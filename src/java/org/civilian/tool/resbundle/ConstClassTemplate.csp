@@ -1,0 +1,105 @@
+import java.util.ArrayList
+import java.util.HashSet
+import org.civilian.util.ClassUtil
+import org.civilian.util.DateTime
+
+
+template(ResBundleCompiler.Config config, String packageName, DateTime generationTime, ArrayList<String> ids)
+	package-access
+	extends -
+	throws -
+{{
+	@boolean hasIdClass   = config.idClass != null;
+	@String idClassSimple = hasIdClass ? ClassUtil.cutPackageName(config.idClass) : "String";
+	@HashSet<String> usedConstants = new HashSet<>();
+	@StringBuilder s = new StringBuilder();
+	@//
+	package <%packageName%>;
+	<%%>	
+	<%%>	
+	@if (hasIdClass && !config.inlineIdClass)
+		import <%config.idClass%>;
+		<%%>	
+		<%%>	
+	<%%>/**
+	<%%> * Contains constants for resource bundle ids in <%config.excelFile.getName()%>.
+	<%%> * Generated at <%generationTime%>. Do not edit directly.
+	<%%> */
+	public interface <%config.constClass%>
+	{
+		@for (String id : ids)
+			@// javafy key: must be a valid java identifier
+			@// escape key when passed as argument to the MsgKey ctor
+			@// keep a list of javafied keys and add _x suffixes if not unique
+			@String constantName = getConstantName(id, usedConstants, s);
+			@if (constantName != null)
+				public static final <%idClassSimple%> <%constantName%><%/%>
+				@for (int i=id.length(); i<=20; i++)
+					<%%> <%/%>
+				<%%> = <%?hasIdClass%>new <%idClassSimple%>(<%?%>"<%escapeId(id)%>"<%?hasIdClass%>)<%?%>;
+		@if (config.inlineIdClass)
+			<%%>	
+			<%%>	
+			public static class <%idClassSimple%> implements CharSequence
+			{
+				public <%idClassSimple%>(String value)
+				{
+					value_ = value;
+				}
+
+				@@Override public int length()
+				{
+					return value_.length();");
+				}
+
+				@@Override public char charAt(int index)
+				{
+					return value_.charAt(index);");
+				}
+
+				@@Override public CharSequence subSequence(int start, int end)
+				{
+					return value_.subSequence(start, end);");
+				}
+				
+				@@Override public String toString()
+				{
+					return value_;
+				}
+				
+				private String value_;
+			}
+	}
+}}
+
+
+private String getConstantName(String id, HashSet<String> usedConstants, StringBuilder s)
+{
+	int length = id.length();
+	if (length == 0)
+		return null;
+	
+	if (!Character.isJavaIdentifierStart(id.charAt(0)))
+		return null;
+	
+	s.setLength(0);
+	for (int i=0; i<length; i++)
+	{
+		char c = id.charAt(i);
+		if (!Character.isJavaIdentifierPart(c))
+			c = '_';
+		s.append(c);
+	}
+	String constantName = s.toString();
+	if (usedConstants.contains(constantName))
+		return null;
+	
+	usedConstants.add(constantName);
+	return constantName;
+}
+
+	
+private String escapeId(String id)
+{
+	return id.replace("\\",  "\\\\").replace("\"", "\\\"");
+}

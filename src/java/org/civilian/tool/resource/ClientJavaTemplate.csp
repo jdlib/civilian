@@ -1,0 +1,107 @@
+import org.civilian.Application
+import org.civilian.Resource
+import org.civilian.util.DateTime
+import org.civilian.util.StringUtil
+import org.civilian.client.WebResource
+
+
+template(Resource root, String outputPackage, String outputName, Application app, boolean timestamp)
+	package-access
+	extends - using TabWriter
+	throws -
+{{
+	<%%>/**
+	<%%> * Generated <%?timestamp%>at <%new DateTime()%> <%?%>by <%ClientConstGenerator.class.getName()%>.
+	<%%> * Do not edit.
+	<%%> */
+	package <%outputPackage%>;
+	
+	
+	@printResourceClass(root);
+}}
+
+
+private void printResourceClass(Resource resource)
+{{
+	@if (!resource.isRoot())
+		@// two line spacer
+		<%%>
+		<%%>
+	@int childCount = resource.getChildCount();
+	@printResourceComment(resource);
+	@String className; 
+	@if (resource.isRoot())
+		@className = outputName;
+		public class <%className%> extends <%WebResource.class.getName()%>
+	@else
+		@className = buildClassName(resource);
+		public static class <%className%> extends <%WebResource.class.getName()%>
+	{
+		public <%className%><%/%>
+		@if (resource.isRoot())
+			(String url)
+		@else
+			(<%WebResource.class.getName()%> parent)
+		{
+			super(<%printCtorArgs(resource, false);%>);
+			
+			@// print field definitions
+			@for (int i=0; i<childCount; i++)
+				@Resource child = resource.getChild(i);
+				addChild(this.<%buildFieldName(child)%> = new <%/%>
+				@if (child.getChildCount() == 0)
+					<%WebResource.class.getName()%>(<%printCtorArgs(child, true);%>));
+				@else
+					<%buildClassName(child)%>(this));
+		}
+		@// print field declarations
+		@for (int i=0; i<childCount; i++)
+			<%%>
+			@Resource child = resource.getChild(i);
+			@printResourceComment(child);
+			public final <%child.getChildCount() > 0 ? buildClassName(child) : WebResource.class.getName()%> <%buildFieldName(child)%>;
+		@for (int i=0; i<childCount; i++)
+			@Resource child = resource.getChild(i);
+			@if (child.getChildCount() > 0)
+				@printResourceClass(child);
+	}
+}}
+
+
+
+private void printResourceComment(Resource resource)
+{{
+	<%%>/**
+	<%%> * Resource "<%resource%>"<%?resource.isRoot()%> of application <%app.getClass().getName()%><%?%>. 
+	<%%> */ 
+}}
+
+
+private void printCtorArgs(Resource resource, boolean isChild)
+{{
+	@if (!resource.isRoot())
+		<%isChild ? "this" : "parent"%>, <%/%> 
+		@if (resource.getSegment() != null)
+			"<%resource.getSegment()%>"<%/%>
+		@else
+			<%app.getResourceConfig().getPathParams().getConstant(resource.getPathParam())%><%/%>
+	@else
+		url<%/%>
+}}
+
+
+private String buildClassName(Resource resource)
+{
+	return resource.getSegment() != null ? 
+		StringUtil.startUpperCase(resource.getSegment()) : 
+		"$" + StringUtil.startUpperCase(resource.getPathParam().getName());
+} 
+
+
+private String buildFieldName(Resource resource)
+{
+	return resource.getSegment() != null ? 
+		StringUtil.startLowerCase(resource.getSegment()) : 
+		"$" + StringUtil.startLowerCase(resource.getPathParam().getName());
+} 
+

@@ -1,0 +1,87 @@
+import org.civilian.samples.crm.text.Message
+
+
+template mixin table:t, lang
+{{
+	<form name="form" ng-submit="nothing()" ng-controller="MasterDataController">
+	@t.columns("[]10[90, class=fill][100, class=fill][100, class=fill]30[][80]");
+	@t.startTable("class", "table table-form");
+	[t.colspan(4)]	<b><%lang.msg(Message.Company)%></b>
+	[t.colspan(2)]	<b><%lang.msg(Message.Internal)%></b>
+	@//-----------------------------------------------
+	[t]				<%lang.msg(Message.Name)%>
+	[t.colspan(3)]	<input type="text" ng-model="object.name">
+	[t]				<%lang.msg(Message.Type)%>
+	[t]				<input type="text">
+	@//-----------------------------------------------
+	[t]		
+	[t.colspan(3)]	<input type="text">
+	@t.endRow();
+	@//-----------------------------------------------
+	[t]		
+	[t.colspan(3)]	<input type="text">
+	[t]				<%lang.msg(Message.Number)%>
+	[t]				<input type="text">
+	@//-----------------------------------------------
+	[t]				<%lang.msg(Message.ParentCompany)%>
+	[t.colspan(2)]	<input readonly type="text" ng-model="object.parent.name">
+	[t]				<button class="btn btn-small" ng-click="lookupCustomer()"><i class="icon-search"></i></button>	
+	[t]				<%lang.msg(Message.Status)%>
+	[t]				<input type="text">
+	@//-----------------------------------------------
+	[t]				<%lang.msg(Message.Enterprise)%>
+	[t.colspan(2)]	<input type="text">
+	@t.endRow();
+	@//-----------------------------------------------
+	[t]				<%lang.msg(Message.Country)%>, <%lang.msg(Message.Code)%>
+	[t.colspan(2)]	<input type="text">
+	[t]				<input type="text">
+	@t.endRow();
+	@//-----------------------------------------------
+	[t]				<%lang.msg(Message.State)%>
+	[t.colspan(2)]	<input type="text">
+	[t]				<input type="text">
+	@t.endRow();
+	@//-----------------------------------------------
+	[t]				<%lang.msg(Message.Zip)%>, <%lang.msg(Message.City)%>
+	[t]				<input type="text" ng-model="object.zip">
+	[t.colspan(2)]	<input type="text" ng-model="object.city">
+	[t]				<%lang.msg(Message.createdAt)%>
+	[t]				<input type="text">
+	@//-----------------------------------------------
+	[t]				<%lang.msg(Message.Street)%>
+	[t.colspan(3)]	<input type="text">
+	[t]				<%lang.msg(Message.changedAt)%>
+	[t]				<input type="text">
+	@//-----------------------------------------------
+	[t]
+	[t.colspan(3)]	<input type="text">
+	[t]				<%lang.msg(Message.by)%>
+	[t]				<input type="text">
+	@//-----------------------------------------------
+	[t]				<%lang.msg(Message.Zip)%>, <%lang.msg(Message.Postbox)%>
+	[t]				<input type="text">
+	[t.colspan(2)]	<input type="text">
+	@t.endRow();
+	@//-----------------------------------------------
+	[t]				<%lang.msg(Message.Telephone)%>
+	[t.colspan(3)]	<input type="text">
+	@t.endRow();
+	@//-----------------------------------------------
+	[t]				<%lang.msg(Message.Fax)%>
+	[t.colspan(3)]	<input type="text">
+	@t.endRow();
+	@//-----------------------------------------------
+	[t]				<%lang.msg(Message.Homepage)%>
+	[t.colspan(3)]	<input type="url" ng-model="object.homepage">
+	@t.endRow();
+	@//-----------------------------------------------
+	[t]
+	[t.colspan(3)	
+		<br>
+		<button ng-disabled="form.$pristine || form.$invalid" class="btn btn-primary"><%lang.msg(Message.Save)%></button>
+		<button ng-disabled="form.$pristine" class="btn"><%lang.msg(Message.Cancel)%></button>
+	]
+	@t.endTable();
+	</form>
+}}

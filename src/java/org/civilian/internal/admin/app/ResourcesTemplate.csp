@@ -1,0 +1,73 @@
+import java.util.Iterator
+import org.civilian.Application
+import org.civilian.Resource
+
+
+template(Application app)
+mixin html
+{{
+	@html.script("civilian/admin/angular.min.1.2.13.js");
+	<script>
+	function Ctrl($scope, $http) {
+		$scope.resources = [
+			@Resource rootRes = app.getRootResource();
+			@if (rootRes != null)
+				@Iterator<Resource> it = rootRes.iterator();
+				@while(it.hasNext())
+					@Resource resource = it.next();
+					@String route = resource.getRoute().toString();
+					@printControllerEntry(resource.getControllerSignature(), route);				
+		<%%>];
+		
+		$scope.showDetails = function(resource) {
+			if (!resource.details) {
+				$http({ url: window.location.pathname, method: "GET", params: { controller: resource.controller}}).
+					success(function(data, status, headers, config) {
+						resource.details = data;
+					});
+			}
+			resource.show = !resource.show;
+		}
+	}
+	</script>
+	<table class="table table-bordered table-condensed" ng-app ng-controller="Ctrl">
+	<tr>
+		<td width="30px">#</td>
+		<th width="33%">Path</th>
+		<th>mapped to class</th>
+		<th></th>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<input type="search" ng-model="search.path" placeholder="filter path">
+		</td>
+		<td>
+			<input type="search" ng-model="search.controller" placeholder="filter class">
+		</td>
+		<td></td>
+	</tr>
+	<tr ng-repeat-start="r in resources | filter:search:strict">
+		<td>{{$index+1}}</td>
+		<td><a href="javascript:;" ng-click="showDetails(r)">{{r.path}}</a></td>
+		<td>{{r.controller}}</td>
+		<td><a ng-href="<%app.getPath()%>{{r.path}}" target="<%app.getId()%>"><i class="icon-share-alt"></i></a></td>
+	</tr>
+	<tr ng-repeat-end ng-show="r.show">
+		<td colspan="2"></td>
+		<td>
+			<ul>
+				<li ng-repeat="detail in r.details">{{detail.method}}(): {{detail.info}}</li>
+			</ul>
+		</td>
+		<td></td>
+	</tr>
+	</table>
+}}
+
+
+private void printControllerEntry(String ctrlSig, String path)
+{{
+	@if (ctrlSig != null)
+		{ controller: "<%ctrlSig%>", path: "<%path.length() != 0 ? path : "/"%>" },
+}}

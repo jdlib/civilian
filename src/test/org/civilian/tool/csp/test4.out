@@ -1,0 +1,60 @@
+/**
+ * Generated from test4.csp
+ * Do not edit.
+ */
+package org.civilian.template.csp;
+
+
+import org.civilian.Template;
+import org.civilian.response.ResponseWriter;
+import org.civilian.template.mixin.TableMixin;
+
+
+public class Test4 extends Template
+{
+	@Override public synchronized void print(ResponseWriter out) throws Exception
+	{
+		try
+		{
+			t = new TableMixin(out);
+			super.print(out);
+		}
+		finally
+		{
+			t = null;
+		}
+	}
+
+
+	@Override protected void print() throws Exception
+	{
+		t.columns("[50]5[][200]");                                      // line 6: @t.columns("[50]5[][200]");
+		t.startTable("class", "table table-form");                      // line 7: @t.startTable("class", "table table-form");
+		org.civilian.template.ComponentBuilder cspCb0 = t;
+		cspCb0.startComponent(false);                                   // line 8: t
+		out.print("Name");                                              // line 8: Name
+		cspCb0.endComponent(false);
+		cspCb0 = t.colspan(2);
+		cspCb0.startComponent(false);                                   // line 9: t.colspan(2)
+		out.print("<input type=\"text\">");                             // line 9: <input type="text">
+		cspCb0.endComponent(false);
+		cspCb0 = t;
+		cspCb0.startComponent(false);                                   // line 10: t
+		out.print("ZIP / City");                                        // line 10: ZIP / City
+		cspCb0.endComponent(false);
+		cspCb0 = t;
+		cspCb0.startComponent(true);                                    // line 11: t
+		out.increaseTab();
+		out.println("<input type=\"text\" size=\"5\">");                // line 12: <input type="text" size="5">
+		out.decreaseTab();
+		cspCb0.endComponent(true);                                      // line 13: ]
+		cspCb0 = t;
+		cspCb0.startComponent(false);                                   // line 14: t
+		out.print("<input type=\"text\" required>");                    // line 14: <input type="text" required>
+		cspCb0.endComponent(false);
+		t.endTable();                                                   // line 15: @t.endTable();
+	}
+
+
+	private TableMixin t;
+}

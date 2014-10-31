@@ -1,0 +1,91 @@
+import org.civilian.resource.Url
+import ../CrmResources
+import ../../text.Message
+
+
+template mixin lang, html
+{{
+	<div class="row-fluid">
+	<tabset>
+	@printWelcome();
+	@// tabs is a variable in the MenuController
+	<tab ng-repeat="tab in tabs" active="tab.active">
+		<tab-heading>{{tab.label}}<i ng-click="closeModule(tab)" class="tabclose icon-remove-sign"></i></tab-heading> 
+		<civ-include src="tab"></civ-include>
+	</tab>	
+	</tabset>
+	</div>
+}}
+
+
+private void link(String url, String text)
+{{
+	<b><a href="<%url%>" target="_blank"><%text%></a></b><%/%>
+}}
+
+
+private void printWelcome()
+{{
+	<tab>
+		<tab-heading><%lang.msg(Message.Start)%></tab-heading>
+		<h3>Welcome</h3>to the Customer Relationship (CRM) sample of 
+		<%link("http://www.civilian-framework.org/", "Civilian Framework");%>.
+		<p>
+		Civilian CRM is a proof of concept application how to build an <b>arbitrarily complex Rich 
+		Internet Application</b>, using a REST-based server and modern JavaScript frameworks.<br>
+		Complex translates mainly to a lot of input forms which interact with database content.
+		</p>
+		<p>
+		It uses <%link("http://www.civilian-framework.org/", "Civilian");%> on the server-side, 
+		and <%link("http://www.angularjs.org/", "AngularJS");%>,
+		<%link("http://angular-ui.github.io/", "AngularUI");%>,
+		<%link("http://jquery.com/", "JQuery");%>,
+		<%link("http://getbootstrap.com/2.3.2/", "Twitter Bootstrap");%> to implement an interactive client.
+		</p>
+		The <b>navigation design</b> is as follows:<br>
+		<ul>
+		<li>The application consists of a set of <b>modules</b> for the main entities of the CRM 
+			(customers, contacts, opportunities, etc).</li>
+		<li>You <b>open a module</b> by clicking its menu item on the main navigation bar, which will add a tab to
+			the main tab row. You can open a module several times.</li>
+		<li>The entry page of a module typically presents a <b>search form</b>. From a row in a search result 
+			you can then navigate to a single entity.
+		<li>A <b>single entity</b> can have multiple panels to present its data, with typical CRUD semantics.</li>
+		<li><b>Complex state</b> is preserved on all panels. This essentially allows you to interact with your data in multiple 
+			views within the same browser window.</li> 
+		</ul>
+		<h3>Please note</h3>
+		The database backend in this sample is just a mock, but could easily replaced by a real database.<br>
+		The number of implemented entities, forms and panels is also very limited but hopefully we convinced you that the 
+		navigation design and the implementation techniques scale to very complex data models.<br>
+		<h3>What to take away</h3>
+		Several main features of Civilian interacting with AngularJS are demonstrated in the sample. Please consult the source code of the 
+		Civilian distribution to see how these are implemented.
+		<ul>
+		<li><b>Lazy loading</b> of template and script code: When you open modules or sub-panels for the first time, 
+			the HTML templates and accompanying JavaSccript code are transparently loaded from the server.</li>
+		<li>All <b>templates</b> are <b>dynamically generated</b>, to account for the users language chosen in the login form and 
+			access right settings. (This text appears only in English, though).</li>
+		<li>When initial templates have been sent to the client, all further communication between browser and 
+			server is data-centric using <b>Ajax</b> calls with <b>JSON</b> messages.</li>
+		<li>Civilian helps to implement a transparent <b>login popup</b> during Ajax calls when the server-session 
+			had a timeout and requires new authentication.</li>
+		<li>Being essentially a <b>single page application</b>, the REST-API of Civilian CRM nevertheless allows to 
+			open <b>multiple windows</b> with different entry points. For example<br>
+			<ul>
+				@Url url = html.url(CrmResources.root.customers);
+				<li>Open the <a href="<%url%>" target="_blank">Customer</a> module in a new window.</li>
+				@url = html.url(CrmResources.root.customers.$customerId);
+				@url.setPathParam(new Integer(100)); // :customerId
+				<li>Open the detail page of <a href="<%url%>" target="_blank">Customer 100</a>.</li>
+				@url = html.url(CrmResources.root.customers.$customerId.masterdata);
+				@url.setPathParam(new Integer(100)); // :customerId
+				<li>Open the masterdata page of <a href="<%url%>" target="_blank">Customer 100</a>.</li>
+			</ul>
+			This technique allows effective reuse of the server-side API: E.g. search dialogs for lookup of CRM entities 
+			use the same search URL as the main search page of a module.<br>
+			This also helps development: Simply open a window with a specific URL to directly see the resource in 
+			action which you are currently working on.</li>  
+		</ul> 
+	</tab>	
+}}

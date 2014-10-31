@@ -1,0 +1,51 @@
+import java.util.Locale
+import java.util.Date
+import org.civilian.text.LocaleService
+
+
+template(LocaleService service, Locale... locales) mixin html, lang
+{{
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title>Civilian Form Sample</title>
+		@html.metaContentType();
+	</head>
+	<body>
+		<h1>Locale Sample</h1>
+		<table>
+			@for (Locale locale : locales)
+				@printLocale(locale);
+		</table>
+	</body>
+	</html>
+}}
+
+
+private void printLocale(Locale locale)
+{{
+	@out.setLocaleData(service.getLocaleData(locale));
+	<tr>
+		<td colspan="2"><hr></td>
+	</tr>
+	<tr>
+		<td><b>current locale is</b></td>
+		<td><b><%locale%>, <%locale.getDisplayName()%></b></td>
+	</tr>
+	<tr>
+		<td>numbers</td>
+		<td><%lang.format(1234567890)%></td>		
+	</tr>
+	<tr>
+		<td>decimal</td>
+		<td><%lang.format(334455.6677)%></td>		
+	</tr>
+	<tr>
+		<td>date</td>
+		<td><%lang.format(new Date())%></td>		
+	</tr>
+	<tr>
+		<td>translation</td>
+		<td><%lang.msg("civilian")%></td>		
+	</tr>
+}}

@@ -1,0 +1,5 @@
+template(CreateForm form) mixin formTable
+{{
+	<h1>Create Person</h1>
+	@formTable.print(form);
+}}	

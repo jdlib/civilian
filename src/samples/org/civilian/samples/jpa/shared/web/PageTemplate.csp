@@ -1,0 +1,22 @@
+import org.civilian.Template
+
+
+template(Template content) mixin html
+{{
+	<!DOCTYPE html>
+	<html>
+	<head>
+		@html.metaContentType();
+		@html.linkCss("css/lib/bootstrap.css"); 
+		@html.linkCss("css/samples.css");
+		<title>Civilian JPA Sample</title>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<%content%>
+			</div>
+		</div>
+	</body>
+	</html>
+}}	

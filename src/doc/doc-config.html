@@ -1,0 +1,186 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Configuration</h1>
+
+		<div class="takeaway">
+			How to configure Civilian. Covers web.xml, civilian.ini, programmatic
+			configuration and logging.
+		</div>
+
+		<ul>
+			<li><a href="#servlet">Minimal servlet configuration and web.xml</a></li>
+			<li><a href="#ini">The config file civilian.ini</a></li>
+			<li><a href="#prog">Programmatic configuration</a></li>
+			<li><a href="#logging">Logging</a></li>
+			<li><a href="#servlet-explicit">Explicit servlet configuration</a></li>
+			<li><a href="#multiapp">Multiple applications in a context</a></li>
+		</ul>
+		
+		<h2 id="servlet">Minimal servlet configuration and web.xml</h2>
+		When deployed in a servlet container a Civilian application needs a <code>web.xml</code> file,
+		placed into the <code>WEB-INF</code> directory.
+		The minimal <code>web.xml</code> looks like <a href="web.xml">this</a>:
+		<div class="highlight"><pre><code>&lt;web-app version="3.0" <i>...3.0 schema-decls omitted...</i>>
+    &lt;listener>
+        &lt;listener-class>org.civilian.context.servlet.ContextListener&lt;/listener-class>
+    &lt;/listener>
+&lt;/web-app></code></pre></div>
+		The {javadoc:context.servlet.ContextListener} will be run at server startup and bootstraps Civilian.
+		It reads the config file <code>WEB-INF/civilian.ini</code> (see next section), initializes the application
+		and dynamically creates all needed servlets.<p>
+		  	
+		<h2 id="ini">The config file civilian.ini</h2>
+		The configuration file <code>civilian.ini</code> allows to configure most settings of Civilian.<br>
+		When run in a servlet environment, the file is placed into the <code>WEB-INF</code> folder.<p>
+		<code>civilian.ini</code> is a simple config file in <code>java.util.Properties</code> format, 
+		containing definitions in <i>key</i> = <i>value</i> form.
+		<p>
+		The config file of a newly <a href="doc-development.html#scaffold">scaffolded</a> application (or of the 
+		<a href="doc-samples.html">samples</a>) contains detailed comments which explain the various settings
+		and their default values.
+		We give an overview of the most important entries:
+		<p>
+		The <b>develop flag</b> controls if the Civilian {javadoc:Context} and its applications run in
+		{javadoc:Context#develop() development mode}:
+		<div class="highlight">
+			<pre><code>develop = true</code></pre>
+		</div>
+		
+		You can run one or more applications inside a Civilian context (<a href="#multiapp">This</a>
+		topic motivates why you would want to run more than one app). Every <b>application config</b>
+		uses keys <code>app.<i>id</i>.*</code> with id being a unique {javadoc:Application#getId() identifier} for each application.<br>
+		The <b>class</b> entry gives the application class, <b>path</b> the {javadoc:Application#getRelativePath() relative path} of the 
+		application under the context path. 
+		<b>enabled</b> allows to include/exclude the application from deployment. <b>encoding</b> is the default application
+		{javadoc:Application#getEncoding() encoding} used for assets, HTML pages, etc.
+		<div class="highlight">
+			<pre><code>app.crm.class    = org.example.crm.web.CrmApp<br
+			          >app.crm.path     = /crm<br
+			          >app.crm.enabled  = true<br
+			          >app.crm.encoding = UTF-8</code></pre>
+		</div>
+		The <b>locales</b> and <b>text</b> entries configure localization support and are explained <a href="doc-l10n.html#config">here</a>.
+		<div class="highlight">
+			<pre><code>app.crm.locales  = en-UK,de-CH,fr<br
+			          >app.crm.message  = resbundle:org/example/crm/text/message</code></pre>
+		</div>
+		
+		The <b>asset.location</b> entries define the location of static resources (asset files), explained in detail 
+		<a href="doc-assets.html#config">here</a>.
+		<div class="highlight">
+			<pre><code>app.crm.asset.location.0 = dir:assets<br
+			          >app.crm.asset.location.1 = dir:~/crm/files<br
+			          >app.crm.asset.location.2 = res:assets</code></pre>
+		</div>
+		Async processing of request are enabled with the <b>async</b> entry:
+		<div class="highlight">
+			<pre><code>app.crm.async = true</code></pre>
+		</div>
+		
+		To enable file uploads, <b>upload</b> entries are needed. The {javadoc:application.UploadConfig}
+		defines their meanings which are equal to a servlet MultipartConfig: 
+		<div class="highlight">
+			<pre><code>app.crm.async.enabled           = true<br
+			          >app.crm.upload.enabled           = true<br
+			          >app.crm.upload.dir               = <br
+			          >app.crm.upload.maxRequestSize    = 200000<br
+			          >app.crm.upload.maxFileSize       = 100000<br
+			          >app.crm.upload.fileSizeThreshold = 5000</code></pre>
+		</div>
+		Last are entries used when development mode is on, explained in detail <a href="doc-development.html#config">here</a>. 
+		<div class="highlight">
+			<pre><code>app.crm.dev.classreload = true</code></pre>
+		</div>
+		<p>
+		The built-in <a href="doc-development.html#admin">admin app</a> can be configured with entries <b>civ.admin.*</b>
+		which are similar to an application config:
+		<div class="highlight">
+			<pre><code>civ.admin.enabled = develop<br
+			          >civ.admin.path    = civadmin</code></pre>
+		</div>
+
+
+		<h2 id="prog">Programmatic configuration</h2>
+		Almost all application settings of <code>civilian.ini</code> can also be changed programmatically
+		within your implementation of the {javadoc:Application} class. Some advanced settings can
+		only be changed programmatically.<br>
+		Programmatic configuration can be done in these methods:
+		<ul>
+		<li>{javadoc:Application#init(org*civilian*application*AppConfig) init(AppConfig)} is called
+			at application startup. {javadoc:application.AppConfig} allows to tweak most settings of <code>civilian.ini</code>.
+			The method should also be used to initialize any other application-global resources.<br>
+		<li>{javadoc:Application#initProcessors(org*civilian*processor*ProcessorConfig) initProcessors(ProcessorConfig)}
+			is called next and allows to tweak, rearrange, enhance or else modify the <a href="doc-processors.html">processor pipeline</a>
+			of the application.	The default configuration should be sufficient for most cases.
+		<li>{javadoc:Application#initAssets(org*civilian*asset*AssetConfig) initAssets(AssetConfig)} also offers more
+			advanced possibilities to configure the applications {javadoc:asset.AssetService}.
+		</ul>
+		In addition
+		<ul>
+			<li>{javadoc:Application#close() close()} is called at application shutdown and can be used to release or close custom resources.   
+		</ul>
+		Please consult the javadoc of the config objects passed to the init-methods to learn about the configuration possibilities in detail.
+		
+		<h2 id="logging">Logging</h2>
+		Civilian uses {link:http://www.slf4j.org/ SLF4J} for logging. Please consult the 
+		SLF4J documentation how to configure SLF4J.<br>
+		Log output is definitely not chatty, and hopefully to the point. 
+		<p> 
+		Civilian uses the following logger names for the corresponding part of the framework:
+		<ul>
+		<li>org.civilian.application
+		<li>org.civilian.asset
+		<li>org.civilian.servlet
+		<li>org.civilian.classloader
+		<li>org.civilian.context
+		<li>org.civilian.controller
+		<li>org.civilian.processor
+		<li>org.civilian.request
+		<li>org.civilian.response
+		</ul>
+
+		<h2 id="servlet-explicit">Explicit servlet configuration</h2>
+		There can be situations when you want to have an explicit servlet declaration in your web.xml, instead of letting
+		Civilian dynamically create servlets. Here is how you do it for an application with id <code>myapp</code>:
+		<p>
+		1. Prevent Civilian from dynamically creating the servlet, either in <code>civilian.ini</code>
+		<div class="highlight"><pre><code>app.<b>myapp</b>.connect = <b>false</b></code></pre></div>
+		or programmatically in {javadoc:Application#init(org*civilian*application*AppConfig) init(AppConfig)}: 
+		<div class="highlight"><pre><code>protected void init(AppConfig config) {<br>    config.setConnect(<b>false</b>);<br>    ...</code></pre></div>
+		2. Define the following servlet in your web.xml:
+		<div class="highlight"><pre><code>&lt;web-app>
+    ...
+    &lt;servlet>
+        &lt;servlet-name><b><i>myapp-servlet-name</i></b>&lt;/servlet-name>
+        &lt;servlet-class>org.civilian.context.servlet.AppServlet&lt;/servlet-class>
+        &lt;init-param>
+            &lt;param-name>app.id&lt;/param-name>
+            &lt;param-value><b>myapp</b>&lt;/param-value>
+        &lt;/init-param>
+    &lt;/servlet>
+    &lt;servlet-mapping>
+        &lt;servlet-name><b><i>myapp-servlet-name</i></b>&lt;/servlet-name>
+        &lt;url-pattern><b>/<i>mypath</i>/*</b>&lt;/url-pattern>
+    &lt;/servlet-mapping>
+    ...
+&lt;web-app></code></pre></div>
+
+		<h2 id="multiapp">Multiple applications in a context</h2>
+		Civilian allows to install more than one applications in a context.
+		Of course it is perfectly fine to only use a single application, whose path equals
+		the context path.
+		Installing multiple application effectively means to segment the resource URL space
+		below the context into multiple application spaces.  
+		The following gives some use-cases where multi-installations are usefull:
+		<ul>
+		<li>The <a href="doc-development.html#admin">admin app</a> can be plugged-in into
+			the application space and comes in handy during development to diagnose configuration problems.
+		<li>The <a href="doc-samples.html">samples</a> all run within the same Civilian context,
+			not needing separate servlet contexts. 
+		<li>One can develop "module" applications which are not meant to run alone but to be added
+			to another app, providing certain functionality.
+		</ul> 
+
+	</div>
+</div>

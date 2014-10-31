@@ -1,0 +1,28 @@
+/**
+ * Generated from test5.csp
+ * Do not edit.
+ */
+package org.civilian.template.csp;
+
+
+import org.civilian.Template;
+
+
+public class Test5 extends Template
+{
+	public Test5(String name)
+	{
+		super(name, 5, "10");                                           // line 6: super(name, 5, "10");
+		this.name = name;
+	}
+
+
+	@Override protected void print() throws Exception
+	{
+		out.print(name);                                                // line 7: <%name%>
+		out.printlnIfNotEmpty();
+	}
+
+
+	private String name;
+}

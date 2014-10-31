@@ -1,0 +1,34 @@
+!-------------------------------------------
+! general settings
+!-------------------------------------------
+
+version = 1.0
+develop	= true
+
+
+!--------------------------------------------
+! settings for the built-in admin application
+!--------------------------------------------
+#civ.admin.enabled = develop
+#civ.admin.path    = civadmin
+#civ.admin.ip      = localhost
+
+
+!--------------------------------------------
+! the application config for the !{appId} application
+!--------------------------------------------
+
+app.!{appId}.class = !{webPackage}.!{appClass}
+#app.!{appId}.path = /
+app.!{appId}.asset.location = dir
+#app.!{appId}.upload.enabled           = true|false, default is false
+#app.!{appId}.upload.dir               = (defaults to "")
+#app.!{appId}.upload.maxRequestSize    = (defaults to -1)
+#app.!{appId}.upload.maxFileSize       = (defaults to -1)
+#app.!{appId}.upload.fileSizeThreshold = (defaults to 0)
+app.!{appId}.dev.classreload          = true
+#app.!{appId}.dev.classreload.exclude = (comma-separated list of packages or classes to exclude) 	
+#app.!{appId}.dev.classreload.include = (comma-separated list of packages or classes to include)
+app.!{appId}.locales = !{locales}
+!{appMsgsIni}
+ 	

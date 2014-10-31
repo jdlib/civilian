@@ -1,0 +1,76 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Forms</h1>
+
+		<div class="takeaway">
+			Civilians form library helps to process HTML forms.
+		</div>
+		
+		
+		<ul>
+		<li><a href="#intro">Intoduction</a></li>
+		<li><a href="#params">Controller method parameters</a></li>
+		<li><a href="#formlib">The form library</a></li>
+		</ul>
+		
+		<h2 id="intro">Introduction</h2>
+		
+		Processing HTML forms in a classic roundtrip application typically follows this schema:
+		<ol>
+		<li>The browser requests a HTML page which contains a form.
+		<li>The server returns the page. The form may or may not be populated with initial data. 
+		<li>The browser submits the form.
+		<li>The server evaluates the submitted form. If the input has errors, it jumps back to step 2) and adds error messages to the page.
+			If the input has no errors, the server sends an appropriate response or redirects to another page.
+		</ol>    
+		
+		Using only low-level APIs such as HttpServletRequest and HttpServletResponse makes form processing a hard job.<br>
+		Type conversion of the data which is presented in the form is especially tedious: 
+		<ul>
+		<li>From the applications perspective, form values can have any (simple) type: strings, numbers, dates, discrete values (to select from), etc.
+		<li>Values must be converted to strings when rendered in the output.
+		<li>Values must be parsed from string request parameters when a form is submitted.
+		<li>In a multi-locale application conversion of values must obey the locale of request or response.
+		</ul>
+		
+		<h2 id="params">Controller method parameters</h2>
+		<a href="doc-controllers.html#parameters">Parameters</a> of controller methods build a simple way  
+		how to extract values of a submitted form from the request.<br>
+		Use the {javadoc:annotation.Parameter @Parameter} to read the value of a single form control
+		or {javadoc:annotation.BeanParam @BeanParam} to read values from multiple controls in the form of a Java bean.
+		<div class="highlight">
+			<pre><code>@Post public void processForm(@BeanParam Order order)<br
+			>{ ...</code></pre>
+		</div>
+		The <a href="doc-samples.html#inject">Inject</a> sample demonstrates this technique.
+		<p>
+		Controller method parameters take care of type conversion from request Strings to the target type.
+		But they can't handle conversion errors when string values of the request are converted to other types.
+		Invalid input will therefore result in response with status 400 (bad request).
+		A more elaborate and error tolerant way to process forms is to use Civilians form library:      
+		  
+		<h2 id="formlib">The form library</h2>
+		Civilians form library allows a higher-level approach to form processing:<br>
+		The {javadoc:form.Form} class models a HTML form and consists of a list of form controls.
+		<p>
+		For every form element presented in the HTML page you {javadoc:form.Form#add(T) add} a control to the form.<p>
+		{javadoc:form.Control Control} implementations exist for all HTML(5) form elements and provides accessors for the HTML attributes
+		used in these elements.
+		<p> 
+		Controls possess a value whose type is not restricted to strings. For example {javadoc:form.DateField} and {javadoc:form.IntField} are two
+		Control implementations which have Date and Integer values. Therefore setting or getting values from a control does not need any
+		type conversion from your side.
+		<p>
+		Controls know how to write themselves to a response.
+		Sending a control to {javadoc:response.ResponseWriter#print(java*lang*Object) ResponseWriter.print(Object)}
+		will print the HTML code for the control. Of course a <a href="doc-templates.html">template</a> is still needed to print the overall form layout.  
+		<p>
+		Evaluating a submitted form is equally easy. If a form object is asked to {javadoc:form.Form#read() read} its values from a Request,
+		all form controls will update their values from the request. If a submitted value is invalid (e.g. because it violates
+		the format prescribed by the control type), the control {javadoc:form.Control#getStatus() status} reflects this.        
+		<p>
+		Like <a href="doc-controllers.html#lifecycle">controllers</a> form objects are constructed for a single request. Please study the 
+		<a href="doc-samples.html#form">form sample</a> for further details.
+	</div>
+</div>

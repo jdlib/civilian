@@ -1,0 +1,97 @@
+<div class="row">
+	<div class="col-md-3 sidebar toc hidden-xs hidden-sm hidden-print">
+		<ul class="nav sidenav tocnav">
+			<li><a href="#webapps">Web applications</a></li>
+			<li><a href="#frameworks">Frameworks</a></li>
+			<li><a href="#rest">REST API and clean URLs</a></li>
+			<li><a href="#interactions">Interactions and tasks</a></li>
+			<li><a href="#dev">Ease of development</a></li>
+		</ul>
+	</div>
+	<div class="col-md-9 doc">
+		<h1>Introduction</h1>
+
+		<div class="takeaway">
+			Presents Civilian. Somewhat philosophical. If you are impatient, just
+			jump to the <a href="quickstart.html">quickstart</a>. Or simply start
+			reading the <a href="doc.html">documentation</a> 
+		</div>
+
+		<section>
+			<h2 id="webapps">Web applications</h2>
+			We see three main parts in web applications:
+			<ul>
+			<li>A <b>client</b> which talks to a server via HTTP. The usual client is the browser,
+				technology-wise based on HTML, CSS and JavaScript.
+			<li>A <b>server</b> application which can process HTTP requests and dynamically build responses.
+			<li>A <b>database</b> back-end which provides data to the server application. 
+			</ul>   
+			<div class="feature">
+				Civilian is a Java framework to develop the server-side part of a web application.
+			</div>
+		</section>
+		
+		<section>
+			<h2 id="frameworks">Frameworks</h2>
+			There is no shortage of web frameworks in all languages to build
+			the server- or client-side of web applications.
+			Of course the reason to use a  framework is because it helps to get things done.<br> 
+			Frameworks &ndash; in contrast to simple libraries &ndash; often prescribe a very specific way 
+			how to structure and implement an application.<br>
+			But a framework <i>can</i> become problematic if at some point it prevents you to do something what you want to do.
+			Difficult workarounds then often eliminate the gains achieved by using the framework in the first place.<br>
+			<div class="feature">
+				Civilian does structure your application. But its also wants you to totally control the HTTP response and the data back-end
+				without any restrictions. Design your application in terms
+				of REST API, HTML and data output, Ajax communications and database back-end, then use
+				Civilian to implement the design.   
+			</div>
+		</section>
+			
+		<section>
+			<h2 id="rest">REST and clean URLs</h2>
+			Todays best practice recommends that a web application should 
+			process requests in a {link:https://en.wikipedia.org/wiki/Representational_State_Transfer RESTful} 
+			way. And the URLs exposed by an application should follow the paradigm of 
+			{link:https://en.wikipedia.org/wiki/Semantic_URL semantic} or clean URLs.
+			
+ 			<div class="feature">
+ 				Civilian makes it easy to implement RESTful processing and design clean URLs.  
+			</div>
+  		</section>
+
+		<section>
+			<h2 id="interactions">Interactions and tasks</h2>
+
+			Web applications must support a variety of clients: Talking with browsers they need to
+			deliver HTML pages and assets likes CSS, images, script files. Content can be presented
+			in multiple languages or locales. Data-oriented clients will send or consume data formatted as JSON, XML, etc. 
+			Recent client-side MVC JavaScript frameworks embody more than one role: They request initial pages or 
+			page templates from the server, and then use Ajax calls to obtain or send pure data.
+			And it is still valid to develop traditional round trip applications. 
+			
+			<div class="feature">
+				Civilian supports all these web application aspects: Generation of HTML using templates.
+				Content serialization of data in different formats. Processing of traditional HTML forms.
+				Support for multiple languages and locales. Serving of static assets.
+				And it integrates all in an efficient API.     
+			</div>
+  		</section>
+  		
+		<section>
+			<h2 id="dev">Ease of development</h2>
+  			At minimum a framework must allow to implement an application, hopefully without too many obstacles.
+  			But we really like frameworks when they are easy and fun to use.
+  			
+  			<div class="feature">
+  				We hope that you won't have a steep learning curve when using Civilian.
+  				The API is small, as is the footprint of the library.
+  				It contains some neat techniques to boost productivity.
+				It does not use <span class="monospace">AbstractProxyFactoryConfigurers</span>.
+				You may also enjoy to take a look at the handcrafted source code.
+				So we hope you like it.
+			</div>
+  		</section>
+	</div>
+</div>
+	

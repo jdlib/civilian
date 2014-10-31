@@ -1,0 +1,16 @@
+package org.civilian.template.csp
+
+
+template mixin table:t
+{{
+	@t.columns("[50]5[][200]");
+	@t.startTable("class", "table table-form");
+	[t]            Name
+	[t.colspan(2)] <input type="text">
+	[t]            ZIP / City
+	[t
+		<input type="text" size="5">
+	]
+	[t]            <input type="text" required>
+	@t.endTable();
+}}

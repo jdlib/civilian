@@ -1,0 +1,77 @@
+/**
+ * Generated from test1.csp
+ * Do not edit.
+ */
+package org.civilian.template.csp;
+
+
+import java.util.ArrayList;
+import com.app.MyMixin;
+import org.civilian.Template;
+import org.civilian.response.ResponseWriter;
+import org.civilian.template.mixin.HtmlMixin;
+import org.civilian.template.mixin.LangMixin;
+
+
+/* Class-Comment */
+public class Test1 extends Template
+{
+	public Test1(String... names, ArrayList<String,String > someList1, ArrayList<? extends X<String>> someList2)
+	{
+		this.names = names;
+		this.someList1 = someList1;
+		this.someList2 = someList2;
+	}
+
+
+	@Override public synchronized void print(ResponseWriter out) throws Exception
+	{
+		try
+		{
+			lang = new LangMixin(out);
+			htm = new HtmlMixin(out);
+			html = new HtmlMixin(out);
+			myMixin = new MyMixin(out);
+			super.print(out);
+		}
+		finally
+		{
+			lang = null;
+			htm = null;
+			html = null;
+			myMixin = null;
+		}
+	}
+
+
+	@Override protected void print() throws Exception
+	{
+		out.println("<start>");                                         // line 11: <start>
+		for (int i=0; i<10; i++)                                        // line 12: @for (int i=0; i<10; i++)
+		{
+			if (i % 2 == 0)                                             // line 13: <%?i % 2 == 0%>
+			{
+				out.print("conditional");                               // line 13: conditional
+			}
+			out.printlnIfNotEmpty();
+			out.print(names);                                           // line 14: <%names%>
+			out.print(": ");                                            // line 14: :
+			out.print(lang.format(i));                                  // line 14: <%lang.format(i)%>
+			out.printlnIfNotEmpty();
+			list_.add(names);                                           // line 15: @list_.add(names);
+		}
+		out.println("</start>");                                        // line 16: </start>
+	}
+	
+	
+	private ArrayList<String> list_ = new ArrayList<>();
+
+
+	private String[] names;
+	private ArrayList<String,String > someList1;
+	private ArrayList<? extends X<String>> someList2;
+	private LangMixin lang;
+	private HtmlMixin htm;
+	private HtmlMixin html;
+	private MyMixin myMixin;
+}

@@ -1,0 +1,71 @@
+import org.civilian.Request
+import org.civilian.request.Upload
+ 
+
+template(IndexForm form) mixin html, lang, formTable
+{{
+	@Request request = form.getRequest();
+	<!DOCTYPE html>
+	<html>
+	<head>
+		@html.metaContentType();
+		@html.linkCss("/css/lib/bootstrap.css"); 
+		@html.linkCss("/css/samples.css");
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Civilian Upload Sample</title>
+	</head>
+	<body>
+	<div class="container">
+	<div class="row">
+		<h1>Upload Sample</h1>
+		<p class="doc">
+			The upload sample demonstrates upload of files via 
+			<a target="_blank" href=http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.2">multipart/form-data</a> requests.<br>
+			To allow upload requests, you need to configure your application accordingly via civilian.ini or Application#init(AppConfig).<br>
+			To read uploaded files from a request use <code>request.getUpload(<i>parameter name</i>)</code> 
+			or <code>request.getUploads(<i>parameter name</i>)</code>.<br>
+			The <code>FileField</code> class of the Civilian form library used in the sample is a convenient wrapper around this API. 
+		</p>
+		
+		<h3 style="margin-top:30px">1. Select one or more files and click OK</h3>
+		<p> 
+		@form.start(out);
+		<table class="table table-form">
+			@formTable.row(form.file);
+			@formTable.row(form.ok);
+		</table>
+		@form.end(out);
+		@if (request.getUploadError() != null)
+			<p>
+			<h3>2. The server received an error:</h3>
+			<code>request.getUploadError()</code> says<p><br>
+			<%html.stackTrace(request.getUploadError());%>
+		@else
+			@Upload[] uploads = form.file.getUploads();
+			@if (uploads.length != 0)
+				<p>
+				<h3 style="margin-top:30px">2. The server received <%uploads.length%> uploads</h3> 
+				<table class="table table-bordered table-form">
+				<tr>
+					<th>#</th>
+					<th>upload.length()</th>
+					<th>upload.getContentType()</th>
+					<th>upload.getFileName()</th>
+				</tr>
+				@for (int i=0; i<uploads.length; i++)
+					@Upload upload = uploads[i];
+					<tr>
+						<td><%i%></td>
+						<td><%lang.format(upload.length())%> bytes</td>
+						<td><%upload.getContentType()%></td>
+						<td><%upload.getFileName()%></td>
+					</tr>
+				</table>			
+				</div>
+			@else if (request.hasMethod("POST"))
+				Did not receive any uploads... :-(<br>
+	</div>
+	</div>
+	</body>
+	</html>
+}}

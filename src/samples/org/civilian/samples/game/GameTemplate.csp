@@ -1,0 +1,21 @@
+template(Game game, GameForm form, String feedback) mixin html, formTable
+{{
+	<!DOCTYPE html>
+	<html>
+	<head>
+		@html.metaContentType();
+		@html.linkCss("css/lib/bootstrap.css"); 
+		@html.linkCss("css/samples.css");
+		<title>Civilian Game Sample</title>
+	</head>
+	<body>
+		<h1>Guess a number:</h1>
+		I'm thinking of a number between <%game.getSmallest()%> and <%game.getBiggest()%>.<br>
+		You have <%game.getRemainingGuesses()%> guesses remaining.
+		<p>
+		@formTable.print(form);
+		@if (feedback != null)
+			<div><%html.text(feedback);%></div>
+	</body>
+	</html>
+}}	

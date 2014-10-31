@@ -1,0 +1,56 @@
+import org.civilian.Application
+import org.civilian.Resource
+import org.civilian.Template
+import org.civilian.resource.Url
+
+
+template(Template content, AdminApp adminApp, Application viewedApp, Resource appResource) mixin html
+{{
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		@html.metaContentType();
+		@html.linkCss("civilian/admin/bootstrap.css");
+		@html.linkCss("civilian/admin/admin.css");
+		<title>Civilian Admin</title>
+	</head>
+	<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<div class="row">
+					<div class="span10 offset2">
+						<h2><span class="title">civilian</span></h2>  
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="span2">
+				<div class="well sidebar-nav">
+					<ul class="nav nav-list">
+						@printNavItem("Context", html.url(adminApp), viewedApp == null);
+						<li class="nav-header">Applications</li>
+						@Url appUrl = html.url(appResource);
+						@for (Application app : adminApp.getContext().getApplications())
+							@appUrl.setPathParam(app.getId());
+							@printNavItem(app.getId(), appUrl, viewedApp == app);
+					</ul>
+				</div>
+			</div>
+			<div class="span10">
+				<%content%>
+			</div>
+		</div>
+	</div>
+	</body>
+	</html>
+}}
+
+
+private void printNavItem(String label, Url url, boolean active)
+{{
+	<li<%?active%> class="active"<%?%>><a href="<%url%>"><%label%></a></li>
+}}

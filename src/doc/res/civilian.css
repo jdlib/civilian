@@ -1,0 +1,305 @@
+body {
+	overflow-y: scroll;
+	position: relative;
+	padding-top: 60px;
+	padding-bottom: 10px;
+}
+
+
+h1, h2, h3 {
+    margin-top: 30px;
+}
+
+
+h1:first-child {
+    margin-top: 17px;
+}
+
+h4, h5, h6 {
+    margin-top: 20px;
+}
+
+h3, .h3 {
+    font-size: 18px;
+}
+
+
+a {
+    color: #0077cc;
+    font-weight: 500;
+}    
+
+.doc {
+	line-height: 1.8;
+}
+
+
+.doc p {
+	margin-top: 10px;
+}
+
+
+p.indent {
+	margin-left: 30px;
+}
+
+.relative {
+	position: relative;
+}
+
+
+.jumbotron {
+	margin-top: 20px;
+	margin-bottom: 30px;
+	text-align: center;
+	font-size: 56px; 	
+    line-height: 56px;
+	color: white;
+	background-color: #0088cc;
+    padding: 24px;
+} 
+
+.container .jumbotron {
+ 	border-radius: 0px;
+}
+
+.civilian {
+	font-family: "Garamond", "Times", serif;
+	font-variant: small-caps;
+	letter-spacing:.18em;
+}
+
+a.civilian-title:hover {
+    text-decoration:none; 
+}
+
+
+.intro p {
+	font-size: 16px;
+	line-height: 1.6;
+	text-align: justify;
+}
+
+.intro p.center {
+	text-align: center;
+}
+
+
+.sidenav {
+	width:100%;
+	margin: 20px 0;
+	padding: 0;
+	background-color: #fff;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+	-moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+	box-shadow: 0 1px 4px rgba(0,0,0,.065);
+}
+
+
+.sidenav > li > a {
+	display: block;
+	margin: 0 0 -1px;
+	padding: 7px 14px;
+	font-size: 14px;
+	border: 1px solid #e5e5e5;
+}
+
+
+.sidenav > li:first-child > a {
+  -webkit-border-radius: 6px 6px 0 0;
+     -moz-border-radius: 6px 6px 0 0;
+          border-radius: 6px 6px 0 0;
+}
+
+
+.sidenav > li:last-child > a {
+  -webkit-border-radius: 0 0 6px 6px;
+     -moz-border-radius: 0 0 6px 6px;
+          border-radius: 0 0 6px 6px;
+}
+
+
+.sidenav > li > a:hover {
+	background-color: #f5f5f5;
+}
+
+.docnav > .active > a, 
+.docnav > .active > a:hover, 
+.docnav > .active > a:focus {
+    background-color: #0088cc;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+	position: relative;
+	z-index: 2;
+	padding: 8px 14px;
+	border: 0;
+	-webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+	-moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+	box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+}
+
+
+.tocnav > .active > a, 
+.tocnav > .active > a:hover, 
+.tocnav > .active > a:focus {
+    font-weight: bold;
+}
+
+@media (min-width: 992px) {
+	.sidebar {
+		position: fixed;
+		width: 243px;
+	}
+
+	.doc {
+		margin-left: 243px;
+	}
+}
+
+
+@media (min-width: 1200px) {
+	.sidebar {
+		width: 293px;
+	}
+
+	.doc {
+		margin-left: 293px;
+	}
+}
+
+
+.highlight {
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+    margin: 7px 0;
+    padding: 9px 14px;
+}
+
+
+.highlight pre {
+    background-color: transparent;
+    border: 0 none;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+
+.highlight pre code {
+    font-size: 14px;
+}
+
+
+.monospace {
+    font-family: "Courier New",monospace;
+}
+
+
+pre code,
+code {
+    font-size: 14px;
+    color: green;
+    font-family: "Courier New",monospace;
+}
+
+
+code b {
+	color: blue;
+	font-weight: normal;
+}
+
+
+.takeaway, .feature {
+	border: 1px solid #f1f9f0;
+    border-radius: 4px;
+	min-height: 35px;
+	margin-top: 16px;
+	margin-bottom: 16px;
+	padding: 20px;
+}
+
+.takeaway {
+	background: none repeat scroll 0 0 #dff7dd;
+	box-shadow: 0 0 45px #cbe5c9 inset;
+}
+
+.feature {
+   background-color: #d9edf7;
+}
+
+.takeaway:before {
+	content: "Takeaway:";
+	font-weight: bold;
+	padding-right: 5px;
+}
+
+.doc h1[id]:before,
+.doc h2[id]:before,
+.doc h3[id]:before {
+    content: "";
+    display: block;
+    height: 80px;
+    margin-top: -80px;
+}
+
+
+.img {
+	padding: 12px 0 24px 24px;
+}
+
+
+.samples {
+    border-radius: 6px;
+    border: 1px solid #e1e1e8;    
+	padding: 12px;
+	margin: 12px 0;
+	-webkit-columns: 4;
+	-moz-columns: 4;
+	columns: 4;
+}
+
+.badge {
+	background-color: #468847;
+}
+
+
+.footer {
+	font-size: 12px;
+	margin:top 20px;
+	/*text-align: center;*/
+}
+
+
+.codelist {
+	list-style-type: none;
+}
+
+
+pre {
+    color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+}
+
+.extlink {
+}
+
+
+.extlink:before {
+	content: "\00BB\0020";
+	text-decoration: none;
+}
+
+.javadoc {
+}
+
+
+.javadoc:before {
+	content: "\203A\0020";
+	text-decoration: none;
+}

@@ -1,0 +1,30 @@
+java
+package org.civilian.template.csp;
+
+
+import java.util.ArrayList;
+import org.civilian.template.Template;
+
+
+public class Test2 extends Template
+{
+	public Test2(String name)
+	{
+		this.name = name;
+	}
+	
+	
+	@Override protected void print() throws Exception
+	{{
+		<start>
+		@for (int i=0; i<10; i++)
+			<%?i % 2 == 0%>conditional<%?%>
+			<%name%>: <%i%> 	
+			@list_.add(name);
+		</start>		
+	}}
+
+
+	private String name; 
+	private ArrayList<String> list_ = new ArrayList<>();
+}

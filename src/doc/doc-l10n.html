@@ -1,0 +1,285 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Localization</h1>
+
+		<div class="takeaway">
+			Support for localization, formatting and parsing of locale dependent values, and multi-language messages 
+			is an integral part of Civilian.
+		</div>
+		
+		<ul>
+		<li><a href="#intro">Intoduction</a></li>
+		<li><a href="#basic">The basic techniques</a></li>
+		<li><a href="#civsupport">Civilians localization support</a></li>
+		<li><a href="#localeservice">LocaleService, supported locales</a></li>
+		<li><a href="#reqresp">Associating a LocaleData with request and response</a></li>
+		<li><a href="#msgbundle">The MsgBundle class</a>
+			<ul>
+				<li><a href="#rescompiler">The resource bundle compiler</a>
+			</ul>
+		</li>
+		<li><a href="#typelib">The Type framework</a></li>
+		<li><a href="#datetime">The Date and Time class</a>
+		<li><a href="#controller">Localization of controller method parameters</a>
+		<li><a href="#form">Localization and forms</a>
+		<li><a href="#config">Configuration</a></li>
+		</ul>
+		
+		<h2 id="intro">Introduction</h2>
+
+		{link:https://en.wikipedia.org/wiki/Internationalization_and_localization Wikipedia} 
+		defines localization (l10n) and internationalization (i18n) as "means of adapting computer software to different languages, 
+		regional differences".<br>Localization in the context of web applications deals especially with theses tasks:  
+		<ul>
+			<li>How to associate a locale with a request and a response.
+			<li>How to parse number, date and time values from request parameters which are formatted according to a certain locale.
+			<li>How to format number, date and time values in response content according to a certain locale.
+			<li>How to construct text messages in response content, translated into a certain language.         
+		</ul>
+		
+		If you build an application which only consumes and produces JSON messages, or only constructs responses in a single language,
+		and never serializes a number or date, then localization is obviously not an issue.<br>
+		Else you might want to learn about the localization support of Civilian.
+		
+		<h2 id="basic">The basic techniques</h2>
+		Of course the experienced Java programmer knows how to deal with the localization tasks mentioned above:
+		<ul>
+		<li><code>java.util.Locale</code> is the standard way to represent a language or more specific a locale. 
+		<li>HTTP specifies how to associate a locale with a request (via the Accept-Language header) and a response
+			(via the Content-Language header). The Servlet API allows to access and override that information in ServletResponse and
+			ServletRequest in form of <code>java.util.Locale</code> objects.   
+		<li>Locale dependent parsing and formatting of numbers, date and time values can be achieved 
+			using the <code>java.text</code> package.  
+		<li>Multi-language applications can be realized by converting message ids into language texts of the target language.
+		    <code>java.util.ResourceBundle</code> provides a popular way how to implement such a translation function.     
+		</ul>
+		Nevertheless dealing with this tasks is burdensome in detail:
+		<ul>
+		<li>Parsing and formatting string based request parameters to and from objects is left to the application.
+		<li><code>java.text</code> has its own issues (thread-safety, complicated to use, etc.)
+		<li>The various attempts of the JDK to model Date and Time classes were not convincing. 
+			(The LocalDate class of Java 8 seems to be the first acceptable solution).
+		</ul>
+		
+		<h2 id="civsupport">Civilians localization support</h2>
+		Civilians support for locale-dependent and multi-language applications consists
+		of these integrated classes and functionality:
+		<ul>
+		<li>{javadoc:text.msg.MsgBundle} allows to translate text id into language texts.
+		<li>{javadoc:type.TypeSerializer} allows for locale-dependent formatting and parsing of values.
+		<li>{javadoc:text.LocaleData} bundles a MsgBundle and a TypeSerializer for a certain Locale.
+		<li>{javadoc:Request#setLocaleData(java*util*Locale) Request} and 
+			{javadoc:Response#setLocaleData(java*util*Locale) Response} can be associated with a LocaleData instance.
+		<li>The applications {javadoc:Application#getLocaleService() LocaleService} provides 
+			LocaleData instances for all supported locales.
+		<li>The {javadoc:template.mixin.LangMixin} allows easy formatting and translation in (CSP) templates.
+		<li>The {javadoc:annotation.LocaleValue @LocaleValue} can be set on controller method parameters
+			to parse injected values into a locale-dependent way. 
+		</ul>
+		
+		<h2 id="localeservice">LocaleService, supported locales</h2>
+		Every Civilian application has a list of supported locales. (If you don't <a href="#config">configure</a>
+		explicitly this list will default to the default system locale).<br>
+		For each supported locale, a {javadoc:text.LocaleData} object is available via the applications 
+		{javadoc:Application#getLocaleService() LocaleService}. The LocaleData itself offers
+		<ul>
+		<li>a {javadoc:text.msg.MsgBundle} which can be used to translate text keys into texts of a certain language
+		<li>a {javadoc:type.TypeSerializer} which can be used to format or parse objects of simple types to and from strings. 
+		</ul>  
+
+		<h2 id="reqresp">Associating a LocaleData with request and response</h2>
+		Both {javadoc:Request#getLocaleData() Request} and 
+		{javadoc:Response#getLocaleData() Response} provide a LocaleData instance.
+		If you don't set the LocaleData explicitly, it will be initialized as follows:
+		<ul>
+		<li>The request uses the {javadoc:Response#getAcceptedLocale() preferred client locale} as specified with the <code>Accept-Language</code>
+			header and asks the LocaleService for the corresponding LocaleData instance. If the locale is not supported, it will fall back
+			to the default locale of the LocaleService.
+		<li>The response initializes its LocaleData instance from the request.
+		</ul>
+		A frequent use case is to ignore the <code>Accept-Language</code> header and set the request LocaleData explicitly &ndash; for instance
+		using the locale preference stored in a user session. Just be sure to set the LocaleData before you start to read
+		locale-dependent parameters from the request.  
+			
+		<h2 id="msgbundle">The MsgBundle class</h2>
+		Each LocaleData {javadoc:text.LocaleData#getMessages() has} a {javadoc:text.msg.MsgBundle} object to translate text ids into texts of the language of the LocaleData.<br>
+		<div class="highlight">
+			<pre><code>LocaleData ld = app.getLocaleService().getLocaleData(Locale.FRENCH);<br
+			>assertEquals("libert&eacute;", ld.getMessages().get("FREEDOM"));</code></pre>
+		</div>
+		MsgBundle itself is abstract, in order to support different implementations for this translation service.  
+		Internally, the {javadoc:text.LocaleService} uses a {javadoc:text.msg.MsgBundleFactory} to create MsgBundle instances for a locale.<br>
+		In not explicitly configured the MsgBundle(s) of an application are empty: They will just return the text id + "?" as translated text. 
+		<p> 
+		Civilian provides classes {javadoc:text.msg.resbundle.ResMsgBundle} and {javadoc:text.msg.resbundle.ResMsgBundleFactory}
+		which are a MsgBundle and factory implementations based on <code>java.util.ResourceBundle</code>.
+		Please see the <a href="#config">config</a> section on how to configure and use these.
+		
+		<h3 id="rescompiler">The resource bundle compiler</h3>
+		Using string text ids which are translated into languages texts has an obvious disadvantage: If you pass string literals,
+		you can't easily find where a specific text id is used except using full text search on your code-base.<br>
+		A better idea is to define Java constants for your text ids, and use the constants on a MsgBundle:
+		<div class="highlight">
+			<pre><code>import com.myapp.text.Msg;<br><br
+			>MsgBundle msgs = ...<br
+			>msgs.get("FREEDOM"));   // string literal<br
+			>msgs.get(<b>Msg.FREEDOM</b>);  // constant, checked by the compiler</code></pre>
+		</div>
+		Civilian provides a small command-line tool {javadoc:tool.resbundle.ResBundleCompiler} which is based on that idea.
+		It enables the following workflow:
+		<ul>
+		<li>You collect and edit your text ids and translations in a Excel file. It contains a column for the text id and columns
+			for all translated locales.
+		<li>Whenever you change (add, edit, delete) texts in that translation file you invoke the ResBundleCompiler on it.
+		<li>The compiler generates a resource-bundle file for each locale, and a Java class defining constants for every text id
+			(like the <code>Msg</code> class in the above example).
+		</ul>  
+		The ResBundleCompiler uses {link:https://poi.apache.org/ Apache POI} to read the Excel file.
+		In order to run the ResBundleCompiler, you must add the POI (3.1+) libraries to your classpath.<br> 
+		When you run the ResBundleCompiler without arguments, it will print a help message how to use it.<br>
+		The <a href="doc-samples.html#crm">CRM</a> sample demonstrates this technique.
+
+		<h2 id="typelib">The Type framework</h2>
+		Civilians {javadoc:type.package-summary Type framework} builds the basis of locale-dependent formatting and parsing of values.
+		But not restricted to locale-dependent string representations it allows to implement arbitrary serialization schemes:
+		<p>
+		Generally speaking, a parsing and formatting function depends on both the value type and the serialization scheme:
+		<div class="highlight">
+			<pre><code>format: (T value, TypeSerializer ts)  &rarr; String<br
+			          >parse:  (String s, TypeSerializer ts) &rarr; T</code></pre>
+		</div>
+		The type framework implements such functions using a double-dispatch-pattern: Types like strings, numbers, boolean, dates are 
+		represented by a {javadoc:type.Type} object, the serialization scheme is represented by a {javadoc:type.TypeSerializer} object.
+		Given a Type object, a value of that type and a TypeSerializer we can produce a string for the value.
+		In reverse given the Type, TypeSerializer and that string we can reconstruct the value:
+		   
+		<div class="highlight">
+			<pre><code>TypeSerializer ts = ...;<br
+					  >Type&lt;T> type      = ...;<br
+			          >T value           = ...;<br 
+					  >String s          = type.format(ts, value);<br
+					  >T parsed          = type.parse(ts, s);<br
+					  >assertEquals(value, parsed);</code></pre>
+		</div>
+		Civilian implements two serialization schemes, a locale-dependent {javadoc:type.lib.LocaleSerializer} and 
+		a {javadoc:type.lib.StandardSerializer} which is based on <code>String.valueOf</code> to serialize values:
+		<p>
+		
+		<table class="table table-border">
+		<tr>
+			<th>Value</th>
+			<th colspan="3">formatted by LocaleSerializer</th>
+			<th>StandardSerializer</th>
+		</tr>
+		<tr>
+			<th></th>
+			<th>en_UK</th>
+			<th>fr</th>
+			<th>de</th>
+			<th></th>
+		</tr>
+		<tr>
+			<td>String("abc")</td>
+			<td>"abc"</td>
+			<td>"abc"</td>
+			<td>"abc"</td>
+			<td>"abc"</td>
+		</tr>
+		<tr>
+			<td>Integer(123456)</td>
+			<td>"123,456"</td>
+			<td>"123 456"</td>
+			<td>"123.456"</td>
+			<td>"123456"</td>
+		</tr>
+		<tr>
+			<td>Double(9876.54)</td>
+			<td>"9,876.54"</td>
+			<td>"9 876,54"</td>
+			<td>"9.876,54"</td>
+			<td>"9876.54"</td>
+		</tr>
+		<tr>
+			<td>Date(y=2014, m=12, d=31)</td>
+			<td>"12/31/2014"</td>
+			<td>"31/12/2014"</td>
+			<td>"31.12.2014"</td>
+			<td>"20141231"</td>
+		</tr>
+		</table>
+		
+		
+		<h2 id="datetime">The Date and Time class</h2>
+		Out of frustration with the various attempts of the JDK to model a simple Date and Time class, Civilians provides 
+		{javadoc:util.Date}, {javadoc:util.Time} and {javadoc:util.DateTime} classes.
+		Besides that the standard JDK 7 date classes (<code>java.util.Date</code>, <code>java.util.Time</code>,
+		<code>java.util.Calendar</code> are also supported.
+		
+
+		<h2 id="controller">Localization of controller method parameters</h2>
+		You can inject request values into <a href="doc-controllers.html#parameters">parameters</a> of a controller action method.
+		For example given 
+		<div class="highlight">
+			<pre><code>public class SearchController extends Controller<br
+			          >{<br
+			          >    @Post public void search(@Parameter("term") String term, @Parameter("from") Date from)<br
+			          >    {<br
+			          >        ...</code></pre>
+		</div>
+		the query parameters <code>term</code> and <code>from</code> are injected into the respective parameters when this method is invoked.<br>
+		The String parameter is passed unchanged, but the Date parameter will be converted from a string into a date value.
+		If this conversion is <a href="doc-controllers.html#parameters">done</a> by a {javadoc:type.Type} object, then by default the 
+		{javadoc:type.lib.StandardSerializer} is used, and of course will raise a runtime error if the supplied query parameter
+		does not conform to its format.<br> 
+		But what if the Date value was entered in a HTML form in a locale-dependent manner? Add the <code>@LocaleValue</code>
+		annotation to instruct the Type to use the locale-dependent {javadoc:type.lib.LocaleSerializer} of the request to parse the value: 
+		<div class="highlight">
+			<pre><code>    @Post public void search(..., @QueryParam("from") <b>@LocaleValue</b> Date from)</code></pre>
+		</div>
+		
+		
+		<h2 id="form">Localization and forms</h2>
+		If a HTML form presents a textfield to allow the user to input an integer, a decimal number, a date, a time value, etc. 
+		then the input is done in some locale-dependent format and needs to be parsed from a string request parameter when the submitted
+		form is evaluated on the server.<br>
+		The form controls in Civlians <a href="doc-forms.html">form library</a> don't force you to interact with string values,
+		but already convert request values into typed representations. In addition any form control which displays a HTML textfield
+		to the user, will parse the entered value in a locale dependent manner.
+		
+		
+		<h2 id="config">Configuration</h2>
+		You can configure the list of supported locales and the {javadoc:text.msg.MsgBundleFactory} to create {javadoc:text.msg.MsgBundle MsgBundle} 
+		for those locale in <a href="doc-config.html#ini">civilian.ini</a>:
+		
+		<div class="highlight">
+			<pre><code>app.myapp.locales   = en-UK,de-AT,de-CH,fr<br
+			          >app.myapp.messages  = resbundle:org/example/myapp/text/message</code></pre>
+		</div>
+		
+		The <code>locales</code> entry lists the supported locales, the default locale coming first.<br>
+		The <code>message</code> entry defines a {javadoc:text.msg.MsgBundleFactory}. The entry is either
+		<ul>
+		<li>The class name of a MsgBundleFactory implementation
+		<li>a string starting with <code>resbundle:</code> followed by a base name which can be passed to
+			<code>java.util.ResourceBundle.getBundle(String baseName, Locale locale)</code>.
+		</ul> 
+		
+		In the example above the application <code>myapp</code> could provide these resource bundle files
+		<div class="highlight">
+			<pre><code>org/example/myapp/text/message_en_UK.properties<br
+			          >org/example/myapp/text/message_de.properties<br
+			          >org/example/myapp/text/message_fr.properties</code></pre>
+		</div>
+		(in that case locale <code>de-AT</code> and <code>de-CH</code> would share the same resouce bundle).  
+		<p>
+		Alternatively you can also configure the localization settings programmatically during
+		{javadoc:Application#init(org*civilian*application*AppConfig) Application.init(AppConfig)},
+		using {javadoc:application.AppConfig#setSupportedLocales()} and
+		{javadoc:application.AppConfig#setMsgBundleFactory(org*civilian*text*msg*MsgBundleFactory) AppConfig.setMsgBundleFactory()}.<br>
+		You may also {javadoc:application.AppConfig#getTypeLib() add} own {javadoc:type.Type} implementations for 
+		custom types to the {javadoc:type.TypeLib type library} of the 
+		{javadoc:Application#getTypeLib()}.
+		 
+	</div>
+</div>

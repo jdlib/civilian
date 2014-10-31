@@ -1,0 +1,30 @@
+import org.civilian.Template
+
+
+template(Template detailTemplate)
+{{
+	<div class="ng-cloak">
+		<div ng-show="showSearch">
+			<%new SearchTemplate(true)%>
+		</div>
+		<div ng-hide="showSearch" class="row-fluid row-stack">
+			<div class="btn-group btn-group-vertical pull-left">
+				@printToolbarButton("showSearch = true", null, "arrow-left");
+				@printToolbarButton("openNextResult()", "searchResult.isLastSelected()", "chevron-right");
+				@printToolbarButton("openPrevResult()", "searchResult.isFirstSelected()", "chevron-left");
+			</div>
+			<div class="margin-left">
+				<%detailTemplate%>
+			</div>
+		</div> 
+	</div>
+}}
+
+
+private void printToolbarButton(String ngClick, String disabled, String icon)
+{{
+	<button class="btn" ng-click="<%ngClick%>"<%/%>
+	@if (disabled != null)
+		<%%> ng-disabled="<%disabled%>"<%/%>
+	><i class="icon-<%icon%>"></i></button>
+}}

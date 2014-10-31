@@ -1,0 +1,38 @@
+/**
+ * Generated from test3.csp
+ * Do not edit.
+ */
+package com.test;
+
+
+import java.io.IOException;
+import java.io.Serializable;
+import com.Data2;
+import com.test.data.Data1;
+import org.civilian.util.TabWriter;
+
+
+class Test3 implements Serializable
+{
+	public synchronized void print(TabWriter out) throws IOException
+	{
+		try
+		{
+			this.out = out;
+			print();
+		}
+		finally
+		{
+			this.out = null;
+		}
+	}
+
+
+	protected void print() throws IOException
+	{
+		out.println("Hello!");                                          // line 15: Hello!
+	}
+
+
+	protected TabWriter out;
+}

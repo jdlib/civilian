@@ -1,0 +1,192 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Architecture</h1>
+
+		<div class="takeaway">
+			Introduces Civilians core classes and concepts. How they relate to Servlet concepts.
+		</div>
+
+		<ul>
+			<li><a href="#core">Core classes and concepts</a></li>
+				<ul>
+					<li><a href="#core-app">About applications and contexts</a></li>
+					<li><a href="#core-ctrl">About resources and controllers</a></li>
+					<li><a href="#core-ctrl2">About controllers (continued)</a></li>
+					<li><a href="#core-assets">About assets</a></li>
+					<li><a href="#core-proc">About processors</a></li>
+				</ul>
+			<li><a href="#servlet">Using Civilian in a Servlet Container</a></li>
+		</ul>
+		 
+		<h2 id="core">Core classes and concepts</h2>
+		
+		<h3 id="core-app">About applications and contexts</h3>
+		
+		A Civilian {javadoc:Application} is a server application which receives HTTP {javadoc:Request Requests}
+		and generates {javadoc:Response Responses}.
+		<div class="img"><img src="doc-arch-app.png"></div>
+
+		Application instances are singletons. They are embedded into a server by the means of a {javadoc:Context} 
+		which provides access to server resources.
+		A Context can host one ore more applications. Context and applications are associated with a path within the server.  
+		<div class="img"><img src="doc-arch-context.png"></div>
+		The main responsibility of application instances is to provide application global resources 
+		such as database connections to your data back-end, initialize those resources at application start and clean up at shutdown.  
+		
+		<h3 id="core-ctrl">About resources and controllers</h3>
+		The very nature of a web application is to expose resources which can be referenced by URLs. 
+		A request is therefore always a request for an application resource.
+		<div class="img"><img src="doc-arch-url.png"></div>
+		<p>
+		Civilian allows and demands <b>restful</b> processing of a request. Not only the request path, but also request method or verb,
+		accepted response content type, content type of the request body, etc. can and should be taken into account when
+		generating the response.<br>
+		For instance the following request asks for a JSON representation of a resource 
+		<div class="highlight">
+			<pre><code>GET /apps/crm/customers/1345 HTTP/1.1<br>Accept: application/json</code></pre>
+		</div>
+		and the response might look like
+		<div class="highlight">
+			<pre><code>HTTP/1.1 200 OK<br><br>Content-Type: application/json; charset=UTF-8<br>{"id":1345,"name":"ACME",...}</code></pre>
+		</div>
+		<p>   
+		Your application can expose any number of resources and each resource should support individual RESTful processing.<br>
+		Therefore
+		<ul>
+		<li>for each resource of your application you will implement a class derived from {javadoc:Controller} which is responsible
+			to process requests for its resource.
+		<li>Special annotated methods in your controller class &ndash; "action" methods &ndash; are the entry points of request processing.
+		<li>At runtime the framework dispatches requests to the appropriate controller and invokes the appropriate method depending on
+			RESTful criteria:
+		</ul>     	   
+		<div class="highlight">
+			<table width="100%">
+			<tr>
+				<td width="50%">Request</td>
+				<td width="50%">Dispatched to</td>
+			</tr>
+			<tr valign="baseline">
+				<td><pre><code>GET /apps/crm/users/789 HTTP/1.1<br>Accept: application/json<br>&nbsp;</code></pre></td>
+				<td><pre><code><b>@Get @Produces("application/json")<br>com.crm.users.id.IndexController#getJson()</b></code></pre></td>
+			</tr>
+			<tr valign="baseline">
+				<td><pre><code>POST /apps/crm/users/789 HTTP/1.1<br>Accept: text/html<br>Content-Type: application/x-www-form-urlencoded<br>&nbsp;</code></pre></td>
+				<td><pre><code><b>@Post @Produces("text/html")<br>com.crm.users.id.IndexController#editForm()</b></code></pre></td>
+			</tr>
+			<tr valign="baseline">
+				<td><pre><code>DELETE /apps/crm/users/789 HTTP/1.1</code></td>
+				<td><pre><code><b>@Delete com.crm.users.id.IndexController#delete()</b></code></pre></td>
+			</tr>
+			</table>
+		</div>
+		Request dispatch and routing is easily the most important feature of a web framework.<br>
+		But such an approach would not scale well. For all other applications elegant solutions for resource dispatch and routing are essential. 
+		If your application serves only two resources, doesn't care about REST, a single Servlet with handwritten print statements might just be enough.
+		
+		<h3 id="core-ctrl2">About controllers (continued)</h3>
+		<b>... MVC pattern, templates, forms, localization and more</b><br>
+		As you already guessed, Controllers are the C in the {link:http://c2.com/cgi/wiki?ModelViewController MVC} &ndash; Model View Controller &ndash; pattern.<br>
+		Their job is to accept a resource request and to initiate and orchestrate request processing.
+		When a controller has finished, a response should have been generated. This usually means:
+		<ol>
+		<li>Evaluate request parameters (normal params, path params, matrix params, cookies, headers, request content)
+		<li>Depending on that evaluation respond with one of the following
+			<ul>
+			<li>an error response, or
+			<li>a redirect or forward to another resource, or 
+			<li>response content and response headers, to be processed by the client
+			</ul>
+		</ol>  
+		But controllers don't need to (and should not) implement response generation all by themselves.<br>
+		Ideally they are just the <b>glue</b> between frontend request and back-end services:
+		<ol>
+		<li>The controller extracts parameters from the request, translates them into back-end service parameters and 
+			calls all back-end services needed to fulfill the request.
+		<li>Services return data - the <b>model</b> of the MVC pattern.
+		<li>The controller turns the model into a <b>view</b>, suitable to be sent as response.
+			This might be a JSON or XML representation of the model, or a HTML page which
+			displays dynamic data, etc.	
+		</ol>
+		
+		Civilian does not make any assumptions about your data back-end and your models. It also gives you total freedom
+		what response to generate. But it offers the following facilities to make implementation of controllers easier:
+		<ul>
+		<li>Easy conversion of request parameters from strings into typed values. Special support for path parameters. 
+		<li>Support for reading and writing HTML forms using the {javadoc:form.Form} class.
+		<li>Customizable and extensible {javadoc:content.ContentSerializer content serialization} to easily convert models from and to JSON, XML, etc.    
+		<li>A powerful {javadoc:Template} system to turn models into complex textual output like HTML    
+		<li>{javadoc:text.LocaleService Integrated support} for multi-language/locale-dependent applications.  	
+		</ul>
+		
+		<h3 id="core-assets">About assets</h3>
+		Not every resource exposed by your application needs to be dynamically generated. Web applications with browser clients
+		will most likely provide JavaScript, CSS, image resources, etc. On the server side these resources are usually stored as files and
+		should simple be sent to the client when they are requested.<br> 
+		<div class="highlight">
+			<table width="100%">
+			<tr>
+				<td width="50%">Request</td>
+				<td width="50%">Returns file</td>
+			</tr>
+			<tr valign="baseline">
+				<td><pre><code>GET /apps/crm/gfx/style.css HTTP/1.1<br>Accept: text/css,*/*;q=0.1</code></pre></td>
+				<td><pre><code><b>/tomcat/webapps/crm/gfx/style.css</b></code></pre></td>
+			</tr>
+			</table>
+		</div>
+		Following common webapp lingo we call such static resources {javadoc:asset.Asset assets}.<br>
+		Civilian helps you to organize your applications assets, to define how assets are exposed as resources and to implement fast and easy
+		processing of asset requests.   
+		
+		<h3 id="core-proc">About processors</h3>
+		Now lets step back a little bit:<br>
+		Processing of dynamic resources (by Controllers) and static resources (by Civilians asset handling)
+		are two kinds of request processing supported by the framework. But Civilian can't know all possible ways your application wants
+		to handle requests.
+		<p>
+		Therefore applications allow to customize request processing by the concept of request {javadoc:Processor Processors} which
+		are arranged in a pipeline. Each processor in the pipeline can decide to handle the request, pass it on to the next processor in the pipeline,
+		modify request or response to implement filter functionality, etc.<br>
+		<div class="img"><img src="doc-arch-proc.png"></div>
+		
+		The pipeline in the example above uses the {javadoc:processor.ResourceDispatch} and {javadoc:processor.AssetDispatch}  
+		which are processor implementations to handle dynamic and static resources.
+		{javadoc:processor.IpFilter} is another predefined processor which allows to accept or reject requests based on a IP whitelist.
+		(Logger and EncryptionHandler are two fictional processors implementations provided by the example application).
+		
+		<h2 id="servlet">Using Civilian in a Servlet Container</h2>
+		Civilian applications main installation target is a Servlet Container: The following table shows the main correspondence
+		between Civilian and Servlet concepts. 
+		<table class="table">
+		<tr>
+			<th width="50%">Civilian</th>
+			<th width="50%">Servlet Environment</th> 
+		</tr>
+		<tr>
+			<td>{javadoc:Context}</td>
+			<td>javax.servlet.ServletContext</td>
+		</tr>
+		<tr>
+			<td>{javadoc:Application}</td>
+			<td><i>no direct counterpart</i></td>
+		</tr>
+		<tr>
+			<td><i>used internally to route requests to applications</i></td>
+			<td>javax.servlet.Servlet</td>
+		</tr>
+		<tr>
+			<td>{javadoc:Processor}, implementing a filter strategy</td>
+			<td>javax.servlet.Filter</td>
+		</tr>
+		<tr>
+			<td>{javadoc:Request}</td>
+			<td>javax.servlet.http.HttpServletRequest</td>
+		</tr>
+		<tr>
+			<td>{javadoc:Response}</td>
+			<td>javax.servlet.http.HttpServletResponse</td>
+		</tr>
+		</table>  	
+	</div>
+</div>

@@ -1,0 +1,213 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Development</h1>
+
+		<div class="takeaway">
+			Ease of development is crucial: Shows how to make development more productive.
+			Introduces class-reloading also known as the "code &ndash; save &ndash; refresh &ndash; be happy" 
+			cycle. Explains testing and scaffold capabilities. Introduces the admin application.
+		</div>
+
+		<ul>
+		<li><a href="#intro">Introduction</a>
+		<li><a href="#ease">Ease of development</a>
+			<ul>
+				<li><a href="#tomcat-loader">Using Tomcats VirtualWebappLoader</a>
+				<li><a href="#tomcat-manager">Using Tomcat manager to reload applications</a>
+				<li><a href="#embed">Running an embedded Jetty or Tomcat server</a>
+			</ul>
+		</li>
+		<li><a href="#reload">Class reloading</a>
+		<li><a href="#testing">Testing</a>
+		<li><a href="#admin">Admin app</a>
+		<li><a href="#scaffold">Scaffold</a>
+		</ul>
+		
+		<h2 id="intro">Introduction</h2>
+		This chapter deals with development topics.
+		<p>
+		First we concentrate on ease of development.<br>
+		We want to work with frameworks that support an elegant, fast and productive development mode.<br>
+		Children would break out in tears if you would tell them about past J2EE application servers 
+		with 10++ minutes redeployment time just to see the effect of changing a single line of code.<br>
+		Much has improved since, but there is still room for more. Here we describe several techniques to ease development. 
+		We especially describe Civilians class-reloading technique which can supercharge your development cycle. 
+		<p>
+		Then we discuss how Civilian web applications can be tested, introduce the admin application and
+		end with a topic which is at the very beginning of application development: Scaffold new applications.
+
+		<h2 id="ease">Ease of development</h2>
+		From a developers perspective we want to see the effect of code changes immediately. Ideally we want just
+		to hit refresh in the browser. PHP is not an option since we are Java pigheads.
+		
+		<h3 id="tomcat-loader">Using Tomcats VirtualWebappLoader</h3>
+		For deployment in a servlet container you can always build a WAR archive of your application and deploy that.<br>
+		Eclipse Dynamic Web Projects (and similar offers by other IDEs) do the packing and copying for you.
+		<p>
+		When using {link:https://tomcat.apache.org/ Apache Tomcat} (7.0.54+) we take the opposite
+		approach: Instead of deploying the application into Tomcats webapp directory, we instruct Tomcat to pick up
+		the application from our IDE project, using Tomcats 
+		{link:https://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/loader/VirtualWebappLoader.html VirtualWebappLoader}.
+		(In Tomcat 8 configuration seems to have {link:https://tomcat.apache.org/tomcat-8.0-doc/config/resources.html changed}).  
+		<p>
+		In <code>$tomcat/conf/server.xml</code> add a context entry for your application within the <code>Host</code> element:
+		<div class="highlight">
+			<pre><code>&lt;Host name="localhost" ...>
+    ...
+    &lt;Context path="<b>/myapp</b>" docBase="<b>c:\proj\myproj\web</b>">
+        &lt;Loader className="org.apache.catalina.loader.VirtualWebappLoader" virtualClasspath="<b>
+            c:\proj\base\bin;
+            c:\proj\base\lib\*.jar;
+            c:\proj\myproj\lib\*.jar;
+            c:\proj\myproj\bin</b>"/>
+            &lt;!-- jars in c:\proj\myproj\web\WEB-IN\lib ate automatically included --&gt;
+    &lt;/Context><br>&lt;Host></code></pre></div>
+		<code>Context/@path</code> is the path of the ServletContext within Tomcat, <code>Context/@docBase</code> is the web applications root directory
+		(containing the <code>WEB-INF</code> folder), <code>Context/Loader/@virtualClasspath</code> instructs Tomcat where to find your classes and libraries.
+		<p>
+		If you now start up Tomcat, it will serve your application without a deployment in its <code>webapp</code> folder.     
+		       
+		<h3 id="tomcat-manager">Using Tomcat manager to reload applications</h3>
+		Some servlet containers are able to monitor application files and reload the application when they detect a change.<br>
+		Using Tomcats manager application we can also reload applications but can precisely control when to do it.
+		Please follow these {link:https://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html instructions}
+		to enable Tomcats manager application on your development box and especially install a user whose role includes the <code>manager-script</code> role.
+		<p>
+		With that you can reload an application by sending its context path to the manager app: 
+		<div class="highlight">
+			<pre><code>http://localhost/manager/text/reload?path=<b>/myapp</b></code></pre>
+		</div>   
+		This is how we use this feature:<br> 
+		When running in development mode we typically integrate a reload button or link in our HTML pages. When clicked it will 
+		send an Ajax call to the manager application
+		Please take a look at the <a href="doc-samples.html#crm">CRM sample</a> and the script <code>civassets/dev/reload-tomcat.js</code>
+		in Civilians source how this can be implemented.
+		<p>
+		Now we can write and save code in our IDE, switch to the browser, click the reload button and immediately see the effect.<br>
+		Note that this technique will reinitialize your application. If the application needs significant startup time, 
+		this will somewhat degrade the reload experience...
+		
+		<h3 id="embed">Running an embedded Jetty or Tomcat server</h3>
+		Another great way to avoid building WARs or copy classes to a servlet container is to start an embedded server.<br> 
+		The {javadoc:boot.Jetty} and {javadoc:boot.Tomcat} classes provide a small command line interface to start a Jetty or Tomcat server embedded
+		in your program (see the <a href="quickstart.html">Quickstart</a> for an example).<br>
+		(The {javadoc:boot.Tomcat} class right now is experimental &ndash; unfortunately Tomcats documentation 
+		about its embedded mode is not very detailed).
+
+		<h2 id="reload">Class reloading</h2>
+		Civilians class reloading is a feature which when used in combination with the <a href="#tomcat-loader">VirtualWebappLoader</a> technique
+		or with an embedded server enables the following development cycle:
+		<ol>
+		<li>Code (save, compile).
+		<li>Hit refresh in the browser and immediately see the changes.
+		</ol>
+		Unlike <a href="#tomcat-manager">application reloading</a> this does not reinitialize the application, so you now will
+		see the changes without any delay.
+		<p>
+		When class reloading is turned on, Civilian is using a new classloader for each request to load your controller class and all 
+		classes used by the controller. Therefore on the next request you will see code changes immediately since now the new controller
+		version is loaded and used.
+		<p>
+		To turn class reloading on, you need to add these configuration entries to your <code>civilian.ini</code> config file: 
+		<div class="highlight">
+			<pre><code># turn on development mode<br><b>develop = true</b><br><br># in your app config add this<br><b>app.myapp.dev.classreload = true</b></code></pre>
+		</div>   
+		Class reloading can pick up any changes in all classes which were not touched during application startup. This usually includes controllers, templates, forms etc.
+		By default only classes below the application class are included. With the <code>.exclude</code> and <code>.include</code> switches
+		you can fine-tune what classes are reloadable:     
+		<div class="highlight">
+			<pre><code><b>app.myapp.dev.classreload.exclude = org.myapp.web.SessionUser,org.myapp.web.Constants<br>app.myapp.dev.classreload.include = org.myapp.util.*<br></b></code></pre>
+		</div>
+		If you create a new controller, you need to restart the application to see the changes.
+		<p>
+		Sometimes class reloading may not work as desired. In this case you can set the <a href="doc-config.html#logging">log level</a> of <code>org.civilian.classloader</code>
+		to <code>trace</code> to analyze if classes are loaded correctly.   
+		
+		<h2 id="testing">Testing</h2>
+		Civilian allows to run requests and evaluate responses in a test environment without the overhead of HTTP calls or the need to start a servlet server.<br>
+		Therefore it provides the {javadoc:context.test.TestContext} class which implements {javadoc:Context}.   
+		The {javadoc:context/test/package-summary context.test} package contains a {javadoc:Context} implementation which can be used for unit tests.
+		The steps to run test request are:
+		<ol>
+		<li>Create a {javadoc:context.test.TestContext} instance.
+		<li>Either initialize the context using a <code>civilina.ini</code> config, or explicitly add application objects to the TestContext.
+		<li>Create a {javadoc:context.test.TestRequest} object and set its properties.
+		<li>Run the request and assert that the returned {javadoc:context.test.TestResponse} matches the expectations.   
+		</ol>
+		The <a href="doc-samples.html#test">Test sample</a> demonstrates this technique.
+		
+		<h2 id="admin">Admin app</h2> 
+		Civilian ships with a built-in admin application.
+		Its gives you an overview of deployed applications, their configurations and resource URLs. It shows 
+		if your configurations work as expected, and which resource URLs are actually published. You can also inspect which controller
+		is mapped to a resource and what action methods are available.
+		<p>  
+		The admin app uses Civilians ability to run multiple {javadoc:Application applications} in a Civilian {javadoc:Context context}.
+		When you start your application in development mode by default the admin app is also started and available under the path <code>/civadmin</code> below
+		your context path.
+		<p>
+		The admin app can be configured via <code><a href="doc-config.html#ini">civilian.ini</a></code> like your own applications.
+		(It just uses the key prefix <code>civ.admin</code> instead of <code>app.<i>id</i></code>).   
+
+		<h2 id="scaffold">Scaffold</h2> 
+		The <a href="start">quickstart tutorial</a> already introduced the {javadoc:tool.scaffold.Scaffold} tool 
+		to generate a Civilian application. The manifest of <code>civilian.jar</code> declares it as Main-class. 
+		It prints a detailed help message when run without any arguments.
+		Scaffold expects 
+		<ul>
+		<li>optional parameters,  		
+		<li>the directory where to put the generated files,
+		<li>a prefix which will be prependeded to the name of core application classes.
+		</ul>
+		<div class="highlight">
+			<pre><code>java -jar civilian.jar <i>param</i>* <i>directory</i> <i>class-prefix</i></code></pre>
+		</div>
+		for example
+		<div class="highlight">
+			<pre><code>java -jar civilian.jar /proj/crm Crm</code></pre>
+		</div>
+		The parameters are 
+		<table class="table table-border">
+		<tr>
+			<td><code>-eclipse</code>
+			<td>also generates Eclipse project files</td>
+		</tr>
+		<tr>
+			<td><code>-enc <i>encoding</i></code>
+			<td>use the encoding for the generated files (default is UTF-8)</td>
+		</tr>
+		<tr>
+			<td><code>-locales <i>list of locales</i></code>
+			<td>comma separated list of supported locales (without spaces), default is simple <code>en</code></td>
+		</tr>
+		<tr>
+			<td><code>-libs <i>list of jar files</i></code>
+			<td>copy the jar files to the generated <code>WEB-INF/lib directory</code></td>
+		</tr>
+		<tr>
+			<td><code>-min</code>
+			<td>create a minimal scaffold application</td>
+		</tr>
+		<tr>
+			<td><code>-package</code>
+			<td>use the package as application package, default is "com." + lowercase(class-prefix)</td>
+		</tr>
+		<tr>
+			<td><code>-tomcat</code>
+			<td>generates a snippet <code>tomcat.server.xml</code> which can be inserted into a Tomcat <code>server.xml</code>
+				to <a href="#tomcat-loader">deploy</a> the application from it project directory.
+			</code>
+			</td>
+		</tr>
+		<tr>
+			<td><code>-text</code>
+			<td>creates empty resource bundle files for all supported locales</td>
+		</tr>
+		<tr>
+			<td><code>-v</code>
+			<td>print verboses messages during scaffold</td>
+		</tr>
+		</table>
+	</div>
+</div>

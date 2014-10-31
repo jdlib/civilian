@@ -1,0 +1,120 @@
+import org.civilian.Response
+import org.civilian.Resource
+import org.civilian.Template
+import org.civilian.text.msg.MsgId
+import org.civilian.resource.Path
+import ../../text.Message
+import ../CrmConstants
+import ../CrmResources
+import ../SessionUser
+import ../util.Script
+import ../util.NavItem
+
+
+template(Response response, Template content, Script script, SessionUser sessionUser, boolean showNavigation, Path reloadPath) 
+	mixin html, lang
+{{
+	<!DOCTYPE html>
+	<html ng-app="crm" class="ng-cloak" ng-controller="CrmController">
+	<head>
+		@html.metaContentType();
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Civilian CRM</title>
+		<%CrmConstants.CSS_ASSETS%>
+	</head>
+	<body<%?showNavigation%> ng-controller="MenuController"<%?%>>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<span class="brand brand-main">civilian crm</span>
+			@if (showNavigation || (reloadPath != null))
+				<ul class="nav">
+					@if (showNavigation)
+						@printMenuItems();
+					@if (reloadPath != null)
+						<li><button class="btn btn-success" style="display:inline" onclick="reload('<%reloadPath%>')">Reload</button></li>
+				</ul>
+			<p class="text-right banner-info">
+				<%html.text(sessionUser.name);%>
+				| <a href="#"><%lang.msg(Message.Help)%></a> 
+				| <a href="#"><%lang.msg(Message.Profile)%></a> 
+				| <a href="<%html.url(CrmResources.root.logout)%>"><%lang.msg(Message.Logout)%></a>
+			</p>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<%content%>
+	</div>
+	@html.script("js/lib/jquery-2.1.1.min.js"); 
+	@html.script("js/lib/jquery-ui-1.10.3.custom.min.js"); 
+	@html.script("js/lib/toastr.min.js"); 
+	@html.script("js/lib/script.js"); 
+	@html.script("js/lib/angular1.2.0.min.js"); 
+	@html.script("js/lib/ui/date.js"); 
+	@html.script("js/lib/ui-bootstrap-tpls-0.11.0.min.js");
+	@html.script("civilian/angular/civ.js"); 
+	@html.script("civilian/angular/civ-auth.js"); 
+	@html.script("civilian/angular/civ-load.js"); 
+	@html.script("civilian/angular/civ-init.js"); 
+	@if (reloadPath != null)
+		@html.script("civilian/dev/reload-tomcat.js");
+	@loadScript(script); 
+	<script type="text/ng-template" id="login.template">
+	<form name="form">	
+	<div class="modal-header">
+		<h3>CRM <%lang.msg(Message.Login)%></h3>
+	</div>
+	<div class="modal-body">
+		<table class="table table-form" ng-init="lang='<%sessionUser.localeData.toString()%>'">
+		<tr>
+			<td><%lang.msg(Message.Name)%></td>
+			<td><input type="text" ng-model="name" ng-required="true"></td>
+		</tr>
+		<tr>
+			<td><%lang.msg(Message.Password)%></td>
+			<td><input type="password" ng-model="password" ng-required="true"></td>
+		</tr>
+		</table>
+	</div>
+	<div class="modal-footer">
+		<button ng-click="login(name, password, lang)" class="btn" ng-disabled="form.$invalid"><%lang.msg(Message.Login)%></button>
+	</div>
+	</form>
+	</script>
+	</body>
+	</html>
+}}
+
+
+private void loadScript(Script script)
+{
+	if (script.dependsOn != null)
+	{
+		for (int i=0; i<script.dependsOn.length; i++)
+			html.script(script.dependsOn[i].path);
+	}
+	html.script(script.path);
+}
+
+
+private void printMenuItems()
+{
+	printMenuItem(Message.Customers, CrmResources.root.customers, Script.CUSTOMER, "customers.png");
+	printMenuItem(Message.Contacts,  CrmResources.root.contacts,  Script.CONTACT,  "contact.png");
+	printMenuItem(Message.Opportunities, CrmResources.root.opportunities, Script.OPPORTUNITY, "opportunity.png");
+	if (sessionUser.isAdmin)
+		printMenuItem(Message.Users, CrmResources.root.users, Script.USER, "settings.png");
+}
+
+
+private void printMenuItem(MsgId labelId, Resource resource, Script script, String image)
+{{
+	@NavItem navItem = new NavItem(response);
+	@navItem.setScript(script);
+	@navItem.setTemplateUrl(resource);
+	@String label = lang.msg(labelId);
+	<li class="border-left">
+		<a ng-click="openModule('<%label%>', '<%navItem.templateUrl%>', '<%navItem.scriptUrls%>')" href="">
+			<img ng-src="<%html.path("/img/crm/");%><%image%>"> <%label%>
+		</a>
+	</li> 
+}}

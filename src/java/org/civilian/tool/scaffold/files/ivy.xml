@@ -1,0 +1,15 @@
+<!--  ivy file to download 3rd party jars -->
+<ivy-module version="2.0">
+    <info organisation="your organization" module="!{appPrefix}"/>    
+    <configurations>
+        <conf name="rt-jars" description="runtime jar files"/>
+        <conf name="jetty-jars" description="jetty jar files"/>
+    </configurations>
+    <dependencies>
+		<dependency conf="rt-jars->default" org="javax.servlet" name="javax.servlet-api" rev="3.1.0"/>
+        <dependency conf="rt-jars->default" org="com.google.code.gson" name="gson" rev="2.2.4"/>
+        <dependency conf="rt-jars->default" org="org.slf4j" name="slf4j-api" rev="1.7.7"/>
+        <dependency conf="rt-jars->default" org="org.slf4j" name="slf4j-simple" rev="1.7.7"/>
+		<dependency conf="jetty-jars->default" org="org.eclipse.jetty.aggregate" name="jetty-all-server" rev="8.1.15.v20140411"/>
+    </dependencies>    
+</ivy-module>

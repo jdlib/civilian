@@ -1,0 +1,121 @@
+import org.civilian.Application
+import org.civilian.Resource
+import org.civilian.controller.ControllerSignature
+import org.civilian.resource.scan.ResourceInfo
+import org.civilian.util.DateTime
+import org.civilian.util.ClassUtil
+
+
+template(ResourceInfo root, String outputPackage, String outputName, Application app, boolean timestamp)
+	package-access
+	extends - using TabWriter
+	throws -
+{{
+	@ctrlRootPackage_ = app.getControllerConfig().getRootPackage();
+	<%%>/**
+	<%%> * Generated <%?timestamp%>at <%new DateTime()%> <%?%>by <%ServerConstGenerator.class.getName()%>.
+	<%%> * Do not edit.
+	<%%> */
+	package <%outputPackage%>;
+	
+	
+	<%%>/**
+	<%%> * Defines the resources of application <%app.getClass().getName()%>.
+	<%%> */	
+	public interface <%outputName%>
+	{
+		@printResourceComment(root);
+		public static final Root root = new Root();
+		@printResourceClass(root);
+	}
+}}
+
+
+private void printResourceClass(ResourceInfo info)
+{{
+	@// two line spacer
+
+
+	@int childCount = info.getChildCount();
+	@printResourceComment(info);
+	public static class <%info.getJavaClass()%> extends <%Resource.class.getName()%> 
+	{
+		public <%info.getJavaClass()%>(<%?!info.isRoot()%><%Resource.class.getName()%> parent<%?%>)
+		{
+			@if (!info.isRoot())
+				super(<%printCtorArgs(info, false);%>);
+			@if (info.getControllerSignature() != null)
+				@printSetCtrlSeg(info);
+			
+			@// print field definitions
+			@for (int i=0; i<childCount; i++)
+				@ResourceInfo child = info.getChild(i);
+				@String field = child.getJavaField();
+				this.<%field%> = new <%/%>
+				@if (child.getChildCount() == 0)
+					<%Resource.class.getName()%>(<%printCtorArgs(child, true);%>);
+					@if (child.getControllerSignature() != null)
+						this.<%field%>.<%printSetCtrlSeg(child);%>
+				@else
+					<%child.getJavaClass()%>(this);
+		}
+		@// print field declarations
+		@for (int i=0; i<childCount; i++)
+			<%%>
+			@ResourceInfo child = info.getChild(i);
+			@printResourceComment(child);
+			public final <%child.getChildCount() > 0 ? child.getJavaClass() : Resource.class.getName()%> <%child.getJavaField()%>;
+		@for (int i=0; i<childCount; i++)
+			@ResourceInfo child = info.getChild(i);
+			@if (child.getChildCount() > 0)
+				@printResourceClass(child);
+		@if (info.isRoot())
+			<%%>
+			<%%>
+			private static String cls(String subPackage, String className)
+			{
+				return "<%ctrlRootPackage_%>" + subPackage + '.' + className;
+			}
+	}
+}}
+
+
+
+private void printResourceComment(ResourceInfo resInfo)
+{{
+	@String ctrlSig = resInfo.getControllerSignature();
+	<%%>/**
+	<%%> * "<%resInfo%>"<%?ctrlSig != null%> -> <%ctrlSig%><%?%>
+	<%%> */ 
+}}
+
+
+private void printCtorArgs(ResourceInfo info, boolean isChild)
+{{
+	<%isChild ? "this" : "parent"%>, <%/%> 
+	@if (info.getSegment() != null)
+		"<%info.getSegment()%>"<%/%>
+	@else
+		<%app.getResourceConfig().getPathParams().getConstant(info.getPathParam())%><%/%>
+}}
+
+
+private void printSetCtrlSeg(ResourceInfo info)
+{{
+	@String csig        = info.getControllerSignature();
+	@String className   = ControllerSignature.getClassName(csig);
+	@String methodPath  = ControllerSignature.getMethodFilter(csig);
+	@String packageName = ClassUtil.getPackageName(className);
+	@String simpleName  = ClassUtil.cutPackageName(className);
+	@String packagePart = packageName.substring(ctrlRootPackage_.length());
+	setControllerSignature(cls(<%stringArg(packagePart)%>, <%stringArg(simpleName)%>), <%stringArg(methodPath)%>);
+}}
+
+
+private String stringArg(String s)
+{
+	return s == null ? "null" : '"' + s + '"';
+}
+
+
+private String ctrlRootPackage_;

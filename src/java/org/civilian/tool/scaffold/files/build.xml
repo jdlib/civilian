@@ -1,0 +1,109 @@
+<project basedir="." default="war" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property file="${basedir}/build.properties" />
+	
+
+	<path id="classpath">
+		<fileset dir="${lib}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement location="${bin}"/>
+		<pathelement location="${web}/WEB-INF/classes/" />
+	</path>
+
+			
+	<description>
+		Ant build file for application !{appPrefix} 
+	</description>
+	
+	
+	<target name="clear" description="deletes the tmp directory">
+		<delete dir="${tmp}"/>	
+	</target>
+	
+	
+	<target name="compile" description="compiles the java classes">
+		<javac srcdir="${src}" destdir="${bin}" classpathref="classpath" debug="true" includeantruntime="false"/>
+		<copy todir="${bin}">
+			<fileset dir="${src}" includes="**/*.properties"/>
+		</copy>
+	</target>
+		
+		
+	<target name="csp" description="runs the csp template compiler">
+		<java classname="org.civilian.tool.csp.CspCompiler" classpathref="classpath">
+			<arg value="-enc"/>
+			<arg value="!{encoding}"/>
+			<arg value="-out:input"/>
+			<arg value="${src}"/>
+		</java>
+		<antcall target="compile"/>
+	</target>
+	
+	
+	<target name="jar" description="builds the application jar file" depends="compile">
+		<property name="jarfile" value="${tmp}/!{appId}.jar"/>
+		<mkdir dir="${tmp}"/>
+		<jar destfile="${jarfile}">
+    		<fileset dir="${bin}">
+				<exclude name="**/*.csp"/>
+			</fileset> 
+		</jar>
+	</target>
+
+
+	<target name="jetty" description="run jetty">
+		<java classname="org.civilian.boot.Jetty" classpathref="classpath">
+			<classpath>
+				<path refid="classpath"/>
+				<fileset dir="${lib}/jetty">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<arg value="-port"/>
+			<arg value="8080"/>
+			<arg value="${web}"/>
+		</java>
+	</target>
+
+
+	<target name="resbundle" description="generates resbundles from excel">
+		<java classname="org.civilian.tool.resbundle.ResBundleCompiler" classpathref="classpath">
+			<arg value="-constClass"/>	
+			<arg value="#file"/>	
+			<arg value="-idClass"/>	
+			<arg value="#inline"/>	
+			<arg value="-out:input"/>
+		</java>
+	</target>
+	
+		
+	<target name="resgen" description="generates the !{resourcesClass} class">
+		<java classname="org.civilian.tool.resource.ServerConstGenerator" classpathref="classpath">
+			<arg value="-enc"/>
+			<arg value="!{encoding}"/>
+			<arg value="-out:package"/>
+			<arg value="${src}"/>
+			<arg value="-v"/>
+			<arg value="!{webPackage}.!{appClass}"/>
+		</java>
+		<antcall target="compile"/>
+	</target>
+	
+	
+	<target name="resolve" description="retrieve dependencies with ivy">
+		<ivy:retrieve conf="rt-jars" pattern="lib/[artifact]-[revision].[ext]"/>
+		<ivy:retrieve conf="jetty-jars" pattern="lib/jetty/[artifact]-[revision].[ext]"/>
+	</target>
+	
+	
+	<target name="war" description="builds the application war file" depends="jar">
+		<property name="warfile" value="${tmp}/!{appId}.war"/>
+		<war destfile="${warfile}" basedir="${web}" webxml="${web}/WEB-INF/web.xml">
+			<lib file="${jarfile}"/>
+		</war>
+		<echo>generated ${warfile}</echo>
+	</target>
+
+
+</project>

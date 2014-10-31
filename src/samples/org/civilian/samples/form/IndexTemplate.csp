@@ -1,0 +1,45 @@
+template(IndexForm form) mixin html, formTable
+{{
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title>Civilian Form Sample</title>
+		@html.metaContentType();
+		@html.linkCss("css/lib/bootstrap.css"); 
+		@html.linkCss("css/samples.css");
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<h1>Form Sample</h1>
+				@form.start(out);
+				<table class="table table-form">
+					@formTable.row(form.lastName);
+					@formTable.row(form.firstName);
+					<tr>
+						<td><%formTable.label(form.zip);%>, <%formTable.label(form.city);%></td>
+						<td><%formTable.control(form.zip);%> <%formTable.control(form.city);%></td>
+					</tr>
+					<tr>
+						@formTable.labelCell(form.range);
+						<td><%form.range.getMin()%> <%formTable.control(form.range);%> <%form.range.getMax()%></td>
+					</tr>
+					@formTable.row(form.password);
+					@formTable.row(form.newsletter);
+					@if (form.email != null)
+						@formTable.row(form.email);
+					@formTable.buttonRow(form);
+					<tr>
+						<td></td>
+						<td>	
+							<br>
+							You clicked OK <span class="badge badge-success"><%form.counter.getValue()%></span> times.
+						</td>
+					</tr>
+				</table>
+				@form.end(out);
+			</div>
+		</div>
+	</body>
+	</html>
+}}

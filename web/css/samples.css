@@ -1,0 +1,276 @@
+body {
+	padding: 10px;
+}
+
+
+pre code,
+code {
+    font-size: 14px;
+    color: green;
+    font-family: "Courier New",monospace;
+}
+
+
+.doc
+{
+	line-height: 1.7;
+}
+
+.well
+{
+	padding: 10px;
+}
+
+
+.stacktrace { 
+	padding: 0 0 0 50px; margin: 0 
+} 
+
+
+.highlight {
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+    margin-bottom: 7px;
+    margin-top: 7px;
+    padding: 9px 14px;
+}
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], 
+input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], 
+input[type="week"], input[type="number"], input[type="email"], input[type="url"], 
+input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {	
+	margin-bottom: 0;
+}
+
+
+input[type="radio"], input[type="checkbox"] 
+{
+    line-height: normal;
+    margin: 0 4px 0;
+}
+
+
+.nav-list > li > a 
+{
+	cursor: pointer;
+}
+
+
+.sidenav.affix 
+{
+    top: 40px;
+}
+
+
+.sidenav 
+{
+	background-color: #FFFFFF;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+    margin: 30px 0 0;
+    padding: 0;
+}
+
+.sidenav li
+{
+	width: 100%;
+}
+
+.sidenav > li:first-child > a 
+{
+    border-radius: 6px 6px 0 0;
+}
+
+.sidenav > li > a 
+{
+}
+
+.sidenav > li > a 
+{
+    border: 1px solid #E5E5E5;
+    display: block;
+    margin: 0 0 -1px;
+    padding: 8px 14px;
+}
+
+.sidenav .icon-chevron-right 
+{
+    float: right;
+    margin-right: -6px;
+    margin-top: 2px;
+    opacity: 0.25;
+}
+
+.content
+{
+    padding-top: 50px;
+}
+
+.table th
+{
+	font-weight: bold;
+    background-color: #FAFAFA;
+    background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
+    background-repeat: repeat-x;
+}
+
+.tabclose
+{
+	margin-left:10px;
+	cursor: pointer;
+}
+
+
+.result
+{
+	cursor: pointer;
+}
+
+
+.margin-left
+{
+	 margin-left: 60px;
+}
+
+
+.table-result tr
+{
+	cursor: pointer;
+}
+
+
+.no-select
+{
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: -moz-none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.row-stack > .pull-left + .pull-left {
+    margin-left: 15px;
+}
+
+	
+.gap-bottom
+{
+	margin-bottom: 6px;
+}
+
+
+.table-form {
+    margin-bottom: 0;
+    width: auto;
+}
+
+.table-form th, .table-form td {
+	vertical-align:middle;
+	padding: 3px;
+}
+
+
+
+td.fill > select,
+td.fill > textarea,
+td.fill > input[type="text"],
+td.fill > input[type="password"],
+td.fill > input[type="datetime"],
+td.fill > input[type="datetime-local"],
+td.fill > input[type="date"],
+td.fill > input[type="month"],
+td.fill > input[type="time"],
+td.fill > input[type="week"],
+td.fill > input[type="number"],
+td.fill > input[type="email"],
+td.fill > input[type="url"],
+td.fill > input[type="search"],
+td.fill > input[type="tel"],
+td.fill > input[type="color"] {
+	width: 100%;
+}	
+
+.fullwidth {
+    width: 100%;
+}
+
+
+input.ng-invalid:invalid,
+textarea.ng-invalid:invalid,
+select.ng-invalid:invalid {
+  color: #b94a48;
+  border-color: #ee5f5b;
+}
+input.ng-invalid:focus,
+textarea.ng-invalid:focus,
+select.ng-invalid:focus {
+  border-color: #e9322d;
+  -webkit-box-shadow: 0 0 6px #f8b9b7;
+  -moz-box-shadow: 0 0 6px #f8b9b7;
+  box-shadow: 0 0 6px #f8b9b7;
+}
+
+
+
+.wd50 {
+	width:50px;	
+}
+
+.wd100 {
+	width:100px;	
+}
+
+.wd150 {
+	width:150px;	
+}
+
+.wd200 {
+	width:200px;	
+}
+
+.wd250 {
+	width:250px;	
+}
+
+
+#noJs {
+    background-color: #AE0000;
+    color: #FFFFFF;
+    font-size: 120%;
+    font-weight: bold;
+    left: 0;
+    padding: 5px 0;
+    /* position: fixed;*/
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 101;
+}
+
+.modal
+{
+	/*width: auto;
+	margin-left: 0;
+	text-align:center;
+	left:auto;*/
+}
+
+span.error
+{
+	color: red;
+}
+
+span.required
+{
+	font-weight: bold;
+}
+
+
+.tab-content
+{
+	padding-left: 12px;
+}
+
+

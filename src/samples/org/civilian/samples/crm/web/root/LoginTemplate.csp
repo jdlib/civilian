@@ -1,0 +1,66 @@
+import ../../text.Message
+
+
+template(LoginForm form, String errorMessage) mixin html, lang, formTable
+{{
+	<!DOCTYPE html>
+	<html ng-app="crm">
+	<head>
+		@html.metaContentType();
+		<title><%lang.msg(Message.CRM)%></title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		@html.linkCss("css/lib/bootstrap.css");
+		@html.linkCss("css/lib/toastr.css");
+		@html.linkCss("css/samples.css");
+		@html.script("js/lib/jquery-2.1.1.min.js"); 
+	</head>
+	<body>
+	<div id="noJs">
+		Civilian CRM needs JavaScript. Please enable JavaScript in your browser.
+	</div>
+	<div class="container" style="margin-top:50px">
+		<div class="row">
+			<div class="span3"></div>	
+			<h3 class="span9">Civilian CRM Sample</h3>
+		</div>
+		<div class="row hide" id="login">
+			<div class="span3">
+				@form.start(out);
+				<table class="table">
+				@formTable.row(form.name);
+				@formTable.row(form.password);
+				@formTable.row(form.language);
+				@formTable.row(form.ok.setAttribute("class", "btn"));
+				@if (errorMessage != null)
+					<tr>
+						<td></td>
+						<td><%html.text(errorMessage);%></td>
+					</tr>
+				</table>
+				@form.end(out);
+			</div>
+			<div class="span9">
+				<p>
+				Welcome to the CRM Sample of the <a href="http://www.civilian-framework.org/" target="_blank"><b>Civilian Framework</b></a>.<br>
+				It is a show case for a Rich Internet Application, using <a href="http://www.angularjs.org/" target="_blank"><b>Angular JS</b></a> on the Client
+				and Civilian on the server.<br>
+				Source code is available as part of the Civilian distribution.
+				</p>
+				<br>
+				<p>Please login with one the following login names: "user", "power", "admin".<br>
+				The password equals the login name, prefixed by an exclamation mark "!".</p>
+				<br>
+				<p>To view the sample you need a HTML5 capable browser with Javascript enabled.</p>
+			</div>
+		</div>
+	</div>
+	<script>
+	$(document).ready(function() {
+		$("#noJs").hide();
+		$("#login").show();
+		@form.name.focus(out, false);
+	});	
+	</script>
+	</body>
+	</html>
+}}

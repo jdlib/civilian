@@ -1,0 +1,49 @@
+<ivy-module version="2.0">
+    <info organisation="civilian" module="main"/>    
+    <configurations>
+		<conf name="build"     description="jars needed to build src/java amd src/samples"/>
+		<conf name="test"      description="jars needed to build and run src/test"/>
+		<conf name="samples"   description="jars needed to run the samples" />
+        <conf name="jetty"     description="jetty jar files"/>
+        <conf name="cobertura" description="cobertura jar files"/>
+    </configurations>
+    <dependencies>
+        <dependency conf="build->master" org="com.google.code.gson" name="gson" rev="2.2.4"/>
+		<dependency conf="build->master" org="com.google.inject" name="guice" rev="3.0"/>
+		<dependency conf="build->master" org="javax.inject" name="javax.inject" rev="1"/>
+		<dependency conf="build->master" org="javax.servlet" name="javax.servlet-api" rev="3.0.1"/>
+		<dependency conf="build->master" org="javax.enterprise" name="cdi-api" rev="1.2"/>		
+		<dependency conf="build->master" org="javax.ejb" name="ejb-api" rev="3.0"/>		
+		<dependency conf="build->master" org="javax.el" name="el-api" rev="1.0"/>
+		<dependency conf="build->master" org="org.apache.poi" name="poi" rev="3.10-FINAL"/>
+		<dependency conf="build->master" org="org.apache.poi" name="poi-ooxml" rev="3.10-FINAL"/>
+		<dependency conf="build->master" org="org.apache.tomcat" name="tomcat-catalina" rev="7.0.54"/>
+		<dependency conf="build->master" org="org.apache.velocity" name="velocity" rev="1.7"/>
+		<dependency conf="build->master" org="org.eclipse.jetty.aggregate" name="jetty-all-server" rev="8.1.15.v20140411"/>
+ 		<dependency conf="build->master" org="org.eclipse.persistence" name="javax.persistence" rev="2.1.0"/>
+		<dependency conf="build->master" org="org.freemarker" name="freemarker" rev="2.3.19"/>
+		<dependency conf="build->master" org="org.jboss" name="jboss-vfs" rev="3.2.2.Final"/>
+        <dependency conf="build->master" org="org.slf4j" name="slf4j-api" rev="1.7.5"/>
+		
+		<dependency conf="test->master" org="junit" name="junit" rev="4.11"/>
+        <dependency conf="test->master" org="org.slf4j" name="slf4j-nop" rev="1.7.5"/>
+        <dependency conf="test->default" org="org.mockito" name="mockito-all" rev="1.9.5"/>
+
+    	<dependency conf="samples->default" org="com.google.inject" name="guice" rev="3.0"/>
+        <dependency conf="samples->master" org="org.slf4j" name="slf4j-api" rev="1.7.5"/>
+    	<dependency conf="samples->master" org="org.slf4j" name="slf4j-simple" rev="1.7.5"/>
+    	<dependency conf="samples->master" org="com.h2database" name="h2" rev="1.4.179"/>
+        <dependency conf="samples->default" org="com.google.code.gson" name="gson" rev="2.2.4"/>
+ 		<dependency conf="samples->default" org="org.eclipse.persistence" name="eclipselink" rev="2.5.1"/>
+ 		
+ 		<dependency conf="jetty->default" org="org.eclipse.jetty.aggregate" name="jetty-all-server" rev="8.1.15.v20140411"/>
+
+ 		<dependency conf="cobertura->master" org="net.sourceforge.cobertura" name="cobertura" rev="2.0.3"/>
+ 		<dependency conf="cobertura->default" org="org.ow2.asm" name="asm-all" rev="4.1"/>
+ 		<dependency conf="cobertura->master" org="oro" name="oro" rev="2.0.8"/>
+ 		<dependency conf="cobertura->master" org="log4j" name="log4j" rev="1.2.9"/>
+ 		
+    </dependencies>    
+</ivy-module>
+
+

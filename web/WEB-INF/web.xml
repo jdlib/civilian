@@ -1,0 +1,36 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0">
+
+	<listener>
+		<listener-class>org.civilian.context.servlet.ContextListener</listener-class>
+	</listener>
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<!-- 
+	Template for servlet and servlet-mapping elements
+	when you explicitly want a servlet definition in your web.xml.
+	In civilian.ini you must also include an "app.crm.connect = false" entry.
+	 
+	<servlet>
+		<servlet-name>crm-servlet</servlet-name>
+		<servlet-class>org.civilian.container.servlet.AppServlet</servlet-class>
+		<init-param>
+			<param-name>app.id</param-name>
+			<param-value>crm</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>crm-servlet</servlet-name>
+		<url-pattern>/crm/*</url-pattern>
+	</servlet-mapping>
+	-->
+
+</web-app>

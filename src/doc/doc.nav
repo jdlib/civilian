@@ -1,0 +1,21 @@
+<div class="col-md-3 sidebar hidden-print">
+	<ul class="nav sidenav docnav">
+		{nav:doc.html Architecture}
+		{nav:doc-app.html Application Structure}
+		{nav:doc-config.html Configuration}
+		{nav:doc-reqresp.html Request &amp; Response}
+		{nav:doc-resources.html Resources}
+		{nav:doc-controllers.html Controllers}
+		{nav:doc-assets.html Assets}
+		{nav:doc-processors.html Processors}
+		{nav:doc-linking.html Linking}
+		{nav:doc-templates.html Templates}
+		{nav:doc-templates-csp.html CSP Templates}
+		{nav:doc-forms.html Forms}
+		{nav:doc-l10n.html Localization}
+		{nav:doc-security.html Security}
+		{nav:doc-development.html Development}
+		{nav:doc-samples.html Samples}
+		{nav:javadoc/index.html API Javadoc}
+	</ul>
+</div>

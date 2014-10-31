@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="pragma" content="no-cache">
+	<title>Chat</title>
+	<link rel="stylesheet" href="../css/lib/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="../css/chat.css" type="text/css" />
+</head>
+<body>
+<div class="container">
+<div class="row-fluid">
+	<div class="span1"></div>
+	<div class="span10">
+      	<h1>Chat</h1>
+		<div id="display"></div>
+		<div id="loginForm" class="form-inline">
+			<label>Please enter your name:</label><br>
+			<input id="loginName" type="text" size="50" required>
+			<button id="loginButton" type="button" class="btn">Login</button>
+		</div>
+		<div id="msgForm" class="hide">
+			<label id="msgLabel"></label>
+			<input id="message" type="text" maxlength="150">
+			<div class="form-inline">
+				<button id="postButton" type="button" class="btn">Post</button>
+				<button id="logoutButton" type="button" class="btn">Logout</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<iframe id="cometFrame" class="hide"></iframe>
+<script src="../js/lib/jquery-2.1.1.min.js"></script>
+<script src="../js/chat.js"></script>
+</body>
+</html>

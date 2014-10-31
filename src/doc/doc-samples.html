@@ -1,0 +1,253 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Samples</h1>
+
+		<div class="takeaway">
+			Civilians includes sample applications which demonstrate its features.
+		</div>
+		
+		<ul>
+		<li><a href="#intro">Introduction</a></li>
+		<li><a href="#list">The samples</a></li>
+		</ul>
+		
+		<h2 id="intro">Introduction</h2>
+		Civilian includes a set of sample applications which demonstrate the framework features.<br>
+		To run the samples you may either <a href="download.html">download</a> 
+		<ul>
+		<li>the {downloadfile:civilian-samples.war samples WAR file}, ready to be deployed in a servlet 3.0+ container, or
+		<li>the {downloadfile:civilian.zip distribution} and follow the instructions in its <code>runsamples.txt</code>. 
+		</ul>
+		
+		<h2 id="list">The samples</h2>
+		Below we provide a short description of each sample: 
+		 
+		<div class="samples">
+		<a href="#civadmin">Civilian Admin</a><br>
+		<a href="#cdi">CDI</a><br>
+		<a href="#chat">Chat</a><br>
+		<a href="#client">Client</a><br>
+		<a href="#crm">CRM</a><br>
+		<a href="#error">Error</a><br>
+		<a href="#form">Form</a><br>
+		<a href="#game">Game</a><br>
+		<a href="#guice">Guice</a><br>
+		<a href="#helloworld">Helloworld</a><br>
+		<a href="#inject">Inject</a><br>
+		<a href="#jpareslocal">JPA Resource Local</a><br>
+		<a href="#jpajta">JPA JTA</a><br>
+		<a href="#locale">Locale</a><br>
+		<a href="#quickstart">Quickstart</a><br>
+		<a href="#test">Test</a><br>
+		<a href="#upload">Upload</a><br>
+		</div>
+
+
+		<h3 id="civadmin">Civilian Admin</h3>
+		<span class="badge">Admin App</span>
+		<span class="badge">Assets</span>
+		<span class="badge">CSP</span>
+		<span class="badge">Resource Constants</span>
+		<span class="badge">Resource Linking</span>
+		<span class="badge">Resource Service</span>
+		<p>
+		The <a href="doc-admin">admin</a> application of Civilian is part of the core distribution
+		but also enabled in the samples. It gives you an overview of the configurations and resources of each deployed sample app.
+
+
+		<h3 id="cdi">CDI</h3>
+		<span class="badge">CDI</span>
+		<span class="badge">ControllerFactory</span>
+		<span class="badge">DI</span>
+		<p>
+		The CDI samples demonstrates Dependency Injection (DI) using CDI.<br>
+		At startup the application installs the {javadoc:controller.factory.CdiControllerFactory}, 
+		in order to inject CDI managed beans via <code>javax.inject.Inject</code> annotations into Controllers.<br>
+		CDI support is experimental. If you look into the CdiControllerFactory code and compare with 
+		{javadoc:controller.factory.GuiceControllerFactory} you will understand why.<br>
+		The CDI app is disabled by default since it requires a JEE environment. To activate, 
+		set <code>app.cdi.enabled = true</code> in <code>civilian.ini</code>, save it back to the sample war and deploy
+		in a JEE server, such as TomcatEE or JBoss Wildfly.
+		
+
+		<h3 id="chat">Chat</h3>
+		<span class="badge">Async Response</span>
+		<p>
+		The chat app demonstrates asynchronous response. After you chose a user name you can write 
+		messages to the chat board which are broadcasted to all participating users. 
+		
+		<h3 id="client">Client</h3>
+		<span class="badge">Client</span>
+		<span class="badge">Resource Constants</span>
+		<span class="badge">WebResource</span>
+		<span class="badge">WebUrl</span>
+		<p>
+		The Client sample is not a server-side application but demonstrates how to build URLs to access resources of a server application
+		from a Java client program.<br>
+		Its <code>CrmRoot</code> class describes the resource tree of <a href="#crm">CRM</a> app and
+		was generated using {javadoc:tool.resource.ClientConstGenerator}.<br>
+		Given the resource constants in <code>CrmRoot</code> one can easily construct {javadoc:client.WebUrl} objects, add 
+		path and query parameters and finally create a URL string from the WebUrl. You could then use a HTTP library like Apaches
+		<a target="_blank" href="https://hc.apache.org/httpcomponents-client-ga/">HTTP Client</a> or a JAX-RS client to
+		send requests.   
+
+
+		<h3 id="crm">CRM</h3>
+		<span class="badge">Ajax</span>
+		<span class="badge">Angular JS</span>
+		<span class="badge">Assets</span>
+		<span class="badge">Controller Hierarchy</span>
+		<span class="badge">CSP</span>
+		<span class="badge">JSON</span>
+		<span class="badge">L10N</span>
+		<span class="badge">REST</span>
+		<span class="badge">Security</span>
+		<p>
+		The CRM sample is the most complex sample on the block.<br>
+		It is a proof of concept application how to build a Rich Internet Application (RIA) using 
+		a MVC/MVVM Javascript on the client (here <a href="https://angularjs.org/">Angular JS</a>) and a REST-based server (you guessed it: Civilian).
+		<p>
+		The navigation design of the sample CRM allows the user to build an arbitrary complex state: Opening multiple modules to handle 
+		CRM core objects like customer, opportunities, etc.
+		<p>
+		The client is realized with AngularJS. Therefore the server will provide HTML page fragments containing Angular code.
+		Beyond that all data is exchanged between server and client in JSON form. Both templates and data requests are done
+		with Ajax calls.
+		<p> 
+		To not crucify startup time we use transparent lazy loading for HTML templates and Javascript code: This is implemented
+		in the angular module <code>civLoad</code>, located in <code>civassets/angular/civ-load.js</code> in the core source.
+		<p>
+		The sample also demonstrates several security related solutions:<br>
+		The client should not switch to a login page, when its server side session has a timeout, since it would loose all its client state. 
+		Therefore it uses a transparent login popup which is shown when a Ajax call returns with a 401 error: The login popup is shown
+		and then the original request is repeated. Again the solution is implemented in an angular module <code>civLoad</code>, 
+		located in <code>civassets/angular/civ-auth.js</code> in the core source.<br>
+		Users in the CRM sample have different access rights: We use the Controller class hierarchy to implement and enforce security checks.   
+		<p>
+		Even if the CRM is a single-page application, it allows to access single modules or objects in own windows, as explained
+		on the CRM landing page. Again controller inheritance was heavily used to implement this feature.
+		
+		
+		<h3 id="error">Error</h3>
+		<span class="badge">Development</span>
+		<span class="badge">Error Messages</span>
+		<p>
+		The error sample has a vandalizing nature and deliberately throws various kinds of runtime exceptions.<br>
+		This is just a demonstration of how Civilian tries to give meaningful insight in what is going wrong during development
+		time.
+		If you switch the Civilian context to production mode, and revisit the sample, you will see how the error messages
+		change accordingly. 
+		  
+		
+		<h3 id="form">Form</h3>
+		<span class="badge">CSP</span>
+		<span class="badge">Forms</span>
+		<span class="badge">Mixin FormTable</span>
+		<p>
+		The Form sample demonstrates the use of the {javadoc:form.package-summary form package}.
+		Roundtrip applications can use {javadoc:form.Form} objects to print HTML forms and read the values from a submitted
+		form in a typesafe way.
+
+		
+		<h3 id="game">Game</h3>
+		<span class="badge">CSP</span>
+		<span class="badge">Forms</span>
+		<span class="badge">Session</span>
+		<p>
+		Games is another demonstration of {javadoc:form.Form Forms}.
+		
+		
+		<h3 id="guice">Guice</h3>
+		<span class="badge">ControllerFactory</span>
+		<span class="badge">DI</span>
+		<span class="badge">Guice</span>
+		<p>
+		Guice is another Dependency Injection sample, this time using <a target="_blank" href="https://github.com/google/guice">Guice</a>.
+		Just create an Guice Injector during application startup and install a {javadoc:controller.factory.GuiceControllerFactory}
+		to insert dependencies into your controllers.
+		
+		
+		<h3 id="helloworld">Helloworld</h3>
+		<span class="badge">Classic</span>
+		<span class="badge">Minimal Art</span>
+		<span class="badge">Must Have</span>
+		<p>
+		The smallest possible sample: It justs consists of a single Controller, and does not have an application class 
+		instead uses a <code>package</code> entry in its application config.
+		 
+		
+		<h3 id="inject">Inject</h3>
+		<span class="badge">Controller</span>
+		<span class="badge">Action Arguments</span>
+		<span class="badge">Annotations</span>
+		<span class="badge">Forms</span>
+		<p>
+		The inject sample demonstrates how to inject request values into the parameters of a controller action method.
+		It also demonstrates how to define an own custom annotation: <code>@RemoteIp</code> injects the
+		IP of the caller into a controller action parameter.<p>
+
+
+		<h3 id="jpajta">JPA / JTA</h3>
+		<span class="badge">CDI</span>
+		<span class="badge">JPA</span>
+		<span class="badge">JTA</span>
+		<p>
+		The sample demonstrates use of the Java Persistence API (JPA) and JTA in a Civilian application.
+		Data services are injected into Controllers using CDI. This requires the installation of a {javadoc:controller.factory.CdiControllerFactory}
+		during application startup.<br>
+		The data services uses JPA and JTA managed transactions.
+		<p>
+		The sample is disabled by default since it requires a JEE environment. To activate, 
+		set <code>app.jpa-jta.enabled = true</code> in <code>civilian.ini</code>, rebuild the sample WAR and deploy
+		in a JEE server, like TomcatEE or JBoss Wildfly 
+				
+		
+		<h3 id="jpareslocal">JPA / Resource Local</h3>
+		<span class="badge">Controller Hierachy</span>
+		<span class="badge">Controller Lifecycle</span>
+		<span class="badge">JPA</span>
+		<span class="badge">Resource Local Transactions</span>
+		<p>
+		The sample demonstrates use of the Java Persistence API (JPA) in a Civilian application, setting the transaction type attribute
+		to resource local.<br>
+		It introduces the helper class <code>org.civilian.samples.jpa.reslocal.model.JpaContext</code>, which provides an JPA EnitityManager 
+		to data services. It possesses a EntityManagerFactory, created by the application at startup.<br>
+		<code>JpaContext</code> associates the EntityManager with the current thread, therefore the same EntityManager is used when processing a 
+		request.
+		To cleanup correctly we use {javadoc:Controller#exit() Controller.exit()} to free the threadlocal EntityManager. Since it is defined
+		in a common controller base class, it will work for all exposed resources.    
+
+		
+		<h3 id="locale">Locale</h3>
+		<span class="badge">CSP</span>
+		<span class="badge">L10N</span>
+		<span class="badge">Lang Mixin</span>
+		<span class="badge">ResMsgBundle</span>
+		<span class="badge">ResBundleCompiler</span>
+		<p>
+		The Locale sample shows how to produce locale dependent output, even using mixed locales in a single page. 
+
+		
+		<h3 id="quickstart">Quickstart</h3>
+		<span class="badge">Scaffold</span>
+		<p>
+		This is essentially the same application as generated by the <a href="quickstart.html">scaffold tool</a>.
+		
+		 
+		<h3 id="test">Test</h3>
+		<span class="badge">Test</span>
+		<p>
+		The test sample demonstrate how to use {javadoc:context.test.TestContext}, {javadoc:context.test.TestRequest}
+		and {javadoc:context.test.TestResponse} to write automated tests for your application. It does not need
+		a servlet environment and invokes requests on an application without the overhead of HTTP calls.
+
+
+		<h3 id="upload">Upload</h3>
+		<span class="badge">Form</span>
+		<span class="badge">Upload</span>
+		<p>
+		The Upload sample demonstrate how to configure Civilian to allows upload of files using the multipart/form-data content-type.
+		
+	</div>
+</div>

@@ -1,0 +1,6 @@
+template(Template content, String controller)
+{{
+	<div ng-controller="<%controller%>">
+		<%content%>
+	</div>
+}}

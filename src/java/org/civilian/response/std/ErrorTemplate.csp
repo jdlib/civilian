@@ -1,0 +1,55 @@
+import org.civilian.Request
+
+
+prolog /**
+prolog  * Used by ErrorResponse to print out error information
+prolog  * during development.
+prolog  */
+template(Request request, int status, String message, Throwable error)
+mixin html
+{{
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title>Dev Error</title>
+		<style>
+			code { font-size: 90% }
+			.stacktrace { padding: 0 0 0 50px; margin: 0 }
+		</style>
+	</head>
+	<body>	
+	<h1>Civilian Dev Error - <%status%></h1>
+	<table>
+	@printInfo("Message", message);
+	@printInfo("URL", request.getMethod() + " " + request.getUrl(false, true).toString());
+	@printClass("Application", request.getApplication());
+	@if (error != null)
+		<tr valign="baseline">
+			<td>Error</td>
+			<td>
+				<code>	
+				@html.stackTrace(error);
+				</code>
+			</td>
+		</tr>
+	</table>
+	</body>
+	</html>		
+}}
+
+
+private void printClass(String what, Object item)
+{
+	if (item != null)
+		printInfo(what, item.getClass().getName());
+}
+
+
+private void printInfo(String what, String text)
+{{
+	@if (text != null)
+		<tr>
+			<td><%what%></td>
+			<td><%html.text(text);%></td>
+		</tr>
+}}

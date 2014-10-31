@@ -1,0 +1,20 @@
+package org.civilian.template.csp
+
+
+import java.util.ArrayList
+
+
+prolog /* Class-Comment */
+template(String... names, ArrayList < String,String > someList1, ArrayList<? extends X<String>> someList2) 
+	mixin lang, html:htm, html, com.app.MyMixin
+{{
+	<start>
+	@for (int i=0; i<10; i++)
+		<%?i % 2 == 0%>conditional<%?%>
+		<%names%>: <%lang.format(i)%> 	
+		@list_.add(names);
+	</start>		
+}}
+
+
+private ArrayList<String> list_ = new ArrayList<>();

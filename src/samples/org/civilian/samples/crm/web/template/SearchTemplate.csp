@@ -1,0 +1,51 @@
+import ../../text.Message
+
+
+prolog /**
+prolog  * Generic SearchTemplate
+prolog  * @param toolbar: if embedded in a module panel, the searchpanel has a toolbar to navigate to
+prolog  * 		the detail view
+prolog  */
+template(boolean withToolbar)
+mixin lang
+{{
+	<div ng-controller="SearchController" class="row-fluid">
+		@if (withToolbar)
+			<div class="btn-group btn-group-vertical pull-left">
+				<button ng-disabled="searchResult.empty()" class="btn" ng-click="openResult()"><i class="icon-arrow-right"></i></button>
+				<button ng-disabled="searchResult.empty()" class="btn"><i class="icon-download"></i></button>
+				<button ng-disabled="searchResult.empty()" class="btn"><i class="icon-print"></i></button> 
+			</div>
+			<div class="margin-left">
+				@printSearchPanel();
+			</div>
+		@else
+			@printSearchPanel();
+	</div>
+}}
+
+
+private void printSearchPanel()
+{{
+	<div ng-repeat="param in searchParams" class="gap-bottom">
+		<select ng-options="f.value as f.text for f in searchFilters" ng-model="param.filter" class="span2"></select>
+		<input type="text" size="40" ng-model="param.value">
+		<button class="btn" ng-click="removeSearchParam($index)" ng-disabled="searchParams.length == 1"><i class="icon-minus"></i></button>
+		<button class="btn" ng-click="addSearchParam()" ng-show="$last"><i class="icon-plus"></i></button>
+	</div>
+	<button class="btn btn-primary" ng-click="search()"><%lang.msg(Message.Search)%></button>
+	<button class="btn" ng-click="reset()"><%lang.msg(Message.Reset)%></button>
+	<p></p>
+	<span ng-hide="searchResult.empty()">{{searchResult.items.length}} <%lang.msg(Message.Hits)%></span>
+	<p></p>
+	<table ng-hide="searchResult.empty()" class="table table-bordered table-striped table-condensed table-hover table-result no-select">
+	<tr class="result">
+		<th>#</th>
+		<th ng-repeat="col in searchResult.cols">{{col}}</th>
+	</tr>
+	<tr ng-repeat="row in searchResult.rows" ng-dblclick="openResult()" ng-class="{info: $index == searchResult.selected}" ng-click="searchResult.setSelected($index)">
+		<td width="30px">{{$index+1}}</td>
+		<td ng-repeat="data in row.data">{{data}}</td>
+	</tr>
+	</table>
+}}

@@ -1,0 +1,20 @@
+import org.civilian.Request
+
+
+prolog /**
+prolog  * Used by NotFoundResponse to print out context information
+prolog  * during development.
+prolog  */
+template(Request request)
+{{
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title>Dev NotFound</title>
+	</head>
+	<body>	
+		<h1>Civilian Dev Not Found - 404</h1>
+		<b>request: <%request.getPath().print()%></b>
+	</body>
+	</html>
+}}

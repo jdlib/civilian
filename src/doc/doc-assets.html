@@ -1,0 +1,279 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Assets</h1>
+
+		<div class="takeaway">
+			Civilians asset handling serves the static resources &ndash; CSS, JavaScript, images, etc. &ndash;  
+			of your application. 
+		</div>
+		
+		<ul>
+		<li><a href="#intro">Introduction</a>
+		<li><a href="#processing">Processing asset requests</a>
+		<li><a href="#locations">Asset locations</a>
+			<ul>
+				<li><a href="#dir">Publishing file assets from local directories</a>
+				<li><a href="#classpath">Publishing Java resource files from the classpath</a>
+				<li><a href="#impl">Implementing own asset locations</a>
+			</ul>
+		<li><a href="#caching">Caching</a>
+		<li><a href="#service">Asset service</a>
+		<li><a href="#encoding">Asset encoding and content-types</a>
+		<li><a href="#config">Configuration</a>
+			<ul>
+				<li><a href="#civilian.ini">Configuration in civilian.ini</a>
+				<li><a href="#startup">Configuration during application startup</a>
+			</ul>
+		<li><a href="#build">Build Process</a>
+		</ul>
+		
+		<h2 id="intro">Introduction</h2>
+		Assets are static resources like CSS stylesheets, JavaScript code, images, etc. 
+		used by your application. They are resources since they can be addressed by a URL;
+		they are static since they are (usually) not generated at runtime, but reside as files in the local file system.<br>
+		
+		<h2 id="processing">Processing asset requests</h2>
+		a client does not care if a resource is static or dynamic. But internally processing of these requests is different:
+		<ul>
+		<li>Requests for dynamic resources requires to create a Controller and call it to process the request.
+		<li>Requests for static resources will return the content of a server-side file.
+		</ul>
+		By default Civilian first tries to route a request to a Controller.
+		If not possible it tries to find an asset for the request. If both fails the application sends
+		{javadoc:Application#createNotFoundResponse() a not-found response}.
+		<p>
+		Asset responses include a <code>Last-Modified</code> header for the asset file date, and a <code>max-age</code>
+		header for 30 days. The <code>If-Modified-Since</code> request header is evaluated and may
+		result in a {javadoc:Response*Status#SC304_NOT_MODIFIED 304 not modified} response. 
+		
+		<h2 id="locations">Asset locations</h2>
+		Civilians asset handling allows you to publish files from a local directories or (any other file trees) as
+		resources under the application path.<br>  
+		For example if directory <code>c:\myfiles</code> is published under the asset path <code>/files</code> in an application
+		with {javadoc:Application#getPath() path} <code>/myapp</code>, then the directory content will become available
+		as resources:
+		<table class="table table-bordered">
+		<tr>
+			<th width="50%">File</th>
+			<th>Resource</th>
+		</tr>
+		<tr>
+			<td><code>c:\myfiles\<b>style.css</b></code></td>
+			<td><code>/myapp/<b>files/style.css</b></code></td>
+		</tr>
+		<tr>
+			<td><code>c:\myfiles\<b>js\script.js</b></code></td>
+			<td><code>/myapp/<b>files/js/script.js</b></code></td>
+		</tr>
+		</table>
+		(Of course the asset path may be the root path <code>/</code>, publishing the asset files directly under the application root).
+		<p>
+		
+		<h3 id="dir">Publishing file assets from local directories</h3>
+		If deployed in a servlet container a Civilian has the directory layout of a web application, i.e. consists of a root 
+		web app directory, containing a <code>WEB-INF</code> subdirectory with <code>web.xml</code> <code>civilian.ini</code>.
+		<p>
+		The most natural way to publish assets is to place their files in the web app directory (the Civilian runtime makes
+		sure that files from the WEB-INF folder are not accesible).
+		<p>
+		<table class="table table-bordered">
+		<tr>
+			<th width="50%">File</th>
+			<th>Resource</th>
+		</tr>
+		<tr>
+			<td><code>/tomcat/webapps/myapp/<b>style.css</b></code></td>
+			<td><code>/myapp/<b>style.css</b></code></td>
+		</tr>
+		<tr>
+			<td><code>/tomcat/webapps/myapp/<b>js/script.js</b></code></td>
+			<td><code>/myapp/<b>js/script.js</b></code></td>
+		</tr>
+		<tr>
+			<td><code>/tomcat/webapps/myapp/<b>WEB-INF/web.xml</b></code></td>
+			<td><code>403 forbidden</code></td>
+		</tr>
+		</table>
+		You may also publish a subdirectory of the web app root, or any directory in the local file system, outside of your
+		web app structure. (The later feature comes in handy during development, when you want to skip a
+		<a href="doc-development.html#tomcat-loader">deployment build</a>). 
+
+		<h3 id="classpath">Publishing Java resource files from the classpath</h3>
+		Java classpath resources can also be published as web resources. For security reasons only Java resources with certain
+		non-empty prefixes may be published.<br>
+		If for example Java resources beginning with <code>"/civassets"</code> are published under the asset path <code>/civ</code> 
+		in an application with path <code>/myapp</code>, then these Java resources become available as web resources: 
+
+		<table class="table table-bordered">
+		<tr>
+			<th width="50%">File</th>
+			<th>Resource</th>
+		</tr>
+		<tr>
+			<td><code>jar:civilian.jar//civassets/<b>admin/admin.css</b></code></td>
+			<td><code>/myapp/<b>civ/admin/admin.css</b></code></td>
+		</tr>
+		<tr>
+			<td><code>/tomcat/webapps/myapp/WEB-INF/classes/civassets/<b>style.css</b></code></td>
+			<td><code>/myapp/<b>civ/style.css</b></code></td>
+		</tr>
+		</table>
+		
+		<h3 id="impl">Implementing own asset locations</h3>
+		Asset locations are represented as instances of the {javadoc:asset.AssetLocation} class. If you need an additional asset retrieval 
+		besides directories or Java resources, you could implement your own AssetLocation and install an instance during
+		asset configuration (see below). 
+
+		<h2 id="caching">Caching</h2>
+		Civilian maintains an asset cache and keeps smaller assets in memory to allow for fast responses.
+		(It also monitors and detects changes in assets files, and updates the cache accordingly).
+		
+		<h2 id="service">Asset service</h2>
+		All the different asset locations used by an application and the asset cache are organized as pipeline
+		and made {javadoc:Application#getAssetService() available} as {javadoc:asset.AssetService}.
+		
+		<h2 id="encoding">Asset encoding and content-types</h2>
+		An asset response contains a <code>Content-Type</code> header which includes an encoding parameter.
+		By default encoding of textual assets equals the application {javadoc:Application#getEncoding() encoding} (which by default is UTF-8).
+		It is a good idea to serve all HTML pages and textual assets in the same encoding.
+		<p>
+		Additionally you can specify different encodings for every asset location.
+		<p>
+		The {javadoc:Context#getContentTypeLookup() ContentLookup} of the context is used to derive content-types from file extensions.
+		In a servlet environment this is implemented with a call to <code>ServletContext.getMimeType()</code> and therefore uses
+		the content-type configuration of the servlet container.     
+		 
+		<h2 id="config">Configuration</h2>
+		By default Civilian does not serve any assets. You must explicitly configure the asset locations
+		of an application via settings in <a href="doc-config.html#ini">civilian.ini</a>
+		or during application setup.
+		
+		<h3 id="civilian.ini">Configuration in civilian.ini</h3>
+		To define a single asset location for an application with id <code>myapp</code>, add a line to <code>civilian.ini</code>
+		<div class="highlight">
+			<code>app.myapp.asset.location = <i>&lt;definition></i></code>
+		</div>
+		For multiple locations, add
+		<div class="highlight">
+			<pre><code>app.myapp.asset.location.0 = <i>&lt;definition 0></i><br
+			>app.myapp.asset.location.1 = <i>&lt;definition 1></i><br
+			>...</code></pre>
+		</div>
+		The location definition consists of the location type, an optional parameter and 
+		an optional path relative to the application path:
+		<div class="highlight">
+			<pre>&lt;definition> ::= &lt;type> ( '<code>:</code>' &lt;param> )? ( '<code>-></code>' &lt;path> )?<br
+			>&lt;type> ::= <code>dir</code> | <code>res</code> | <code>civres</code></pre>
+		</div>
+		<p>
+		The location type <code>dir</code> denotes a <b>directory</b> containing assets files. If it has no param it equals
+		the directory where the application is deployed, if the param is an relative directory
+		then it is the corresponding subdirectory, else it is interpreted as absolute directory. 
+		<div class="highlight">
+			<table width="100%">
+			<tr>
+				<td width="50%"></td>
+				<td>maps to directory</td>
+			</tr>
+			<tr>
+				<td><code>app.myapp.asset.location.0 = dir</code></td>
+				<td>&rarr; <code>/tomcat/webapps/myapp</code></td>
+			</tr>
+			<tr>
+				<td><code>app.myapp.asset.location.1 = dir:gfx/images</code></td>
+				<td>&rarr; <code>/tomcat/webapps/myapp/gfx/images</code></td>
+			</tr>
+			<tr>
+				<td><code>app.myapp.asset.location.2 = dir:c:\repo\files</code></td>
+				<td>&rarr; <code>c:\repo\files</code></td>
+			</tr>
+			</table>
+		</div>
+		
+		By default the assets are published under the application root path. To <b>publish</b> under a <b>subpath</b>
+		add that subpath to the definition:
+		<div class="highlight">
+			<table width="100%">
+			<tr>
+				<td colspan="2">definition / file</td>
+				<td width="50%">URL</td>
+			</tr>
+			<tr>
+				<td colspan="2"><code>app.myapp.asset.location.0 = dir</code></td>
+			</tr>
+			<tr>
+				<td width="20"></td>
+				<td><code>/tomcat/webapps/myapp/css/style.css</code></td>
+				<td>&rarr; <code>https://example.org/myapp/css/style.css</code></td>
+			</tr>
+			<tr>
+				<td colspan="2"><code>app.myapp.asset.location.0 = dir <b>-> /assets</b></code></td>
+			</tr>
+			<tr>
+				<td width="20"></td>
+				<td><code>/tomcat/webapps/myapp/css/style.css</code></td>
+				<td>&rarr; <code>https://example.org/myapp<b>/assets</b>/css/style.css</code></td>
+			</tr>
+			</table>
+		</div>
+		
+		The location type <code>res</code> serves <b>Java resources</b> as assets. The required parameter is a 
+		non-empty prefix of the served <b>Java resources</b>.<br><code>civres</code> is an abbreviation
+		for <code>res:civassets -> /civilian</code> to serve resources from <code>civilian.jar</code>:
+		<div class="highlight">
+			<table width="100%">
+			<tr>
+				<td width="50%"></td>
+				<td>maps to resources</td>
+			</tr>
+			<tr>
+				<td><code>app.myapp.asset.location.3 = res:assets</code></td>
+				<td>&rarr; <code>ClassLoader.getResources("/myassets")</code></td>
+			</tr>
+			<tr>
+				<td><code>app.myapp.asset.location.4 = civres</code></td>
+				<td>&rarr; <code>ClassLoader.getResources("/civassets")</code></td>
+			</tr>
+			</table>
+		</div>
+
+		<h3 id="startup">Configuration during application startup</h3>
+		Alternatively and additionally you can {javadoc:application.AppConfig#getAssetConfig() configure} the asset 
+		locations and cache behaviour during {javadoc:Application#init(org*civilian*application*AppConfig) application startup}.
+		<p>
+		For advanced use you could also override {javadoc:Application#initAssets(org*civilian*asset*AssetConfig) Application.initAssets(AssetConfig)}
+		to determine how the applications {javadoc:asset.AssetService} is constructed.  
+		<br>
+		  
+
+		<h2 id="build">Build Process</h2>
+		JavaScript and CSS assets sent to the browser may often be direct development items. 
+		But of course they can also be the result of some build process
+		<ul>
+		<li>CSS stylesheets can be generated from LESS or SASS files,
+		<li>JavaScript can be generated from Coffeescript files,
+		<li>JavaScript or stylesheet files can be minified, uglified, beautified, ...
+		<li>Multiple JavaScript or stylesheet files can be concatenated
+		<li>etc.
+		</ul>
+		Some web frameworks allow to include such a development process into their asset delivery pipeline.
+		This of course eases development: You simply edit the asset source(s) which get automatically transformed 
+		into their final form when requested by a client.
+		Civilian decided to <b>not include</b> such a facility because of the following reasons.
+		<p>
+		There are two main scenarios for an asset pipeline with inherent build capabilities:
+		<ul>
+		<li>Minification and concatenation of multiple sources into a single JavaScript or CSS file
+			is typical for a <b>production</b> environment. But usually some build process is already needed  
+			to create the deployment artifact (e.g. a WAR file) &ndash; the generation of asset files
+			can easily be integrated into that process.
+		<li>During <b>development</b> automatic transformation of coffee script, LESS, SASS, etc. files
+			into JavaScript or CSS files saves precious development time. But watcher tools   
+			like {link:http://gruntjs.com/ Grunt} are just perfect in
+			doing this: Just save your source, and the tool will almost immediately generate the transformed file,
+			which is then picked up by Civilians asset dispatch on the next request.  
+		</ul>
+		
+	</div>
+</div>

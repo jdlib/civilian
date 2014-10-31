@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="civilian" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property name="lib"               value="${basedir}/lib"/>
+	<property name="src.java"          value="${basedir}/src/java"/>
+	<property name="src.test"          value="${basedir}/src/test"/>
+	<property name="src.js"            value="${basedir}/src/js"/>
+	<property name="src.build"         value="${basedir}/src/build"/>
+	<property name="src.samples"       value="${basedir}/src/samples"/>
+	<property name="src.doc"           value="${basedir}/src/doc"/>
+	<property name="build"             value="${basedir}/tmp"/>
+	<property name="build.bin"         value="${build}/bin"/>
+	<property name="build.bin.java"    value="${build.bin}/java"/>
+	<property name="build.bin.test"    value="${build.bin}/test"/>
+	<property name="build.bin.samples" value="${build.bin}/samples"/>
+	<property name="build.bin.build"   value="${build.bin}/build"/>
+	<property name="build.doc"         value="${build}/doc"/>
+	<property name="build.doc.javadoc" value="${build.doc}/javadoc"/>
+	<property name="web"               value="${basedir}/web"/>
+	
+	
+	<description>
+    	Ant build file for Civilian 
+    </description>
+	
+	
+	<path id="compile.path">
+		<fileset dir="${lib}\build">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+
+	<path id="run.path">
+		<path refid="compile.path"/>
+		<pathelement location="${build.bin.java}"/>
+	</path>
+	
+	
+	<path id="test.path">
+		<path refid="run.path"/>
+		<pathelement location="${build.bin.test}"/>
+	</path>
+	
+	
+	<path id="samples.path">
+		<fileset dir="${lib}\samples">
+			<include name="*.jar" />
+		</fileset>	
+		<pathelement location="${build.bin.java}"/>
+		<pathelement location="${build.bin.samples}"/>
+		<pathelement location="${web}/WEB-INF/classes/"/>
+		<!-- for *.properties -->
+		<pathelement location="${src.samples}"/> 
+		<!-- for client resources -->
+		<pathelement location="${src.js}"/> 
+	</path>
+
+			
+    <target name="clear" description="clears the build directory">
+    	<delete dir="${build}"/>	
+    </target>
+	
+
+	<target name="clientconst" description="runs the ClientContsGenerator" depends="compile">
+		<java classname="org.civilian.tool.resource.ClientConstGenerator">
+			<classpath>
+				<path refid="run.path"/>
+				<pathelement location="${build.bin.samples}"/>
+			</classpath>				
+			<arg value="-java"/>
+			<arg value="org.civilian.samples.client.CrmRoot"/>
+			<arg value="-javaout:package"/>
+			<arg value="${src.samples}"/>
+			<arg value="org.civilian.samples.crm.web.CrmApp"/>
+		</java>
+	</target>	
+
+	
+	<target name="cobertura" depends="compile">
+		<path id="cobertura.path">
+			<fileset dir="${lib}/cobertura">
+				<include name="lib/**/*.jar" />
+			</fileset>
+			<fileset dir="${lib}">
+				<include name="**/*.jar" />
+				<exclude name="samples/**/*.jar"/>
+			</fileset>
+		</path>
+
+		<taskdef resource="tasks.properties" classpathref="cobertura.path"/>
+		
+		<!-- init -->
+		<property name="instrumented.dir" value="${build}/cobertura/instrumented"/>
+		<property name="reports.dir" value="${build}/cobertura/reports"/>
+		<property name="reports.xml.dir" value="${reports.dir}/junit-xml"/>
+		<property name="reports.html.dir" value="${reports.dir}/junit-html"/>
+		<property name="coverage.html.dir" value="${reports.dir}/cobertura-html"/>
+		<property name="cobertura.ser" value="${build}/cobertura/cobertura.ser"/>
+
+		<property name="test.package" value="**"/>
+		<loadresource property="test.dir">
+			<propertyresource name="test.package"/>
+			<filterchain>
+				<tokenfilter>
+					<replacestring from="." to="/"/>
+				</tokenfilter>
+			</filterchain>
+		</loadresource>
+		
+		<!-- instrument -->
+		<!-- remove the coverage data file and any old instrumentation -->
+		<delete file="${cobertura.ser}"/>
+		<delete dir="${instrumented.dir}" />
+		
+		<!-- instrument the classes and write them into ${instrumented.dir}.-->
+		<cobertura-instrument todir="${instrumented.dir}" datafile="${cobertura.ser}">
+			<!--ignore source lines containing a reference to slf4j-->
+			<ignore regex="org.slf4j.*"/>
+			<fileset dir="${build.bin.java}">
+				<exclude name="org/civilian/internal/admin/**/*.class" />
+			</fileset>
+		</cobertura-instrument>
+		
+		<mkdir dir="${reports.xml.dir}"/>
+		<mkdir dir="${reports.html.dir}"/>
+
+		<junit fork="yes" forkmode="once" dir="${basedir}" failureProperty="test.failed">
+			<classpath location="${instrumented.dir}" />
+			<classpath location="${build.bin.java}" />
+			<classpath location="${build.bin.test}" />
+			<classpath refid="run.path" />
+			<classpath location="${src.java}" />
+			<classpath location="${src.js}" />
+			<classpath location="${src.test}" />
+			<classpath refid="cobertura.path"/>
+			<jvmarg value="-Dnet.sourceforge.cobertura.datafile=${cobertura.ser}"/>
+			<formatter type="xml" />
+			<test name="${testcase}" todir="${reports.xml.dir}" if="testcase" />
+			<batchtest todir="${reports.xml.dir}" unless="testcase">
+				<fileset dir="${src.test}">
+					<include name="${test.dir}/*Test.java" />
+					<exclude name="**/CivTest.java" />
+					<exclude name="**/PackageDetectorTest.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+
+		<junitreport todir="${reports.xml.dir}">
+			<fileset dir="${reports.xml.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${reports.html.dir}" />
+		</junitreport>
+		
+
+		<mkdir dir="${coverage.html.dir}"/>
+		<cobertura-report destdir="${coverage.html.dir}" datafile="${cobertura.ser}">
+			<fileset dir="${src.java}">
+				<include name="${test.dir}/*.java"/>
+			</fileset>
+		</cobertura-report>
+	</target>
+
+	
+ 	<target name="compile" description="compiles all java classes" 
+ 		depends="compile.java, compile.build, compile.test, compile.samples">
+	</target>
+		
+		
+ 	<target name="compile.java" description="compiles src/java">
+    	<mkdir dir="${build.bin.java}"/>
+		<javac srcdir="${src.java}" destdir="${build.bin.java}" classpathref="compile.path" 
+			debug="true" includeantruntime="false">
+		</javac>
+	</target>
+
+		
+ 	<target name="compile.build" description="compiles src/build" depends="compile.java">
+    	<mkdir dir="${build.bin.build}"/>
+		<javac srcdir="${src.build}" destdir="${build.bin.build}" debug="true" includeantruntime="false">
+			<classpath>
+				<path refid="compile.path"/>	
+				<pathelement path="${build.bin.java}"/>
+            </classpath>
+		</javac>
+	</target>
+
+				
+ 	<target name="compile.samples" description="compiles src/samples" depends="compile.java">
+    	<mkdir dir="${build.bin.samples}"/>
+		<javac srcdir="${src.samples}" destdir="${build.bin.samples}" debug="true" includeantruntime="false">
+			<classpath>
+				<path refid="compile.path"/>	
+				<pathelement path="${build.bin.java}"/>
+            </classpath>
+		</javac>
+	</target>
+
+		
+ 	<target name="compile.test" description="compiles src/test">
+    	<mkdir dir="${build.bin.test}"/>
+		<javac srcdir="${src.test}" destdir="${build.bin.test}"	debug="true" includeantruntime="false" encoding="UTF-8">
+			<classpath>
+				<path refid="compile.path"/>	
+				<pathelement path="${build.bin.java}"/>
+				<fileset dir="${lib}\test">
+					<include name="*.jar" />
+				</fileset>
+            </classpath>
+		</javac>
+		<copy todir="${build.bin.test}">
+			<fileset dir="${src.test}">
+				<include name="**/*.csp"/>
+				<include name="**/*.out"/>
+			</fileset>
+		</copy>
+	</target>
+
+		
+	<target name="copyright">
+		<copy todir="${build}/cr/java">
+	  		<fileset dir="${src.java}" includes="**/*.java"/>
+	  		<filterchain>
+	    		<concatfilter prepend="copyright.txt"/>
+	  		</filterchain>
+		</copy>
+		<copy todir="${build}/cr/test">
+	  		<fileset dir="${src.test}" includes="**/*.java"/>
+	  		<filterchain>
+	    		<concatfilter prepend="copyright.txt"/>
+	  		</filterchain>
+		</copy>
+		<copy todir="${build}/cr/samples">
+	  		<fileset dir="${src.samples}" includes="**/*.java"/>
+	  		<filterchain>
+	    		<concatfilter prepend="copyright.txt"/>
+	  		</filterchain>
+		</copy>
+	</target>
+	
+		
+ 	<target name="cspcompile.force">
+ 		<property name="csp.force" value="-force"/>
+		<antcall target="cspcompile"/>
+ 	</target>
+ 		
+ 		
+ 	<target name="cspcompile" description="compiles the csp files" depends="_cspcompile.bootstrap">
+   		<property name="csp.force" value=""/>
+ 		<antcall target="_cspcompile.run">
+ 			<param name="csp.src" value="${src.java}"/>
+ 		</antcall>
+ 		<antcall target="_cspcompile.run">
+ 			<param name="csp.src" value="${src.samples}"/>
+ 		</antcall>
+	</target>
+	
+	
+ 	<target name="_cspcompile.run">
+		<java classname="org.civilian.tool.csp.CspCompiler" classpath="${build.bin.java}">
+			<arg value="${csp.force}"/>
+			<arg line="-v 1"/>
+			<arg value="${csp.src}"/>
+		</java>
+	</target>
+	
+
+		
+ 	<target name="_cspcompile.prep" description="compiles the csp files">
+ 		<condition property="csp.needs.compile">
+ 			<not><available file="${build.bin.java}/org/civilian/tool/csp/CspCompiler.class"/></not>
+ 		</condition>
+ 	</target>
+ 		
+ 		
+ 	<target name="_cspcompile.bootstrap" if="csp.needs.compile" depends="_cspcompile.prep">
+ 		<antcall target="compile.java"/>
+	</target>
+
+		
+	<target name="dist" description="builds the civilian distribution" depends="war,javadoc,doc">
+   		<property name="dist.zip" value="${build}/civilian-${version}.zip"/>
+		<zip destfile="${dist.zip}">
+			<fileset dir="${basedir}">
+				<include name="bin"/>
+				<include name="src/**/*"/>
+				<include name="lib/readme.txt"/>
+				<include name="web/**/*"/>
+				<exclude name=".settings"/>
+				<exclude name="tmp"/>
+				<include name="*"/>
+			</fileset>
+			<fileset dir="${build}">
+				<include name="doc/**/*"/>
+			</fileset>
+		</zip>
+   		<property name="civilian-src.zip" value="${build}/civilian-${version}-src.zip"/>
+		<zip destfile="${civilian-src.zip}" basedir="${src.java}" includes="**/*"/>
+	</target>
+		
+		
+	<target name="doc" description="build doc" depends="compile.build">
+   		<property name="force" value=""/>
+   		<property name="docdir" value="${build.doc}"/>
+    	<copy todir="${docdir}" file="${src.doc}/favicon.ico"/>
+		<copy todir="${docdir}" file="${src.doc}/web.xml"/>
+		<copy todir="${docdir}" file="${src.doc}/doc-templates-csp.txt"/>
+		<copy tofile="${docdir}/license.txt" file="${basedir}/LICENSE.txt"/>
+		<copy todir="${docdir}">
+			<fileset dir="${src.doc}/yed" includes="*.png"/>
+		</copy>
+    	<copy todir="${docdir}/res">
+			<fileset dir="${src.doc}/res"/>
+    	</copy>
+    	<java classname="org.civilian.internal.build.DocConverter">
+			<classpath>
+				<path refid="compile.path"/>	
+				<pathelement path="${build.bin.java}"/>
+				<pathelement path="${build.bin.build}"/>
+            </classpath>
+    		<arg value="${force}"/>
+    		<arg value="${build.doc.javadoc}"/>
+    		<arg value="${src.doc}"/>
+    		<arg value="${docdir}"/>
+    	</java>	
+    </target>	
+    	
+
+	<target name="doc.force" description="build doc (force)">
+		<property name="force" value="-force"/>
+		<antcall target="doc"/>
+   	</target>
+	
+	
+    <target name="javadoc" description="build javadoc" depends="version">
+    	<mkdir dir="${build.doc.javadoc}"/>
+    	<javadoc author="false" sourcepath="${src.java}"
+    		classpathref="compile.path"
+    		destdir="${build.doc.javadoc}"
+    		packagenames="org.civilian.*"
+    		excludepackagenames="org.civilian.internal.*"
+    		stylesheetfile="${src.doc}/javadoc/stylesheet.css"
+    		Splitindex="yes"/>
+    </target>
+
+
+	<target name="jar" description="builds the civilian jar file" depends="jar.civilian, jar.samples">
+	</target>	
+	
+		
+	<target name="jar.civilian" description="builds the civilian jar file" depends="_jar.prep">
+		<property name="civilian.jar" value="${build}/civilian-${version}.jar"/>
+		<jar destfile="${civilian.jar}">
+    		<fileset dir="${build.bin.java}">
+				<exclude name="**/*.csp"/>
+			</fileset>
+    		<fileset dir="${src.java}" includes="org/civilian/tool/scaffold/files/**/*.*"/>
+    		<fileset dir="${src.js}"/>
+			<manifest>
+				<attribute name="Main-Class" value="org.civilian.tool.scaffold.Scaffold"/>
+				<attribute name="Civilian-Version" value="${version}"/>
+				<attribute name="Civilian-Website" value="http://www.civilian-framework.org"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	
+	<target name="jar.samples" description="builds the samples jar file" depends="_jar.prep">
+		<property name="samples.jar" value="${build}/civilian-${version}-samples.jar"/>
+		<jar destfile="${samples.jar}">
+			<fileset dir="${build.bin.samples}">
+				<exclude name="**/*.csp"/>
+			</fileset>
+			<fileset dir="${src.samples}">
+				<include name="**/*.properties"/>
+			</fileset>
+			<manifest>
+				<attribute name="Civilian-Version" value="${version}"/>
+			</manifest>
+		</jar>
+	</target>
+
+
+	<target name="jar.resbundlec" description="build resbundle-compiler jar" depends="_jar.prep">
+        <property name="jarfile" value="${build}/resbundlec.jar"/>
+        <jar destfile="${jarfile}">
+            <fileset dir="${build.bin}">
+                <include name="org/civilian/text/msg/resbundle/ResBundleCompiler*.class"/>
+                <include name="org/civilian/text/msg/resbundle/ConstClassTemplate.class"/>
+                <include name="org/civilian/text/msg/MsgId.class"/>
+                <include name="org/civilian/util/Arguments.class"/>
+                <include name="org/civilian/util/Check.class"/>
+                <include name="org/civilian/util/ClassUtil.class"/>
+                <include name="org/civilian/util/Date.class"/>
+                <include name="org/civilian/util/DateTime.class"/>
+                <include name="org/civilian/util/FileType.class"/>
+                <include name="org/civilian/util/StringUtil.class"/>
+                <include name="org/civilian/util/Time.class"/>
+                <include name="org/civilian/util/io/ClosedWriter.class"/>
+                <include name="org/civilian/util/io/IoUtil.class"/>
+                <include name="org/civilian/util/io/TabWriter.class"/>
+                <include name="org/civilian/util/source/OutputFile.class"/>
+                <include name="org/civilian/util/source/OutputLocation*.class"/>
+                <include name="org/civilian/util/source/PackageDetector.class"/>
+            </fileset>
+            </jar>
+            <echo>generated ${jarfile}</echo>
+    </target>
+
+	
+	<target name="_jar.prep" description="calls dependent targets for the jar tasks" depends="compile.java, cspcompile, version">
+		<antcall target="compile"/>
+	</target>
+	
+	
+	<target name="jetty" description="run the samples in a jetty server" depends="compile">
+		<java classname="org.civilian.boot.Jetty" classpathref="samples.path">
+			<classpath>
+				<path refid="samples.path"/>
+				<fileset dir="${lib}/jetty">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+			<arg value="-port"/>
+			<arg value="8080"/>
+			<arg value="${web}"/>
+		</java>
+	</target>
+
+
+	<target name="resolve" description="retrieve dependencies with ivy">
+		<ivy:retrieve pattern="lib/[conf]/[artifact]-[revision].[ext]"/>
+	</target>
+	
+	
+    <target name="samples.test" description="runs the test sample" depends="compile">
+		<java classname="org.civilian.samples.test.SamplesTest">
+			<classpath>
+				<fileset dir="${lib}/samples"><include name="**/*.jar"/></fileset>
+			</classpath>
+    		<classpath location="${build.bin.java}"/>
+			<classpath location="${src.samples}" />
+			<classpath location="${build.bin.samples}" />
+			<classpath location="${web}/WEB-INF/classes" />
+			<arg value="${web}"/>
+		</java>
+    </target>
+	
+
+	<target name="serverconst" description="generates the AdminResources class of the admin app">
+		<antcall target="_serverconst.run">
+			<param name="serverconst.src" value="${src.java}"/>
+			<param name="serverconst.app" value="org.civilian.internal.admin.AdminApp"/>
+		</antcall>
+		<antcall target="_serverconst.run">
+			<param name="serverconst.src" value="${src.samples}"/>
+			<param name="serverconst.app" value="org.civilian.samples.crm.web.CrmApp"/>
+		</antcall>
+		<antcall target="_serverconst.run">
+			<param name="serverconst.src" value="${src.samples}"/>
+			<param name="serverconst.app" value="org.civilian.samples.quickstart.QsApp"/>
+		</antcall>
+		<antcall target="_serverconst.run">
+			<param name="serverconst.src" value="${src.samples}"/>
+			<param name="serverconst.app" value="org.civilian.samples.jpa.jta.JtaApp"/>
+		</antcall>
+    </target>
+	
+	
+	<target name="_serverconst.run" description="generates the AdminResources class of the admin app">
+		<java classname="org.civilian.tool.resource.ServerConstGenerator" classpathref="samples.path">
+			<arg value="-out:package"/>
+			<arg value="${serverconst.src}"/>
+			<arg value="-v"/>
+			<arg value="${serverconst.app}"/>
+		</java>
+    </target>
+
+				
+	<target name="version" description="set version property" depends="compile">
+    	<java classpath="${build.bin.java}" classname="org.civilian.Version" outputproperty="version"/>
+	</target>
+
+	
+    <target name="war" description="builds the samples war file" depends="jar">
+		<property name="samples.war" value="${build}/civilian-${version}-samples.war"/>
+    	<war destfile="${samples.war}" needxmlfile="false" basedir="${web}">
+    		<lib file="${civilian.jar}"/>
+    		<lib file="${samples.jar}"/>
+    		<lib dir="${lib}/samples">
+    			<include name="*.jar" />
+    		</lib>
+    	</war>
+	</target>
+	
+	
+</project>

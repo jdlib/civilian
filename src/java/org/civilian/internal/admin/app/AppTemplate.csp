@@ -1,0 +1,28 @@
+import org.civilian.Application
+import org.civilian.Template
+
+
+template(Application app, Template content, int activeTab) mixin html
+{{
+	<h3>Application <%app.getId()%></h3>
+	<div class="tabbable">
+		<ul class="nav nav-tabs">
+			@printTab("Settings", 0, "settings");
+			@printTab("Resources", 1, "resources");
+		</ul>
+	</div>
+	<div class="tab-content">
+		<%content%>
+	</div>
+}}
+
+
+private void printTab(String label, int tabIndex, String path)
+{{
+	@boolean active = activeTab == tabIndex;
+	<li<%?active%> class="active"<%?%>>
+		<a<%?!active%> href="<%html.url(path)%>"<%?%>>
+			<%label%>
+		</a>
+	</li>
+}}

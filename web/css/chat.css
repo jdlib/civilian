@@ -1,0 +1,33 @@
+#display {
+    border: 1px solid #cccccc;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+	height: 400px;
+	margin-bottom: 10px;
+	overflow-y: scroll;
+}
+
+#display p {
+	margin-bottom: 2px;
+}
+
+input[type='text'] {
+	margin-bottom: 0px;
+}
+
+
+.hide {
+	display: none;
+}
+
+#msgLabel {
+	font-weight: bold;
+	padding-right: 10px;
+}
+
+#msgLabel:after {
+	content: " >";
+}
+
+.form-inline {
+	margin-top: 4px;
+}

@@ -1,0 +1,405 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Controllers</h1>
+
+		<div class="takeaway">
+			Controllers process requests for dynamic resources and orchestrate generation of an appropriate response.
+			Controllers publish "action" methods which act as entry-points for RESTful request processing. 
+			You can inject request context into parameters of action methods. Controller invocation follows
+			a defined lifecycle. Ways to use Dependency Injection with controllers.
+		</div>
+		
+		<ul>
+		<li><a href="#intro">Introduction</a>
+		<li><a href="#what">What makes a controller a controller</a>
+		<li><a href="#methods">Controller action methods</a>
+			<ul>
+				<li><a href="#anno-method">@Get, @Post, etc: HTTP method annotations</a>
+				<li><a href="#anno-produces">@Produces annotation</a>
+				<li><a href="#anno-consumes">@Consumes annotation</a>
+				<li><a href="#selection">Action method selection</a>
+				<li><a href="#parameters">Action method parameters</a>
+			</ul>
+		</li>
+		<li><a href="#lifecycle">Controller lifecycle</a>
+		<li><a href="#invocation">Controller invocation</a>
+		<li><a href="#arch">Controller architecture</a>
+		<li><a href="#di">Dependency injection</a>
+		</ul>
+
+		<h2 id="intro">Introduction</h2>
+		{javadoc:Controller Controllers} process requests for dynamic resources.
+		The <a href="doc-resources.html">Resources</a> chapter showed how Controller classes are mapped to dynamic resources.
+		<p>
+		<b>Controllers</b> are named after the C part in the MVC (Model-View-Controller) pattern. 
+		Their job is to accept a resource request and to orchestrate request processing. 
+		When a controller has finished, a response should have been generated. This usually means: 
+		<ol>
+		<li>Evaluate request parameters (normal parameters, path params, matrix-params, cookies, headers, request content)
+		<li>Call back-end services to fulfill the request, passing request parameters in appropriate form.
+			The result produced by those servies is the <b>model</b> (the M in MVC). Civilian does not make any assumption about the form
+			of your services and models. 
+		<li>Turn the model into a <b>view</b> (the V in MVC), suitable to be sent as response. 
+			This might be a JSON or XML representation of the model, or a HTML page which displays model data, etc.
+			Civilians <a href="doc-reqresp.html#content">content serialization</a> and 
+			<a href="doc-templates.html">template system</a> can help to implement this.
+		<li>Alternative responses would be to send an {javadoc:Response#sendError(int) error status}, 
+			or a {javadoc:Response#sendRedirect(java*lang*String) redirect} to another resource.
+		</ol>
+		Controllers are not meant to contain a lot of code. Ideally they are just the glue between the frontend request and back-end services,
+		translating request parameters, invoke back-end services and convert data models into response views. 
+		<p>
+		 
+
+		<h2 id="what">What makes a controller a controller</h2>
+		A class in your application is recognized and treated as controller class if
+		<ol>
+		<li>it directly or indirectly extends the {javadoc:Controller} base class,
+		<li>its class name ends with <code>Controller</code>, e.g. <code>SearchController</code> or <code>PrintController</code>,
+		<li>it is placed in a package below the applications {javadoc:controller.ControllerConfig#getRootPackage() root controller package}.
+		</ol> 
+		<small>(As explained in the <a href="doc-resources.html">resources</a> chapter, we scan the classpath to find all controller classes
+		and build the resource tree. 2. and 3. help to do this efficiently. There are {javadoc:controller.ControllerNaming several}
+		{javadoc:resource.scan.ResourceScan ways} to alter these requirements).</small>
+		
+		  
+		<h2 id="methods">Controller action methods</h2>
+		
+		For RESTful request processing, the controller should take request properties such as
+		<ul>
+		<li>{javadoc:Request#getMethod() HTTP method}
+		<li>content types {javadoc:Request#getAcceptedContentTypes() accepted} by the client and 
+		<li>{javadoc:Request#getContentType() content type} of the request body
+		<li>etc.
+		</ul> 
+		into account and create a specific response for the request. 
+		<p>
+		Civilian helps to implement such a case-by-case analysis of requests with the concept of controller <b>action methods</b>:<br>
+		Action methods are methods in a Controller class which act as entry points for RESTful processing. They use 
+		{javadoc:annotation/package-summary annotations} to specify the requests types for which they can be used.<br> 
+		Given a request, the most suitable action method is selected and invoked.
+		
+		<div class="highlight">
+			<table width="100%">
+			<tr>
+				<td width="50%">Request</td>
+				<td width="50%">Dispatched to</td>
+			</tr>
+			<tr valign="baseline">
+				<td><pre><code>GET /apps/crm/users/789 HTTP/1.1<br>Accept: application/json<br>&nbsp;</code></pre></td>
+				<td><pre><code><b>@Get @Produces("application/json")<br>com.crm.users.id.IndexController#getJson()</b></code></pre></td>
+			</tr>
+			<tr valign="baseline">
+				<td><pre><code>POST /apps/crm/users/789 HTTP/1.1<br>Accept: text/html<br>Content-Type: application/x-www-form-urlencoded</code></pre></td>
+				<td><pre><code><b>@Post @Produces("text/html")<br>com.crm.users.id.IndexController#editForm()</b></code></pre></td>
+			</tr>
+			</table>
+		</div>
+		What makes a method to an action method? The method must
+		<ul>
+		<li>be public and not static
+		<li>have a <code>void</code> return value
+		<li>either have one or more <a href="#anno-method">HTTP method annotations</a> (see below) 
+		<li>or must override an inherited action method from a parent controller class
+		</ul>
+		You can choose any method name you want. (Of course you may also define as many "normal" methods in a Controller class as you want).<br>
+		The following describes action method annotations in detail:
+		
+		<h3 id="anno-method"> @Get, @Post, etc: HTTP method annotations</h3>
+		consist of these annotations: {javadoc:annotation.Get @Get}, {javadoc:annotation.Post @Post}, {javadoc:annotation.Put @Put}
+		{javadoc:annotation.Delete @Delete}, {javadoc:annotation.Head @Head}, {javadoc:annotation.Options @Options}
+		or {javadoc:annotation.RequestMethod @RequestMethod}.<br>
+		A controller method needs at least one of these annotations to qualify as action method.  
+		
+		<div class="highlight"><pre><code>public class MyController extends Controller<br>{<br>    @Get @Post @RequestMethod("TRACE") public void run()<br>    {<br>        ...</code></pre>
+		</div> 
+		These method annotations signal that only requests with such HTTP method(s) can be processed by the action method. 
+		In the example above the run-method only processes GET, POST or TRACE requests.<br>
+		
+		<h3 id="anno-produces">@Produces annotation</h3>
+		Action methods can use the {javadoc:annotation.Produces @Produces} annotation to specify that they only can process 
+		requests with certain {link:http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html Accept-Headers}.<br>
+		The client uses this header to specify
+		the {javadoc:Request#getAcceptedContentTypes() acceptable} content types for the response body. Since different response types usually require
+		different processing, the @Produces annotation allows to
+		<ol>
+		<li>overall specify which content types can be produced by the controller
+		<li>and which action method should be invoked for a specific request
+		</ol> 
+		<div class="highlight">
+			<pre><code>@Get @Produces("text/html") public void asHtml() {<br>    ... // produces a HTML response<br>}<br
+			      ><br>@Get @Produces("application/json;q=2, application/xml") public void asData() {<br>    ... // produces a JSON or XML response<br>}<br
+			      ><br>@Get @Produces("image/*") public void asImage() {<br>    ... // produces a image<br>}<br></code></pre></div>
+		<p>
+		The @Produces annotations specifies one or more content types. Wildcards are allowed, as are quality parameters <code>q</code> with values &ge; 0 
+		to express server-side preferences of certain content types.<br>
+		The client accept-header will also contain a list of (wildcarded, parameterized) content-types. 
+		The {javadoc:content.ContentNegotiation content negotiation} algorithm is used to match client preferences with 
+		server capabilities to determine the {javadoc:Response#getContentType() actual content-type} of the response.<br>
+		An action method without a @Produces annotation makes the bold statement that it can handle all preferred content-types of the client.     
+		
+		<h3 id="anno-consumes">@Consumes annotation</h3>
+		Action methods can use the {javadoc:annotation.Consumes @Consumes} annotation to specify that they only can process 
+		requests with payloads of a certain {javadoc:Request#getContentType() content-type}. 
+		<div class="highlight">
+			<pre><code>@Put @Consume("application/json") public void processJson() {<br>    ... // handle requests with a JSON body<br>}<br><br
+			>@Put @Consume("image/png", "image/gif") public void processImages() {<br>    ... // handle requests with a image body<br>}<br></code></pre>
+		</div>
+		
+		<h3 id="selection">Action method selection</h3>
+		When a controller receives a request, it must select the most appropriate action method to process the request,
+		or signal an error if it has no suitable method.<br>Selection starts with all action methods declared by the controller class
+		and its superclasses. Methods declared in derived classes are given higher priority.
+		<ol>
+		<li><b>Test:</b> Only candidate methods pass whose HTTP method annotation(s) includes the request HTTP method.<br>
+			If there are no more candidates, selection stops with a {javadoc:Response*Status#SC405_METHOD_NOT_ALLOWED 405 method not allowed} error.   
+		<li><b>Test:</b> Only candidate methods pass which can consume the content-type of the request.<br>The method 
+			either does not have a {javadoc:annotation.Consumes @Consumes} annotation or the annotation value contains the request content-type.<br>
+			If there are no more candidates, selection stops with a {javadoc:Response*Status#SC415_UNSUPPORTED_MEDIA_TYPE 415 unsupported media type} error.   
+		<li><b>Test:</b> Only candidate methods pass which can produce one of the acceptable response content types.<br>
+			An algorithm implemented by the {javadoc:content.ContentNegotiation} class gives a score to each potential content type.
+			The best scoring content type and the providing action method is selected as best match.<br>
+			If there is no match, selection stops with a {javadoc:Response*Status#SC406_NOT_ACCEPTABLE 406 not acceptable} error.
+		</ol> 
+				
+		<h3 id="parameters">Action method parameters</h3>
+		Controller action methods can declare Java parameters. When the method is invoked, the Civilian runtime will inject argument values into those parameters.
+		You must restrict to certain parameter types and/or use parameter annotations to specify what you want to inject.
+		(In the following <i>parameter</i> is used both for <i>Java method parameters</i> and <i>request parameters</i>, so don't get confused).  
+		 
+		<p>
+		<b>Inject request parameters</b><br>
+		All kinds of request parameters can be injected. The method parameter must be annotated with 
+		<ul>
+		<li>{javadoc:annotation.Parameter @Parameter} for {javadoc:Request#getParameter(java*lang*String) parameters}
+		<li>{javadoc:annotation.PathParam @PathParam} for {javadoc:Request#getPathParam(org*civilian*resource*PathParam) path parameters}
+		<li>{javadoc:annotation.MatrixParam @MatrixParam} for {javadoc:Request#getMatrixParam(java*lang*String) matrix parameters}
+		<li>{javadoc:annotation.HeaderParam @HeaderParam} for {javadoc:Request#getHeaders() headers}
+		<li>{javadoc:annotation.CookieParam @CookieParam} for {javadoc:Request#getCookies() cookies}
+		</ul> 
+		Example? Example!
+		<div class="highlight">
+			<pre><code>@Get public void youNameIt(<br
+			>    @Parameter("name")                   String name,<br
+			>    @Parameter("when") @LocaleValue      Date when,<br
+			>    @PathParam("customerId")             Integer custId,<br
+			>    @MatrixParam("p") @DefaultValue("0") int page,<br
+			>    @HeaderParam("x-eval")               List&lt;String> evalHeaders,<br
+			>    @CookieParam("prefs")                Cookie prefs,<br
+			>    @CookieParam("optout")               boolean optout)<br
+			>{ ...</code></pre>
+		</div>
+		
+		The annotation value specifies the name of the request parameter (which may or may not be the same as the method parameter name).<br>
+		If a path parameter is injected, the type of the method parameter must equal the type of 
+		the {javadoc:resource.PathParam}.<br>
+		For all other parameters the injected argument is the value of the request 
+		parameter converted to the type of the method parameter. These method parameter types are supported:
+		<ul>
+		<li><code>String</code> (of course since request parameters are strings)
+		<li>any class for which a {javadoc:type.Type} implementation exists in the applications {javadoc:Application#getTypeLib() type library}. 
+			The Type implementation will parse the string value and construct the target object value.<br>
+			The default type-library includes Types for all primitive Java types and its class counterparts, and common Date classes. 
+		<li>any class with a constructor which takes a single string argument.
+		<li>any class with a public static method named <code>valueOf</code> or <code>fromString</code> which takes a single String parameter
+			and returns an object of that class.
+		<li><code>java.util.List</code>, <code>java.util.Set</code>, <code>java.util.SortedSet</code>. Many request parameters can have multiple 
+			values, therefore these collection parameters will receive all values, not just the first one.
+			If no generic type argument is given on the collection, the collection will contain string values. Else the generic type argument
+			must be a supported simple type and the values will be converted accordingly.
+		<li>{javadoc:util.Value} 
+		<li>{javadoc:annotation.CookieParam @CookieParam} can also inject the whole Cookie object and not just the cookie value.
+		</ul>
+		Conversion of parameter string values to another type is by default locale independent. But especially for parameters
+		locale dependent parsing can be what you want. In this case add the {javadoc:annotation.LocaleValue @LocaleValue} annotation.
+		<p>   
+		The {javadoc:annotation.DefaultValue @DefaultValue} annotation can be used to specify a default value which is injected if
+		the request does not contain the parameter.<br>
+		<p>
+		<b>Inject request content</b><br>
+		You can annotate a method parameter with {javadoc:annotation.RequestContent @RequestContent} to inject the request content:
+		<div class="highlight">
+			<pre><code>@Put @Consumes("application/json") public void placeOrder(@RequestContent Order order)<br
+			>{ ...</code></pre>
+		</div>
+		Conversion of the request content depends on the type of the method parameter: If the type of the method parameter is
+		<ul>
+		<li><code>java.io.InputStream</code> an {javadoc:Request#getContentStream() InputStream} for the request content is injected
+		<li><code>java.io.Reader</code> or <code>java.io.BufferedReader</code> a {javadoc:Request#getContentReader() Reader} 
+			for the request content is injected
+		<li><code>byte[]</code> the raw request content is injected
+		<li><code>String</code> the {javadoc:Request#getContentEncoding() decoded} request content is injected
+		<li>for any other type Civilians <a href="doc-reqresp.html#content">content serialization</a> mechanism is used
+			to produce an parameter instance from the request content. In this case you want to use a @Consumes annotation
+			to restrict to content-types which can be handled by your application.
+		</ul>
+
+		<p>
+		<b>Inject response content</b><br>
+		Action methods which return data (e.g. as XML or JSON) can use Civilians <a href="doc-reqresp.html#content">content serialization</a>
+		to easily marshall the data:
+		<div class="highlight">
+			<pre><code>@Get @Produces("application/json") public void getOrder()<br>{<br
+			>    Order order = new Order();<br
+			>    ... // fill order object with data<br
+			>    getResponse().write(order); // serializes to JSON<br
+			>}</code></pre>
+		</div>
+		For a slightly more compact syntax you can  use the {javadoc:annotation.ResponseContent @ResponseContent} annotation to achieve
+		the same effect. A new instance is injected into the parameter. When the action method ended and the response is not committed, the 
+		object will be written to the response:
+		<div class="highlight">
+			<pre><code>@Get @Produces("application/json") public void getOrder(@ResponseContent Order order)<br>{<br
+			>    ... // fill order object with data<br
+			>}</code></pre>
+		</div>
+		An alternative to the @ResponseContent annotation is to derive your data class from the {javadoc:response.ResponseContent} class.
+		<div class="highlight">
+			<pre><code>@Get @Produces("application/json") public void getOrder(Order /*extends ResponseContent*/ order)<br>{<br
+			>    ... // fill order object with data<br
+			>}</code></pre>
+		</div>
+		
+		<p>
+		<b>Inject request or response objects</b><br>
+		When a controller action method is invoked the request and response are available via {javadoc:Controller#getRequest() getRequest()}
+		and {javadoc:Controller#getRequest() getResponse()}. Similar you can access the {javadoc:Controller#getApplication() application},
+		the {javadoc:Controller#getContext() context} and other context variables.<br>
+		But if you prefer you can also inject request and response objects via method parameters (no annotations needed):
+		<div class="highlight">
+			<pre><code>@Get public void process(Request request, Response response)<br
+			>{ ...</code></pre>
+		</div>
+
+		<p>
+		<b>Inject multiple request parameters as Java bean</b><br>
+		The signature of a controller action method can become crowded if it contains a lot of parameters. 
+		This especially happens if you want to process a posted HTML form with many form controls.
+		The {javadoc:annotation.BeanParam @BeanParam} annotation allows you to inject a bean object into
+		a controller method parameter, with the bean properties populated by request values.
+		These properties are supported:
+		<ul>
+		<li>Bean setter methods. If not otherwise annotated, the request parameter with the name 
+			of the bean property will be injected into the property.
+		<li>Other public methods, with a single argument and an annotation what to inject.
+		<li>Public fields. If not otherwise annotated, the request parameter with the name 
+			of the field will be injected into the field.
+		</ul>   
+		 
+		<div class="highlight">
+			<pre><code>@Post public void process(@BeanParam Data data)<br
+			>{ ... }<br><br
+			>public class Data<br
+			>{<br
+			>    /*implicit: @Parameter("name")*/    public void setName(String s) { ... }<br
+			>    /*implicit: @Parameter("length")*/  public int length;<br
+			>    @MatrixParam("page")                public void initPage(int n) { ... }<br
+			>    @PathParam("customerId")            public Integer customeId;<br
+			>    @BeanParam                          public void setMoreData(MoreData md);<br
+			>}</code></pre>
+		</div>
+		
+
+		<p>
+		<b>Build own annotations to inject custom objects</b><br>
+		Civilian allows to build own annotations for action method parameters. Please study
+		the <a href="doc-samples.html#inject">Inject sample</a> how to do this.
+		<div class="highlight">
+			<pre><code>import org.myapp.annotations.Order;<br><br
+			>@Post public void process(@Order Order order)<br
+			>{ ... </code></pre>
+		</div>
+		
+		<p>
+		<b>Injection errors</b><br>
+		Converting request parameters or content to the method parameter type may fail due syntactically invalid data.
+		In this case the action method is not invoked, but instead a {javadoc:request.BadRequestException} is thrown which will
+		by default result in a {javadoc:Response*Status#SC400_BAD_REQUEST 400 bad request} error sent to the client.<p>
+		You can avoid injection error by using a {javadoc:util.Value} parameter. If an conversion error occurs the Value object
+		will store the exception, else will contain the parsed value:
+		<div class="highlight">
+			<pre><code>@Get public void process(@Parameter("page") <b>Value&lt;Integer></b> page)<br
+			>{<br
+			>    if (!value.hasError())<br
+			>    {</code></pre>
+		</div>
+		 
+
+		<h2 id="lifecycle">Controller Lifecycle</h2>
+		The lifecycle of a controller is simple: A controller instance is created
+		to process a single request, and then discarded.<br>
+		This has the following important consequences:
+		<ul>
+		<li>A controller class itself must not be thread-safe.
+		<li>A controller class can define own properties to store temporary data. The controller base class actually defines several
+			properties, e.g. the {javadoc:Controller#getRequest() request} property.
+		</ul>
+		 
+		<h2 id="invocation">Controller invocation</h2>
+		The entry point for request processing are action methods. But the call to the negotiated action method is embedded in calls to 
+		special init- and exit-methods. 
+		The exact sequence of method calls when a controller {javadoc:Controller#process(org*civilian*Request) processes} a request is as follows:
+		<p>
+		<ul class="codelist">
+			<li>
+				<code>try</code>
+				<ul class="codelist">
+					<li>{javadoc:Controller#checkAccess() checkAccess()}. Should test if access to the resource is allowed.
+					<li><code>if (!{javadoc:Response#isCommitted()})</code>
+						<ul class="codelist">
+							<li>Perform content negotiation to determine the action method.
+							<li><code>if (action method found)</code>
+								<ul class="codelist">
+									<li>{javadoc:Controller#init() init()}: Put common initialization code in this method.
+									<li>{javadoc:Controller#setCaching() setCaching()}: Initialize caching behavior.
+									<li><code>if (!{javadoc:Response#isCommitted()})</code>
+										<ul class="codelist">
+											<li>Invoke the action method.
+										</ul>
+								</ul>
+							<li><code>else</code>
+								<ul class="codelist">
+									<li>{javadoc:Controller#reject(int) reject()}. Sends a 405, 406 or 415 error. 
+								</ul>
+						</ul>
+				</ul>
+			</li>
+			<li>
+				<code>catch</code>
+				<ul class="codelist">
+					<li>{javadoc:Controller#onError(java*lang*Exception) onError(e)}: Place common exception handling here.
+				</ul>
+			<li>
+				<code>finally</code>
+				<ul class="codelist">
+					<li>{javadoc:Controller#exit() exit()}: Place cleanup code in this method.
+				</ul>
+		</ul>
+		<p>
+		<h2 id="arch">Controller architecture</h2>
+		Controller classes all derive from the {javadoc:Controller} base class. Its also a good idea to introduce own
+		controller base classes in your application, to let derived classes inherit common functionality.<br>
+		Controller base classes can especially provide meaningful implementations of {javadoc:Controller#checkAccess() checkAccess()},
+		{javadoc:Controller#init() init()}, {javadoc:Controller#setCaching() setCaching()}, 
+		{javadoc:Controller#onError(java*lang*Exception) onError(e)} and {javadoc:Controller#exit() exit()}.
+		<p>
+		For example a base controller class might implement {javadoc:Controller#checkAccess() checkAccess()} to test if the user is 
+		logged in and if not redirect to a login page or send a 403 forbidden response. All derived controller would automatically inherit
+		that access control. The <a href="doc-security.html">Security</a> chapter discusses this topic in detail.
+		<p>
+		Another example is demonstrated by the <a href="doc-samples.html#jpareslocal">JPA / Resource Local</a> sample. A base controller
+		class uses {javadoc:Controller#exit() exit()} to commit or rollback a JPA transaction.
+		
+		<h2 id="di">Dependency injection</h2>
+		If you intend to use <a href="https://en.wikipedia.org/wiki/Dependency_injection">Dependency Injection</a> (DI) in your web application,
+		then Controller objects are the ideal targets to inject dependencies.<br>
+		Controller objects are created per request. You can intercept Controller creation by providing a {javadoc:controller.ControllerFactory}
+		during {javadoc:application.AppConfig#setControllerFactory(org*civilian*controller*ControllerFactory) application startup}.
+		<p>
+		Civilian itself provides factory implementations for {javadoc:controller.factory.GuiceControllerFactory Guice} and 
+		{javadoc:controller.factory.CdiControllerFactory CDI} in order to use Guice or CDI dependency injection on controllers. 
+		<a href="doc-samples.html#guice">Several</a> <a href="doc-samples.html#cdi">samples</a> demonstrate this feature.
+
+	</div>
+</div>

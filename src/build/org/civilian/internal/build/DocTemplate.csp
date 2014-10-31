@@ -1,0 +1,75 @@
+import java.util.List
+import org.civilian.util.StringUtil
+
+
+template(String inputFile, List<String> lines) extends - throws -
+{{
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="civilian java web framework">
+		<title><%printTitle();%></title>
+		<link rel="stylesheet" type="text/css" href="res/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="res/civilian.css">
+	</head>
+	<body>
+	<nav class="navbar navbar-default navbar-fixed-top hidden-print" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<!--<a class="navbar-brand civilian civ-brand" href="index.html">CIVILIAN</a>  -->
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					@printNav("index", 		"Home");
+					@printNav("intro", 		"Introduction");
+					@printNav("quickstart", "Quickstart");
+					@printNav("doc", 		"Documentation");
+					@printNav("download", 	"Download");
+					@printNav("license", 	"License");
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					@printNav("contact",	"Contact/Imprint");
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+	@for (String line : lines)
+		<%line%>
+	@if (!inputFile.startsWith("index"))
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-9">
+				<hr>
+				<p class="footer">Copyright &copy; 2014. All rights reserved.</p>
+			</div>
+		</div>
+	</div>
+	</body>
+	</html>
+}}
+
+
+private void printNav(String file, String text)
+{{
+	<li<%?inputFile.startsWith(file)%> class="active"<%?%>><a href="<%file%>.html"><%text%></a></li>
+}}
+
+
+private void printTitle()
+{{
+	Civilian<%/%>
+	@String file = StringUtil.cutRight(inputFile, ".html");
+	@if (!"index".equals(file))
+		@for (String part : file.split("-"))
+			<%%> - <%StringUtil.startUpperCase(part)%><%/%>
+}}

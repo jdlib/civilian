@@ -1,0 +1,8 @@
+package org.civilian.template.csp
+
+
+template(String name)
+{{
+	@super(name, 5, "10");
+	<%name%>
+}}

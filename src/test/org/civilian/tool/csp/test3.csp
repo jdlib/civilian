@@ -1,0 +1,16 @@
+encoding ISO-8859-1
+package com.test;
+
+import java.io.Serializable
+import java.io.IOException
+import ./data.Data1
+import ../Data2;
+
+template
+	package-access
+	extends - using TabWriter
+	implements Serializable
+	throws IOException
+{{
+	Hello!
+}}

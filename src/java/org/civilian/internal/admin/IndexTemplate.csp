@@ -1,0 +1,90 @@
+import java.util.Date
+import org.civilian.Version
+import org.civilian.Context
+import org.civilian.Application
+import org.civilian.resource.Url
+
+
+template(Context context) mixin html
+{{
+	<h3>Context Settings</h3>
+	<table class="table table-striped table-bordered table-condensed">
+	<tr>
+		<th>Parameter</th>
+		<th>Value</th>
+		<th>API</th>
+	</tr>
+	<tr>
+		<td>Develop</td>
+		<td><%context.develop()%></td>
+		<td>org.civilian.Context.develop()</td>
+	</tr>
+	<tr>
+		<td>Context Path</td>
+		<td><%context.getPath()%></td>
+		<td>org.civilian.Context.getPath()</td>
+	</tr>
+	<tr>
+		<td>Context Class</td>
+		<td><%context.getClass().getName()%></td>
+		<td>org.civilian.Context.getClass()</td>
+	</tr>
+	<tr>
+		<td>Civilian Version</td>
+		<td><%Version.VALUE%></td>
+		<td>org.civilian.Version.VALUE</td>
+	</tr>
+	<tr>
+		<td>Server</td>
+		<td><%context.getServerInfo()%> <%context.getServerVersion()%></td>
+		<td>org.civilian.Context.getServerInfo(), .getServerVersion()</td>
+	</tr>
+	<tr>
+		<td>Java Version, VM</td>
+		<td><%System.getProperty("java.version")%>, <%System.getProperty("java.vm.name")%></td>
+		<td>java.lang.System.getProperty()</td>
+	</tr>
+	<tr>
+		<td>Java Total Used Memory</td>
+		<td><%getMemory()%></td>
+		<td>java.lang.Runtime.totalMemory()</td>
+	</tr>
+	<tr>
+		<td>System Date</td>
+		<td><%new Date()%></td>
+		<td></td>
+	</tr>
+	</table>
+
+	<h3>Installed Applications</h3>
+	<table class="table table-striped table-bordered table-condensed">
+	<tr>
+		<th>Application</th>
+		<th>Path</th>
+		<th>Status</th>
+		<th>App Class</th>
+	</tr>
+	@Url appUrl = html.url(AdminResources.root.$appId.settings);
+	@for (Application app : context.getApplications())
+		@appUrl.setPathParam(app.getId()); 
+		<tr>
+			@// link within the admin app
+			<td><a href="<%appUrl%>"><%app.getId()%></a></td>
+			@// link to the application itself 
+			<td><a target="_blank" href="<%html.url(app)%>"><%app.getPath()%></a></td>
+			<td><%app.getStatus()%></td>
+			<td><%app.getClass().getName()%></td>
+		</tr>
+	</table>
+}}
+
+
+private String getMemory()
+{
+	long memoryKb   = Runtime.getRuntime().totalMemory() / 1024;
+	String memoryMb = String.valueOf(((double)memoryKb) / 1024);
+	int p = memoryMb.indexOf('.');
+	if (memoryMb.length() > p + 4)
+		memoryMb = memoryMb.substring(0, p + 4);
+	return memoryMb + " MB";
+}

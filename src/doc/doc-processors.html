@@ -1,0 +1,117 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Processors</h1>
+
+		<div class="takeaway">
+			Application use a configurable and extensible pipeline of 
+			{javadoc:Processor Processors} to process a request.  
+			A processor can contribute to the response or may act as filter.
+			{javadoc:processor.ResourceDispatch} and {javadoc:processor.AssetDispatch} are  
+			processor implementations to process requests for dynamic and static resources.
+		</div>
+
+		<ul>
+			<li><a href="#intro">Introduction</a></li>
+			<li><a href="#config">Configuration</a></li>
+			<li><a href="#resdispatch">ResourceDispatch</a></li>
+			<li><a href="#assetdispatch">AssetDispatch</a></li>
+			<li><a href="#ipfilter">IpFilter</a></li>
+			<li><a href="#decompressor">Decompressor</a></li>
+			<li><a href="#compressor">Compressor</a></li>
+			<li><a href="#writing">Writing an own processor</a></li>
+		</ul>
+		
+		<h2 id="intro">Introduction</h2>
+		The <a href="doc-resources.html">resources</a>, <a href="doc-controllers.html">controller</a> and 
+		<a href="doc-assets.html">asset</a> chapter
+		showed how requests for dynamic and static resources are handled.<br>
+		But Civilian can't know all possible ways your application wants to process requests.
+		<p>
+		Therefore applications can customize request processing by using {javadoc:Processor Processors}. The application
+		processors are arranged in a {javadoc:Application#getProcessors() pipeline}:
+		 
+		<div class="img"><img src="doc-arch-proc.png"></div>
+		<p>
+		Each processor &ndash; when invoked &ndash; can decide
+		<ul>
+		<li>whether to handle the request and contribute to the response</li>
+		<li>to either stop further processing or invoke the next processor in the pipeline</li>
+		<li>to do additional processing after the following processors have been invoked</li>
+		<li>to modify request or response to implement filter functionality</li>
+		</ul>
+		The processor pipeline usually contains a {javadoc:processor.ResourceDispatch} and {javadoc:processor.AssetDispatch} processor to handle
+		requests for dynamic resources and assets.<br>
+		Besides predefined processors you may write own implementations for special tasks. You may especially want to do this for tasks
+		which normally would have required to implement a servlet filter.
+
+		<h2 id="config">Configuration</h2>
+		The processor pipeline &ndash; like all other application settings &ndash; can be configured via <code>civilian.ini</code> or programmatically
+		during {javadoc:Application#initProcessors(org*civilian*processor*ProcessorConfig) application setup}: By default this pipeline is created:
+		<ol>
+		<li><a href="#ipfilter">IpFilter</a>, if the Civilian config specified a list of allowed ips
+		<li><a href="#resdispatch">ResourceDispatch</a>, to dispatch requests to dynamic resources
+		<li><a href="#assetdispatch">AssetDispatch</a>, to serve CSS, JS files and other static resources of the application, if 
+			the application has a non empty list of asset locations
+		</ol>
+		
+		To programmatically rearrange this pipeline, add or remove own processors you need to overwrite 
+		{javadoc:Application#initProcessors(org*civilian*processor*ProcessorConfig) Application.initProcessors(ProcessorConfig)}.    
+		  
+		<h2 id="resdispatch">ResourceDispatch</h2>
+		When invoked, the {javadoc:processor.ResourceDispatch} processor tries to find a resource within
+		the applications resource tree which matches the request path.
+		As a side-effect of this matching process, path parameters are recognized and initialized in the request.<br>
+		If the matched resource is associated with a controller, a controller instance is created and invoked.
+		Else the ResourceDispatch invokes the next processor in the processor pipeline.<br> 
+		
+		<h2 id="assetdispatch">AssetDispatch</h2>
+		The {javadoc:processor.AssetDispatch} processor uses the applications {javadoc:asset.AssetService} to locate an
+		asset for the request. If it finds one, it writes the asset to the response and stops further processing.
+		Else it just invokes the next processor in the processor pipeline.
+
+		<h2 id="ipfilter">IpFilter</h2>
+		{javadoc:processor.IpFilter} is a processor implementation which blocks requests when it's remote IP is not contained in a whitelist
+		of allowed IPs.
+		
+		<h2 id="decompressor">Decompressor</h2>
+		{javadoc:processor.Decompressor} examines the request if its content is compressed:
+		It evaluates the <code>Content-Encoding</code> header and recognizes these encoding schemes: gzip, x-gzip, deflate, compress, x-compress, identity.<br>
+		If it sees one of these schemes, it {javadoc:Request#addInterceptor(org*civilian*request*RequestStreamInterceptor) intercepts} access to the request content 
+		and transparently decompresses the content. 
+		
+		<h2 id="compressor">Compressor</h2>
+		{javadoc:processor.Compressor} examines the <code>Accept-Encoding</code> header of the request to detect
+		if the response content can be be compressed. 
+		If yes it {javadoc:Response#addInterceptor(org*civilian*response*ResponseStreamInterceptor) intercepts} access to the response content 
+		in order to transparently encode the content.
+
+		<h2 id="writing">Writing an own processor</h2>
+		To write an own processor you derive a class from {javadoc:Processor} and add an instance to the processor pipeline
+		during {javadoc:Application#initProcessors(org*civilian*processor*ProcessorConfig) Application.initProcessors(ProcessorConfig)}.
+		<p>
+		To implement filter functionality, you can use these techniques
+		<ul>
+			<li>Overwrite properties of request or response.
+			<li>Intercept request or response content as demonstrated by <a href="#decompressor">Decompressor</a> and <a href="#compressor">Compressor</a>
+			<li>Wrap {javadoc:request.RequestWrapper request} or {javadoc:response.ResponseWrapper response} if you want to intercept access
+				to request or response methods.  
+		</ul>
+		
+		Both request and response allow you to intercept access to their content.
+		<ul>
+		<li>Add a {javadoc:Request#addInterceptor(org*civilian*request*RequestStreamInterceptor) RequestStreamInterceptor} to intercept
+			reading of any request content. 
+		<li>Add a {javadoc:Request#addInterceptor(org*civilian*request*RequestReaderInterceptor) RequestReaderInterceptor} to intercept
+			reading of text request content. 
+		<li>Add a {javadoc:Response#addInterceptor(org*civilian*response*ResponseStreamInterceptor) ResponseStreamInterceptor} to intercept
+			writing of any response content. 
+		<li>Add a {javadoc:Response#addInterceptor(org*civilian*response*ResponseWriterInterceptor) ResponseWriterInterceptor} to intercept
+			writing of text response content.
+		</ul>
+		
+		Interceptors can be used to wrap request input or response output, as shown by the <a href="#compressor">Compressor</a> or
+		<a href="#decompressor">Decompressor</a> processors.<br>
+		Additionally response interceptors can also be used to modify a response just before it is committed.     
+	</div>
+</div>

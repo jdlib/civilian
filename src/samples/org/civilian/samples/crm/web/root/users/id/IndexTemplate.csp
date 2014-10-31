@@ -1,0 +1,30 @@
+import org.civilian.samples.crm.text.Message
+
+
+template mixin table:t, lang
+{{
+	<form name="form" ng-submit="nothing()">
+	@t.columns("[]10[200, class=fill]");
+	@t.startTable("class", "table table-form");
+	@//-----------------------------	
+	[t]	<%lang.msg(Message.Name)%>
+	[t]	<input type="text" ng-model="object.name" required>
+	@//-----------------------------	
+	[t] <%lang.msg(Message.FirstName)%>
+	[t] <input type="text" ng-model="object.firstName">
+	@//-----------------------------	
+	[t] <%lang.msg(Message.Email)%>
+	[t] <input type="email" ng-model="object.email" required>
+	@//-----------------------------	
+	[t] <%lang.msg(Message.Telephone)%>
+	[t] <input type="text" ng-model="object.phone">
+	@//-----------------------------	
+	[t] <%lang.msg(Message.isAdmin)%>
+	[t] <input type="checkbox" ng-model="object.isAdmin">
+	@//-----------------------------	
+	[t] <%lang.msg(Message.Login)%>
+	[t] <input type="text" ng-model="object.login">
+	@//-----------------------------	
+	@t.endTable(); 
+	</form>
+}}

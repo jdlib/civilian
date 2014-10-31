@@ -1,0 +1,9 @@
+.settings
+bin/
+lib/build/
+lib/jetty/
+lib/samples/
+lib/test/
+lib/cobertura/
+tmp/
+todo.txt

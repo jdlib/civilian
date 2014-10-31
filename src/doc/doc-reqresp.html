@@ -1,0 +1,259 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Request & Response</h1>
+
+		<div class="takeaway">
+			The {javadoc:Request} and {javadoc:Response} interfaces represent
+			a HTTP request and response. Writing a web application means
+			to evaluate requests and building responses. ContentSerialization
+			allows to easily convert Java models into/from request or response content. 
+		</div>
+
+		<ul>
+			<li><a href="#intro">Introduction</a></li>
+			<li><a href="#request">Request</a></li>
+				<ul>
+					<li><a href="#reqpath">Path</a>, 
+						<a href="#reqmethod">Method</a>,
+						<a href="#reqparams">Parameters</a>,
+						<a href="#reqheaders">Headers</a>,
+						<a href="#reqcontent">Content</a>,
+						<a href="#reqsecurity">Security</a>,
+						<a href="#reqmp">Multipart</a>,
+						<a href="#reqasync">Async</a>,
+						<a href="#reqinterface">IP Interfaces</a>
+				</ul>
+			<li><a href="#response">Response</a></li>
+				<ul>
+					<li><a href="#respstatus">Status</a>, 
+						<a href="#respheaders">Headers</a>, 
+						<a href="#respcontent">Content</a>, 
+						<a href="#respwriter">ResponseWriter</a>, 
+						<a href="#resperror">sendError</a>,
+						<a href="#respredirect">sendRedirect</a>, 
+						<a href="#respbuffer">Buffer</a> 
+				</ul>
+			<li><a href="#content">Content Serialization</a></li>
+		</ul>
+
+		<h2 id="intro">Introduction</h2>
+		The interfaces {javadoc:Request} and {javadoc:Response} model a HTTP request and response.<br>
+		A web application is essentially something which receives HTTP requests and returns HTTP responses.
+		<p>
+		Request and Response are functionally equivalent to a HttpServletRequest and HttpServletResponse.
+		If Civilian is running in a servlet container, the Request and Response implementations used
+		are simple wrappers around their servlet counterparts.
+		<p>
+		Civilian also provides request and response implementations for a {javadoc:context.test.package-summary test environment}.
+		Please read the <a href="doc-development.html#testing">test chapter</a> for further information.
+		<p>
+		This chapter gives a short overview about these two classes and its most important methods. The following chapters will introduce
+		the <a href="doc-resources.html">resource</a> concept &ndash; requests are requests for resources &ndash; and how the application can dynamically 
+		build responses to resource requests using <a href="doc-controllers.html">controllers</a>.<br>
+		 
+		<h2 id="request">Request</h2>
+		{javadoc:Request} gives you access to the path, method, headers, parameters and content of a HTTP request.
+
+		<h3 id="reqpath">Path</h3>
+		Civilian uses the {javadoc:resource.Path} class to represent path strings (which guarantees correct syntactical form).
+		The {javadoc:Request#getPath() request path} is the absolute path from the server root <code>/</code> to the requested resource.
+		{javadoc:Context#getPath() Context path} and {javadoc:Application#getPath() application path} are both prefixes of
+		the request path.<p>
+		<div class="img">
+			<img src="doc-arch-url.png">
+		</div>
+		Context path and applications may both be the root path <code>/</code>.<br>
+		{javadoc:Request#getRelativePath()} gives you the path of the request relative to the application path. 
+		  
+		<h3 id="reqmethod">Method</h3>
+		{javadoc:Request#getMethod()} returns the name of the HTTP method.
+		
+		<h3 id="reqparams">Parameters</h3>
+		Civilian gives you access to normal paramters, matrix-, and path parameters in a request.
+		Given a request to the URL:
+		<div class="highlight">
+			<code>https://example.org/apps/crm/customers/1345;mode=list?sel=1&sel=2&sel=3</code>
+		</div>
+		these parameters are recognized:
+		<p>
+		<table class="table">
+		<tr>
+			<td rowspan="2">Parameter</td>
+			<td>{javadoc:Request#getParameter(java*lang*String) request.getParameter("sel")}</td>
+			<td><code>"1"</code></td>
+		</tr>
+		<tr>
+			<td>{javadoc:Request#getParameters(java*lang*String) request.getParameters("sel")}</td>
+			<td><code>{ "1", "2", "3" }</code></td>
+		</tr>
+		<tr>
+			<td rowspan="2">Matrix parameter</td>
+			<td>{javadoc:Request#getMatrixParam(java*lang*String) request.getMatrixParam("mode")}</td>
+			<td><code>"list"</code></td>
+		</tr>
+		<tr>
+			<td>{javadoc:Request#getMatrixParams(java*lang*String) request.getMatrixParams("mode")}</td>
+			<td><code>{ "list" }</code></td>
+		</tr>
+		<tr>
+			<td>Path parameter</td>
+			<td>{javadoc:Request#getPathParams(org*civilian*resource*PathParam) request.getPathParam(MyPathParams.CUSTOMERID)}</td>
+			<td><code>Integer(1345)</code></td>
+		</tr>
+		</table>
+		Path parameters are not defined by the URL syntax, they are just segments of the path interpreted as parameter.
+		In the example the path segment <code>/1345</code> is interpreted as the id of database entity. Definition and
+		workings of path parameters are explained <a href="doc-resources.html#pathparams">here</a>.
+		<p>
+		When a HTML form is posted, the browser send form values as request content with content type <code>application/x-www-form-urlencoded</code>.
+		Civilian treats these as query parameters as well - if you would use "GET" as form method they also would end up as part of
+		the URL.
+		<p>
+		Values of query and matrix parameters are strings. Manual conversion to other types is tedious and error prone. Civilian includes
+		a {javadoc:type.package-summary Type framework} to help with parsing and formatting. Based on that simple and type-safe access
+		to parameters is {javadoc:Request#getQueryParam(java*lang*String,$org*civilian*type*Type) possible}.<br>
+		Within Controllers the runtime can inject request parameter values into Controller 
+		<a href="doc-controllers.html#parameters">method parameters</a> in a type-safe way, to relieve you from manual type conversion.
+		<p>
+		Path parameters avoid conversion traps since they are designed as typed values using the {javadoc:resource.PathParam} class.
+		<p>
+		Dealing with parameters in the context of HTML forms is also a huge topic. Civilians <a href="doc-forms.html">form library</a>
+		again helps you with parsing and formatting, including handling of locale dependent values.   
+
+		<h3 id="reqheaders">Headers</h3>
+		{javadoc:Request#getHeaders() Access} to the HTTP headers of the request is available via the sub-object {javadoc:request.RequestHeaders}.<br>
+		Request provides specialized methods to access the {javadoc:Request#getCookies() Cookie} header, the
+		{javadoc:Request#getAcceptedContentTypes() Accept} header or the
+		{javadoc:Request#getAcceptedLocale() Accept-Language} header.   
+
+		<h3 id="reqcontent">Content</h3>
+		The content of the request is described by its {javadoc:Request#getContentType() content type}, 
+		{javadoc:Request#getContentEncoding() encoding}, {javadoc:Request#getContentLength() length}.
+		For low-level handling it can be read as {javadoc:Request#getContentStream() byte} or {javadoc:Request#getContentReader() text}
+		stream.<br>
+		Alternatively you can call {javadoc:Request#readContent(java*lang*Class) Request.readContent(Class, Type?)} 
+		to easily parse complex objects. This method is based on Civilians <a href="#content">content serialization</a> framework 
+		which allows easy conversion from data-formats such as JSON or XML to application objects. 
+
+		<h3 id="reqsecurity">Security information</h3>
+		{javadoc:Request#getSecurity() Access} to security related information of the request is available via the sub-object 
+		{javadoc:request.RequestSecurity}. It is aligned along the security capabilities of a servlet container, namely session management,
+		container based authentication and user management.<br>
+		The request object also provides {javadoc:Request#getSession(boolean) access} to a servlet container inspired {javadoc:request.Session} object.
+	 
+		<h3 id="reqmp">Multipart requests</h3>
+		Prior to the servlet 3.0 spec multipart requests (i.e. request with content-type <code>multipart/form-data</code>) required own processing.
+		The introduction of <code>javax.servlet.http.Part</code> helped a little, but required different handling of
+		simple parameters in normal and multipart requests.
+		<p>
+		Civilian simplifies multipart processing. All parameters in the multipart request are available as {javadoc:Request#getQueryParam() query parameters}.
+		Additionally for each parameter which represents an uploaded file a {javadoc:request.Upload} object is provided by the 
+		{javadoc:Request#getUpload(java*lang*String) request}. The <a href="doc-samples.html#upload">Upload sample</a> demonstrates this feature.
+		<p>
+		Multipart requests need to be explicitly enabled in the Civilian <a href="doc-config.html">configuration</a> (for instance look at the
+		upload sample) or during {javadoc:Application#init(org*civilian*application*AppConfig) application}
+		{javadoc:application.AppConfig#setUploadConfig(org*civilian*application*UploadConfig) startup}.
+		
+		<h3 id="reqasync">Async operations</h3>
+		Asynchronous processing of requests was introduced in the servlet 3.0 spec. Civilian covers this functionality 
+		with the {javadoc:request.AsyncContext} available via {javadoc:Request#getAsyncContext()}.   		
+		The <a href="doc-samples.html#chat">Chat sample</a> demonstrates this feature.
+		<p>
+		Async capabilities need to be explicitly enabled in the Civilian <a href="doc-config.html">configuration</a> (for instance look at the
+		chat sample) or during {javadoc:Application#init(org*civilian*application*AppConfig) application}
+		{javadoc:application.AppConfig#setAsync(boolean) startup}.
+		
+		<h3 id="reqinterface">IP Interface information</h3>
+		Information about the {javadoc:Request#getRemoteInfo() remote}, {javadoc:Request#getServerInfo() server} and
+		{javadoc:Request#getLocalInfo() local} IP interfaces is made available sub-objects of the request.  
+
+		<h2 id="response">Response</h2>
+		The {javadoc:Response} contains a status, headers and content.
+		
+		<h3 id="respstatus">Status</h3>		
+		{javadoc:Response#setStatus(int)} allows to set the HTTP response status. {javadoc:Response*Status} defines constants 
+		for most common HTTP status codes.
+		
+		<h3 id="respheaders">Headers</h3>		
+		{javadoc:Response#getHeaders() Access} to the HTTP headers of the response is available via the sub-object {javadoc:response.ResponseHeaders}.
+		A cookie header can be added through {javadoc:Response#addCookie(javax*servlet*http*Cookie) addCookie(Cookie)}. 
+
+		<h3 id="respcontent">Content</h3>		
+		The content of the response is described by its {javadoc:Response#setContentType(org*civilian*content*ContentType) content type}, 
+		{javadoc:Response#setContentEncoding(java*lang*String) encoding}, {javadoc:Response#setContentLength(int) length}.
+		For low-level handling it can be written via a {javadoc:Response#getContentStream() byte} or {javadoc:Response#getContentWriter() text}
+		stream.<br>
+		Alternatively Response provides a  
+		{javadoc:Response#writeContent(java*lang*Object,$org*civilian*content*ContentType) Response.writeContent(Class, ContentType?)} method
+		to easily write complex objects. Abbreviations for popular data formats like {javadoc:Response#writeJson(java*lang*Object) JSON}
+		or  {javadoc:Response#writeXml(java*lang*Object) XML} exist. 
+		These methods are based on Civilians <a href="#content">content serialization</a> framework 
+		which allows easy conversion from application objects to data-formats like JSON or XML. 
+		
+		<h3 id="respwriter">ResponseWriter</h3>
+		The writer returned by {javadoc:Response#getContentWriter() Response.getContentWriter()} is 
+		an instance of class {javadoc:response.ResponseWriter}.<br>
+		Besides being a <code>java.io.PrintWriter</code>, ResponseWriter provides additional functionality:
+		<ul>
+		<li>It has getter methods for context objects like the {javadoc:response.ResponseWriter#getResponse() response},
+			{javadoc:response.ResponseWriter#getRequest() request}, {javadoc:response.ResponseWriter#getApplication() application}.
+		<li>It has a {javadoc:response.ResponseWriter#getCharset() charset} property which is set according the response 
+			{javadoc:Response#getContentEncoding() encoding}. {javadoc:util.Charset} allows to detect non-printable characters.
+			In the case of HTML output these can be replaced by character references.
+		<li>It has support for locale dependent {javadoc:response.ResponseWriter#getSerializer() formatting} which is initialized
+			by the response {javadoc:Response#getContentLanguage() locale}.
+		<li>ResponseWriter itself is derived from {javadoc:util.TabWriter} which allows for pretty indentend output (think HTML).  
+		</ul>
+		Being a PrintWriter the ResponseWriter can be passed to any <a href="doc-templates.html">template system</a> like Velocity or Freemaker.
+		But its additional functionality is especially used by Civilians own template system <a href="doc-templates-csp.html">CSP</a>.
+
+		<h3 id="resperror">sendError</h3>
+		Response provides the {javadoc:Response#sendError(int) sendError(int)} and
+		{javadoc:Response#sendError(int,$java*lang*String,$java*lang*Throwable) sendError(int,String,Throwable)}
+		to send an error to the client. This will commit the response.<br>
+		Also any uncaught exception during request processing will automatically result in sending an error 
+		to the client.<br>
+		The exact error response sent to the client can be tweaked by overriding {javadoc:Application#createErrorResponse()}.
+
+		<h3 id="respredirect">sendRedirect</h3>
+		Response provides several {javadoc:Response#sendRedirect(java*lang*String) sendRedirect(*)} methods
+		to send the client a redirect to another URL.
+
+		<h3 id="respbuffer">Response buffer</h3>
+		The response maintains a buffer for the response content. When this buffer is full, writing of the response
+		to the client is started, and the response is set to {javadoc:Response#isCommitted() committed}. 
+		Upto this point the you can reset the {javadoc:Response#reset() response} or its {javadoc:Response#resetBuffer() buffer}.
+		{javadoc:Response#flushBuffer()} actively commits the request.
+		
+		<h2 id="content">Content Serialization</h2>
+		Both request and response can have content payloads, described by a {javadoc:content.ContentType content-type}, encoding and length headers.
+		<p>
+		Oftentimes these payloads can be textual representations of Java objects, e.g. in JSON or XML form.<br>
+		From the application programmers point of view it should be easy to 
+		format such Java models into response content or parse them from request content.
+		The following methods enable such one-liners:
+		<ul>
+			<li>{javadoc:Request#readContent(java*lang*Class) Request.readContent(Class)}
+			<li>{javadoc:Request#readContent(java*lang*Class,$java*lang*reflect*Type) Request.readContent(Class, Type)}
+			<li>{javadoc:Response#writeContent(java*lang*Object) Response.writeContent(Object)}
+			<li>{javadoc:Response#writeContent(java*lang*Object,$org*civilian*content*ContentType) Response.writeContent(Object, ContentType)}
+		</ul>
+		Behind the scenes these calls are implemented by using Civilians content serialization framework.<br>
+		Each application {javadoc:Application#getContentSerializer(org*civilian*content*ContentType) possesses} a list of 
+		{javadoc:content.ContentSerializer ContentSerializers}.
+		A ContentSerializer knows how to to parse and format Java objects from/to representations of a certain content type.
+		<p>
+		Civilian provides a default ContentSerializer for {javadoc:content.GsonJsonSerializer JSON}, 
+		based on <a href="https://code.google.com/p/google-gson/">Google GSON</a>.<br>
+		<small>Just add the GSON libraries to your project and your are ready to go. We recommend using Gson 2.2.4+ which resolved
+		threadlocal issues.</small>
+		<p>
+		Also it has a ContentSerializer for XML based on {javadoc:content.JaxbXmlSerializer JAXB}. In order to use it
+		you need to create an instance passing a suitable JAXBContext for your model classes and register it during
+		application {javadoc:application.AppConfig#registerContentSerializer(org*civilian*content*ContentType,$org*civilian*content*ContentSerializer) startup}. 
+		<p>
+		And of course you can always add an own implementation or replace the default ones. 
+
+	</div>
+</div>

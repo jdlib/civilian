@@ -1,0 +1,338 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Resources</h1>
+
+		<div class="takeaway">
+			Web applications expose resource URLs and handle requests for 
+			these resources. Path parameters complicate
+			things but enable clean URLs.
+			A mapping between a resource and application code
+			which processes requests for the resource is called routing.
+			Civilian has a low-config, intrinsic approach to routing. 
+		</div>
+		
+		<ul>
+		<li><a href="#intro">Introduction</a></li>
+		<li><a href="#pathparams">Path parameters</a></li>
+		<li><a href="#routing">Routing</a>
+			<ul>
+			<li><a href="#basemapping">Base mapping from controller classes to resource paths</a>
+			<li><a href="#indexcontrollers">IndexControllers</a>
+			<li><a href="#pathanno">Using the @Path annotation on packages and class names</a>
+			<li><a href="#pathparamanno">Using the @PathParam annotation on packages and class names</a>
+			<li><a href="#pathannomethods">Using the @Path annotation on controller methods</a>
+			<li><a href="#exensions">URLs and extensions</a>
+			<li><a href="#finepoints">Fine points of resource mappings</a>
+			<li><a href="#checking">Checking resource mappings</a>
+			</ul>
+		</li>
+		</ul>
+
+		<h2 id="intro">Introduction</h2>
+		From a clients perspective a web application consists of resources which are addressed by a URL and 
+		can be requested via HTTP.<br>
+		Internally, depending on whether the response content is generated at runtime, we talk about <b>dynamic</b> 
+		or <b>static</b> resources. Usually we differentiate static from dynamic resources by using the name 
+		<a href="doc-assets.html">assets</a>
+		for the static kind.          
+		<p>
+		Then main tasks with regard to resource processing are
+		<ul>
+		<li>define the URLs of resources which can be requested by a client.
+		<li>for every dynamic resource write code to process requests for that resource and dynamically generate responses.
+		<li>provide files for all static resources (assets) and expose them via Civilians asset handling.  
+		</ul>
+		This chapter explains handling of dynamic resources. From now on we will simply call them resources.
+		<p>
+		Civilian uses the {javadoc:Resource} class to model a resource. At runtime every application 
+		{javadoc:Application#getRootResource() possesses} a list of all its resources, organized as resource tree.
+		The code which processes resource requests is implemented in {javadoc:Controller} classes. In Civilian every resource is 
+		associated with (at most) one controller class.
+		<table class="table">
+		<tr>
+			<th>Resource</th>
+			<th>Controller</th>
+		</tr>
+		<tr>
+			<td><code>Resource("/users")</code></td>
+			<td><code>com.myapp.UsersController</code></td>
+		</tr>
+		<tr>
+			<td><code>Resource("/messages")</code></td>
+			<td><code>com.myapp.MessagesController</code></td>
+		</tr>
+		</table>
+		
+		The <a href="doc-controllers.html">next</a> chapter will explain the inner workings of controllers. Here  
+		we describe how the resource tree is defined and how resources are mapped to controller classes. 
+		In webapp lingo this is called <b>routing</b>.
+		<p>
+		Some web frameworks require to <b>explicitly</b> specify the resource paths
+		and map them to controller classes/functions/code. This is fine for a small set of resources but tedious 
+		for complex applications.<br> 
+		Civilian uses a more <b>implicit</b> approach: It scans the controller classes of an application and builds the resource
+		tree using naming conventions and annotations within the controllers.
+		<p>   
+		Before we explain how this works we complicate things a little bit and introduce path parameters.
+			  
+		<h2 id="pathparams">Path parameters</h2>
+		From the applications perspective, it is tempting to interpret an URL as function, a request as function call, and 
+		request parameters as function arguments. For example in the following URL the id parameter could contain a database id for 
+		a customer entity, and the sample request would therefore return a HTML page showing data of customer 1345:
+		<div class="highlight">
+			<pre><code>https://example.org/crm/customers/show.html?id=1345</code></pre>
+		</div>
+		  
+		Contrary to that view the concept of {link:https://en.wikipedia.org/wiki/Clean_URL semantic or clean URLs}
+		demands a different style of URL design: URLs identify resources and should not contain technical parameters which are instead 
+		expressed in a RESTful way:
+		<ul>
+		<li>Customer 1345 receives an own URL (which is different from customer 1346), 
+			therefore the parameter <code>id</code> is made part of the request path.
+		<li>The URL segment <code>/show</code> is dropped. Instead the HTTP method "GET" is used to tell the server that we 
+			intend to retrieve readonly information.
+		<li>The path extension <code>.html</code> is dropped. Instead the HTTP Accept header is used to request a specific content-type.
+		</ul>
+		<div class="highlight">
+			<pre><code>GET /crm/customers/1345<br>Accept: text/html</code></pre>
+		</div>
+		<p>
+		Accordingly, updating customer 1346, by sending JSON data, might be done with  
+		<div class="highlight">
+			<pre><code>PUT /crm/customers/1346<br>Content-Type: application/json</code></pre>
+		</div>
+		From a functional point of view, path segments like <code>/1345</code> or <code>/1346</code> can transport the same
+		information as parameters and can be used for the same purpose (namely identifying application data). 
+		We call such segments <b>path parameters</b>. (Please note that path parameters are not a syntax element of URLs but just 
+		an interpretation of path segments as parameter values).
+		<p>
+		Of course, in order to answer such requests, the application will examine path parameter segments, convert them into a value
+		(e.g. a customer id) and use them in their calls to the data back-end.
+		<p>
+		Path parameters enable clean URLs, but internally require more sophisticated mapping of URLs to controller code: 
+		With path parameters applications can potentially expose an unlimited number of resource URLs.<br>
+		Therefore routing can't just use constant resource paths, but instead needs to map <b>path schemes</b> to controller code:  
+		<div class="highlight">
+			<table width="100%">
+			<tr>
+				<td width="50%"><code>/crm/customers/<b>{:customerId [0-9]+}</b></code></td>
+				<td width="50%"><code>&rArr; com.crm.customers.id.IndexController</code></td>
+			</tr>
+			</table>
+		</div>
+		At runtime the path parameter segments are converted into a path parameter value:
+		<div class="highlight">
+			<table width="100%">
+			<tr>
+				<td width="50%"><code>/crm/customers/1345</code></td>
+				<td width="50%">run <code>IndexController</code> with <code>customerId = 1345</code></td>
+			</tr>
+			</table>
+		</div>
+		In Civilian path parameters are not constrained to a single path segment, but can also span multiple path segments.
+		Types of path parameter values can be of any kind, not just Strings or simple types.   
+		<div class="highlight">
+			<table width="100%">
+			<tr>
+				<td width="50%"><code>/archive/<b>2014/11/20</b></code></td>
+				<td width="50%"><code><b>&equiv; Date(2014,11,20)</b></code></td>
+			</tr>
+			<tr>
+				<td width="50%"><code>/blog/posts/<b>c3po/latest-musings</b></code></td>
+				<td width="50%"><code><b>&equiv; Post(id:"c3po", slug:"latest-musings")</b></code></td>
+			</tr>
+			<tr>
+				<td width="50%"><code><b>/en</b>/intro</code></td>
+				<td width="50%"><code><b>&equiv; Locale.ENGLISH</b></code></td>
+			</tr>
+			</table>
+		</div>
+		
+		Extracting path parameter values from path strings is only one half of the game. When we want to build resource URLs
+		(for instance to be used in HTML hyperlinks) path parameter values need to be formatted and inserted into a path scheme. 
+		<p>		
+		<hr>
+		<p>		
+		Civilian takes a very formalized approach in handling path parameters:
+		<ul>
+		<li>Every path parameter is described by an own {javadoc:resource.PathParam} object.
+		<li>A PathParam object knows how to extract its value from one or more path segments and 
+			is able to format a value into one or more path segments.
+		<li>PathParam implementations exist for most {javadoc:resource.PathParams common use cases}, but you can easily build implementations
+			for more specific cases. 
+		<li>Defining the URL of a resource includes to describe which path parameters are used in what URL parts.
+		<li>When a request is dispatched, and the matching resource is determined, all path parameters are automatically recognized,
+			their values extracted and made available via {javadoc:Request#getPathParam(org*civilian*resource*PathParam) Request.getPathParam(PathParam)}.<br>
+			<small>This method does not take some string to identify the path param, but a PathParam object, therefore enforcing 
+			compile time safety.</small> 
+		<li>When generating URLs via the {javadoc:resource.Url} class, you simply provide a value for every contained path parameter
+			and let the Url class do the formatting.  
+		<li>All the path parameters used by an application are defined as application wide constants.
+			{javadoc:Application} implementations register their path parameters via a {javadoc:resource.PathParamMap} passed to the constructor
+			of the application base class.<br>
+			For an example please take a look at the source code of the <a href="doc-samples.html#crm">CRM sample</a>:
+			<ul>
+			<li>{source:org.civilian.samples.crm.web.CrmPathParams} defines constants for all path parameters used by the CRM application
+				and collects them in a {javadoc:resource.PathParamMap}
+			<li>{source:org.civilian.samples.crm.web.CrmApp} registers the path parameters by passing the map to the application base class,
+			<li>{source:org.civilian.samples.crm.web.root.customers.id.CustomerController} uses a PathParam to read the value from a request. 
+			</ul>
+		</li>
+		</ul>
+		
+		<h2 id="routing">Routing</h2>
+		The resource URLs of an application build a hierarchy or tree. So does a file system, and publishing a directory of static resources as 
+		website is easy:
+		<table class="table">
+		<tr>
+			<th>File</th>
+			<th width="40%">maps to URL Path</th>
+		</tr>
+		<tr>
+			<td><code>/webapp<b>/index.html</b></code></td>
+			<td><code>/index.html</code></td>
+		</tr>
+		<tr>
+			<td><code>/webapp<b>/css/stlyes.css</b></code></td>
+			<td><code>/css/styles.css</code></td>
+		</tr>
+		</table>
+		
+		<h3 id="basemapping">Base mapping from controller classes to resource paths</h3>
+		Java classes also build a hierarchy and we use this to derive a default mapping from package and class name:   
+		<table class="table">
+		<tr>
+			<th>Class</th>
+			<th width="40%">maps to URL Path</th>
+		</tr>
+		<tr>
+			<td><code>com.demo.web.<b>LoginController</b></code></td>
+			<td><code>/login</code></td>
+		</tr>
+		<tr>
+			<td><code>com.demo.web.<b>posts.ListController</b></code></td>
+			<td><code>/posts/list</code></td>
+		</tr>
+		</table>
+		
+		At application startup Civilian scans the classpath for all controller classes of the application.
+		To be recognized as controller, a class
+		<ol>
+		<li>must have a simple name which ends with <code>Controller</code>
+		<li>must (directly or indirectly) be derived from {javadoc:Controller}
+		<li>must be in or below the {javadoc:controller.ControllerConfig#getRootPackage() controller root package} which by default equals
+			the package of the application class.
+		</ol>
+		The qualified controller class - minus the root package, dots converted to slashes, uppercase converted to lowercase
+		gives the resource path of the controller (relative to the application path). 
+		<p>
+		One great advantage of this implicit mapping is that you can easily find the controller class given a resource url based
+		on the naming conventions. And contrary to explicit routing it can't get out of sync   
+		when you rename classes or packages.    
+
+		<h3 id="indexcontrollers">IndexControllers</h3>
+		Given the mapping based on package and class names we could not map a controller to the application root <code>/</code>. 
+		To enable this, controller classes named <code>IndexController</code> are treated specially, and are mapped to the path corresponding to its package:   
+		  
+		<table class="table">
+		<tr>
+			<td><code>com.demo.web.<b>IndexController</b></code></td>
+			<td width="40%"><code>/</code></td>
+		</tr>
+		<tr>
+			<td><code>com.demo.web.<b>posts.IndexController</b></code></td>
+			<td><code>/posts</code></td>
+		</tr>
+		</table>
+		
+		<h3 id="pathanno">Using the @Path annotation on packages and class names</h3>
+		When you specify the {javadoc:annotation.Path @Path} annotation on a controller class or package (in its 
+		<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.4">package-info.java</a>),
+		the annotation value then is used to extend the path, instead of the simple class name or the last package part:
+		<p>
+		<table class="table">
+		<tr>
+			<td><code>@Path("<b>Civilian</b>") package com.demo.web.<b>civ</b></code></td>
+			<td width="40%"><code>/Civilian</code></td>
+		</tr>
+		<tr>
+			<td><code>@Path("<b>temp</b>") public class com.demo.web.<b>civ.TmpController</b></code></td>
+			<td><code>/Civilian/temp</code></td>
+		</tr>
+		<tr>
+			<td><code>@Path("<b>index</b>") public class com.demo.web.<b>civ.IndexController</b></code></td>
+			<td><code>/Civilian/index</code></td>
+		</tr>
+		</table>
+		Therefore use the @Path annotation to override the naming conventions when necessary.<br>
+		<small>(Or as an advanced technique alter the {javadoc:controller.ControllerNaming naming conventions}).</small>
+		<p>
+		Please not that the @Path value is not interpreted as absolute path (like in JAX-RS) but rather
+		extends the path defined by the parent package.  		
+		 
+		<h3 id="pathparamanno">Using the @PathParam annotation on packages and class names</h3>
+		Right now Controllers can only be mapped to constant paths. To map to path schemes which contain
+		path parameters, use the {javadoc:annotation.PathParam @PathParam} annotation on packages
+		or controller classes.<br>
+		The value of the annotation is the {javadoc:resource.PathParam#getName() PathParam name}.
+		<p>
+		<table class="table">
+		<tr>
+			<td><code>@PathParam("<b>userId</b>") package com.demo.web.users.id<</code>/td>
+			<td width="40%"><code>/users/{userId:[a-z0-9]+}</code></td>
+		</tr>
+		<tr>
+			<td><code>com.demo.web.users.id.ProfileController</code></td>
+			<td width="40%"><code>/users/{userId:[a-z0-9]+}/profile</code></td>
+		</tr>
+		</table>
+
+		<h3 id="pathannomethods">Using the @Path annotation on controller methods</h3>
+		Given all these features every dynamic resource exposed by the application still requires an own controller class.
+		Nothing wrong with that, but for very small controller implementations this might seem a liitle bit oversized.<br>
+		As we will see in the <a href="doc-controllers.html">Controller</a> chapter, controller classes define
+		special methods as entry points for request processing.
+		<br>
+		You can place {javadoc:annotation.Path @Path} on such methods and create a virtual sub-controller class
+		which processes requests for the corresponding sub-resource: 
+		
+		<table class="table">
+		<tr>
+			<td><code>com.demo.web.SearchController</code></td>
+			<td width="40%"><code>/search</code></td>
+		</tr>
+		<tr>
+			<td><code>@Path("filter") com.demo.web.SearchController#processFilter()</code></td>
+			<td><code>/search/filter</code></td>
+		</tr>
+		</table>
+		<p>
+		So using @Path annotations on methods you can implements multiple resource URLs in a single controller class.
+
+		<h3 id="exensions">URLs and extensions</h3>
+		In all the examples we followed the {link:https://en.wikipedia.org/wiki/Clean_URL clean URL}
+		paradigma and did not use any extension in URLs.<br>
+		Actually when a resource request is dispatched to a controller, the extension of the URL is simply ignored.
+		By default both these requests URLs yield the same result:
+		<div class="highlight">
+			<pre><code>/users<br>/users.html</code></pre>
+		</div>
+		But when dealing with clients which cannot properly set an HTTP Accept-Header to express their preferred response content-type,
+		the URL extension can be used as a replacement for the Accept header.
+		<div class="highlight">
+			<pre><code>GET /users.html ~ GET /users, Accept: text/html</code></pre>
+		</div>
+		Please study the {javadoc:resource.ExtensionMapping} class how to configure such behavior.     
+		   
+		<h3 id="finepoints">Fine points of resource mappings</h3>
+		No resource may be mapped to more than one controller. 
+		Doing so (e.g. using @Path annotations), results in an error.
+		<p>
+		<b>Abstract</b> controller classes will not be mapped to a resource.
+
+		<h3 id="checking">Checking resource mappings</h3>
+		The <a href="doc-development.html#admin">admin app</a> lists all resources of an application and the associated
+		controller classes. This allows for a fast check if the reality matches the intended routing. 
+	</div>
+</div>

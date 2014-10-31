@@ -1,0 +1,103 @@
+<div class="row">
+	<div class="col-md-3 sidebar toc hidden-xs hidden-sm hidden-print">
+		<ul class="nav sidenav tocnav">
+			<li><a href="#req">1. System requirements</a></li>
+			<li><a href="#download">2. Download Civilian.jar</a></li>
+			<li><a href="#scaffold">3. Run scaffold</a></li>
+			<li><a href="#build">4. Build the application</a></li>
+			<li><a href="#run">5. Run the application</a></li>
+			<li><a href="#dev">6. Development preview</a></li>
+		</ul>
+	</div>
+	<div class="col-md-9 doc">
+		<h1>Quickstart</h1>
+		<div class="takeaway">
+			A quickstart tutorial how to install Civilian, create and run a new application.
+			Can be completed in a couple of minutes (depending on fitness level).
+		</div>
+
+		<section>
+			<h2 id="req">1. Check system requirements</h2>		
+			In order to follow this tutorial you need:
+			<ul>
+				<li>a {link:https://www.java.com/ Java JDK} (7+)</li>
+				<li>{link:https://ant.apache.org Apache Ant} (1.6.0+)</li>
+				<li>{link:https://ant.apache.org/ivy/history/latest-milestone/install.html Apache Ivy}</li>
+			</ul>	 
+			Please make sure that you can run <code>java</code> and <code>ant</code> from a console prompt.<br>
+			If you don't have Apache Ivy installed, download it from {link:https://ant.apache.org/ivy/download.html Apache}, 
+			unpack the downloaded zip file wherever you want, and copy the ivy jar file into your ant lib directory (ANT_HOME/lib).
+		</section>
+
+		<section>
+			<h2 id="download">2. Download Civilian.jar</h2>		
+			Download the latest {downloadfile:civilian.jar} and store it into a local directory.
+		</section>
+	
+		<section>
+			<h2 id="scaffold">3. Run the scaffold tool to create a new application</h2>
+			Civilian contains a scaffold tool to create a new application.<br> To run the tool
+			open a console prompt in the directory where you stored the Civilian jar file.<br>
+			Choose a project directory into which the scaffold tool will write the application files.<br>
+			Lets suppose you chose <code>/temp/civilian/quickstart</code>. Now run the scaffold tool
+			<div class="highlight">
+				<pre><code>java -jar civilian-{version:}.jar -v /temp/civilian/quickstart Qs</code></pre>
+			</div>
+			Some messages are printed, but just confirm that the last line says <code>done</code>.
+		</section>
+
+		<section>
+			<h2 id="build">4. Build the new application</h2>
+			Navigate to the directory <code>/temp/civilian/quickstart</code> created in step 3.
+			You will find an ant build file, a src, bin and web directory containing source code and
+			other resources of the scaffolded application.<br>
+			Open a console prompt in that directory.<br>
+			<p>
+			First we use Ant and Ivy to download needed runtime libraries which are not distributed with Civilian. Run:
+			<div class="highlight">
+				<pre><code>ant resolve</code></pre>
+			</div>
+			You will see a lot of Ivy messages. If the task runs without errors, the lib subdirectory should now
+			contain Gson, Slf4J and Jetty libaries. Gson and Slf4j are required by Civilian, Jetty is just used
+			as the simplest way to run the scaffolded webapp.
+			<p>
+			Now compile the application: 
+			<div class="highlight">
+				<pre><code>ant compile</code></pre>
+			</div>
+		</section>
+
+		<section>
+			<h2 id="run">5. Run the application</h2>
+			In this step we run the application.   
+			<div class="highlight">
+				<pre><code>ant jetty</code></pre>
+			</div>
+			Jetty has started up (of course Civilian also runs with any other servlet 3.0+ container) &ndash; 
+			now take a look at the application: {link:http://localhost:8080/}.<br>
+			Minimal as it is.<br>
+			Or open {link:http://localhost:8080/civadmin} which is Civilians
+			<a href="doc-development.html#admin">admin application</a>.
+		</section>
+		
+		<section>
+			<h2 id="dev">6. Development preview</h2>
+			In the last step we demonstrate <a href="doc-development.html#reload">class reloading</a>, as preview on Civilians rapid development support.<br>
+			Browse to {link:http://localhost:8080/users}.<br>
+			Now open the class <code>src/com/qs/web/users/IndexController.java</code> (which actually produces this 
+			exciting page) in an editor and modify the render-method:
+			<div class="highlight">
+				<pre><code>@Get @Produces("text/html") public void render() throws Exception<br>{<br>    getResponse().write("list users...<b>changed</b>");<br>}</code></pre>
+			</div>
+			or something like that. Save and then recompile with <code>ant compile</code> in a new console, but don't stop the running Jetty.
+			Go back to the browser and hit refresh. You will see the changed output. Magic!
+		</section>
+		
+		<section>
+			<p>
+			<hr>
+			Thanks for completing this tutorial. You may now want to explore the anatomy of the generated application, or simple start 
+			reading the <a href="doc.html">documentation</a>.
+		</section>
+	</div>
+</div>

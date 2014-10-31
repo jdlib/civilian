@@ -1,0 +1,12 @@
+<!-- 
+place this snippet in $tomcat/conf/server.xml into the /Server/Engine/Host/ element
+to run the application in tomact without deployment
+-->
+  
+  		<!--
+  		your application is available under http://<your-server>/!{appId} 
+  		-->
+		<Context path="/!{appId}" docBase="$docbase">
+			<Loader className="org.apache.catalina.loader.VirtualWebappLoader"
+				virtualClasspath="$classpath"/>
+		</Context>

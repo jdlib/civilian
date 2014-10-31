@@ -1,0 +1,152 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Security</h1>
+
+		<div class="takeaway">
+			Application managed security can be implemented using Controller hierarchies and lifecycle features.
+		</div>
+		
+		<ul>
+		<li><a href="#intro">Introduction</a></li>
+		<li><a href="#managed">Container and application managed security</a></li>  
+		<li><a href="#ctrl">Use controller architecture for security</a></li>
+		</ul>
+		
+		<h2 id="intro">Introduction</h2>
+		All aspects of {link:https://en.wikipedia.org/wiki/Web_application_security web application security}
+		of course also pertain to Civilian applications, as do established security techniques and solutions.  
+		<p>
+		In addition we present techniques how to implement application managed security based on features of the {javadoc:Controller} class.
+		
+		
+		<h2 id="managed">Container and application managed security</h2>  
+		Authentication and access control are two main aspects of application security.
+		In the context of web applications they translate into questions such as 
+		<ul>
+		<li>how to authenticate clients which make a request?
+		<li>how to present a login form?
+		<li>how to implement session management?
+		<li>how to restrict access to resources?
+		<li>how to create responses tailored to access rights?
+		<li>etc.
+		</ul> 
+		   		
+		<b>Container managed security</b> is a solution to enforce authentication and access control
+		at the container level whereas the application does not need to take care of these tasks.
+		In a servlet environment this is done using declarative definitions, e.g. in the web.xml.<br>
+		<p>
+		But more complex applications often require <b>application managed security</b> &ndash;
+		security measures are implemented and enforced by the application.
+		Here are two use cases which cannot be addressed by declarative definitions in a servlet container:
+		<ul>
+		<li>Access to a resource is always granted but the returned representation depends
+			on access rights of the user who is making the request. 
+			E.g. in a returned HTML page specific menu items are only included for specific user roles, 
+			page parts are different, etc.
+		<li>A resource displays data which is identified by a request parameter. Access control restricts an 
+			user to certain partitions of the whole data space. Therefore requests are either
+			processed or rejected based on the request parameter. For instance (for a path parameter encoding a customer id) 
+			a user may access the resource <code>/customers/1345</code> but not
+			<code>/customers/7890</code>.
+		</ul>
+		
+		Libraries like Spring Security or Apache Shiro can help you to implement application managed
+		security. In the following we discuss additional possibilities to implement authentication 
+		and access control in your application using Controller features.
+		
+		<h2 id="ctrl">Use controller architecture for security</h2>
+		Requests to dynamic resources are processed by <a href="doc-controllers.html">Controllers</a>.
+		The interplay of controller inheritance 
+		and <a href="doc-controllers.html#invocation">invocation</a>
+		allows for elegant solutions how to implement and enforce authentication and access control
+		within your application.
+		<p>
+		The <a href="doc-samples.html#crm">CRM sample</a> is used to exemplify the discussion. 
+		<h3>Controller inheritance</h3>
+		Controller classes are derived from {javadoc:Controller Controller}, but you can also 
+		introduce base controller classes derived from Controller specific to your application.<br>
+		Why would you want to do this? Of course to inherit functionality from base classes.
+		<p>
+		Now to an important observation: If the resource URLs exposed by your application form a well designed
+		URL tree it will most likely align well with a controller hierarchy: 
+		
+		<div class="highlight">
+			<table width="100%">
+			<tr>
+				<td width="65%">Controller class</td>
+				<td width="35%">maps to resource</td>
+			</tr>
+			<tr>
+				<td><pre><code>abstract          CrmController</code></pre></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><pre><code>+- abstract       SecuredController</code></pre></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><pre><code>   +-             IndexController</code></pre></td>
+				<td><pre><code>/</code></pre></td>
+			</tr>
+			<tr>
+				<td><pre><code>   +- abstract    users.UsersController</code></pre></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><pre><code>      +-          userse.IndexController</code></pre></td>
+				<td><pre><code>/users</code></pre></td>
+			</tr>
+			<tr>
+				<td><pre><code>      +- abstract users.id.UserController</code></pre></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><pre><code>         +-       users.id.IndedxController</code></pre></td>
+				<td><pre><code>/users/{:userId}</code></pre></td>
+			</table>
+		</div>
+		<small>(using <code>+-</code> as inheritance relation and omitting the package prefix <code>org.civilian.samples.crm.web.root</code>)</small>
+		<p>
+		We will use this feature to inherit security related functionality.
+		
+		<h3>Controller invocation</h3>
+		Controllers have a defined lifecycle and <a href="doc-controllers.html#invocation">invocation</a>:
+		A controller instance is created to process a single request. Controllers define action
+		methods (for different RESTful scenarios) which are the entry points for processing.
+		Before and after a controller action method is invoked, initialization and cleanup methods 
+		defined by the {javadoc:Controller} base class are called.
+		<p>
+		Our strategy to implement authentication and access control is based on the initialization method 
+		{javadoc:Controller#checkAccess()} which is called before the negotiated Controller action method.<br>
+		If <code>checkAccess()</code> commits the response, e.g. by sending a redirect or an error, the controller
+		action method is not invoked.
+		
+		<h3>Prevent unauthenticated access using Controller.checkAccess()</h3>
+		Class {source:org.civilian.samples.crm.web.root.CrmSecuredController} of the CRM sample
+		is the common base class for <b>all</b> controllers whose resource is behind the login wall.<br>
+		It implements <code>checkAccess()</code> and
+		<ul>
+		<li>tests if the request is made by an authenticated user (testing the existence of a session attribute).
+		<li>If not, it sends a 401 unauthorized error (for ajax requests) or a redirect to the <code>/login</code> resource (for non-ajax requests). 
+		<li>If yes, it initializes a SessionUser property which is available to all derived classes. 
+		</ul>
+		<code>CrmSecuredController.checkAccess()</code> is declared final, therefore it is guaranteed that no resource
+		behind the login wall can be accessed without proper authentication. 
+
+		<h3>Implement and enforce any access control using Controller.checkAccess()</h3>
+		Naturally this technique can be used to implement any access control. As a second example the CRM sample allows
+		access to resources <code>/users/*</code> only to users with the administrator role.<br>
+		Again a common Controller base class {source:org.civilian.samples.crm.web.root.users.UsersController}
+		for these resources exists.<br>
+		It inherits from <code>CrmSecuredResource</code> &ndash; that already guarantees only authenticated
+		access to resources <code>/users/*</code>.<br>
+		But <code>CrmSecuredResource.checkAccess()</code> is declared final (to have a strong guarantee). To allow for additional
+		access control checks, <code>CrmSecuredResource</code> declares the method <code>checkCrmAccess()</code> which is called 
+		when the request is properly authenticated.<br>
+		Now, <code>UsersController</code> uses this method to implement its check for the admin role.<br>
+		If derived classes would require another 
+		more specific access check, we could apply the technique again and provide for instance a method <code>checkUserAccess()</code>.  
+
+	</div>
+</div>

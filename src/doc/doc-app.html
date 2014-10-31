@@ -1,0 +1,159 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>Application structure</h1>
+
+		<div class="takeaway">
+			A Civilian application has the directory layout of a servlet application. Its 
+			package and class structure is aligned with its resource URLS.
+		</div>
+
+		<ul>
+			<li><a href="#layout">Directory layout</a></li>
+			<li><a href="#package">Package structure</a></li>
+			<li><a href="#tasks">Main development tasks</a></li>
+		</ul>
+		
+		This chapter describes how to organize a Civilian application. First we describe
+		the directory layout of an application, then the Java class structure.
+	  	
+		<h2 id="layout">Directory layout</h2>
+		A Civilian deployment consists of the application classes, third-party libraries (e.g.
+		<code>civilian.jar</code>), configuration files and asset files such as CSS, Javascript, images, etc.<p>
+		Civilians primary (and right now only) runtime environment is a servlet container, therefore  
+		the directory layout of the application is that of a 
+		{link:http://docs.oracle.com/javaee/7/tutorial/doc/packaging003.htm servlet application}.<br>
+		Its <code>WEB-INF</code> directory contains a 
+		<code>web.xml</code> file and a configuration file <code>civilian.ini</code>. Both are described in the
+		<a href="doc-config.html">configuration</a> chapter.
+		<table class="table">
+		<tr>
+			<td width="50%"><code>$web</code></td>
+			<td>(static assets)</td>
+		</tr>	 
+		<tr>
+			<td><code>$web/WEB-INF</code></td>
+			<td>configuration directory</td>
+		</tr>
+		<tr>
+			<td><code>$web/WEB-INF/web.xml</code></td>
+			<td>servlet configuration</td>
+		</tr>
+		<tr>
+			<td><code>$web/WEB-INF/civilian.ini</code></td>
+			<td>Civilian config file</td>
+		</tr>
+		<tr>
+			<td><code>$web/WEB-INF/classes</code></td>
+			<td>classes, Java resources</td>
+		</tr>
+		<tr>
+			<td><code>$web/WEB-INF/lib</code></td>
+			<td>libraries</td>
+		</tr>
+		</table>
+		  
+		To deploy to a servlet container your build process must be able to produce a WAR file with these directory layout.
+		<p>
+		During development we usually embed that structure into a IDE project.
+		<table class="table">
+		<tr>
+			<td width="50%"><code>$project</code></td>
+			<td>project root dir</td>
+		</tr>	 
+		<tr>
+			<td><code>$project/bin</code></td>
+			<td>compiled application classes</td>
+		</tr>
+		<tr>
+			<td><code>$project/src</code></td>
+			<td>application sources</td>
+		</tr>
+		<tr>
+			<td><code>$project/lib</code></td>
+			<td>third-party libraries</td>
+		</tr>
+		<tr>
+			<td><code>$project/web</code></td>
+			<td>corresponds to $web in the previous table</td>
+		</tr>
+		<tr>
+			<td><code>$project/web/WEB-INF</code></td>
+			<td>same as the WEB-INF directory in the previous table</td>
+		</tr>
+		</table>
+
+		The <a href="doc-development.html">development</a> chapter describes techniques
+		how to run the application directly from such a project structure, for example using
+		embedded web servers or Tomcats VirtualWebappLoader, without building a WAR and 
+		deploying to a server. 		
+
+		
+		<h2 id="classes">Package structure</h2>
+		Each Civilian application has an application class derived from {javadoc:Application}.
+		You can freely choose its package and name:<br>
+		<div class="highlight">
+			<pre><code>org.example.petshop.web.PetshopApp</code></pre>
+		</div>
+		
+		If your application uses <a href="doc-resources.html#pathparams">path parameters</a>
+		they will be defined as constants in a separate class. Optionally you can create a class
+		which defines constants for every resource URL exposed by your application.
+		By convention we use the suffixes "PathParams", "Resources" for these classes and place
+		it in the application package: 
+		<div class="highlight">
+			<pre><code>org.example.petshop.web.PetshopPathParams<br
+			          >org.example.petshop.web.PetshopResources</code></pre>
+		</div>
+		<p>
+		As will be described <a href="doc-controllers.html">later</a>, you need to implement
+		a {javadoc:Controller} class for each dynamic resource of your application. 
+		Their class names and package structure are used to derive their resource URLs,
+		so designing your resource URLS will automatically structure your controller classes 
+		and packages.<br> 
+		The name of the root package of your controller classes must be known to the application
+		base class. By default it equals the application package, else you must explicitly
+		register it by passing  to the Application constructor.
+		<div class="highlight">
+			<pre><code>org.example.petshop.web.LoginController       &rarr; /login<br
+			          >org.example.petshop.web.food.OrderController  &rarr; /food/order</code></pre>
+		</div>
+		Controller classes may have helper classes to process their resource. We usually put them
+		into the controller package and use naming conventions to express that they form a functional group:
+		<div class="highlight">
+			<pre><code>org.example.petshop.web.food.OrderController<br
+			          >org.example.petshop.web.food.OrderForm<br
+			          >org.example.petshop.web.food.OrderTemplate</code></pre>
+		</div>
+		Your application may define any other packages, for instance for accessing the data back-end.
+		Keeping those separate from the controller packages is a good idea:
+		<div class="highlight">
+			<pre><code>org.example.petshop.service<br
+			          >org.example.petshop.text</code></pre>
+		</div>
+	
+		
+		<h2 id="tasks">Main development tasks</h2>
+		Developing a Civilian application has these main tasks.
+		<ul>
+		<li>Design the URL interface of your application, including parameters, allowed REST methods and content types, etc.
+		<li>Design the expected responses when calling these URLs.
+		<li><a href="doc-development.html#scaffold">Scaffold</a> a new application.
+		<li>Configure the application via the Civilian <a href="doc-config.html#ini">config file</a>. 
+		<li>Implement an {javadoc:Application} class to
+			<ul>
+			<li>define all path parameters used by the application
+			<li>implement additional programmatic configurations
+			<li>initialize and provide application global resources like data back-end services.
+			</ul>
+		</li>
+		<li>Create {javadoc:Controller} implementations for every dynamic resource exposed by the application.
+			Controllers most probably will rely on a data back-end services to retrieve model, completely in control by your application.
+		<li>Implement {javadoc:Template Templates} to be used by controllers to turn models into views.
+		<li>Implement {javadoc:form.Form Forms} to be used by controller to read and write HTML forms. 
+		<li>Assemble and organize static assets like JavaScript, CSS, image files, etc.
+		<li>Take care of application <a href="doc-security.html">security</a>.
+		<li>Enjoy rapid development using special Civilian <a href="doc-development.html#reload">development features</a>.
+		</ul>
+	</div>
+</div>

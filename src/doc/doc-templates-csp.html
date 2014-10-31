@@ -1,0 +1,638 @@
+<div class="row">
+	#include:doc.nav
+	<div class="col-md-9 doc">
+		<h1>CSP Templates</h1>
+
+		<div class="takeaway">
+			CSP is Civilians own type-safe and high-performance template system.
+			It uses a Turing complete expression language called Java. Time to learn: 15-30 minutes.
+		</div>
+		
+		<ul>
+			<li><a href="#intro">Introduction</a></li>
+			<li><a href="#basic">CSP syntax &ndash; the basic idea</a></li>
+			<li><a href="#csp2java">CSP is compiled into Java code</a></li>
+			<li><a href="#syntax">In-depth walkthrough of CSP syntax</a>
+				<ul>
+					<li><a href="#syntax.config">Template configuration</a></li> 
+					<li><a href="#syntax.decl">Template declaration</a></li> 
+					<li><a href="#syntax.body">Template body</a></li>
+					<li><a href="#syntax.add">Additional template functions</a></li>
+				</ul>
+			</li>
+			<li><a href="#mixin">Template Mixins</a></li>
+				<ul>
+					<li><a href="#tablemixin">The Table mixin</a></li> 
+				</ul>
+			<li><a href="#compiler">The CSP compiler</a></li>
+			<li><a href="#project">Project organisation and IDE support</a></li>
+			<li><a href="#standalone">CSP as standalone template system</a></li>
+		</ul>	
+
+		<h2 id="intro">Introduction</h2>
+		Civilian includes an own template system called CSP, shortcut for Civilian Server Pages.<br>
+		For a introduction into Civilians template philosophy please consult the <a href="doc-templates.html">Templates</a> chapter. 
+		<p>
+		The steps to use CSP in your application are the following:
+		<ol>
+		<li>You create a template file &ndash; by convention it has the extension .csp &ndash; and write 
+			your template in CSP syntax.
+		<li>You then invoke the CSP Compiler which generates a Java class derived from {javadoc:Template}.
+			The compiler translates the CSP syntax into a series of Java commands. This Java class needs to be included in
+			your IDE project or build process.
+		<li>When you want to produce response content (e.g. in a Controller method) you instantiate this Java class.
+			Dynamic data needed by the template is passed to its constructor. Then you simply call its 
+			{javadoc:Template#print(org*civilian*response*ResponseWriter) print(ResponseWriter)} method
+			or pass the template object to {javadoc:Response#writeTemplate(org*civilian*Template) Response.writeTemplate(Template)}.<br>
+			At runtime only the generated Java template class is used, the CSP file is only needed during development time.
+		<li>Whenever you change the CSP file, you repeat the compilation process.
+		</ol>
+		Of course, different CSP templates are created for different response outputs. Usually each Controller will
+		have an own CSP template.   
+		<p>
+		The CSP approach has the following important advantages:<br>
+		<ul>
+		<li>There is no runtime interpretation of template syntax with all its pitfalls.
+		<li>Compiled templates give you all the benefit of compile time checks. Runtime exceptions
+			due to incongruencies between your templates and the rest of your code base just vanish.
+			Any code change which breaks the template will be spotted by a Java compiler error 
+			in the generated template class.</li> 
+		<li>Output is fffast since it runs as compiled Java code and does not need an interpreting template engine.</li>
+		<li>There is no dependency on external libraries, such as taglibs in JSP.</li>
+		<li>You can use all Java design techniques to compose templates.</li>  
+		<li>You are not constrained by a simplistic template expression language but can use all the expressiveness of Java.</li>
+		<li>You don't need to prepare artificial temporary models which can be digested by the templates expression language.
+			CSP can directly work with any Java object.
+		</ul> 
+
+		The rest of the chapter describes how to write CSP templates. This is a rather lengthy description, so we hope you make it 
+		to the end (to become a lifetime CSP ninja).
+		
+		<h2 id="basic">CSP syntax &ndash; the basic idea</h2>
+		CSP syntax &ndash; like many other templates systems &ndash; allows you to literally describe the static scaffold of your output
+		intermingled with expressions to insert your dynamic data:
+		<div class="highlight">
+			<pre><code>Hello <b>&lt;%name%&gt;</b>!</code></pre>
+		</div>
+		Here we expect to find the literal <code>"Hello "</code> in the output. The following <code>&lt;%</code> switches from literal mode
+		to expression mode, terminated by <code>%&gt;</code>. <code>name</code> is expected to be a variable or expression defined
+		in the execution context of the template. At runtime it will be replaced by its value. Then again we expect a literal <code>!</code>.
+		The output could therefore be
+		
+		<div class="highlight">
+			<pre><code>Hello Wilma!</code></pre>
+		</div>
+		
+		Of course one needs more than simple variable replacement: We need expressions, conditional output, loops and more. 
+		Many template systems invent an own expression and control flow syntax for this. CSP does not - its expression language is <b>plain Java</b>. 
+		Congratulations - zero learning curve ahead. 
+		
+		<h2 id="csp2java">CSP is compiled into Java code</h2>
+		The CSP compiler takes your CSP file and turns it into a Java class. At runtime only this generated class is used.<br>
+		In the above example the compiler would produce a class similar to:
+
+		<div class="highlight">
+			<pre><code>package com.myapp.greeting;
+
+import org.civilian.Template;
+
+public class GreetingTemplate extends Template
+{
+    public GreetingTemplate(String name)
+    {
+        this.name = name;
+    }
+    
+    protected void print() throws Exception
+    {
+    	out.print("Hello ");
+    	out.print(name);
+    	out.println("!");
+    }
+    
+    private String name;
+ }</code></pre></div>
+ 
+ 		Even if the generated code is nicely formatted, we really never look at it, we just use it, e.g. in a {javadoc:Controller}. 
+ 		(And we never ever edit this generated class, only the CSP file).<br>  
+ 		Note that GreetingTemplate is derived from {javadoc:Template} (<code>out</code> is inherited from Template),
+ 		and therefore we can generate {javadoc:Response} content in the following way: 
+ 		
+		<div class="highlight">
+			<pre><code>Response response = ...;<br>GreetingTemplate t = new GreetingTemplate("Wilma");<br>response.writeTemplate(t);</code></pre>
+		</div> 
+ 		and on the wire the greetings are. 
+			    
+		<h2 id="syntax">In-depth walkthrough of CSP syntax</h2>
+		A CSP file has four sections:
+		<ol>
+		<li>Template configuration (optional)
+		<li>Template declaration
+		<li>Template body
+		<li>Additional template functions (optional)
+		</ol>
+		We now walk through these parts, examining one syntax construct at a time. 
+		This <a target="_blank" href="doc-templates-csp.txt">example</a> shows how the whole template file might look like.  
+
+		<h3 id="syntax.config">1. Template configuration</h3>
+		The template configuration consists of a sequence of optional instructions.  
+		Since the CSP file is turned into a Java class, these instructions essentially translate into Java statements.
+		An instruction always covers a single line and consists of a keyword followed by whitespace followed by a value.
+		The instructions must be specified in the following order.
+		<p>
+
+		The <b>encoding instruction</b> allows you to set the encoding of the template file. (The default is UTF-8). You can
+		also use parameters on the CSP compiler to specify the encoding.   
+		<div class="highlight">
+			<pre><code>encoding ISO-8859-1</code></pre>
+		</div>
+
+		The <b>package instruction</b> allows to set the package of the generated class. A closing semicolon is optional. The CSP compiler can deduce
+		the package from the location of the CSP file, so most of the time we will skip this instruction. 
+		<div class="highlight">
+			<pre><code>package com.myapp.greeting</code></pre>
+		</div>
+
+		If your template uses classes from packages different than the template package, you need to include <b>import instructions</b>. Again a closing 
+		semicolon is optional. 
+		<div class="highlight">
+			<pre><code>import java.util.List;<br>import com.myapp.util.GreetingHelper</code></pre>
+		</div>
+		As you already guessed, the package and import instructions are simpley turned into Java package and import statements.<br>
+		With all the people inventing new languages left and right we couldn't resist to tinker with the Java import statement 
+		and allow relativ imports, increasing immunity against package refactorings:
+		<div class="highlight">
+			<pre><code>import ./flowers.Flower   // -> com.myapp.greeting.flowers.Flower<br>import ../util/StringUtil // -> com.myapp.util.StringUtil</code></pre>
+		</div>
+		
+		The <b>prolog instruction</b> allows you to generate lines before the class declaration. 
+		You may want to use it to define a Javadoc comment or class level annotations
+		<div class="highlight">
+			<pre><code>prolog /**<br>prolog  * What a template.<br>prolog  */<br>prolog @SuppressWarnings("unused")</code></pre>
+		</div>
+		 
+		<h3 id="syntax.decl">2. Template declaration</h3>
+		The Template declaration is used to generate the declaration of the template Java class and its constructor. Remember, all runtime data used by the template is passed
+		to its constructor.<br>
+		The template declaration consists of keywords, sometimes followed by parameters or parameter lists. The declaration may be placed in
+		a single line or in multiple lines.
+		<p>
+		The declaration starts with the only required keyword. Checkpoint reached!
+		<div class="highlight">
+			<pre><code>template</code></pre>
+		</div>
+		
+		Do you want to pass parameters to your template? If yes, open a bracket, specify the parameters, and close with a bracket.
+		Think of constructor parameters.
+		<div class="highlight">
+			<pre><code>(String name, List&lt;Flower&gt; flowers, GreetingHelper helper)</code></pre>
+		</div>
+		
+		By default the generated class is public. To turn it into a non public class continue with
+		<div class="highlight">
+			<pre><code>package-access</code></pre>
+		</div>
+		
+		By default your template class is automatically derived from {javadoc:Template}. Want another parent class?
+		Maybe you prepared a base template class in your application and want to inherit all its goodies. Then use the extends keyword
+		(and don't forget to include a import instruction if needed).
+		<div class="highlight">
+			<pre><code>extends MyBaseTemplate</code></pre>
+		</div>
+		Want no parent class? (This <a href="#standalone">topic</a> motivates why you want to do this). Write:
+		<div class="highlight">
+			<pre><code>extends -</code></pre>
+		</div>
+		 
+		Want the template to implement an interface? Use the implements keyword followed by a list of
+		interfaces. Again use either qualified names or add imports to the template configuration.
+		<div class="highlight">
+			<pre><code>implements Adorable, BattleNotificationSender</code></pre>
+		</div>
+		 
+		Next you can declare what <a href="#mixin">mixins</a> will be available in your template. (Mixins will be 
+		explained in detail in the next section): The mixin keyword is followed by a list of mixin classes. 
+		The {javadoc:template.mixin.HtmlMixin}, {javadoc:template.mixin.LangMixin}, {javadoc:template.mixin.TableMixin} 
+		and {javadoc:template.mixin.FormTableMixin} mixins offered by Civilian can be 
+		simply specified as "html", "lang", "table" and "formTable".
+		<div class="highlight">
+			<pre><code>mixin html, lang, MyMixin</code></pre>
+		</div>
+		The mixins are available in the template as fields, whose field names are derived from the Mixin classes. You can explicitly state this
+		field name if you want a different one. Here is one for people raised up in MS territory: 
+		<div class="highlight">
+			<pre><code>mixin html:m_html, lang:m_lang, MyMixin:m_mymixin</code></pre>
+		</div>
+		
+		No declaration without exceptions. By default templates follow the Civilian design rule to simply declare that 
+		they might throw an Exception (even if they don't intend to). You want to tame that? Overrride with the throws keyword
+		<div class="highlight">
+			<pre><code>throws IOException, IllegalArgumentException</code></pre>
+		</div>
+		or for the optimistic
+		<div class="highlight">
+			<pre><code>throws -</code></pre>
+		</div>
+
+		Putting it all together the declaration might look like.
+		<div class="highlight">
+			<pre><code>template(String name, List&lt;Flower&gt; flowers, GreetingHelper helper)<br>  package-access<br>  extends MyBaseTemplate<br>  implements Adorable, BattleNotificationSender mixin html, lang, MyMixin<br>  throws IOException, IllegalArgumentException</code></pre>
+		</div>
+
+		Looks complicated but that was really the full treatment, the minimum declaration is simply
+		<div class="highlight">
+			<pre><code>template </code></pre>
+		</div>
+		A mindful reader might miss a way to specify the name of the generated class. Glad that you asked: The name is just taken from the CSP file.
+		So if the file is called <code>GreetingTemplate.csp</code> we end up with a class named <code>GreetingTemplate.java</code>.
+		(Yes, the suffix "Template" is pure convention).       
+		<p>
+		That's all about template declarations. With the configuration and declaration we defined the class level stuff
+		and the constructor of the template class.<br>
+		Time to produce some output. So on to the hard stuff and best part.
+		
+		<h3 id="syntax.body">3. Template body</h3>
+		As already said the CSP file is turned into a Java class. This class will have a <code>print</code>-method which will produce the template output
+		when called. The template body will just define the content of this method.<br>
+		You start the template body after the template declaration on a new line with 
+		<div class="highlight">
+			<pre><code>{{</code></pre>
+		</div>
+		For the sake of symmetry you will end the template body with 		 
+		<div class="highlight">
+			<pre><code>}}</code></pre>
+		</div>
+		The similarity to method blocks is intended. But the double braces actually turn on what is called the literal template mode.
+		Now by default everything in the template body is treated as literal and written as such to the output.<br>
+		Time to show the first complete CSP template:
+		<div class="highlight">
+			<pre><code>template<br>{{<br>    Hello World<br>}}</code></pre>
+		</div>
+		Of course this also works with angle brackets:
+		<div class="highlight">
+			<pre><code>template<br>{{<br>    &lt;html><br>         &lt;body>Hello World&lt;/body><br>    &lt;/html><br>}}</code></pre>
+		</div>
+		
+		<b>Embedded expressions</b><br>
+		You might appreciate this simple beauty but probably still want to have some dynamic action? Remember the 
+		<a href="#basic">first look</a> at the syntax, which introduced embedded expressions, using JSP like <code>&lt;% %&gt;</code> brackets.
+		Here we go:     
+		<div class="highlight">
+			<pre><code>template(String name)<br>{{<br>    Hello <b>&lt;%name%></b>!<br>}}</code></pre>
+		</div>
+		This will print the name passed to the template constructor.<br>
+		What can be placed inside <code>&lt;% %&gt;</code>? Any Java expression, e.g a variable reference, an arithmetic expression, a method call
+		which returns a non-void result.<br>
+		(From now on we mostly only show the inner content of a template body):
+		<div class="highlight">
+			<pre><code>1 + 2 = <b>&lt;%1 + 2%></b><br>SPAM GREETINGS <b>&lt;%name.toUpperCase()%></b></code></pre>
+		</div>
+		
+		You can insert as much embedded expressions in a line as you want: 
+		<div class="highlight">
+			<pre><code>Hey <b>&lt;%name%></b>, 1 + 2 = <b>&lt;%1 + 2%></b></code></pre>
+		</div>
+		
+		Now what is actually printed when we execute the template? Let's take a look at the generated code:
+		<div class="highlight">
+			<pre><code>out.print("Hey ");<br>out.print(name);<br>out.print(", 1 + 2 = ");<br>out.println(1 + 2);</code></pre>
+		</div>
+
+		The field <code>out</code> is a {javadoc:response.ResponseWriter} inherited from the {javadoc:Template} base class.
+		ResponseWriter in the end is just a <code>java.io.PrintWriter</code>. Therefore all values are finally
+		serialized to strings calling <code>value.toString()</code> or <code>String.valueOf(value)</code> before they are written to the output.
+		So it only makes sense to print simple objects like Strings or primitive values. If you print a fancy Customer object 
+		it will just simply fallback to its toString() method. 
+		Escaping text or formatting values is another topic. Later in the <a href="mixin">Mixins</a> section we will learn how to achieve that.
+		<p>
+		Within <code>&lt;% %&gt;</code> you can also call methods which return void, but need to add a semicolon at the end
+		<div class="highlight">
+			<pre><code>Hey <b>&lt;% doSomething(name); %></b>!</code></pre>
+		</div>
+		This translates to  
+		<div class="highlight">
+			<pre><code>out.print("Hey ");<br>doSomething(name);<br>out.println("!");</code></pre>
+		</div>
+		Why you want to do this? Of course because the called method prints something to the output (having access to the ResponseWriter
+		or obtaining it as parameter) or produces some side-effect.
+		Again the <a href="mixin">Mixins</a> provide good use cases for this technique. Here is a brief glimpse, using the 
+		{javadoc:template.mixin.HtmlMixin#text(java*lang*String) HtmlMixin} to escape a string and write it to the output: 
+		<div class="highlight">
+			<pre><code>Hey <b>&lt;% html.text(name); %></b></code></pre>
+		</div>
+		
+		<p>
+		<b>The transcript operator @</b><br>
+		Expressions and method calls, nice and sweet. What about CSPs control flow capabilities? Time for the @-Operator.<br>
+		Let's test your intuition again &ndash; can you spot the meaning of:
+		<div class="highlight">
+			<pre><code><b>@if (name.length() > 20)</b><br>    howdy big <b>&lt;%name%></b><br><b>@else</b><br>    howdy shorty <b>&lt;%name%></b></code></pre>
+		</div>
+		This compiles to:
+		<div class="highlight">
+			<pre><code>if (name.length() > 20)<br>{<br>    out.print("howdy big ");<br>    out.println(name);<br>}<br>else<br>{<br>    out.println("howdy shorty ");<br>    out.println(name);<br>}</code></pre>
+		</div>
+		Got it? A line in literal mode which begins with a @-character is just copied into the Java class (minus the @).
+		<p> 
+		Let's use the same technique to demonstrate a loop:
+		<div class="highlight">
+			<pre><code><b>@for (int i=0; i&lt;name.length(); i++)</b><br>    The <b>&lt;%i%></b>-th character in your name is <b>&lt;%name.charAt(i)%></b></code></pre>
+		</div>
+		No taglib consultant was tortured to implement this example. In the end it just translates to plain Java.<br> 		
+		<p>
+		In the last examples we silently used an important feature of CSP, namely indentation.<br>
+		Indentend lines after a @-line (as demonstrated in the previous two examples)
+		are put into a Java block &ndash; except that we don't need curly braces: Kudos Python!<br>
+		Else indented lines are also indented in the ouput, exactly what we want for things like HTML output.
+		<div class="highlight">
+			<pre><code>&lt;body><br>    &lt;h1>Hi&lt;/h1><br>&lt;/body></code></pre>
+		</div>
+		The result is pretty printed HTML code of pure handcraft grade. 
+		JSP output with only rough similarity to the template was yesterday. Don't believe this? 
+		Take a look at the output of the Civilian samples.
+		<p>
+		The indent technique comes at a price:Use only tabs or spaces to indent your lines. But be consistent, else
+		the CSP compiler will complain.
+		<p>
+		<p>
+		<b>The component operator [</b><br>
+		The [-operator is somewhat arcane but nonetheless powerful. The <a href="#tablemixin">TableMixin</a> makes 
+		heavy use of this operator, so please study this section for an motivating example.<br> 
+		The component-operator addresses the following problem: Sometimes you want to embed content into
+		structures which are highly repetitive. Instead of explicitly repeat these structures in
+		the template, a {javadoc:template.ComponentBuilder} is asked to print output before and after content is printed,
+		therefore enabling much shorter templates.<br>
+		The <code>[</code> character at the beginning of a line is used to turn on the component-operator.
+		It can be used in a single-lined form
+		<div class="highlight">
+			<pre><code><b>[<i>&lt;cb-expression></i>]</b> <i>&lt;content></i></code></pre>
+		</div>
+		or in a multi-lined form 
+		<div class="highlight">
+			<pre><code><b>[<i>&lt;cb-expression></i></b><br>    <i>&lt;content></i><br><b>]</b></code></pre>
+		</div>
+		<code><i>&lt;content></i></code> can be any CSP template content. <code><i>&lt;cb-expression></i></code>
+		is a Java expression which returns an instance of {javadoc:template.ComponentBuilder}. The operator
+		content will be printed, {javadoc:template.ComponentBuilder#startComponent(boolean) preceeded}
+		and {javadoc:template.ComponentBuilder#startComponent(boolean) followed} by output defined by the
+		ComponentBuilder.  
+		<p>
+		Now we have only some syntactic sugar to cover, namely <code>&lt;%%></code>,
+		<code>&lt;%/%></code>, <code>&lt;%?%> and super-calls.</code> 
+
+		<p>
+		<b>Using &lt;%%></b><br>
+		What if a line output deliberately starts with whitespace? Indentation rules could cause trouble.
+		An empty <code>&lt;%%></code> at the start of the line disambiguates between indent and whitespace content:
+		<div class="highlight">
+			<pre><code>&lt;div><br>    Hey <b>&lt;%name%></b><br><b>    &lt;%%></b> what's up?<br>&lt;/div></code></pre>    
+		</div>
+		In the same way you can enforce whitespace at the end of a line. Another use case is if your literal line starts with a operator
+		character:
+		<div class="highlight">
+			<pre><code>hello  <b>&lt;%%></b><br><b>&lt;%%></b>@...<br><b>&lt;%%></b>[...</code></pre>    
+		</div>
+			
+		<p>
+		<b>Using &lt;%/%></b><br>
+		Literal lines always produce a linebreak in the output (whereas @-lines never do). But there are situations where we don't
+		want this behaviour. Use a <code>&lt;%/%></code> at the end of a literal line to prevent
+		a linebreak in the output:
+		<div class="highlight">
+			<pre><code>Hey <b>&lt;%/%></b><br><b>@if (name.length() > 0)</b><br>    big <b>&lt;%/%></b><br><b>&lt;%name%></b></code></pre>    
+		</div>
+		
+		<p>
+		<b>Using &lt;%?%></b><br>
+		The <code>&lt;%?%></code> syntax allows you to produce a inline conditional version of the last example.
+		A first <code>&lt;%?%></code>-block contains a boolean Java condition, the second <code>&lt;%?%></code>-block terminates the conditional content.
+		The content in between is only printed if the condition evaluates to true.
+		Rewriting the last example gives
+		<div class="highlight">
+			<pre><code>Hey <b>&lt;%? name.length() > 0 %></b>big<b> &lt;%?%>&lt;%name%></b></code></pre>    
+		</div>
+		
+		<p>
+		<b>Using @super</b><br>
+		Templates can be derived from other templates. If the super-template itself defines constructor-parameters then the derived template
+		must pass values to the super-constructor. You can do this by placing a super-call in the first line of the template body  
+		<div class="highlight">
+			<pre><code>template(String name) extends BaseTemplate<br>{{<br>    <b>@super(name, true);</b><br>    ...</code></pre>    
+		</div>
+		
+		Now you know all about CSP literal mode. Piece of cake.
+		
+		<h3 id="syntax.add">4. Additional template functions</h3>
+		We just ended the template body with closing double curly braces.
+		This could end the template file &ndash; or we through in some more, namely additional 
+		methods and/or fields.
+		Look at this example:
+		<div class="highlight">
+			<pre><code>template(int x, int y)
+{{
+    <b>@calcArea();</b>
+    The area of <b>&lt;%x%></b> times <b>&lt;%y%></b> is <b>&lt;%printArea();%></b>.
+}}
+
+private void printArea()
+{{
+     <b>&lt;%area%></b>!
+}}
+
+private void calcArea()
+{
+    area = x * y;
+}
+
+private int area;</code></pre></div>
+		Lots of things to cover:<br>
+		The template got an additional private field named <code>area</code>.<br>
+		We defined a private helper method <code>calcArea()</code>. It does not use literal template mode (note the simple braces).
+		It accesses the template parameters x and y which are visible throughout the template.<br>
+		We defined a private helper method <code>printArea()</code>. This one uses literal template mode again and when
+		called adds to the output.<br>
+		To summarize: 
+		CSP allows to define helper methods, either pure computational or again using 
+		CSP literal syntax. Helper variables can be defined within a method or on a class level.<br>
+		What do you think?
+	
+		<h2 id="mixin">Template Mixins</h2>
+		
+		We can think of a lot of useful helper methods when writing templates: HTML related methods 
+		like escaping text or localization methods to format numbers and date values.
+		Since Civilian templates can inherit from base templates inheritance would be an obvious option to provide
+		such useful helper methods.<br>
+		But this would easily lead to bloated base classes. {link:https://en.wikipedia.org/wiki/Mixin Mixins} to the rescue!
+		We would like to include helper methods (defined in some mixin) into our template when needed.<br>
+		The only bad thing about mixins is that Java does not support them. 
+		Did not bother us much, and we invented some sort of replacement. Repeating an example from above, 
+		template mixins allow to write CSP code like this:
+		<div class="highlight">
+			<pre><code>Hey <b>&lt;%html.text(name);%></b>, 100 * 321 is <b><%lang.format(100*321)%></b></code></pre>
+		</div>
+		The first embedded expression calls a method <code>html.text(String)</code>. It returns void and therefore we 
+		end the call with a semicolon. This method takes the parameter, escapes any character which is not allowed in HTML text
+		content, and writes the result to the output.<br>
+		Similar, the second embedded expression calls a method <code>lang.format(int)</code>. This method formats the
+		integer parameter according the locale of the response and returns the formated value (which is then printed to the output).<br>
+		Now, <code>html</code> and <code>lang</code> are just fields in the generated template class with access to
+		the {javadoc:response.ResponseWriter}.<br>
+		These fields are not available by default but must explicitly be defined. The syntax section already explained how
+		to do that:
+		<div class="highlight">
+			<pre><code>template ... mixin html, lang ...<br>{{<br>    ...</code></pre>
+		</div>
+		The names <code>html</code> and <code>lang</code> refer to the predefined {javadoc:template.mixin.HtmlMixin} and {javadoc:template.mixin.LangMixin}.
+		Please take a look at their Javadoc to see in detail what methods they provide.<br>
+		But of course you can also build your own mixin implementations and reuse them in your templates. 
+		<div class="highlight">
+			<pre><code>template ... mixin com.myapp.template.BarMixin:foo<br>{{<br>    Hello &lt;%foo.howdie();%><br>    ...</code></pre>
+		</div>
+		
+		<h3 id="tablemixin">The Table mixin</h3>
+		The {javadoc:template.mixin.TableMixin} allows to easily build complex HTML-tables. Since it also implements
+		{javadoc:template.ComponentBuilder} it can be used in combination with the component-operator [.<br>
+		The basic idea of the TableMixin is to first {javadoc:template.mixin.TableMixin#columns(java*lang*String) define}
+		a column layout. The layout defines the number of columns in the table and may specify widths or HTML attributes  
+		for each column or gap column. For example:
+		<div class="highlight">
+			<pre><code>[50]5[30%, align=left][class='help red']</code></pre> 
+		</div>
+		defines a layout with these columns:
+		<ol>
+		<li>a column with width 50px
+		<li>a gap column with width 5px
+		<li>a left aligned column with width 30%
+		<li>a column with the class attribute set to "help red"
+		</ol>
+		and then just output a series of cell contents while the TableMixin will keep track of surrounding 
+		<code>&lt;tr></code> and <code>&lt;td></code> elements and print appropriate output. Here we
+		use the component operator [ to instruct the TableMixin that we are starting a new cell. The template
+		<div class="highlight">
+			<pre><code>template mixin table:t<br
+			>{{<br
+			>    @t.columns("[]5[30%, align=left, class='info']");<br
+			>    @t.startTable("class", "table table-border");<br
+			>    [t.rowspan(2)] a<br
+			>    [t] b<br
+			>    [t] c<br
+			>    @t.endTable();<br
+			>}}</code></pre>
+		</div>
+		would produce the following output
+		<div class="highlight">
+			<pre><code>&lt;table class="table table-border"><br
+			>&lt;colgroup><br
+			>   &lt;col><br
+			>   &lt;col width="5px"><br
+			>   &lt;col width="30%"><br
+			>&lt;/colgroup><br
+			>&lt;tr><br
+			>     &lt;td>a&lt;/td><br
+			>     &lt;td>&lt;/td><br
+			>     &lt;td class="info" align="left">b&lt;/td><br
+			>&lt;/tr><br
+			>&lt;tr><br
+			>     &lt;td>&lt;/td><br
+			>     &lt;td class="info" align="left">c&lt;/td><br
+			>&lt;/tr><br
+			>&lt;/table></code></pre>
+		</div>
+		       
+		<h2 id="compiler">The CSP compiler</h2>
+		
+		The CSP compiler turns a CSP file in a Java template class.<br>
+		It is implemented by class {javadoc:tool.csp.CspCompiler org.civilian.tool.csp.CspCompiler}.
+		It prints a detailed help message when run without any arguments.<br>
+		CspCompiler expects an input file or directory and can optional parameters:
+		<div class="highlight">
+			<pre><code>java org.civilian.tool.csp.CspCompiler <i>param</i>* <i>input</i></code></pre>
+		</div>
+		The input is either a single CSP file or a directory. In the later case all CSP files in the directory are compiled,
+		by default also recursing into subdirectories.<br>
+		<p>
+		One of the <code>-out:*</code> parameters must be used to the determine the location of the output file:<br>
+		<code>-out:input</code> writes the output file into the same directory as the input. This is the default setting.<br> 
+		<code>-out:package &lt;directory></code> writes the output file into the package directory below the given root directory 
+		<div class="highlight">
+			<pre><code>... -out:package src/main/generated ...</code></pre>
+		</div>
+		<code>-out:dir &lt;directory></code> writes the output file into the given directory.<br> 
+		<code>-out:file &lt;file></code> writes the output file to the given file.<br> 
+		<p>	
+		The compiler only generates the output class if the timestamp of the input file is greater than that of the output file.
+		The force option turns this check off:
+		<div class="highlight">
+			<pre><code>... -force ...</code></pre>
+		</div>
+
+		<p>
+		The <code>-enc</code>, <code>-enc:in</code>, <code>-enc:out</code> parameters allow you to specificy encodings
+		of input and/or output, if they are not UTF-8: 
+		<div class="highlight">
+			<pre><code>... -enc ISO-8859-1 ...      // for both input and output<br>... -enc:in UTF-16 ...       // for the input<br>... -enc:out ISO-88592-2 ... // for the output</code></pre>
+		</div>
+		
+		<p>
+		The <code>-v</code> parameter defines verbosity of compiler messages. Use a value of 0, 1 or 2 for the level.
+		<div class="highlight">
+			<pre><code>... -v <i>level</i> ...</code></pre>
+		</div>
+
+		<p>
+		Normally the CSP compiler only accepts files with extension ".csp". If you want another extension, write
+		<div class="highlight">
+			<pre><code>... -ext <i>myextension</i> ...</code></pre>
+		</div>
+		
+		<h2 id="project">Project organisation and IDE support</h2>
+		Where do you put CSP files and generated templates classes in your IDE project?
+		Since templates are usually used by a single controller, we typically put the CSP file and the generated template class
+		into the same package as the controller.<br>
+		For the Maven minded the CSP file will go under <code>resources</code> and the template class under <code>generated</code>,
+		but we typically put it into the same package folder, as seen in the samples.<br>
+		Anyway just instruct the CSP compiler where to pick up CSP files and where to put the output.
+		<p>
+		The CSP compiler needs to be run every time you change a CSP file. Of course you can 
+		run an ant script (like the one generated by the <a href="doc-scaffold.html">scaffold tool</a>). 
+		In Eclipse we usually run the CSP compiler as External Tool. Here are the steps to configure such a call:
+		<ol>
+		<li>Create new External Tool Configuration
+		<li>Enter the path to java.exe in Main/Location.
+		<li>Enter in Main/Arguments:
+			<pre><code>-cp &lt;path to civilian.jar&gt;<br>org.civilian.tool.csp.CspCompiler<br>-force<br>-v 1<br>${resource_loc}</code></pre>
+			Of course you can tweak the arguments to your needs, e.g. adding an -out parameter.<br>
+			The <code>${resource_loc}</code> variable means that the CSP compiler acts on the active Eclipse resource. If you opened a CSP file, then this
+			file will be compiled. If you selected a package in the project tree, the CSP compiler will recursively compile all its CSP files.
+		<li>Configure the Refresh panel: After the CSP was compiled we want Eclipse to compile the generated template Java class. Since we usually
+			put the generated class in the same folder as the CSP file, we just check "The folder containing the selected resource"
+			and Eclipse will pick up the changes. If you have a different file structure, choose the right refresh location for your case.
+		</ol>
+		We also define a short cut key for the eclipse command "Run Last Launched External Tool" to quickly launch the CSP compiler.
+		(See Prefrences/Keys). Unfortunately Eclipse does not allow to define a short cut for a specific launch command.
+		Other IDEs will have similiar or better possibilies to run a Java command from the IDE.
+		<br>
+		Now we edit the CSP file, save, press the shortcut-key and the Java template class is ready.
+		<p>
+		Syntax coloring would also be nice, but right now is beyong the scope of Civilian. A current possibility is to instruct the
+		IDE to open CSP files in a JSP or HTML editor window for at least some coloring support.
+		 
+		<h2 id="standalone">CSP as standalone template system</h2>
+		When you don't instruct otherwise the generated template class is derived from {javadoc:Template} and operates
+		on a {javadoc:response.ResponseWriter}. This tightly binds the template to Civilians request processing context.<br>
+		<p>
+		But CSP can simply be turned into a standalone template system: If you use the <code>extends</code> instruction
+		to not derive from {javadoc:Template}   
+		<div class="highlight">
+			<pre><code>template ... extends - ...</code></pre>
+		</div>
+		then the generated toplevel class will operate on a {javadoc:util.TabWriter} and will have no other dependencies to Civilian classes.
+		The TabWriter actually implements the pretty indentation stuff. You construct a TabWriter simply by passing a Writer class
+		to its constructor.
+		<p>
+		<hr>
+		<p>
+		At this point you might want to experiment with the syntax and study the compiled output. 
+		Please also take a look at the samples which contain a lot of CSP templates. Thank you for your endurance. 
+	</div>
+</div>

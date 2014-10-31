@@ -1,0 +1,9 @@
+package !{webPackage};
+
+
+/**
+ * Controller for the resource "/".
+ */
+public class IndexController extends !{appController}
+{
+}
