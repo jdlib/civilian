@@ -2,7 +2,7 @@ import java.util.List
 import org.civilian.util.StringUtil
 
 
-template(String inputFile, List<String> lines) extends - throws -
+template(String inputFile, List<String> lines) extends - using TabWriter throws -
 {{
 	<!DOCTYPE html>
 	<html>
@@ -18,28 +18,17 @@ template(String inputFile, List<String> lines) extends - throws -
 	<body>
 	<nav class="navbar navbar-default navbar-fixed-top hidden-print" role="navigation">
 		<div class="container">
-			<div class="navbar-header">
-				<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<!--<a class="navbar-brand civilian civ-brand" href="index.html">CIVILIAN</a>  -->
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					@printNav("index", 		"Home");
-					@printNav("intro", 		"Introduction");
-					@printNav("quickstart", "Quickstart");
-					@printNav("doc", 		"Documentation");
-					@printNav("download", 	"Download");
-					@printNav("license", 	"License");
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					@printNav("contact",	"Contact/Imprint");
-				</ul>
-			</div>
+			<ul class="nav navbar-nav">
+				@printNav("index", 		"Home");
+				@printNav("intro", 		"Introduction");
+				@printNav("quickstart", "Quickstart");
+				@printNav("doc", 		"Documentation");
+				@printNav("download", 	"Download");
+				@printNav("license", 	"License");
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				@printNav("contact",	"Contact/Imprint");
+			</ul>
 		</div>
 	</nav>
 	<div class="container">
