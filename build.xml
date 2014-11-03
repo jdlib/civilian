@@ -254,6 +254,9 @@
  		<antcall target="_cspcompile.run">
  			<param name="csp.src" value="${src.samples}"/>
  		</antcall>
+ 		<antcall target="_cspcompile.run">
+ 			<param name="csp.src" value="${src.build}"/>
+ 		</antcall>
 	</target>
 	
 	
