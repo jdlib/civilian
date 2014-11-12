@@ -35,7 +35,7 @@ import org.civilian.util.IoUtil;
 
 /**
  * Asset represents a static application resource.
- * A static resource is a image, css file or javascript file, etc.<br>
+ * A static resource is an image, css file or javascript file, etc.<br>
  */
 public abstract class Asset
 {
