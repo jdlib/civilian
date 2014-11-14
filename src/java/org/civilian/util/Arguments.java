@@ -115,7 +115,7 @@ public class Arguments
 
     private String[] readArguments(InputStream in) throws IOException
     {
-    	BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+    	BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
     	String line;
     	ArrayList<String> args = new ArrayList<>();
     	while((line = reader.readLine()) != null)
