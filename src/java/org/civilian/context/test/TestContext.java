@@ -236,6 +236,15 @@ public class TestContext extends Context
 
 	
 	/**
+	 * Sets the config path (relative to context directory).
+	 */
+	public void setConfigPath(String path)
+	{
+		configPath_ = Check.notNull(path, "path"); 
+	}
+
+	
+	/**
 	 * Returns "1.0".
 	 */
 	@Override public String getServerVersion()
