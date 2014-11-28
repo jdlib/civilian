@@ -41,7 +41,7 @@ import org.civilian.util.ResourceLoader;
 
 
 /**
- * Context represents the environment which hosts and run Civilian applications.
+ * Context represents the environment which hosts and runs Civilian applications.
  * In servlet terms the context corresponds to a ServletContext.
  */
 public abstract class Context implements ContextProvider, PathProvider
