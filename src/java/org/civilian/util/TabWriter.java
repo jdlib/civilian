@@ -32,7 +32,8 @@ public class TabWriter extends PrintWriter
 	 */ 
 	public static void setDefaultTabChars(String chars)
 	{
-		Check.notNull(chars, "chars");
+		if (chars == null)
+			throw new IllegalArgumentException("chars null");
 		defaultTabChars_ = chars.toCharArray();
 	}
 
@@ -362,7 +363,5 @@ public class TabWriter extends PrintWriter
 	private char tabChars_[] = defaultTabChars_;
 	private char lineSeparator_[] = systemLineSeparator_;
 	private static char defaultTabChars_[] = { '\t' };
-	private static final char systemLineSeparator_[] = getSeparatorChars(IoUtil.getLineSeparator());
+	private static final char systemLineSeparator_[] = getSeparatorChars(System.getProperty("line.separator"));
 }
-
-
