@@ -47,14 +47,14 @@ public abstract class MsgBundle implements MessageProvider
 	/**
 	 * Tests if the bundle contains an entry for the given id.
 	 */
-	public abstract boolean contains(CharSequence id);
+	public abstract boolean contains(Object id);
 
 
 	/**
 	 * Returns the message entry for the given id.
 	 * If the bundle does not contain the id null is returned.
 	 */
-	public abstract String get(CharSequence id);
+	public abstract String get(Object id);
 	
 	
 	/**
@@ -62,7 +62,7 @@ public abstract class MsgBundle implements MessageProvider
 	 * If the bundle does not contain the id, the id prefixed
 	 * by a "?" is returned.
 	 */
-	@Override public abstract String msg(CharSequence id);
+	@Override public abstract String msg(Object id);
 	
 	
 	/**
@@ -72,7 +72,7 @@ public abstract class MsgBundle implements MessageProvider
 	 * These placeholders are replaced with the parameter values
 	 * and the resulting string is returned.
 	 */
-	@Override public String msg(CharSequence id, Object... params)
+	@Override public String msg(Object id, Object... params)
 	{
 		String msg = msg(id);
 		return msg == null ? null : replaceVars(msg, params);
@@ -82,7 +82,7 @@ public abstract class MsgBundle implements MessageProvider
 	/**
 	 * Returns the id prefixed by a "?".
 	 */
-	protected String getUnknown(CharSequence id)
+	protected String getUnknown(Object id)
 	{
 		return "?" + id;
 	}

@@ -63,7 +63,7 @@ public class ResMsgBundle extends MsgBundle
 	 * Returns if the resource bundle contains the message 
 	 * with the given id.
 	 */
-	@Override public boolean contains(CharSequence id)
+	@Override public boolean contains(Object id)
 	{
 		return bundle_.containsKey(id.toString());
 	}
@@ -75,7 +75,7 @@ public class ResMsgBundle extends MsgBundle
 	 * the resulting MissingResourceException is catched and  
 	 * null is returned instead.
 	 */
-	@Override public String get(CharSequence id)
+	@Override public String get(Object id)
 	{
 		try
 		{
@@ -95,7 +95,7 @@ public class ResMsgBundle extends MsgBundle
 	 * the key prefixed with a '?' is returned instead.
 	 * @see #getUnknown(CharSequence)
 	 */
-	@Override public String msg(CharSequence id)
+	@Override public String msg(Object id)
 	{
 		String text = get(id);
 		return text != null ? text : getUnknown(id);

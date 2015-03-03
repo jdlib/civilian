@@ -216,7 +216,7 @@ public class Controller implements
 	 * the MsgBundle object of the response.
 	 * @see #getMsgBundle()
 	 */
-	@Override public String msg(CharSequence key)
+	@Override public String msg(Object key)
 	{
 		return getMsgBundle().msg(key);
 	}
@@ -229,7 +229,7 @@ public class Controller implements
 	 * 		at placeholder strings.
 	 * @see #getMsgBundle()
 	 */
-	@Override public String msg(CharSequence key, Object... params)
+	@Override public String msg(Object key, Object... params)
 	{
 		return getMsgBundle().msg(key, params);
 	}

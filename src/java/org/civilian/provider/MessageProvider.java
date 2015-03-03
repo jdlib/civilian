@@ -25,12 +25,12 @@ public interface MessageProvider
 	/**
 	 * Returns the message for the id
 	 */
-	public String msg(CharSequence id);
+	public String msg(Object id);
 	
 	
 	/**
 	 * Returns the message for the id and inserts the parameters
 	 * into the message at placeholder locations.
 	 */
-	public String msg(CharSequence id, Object... params);
+	public String msg(Object id, Object... params);
 }

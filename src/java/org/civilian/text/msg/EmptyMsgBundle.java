@@ -33,19 +33,19 @@ class EmptyMsgBundle extends MsgBundle
 	}
 
 	
-	@Override public boolean contains(CharSequence id)
+	@Override public boolean contains(Object id)
 	{
 		return false;
 	}
 		
 	
-	@Override public String get(CharSequence id)
+	@Override public String get(Object id)
 	{
 		return null;
 	}
 
 	
-	@Override public String msg(CharSequence id)
+	@Override public String msg(Object id)
 	{
 		return getUnknown(id);
 	}

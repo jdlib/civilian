@@ -47,7 +47,7 @@ public class LangMixin implements MessageProvider
 	 * @see MsgBundle#msg(CharSequence)
 	 * @see ResponseWriter#getMsgBundle()
 	 */
-	@Override public String msg(CharSequence key)
+	@Override public String msg(Object key)
 	{
 		return out.getMsgBundle().msg(key);
 	}
@@ -60,7 +60,7 @@ public class LangMixin implements MessageProvider
 	 * @see MsgBundle#msg(CharSequence, Object...)
 	 * @see ResponseWriter#getMsgBundle()
 	 */
-	@Override public String msg(CharSequence key, Object... params)
+	@Override public String msg(Object key, Object... params)
 	{
 		return out.getMsgBundle().msg(key, params);
 	}
