@@ -93,7 +93,7 @@ public class LocaleSerializer extends AbstractSerializer
 	@Override public String formatBigDecimal(BigDecimal value, Object style)
 	{
 		return value != null ? 
-			numberStyle(style).formatDecimal(numberFormat_, value) :
+			numberFormat_.formatDecimal(value, numberStyle(style), null).toString() :
 			formatNull();
 	}
 
@@ -101,7 +101,7 @@ public class LocaleSerializer extends AbstractSerializer
 	@Override public String formatBigInteger(BigInteger value, Object style)
 	{
 		return value != null ? 
-			numberStyle(style).formatNatural(numberFormat_, value) :
+			numberFormat_.formatNatural(value, numberStyle(style), null).toString() :
 			formatNull();
 	}
 
@@ -132,31 +132,31 @@ public class LocaleSerializer extends AbstractSerializer
 
 	@Override public String formatDouble(double value, Object style)
 	{
-		return numberStyle(style).formatDecimal(numberFormat_, value);
+		return numberFormat_.formatDecimal(value, numberStyle(style));
 	}
 
 	
 	@Override public String formatFloat(float value, Object style)
 	{
-		return numberStyle(style).formatDecimal(numberFormat_, value);
+		return formatDouble(value, style);
 	}
 	
 	
 	@Override public String formatInt(int value, Object style)
 	{
-		return numberStyle(style).formatNatural(numberFormat_, value);
+		return formatLong(value, style);
 	}
 
 
 	@Override public String formatLong(long value, Object style)
 	{
-		return numberStyle(style).formatNatural(numberFormat_, value);
+		return numberFormat_.formatNatural(value, numberStyle(style));
 	}
 
 
 	@Override public String formatShort(short value, Object style)
 	{
-		return numberStyle(style).formatNatural(numberFormat_, value);
+		return formatLong(value, style);
 	}
 
 

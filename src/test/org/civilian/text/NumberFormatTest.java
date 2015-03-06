@@ -24,8 +24,8 @@ public class NumberFormatTest extends CivTest
 		assertEquals('.', formatDe_.getGroupingSeparator());
 		assertEquals(',', formatUk_.getGroupingSeparator());
 
-		assertEquals(".", formatDe_.getGroupingSeparatorString());
-		assertEquals(",", formatUk_.getGroupingSeparatorString());
+		assertEquals(".", formatDe_.getGroupingSepString());
+		assertEquals(",", formatUk_.getGroupingSepString());
 	}
 
 	
@@ -69,38 +69,39 @@ public class NumberFormatTest extends CivTest
 	@Test public void testStyleWholeNumbers()
 	{
 		NumberStyle style = NumberStyle.DEFAULT;
-		assertEquals(      "1",	style.formatNatural(formatDe_, 1));
-		assertEquals(     "12",	style.formatNatural(formatUk_, 12));
-		assertEquals(    "123",	style.formatNatural(formatDe_, 123));
-		assertEquals(  "1,234",	style.formatNatural(formatUk_, 1234));
-		assertEquals( "12.345",	style.formatNatural(formatDe_, 12345));
-		assertEquals("123,456",	style.formatNatural(formatUk_, 123456));
+		assertEquals(      "1",	formatDe_.formatNatural(1, style));
+		assertEquals(     "12",	formatUk_.formatNatural(12, style));
+		assertEquals(    "123",	formatDe_.formatNatural(123, style));
+		assertEquals(  "1,234",	formatUk_.formatNatural(1234, style));
+		assertEquals( "12.345",	formatDe_.formatNatural(12345, style));
+		assertEquals("123,456",	formatUk_.formatNatural(123456, style));
 		
 		style = NumberStyle.RAW;
-		assertEquals(      "1",	style.formatNatural(formatDe_, 1));
-		assertEquals(     "12",	style.formatNatural(formatUk_, 12));
-		assertEquals(    "123",	style.formatNatural(formatDe_, 123));
-		assertEquals(   "1234",	style.formatNatural(formatUk_, 1234));
-		assertEquals(  "12345",	style.formatNatural(formatDe_, 12345));
-		assertEquals( "123456",	style.formatNatural(formatUk_, 123456));
+		assertEquals(      "1",	formatDe_.formatNatural(1, style));
+		assertEquals(     "12",	formatUk_.formatNatural(12, style));
+		assertEquals(    "123",	formatDe_.formatNatural(123, style));
+		assertEquals(   "1234",	formatUk_.formatNatural(1234, style));
+		assertEquals(  "12345",	formatDe_.formatNatural(12345, style));
+		assertEquals( "123456",	formatUk_.formatNatural(123456, style));
 	}
 
 	
 	@Test public void testStyleDecimals()
 	{
-		assertEquals("1,00",	NumberStyle.DEFAULT.formatDecimal(formatDe_, 1));
-		assertEquals("1.20",	NumberStyle.DEFAULT.formatDecimal(formatUk_, 1.2));
-		assertEquals("1,23",	NumberStyle.DEFAULT.formatDecimal(formatDe_, 1.23));
-		assertEquals("1,23",	NumberStyle.DEFAULT.formatDecimal(formatDe_, 1.239));
-		assertEquals("1.234,56",NumberStyle.DEFAULT.formatDecimal(formatDe_, 1234.56));
-		assertEquals("1234.56",	NumberStyle.RAW.formatDecimal(formatUk_, 1234.56));
+		NumberStyle style = NumberStyle.DEFAULT;
+		assertEquals("1,00",	formatDe_.formatDecimal(1, style));
+		assertEquals("1.20",	formatUk_.formatDecimal(1.2, style));
+		assertEquals("1,23",	formatDe_.formatDecimal(1.23, style));
+		assertEquals("1,23",	formatDe_.formatDecimal(1.239, style));
+		assertEquals("1.234,56",formatDe_.formatDecimal(1234.56, style));
+		assertEquals("1234.56",	formatUk_.formatDecimal(1234.56, NumberStyle.RAW));
 		
-		NumberStyle style = NumberStyle.DEFAULT.maxDecimals(3);
-		assertEquals("1,00",	style.formatDecimal(formatDe_, 1));
-		assertEquals("1.20",	style.formatDecimal(formatUk_, 1.2));
-		assertEquals("1,23",	style.formatDecimal(formatDe_, 1.23));
-		assertEquals("1,239",	style.formatDecimal(formatDe_, 1.239));
-		assertEquals("1,239",	style.formatDecimal(formatDe_, 1.2398));
+		style = NumberStyle.DEFAULT.maxDecimals(3);
+		assertEquals("1,00",	formatDe_.formatDecimal(1, style));
+		assertEquals("1.20",	formatUk_.formatDecimal(1.2, style));
+		assertEquals("1,23",	formatDe_.formatDecimal(1.23, style));
+		assertEquals("1,239",	formatDe_.formatDecimal(1.239, style));
+		assertEquals("1,239",	formatDe_.formatDecimal(1.2398, style));
 
 		style = NumberStyle.DEFAULT.decimals(0);
 	}
