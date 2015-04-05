@@ -28,7 +28,7 @@ public class ResLocalApp extends Application
 	@Override protected void init(AppConfig config) throws Exception
 	{
 		// get the entity-manager-factory defined by the
-		// persisten-unit "reslocal" in META-INF/services/persistence.xml
+		// persistence-unit "reslocal" in WEB-INF/classes/META-INF/persistence.xml
 		emFactory_ = Persistence.createEntityManagerFactory("reslocal");
 		JpaContext.setEntityManagerFactory(emFactory_);
 	}
