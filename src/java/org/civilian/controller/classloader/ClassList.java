@@ -24,18 +24,24 @@ import org.civilian.util.StringUtil;
 
 /**
  * ClassList defines a list of classes, either by specifying
- * them directly, or by defining match cirteria for class or
+ * them directly, or by defining match criteria for class or
  * package names. 
  */
 public class ClassList
 {
+	/**
+	 * Returns the size of the list.
+	 */
 	public int size()
 	{
 		return list_.size();
 	}
 	
 
-	public ClassList add(Item item)
+	/**
+	 * Adds a Item to the list.
+	 */
+	private ClassList add(Item item)
 	{
 		if (!list_.contains(item))
 			list_.add(item);
@@ -43,6 +49,15 @@ public class ClassList
 	}
 
 	
+	/**
+	 * Adds an item to the lists.
+	 * The passed name can be 
+	 * <ul>
+	 * <li>either a qualified class name, therefore including that class.
+	 * <li>or a string ending with '*' or '.', therefore including
+	 * 		all classes whose qualified name starts with that package
+	 * </ul>
+	 */
 	public ClassList add(String name)
 	{
 		Check.notNull(name, "name");
@@ -55,7 +70,7 @@ public class ClassList
 		else
 		{
 			String simpleName = ClassUtil.cutPackageName(name);
-			if ((simpleName.length() > 0) && (Character.isUpperCase(simpleName.charAt(0))))
+			if ((simpleName.length() > 0) && Character.isUpperCase(simpleName.charAt(0)))
 				add(new ExactMatch(name));
 			else
 				add(new StartsWith(name));
@@ -64,6 +79,10 @@ public class ClassList
 	}
 			
 	
+	/**
+	 * Adds multiple names.
+	 * @see #add(String)
+	 */
 	public ClassList add(String... names)
 	{
 		for (String name : names)
@@ -72,18 +91,27 @@ public class ClassList
 	}
 	
 	
+	/**
+	 * Adds a class.
+	 */
 	public ClassList addClass(Class<?> c)
 	{
 		return add(new ExactMatch(c.getName()));
 	}
 
 	
+	/**
+	 * Adds a package. All class in or below that package are included.
+	 */
 	public ClassList addPackage(Class<?> c)
 	{
 		return add(new StartsWith(ClassUtil.getPackageName(c) + "."));
 	}
 
 	
+	/**
+	 * Tests if the name is in the list..
+	 */
 	public boolean contains(String name)
 	{
 		if (name != null)
