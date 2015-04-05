@@ -84,6 +84,8 @@ public class NonDelegatingClassLoader extends ClassLoader
 			}
 		}
 		
+		if (Logs.CLASSLOADER.isTraceEnabled())
+			Logs.CLASSLOADER.trace("delegated: " + name);
 	    return super.loadClass(name, resolve);
 	}
 	
