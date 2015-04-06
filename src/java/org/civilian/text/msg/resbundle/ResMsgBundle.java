@@ -31,17 +31,6 @@ import org.civilian.util.ClassUtil;
 public class ResMsgBundle extends MsgBundle
 {
 	/**
-	 * Creates a new ResMsgBundle. 
-	 * @param baseName the base name of the message bundle
-	 * @param locale the locale
-	 */
-	public ResMsgBundle(String baseName, Locale locale)
-	{
-		this(ResourceBundle.getBundle(baseName, locale));
-	}
-
-	
-	/**
 	 * Creates a new ResMsgBundle for a ResourceBundle. 
 	 */
 	public ResMsgBundle(ResourceBundle bundle)

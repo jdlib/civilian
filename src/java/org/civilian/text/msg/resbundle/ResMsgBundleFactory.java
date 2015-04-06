@@ -17,9 +17,11 @@ package org.civilian.text.msg.resbundle;
 
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleFactories;
 import org.civilian.text.msg.MsgBundleFactory;
+import org.civilian.util.Check;
 
 
 /**
@@ -34,16 +36,70 @@ public class ResMsgBundleFactory extends MsgBundleFactory
 	 */
 	public ResMsgBundleFactory(String baseName)
 	{
-		baseName_ = baseName;
+		baseName_ 		= baseName;
+		classLoader_	= getClass().getClassLoader();
+		control_		= DEFAULT_CONTROL; 
 	}
 	 
+	
+	/**
+	 * Creates a ResMsgBundleFactory. 
+	 * @param msgClass the class name is used as basename (with '.' replaced with '/').
+	 */
+	public ResMsgBundleFactory(Class<?> msgClass)
+	{
+		this(msgClass.getName().replace('.', '/'));
+	}
+
 	
 	/**
 	 * Returns the ResMsgBundle for the locale.
 	 */
 	@Override public MsgBundle getMsgBundle(Locale locale)
 	{
-		return new ResMsgBundle(baseName_, locale);
+		return new ResMsgBundle(getResBundle(locale));
+	}
+
+	
+	/**
+	 * Returns a ResourceBundle for the locale.
+	 */
+	public ResourceBundle getResBundle(Locale locale)
+	{
+		return ResourceBundle.getBundle(baseName_, locale, classLoader_, control_);
+	}
+
+
+	/**
+	 * Sets the ClassLoader used by the factory.
+	 */
+	public void setClassLoader(ClassLoader classLoader)
+	{
+		classLoader_ = Check.notNull(classLoader, "classLoader");
+	}
+	
+	
+	/**
+	 * Sets the ResourceBundle.Control used by the factory.
+	 */
+	public void setControl(ResourceBundle.Control control)
+	{
+		control_ = Check.notNull(control, "control");
+	}
+
+	
+	/**
+	 * Disables caching of ResourceBundles produced by this factory.
+	 */
+	public void disableCache()
+	{
+		control_ = new ResourceBundle.Control() 
+		{
+			@Override public long getTimeToLive(String baseName, Locale locale) 
+			{
+				return TTL_DONT_CACHE;
+			}		
+		};
 	}
 
 	
@@ -56,5 +112,8 @@ public class ResMsgBundleFactory extends MsgBundleFactory
 	}
 	
 	
-	private String baseName_;
+	protected final String baseName_;
+	protected ClassLoader classLoader_;
+	protected ResourceBundle.Control control_;
+	protected static final ResourceBundle.Control DEFAULT_CONTROL = new ResourceBundle.Control() {};
 }
