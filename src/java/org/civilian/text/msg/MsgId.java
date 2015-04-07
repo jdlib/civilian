@@ -18,7 +18,7 @@ package org.civilian.text.msg;
 
 /**
  * MsgId is a CharSequence which can be used
- * as {@link MsgBundle#msg(CharSequence) message id parameter}.
+ * as {@link MsgBundle#msg(Object) message id parameter}.
  * The intention of this class is explained in the documentation
  * of ResBundleCompiler.
  */

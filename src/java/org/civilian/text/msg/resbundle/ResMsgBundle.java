@@ -82,7 +82,7 @@ public class ResMsgBundle extends MsgBundle
 	 * If the resource bundle does not contain a message with that id,
 	 * the resulting MissingResourceException is catched and  
 	 * the key prefixed with a '?' is returned instead.
-	 * @see #getUnknown(CharSequence)
+	 * @see #getUnknown(Object)
 	 */
 	@Override public String msg(Object id)
 	{
