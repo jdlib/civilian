@@ -2,7 +2,7 @@ import java.util.Iterator
 import org.civilian.Application
 import org.civilian.Processor
 import org.civilian.processor.ProcessorList
-import org.civilian.text.LocaleService
+import org.civilian.text.LocaleServiceList
 import org.civilian.content.ContentType
 
 
@@ -37,11 +37,11 @@ template(Application app) mixin html
 	<tr>
 		<td>Locale</td>
 		<td>
-			@LocaleService ls = app.getLocaleService();
-			@for (int i=0; i<ls.getLocaleCount(); i++)
-				<%?i > 0%>, <%?%><%ls.getLocale(i)%> 
+			@LocaleServiceList services = app.getLocaleServices();
+			@for (int i=0; i<services.getLocaleCount(); i++)
+				<%?i > 0%>, <%?%><%services.getLocale(i)%> 
 		</td>
-		<td>org.civilian.Application.getLocaleService().getLocale(i)</td>
+		<td>org.civilian.Application.getLocaleServices().getLocale(i)</td>
 	</tr>
 	<tr>
 		<td>ContentSerializers</td>

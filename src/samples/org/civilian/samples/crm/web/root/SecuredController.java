@@ -65,8 +65,8 @@ public abstract class SecuredController extends CrmController
 		else
 		{
 			// check access successful: initialize the locale to the locale specified at login
-			getRequest().setLocaleData(sessionUser_.localeData);
-			getResponse().setLocaleData(sessionUser_.localeData);
+			getRequest().setLocaleService(sessionUser_.localeService);
+			getResponse().setLocaleService(sessionUser_.localeService);
 			checkCrmAccess();
 		}
 	}

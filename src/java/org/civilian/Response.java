@@ -29,7 +29,7 @@ import org.civilian.content.ContentType;
 import org.civilian.content.JaxbXmlSerializer;
 import org.civilian.provider.ApplicationProvider;
 import org.civilian.provider.ContextProvider;
-import org.civilian.provider.LocaleDataProvider;
+import org.civilian.provider.LocaleServiceProvider;
 import org.civilian.provider.RequestProvider;
 import org.civilian.provider.ResponseProvider;
 import org.civilian.resource.Url;
@@ -39,7 +39,7 @@ import org.civilian.response.ResponseWriter;
 import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.response.UriEncoder;
 import org.civilian.response.std.ErrorResponse;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 import org.civilian.type.TypeSerializer;
 
 
@@ -50,7 +50,7 @@ import org.civilian.type.TypeSerializer;
  * In a Servlet environment Response is functionally equivalent to a HttpServletResponse.<p>
  */
 public interface Response extends RequestProvider, ResponseProvider, ApplicationProvider, 
-	ContextProvider, LocaleDataProvider
+	ContextProvider, LocaleServiceProvider
 {
 	/**
 	 * Defines constants for the response status. Their numeric value equals the correspondent HTTP status code.
@@ -263,27 +263,27 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	
 	/**
 	 * Returns the locale data associated with the response.
-	 * The locale data can be set explicitly by {@link #setLocaleData(LocaleData)}.
+	 * The locale data can be set explicitly by {@link #setLocaleService(LocaleService)}.
 	 * If not explicitly set it is the same as the LocalData of the request.
-	 * @see Request#getLocaleData()
+	 * @see Request#getLocaleService()
 	 */
-	@Override public abstract LocaleData getLocaleData();
+	@Override public abstract LocaleService getLocaleService();
 	
 
 	/**
 	 * Sets the locale data associated with the response.
 	 */
-	public abstract void setLocaleData(LocaleData localeData);
+	public abstract void setLocaleService(LocaleService service);
 
 	
 	/**
 	 * Sets the locale data associated with the response.
 	 */
-	public abstract void setLocaleData(Locale locale);
+	public abstract void setLocaleService(Locale locale);
 	
 
 	/**
-	 * Shortcut for {@link #getLocaleData()}.getTypeSerializer().
+	 * Shortcut for {@link #getLocaleService()}.getTypeSerializer().
 	 */
 	public abstract TypeSerializer getLocaleSerializer();
 
@@ -515,7 +515,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * @return the locale defining the content language, or null if not 
 	 * 		set. When a Writer is requested, and the content language is null,
 	 * 		then it is set to locale of the response's lcaleData.
-	 * @see #getLocaleData()
+	 * @see #getLocaleService()
 	 */
 	public abstract Locale getContentLanguage();
 

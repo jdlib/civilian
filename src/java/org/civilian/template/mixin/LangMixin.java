@@ -44,7 +44,7 @@ public class LangMixin implements MessageProvider
 	
 	/**
 	 * Returns the message text for the key using the ResponseWriters MsgBundle.
-	 * @see MsgBundle#msg(CharSequence)
+	 * @see MsgBundle#msg(Object)
 	 * @see ResponseWriter#getMsgBundle()
 	 */
 	@Override public String msg(Object key)
@@ -57,7 +57,7 @@ public class LangMixin implements MessageProvider
 	 * Returns the message text for the key using the ResponseWriters MsgBundle
 	 * and replaces the placeholders in the message with the given
 	 * parameters.
-	 * @see MsgBundle#msg(CharSequence, Object...)
+	 * @see MsgBundle#msg(Object, Object...)
 	 * @see ResponseWriter#getMsgBundle()
 	 */
 	@Override public String msg(Object key, Object... params)

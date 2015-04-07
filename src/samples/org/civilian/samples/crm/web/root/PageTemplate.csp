@@ -64,7 +64,7 @@ template(Response response, Template content, Script script, SessionUser session
 		<h3>CRM <%lang.msg(Message.Login)%></h3>
 	</div>
 	<div class="modal-body">
-		<table class="table table-form" ng-init="lang='<%sessionUser.localeData.toString()%>'">
+		<table class="table table-form" ng-init="lang='<%sessionUser.localeService.toString()%>'">
 		<tr>
 			<td><%lang.msg(Message.Name)%></td>
 			<td><input type="text" ng-model="name" ng-required="true"></td>

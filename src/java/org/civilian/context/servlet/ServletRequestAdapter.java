@@ -139,7 +139,7 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 		{
 			Locale locale = getExtensionMapping().extractLocale(getRelativePath().getExtension());
 			if (locale == null)
-				locale = getApplication().getLocaleService().getDefaultLocale();
+				locale = getApplication().getLocaleServices().getDefaultLocale();
 			return locale;
 		}
 	}

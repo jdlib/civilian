@@ -11,14 +11,14 @@ import org.civilian.Template;
 import org.civilian.response.ResponseWriter;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
-import org.civilian.text.LocaleService;
+import org.civilian.text.LocaleServiceList;
 
 
 public class IndexTemplate extends Template
 {
-	public IndexTemplate(LocaleService service, Locale... locales)
+	public IndexTemplate(LocaleServiceList services, Locale... locales)
 	{
-		this.service = service;
+		this.services = services;
 		this.locales = locales;
 	}
 
@@ -68,7 +68,7 @@ public class IndexTemplate extends Template
 	
 	private void printLocale(Locale locale)
 	{
-		out.setLocaleData(service.getLocaleData(locale));               // line 27: @out.setLocaleData(service.getLocaleData(locale));
+		out.setLocaleService(services.getService(locale));              // line 27: @out.setLocaleService(services.getService(locale));
 		out.println("<tr>");                                            // line 28: <tr>
 		out.increaseTab();
 		out.println("<td colspan=\"2\"><hr></td>");                     // line 29: <td colspan="2"><hr></td>
@@ -119,7 +119,7 @@ public class IndexTemplate extends Template
 	}
 
 
-	private LocaleService service;
+	private LocaleServiceList services;
 	private Locale[] locales;
 	private HtmlMixin html;
 	private LangMixin lang;

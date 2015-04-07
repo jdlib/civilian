@@ -17,26 +17,26 @@
 
 
 import org.civilian.samples.crm.db.entity.User;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 
 
 public class SessionUser
 {
-	public SessionUser(User user, LocaleData localeData)
+	public SessionUser(User user, LocaleService localeService)
 	{
-		this(user.getName(), user.isAdmin(), localeData);
+		this(user.getName(), user.isAdmin(), localeService);
 	}
 	
 	
-	public SessionUser(String name, boolean isAdmin, LocaleData localeData)
+	public SessionUser(String name, boolean isAdmin, LocaleService localeService)
 	{
-		this.name 		= name;
-		this.localeData = localeData;
-		this.isAdmin	= isAdmin;
+		this.name 			= name;
+		this.localeService 	= localeService;
+		this.isAdmin		= isAdmin;
 	}
 	
 	
 	public final boolean isAdmin;
 	public final String name;
-	public final LocaleData localeData;
+	public final LocaleService localeService;
 }

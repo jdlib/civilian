@@ -691,7 +691,7 @@ public class TestRequest extends AbstractRequest
 	@Override public Locale getAcceptedLocale()
 	{
 		if (acceptedLocale_ == null)
-			acceptedLocale_ = getApplication().getLocaleService().getDefaultLocale();
+			acceptedLocale_ = getApplication().getLocaleServices().getDefaultLocale();
 		return acceptedLocale_;
 	}
 

@@ -30,7 +30,7 @@ import org.civilian.provider.ContextProvider;
 import org.civilian.provider.MessageProvider;
 import org.civilian.provider.RequestProvider;
 import org.civilian.provider.ResponseProvider;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.util.Check;
 
@@ -192,22 +192,22 @@ public class Controller implements
 	
 	
 	/**
-	 * Returns the LocaleData of the response. 
-	 * Shortcut for getResponse().getLocaleData().
+	 * Returns the LocaleService of the response. 
+	 * Shortcut for getResponse().getLocaleService().
 	 */
-	public LocaleData getLocaleData()
+	public LocaleService getLocaleService()
 	{
-		return getResponse().getLocaleData();
+		return getResponse().getLocaleService();
 	}
 
 	
 	/**
-	 * Returns the MsgBundle object of the LocaleData in the response.
-	 * Shortcut for getResponse().getLocaleData().getMsgBundle()
+	 * Returns the MsgBundle object of the LocaleService in the response.
+	 * Shortcut for getResponse().getLocaleService().getMsgBundle()
 	 */
 	public MsgBundle getMsgBundle()
 	{
-		return getLocaleData().getMsgBundle();
+		return getLocaleService().getMsgBundle();
 	}
 	
 	

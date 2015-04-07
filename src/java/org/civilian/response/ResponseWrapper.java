@@ -31,7 +31,7 @@ import org.civilian.Response;
 import org.civilian.Template;
 import org.civilian.content.ContentType;
 import org.civilian.resource.Url;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 import org.civilian.type.TypeSerializer;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
@@ -109,21 +109,21 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public LocaleData getLocaleData()
+	@Override public LocaleService getLocaleService()
 	{
-		return response_.getLocaleData();
+		return response_.getLocaleService();
 	}
 
 
-	@Override public void setLocaleData(LocaleData localeData)
+	@Override public void setLocaleService(LocaleService service)
 	{
-		response_.setLocaleData(localeData);
+		response_.setLocaleService(service);
 	}
 
 
-	@Override public void setLocaleData(Locale locale)
+	@Override public void setLocaleService(Locale locale)
 	{
-		response_.setLocaleData(locale);
+		response_.setLocaleService(locale);
 	}
 
 

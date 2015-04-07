@@ -25,7 +25,7 @@ import org.civilian.form.Select;
 import org.civilian.form.TextField;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.CrmConstants;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 import org.civilian.text.keys.KeyList;
 
 
@@ -35,7 +35,7 @@ public class LoginForm extends Form
 	{
 		super(res);
 		
-		KeyList<LocaleData> langKeys = res.getApplication().getLocaleService().getLocaleDataKeys();
+		KeyList<LocaleService> langKeys = res.getApplication().getLocaleServices().getServiceKeys();
 		
 		add(name 		= new TextField("name"), res.msg(Message.Login));
 		add(password 	= new PasswordField("password"), res.msg(Message.Password));
@@ -52,7 +52,7 @@ public class LoginForm extends Form
 	
 	public Button ok;
 	public TextField name;
-	public Select<LocaleData> language;
+	public Select<LocaleService> language;
 	public PasswordField password;
 	public HiddenField<String> path;
 }

@@ -22,8 +22,8 @@ import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.Template;
 import org.civilian.content.ContentSerializer;
-import org.civilian.provider.LocaleDataProvider;
-import org.civilian.text.LocaleData;
+import org.civilian.provider.LocaleServiceProvider;
+import org.civilian.text.LocaleService;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.lib.LocaleSerializer;
@@ -113,7 +113,7 @@ public class ResponseWriter extends TabWriter
 	 * Returns the TypeSerializer of this ResponseWriter.
 	 * If the ResponseWriter was created from a {@link Request} the 
 	 * TypeSerializer is initialized with the one from the requests
-	 * {@link Request#getLocaleData() LocaleData}.
+	 * {@link Request#getLocaleService() LocaleService}.
 	 * Else it is the {@link LocaleSerializer#SYSTEM_LOCALE_SERIALIZER LocaleSerializer} 
 	 * for the default system locale. 
 	 */
@@ -163,10 +163,10 @@ public class ResponseWriter extends TabWriter
 	
 	private void initDefaults()
 	{
-		LocaleDataProvider lp = getContext(LocaleDataProvider.class);
+		LocaleServiceProvider lp = getContext(LocaleServiceProvider.class);
 		if (lp != null)
 		{
-			LocaleData ld = lp.getLocaleData();
+			LocaleService ld = lp.getLocaleService();
 			if (typeSerializer_ == null)
 				typeSerializer_ = ld.getTypeSerializer();
 			if (msgBundle_ == null)
@@ -177,13 +177,13 @@ public class ResponseWriter extends TabWriter
 	
 	/**
 	 * Sets the MsgBundle and TypeSerialiter of the ResponseWriter
-	 * to the instances provided by the LocaleData.
+	 * to the instances provided by the LocaleService.
 	 */
-	public void setLocaleData(LocaleData localeData)
+	public void setLocaleService(LocaleService service)
 	{
-		Check.notNull(localeData, "localeData");
-		setMsgBundle(localeData.getMsgBundle());
-		setTypeSerializer(localeData.getTypeSerializer());
+		Check.notNull(service, "service");
+		setMsgBundle(service.getMsgBundle());
+		setTypeSerializer(service.getTypeSerializer());
 	}
 
 	

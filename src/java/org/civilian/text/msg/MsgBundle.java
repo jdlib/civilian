@@ -18,14 +18,14 @@ package org.civilian.text.msg;
 
 import java.util.Locale;
 import org.civilian.provider.MessageProvider;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 
 
 /**
  * MsgBundle is a bundle of text messages in
  * a specific language, similar to a Java ResourceBundle.
- * LocaleData contains a MsgBundle suitable for its locale.
- * @see LocaleData#getMsgBundle()
+ * LocaleService contains a MsgBundle suitable for its locale.
+ * @see LocaleService#getMsgBundle()
  */
 public abstract class MsgBundle implements MessageProvider
 {

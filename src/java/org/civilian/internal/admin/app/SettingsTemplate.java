@@ -13,7 +13,7 @@ import org.civilian.content.ContentType;
 import org.civilian.processor.ProcessorList;
 import org.civilian.response.ResponseWriter;
 import org.civilian.template.mixin.HtmlMixin;
-import org.civilian.text.LocaleService;
+import org.civilian.text.LocaleServiceList;
 
 
 public class SettingsTemplate extends Template
@@ -91,19 +91,19 @@ public class SettingsTemplate extends Template
 		out.println("<td>Locale</td>");                                 // line 38: <td>Locale</td>
 		out.println("<td>");                                            // line 39: <td>
 		out.increaseTab();
-		LocaleService ls = app.getLocaleService();                      // line 40: @LocaleService ls = app.getLocaleService();
-		for (int i=0; i<ls.getLocaleCount(); i++)                       // line 41: @for (int i=0; i<ls.getLocaleCount(); i++)
+		LocaleServiceList services = app.getLocaleServices();           // line 40: @LocaleServiceList services = app.getLocaleServices();
+		for (int i=0; i<services.getLocaleCount(); i++)                 // line 41: @for (int i=0; i<services.getLocaleCount(); i++)
 		{
 			if (i > 0)                                                  // line 42: <%?i > 0%>
 			{
 				out.print(", ");                                        // line 42: ,
 			}
-			out.print(ls.getLocale(i));                                 // line 42: <%ls.getLocale(i)%>
+			out.print(services.getLocale(i));                           // line 42: <%services.getLocale(i)%>
 			out.printlnIfNotEmpty();
 		}
 		out.decreaseTab();
 		out.println("</td>");                                           // line 43: </td>
-		out.println("<td>org.civilian.Application.getLocaleService().getLocale(i)</td>"); // line 44: <td>org.civilian.Application.getLocaleService().getLocale(i)</td>
+		out.println("<td>org.civilian.Application.getLocaleServices().getLocale(i)</td>"); // line 44: <td>org.civilian.Application.getLocaleServices().getLocale(i)</td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 45: </tr>
 		out.println("<tr>");                                            // line 46: <tr>

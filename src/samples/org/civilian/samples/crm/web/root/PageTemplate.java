@@ -146,7 +146,7 @@ public class PageTemplate extends Template
 		out.println("<div class=\"modal-body\">");                      // line 66: <div class="modal-body">
 		out.increaseTab();
 		out.print("<table class=\"table table-form\" ng-init=\"lang='"); // line 67: <table class="table table-form" ng-init="lang='
-		out.print(sessionUser.localeData.toString());                   // line 67: <%sessionUser.localeData.toString()%>
+		out.print(sessionUser.localeService.toString());                // line 67: <%sessionUser.localeService.toString()%>
 		out.println("'\">");                                            // line 67: '">
 		out.println("<tr>");                                            // line 68: <tr>
 		out.increaseTab();

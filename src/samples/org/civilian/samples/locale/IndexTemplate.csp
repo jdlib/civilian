@@ -1,9 +1,9 @@
 import java.util.Locale
 import java.util.Date
-import org.civilian.text.LocaleService
+import org.civilian.text.LocaleServiceList
 
 
-template(LocaleService service, Locale... locales) mixin html, lang
+template(LocaleServiceList services, Locale... locales) mixin html, lang
 {{
 	<!DOCTYPE html>
 	<html>
@@ -24,7 +24,7 @@ template(LocaleService service, Locale... locales) mixin html, lang
 
 private void printLocale(Locale locale)
 {{
-	@out.setLocaleData(service.getLocaleData(locale));
+	@out.setLocaleService(services.getService(locale));
 	<tr>
 		<td colspan="2"><hr></td>
 	</tr>

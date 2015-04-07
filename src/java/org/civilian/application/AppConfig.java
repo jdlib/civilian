@@ -33,7 +33,7 @@ import org.civilian.controller.classloader.ReloadConfig;
 import org.civilian.provider.ResponseProvider;
 import org.civilian.resource.ExtensionMapping;
 import org.civilian.resource.Url;
-import org.civilian.text.LocaleService;
+import org.civilian.text.LocaleServiceList;
 import org.civilian.text.msg.MsgBundleFactories;
 import org.civilian.text.msg.MsgBundleFactory;
 import org.civilian.type.TypeLib;
@@ -249,10 +249,10 @@ public class AppConfig
 	
 
 	/**
-	 * Returns false, if the {@link LocaleService} will only provide LocaleData
-	 * for supported locales (and fall back to a supported locale if a LocaleData for 
-	 * any other Locale is requested), or true if LocaleData will be returned
-	 * for any requested locale. In the later case, unsupported LocaleData will not be cached
+	 * Returns false, if the {@link LocaleServiceList} will only provide LocaleService
+	 * for supported locales (and fall back to a supported locale if a LocaleService for 
+	 * any other Locale is requested), or true if LocaleServices will be returned
+	 * for any requested locale. In the later case, unsupported LocaleServices will not be cached
      * (which adds a small performance penalty).
 	 */
 	public boolean allowUnsupportedLocales()
@@ -262,7 +262,7 @@ public class AppConfig
 	
 	
 	/**
-	 * Sets if the {@link LocaleService} will provide LocaleData
+	 * Sets if the {@link LocaleServiceList} will provide LocaleServices
 	 * even for locales which are not included in the list of supported locales. 
 	 */
 	public void setAllowUnsupportedLocales(boolean allow)

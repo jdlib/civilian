@@ -29,7 +29,7 @@ public class IndexController extends Controller
 	{
 		IndexTemplate template = new IndexTemplate
 		(
-			getApplication().getLocaleService(),
+			getApplication().getLocaleServices(),
 			new Locale("en", "UK"), 
 			new Locale("de", "CH"), 
 			new Locale("fr") 

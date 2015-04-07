@@ -47,7 +47,7 @@ import org.civilian.resource.ExtensionMapping;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.Url;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 import org.civilian.type.Type;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.lib.StandardSerializer;
@@ -79,7 +79,7 @@ public abstract class AbstractRequest implements Request
 		relativePath_			= other.getRelativePath();
 		acceptedContentTypes_ 	= other.acceptedContentTypes_;
 		resource_				= other.resource_;
-		localeData_				= other.localeData_;
+		localeService_			= other.localeService_;
 
 		if (other.pathParams_ != null)
 			pathParams_ = new HashMap<>(other.pathParams_);
@@ -379,48 +379,48 @@ public abstract class AbstractRequest implements Request
 	
 	/**
 	 * Returns the locale data associated with the request.
-	 * The locale data can be set explicitly by {@link #setLocaleData(LocaleData)}.
+	 * The locale data can be set explicitly by {@link #setLocaleService(LocaleService)}.
 	 * If not explicitly set it is derived from the requested preferred locale ({@link #getAcceptedLocale()}).
-	 * If the preferred locale is not contained in the list of supported locales (see {@link Application#getLocaleService()})
+	 * If the preferred locale is not contained in the list of supported locales (see {@link Application#getLocaleServices()})
 	 * then the default application locale will be used.  
 	 */
-	@Override public LocaleData getLocaleData()
+	@Override public LocaleService getLocaleService()
 	{
-		// lazy init of localeData
+		// lazy init of LocaleService
 		// if during processing the locale-item is initialized by a call
 		// to #setLocaleItem (e.g. from a user profile), then we avoid to call getPreferences().getLocale())
-		if (localeData_ == null)
-			localeData_ = getApplication().getLocaleService().getLocaleData(getAcceptedLocale());
-		return localeData_;
+		if (localeService_ == null)
+			localeService_ = getApplication().getLocaleServices().getService(getAcceptedLocale());
+		return localeService_;
 	}
 	
 
 	/**
-	 * Sets the locale data associated with the request.
+	 * Sets the localeService associated with the request.
 	 * This overrides the default locale data, as defined by the requested preferred language.
 	 */
-	@Override public void setLocaleData(LocaleData localeData)
+	@Override public void setLocaleService(LocaleService localeService)
 	{
-		localeData_ = Check.notNull(localeData, "localeData");
+		localeService_ = Check.notNull(localeService, "localeService");
 	}
 
 	
 	/**
-	 * Sets the locale data associated with the request.
+	 * Sets the localeService associated with the request.
 	 */
-	@Override public void setLocaleData(Locale locale)
+	@Override public void setLocaleService(Locale locale)
 	{
 		Check.notNull(locale, "locale");
-		localeData_ = getApplication().getLocaleService().getLocaleData(locale);
+		localeService_ = getApplication().getLocaleServices().getService(locale);
 	}
 
 
 	/**
-	 * Shortcut for getLocaleData().getTypeSerializer().
+	 * Shortcut for getLocaleServce().getTypeSerializer().
 	 */
 	@Override public TypeSerializer getLocaleSerializer()
 	{
-		return getLocaleData().getTypeSerializer();
+		return getLocaleService().getTypeSerializer();
 	}
 
 	
@@ -819,7 +819,7 @@ public abstract class AbstractRequest implements Request
 	private Path path_;
 	private Path relativePath_;
 	private Map<PathParam<?>, Object> pathParams_;
-	private LocaleData localeData_;
+	private LocaleService localeService_;
 	private Application application_;
 	private Object contentInput_;
 	private Resource resource_;

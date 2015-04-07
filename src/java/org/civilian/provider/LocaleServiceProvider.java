@@ -16,16 +16,16 @@
 package org.civilian.provider;
 
 
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 
 
 /**
- * ContextProvider is able to return a {@link LocaleData} reference. 
+ * LocaleServiceProvider is able to return a {@link LocaleService} reference. 
  */
-public interface LocaleDataProvider
+public interface LocaleServiceProvider
 {
 	/**
-	 * Returns the LocaleData.
+	 * Returns the LocaleService.
 	 */
-	public LocaleData getLocaleData();
+	public LocaleService getLocaleService();
 }

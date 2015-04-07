@@ -34,7 +34,7 @@ import org.civilian.resource.ExtensionMapping;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.Url;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 import org.civilian.type.Type;
 import org.civilian.type.TypeSerializer;
 import org.civilian.util.Value;
@@ -66,7 +66,7 @@ import org.civilian.util.Value;
  * </ul>
  */
 public interface Request extends RequestProvider, ResponseProvider, ApplicationProvider, 
-	ContextProvider, PathParamProvider, PathProvider, LocaleDataProvider
+	ContextProvider, PathParamProvider, PathProvider, LocaleServiceProvider
 {
 	/**
 	 * Defines constants for common request methods as defined by the HTTP protocol. 
@@ -424,12 +424,12 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	
 	/**
 	 * Returns the locale data associated with the request.
-	 * The locale data can be set explicitly by {@link #setLocaleData(LocaleData)}.
+	 * The locale data can be set explicitly by {@link #setLocaleService(LocaleService)}.
 	 * If not explicitly set, it is derived from the preferred locale ({@link Request#getAcceptedLocale()}).
-	 * If the preferred locale is not contained in the list of supported locales (see {@link Application#getLocaleService()})
+	 * If the preferred locale is not contained in the list of supported locales (see {@link Application#getLocaleServices()})
 	 * then the default application locale will be used.  
 	 */
-	@Override public LocaleData getLocaleData();
+	@Override public LocaleService getLocaleService();
 	
 
 	/**
@@ -437,19 +437,19 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * This overrides the default locale data, as defined by the preferred locale.
 	 * A use case is to set the locale according to the preferences stored in a user session.
 	 */
-	public void setLocaleData(LocaleData localeData);
+	public void setLocaleService(LocaleService service);
 
 	
 	/**
 	 * Sets the locale data associated with the request to the locale data with
 	 * the given locale
 	 */
-	public void setLocaleData(Locale locale);
+	public void setLocaleService(Locale locale);
 
 
 	/**
 	 * Returns a the TypeSerializer for the current locale data.
-	 * Shortcut for getLocaleData().getTypeSerializer().
+	 * Shortcut for getLocaleService().getTypeSerializer().
 	 */
 	public TypeSerializer getLocaleSerializer();
 

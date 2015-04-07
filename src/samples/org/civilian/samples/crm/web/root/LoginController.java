@@ -27,7 +27,7 @@ import org.civilian.samples.crm.db.entity.User;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.CrmConstants;
 import org.civilian.samples.crm.web.SessionUser;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 
 
 public class LoginController extends CrmController
@@ -109,20 +109,20 @@ public class LoginController extends CrmController
 	}
 	
 	
-	private boolean login(String name, String password, LocaleData localeData, String locale) throws Exception
+	private boolean login(String name, String password, LocaleService localeService, String locale) throws Exception
 	{
-		if (localeData == null)
+		if (localeService == null)
 		{
 			if (locale == null)
 				return false;
-			localeData = getApplication().getLocaleService().getLocaleData(locale);
+			localeService = getApplication().getLocaleServices().getService(locale);
 		}
 
 		User user = getCrmApp().getUserService().authenticate(name, password);
 		if (user != null)
 		{
 			Session session = getRequest().getSession(true /*create*/);
-			SessionUser sessionUser = new SessionUser(user, localeData); 
+			SessionUser sessionUser = new SessionUser(user, localeService); 
 			session.setAttribute(CrmConstants.ATTR_USER, sessionUser);
 			return true;
 		}

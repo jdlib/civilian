@@ -45,7 +45,7 @@ import org.civilian.response.ResponseStreamInterceptor;
 import org.civilian.response.ResponseWriter;
 import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.response.UriEncoder;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 import org.civilian.type.TypeSerializer;
 import org.civilian.util.Check;
 
@@ -122,27 +122,27 @@ public abstract class AbstractResponse implements Response
 	}
 
 	
-	@Override public LocaleData getLocaleData()
+	@Override public LocaleService getLocaleService()
 	{
-		return localeData_ != null ? localeData_ : request_.getLocaleData();
+		return localeService_ != null ? localeService_ : request_.getLocaleService();
 	}
 
 	
-	@Override public void setLocaleData(LocaleData localeData)
+	@Override public void setLocaleService(LocaleService localeService)
 	{
-		localeData_ = Check.notNull(localeData, "localeData");
+		localeService_ = Check.notNull(localeService, "localeService");
 	}
 
 	
-	@Override public void setLocaleData(Locale locale)
+	@Override public void setLocaleService(Locale locale)
 	{
-		localeData_ = getApplication().getLocaleService().getLocaleData(locale);
+		localeService_ = getApplication().getLocaleServices().getService(locale);
 	}
 	
 
 	@Override public TypeSerializer getLocaleSerializer()
 	{
-		return getLocaleData().getTypeSerializer();
+		return getLocaleService().getTypeSerializer();
 	}
 
 	
@@ -343,43 +343,6 @@ public abstract class AbstractResponse implements Response
 			initContentOutput(false /*we want a stream*/);
 		return (OutputStream)contentOutput_;
 	}
-	
-	
-	/*
-	private void initContentWriter() throws IOException
-	{
-		// checkNoContentStream();
-		
-		if (contentEncoding_ == null)
-			setContentEncoding(getApplication().getEncoding());
-		
-		// materialize the locale data
-		if (localeData_ == null)
-			localeData_ = getLocaleData();
-		
-		// init the content language if not done yet
-		if (contentLanguage_ == null)
-			setContentLanguage(localeData_.getLocale());
-
-		ResponseStreamInterceptor actualStreamInterceptor = streamInterceptor_ != null ?
-			streamInterceptor_.prepareStreamIntercept(this) :
-			null;
-			
-		ResponseWriter writer;	
-		if (actualStreamInterceptor != null)
-		{
-			InterceptedOutputStream interceptedStream = initContentStream(actualStreamInterceptor);
-			writer = new ResponseWriter(getContentWriterImpl(interceptedStream));
-			interceptedStream.setWriter(writer);
-		}
-		else
-			contentOutput_ = writer = new ResponseWriter(getContentWriterImpl());
-		
-		writer.addContext(this);
-		writer.setCharset(getContentEncoding());
-		contentOutput_ = writer; 
-	}
-	*/
 	
 	
 	private void initContentOutput(boolean createWriter) throws IOException
@@ -643,7 +606,7 @@ public abstract class AbstractResponse implements Response
 	protected void clear()
 	{
 		type_ 				= Type.NORMAL;
-		localeData_ 		= null;
+		localeService_ 		= null;
 		contentLanguage_	= null;
 		contentEncoding_	= null;
 		contentOutput_		= null;
@@ -684,7 +647,7 @@ public abstract class AbstractResponse implements Response
 
 	private Request request_;
 	private UriEncoder uriEncoder_;
-	private LocaleData localeData_;
+	private LocaleService localeService_;
 	private Flushable contentOutput_;
 	// we duplicate the encoding since we want to know if an encoding was explicitly set
 	// (the servlet response returns ISO-8859-1 if no encoding was set).

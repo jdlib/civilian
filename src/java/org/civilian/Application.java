@@ -52,7 +52,7 @@ import org.civilian.resource.ResourceConfig;
 import org.civilian.resource.scan.ResourceScan;
 import org.civilian.response.std.ErrorResponse;
 import org.civilian.response.std.NotFoundResponse;
-import org.civilian.text.LocaleService;
+import org.civilian.text.LocaleServiceList;
 import org.civilian.type.TypeLib;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
@@ -255,7 +255,7 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 			assetService_		= initAssets(appConfig.getAssetConfig());
 			uploadConfig_		= appConfig.getUploadConfig();
 			contentSerializers_ = appConfig.getContentSerializers();
-			localeService_		= new LocaleService( 
+			localeServices_		= new LocaleServiceList( 
 				appConfig.getMsgBundleFactory(), 
 				appConfig.allowUnsupportedLocales(),
 				appConfig.getSupportedLocales());
@@ -603,11 +603,11 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	
 
 	/**
-	 * Returns the locale service which is used for localization.
+	 * Returns the LocaleServiceList.
 	 */
-	public LocaleService getLocaleService()
+	public LocaleServiceList getLocaleServices()
 	{
-		return localeService_;
+		return localeServices_;
 	}
 	
 
@@ -815,7 +815,7 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	// properties set after init(AppConfig)
 	private ControllerService controllerService_;
 	private ControllerConfig controllerConfig_;
-	private LocaleService localeService_;
+	private LocaleServiceList localeServices_;
 	private Resource rootResource_;
 	private ResourceConfig resourceConfig_;
 	private TypeLib typeLib_;

@@ -16,292 +16,149 @@
 package org.civilian.text;
 
 
-import java.util.HashMap;
 import java.util.Locale;
-import org.civilian.text.keys.KeyList;
-import org.civilian.text.keys.KeyListBuilder;
-import org.civilian.text.keys.serialize.KeySerializers;
+import org.civilian.Application;
+import org.civilian.Request;
+import org.civilian.Response;
 import org.civilian.text.msg.MsgBundle;
-import org.civilian.text.msg.MsgBundleFactory;
+import org.civilian.type.TypeSerializer;
 import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
 
 
 /**
- * LocaleService provides LocaleData objects for Locales.<p>
- * The LocaleService possesses a non empty list of "supported" locales, defined by the 
- * application setup. (A non localized application will just use a single
- * supported locale). The first of these supported locales is termed the default locale.
- * The application will usually provide MsgBundles for supported locales.<p>
- * Each Request and Response is associated with a locale and therefore possesses a LocaleData,
- * which is obtained from the LocaleService.<p>
- * Since the locale requested by a client must not be supported,
- * the locale service needs a policy how to handle this situation:
- * <ul>
- * <li>restricted: the locale service tries to find a similar supported locale or falls back
- * 	   to the default locale. (default policy)
- * <li>unrestricted: the locale service constructs LocaleData for unsupported locales
- * 	   which will not be cached and therefore have a small performance penalty.
- * </ul>	       
+ * LocaleService provides localization support for a certain locale.<p>
+ * It contains a MsgBundle for that locale and a serializer 
+ * which can be used to format/parse objects like numbers and dates into/from 
+ * locale dependent string representations.<p>
+ * LocaleService objects are created and can be obtained from the {@link LocaleServiceList}.<p>
+ * {@link Request} and {@link Response} are both associated with a locale
+ * and therefore provide LocaleService objects, initialized
+ * from the request preferences.
+ * @see Application#getLocaleServices()
+ * @see Request#getLocaleService()
+ * @see Response#getLocaleService()
  */
 public class LocaleService
 {
 	/**
-	 * Creates a new LocaleService
-	 * @param msgBundleFactory a factory for MsgBundles. May be null
-	 * @param allowUnsupportedLocales true if the service also constructs LocaleData for unsupported
-	 * 		locales or false, if it falls back to a supported locale.
-	 * @param supportedLocales the list of supported locales. Must at least contain one entry.
+	 * Creates a new LocaleService object which uses a {@link LocaleSerializer},
+	 * created for the locale
+	 * @param locale a locale 
+	 * @param messages a MsgBundle
+	 * @param cached argument passed to the {@link LocaleSerializer#LocaleSerializer(Locale, boolean) LocaleSerializer ctor}.
 	 */
-	public LocaleService(MsgBundleFactory msgBundleFactory, boolean allowUnsupportedLocales, Locale... supportedLocales)
+	public LocaleService(Locale locale, MsgBundle messages, boolean cached)
 	{
-		msgBundleFactory_	= msgBundleFactory;
-		supportedLocales_	= Check.notEmpty(supportedLocales, "supportedLocales");
-		defaultLocale_ 		= supportedLocales_[0];
-		supportedData_		= new LocaleData[supportedLocales_.length];	
-
-		KeyListBuilder<LocaleData> klBuilder = new KeyListBuilder<>(); 
-		klBuilder.setSerializer(KeySerializers.TO_STRING);
-		for (int i=0; i<supportedLocales_.length; i++)
-		{
-			Locale locale = supportedLocales_[i];
-			LocaleData data = supportedData_[i] = createData(locale, true);
-			if (i == 0)
-				defaultData_ = data;
-			klBuilder.add(data, locale.getDisplayName(locale));
-		}
-		localeDataKeys_ = klBuilder.end();
-		
-		if (allowUnsupportedLocales)
-			localeMap_ = new AllowUnsupportedLocaleMap();
-		else if (supportedLocales_.length == 1)
-			localeMap_ = new FixedLocaleMap();
-		else
-			localeMap_ = new FallbackLocaleMap();
+		this(locale, messages, new LocaleSerializer(locale, cached));
 	}
-	
-	
+
+
 	/**
-	 * Returns the number of supported locales. 
+	 * Creates a new LocaleService object which uses a {@link LocaleSerializer},
+	 * created for the locale
+	 * @param locale a locale 
+	 * @param cached argument passed to the {@link LocaleSerializer#LocaleSerializer(Locale, boolean) LocaleSerializer ctor}.
 	 */
-	public int getLocaleCount()
+	public LocaleService(Locale locale, boolean cached)
 	{
-		return supportedLocales_.length;
+		this(locale, null, new LocaleSerializer(locale, cached));
 	}
-
 	
+
 	/**
-	 * Returns the i-th supported locale. 
+	 * Creates a new LocaleService object.
+	 * @param locale a locale 
+	 * @param messages a MsgBundle. Will be converted into an empty bundle if null
+	 * @param serializer a TypeSerializer suitable for the locale. 
 	 */
-	public Locale getLocale(int i)
+	public LocaleService(Locale locale, MsgBundle messages, TypeSerializer serializer)
 	{
-		return supportedLocales_[i];
+		locale_ 		= Check.notNull(locale, 	"locale");
+		serializer_		= Check.notNull(serializer, "serializer");
+		messages_		= messages != null ? messages : MsgBundle.empty(locale);
+		localeString_	= locale.toString();
 	}
-
+	
 	
 	/**
-	 * Returns the first supported locale. 
+	 * Returns the locale.
 	 */
-	public Locale getDefaultLocale()
+	public Locale getLocale()
 	{
-		return defaultLocale_;
+		return locale_;
 	}
 	
-
+	
 	/**
-	 * Tests if the given locale is supported. 
+	 * Returns the TypeSerializer for the locale.
 	 */
-	public boolean isSupported(Locale locale)
+	public TypeSerializer getTypeSerializer()
 	{
-		return toSupported(locale) != null;
-	}
-	
-	
-	private Locale toSupported(Locale locale)
-	{
-		for (Locale supported : supportedLocales_)
-		{
-			if (supported.equals(locale))
-				return supported;
-		}
-		return null;
+		return serializer_;
 	}
 
 	
 	/**
-	 * Returns a supported locale. If the locale is included
-	 * in the supported locales it is returned.
-	 * If its language matches the language of a supported locale
-	 * that locale is returned. Else the default locale is returned. 
+	 * Returns the MsgBundle.
 	 */
-	public Locale normLocale(Locale locale)
+	public MsgBundle getMsgBundle()
 	{
-		if ((locale != null) && (getLocaleCount() > 1))
-		{
-			Locale supported = toSupported(locale);
-			if (supported != null)
-				return supported;
-			
-			// fall back to first locale with same language
-			String language = locale.getLanguage();
-			for (Locale sl : supportedLocales_)
-			{
-				if (sl.getLanguage().equals(language))
-					return sl;
-			}
-		}
-		
-		// fall back to default locale
-		return defaultLocale_;
+		return messages_;
 	}
-	
+
 	
 	/**
-	 * Returns the LocaleData of the default locale.
+	 * Returns the data previously set by setData().
+	 * @see #setData
 	 */
-	public LocaleData getDefaultLocaleData()
+	public Object getData()
 	{
-		return defaultData_;
+		return data_;
 	}
-
+	
 	
 	/**
-	 * Returns the LocaleData for a locale. 
-	 * If the locale is not supported, it depends on the policy of
-	 * the locale service what LocaleData is returned:
-	 * If unsupported locales are allowed, a LocaleData for the locale
-	 * is constructed and returned. Such a LocaleData is not cached and
-	 * therefore has a small performance penalty.
-	 * If unsupported locales are not allowed, a LocaleData for fallback locale
-	 * is returned.
+	 * Associates arbitrary data with the LocaleService object.
 	 */
-	public LocaleData getLocaleData(Locale locale)
+	public void setData(Object data)
 	{
-		Check.notNull(locale, "locale");
-		return localeMap_.getData(locale);
-	}
-
-	
-	public LocaleData getLocaleData(String locale)
-	{
-		Check.notNull(locale, "locale");
-		for (LocaleData localeData : supportedData_)
-		{
-			if (localeData.toString().equals(locale))
-				return localeData;
-		}
-		
-		return getDefaultLocaleData();
+		data_ = data;
 	}
 
 	
 	/**
-	 * Returns the LocaleData for the i-th locale.
-	 */ 
-	public LocaleData getLocaleData(int i)
-	{
-		return supportedData_[i];
-	}
-
-	
-	/**
-	 * Returns a KeyList for the defined LocaleData objects.
-	 */ 
-	public KeyList<LocaleData> getLocaleDataKeys()
-	{
-		return localeDataKeys_;
-	}
-
-	
-	private LocaleData createData(Locale locale, boolean cached)
-	{
-		MsgBundle msgBundle = null;
-		if (msgBundleFactory_ != null)
-			msgBundle = msgBundleFactory_.getMsgBundle(locale);
-		if (msgBundle == null)
-			msgBundle = MsgBundle.empty(locale);
-		
-		LocaleSerializer serializer = new LocaleSerializer(locale, cached);
-		return new LocaleData(locale, msgBundle, serializer);
-	}
-	
-	/**
-	 * A LocaleMap maps locales to LocaleData.
+	 * Returns true iif the other object is a LocaleService for
+	 * the same locale.
 	 */
-	private abstract class LocaleMap
+	@Override public boolean equals(Object other)
 	{
-		public abstract LocaleData getData(Locale locale);
+		return (other instanceof LocaleService) && 
+			localeString_.equals(((LocaleService)other).localeString_); 
 	}
+
 	
 	/**
-	 * A LocaleMap with a single entry.
+	 * Returns a hash code.
 	 */
-	private class FixedLocaleMap extends LocaleMap
+	@Override public int hashCode()
 	{
-		@Override public LocaleData getData(Locale locale)
-		{
-			return defaultData_;
-		}
-	}
-
-	/**
-	 * A base class for LocaleMaps with multiple entries and a default entry.
-	 */
-	private abstract class MultiLocaleMap extends LocaleMap
-	{
-		public MultiLocaleMap()
-		{
-			for (Locale locale : supportedLocales_)
-			{
-				LocaleData data = createData(locale, true);
-				map_.put(locale, data);
-			}
-			defaultData_ = map_.get(supportedLocales_[0]);
-		}
-
-		HashMap<Locale,LocaleData> map_ = new HashMap<>();
+		return localeString_.hashCode();
 	}
 	
+	
 	/**
-	 * A LocaleMaps with multiple entries which returns a LocaleData
-	 * from its supported locale-list for unknown locales
+	 * Returns the string representation of the Locale.
 	 */
-	private class FallbackLocaleMap extends MultiLocaleMap
+	@Override public String toString()
 	{
-		@Override public LocaleData getData(Locale locale)
-		{
-			LocaleData data = map_.get(locale);
-			if (data == null)
-			{
-				data = map_.get(normLocale(locale));
-				if (data == null)
-					data = defaultData_; // should not happen
-			}
-			return data;
-		}
+		return localeString_;
 	}
 
-	/**
-	 * A LocaleMaps with multiple entries which creates uncached
-	 * LocaleDatas when it encounters an unsupported locale.
-	 */
-	private class AllowUnsupportedLocaleMap extends MultiLocaleMap
-	{
-		@Override public LocaleData getData(Locale locale)
-		{
-			LocaleData data = map_.get(locale);
-			if (data == null)
-				data = createData(locale, false /*no cache*/);
-			return data;
-		}
-	}
-
-
-	private Locale defaultLocale_;
-	private Locale[] supportedLocales_;
-	private LocaleData defaultData_;
-	private LocaleData[] supportedData_;
-	private MsgBundleFactory msgBundleFactory_;
-	private LocaleMap localeMap_;
-	private KeyList<LocaleData> localeDataKeys_;
+	
+	private MsgBundle messages_;
+	private Locale locale_;
+	private TypeSerializer serializer_;
+	private Object data_;
+	private String localeString_;
 }

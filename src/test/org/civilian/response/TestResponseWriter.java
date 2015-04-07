@@ -24,7 +24,7 @@ import java.io.Writer;
 import java.util.Locale;
 import org.civilian.Application;
 import org.civilian.Response;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 import org.civilian.text.msg.MsgBundle;
 import org.junit.Assert;
 
@@ -41,10 +41,10 @@ public class TestResponseWriter extends ResponseWriter
 	{
 		Application app = mock(Application.class);
 		
-		LocaleData localeData = new LocaleData(Locale.US, MsgBundle.empty(Locale.ENGLISH), true); 
+		LocaleService service = new LocaleService(Locale.US, MsgBundle.empty(Locale.ENGLISH), true); 
 		Response response = mock(Response.class);
 		when(response.getApplication()).thenReturn(app);
-		when(response.getLocaleData()).thenReturn(localeData);
+		when(response.getLocaleService()).thenReturn(service);
 		when(response.getContentEncoding()).thenReturn(encoding);
 		when(response.getResponse()).thenReturn(response);
 		
@@ -53,7 +53,7 @@ public class TestResponseWriter extends ResponseWriter
 		TestResponseWriter out = new TestResponseWriter(stringOut, response);
 		out.app 		= app;
 		out.response 	= response;
-		out.localeData	= localeData;
+		out.service		= service;
 		out.buffer		= buffer;
 	
 		try
@@ -94,6 +94,6 @@ public class TestResponseWriter extends ResponseWriter
 	
 	public StringBuffer buffer;
 	public Response response;
-	public LocaleData localeData;
+	public LocaleService service;
 	public Application app;
 }

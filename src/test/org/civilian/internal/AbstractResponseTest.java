@@ -31,7 +31,7 @@ import org.civilian.context.test.TestResponse;
 import org.civilian.resource.Url;
 import org.civilian.response.ResponseWriter;
 import org.civilian.template.TextTemplate;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
 import org.junit.Before;
@@ -70,12 +70,12 @@ public class AbstractResponseTest extends CivTest
 		
 		assertNotNull(response.getUriEncoder());
 
-		LocaleData dataEn = new LocaleData(Locale.ENGLISH, false);
-		LocaleData dataDe = new LocaleData(Locale.GERMAN, false);
-		request.setLocaleData(dataEn);
-		assertSame(dataEn, response.getLocaleData());
-		response.setLocaleData(dataDe);
-		assertSame(dataDe, response.getLocaleData());
+		LocaleService dataEn = new LocaleService(Locale.ENGLISH, false);
+		LocaleService dataDe = new LocaleService(Locale.GERMAN, false);
+		request.setLocaleService(dataEn);
+		assertSame(dataEn, response.getLocaleService());
+		response.setLocaleService(dataDe);
+		assertSame(dataDe, response.getLocaleService());
 		assertSame(dataDe.getTypeSerializer(), response.getLocaleSerializer());
 		
 		assertNull(response.getContentEncoding());

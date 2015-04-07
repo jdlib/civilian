@@ -25,40 +25,40 @@ public class LocaleServiceTest extends CivTest
 {
 	@Test public void testSupportedLocales()
 	{
-		LocaleService service = new LocaleService(null, false, Locale.ENGLISH, Locale.GERMAN);
-		assertEquals(2, service.getLocaleCount());
-		assertSame(Locale.ENGLISH, service.getDefaultLocale());
-		assertSame(Locale.GERMAN, service.getLocale(1));
-		assertTrue(service.isSupported(Locale.ENGLISH));
-		assertTrue(service.isSupported(Locale.GERMAN));
-		assertFalse(service.isSupported(Locale.FRENCH));
+		LocaleServiceList services = new LocaleServiceList(null, false, Locale.ENGLISH, Locale.GERMAN);
+		assertEquals(2, services.getLocaleCount());
+		assertSame(Locale.ENGLISH, services.getDefaultLocale());
+		assertSame(Locale.GERMAN, services.getLocale(1));
+		assertTrue(services.isSupported(Locale.ENGLISH));
+		assertTrue(services.isSupported(Locale.GERMAN));
+		assertFalse(services.isSupported(Locale.FRENCH));
 		
 		// norm locale
-		assertSame(Locale.ENGLISH, service.normLocale(null));
-		assertSame(Locale.ENGLISH, service.normLocale(Locale.ENGLISH));
-		assertSame(Locale.ENGLISH, service.normLocale(Locale.ITALIAN));
-		assertSame(Locale.ENGLISH, service.normLocale(Locale.US));
+		assertSame(Locale.ENGLISH, services.normLocale(null));
+		assertSame(Locale.ENGLISH, services.normLocale(Locale.ENGLISH));
+		assertSame(Locale.ENGLISH, services.normLocale(Locale.ITALIAN));
+		assertSame(Locale.ENGLISH, services.normLocale(Locale.US));
 		
 		// locale data
-		assertSame(Locale.ENGLISH, service.getDefaultLocaleData().getLocale());
-		assertSame(Locale.GERMAN, service.getLocaleData(1).getLocale());
-		assertSame(Locale.GERMAN, service.getLocaleData(Locale.GERMAN).getLocale());
-		assertSame(Locale.ENGLISH, service.getLocaleData(Locale.ITALIAN).getLocale());
+		assertSame(Locale.ENGLISH, services.getDefaultService().getLocale());
+		assertSame(Locale.GERMAN, services.getService(1).getLocale());
+		assertSame(Locale.GERMAN, services.getService(Locale.GERMAN).getLocale());
+		assertSame(Locale.ENGLISH, services.getService(Locale.ITALIAN).getLocale());
 	}
 	
 	
 	@Test public void testSingleLocale()
 	{
-		LocaleService service = new LocaleService(null, false, Locale.FRENCH);
-		assertSame(Locale.FRENCH, service.normLocale(Locale.ITALIAN));
+		LocaleServiceList services = new LocaleServiceList(null, false, Locale.FRENCH);
+		assertSame(Locale.FRENCH, services.normLocale(Locale.ITALIAN));
 	}
 	
 
 
 	@Test public void testUnsupportedLocales()
 	{
-		LocaleService service = new LocaleService(null, true, Locale.FRENCH, Locale.CHINESE);
-		assertSame(Locale.FRENCH, service.getDefaultLocale());
+		LocaleServiceList services = new LocaleServiceList(null, true, Locale.FRENCH, Locale.CHINESE);
+		assertSame(Locale.FRENCH, services.getDefaultLocale());
 	}
 	
 }

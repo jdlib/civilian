@@ -35,7 +35,7 @@ import org.civilian.content.ContentTypeList;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.Url;
-import org.civilian.text.LocaleData;
+import org.civilian.text.LocaleService;
 import org.civilian.type.Type;
 import org.civilian.type.TypeSerializer;
 import org.civilian.util.Check;
@@ -296,21 +296,21 @@ public class RequestWrapper implements Request
 	}
 
 
-	@Override public LocaleData getLocaleData()
+	@Override public LocaleService getLocaleService()
 	{
-		return request_.getLocaleData();
+		return request_.getLocaleService();
 	}
 
 
-	@Override public void setLocaleData(LocaleData localeData)
+	@Override public void setLocaleService(LocaleService service)
 	{
-		request_.setLocaleData(localeData);
+		request_.setLocaleService(service);
 	}
 
 
-	@Override public void setLocaleData(Locale locale)
+	@Override public void setLocaleService(Locale locale)
 	{
-		request_.setLocaleData(locale);
+		request_.setLocaleService(locale);
 	}
 
 
