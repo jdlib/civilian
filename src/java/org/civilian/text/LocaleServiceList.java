@@ -18,9 +18,11 @@ package org.civilian.text;
 
 import java.util.HashMap;
 import java.util.Locale;
+
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyListBuilder;
 import org.civilian.text.keys.serialize.KeySerializers;
+import org.civilian.text.msg.EmptyMsgBundleFactory;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleFactory;
 import org.civilian.type.lib.LocaleSerializer;
@@ -28,49 +30,38 @@ import org.civilian.util.Check;
 
 
 /**
- * LocaleServiceList provides LocaleService objects for Locales.<p>
- * The LocaleService possesses a non empty list of "supported" locales, defined by the 
+ * LocaleServiceList provides LocaleService objects for Locales.
+ * The list possesses a non empty list of LocaleServices for "supported" locales, defined by the 
  * application setup. (A non localized application will just use a single
- * supported locale). The first of these supported locales is termed the default locale.
- * The application will usually provide MsgBundles for supported locales.<p>
- * Each Request and Response is associated with a locale and therefore possesses a LocaleService,
- * which is obtained from the LocaleServiceList.<p>
- * Since the locale requested by a client must not be supported,
- * the locale service needs a policy how to handle this situation:
- * <ul>
- * <li>restricted: the locale service tries to find a similar supported locale or falls back
- * 	   to the default locale. (default policy)
- * <li>unrestricted: the locale service constructs LocaleServices for unsupported locales
- * 	   which will not be cached and therefore have a small performance penalty.
- * </ul>	       
+ * supported locale). The first of these supported locales is defined as the default locale.<p>
  */
 public class LocaleServiceList
 {
 	/**
 	 * Creates a new LocaleServiceList.
-	 * @param msgBundleFactory a factory for MsgBundles. May be null
+	 * @param msgBundleFactory a factory to create localized MsgBundles or null, if the service
+	 * 		should only provide empty message bundles 
 	 * @param allowUnsupportedLocales true if the service also constructs LocaleServices for unsupported
 	 * 		locales or false, if it falls back to a supported locale.
 	 * @param supportedLocales the list of supported locales. Must at least contain one entry.
 	 */
 	public LocaleServiceList(MsgBundleFactory msgBundleFactory, boolean allowUnsupportedLocales, Locale... supportedLocales)
 	{
-		msgBundleFactory_	= msgBundleFactory;
+		msgBundleFactory_	= msgBundleFactory != null ? msgBundleFactory : new EmptyMsgBundleFactory();
 		supportedLocales_	= Check.notEmpty(supportedLocales, "supportedLocales");
 		defaultLocale_ 		= supportedLocales_[0];
-		supportedServices_		= new LocaleService[supportedLocales_.length];	
+		supportedServices_	= new LocaleService[supportedLocales_.length];	
 
 		KeyListBuilder<LocaleService> klBuilder = new KeyListBuilder<>(); 
 		klBuilder.setSerializer(KeySerializers.TO_STRING);
 		for (int i=0; i<supportedLocales_.length; i++)
 		{
-			Locale locale = supportedLocales_[i];
-			LocaleService data = supportedServices_[i] = createData(locale, true);
-			if (i == 0)
-				defaultService_ = data;
-			klBuilder.add(data, locale.getDisplayName(locale));
+			Locale locale 			= supportedLocales_[i];
+			LocaleService service	= supportedServices_[i] = createService(locale, true);
+			klBuilder.add(service, locale.getDisplayName(locale));
 		}
-		serviceKeys_ = klBuilder.end();
+		defaultService_	= supportedServices_[0];
+		serviceKeys_ 	= klBuilder.end();
 		
 		if (allowUnsupportedLocales)
 			localeMap_ = new AllowUnsupportedLocaleMap();
@@ -82,9 +73,18 @@ public class LocaleServiceList
 	
 	
 	/**
+	 * Returns the MsgBundleFactory.
+	 */
+	public MsgBundleFactory getMsgBundleFactory()
+	{
+		return msgBundleFactory_;
+	}
+	
+	
+	/**
 	 * Returns the number of supported locales. 
 	 */
-	public int getLocaleCount()
+	public int size()
 	{
 		return supportedLocales_.length;
 	}
@@ -136,7 +136,7 @@ public class LocaleServiceList
 	 */
 	public Locale normLocale(Locale locale)
 	{
-		if ((locale != null) && (getLocaleCount() > 1))
+		if ((locale != null) && (size() > 1))
 		{
 			Locale supported = toSupported(locale);
 			if (supported != null)
@@ -213,14 +213,9 @@ public class LocaleServiceList
 	}
 
 	
-	private LocaleService createData(Locale locale, boolean cached)
+	private LocaleService createService(Locale locale, boolean cached)
 	{
-		MsgBundle msgBundle = null;
-		if (msgBundleFactory_ != null)
-			msgBundle = msgBundleFactory_.getMsgBundle(locale);
-		if (msgBundle == null)
-			msgBundle = MsgBundle.empty(locale);
-		
+		MsgBundle msgBundle = msgBundleFactory_.getMsgBundle(locale);
 		LocaleSerializer serializer = new LocaleSerializer(locale, cached);
 		return new LocaleService(locale, msgBundle, serializer);
 	}
@@ -253,7 +248,7 @@ public class LocaleServiceList
 		{
 			for (Locale locale : supportedLocales_)
 			{
-				LocaleService data = createData(locale, true);
+				LocaleService data = createService(locale, true);
 				map_.put(locale, data);
 			}
 			defaultService_ = map_.get(supportedLocales_[0]);
@@ -291,7 +286,7 @@ public class LocaleServiceList
 		{
 			LocaleService data = map_.get(locale);
 			if (data == null)
-				data = createData(locale, false /*no cache*/);
+				data = createService(locale, false /*no cache*/);
 			return data;
 		}
 	}

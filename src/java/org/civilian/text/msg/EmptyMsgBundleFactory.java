@@ -19,7 +19,7 @@ package org.civilian.text.msg;
 import java.util.Locale;
 
 
-class EmptyMsgBundleFactory extends MsgBundleFactory 
+public class EmptyMsgBundleFactory extends MsgBundleFactory 
 {
 	@Override public MsgBundle getMsgBundle(Locale locale)
 	{

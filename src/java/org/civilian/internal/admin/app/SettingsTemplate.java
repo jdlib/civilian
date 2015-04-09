@@ -92,7 +92,7 @@ public class SettingsTemplate extends Template
 		out.println("<td>");                                            // line 39: <td>
 		out.increaseTab();
 		LocaleServiceList services = app.getLocaleServices();           // line 40: @LocaleServiceList services = app.getLocaleServices();
-		for (int i=0; i<services.getLocaleCount(); i++)                 // line 41: @for (int i=0; i<services.getLocaleCount(); i++)
+		for (int i=0; i<services.size(); i++)                           // line 41: @for (int i=0; i<services.size(); i++)
 		{
 			if (i > 0)                                                  // line 42: <%?i > 0%>
 			{

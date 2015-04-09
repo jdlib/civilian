@@ -38,7 +38,7 @@ template(Application app) mixin html
 		<td>Locale</td>
 		<td>
 			@LocaleServiceList services = app.getLocaleServices();
-			@for (int i=0; i<services.getLocaleCount(); i++)
+			@for (int i=0; i<services.size(); i++)
 				<%?i > 0%>, <%?%><%services.getLocale(i)%> 
 		</td>
 		<td>org.civilian.Application.getLocaleServices().getLocale(i)</td>

@@ -26,7 +26,7 @@ public class LocaleServiceTest extends CivTest
 	@Test public void testSupportedLocales()
 	{
 		LocaleServiceList services = new LocaleServiceList(null, false, Locale.ENGLISH, Locale.GERMAN);
-		assertEquals(2, services.getLocaleCount());
+		assertEquals(2, services.size());
 		assertSame(Locale.ENGLISH, services.getDefaultLocale());
 		assertSame(Locale.GERMAN, services.getLocale(1));
 		assertTrue(services.isSupported(Locale.ENGLISH));
