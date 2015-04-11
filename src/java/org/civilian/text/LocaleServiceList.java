@@ -47,10 +47,10 @@ public class LocaleServiceList
 	 */
 	public LocaleServiceList(MsgBundleFactory msgBundleFactory, boolean allowUnsupportedLocales, Locale... supportedLocales)
 	{
-		msgBundleFactory_	= msgBundleFactory != null ? msgBundleFactory : new EmptyMsgBundleFactory();
-		supportedLocales_	= Check.notEmpty(supportedLocales, "supportedLocales");
-		defaultLocale_ 		= supportedLocales_[0];
-		supportedServices_	= new LocaleService[supportedLocales_.length];	
+		allowUnsupportedLocales_	= allowUnsupportedLocales;
+		msgBundleFactory_			= msgBundleFactory != null ? msgBundleFactory : new EmptyMsgBundleFactory();
+		supportedLocales_			= normLocales(supportedLocales);
+		supportedServices_			= new LocaleService[supportedLocales_.length];	
 
 		KeyListBuilder<LocaleService> klBuilder = new KeyListBuilder<>(); 
 		klBuilder.setSerializer(KeySerializers.TO_STRING);
@@ -69,6 +69,19 @@ public class LocaleServiceList
 			localeMap_ = new FixedLocaleMap();
 		else
 			localeMap_ = new FallbackLocaleMap();
+	}
+	
+	
+	private static Locale[] normLocales(Locale[] locales)
+	{
+		if ((locales != null && locales.length > 0))
+		{
+			for (Locale locale : locales)
+				Check.notNull(locale, "locale");
+			return locales;
+		}
+		else
+			return new Locale[] { Locale.ENGLISH };
 	}
 	
 	
@@ -104,10 +117,20 @@ public class LocaleServiceList
 	 */
 	public Locale getDefaultLocale()
 	{
-		return defaultLocale_;
+		return getDefaultService().getLocale();
 	}
 	
 
+	/**
+	 * Returns if LocaleServices for unsupported locales
+	 * are returned, or if the service falls back to a supported locale. 
+	 */
+	public boolean allowUnsupportedLocales()
+	{
+		return allowUnsupportedLocales_;
+	}
+
+	
 	/**
 	 * Tests if the given locale is supported. 
 	 */
@@ -152,7 +175,7 @@ public class LocaleServiceList
 		}
 		
 		// fall back to default locale
-		return defaultLocale_;
+		return getDefaultLocale();
 	}
 	
 	
@@ -220,6 +243,7 @@ public class LocaleServiceList
 		return new LocaleService(locale, msgBundle, serializer);
 	}
 	
+	
 	/**
 	 * A LocaleMap maps locales to LocaleServices.
 	 */
@@ -227,6 +251,7 @@ public class LocaleServiceList
 	{
 		public abstract LocaleService getService(Locale locale);
 	}
+	
 	
 	/**
 	 * A LocaleMap with a single entry.
@@ -238,6 +263,7 @@ public class LocaleServiceList
 			return defaultService_;
 		}
 	}
+	
 
 	/**
 	 * A base class for LocaleMaps with multiple entries and a default entry.
@@ -246,57 +272,61 @@ public class LocaleServiceList
 	{
 		public MultiLocaleMap()
 		{
-			for (Locale locale : supportedLocales_)
-			{
-				LocaleService data = createService(locale, true);
-				map_.put(locale, data);
-			}
-			defaultService_ = map_.get(supportedLocales_[0]);
+			for (LocaleService service : supportedServices_)
+				map_.put(service.getLocale(), service);
 		}
+		
 
-		HashMap<Locale,LocaleService> map_ = new HashMap<>();
+		protected LocaleService tryGet(Locale locale)
+		{
+			return map_.get(locale);
+		}
+		
+
+		private HashMap<Locale,LocaleService> map_ = new HashMap<>();
 	}
 	
+	
 	/**
-	 * A LocaleMaps with multiple entries which returns a LocaleService
+	 * A LocaleMap with multiple entries which returns a LocaleService
 	 * from its supported locale-list for unknown locales
 	 */
 	private class FallbackLocaleMap extends MultiLocaleMap
 	{
 		@Override public LocaleService getService(Locale locale)
 		{
-			LocaleService data = map_.get(locale);
-			if (data == null)
+			LocaleService service = tryGet(locale);
+			if (service == null)
 			{
-				data = map_.get(normLocale(locale));
-				if (data == null)
-					data = defaultService_; // should not happen
+				service = tryGet(normLocale(locale));
+				if (service == null)
+					service = defaultService_;
 			}
-			return data;
+			return service;
 		}
 	}
 
 	/**
-	 * A LocaleMaps with multiple entries which creates uncached
+	 * A LocaleMap with multiple entries which creates uncached
 	 * LocaleServices when it encounters an unsupported locale.
 	 */
 	private class AllowUnsupportedLocaleMap extends MultiLocaleMap
 	{
 		@Override public LocaleService getService(Locale locale)
 		{
-			LocaleService data = map_.get(locale);
-			if (data == null)
-				data = createService(locale, false /*no cache*/);
-			return data;
+			LocaleService service = tryGet(locale);
+			if (service == null)
+				service = createService(locale, false /*no cache*/);
+			return service;
 		}
 	}
 
 
-	private Locale defaultLocale_;
-	private Locale[] supportedLocales_;
-	private LocaleService defaultService_;
-	private LocaleService[] supportedServices_;
-	private MsgBundleFactory msgBundleFactory_;
-	private LocaleMap localeMap_;
-	private KeyList<LocaleService> serviceKeys_;
+	private final Locale[] supportedLocales_;
+	private final LocaleService defaultService_;
+	private final LocaleService[] supportedServices_;
+	private final MsgBundleFactory msgBundleFactory_;
+	private final LocaleMap localeMap_;
+	private final KeyList<LocaleService> serviceKeys_;
+	private final boolean allowUnsupportedLocales_;
 }
