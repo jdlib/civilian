@@ -25,6 +25,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+
 import org.civilian.Application;
 import org.civilian.Context;
 import org.civilian.Request;
@@ -37,7 +38,7 @@ import org.civilian.resource.PathParam;
 import org.civilian.resource.Url;
 import org.civilian.text.LocaleService;
 import org.civilian.type.Type;
-import org.civilian.type.TypeSerializer;
+import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.Value;
@@ -314,7 +315,7 @@ public class RequestWrapper implements Request
 	}
 
 
-	@Override public TypeSerializer getLocaleSerializer()
+	@Override public LocaleSerializer getLocaleSerializer()
 	{
 		return request_.getLocaleSerializer();
 	}

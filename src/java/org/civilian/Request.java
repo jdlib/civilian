@@ -25,6 +25,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
@@ -36,7 +37,7 @@ import org.civilian.resource.PathParam;
 import org.civilian.resource.Url;
 import org.civilian.text.LocaleService;
 import org.civilian.type.Type;
-import org.civilian.type.TypeSerializer;
+import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Value;
 
 
@@ -448,10 +449,10 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 
 
 	/**
-	 * Returns a the TypeSerializer for the current locale data.
-	 * Shortcut for getLocaleService().getTypeSerializer().
+	 * Returns a the LocaleSerializer for the current locale data.
+	 * Shortcut for getLocaleService().getSerializer().
 	 */
-	public TypeSerializer getLocaleSerializer();
+	public LocaleSerializer getLocaleSerializer();
 
 	
 	/**

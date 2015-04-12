@@ -16,18 +16,23 @@
 package org.civilian.resource;
 
 
+import java.util.Locale;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
 import static org.mockito.Mockito.*;
+
 import org.civilian.CivTest;
 import org.civilian.Request;
 import org.civilian.Resource;
 import org.civilian.Response;
 import org.civilian.response.UriEncoder;
 import org.civilian.type.TypeLib;
+import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.type.lib.StandardSerializer;
 
 
@@ -42,7 +47,7 @@ public class UrlTest extends CivTest
 		when(response_.getResponse()).thenReturn(response_);
 		when(response_.getRequest()).thenReturn(request_);
 		when(response_.getUriEncoder()).thenReturn(new UriEncoder());
-		when(response_.getLocaleSerializer()).thenReturn(StandardSerializer.INSTANCE);
+		when(response_.getLocaleSerializer()).thenReturn(new LocaleSerializer(Locale.ENGLISH));
 		when(response_.addSessionId(anyString())).then(new Answer<String>()
 		{
 			@Override public String answer(InvocationOnMock invocation) throws Throwable
@@ -203,7 +208,7 @@ public class UrlTest extends CivTest
 		// value format
 		Url.QueryParam p = url.getQueryParam("d", true);
 		p.setValue(TypeLib.DOUBLE, new Double(2.0));
-		assertEquals("index.html?d=2.0", url.toString());
+		assertEquals("index.html?d=2.00", url.toString());
 		p.setValue(2);
 		assertEquals("index.html?d=2", url.toString());
 		url.removeQueryParam(p);
@@ -212,7 +217,7 @@ public class UrlTest extends CivTest
 		// value integers
 		url.addQueryParam("i", 1234);
 		url.addQueryParam("i", new Integer(78));
-		assertEquals("index.html?i=1234&i=78", url.toString());
+		assertEquals("index.html?i=1%2C234&i=78", url.toString());
 		url.clearQueryParams();
 		
 		url.addQueryParam("b", true);

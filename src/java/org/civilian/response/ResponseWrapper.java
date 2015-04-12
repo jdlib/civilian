@@ -21,7 +21,9 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Locale;
+
 import javax.servlet.http.Cookie;
+
 import org.civilian.Application;
 import org.civilian.Context;
 import org.civilian.Controller;
@@ -32,7 +34,7 @@ import org.civilian.Template;
 import org.civilian.content.ContentType;
 import org.civilian.resource.Url;
 import org.civilian.text.LocaleService;
-import org.civilian.type.TypeSerializer;
+import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 
@@ -127,7 +129,7 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public TypeSerializer getLocaleSerializer()
+	@Override public LocaleSerializer getLocaleSerializer()
 	{
 		return response_.getLocaleSerializer();
 	}

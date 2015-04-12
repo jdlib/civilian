@@ -21,8 +21,10 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Locale;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+
 import org.civilian.application.AppConfig;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
@@ -40,7 +42,7 @@ import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.response.UriEncoder;
 import org.civilian.response.std.ErrorResponse;
 import org.civilian.text.LocaleService;
-import org.civilian.type.TypeSerializer;
+import org.civilian.type.lib.LocaleSerializer;
 
 
 /**
@@ -283,9 +285,9 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	
 
 	/**
-	 * Shortcut for {@link #getLocaleService()}.getTypeSerializer().
+	 * Shortcut for {@link #getLocaleService()}.getSerializer().
 	 */
-	public abstract TypeSerializer getLocaleSerializer();
+	public abstract LocaleSerializer getLocaleSerializer();
 
 	
 	//------------------------------

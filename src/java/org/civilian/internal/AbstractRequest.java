@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+
 import org.civilian.Application;
 import org.civilian.Context;
 import org.civilian.Request;
@@ -49,7 +50,7 @@ import org.civilian.resource.PathParam;
 import org.civilian.resource.Url;
 import org.civilian.text.LocaleService;
 import org.civilian.type.Type;
-import org.civilian.type.TypeSerializer;
+import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.type.lib.StandardSerializer;
 import org.civilian.util.Check;
 import org.civilian.util.Value;
@@ -416,9 +417,9 @@ public abstract class AbstractRequest implements Request
 
 
 	/**
-	 * Shortcut for getLocaleServce().getTypeSerializer().
+	 * Shortcut for getLocaleServce().getSerializer().
 	 */
-	@Override public TypeSerializer getLocaleSerializer()
+	@Override public LocaleSerializer getLocaleSerializer()
 	{
 		return getLocaleService().getSerializer();
 	}

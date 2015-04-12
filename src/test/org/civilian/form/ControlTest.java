@@ -17,6 +17,9 @@ package org.civilian.form;
 
 
 import static org.mockito.Mockito.*;
+
+
+import java.util.Locale;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.civilian.CivTest;
@@ -26,6 +29,7 @@ import org.civilian.response.TestResponseWriter;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
 import org.civilian.type.TypeLib;
+import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.type.lib.StandardSerializer;
 import org.civilian.util.Date;
 
@@ -36,7 +40,7 @@ public class ControlTest extends CivTest
 	{
 		request = mock(Request.class);
 		when(out.response.getRequest()).thenReturn(request);
-		when(request.getLocaleSerializer()).thenReturn(StandardSerializer.INSTANCE);
+		when(request.getLocaleSerializer()).thenReturn(new LocaleSerializer(Locale.ENGLISH));
 	}
 	
 	

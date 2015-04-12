@@ -25,6 +25,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Locale;
+
 import org.civilian.Application;
 import org.civilian.Context;
 import org.civilian.Controller;
@@ -46,7 +47,7 @@ import org.civilian.response.ResponseWriter;
 import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.response.UriEncoder;
 import org.civilian.text.LocaleService;
-import org.civilian.type.TypeSerializer;
+import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
 
 
@@ -140,7 +141,7 @@ public abstract class AbstractResponse implements Response
 	}
 	
 
-	@Override public TypeSerializer getLocaleSerializer()
+	@Override public LocaleSerializer getLocaleSerializer()
 	{
 		return getLocaleService().getSerializer();
 	}
