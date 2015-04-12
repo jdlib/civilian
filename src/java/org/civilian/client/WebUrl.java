@@ -384,7 +384,7 @@ public class WebUrl implements PathParamProvider
 	 * Returns the TypeSerializer used by the Url when it formats
 	 * typed parameters to a parameter string. 
 	 */
-	public TypeSerializer getTypeSerializer()
+	public TypeSerializer getSerializer()
 	{
 		return serializer_;
 	}
@@ -544,11 +544,11 @@ public class WebUrl implements PathParamProvider
 		/**
 		 * Sets the value of the query parameter.
 		 * The Urls type serializer is used to convert the value to a string. 
-		 * @see WebUrl#getTypeSerializer()
+		 * @see WebUrl#getSerializer()
 		 */
 		public <T> void setValue(Type<T> type, T value)
 		{
-			value_ = type.format(getTypeSerializer(), value);
+			value_ = type.format(getSerializer(), value);
 		}
 
 		
