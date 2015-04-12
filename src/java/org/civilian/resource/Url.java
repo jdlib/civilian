@@ -197,7 +197,7 @@ public class Url implements PathParamProvider, ResponseProvider
 	 * @see QueryParam#setValue(Type, Object) 
 	 * @return this
 	 */
-	public Url setTypeSerializer(TypeSerializer serializer)
+	public Url setSerializer(TypeSerializer serializer)
 	{
 		serializer_ = serializer;
 		return this;
@@ -211,7 +211,7 @@ public class Url implements PathParamProvider, ResponseProvider
 	 * @see QueryParam#setValue(Type, Object) 
 	 * @see Response#getLocaleSerializer()
 	 */
-	public TypeSerializer getTypeSerializer()
+	public TypeSerializer getSerializer()
 	{
 		if (serializer_ == null)
 			serializer_ = response_.getLocaleSerializer();
@@ -627,11 +627,11 @@ public class Url implements PathParamProvider, ResponseProvider
 		/**
 		 * Sets value of the Parameter.
 		 * The Urls type serializer is used to convert the value to a string. 
-		 * @see Url#getTypeSerializer()
+		 * @see Url#getSerializer()
 		 */
 		public <T> void setValue(Type<T> type, T value)
 		{
-			value_ = type.format(getTypeSerializer(), value);
+			value_ = type.format(getSerializer(), value);
 		}
 
 		

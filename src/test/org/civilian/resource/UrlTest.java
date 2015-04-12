@@ -71,8 +71,8 @@ public class UrlTest extends CivTest
 		assertEquals("/some/path", url.toString());
 		
 		assertSame(response_, url.getResponse());
-		url.setTypeSerializer(StandardSerializer.INSTANCE);
-		assertSame(StandardSerializer.INSTANCE, url.getTypeSerializer());
+		url.setSerializer(StandardSerializer.INSTANCE);
+		assertSame(StandardSerializer.INSTANCE, url.getSerializer());
 	}
 	
 
