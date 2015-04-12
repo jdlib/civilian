@@ -102,7 +102,7 @@ public class HiddenField<T> extends Control<T>
 		out.print("<input");
 		HtmlUtil.attr(out, "type", "hidden", false);
 		HtmlUtil.attr(out, "name", getName());
-		HtmlUtil.attr(out, "value", format(out.getTypeSerializer()));
+		HtmlUtil.attr(out, "value", format(out.getSerializer()));
 		printAttrs(out, attrs);
 		out.print('>');
 	}

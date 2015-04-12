@@ -216,7 +216,7 @@ public abstract class InputField<T> extends Control<T>
 		out.print("<input");
 		HtmlUtil.attr(out, "type", type);
 		HtmlUtil.attr(out, "name", getName());
-		HtmlUtil.attr(out, "value", format(out.getTypeSerializer()));
+		HtmlUtil.attr(out, "value", format(out.getSerializer()));
 		if (size_ > 0)
 			HtmlUtil.attr(out, "size", size_);
 		if (maxLength_ > 0)

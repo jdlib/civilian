@@ -105,31 +105,31 @@ public class ResponseWriter extends TabWriter
 	 */
 	public void setTypeSerializer(TypeSerializer serializer)
 	{
-		typeSerializer_ = Check.notNull(serializer, "serializer");
+		serializer_ = Check.notNull(serializer, "serializer");
 	}
 	
 	
 	/**
 	 * Returns the TypeSerializer of this ResponseWriter.
 	 * If the ResponseWriter was created from a {@link Request} the 
-	 * TypeSerializer is initialized with the one from the requests
+	 * TypeSerializer is initialized with the one from the request
 	 * {@link Request#getLocaleService() LocaleService}.
 	 * Else it is the {@link LocaleSerializer#SYSTEM_LOCALE_SERIALIZER LocaleSerializer} 
 	 * for the default system locale. 
 	 */
-	public TypeSerializer getTypeSerializer()
+	public TypeSerializer getSerializer()
 	{
-		if (typeSerializer_ == null)
+		if (serializer_ == null)
 			initTypeSerializer();
-		return typeSerializer_;
+		return serializer_;
 	}
 
 	
 	private void initTypeSerializer()
 	{
 		initDefaults();
-		if (typeSerializer_ == null)
-			typeSerializer_ = LocaleSerializer.SYSTEM_LOCALE_SERIALIZER;
+		if (serializer_ == null)
+			serializer_ = LocaleSerializer.SYSTEM_LOCALE_SERIALIZER;
 	}
 	
 	
@@ -167,8 +167,8 @@ public class ResponseWriter extends TabWriter
 		if (lp != null)
 		{
 			LocaleService ld = lp.getLocaleService();
-			if (typeSerializer_ == null)
-				typeSerializer_ = ld.getSerializer();
+			if (serializer_ == null)
+				serializer_ = ld.getSerializer();
 			if (msgBundle_ == null)
 				msgBundle_ = ld.getMsgBundle();
 		}
@@ -285,7 +285,7 @@ public class ResponseWriter extends TabWriter
 	}
 
 	
-	private TypeSerializer typeSerializer_;
+	private TypeSerializer serializer_;
 	private MsgBundle msgBundle_;
 	private Object context_;
 	private static String defaultLineSeparator_ = "\n";

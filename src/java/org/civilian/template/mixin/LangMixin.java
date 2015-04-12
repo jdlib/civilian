@@ -27,7 +27,7 @@ import org.civilian.util.Check;
 
 /**
  * LangMixin is a template mixin which defines utility methods for localization.
- * It uses the {@link ResponseWriter#getTypeSerializer() TypeSerializer}
+ * It uses the {@link ResponseWriter#getSerializer() TypeSerializer}
  * and {@link ResponseWriter#getMsgBundle() MsgBundle} of the ResponseWriter to generate 
  * locale dependent output.
  */
@@ -144,7 +144,7 @@ public class LangMixin implements MessageProvider
 	 */
 	public <T> String format(DateType<T> type, T date, String defaultValue)
 	{
-		return date != null ? type.format(out.getTypeSerializer(), date) : defaultValue;
+		return date != null ? type.format(out.getSerializer(), date) : defaultValue;
 	}
 
 	
@@ -168,7 +168,7 @@ public class LangMixin implements MessageProvider
 	 */
 	public String format(int n, Object style)
 	{
-		return out.getTypeSerializer().formatInt(n, style);
+		return out.getSerializer().formatInt(n, style);
 	}
 	
 
@@ -204,7 +204,7 @@ public class LangMixin implements MessageProvider
 	 */
 	public String format(long value, Object style)
 	{
-		return out.getTypeSerializer().formatLong(value, style);
+		return out.getSerializer().formatLong(value, style);
 	}
 	
 
@@ -240,7 +240,7 @@ public class LangMixin implements MessageProvider
 	 */
 	public String format(double value, Object style)
 	{
-		return out.getTypeSerializer().formatDouble(value, style);
+		return out.getSerializer().formatDouble(value, style);
 	}
 
 	

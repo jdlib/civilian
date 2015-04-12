@@ -167,7 +167,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 			out.print("<input");
 			HtmlUtil.attr(out, "type", "checkbox", false);
 			HtmlUtil.attr(out, "name", getName());
-			String v = value != null ? elemType_.format(out.getTypeSerializer(), value) : "";
+			String v = value != null ? elemType_.format(out.getSerializer(), value) : "";
 			HtmlUtil.attr(out, "value", v);
 			if (checked)
 				out.print(" checked");

@@ -360,7 +360,7 @@ public class HtmlMixin
 	
 	private Url prepUrl(Url url)
 	{
-		return url.setTypeSerializer(out.getTypeSerializer());
+		return url.setTypeSerializer(out.getSerializer());
 	}
 
 	

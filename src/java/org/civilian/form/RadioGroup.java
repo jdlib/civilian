@@ -153,7 +153,7 @@ public class RadioGroup<T> extends Control<T>
 			out.print("<input");
 			HtmlUtil.attr(out, "type", "radio", false);
 			HtmlUtil.attr(out, "name", getName());
-			String v = value != null ? getType().format(out.getTypeSerializer(), value) : "";
+			String v = value != null ? getType().format(out.getSerializer(), value) : "";
 			HtmlUtil.attr(out, "value", v);
 			if (checked)
 				out.print(" checked");

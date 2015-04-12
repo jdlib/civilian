@@ -119,7 +119,7 @@ public class TextArea extends Control<String>
 		out.increaseTab();
 		
 		// the text is escaped 
-		HtmlUtil.text(out, format(out.getTypeSerializer()));
+		HtmlUtil.text(out, format(out.getSerializer()));
 		
 		out.decreaseTab();
 		out.print("</textarea>");
