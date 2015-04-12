@@ -21,7 +21,6 @@ import org.civilian.Application;
 import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.text.msg.MsgBundle;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
 
@@ -70,9 +69,9 @@ public class LocaleService
 	 * Creates a new LocaleService object.
 	 * @param locale a locale 
 	 * @param messages a MsgBundle. Will be converted into an empty bundle if null
-	 * @param serializer a TypeSerializer suitable for the locale. 
+	 * @param serializer a LocaleSerializer suitable for the locale. 
 	 */
-	public LocaleService(Locale locale, MsgBundle messages, TypeSerializer serializer)
+	public LocaleService(Locale locale, MsgBundle messages, LocaleSerializer serializer)
 	{
 		locale_ 		= Check.notNull(locale, 	"locale");
 		serializer_		= Check.notNull(serializer, "serializer");
@@ -91,9 +90,9 @@ public class LocaleService
 	
 	
 	/**
-	 * Returns the TypeSerializer for the locale.
+	 * Returns the LocaleSerializer.
 	 */
-	public TypeSerializer getTypeSerializer()
+	public LocaleSerializer getSerializer()
 	{
 		return serializer_;
 	}
@@ -158,7 +157,7 @@ public class LocaleService
 	
 	private MsgBundle messages_;
 	private Locale locale_;
-	private TypeSerializer serializer_;
+	private LocaleSerializer serializer_;
 	private Object data_;
 	private String localeString_;
 }

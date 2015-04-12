@@ -142,7 +142,7 @@ public abstract class AbstractResponse implements Response
 
 	@Override public TypeSerializer getLocaleSerializer()
 	{
-		return getLocaleService().getTypeSerializer();
+		return getLocaleService().getSerializer();
 	}
 
 	

@@ -420,7 +420,7 @@ public abstract class AbstractRequest implements Request
 	 */
 	@Override public TypeSerializer getLocaleSerializer()
 	{
-		return getLocaleService().getTypeSerializer();
+		return getLocaleService().getSerializer();
 	}
 
 	

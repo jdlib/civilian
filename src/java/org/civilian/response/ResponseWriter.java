@@ -168,7 +168,7 @@ public class ResponseWriter extends TabWriter
 		{
 			LocaleService ld = lp.getLocaleService();
 			if (typeSerializer_ == null)
-				typeSerializer_ = ld.getTypeSerializer();
+				typeSerializer_ = ld.getSerializer();
 			if (msgBundle_ == null)
 				msgBundle_ = ld.getMsgBundle();
 		}
@@ -183,7 +183,7 @@ public class ResponseWriter extends TabWriter
 	{
 		Check.notNull(service, "service");
 		setMsgBundle(service.getMsgBundle());
-		setTypeSerializer(service.getTypeSerializer());
+		setTypeSerializer(service.getSerializer());
 	}
 
 	

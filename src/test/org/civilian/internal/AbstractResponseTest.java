@@ -76,7 +76,7 @@ public class AbstractResponseTest extends CivTest
 		assertSame(dataEn, response.getLocaleService());
 		response.setLocaleService(dataDe);
 		assertSame(dataDe, response.getLocaleService());
-		assertSame(dataDe.getTypeSerializer(), response.getLocaleSerializer());
+		assertSame(dataDe.getSerializer(), response.getLocaleSerializer());
 		
 		assertNull(response.getContentEncoding());
 		response.setContentEncoding("UTF-8");
