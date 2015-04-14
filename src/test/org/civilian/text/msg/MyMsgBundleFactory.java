@@ -25,4 +25,9 @@ public class MyMsgBundleFactory extends MsgBundleFactory
 	{
 		return null;
 	}
+
+	
+	@Override public void clearCache()
+    {
+    }
 }

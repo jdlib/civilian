@@ -75,7 +75,7 @@ public class LocaleService
 	{
 		locale_ 		= Check.notNull(locale, 	"locale");
 		serializer_		= Check.notNull(serializer, "serializer");
-		messages_		= messages != null ? messages : MsgBundle.empty(locale);
+		msgBundle_		= messages != null ? messages : MsgBundle.empty(locale);
 		localeString_	= locale.toString();
 	}
 	
@@ -103,9 +103,18 @@ public class LocaleService
 	 */
 	public MsgBundle getMsgBundle()
 	{
-		return messages_;
+		return msgBundle_;
 	}
 
+	
+	/**
+	 * Set the MsgBundle used by the service. 
+	 */
+	public void setMsgBundle(MsgBundle msgBundle)
+	{
+		msgBundle_ = Check.notNull(msgBundle, "msgBundle");
+	}
+	
 	
 	/**
 	 * Returns the data previously set by setData().
@@ -155,7 +164,7 @@ public class LocaleService
 	}
 
 	
-	private MsgBundle messages_;
+	private MsgBundle msgBundle_;
 	private Locale locale_;
 	private LocaleSerializer serializer_;
 	private Object data_;

@@ -19,10 +19,22 @@ package org.civilian.text.msg;
 import java.util.Locale;
 
 
+/**
+ * A fallback implementation of MsgBundleFactory which 
+ * returns empty MsgBundles.
+ */
 public class EmptyMsgBundleFactory extends MsgBundleFactory 
 {
 	@Override public MsgBundle getMsgBundle(Locale locale)
 	{
 		return new EmptyMsgBundle(locale);
+	}
+
+
+	/**
+	 * Does nothing.
+	 */
+	@Override public void clearCache()
+	{
 	}
 }

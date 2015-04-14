@@ -244,6 +244,14 @@ public class LocaleServiceList
 	}
 	
 	
+	public void reloadServiceMsgBundles()
+	{
+		msgBundleFactory_.clearCache();
+		for (LocaleService service : supportedServices_)
+			service.setMsgBundle(msgBundleFactory_.getMsgBundle(service.getLocale()));
+	}
+	
+	
 	/**
 	 * A LocaleMap maps locales to LocaleServices.
 	 */

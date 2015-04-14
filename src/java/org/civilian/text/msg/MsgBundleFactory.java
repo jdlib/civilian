@@ -28,4 +28,10 @@ public abstract class MsgBundleFactory
 	 * Creates a MsgBundle for a locale.
 	 */
 	public abstract MsgBundle getMsgBundle(Locale locale);
+	
+	
+	/**
+	 * Clears any cache hold by the factory.
+	 */
+	public abstract void clearCache();
 }

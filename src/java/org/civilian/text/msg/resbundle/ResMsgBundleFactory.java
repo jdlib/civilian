@@ -18,6 +18,7 @@ package org.civilian.text.msg.resbundle;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleFactories;
 import org.civilian.text.msg.MsgBundleFactory;
@@ -100,6 +101,15 @@ public class ResMsgBundleFactory extends MsgBundleFactory
 				return TTL_DONT_CACHE;
 			}		
 		};
+	}
+
+	
+	/**
+	 * Clears the ResourceBundle cache for our ClassLoader.
+	 */
+	@Override public void clearCache()
+	{
+		ResourceBundle.clearCache(classLoader_);
 	}
 
 	
