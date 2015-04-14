@@ -244,6 +244,9 @@ public class LocaleServiceList
 	}
 	
 	
+	/**
+	 * Clears the cache of the MsgBundleFactory and reloads the MsgBundles of all services.
+	 */
 	public void reloadServiceMsgBundles()
 	{
 		msgBundleFactory_.clearCache();
