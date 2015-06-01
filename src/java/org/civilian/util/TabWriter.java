@@ -29,12 +29,11 @@ public class TabWriter extends PrintWriter
 	/**
 	 * Sets the default characters used by a new TabWriter to indent a line.
 	 * By default a indent consists of a single tab character.
+	 * @see #setTabChars(String)
 	 */ 
 	public static void setDefaultTabChars(String chars)
 	{
-		if (chars == null)
-			throw new IllegalArgumentException("chars null");
-		defaultTabChars_ = chars.toCharArray();
+		defaultTabChars_ = getChars(chars, "chars");
 	}
 
 	
@@ -48,7 +47,7 @@ public class TabWriter extends PrintWriter
 
 	
 	/**
-	 * Creates a TabWriter.
+	 * Creates a new TabWriter.
 	 * @param out a Writer
 	 */
 	public TabWriter(Writer out)
@@ -71,13 +70,13 @@ public class TabWriter extends PrintWriter
 
 
 	/**
-	 * Sets the string used for a tab. The default is a tab character.
+	 * Sets the string used for a tab. 
+	 * If you do not explicitly specify the tab chars, 
+	 * the value of {@link #getDefaultTabChars()} is used.
 	 */
 	public void setTabChars(String chars)
 	{
-		int len = chars.length();
-		tabChars_ = new char[len];
-		chars.getChars(0, len, tabChars_, 0);
+		tabChars_ = getChars(chars, "chars");
 	}
 
 
@@ -85,9 +84,9 @@ public class TabWriter extends PrintWriter
 	 * Sets the characters used to separate lines. The default is
 	 * system dependent (e.g. "0xD0xA" on Windows).
 	 */
-	public void setLineSeparator(String s)
+	public void setLineSeparator(String separator)
 	{
-		lineSeparator_ = getSeparatorChars(s);
+		lineSeparator_ = getChars(separator, "separator");
 	}
 
 
@@ -340,13 +339,10 @@ public class TabWriter extends PrintWriter
 	}
 
 
-	private static char[] getSeparatorChars(String s)
+	private static char[] getChars(String s, String what)
 	{
-		if (s == null)
-			throw new IllegalArgumentException();
-		char c[] = new char[s.length()];
-		s.getChars(0, s.length(), c, 0);
-		return c;
+		Check.notNull(s, what);
+		return s.toCharArray();
 	}
 	
 	
@@ -363,5 +359,5 @@ public class TabWriter extends PrintWriter
 	private char tabChars_[] = defaultTabChars_;
 	private char lineSeparator_[] = systemLineSeparator_;
 	private static char defaultTabChars_[] = { '\t' };
-	private static final char systemLineSeparator_[] = getSeparatorChars(System.getProperty("line.separator"));
+	private static final char systemLineSeparator_[] = getChars(System.getProperty("line.separator"), "separator");
 }
