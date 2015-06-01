@@ -829,7 +829,7 @@ public abstract class Control<T> implements ResponseWriter.Printable
 	 */
 	@Override public void print(ResponseWriter out)
 	{
-		printExt(out, (String[])null);
+		print(out, (String[])null);
 	}
 	
 	
@@ -838,7 +838,7 @@ public abstract class Control<T> implements ResponseWriter.Printable
 	 * @param attrs a list of attribute names and values which
 	 * 		should be printed in the start tag of the control element.
 	 */
-	public abstract void printExt(ResponseWriter out, String... attrs);
+	public abstract void print(ResponseWriter out, String... attrs);
 
 	
 	/**

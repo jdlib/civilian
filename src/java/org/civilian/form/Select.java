@@ -148,7 +148,7 @@ public class Select<T> extends Control<T>
 	/**
 	 * Prints the field markup.
 	 */
-	@Override public void printExt(ResponseWriter out, String... attrs)
+	@Override public void print(ResponseWriter out, String... attrs)
 	{
 		start(out, attrs);
 		out.increaseTab();

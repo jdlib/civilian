@@ -58,7 +58,7 @@ public class RadioGroup<T> extends Control<T>
 	/**
 	 * Prints all radio buttons of the group.
 	 */
-	@Override public void printExt(ResponseWriter out, String... attrs)
+	@Override public void print(ResponseWriter out, String... attrs)
 	{
 		Printer printer = getPrinter(out);
 		printer.setAttrs(attrs);

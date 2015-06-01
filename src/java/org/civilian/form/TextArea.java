@@ -102,7 +102,7 @@ public class TextArea extends Control<String>
 	/**
 	 * Prints the field markup.
 	 */
-	@Override public void printExt(ResponseWriter out, String... attrs)
+	@Override public void print(ResponseWriter out, String... attrs)
 	{
 		out.print("<textarea");
 		HtmlUtil.attr(out, "name", getName());

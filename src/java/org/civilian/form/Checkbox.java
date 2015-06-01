@@ -111,7 +111,7 @@ public class Checkbox extends Control<Boolean>
 	/**
 	 * Prints the checkbox markup.
 	 */
-	@Override public void printExt(ResponseWriter out, String... attrs)
+	@Override public void print(ResponseWriter out, String... attrs)
 	{
 		if (text_ != null)
 			out.print("<label>");

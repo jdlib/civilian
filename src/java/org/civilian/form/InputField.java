@@ -234,7 +234,7 @@ public abstract class InputField<T> extends Control<T>
 	/**
 	 * Prints the field markup.
 	 */
-	@Override public void printExt(ResponseWriter out, String... attrs)
+	@Override public void print(ResponseWriter out, String... attrs)
 	{
 		open(out, getInputType(), attrs);
 		out.print('>');

@@ -303,7 +303,7 @@ public class ControlTest extends CivTest
 		out.assertOutNormed("<label><input type='radio' name='rg' value='b'>beta</label>");
 		group.print(out);
 		out.assertOutNormed("<label><input type='radio' name='rg' value='a'>alpha</label>\n<label><input type='radio' name='rg' value='b'>beta</label>\n");
-		group.setHorizontal(false).printExt(out);
+		group.setHorizontal(false).print(out);
 		out.assertOutNormed("<label><input type='radio' name='rg' value='a'>alpha</label><br>\n<label><input type='radio' name='rg' value='b'>beta</label><br>\n");
 	}
 	

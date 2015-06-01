@@ -284,7 +284,7 @@ public class Button extends Control<String>
 	/**
 	 * Prints the button markup.
 	 */
-	@Override public void printExt(ResponseWriter out, String... attrs)
+	@Override public void print(ResponseWriter out, String... attrs)
 	{
 		start(out, attrs);
 		if (variant_.buttonTag)

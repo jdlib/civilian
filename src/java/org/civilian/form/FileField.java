@@ -69,7 +69,7 @@ public class FileField extends Control<Upload[]>
 	/**
 	 * Prints the field.
 	 */
-	@Override public void printExt(ResponseWriter out, String... attrs)
+	@Override public void print(ResponseWriter out, String... attrs)
 	{
 		out.print("<input type=\"file\"");
 		HtmlUtil.attr(out, "name", getName());

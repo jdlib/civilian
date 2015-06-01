@@ -84,7 +84,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 	/**
 	 * Prints all checkboxes of the group, separated by a <br> element.
 	 */
-	@Override public void printExt(ResponseWriter out, String... attrs)
+	@Override public void print(ResponseWriter out, String... attrs)
 	{
 		Printer printer = getPrinter(out);
 		printer.setAttrs(attrs);
