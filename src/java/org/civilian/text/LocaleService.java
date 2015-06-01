@@ -17,9 +17,11 @@ package org.civilian.text;
 
 
 import java.util.Locale;
+
 import org.civilian.Application;
 import org.civilian.Request;
 import org.civilian.Response;
+import org.civilian.provider.LocaleServiceProvider;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
@@ -38,7 +40,7 @@ import org.civilian.util.Check;
  * @see Request#getLocaleService()
  * @see Response#getLocaleService()
  */
-public class LocaleService
+public class LocaleService implements LocaleServiceProvider
 {
 	/**
 	 * Creates a new LocaleService object which uses a {@link LocaleSerializer},
@@ -79,6 +81,15 @@ public class LocaleService
 		localeString_	= locale.toString();
 	}
 	
+	
+	/**
+	 * Implements LocaleServiceProvider and returns this.
+	 */
+	@Override public LocaleService getLocaleService()
+    {
+	    return this;
+    }
+
 	
 	/**
 	 * Returns the locale.
