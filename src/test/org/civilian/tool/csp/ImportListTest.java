@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.source;
+package org.civilian.tool.csp;
 
 
 import java.io.PrintWriter;
@@ -22,7 +22,7 @@ import java.util.List;
 import javax.servlet.Servlet;
 import org.civilian.CivTest;
 import org.civilian.Context;
-import org.civilian.internal.source.ImportList;
+import org.civilian.tool.csp.ImportList;
 import org.junit.Test;
 
 

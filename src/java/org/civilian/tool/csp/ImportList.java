@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.source;
+package org.civilian.tool.csp;
 
 
 import java.io.PrintWriter;
@@ -27,7 +27,7 @@ import java.util.Comparator;
  * ImportList represents a list of import statements
  * of a Java class.
  */
-public class ImportList
+class ImportList
 {
 	/**
 	 * Creates a new ImportList.

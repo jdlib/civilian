@@ -17,7 +17,6 @@ package org.civilian.tool.csp;
 
 
 import java.util.ArrayList;
-import org.civilian.internal.source.ImportList;
 
 
 class ClassData
