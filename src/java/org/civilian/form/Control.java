@@ -110,28 +110,19 @@ public abstract class Control<T> implements ResponseWriter.Printable
 	 */
 	protected Control(Type<T> type)
 	{
-		setType(type);
+		type_ = Check.notNull(type, "type");
 	}
 
 	
 	/**
 	 * Creates a new control.
-	 * @param type the type of the controls values
+	 * @param type the type of the controls value
 	 * @param name the control name
 	 */
 	protected Control(Type<T> type, String name)
 	{
 		this(type);
 		setName(name);
-	}
-
-	
-	/**
-	 * Creates a new control with no initial type.
-	 * Use {@link #setType(Type)} to set the type as soon as possible. 
-	 */
-	protected Control()
-	{
 	}
 
 	
@@ -145,16 +136,7 @@ public abstract class Control<T> implements ResponseWriter.Printable
 	
 	
 	/**
-	 * Allows derived implementations to set the type after the ctor call.
-	 */
-	protected void setType(Type<T> type)
-	{
-		type_ = Check.notNull(type, "type");
-	}
-
-	
-	/**
-	 * Tests if the given type equals this Values's type.
+	 * Tests if the given type equals the type of this control.
 	 */
 	protected void checkType(Type<?> type)
 	{
@@ -226,7 +208,7 @@ public abstract class Control<T> implements ResponseWriter.Printable
 	
 	
 	/**
-	 * Returns if the contained value is not null. 
+	 * Returns if the {@link #getValue() control value} is not null. 
 	 */
 	public boolean hasValue()
 	{
@@ -247,7 +229,7 @@ public abstract class Control<T> implements ResponseWriter.Printable
 	 * Unchecked version of setValue()
 	 */
 	@SuppressWarnings("unchecked")
-	public void setValueUc(Object value)
+	private void setValueUc(Object value)
 	{
 		setValue((T)value);
 	}
