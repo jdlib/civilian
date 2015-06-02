@@ -10,6 +10,8 @@ template(LocaleServiceList services, Locale... locales) mixin html, lang
 	<head>
 		<title>Civilian Form Sample</title>
 		@html.metaContentType();
+		@html.linkCss("css/lib/bootstrap.css"); 
+		@html.linkCss("css/samples.css");
 	</head>
 	<body>
 		<h1>Locale Sample</h1>

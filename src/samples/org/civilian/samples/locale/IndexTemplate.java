@@ -47,75 +47,77 @@ public class IndexTemplate extends Template
 		out.increaseTab();
 		out.println("<title>Civilian Form Sample</title>");             // line 11: <title>Civilian Form Sample</title>
 		html.metaContentType();                                         // line 12: @html.metaContentType();
+		html.linkCss("css/lib/bootstrap.css");                          // line 13: @html.linkCss("css/lib/bootstrap.css");
+		html.linkCss("css/samples.css");                                // line 14: @html.linkCss("css/samples.css");
 		out.decreaseTab();
-		out.println("</head>");                                         // line 13: </head>
-		out.println("<body>");                                          // line 14: <body>
+		out.println("</head>");                                         // line 15: </head>
+		out.println("<body>");                                          // line 16: <body>
 		out.increaseTab();
-		out.println("<h1>Locale Sample</h1>");                          // line 15: <h1>Locale Sample</h1>
-		out.println("<table>");                                         // line 16: <table>
+		out.println("<h1>Locale Sample</h1>");                          // line 17: <h1>Locale Sample</h1>
+		out.println("<table>");                                         // line 18: <table>
 		out.increaseTab();
-		for (Locale locale : locales)                                   // line 17: @for (Locale locale : locales)
+		for (Locale locale : locales)                                   // line 19: @for (Locale locale : locales)
 		{
-			printLocale(locale);                                        // line 18: @printLocale(locale);
+			printLocale(locale);                                        // line 20: @printLocale(locale);
 		}
 		out.decreaseTab();
-		out.println("</table>");                                        // line 19: </table>
+		out.println("</table>");                                        // line 21: </table>
 		out.decreaseTab();
-		out.println("</body>");                                         // line 20: </body>
-		out.println("</html>");                                         // line 21: </html>
+		out.println("</body>");                                         // line 22: </body>
+		out.println("</html>");                                         // line 23: </html>
 	}
 	
 	
 	private void printLocale(Locale locale)
 	{
-		lang.init(services.getService(locale));                         // line 27: @lang.init(services.getService(locale));
-		out.println("<tr>");                                            // line 28: <tr>
+		lang.init(services.getService(locale));                         // line 29: @lang.init(services.getService(locale));
+		out.println("<tr>");                                            // line 30: <tr>
 		out.increaseTab();
-		out.println("<td colspan=\"2\"><hr></td>");                     // line 29: <td colspan="2"><hr></td>
+		out.println("<td colspan=\"2\"><hr></td>");                     // line 31: <td colspan="2"><hr></td>
 		out.decreaseTab();
-		out.println("</tr>");                                           // line 30: </tr>
-		out.println("<tr>");                                            // line 31: <tr>
+		out.println("</tr>");                                           // line 32: </tr>
+		out.println("<tr>");                                            // line 33: <tr>
 		out.increaseTab();
-		out.println("<td><b>current locale is</b></td>");               // line 32: <td><b>current locale is</b></td>
-		out.print("<td><b>");                                           // line 33: <td><b>
-		out.print(locale);                                              // line 33: <%locale%>
-		out.print(", ");                                                // line 33: ,
-		out.print(locale.getDisplayName());                             // line 33: <%locale.getDisplayName()%>
-		out.println("</b></td>");                                       // line 33: </b></td>
+		out.println("<td><b>current locale is</b></td>");               // line 34: <td><b>current locale is</b></td>
+		out.print("<td><b>");                                           // line 35: <td><b>
+		out.print(locale);                                              // line 35: <%locale%>
+		out.print(", ");                                                // line 35: ,
+		out.print(locale.getDisplayName());                             // line 35: <%locale.getDisplayName()%>
+		out.println("</b></td>");                                       // line 35: </b></td>
 		out.decreaseTab();
-		out.println("</tr>");                                           // line 34: </tr>
-		out.println("<tr>");                                            // line 35: <tr>
+		out.println("</tr>");                                           // line 36: </tr>
+		out.println("<tr>");                                            // line 37: <tr>
 		out.increaseTab();
-		out.println("<td>numbers</td>");                                // line 36: <td>numbers</td>
-		out.print("<td>");                                              // line 37: <td>
-		out.print(lang.format(1234567890));                             // line 37: <%lang.format(1234567890)%>
-		out.println("</td>");                                           // line 37: </td>
+		out.println("<td>numbers</td>");                                // line 38: <td>numbers</td>
+		out.print("<td>");                                              // line 39: <td>
+		out.print(lang.format(1234567890));                             // line 39: <%lang.format(1234567890)%>
+		out.println("</td>");                                           // line 39: </td>
 		out.decreaseTab();
-		out.println("</tr>");                                           // line 38: </tr>
-		out.println("<tr>");                                            // line 39: <tr>
+		out.println("</tr>");                                           // line 40: </tr>
+		out.println("<tr>");                                            // line 41: <tr>
 		out.increaseTab();
-		out.println("<td>decimal</td>");                                // line 40: <td>decimal</td>
-		out.print("<td>");                                              // line 41: <td>
-		out.print(lang.format(334455.6677));                            // line 41: <%lang.format(334455.6677)%>
-		out.println("</td>");                                           // line 41: </td>
+		out.println("<td>decimal</td>");                                // line 42: <td>decimal</td>
+		out.print("<td>");                                              // line 43: <td>
+		out.print(lang.format(334455.6677));                            // line 43: <%lang.format(334455.6677)%>
+		out.println("</td>");                                           // line 43: </td>
 		out.decreaseTab();
-		out.println("</tr>");                                           // line 42: </tr>
-		out.println("<tr>");                                            // line 43: <tr>
+		out.println("</tr>");                                           // line 44: </tr>
+		out.println("<tr>");                                            // line 45: <tr>
 		out.increaseTab();
-		out.println("<td>date</td>");                                   // line 44: <td>date</td>
-		out.print("<td>");                                              // line 45: <td>
-		out.print(lang.format(new Date()));                             // line 45: <%lang.format(new Date())%>
-		out.println("</td>");                                           // line 45: </td>
+		out.println("<td>date</td>");                                   // line 46: <td>date</td>
+		out.print("<td>");                                              // line 47: <td>
+		out.print(lang.format(new Date()));                             // line 47: <%lang.format(new Date())%>
+		out.println("</td>");                                           // line 47: </td>
 		out.decreaseTab();
-		out.println("</tr>");                                           // line 46: </tr>
-		out.println("<tr>");                                            // line 47: <tr>
+		out.println("</tr>");                                           // line 48: </tr>
+		out.println("<tr>");                                            // line 49: <tr>
 		out.increaseTab();
-		out.println("<td>translation</td>");                            // line 48: <td>translation</td>
-		out.print("<td>");                                              // line 49: <td>
-		out.print(lang.msg("civilian"));                                // line 49: <%lang.msg("civilian")%>
-		out.println("</td>");                                           // line 49: </td>
+		out.println("<td>translation</td>");                            // line 50: <td>translation</td>
+		out.print("<td>");                                              // line 51: <td>
+		out.print(lang.msg("civilian"));                                // line 51: <%lang.msg("civilian")%>
+		out.println("</td>");                                           // line 51: </td>
 		out.decreaseTab();
-		out.println("</tr>");                                           // line 50: </tr>
+		out.println("</tr>");                                           // line 52: </tr>
 	}
 
 
