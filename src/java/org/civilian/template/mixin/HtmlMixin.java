@@ -310,7 +310,7 @@ public class HtmlMixin
 	 */
 	public Url url(Resource resource)
 	{
-		return prepUrl(new Url(response(), resource));
+		return new Url(response(), resource);
 	}
 
 	
@@ -321,7 +321,7 @@ public class HtmlMixin
 	 */
 	public Url url(Class<? extends Controller> controllerClass)
 	{
-		return prepUrl(new Url(response(), controllerClass));
+		return new Url(response(), controllerClass);
 	}
 
 	
@@ -332,7 +332,7 @@ public class HtmlMixin
 	 */
 	public Url url(String value)
 	{
-		return prepUrl(new Url(response(), value));
+		return new Url(response(), value);
 	}
 	
 	
@@ -343,7 +343,7 @@ public class HtmlMixin
 	 */
 	public Url url(PathProvider pp)
 	{
-		return prepUrl(new Url(response(), pp));
+		return new Url(response(), pp);
 	}
 	
 	
@@ -354,15 +354,9 @@ public class HtmlMixin
 	 */
 	public Url url(Path path)
 	{
-		return prepUrl(new Url(response(), path));
+		return new Url(response(), path);
 	}
 	
-	
-	private Url prepUrl(Url url)
-	{
-		return url.setSerializer(out.getSerializer());
-	}
-
 	
 	//-----------------------------
 	// stacktrace
