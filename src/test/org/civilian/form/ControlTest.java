@@ -418,7 +418,6 @@ public class ControlTest extends CivTest
 		Button button = Button.button("OK");
 		form.add(button);
 		assertEquals(1, form.size());
-		assertNull(form.getFirstInputControl());
 		
 		TextField field = new TextField("name");
 		form.add(field, "Name");
@@ -429,7 +428,6 @@ public class ControlTest extends CivTest
 		assertSame(field, form.get("name"));
 		assertNull(form.get("x"));
 		assertNull(form.get(null));
-		assertSame(field, form.getFirstInputControl());
 		try
 		{
 			// cannot add twice

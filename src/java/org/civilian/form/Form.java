@@ -307,22 +307,6 @@ public class Form implements RequestProvider
 
 	
 	/**
-	 * Returns the first control which is not hidden and not a button. 
-	 */
-	public Control<?> getFirstInputControl()
-	{
-		int n = size();
-		for (int i=0; i<n; i++)
-		{
-			Control<?> control = get(i);
-			if (control.getCategory() == Control.Category.INPUT)
-				return control;
-		}
-		return null;
-	}
-	
-	
-	/**
 	 * Adds a control to the form. 
 	 * @param control the control. It is ignored if null.
 	 */
