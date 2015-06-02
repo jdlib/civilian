@@ -18,12 +18,10 @@ package org.civilian.response;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Locale;
-
 import org.civilian.Application;
 import org.civilian.Response;
 import org.civilian.text.LocaleService;

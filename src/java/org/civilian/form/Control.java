@@ -799,7 +799,6 @@ public abstract class Control<T> implements ResponseWriter.Printable
 	 * If the control has an {@link #getErrorValue()} because
 	 * it was initialized from an invalid request, the error value
 	 * is returned. Else the value converted to a string is returned.
-	 * @param serializer a serializer which implements a formatting scheme for the control value
 	 */
 	public String format()
 	{

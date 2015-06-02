@@ -19,7 +19,6 @@ package org.civilian.util;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
-import org.civilian.Response;
 
 
 /**
@@ -170,7 +169,7 @@ public class TabWriter extends PrintWriter
 	/**
 	 * Associates the TabWriter with an arbitrary context object.
      * When the TabWriter is constructed within a Civilian request
-	 * the {@link Response} is automatically added as context object. 
+	 * the Response is automatically added as context object. 
 	 */
 	public void addContext(Object context)
 	{

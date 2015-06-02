@@ -36,7 +36,7 @@ public class HtmlMixin
 {
 	/**
 	 * Creates a new HtmlMixin.
-	 * @param out the ResponseWriter.
+	 * @param out the TabWriter.
 	 */
 	public HtmlMixin(TabWriter out)
 	{
