@@ -23,7 +23,8 @@ import org.civilian.util.Check;
 
 /**
  * A Template can be used to produce the textual content of a response.
- * Templates store all their dynamic data in instance variables: 
+ * Templates store all their dynamic data in instance variables which are initialized
+ * in the template constructor:
  * Therefore a template object is self-contained and can just simply be printed 
  * to an output. This especially allows to pass templates to other templates 
  * as parameters and to build complex content by composing it from simpler parts.<br> 
