@@ -17,16 +17,9 @@ package org.civilian.response;
 
 
 import java.io.Writer;
-import java.util.Locale;
-import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.Template;
 import org.civilian.content.ContentSerializer;
-import org.civilian.provider.LocaleServiceProvider;
-import org.civilian.text.LocaleService;
-import org.civilian.text.msg.MsgBundle;
-import org.civilian.type.TypeSerializer;
-import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
@@ -43,8 +36,6 @@ import org.civilian.util.TabWriter;
  * <ul>
  * <li>it is a PrintWriter
  * <li>it is a TabWriter i.e. allows convenient indenting of content
- * <li>it provides a {@link TypeSerializer} which can be used to format dates, numbers, etc. 
- * <li>it provides a {@link MsgBundle} which can be used to translate message ids into message texts.
  * <li>it can be associated with multiple {@link #addContext(Object) context} objects. The Response will add itself
  * 		as context object.  
  * </ul>    
@@ -92,98 +83,6 @@ public class ResponseWriter extends TabWriter
 	{
 		super(writer, autoFlush);
 		setLineSeparator(defaultLineSeparator_);
-	}
-
-	
-	//------------------------
-	// locale related
-	//------------------------
-	
-	
-	/**
-	 * Sets the TypeSerializer of this ResponseWriter.
-	 */
-	public void setTypeSerializer(TypeSerializer serializer)
-	{
-		serializer_ = Check.notNull(serializer, "serializer");
-	}
-	
-	
-	/**
-	 * Returns the TypeSerializer of this ResponseWriter.
-	 * If the ResponseWriter was created from a {@link Request} the 
-	 * TypeSerializer is initialized with the one from the request
-	 * {@link Request#getLocaleService() LocaleService}.
-	 * Else it is the {@link LocaleSerializer#SYSTEM_LOCALE_SERIALIZER LocaleSerializer} 
-	 * for the default system locale. 
-	 */
-	public TypeSerializer getSerializer()
-	{
-		if (serializer_ == null)
-			initTypeSerializer();
-		return serializer_;
-	}
-
-	
-	private void initTypeSerializer()
-	{
-		initDefaults();
-		if (serializer_ == null)
-			serializer_ = LocaleSerializer.SYSTEM_LOCALE_SERIALIZER;
-	}
-	
-	
-	/**
-	 * Sets the MsgBundle of this ResponseWriter.
-	 */
-	public void setMsgBundle(MsgBundle msgBundle)
-	{
-		msgBundle_ = Check.notNull(msgBundle, "msgBundle");
-	}
-	
-	
-	/**
-	 * Returns the MsgBundle of this ResponseWriter.
-	 */
-	public MsgBundle getMsgBundle()
-	{
-		if (msgBundle_ == null)
-			initMsgBundle();
-		return msgBundle_;
-	}
-		
-	
-	private void initMsgBundle()
-	{
-		initDefaults();
-		if (msgBundle_ == null)
-			msgBundle_ = MsgBundle.empty(Locale.getDefault());
-	}
-	
-	
-	private void initDefaults()
-	{
-		LocaleServiceProvider lp = getContext(LocaleServiceProvider.class);
-		if (lp != null)
-		{
-			LocaleService ld = lp.getLocaleService();
-			if (serializer_ == null)
-				serializer_ = ld.getSerializer();
-			if (msgBundle_ == null)
-				msgBundle_ = ld.getMsgBundle();
-		}
-	}
-	
-	
-	/**
-	 * Sets the MsgBundle and TypeSerialiter of the ResponseWriter
-	 * to the instances provided by the LocaleService.
-	 */
-	public void setLocaleService(LocaleService service)
-	{
-		Check.notNull(service, "service");
-		setMsgBundle(service.getMsgBundle());
-		setTypeSerializer(service.getSerializer());
 	}
 
 	
@@ -285,8 +184,6 @@ public class ResponseWriter extends TabWriter
 	}
 
 	
-	private TypeSerializer serializer_;
-	private MsgBundle msgBundle_;
 	private Object context_;
 	private static String defaultLineSeparator_ = "\n";
 }
