@@ -16,6 +16,7 @@
 package org.civilian;
 
 
+import java.io.Writer;
 import org.civilian.response.ResponseWriter;
 import org.civilian.util.Check;
 
@@ -41,6 +42,21 @@ public abstract class Template implements ResponseWriter.Printable
 		return out;
 	}
 
+	
+	/**
+	 * Prints the template, using the given Writer.
+	 * The method constructs a ResponseWriter from the writer and
+	 * then calls {@link #print(ResponseWriter)}.
+	 */
+	public void print(Writer out) throws Exception
+	{
+		Check.notNull(out, "out");
+		ResponseWriter rw = out instanceof ResponseWriter ? 
+			(ResponseWriter)out : 
+			new ResponseWriter(out, false);
+		print(rw);
+	}
+	
 	
 	/**
 	 * Prints the template, using the given ResponseWriter.
