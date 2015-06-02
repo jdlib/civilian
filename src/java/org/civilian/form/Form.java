@@ -270,7 +270,7 @@ public class Form implements RequestProvider
 
 
 	/**
-	 * Returns the number of controls.
+	 * Returns the number of controls contained in the form.
 	 */
 	public int size()
 	{
@@ -279,7 +279,7 @@ public class Form implements RequestProvider
 
 	
 	/**
-	 * Returns the i-th control.
+	 * Returns the control.
 	 */
 	public Control<?> get(int i)
 	{

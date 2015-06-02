@@ -98,6 +98,13 @@ public class TextArea extends Control<String>
 		return this;
 	}
 
+
+	@Override protected String formatValue()
+	{
+		String s = getValue();   
+		return s != null ? s : "";
+	}
+
 	
 	/**
 	 * Prints the field markup.
@@ -119,7 +126,7 @@ public class TextArea extends Control<String>
 		out.increaseTab();
 		
 		// the text is escaped 
-		HtmlUtil.text(out, format(out.getSerializer()));
+		HtmlUtil.text(out, format());
 		
 		out.decreaseTab();
 		out.print("</textarea>");

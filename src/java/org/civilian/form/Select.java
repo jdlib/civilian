@@ -231,7 +231,7 @@ public class Select<T> extends Control<T>
 	 */
 	public void printOption(ResponseWriter out, T value, String text, boolean selected)
 	{
-		String s = getType().format(out.getSerializer(), value);
+		String s = getType().format(getResponseSerializer(), value);
 		printOptionImpl(out, s, text, selected);
 	}
 	
@@ -242,7 +242,7 @@ public class Select<T> extends Control<T>
 	public void printOption(ResponseWriter out, int i)
 	{
 		T value				= keyList_.getValue(i);
-		String svalue		= keyList_.getType().format(out.getSerializer(), value, i);
+		String svalue		= keyList_.getType().format(getResponseSerializer(), value, i);
 		String text 		= keyList_.getText(i);
 		boolean selected	= equals(value, getValue());
 		printOptionImpl(out, svalue, text, selected);

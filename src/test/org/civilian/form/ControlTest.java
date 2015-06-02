@@ -30,7 +30,6 @@ import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
 import org.civilian.type.TypeLib;
 import org.civilian.type.lib.LocaleSerializer;
-import org.civilian.type.lib.StandardSerializer;
 import org.civilian.util.Date;
 
 
@@ -134,7 +133,7 @@ public class ControlTest extends CivTest
 		
 		assertEquals(1, field.getRows());
 		assertEquals(Control.Category.INPUT, field.getCategory());
-		assertEquals("", field.format(StandardSerializer.INSTANCE));
+		assertEquals("", field.format());
 		
 		assertEquals("TextField[email=null]", field.toString());
 		
@@ -147,7 +146,7 @@ public class ControlTest extends CivTest
 		DateField<Date> field = new DateField<>(TypeLib.DATE_CIVILIAN, "d");
 		
 		field.setValue(new Date(2014, 01, 31));
-		assertOut(field, "<input type='text' name='d' value='01/31/2014' size='10' maxlength='10'>");
+		assertOut(field, "<input type='text' name='d' value='20140131' size='10' maxlength='10'>");
 	}
 	
 	
@@ -158,7 +157,7 @@ public class ControlTest extends CivTest
 		field.setMin(20.0);
 		field.setStep(2.2);
 		field.setDoubleValue(40.2);
-		assertOut(field, "<input type='text' name='d' value='40.20' min='20.0' step='2.2'>");
+		assertOut(field, "<input type='text' name='d' value='40.2' min='20.0' step='2.2'>");
 	}
 	
 	
@@ -174,7 +173,7 @@ public class ControlTest extends CivTest
 		assertTrue(field.getError() instanceof NumberFormatException);
 		assertNull(field.getValue());
 		assertEquals("a", field.getErrorValue());
-		assertEquals("a", field.format(StandardSerializer.INSTANCE));
+		assertEquals("a", field.format());
 		
 		field.setReadOnly(true);
 		assertFalse(field.read(request));

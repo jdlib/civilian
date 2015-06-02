@@ -23,6 +23,7 @@ import org.civilian.type.ListType;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.type.TypeSerializer;
+import org.civilian.type.lib.StandardSerializer;
 import org.civilian.util.Check;
 
 
@@ -797,15 +798,29 @@ public abstract class Control<T> implements ResponseWriter.Printable
 	 * Returns the control value formatted as a string.
 	 * If the control has an {@link #getErrorValue()} because
 	 * it was initialized from an invalid request, the error value
-	 * is returned.
-	 * @param serializer a serializer which implements a formatting scheme
+	 * is returned. Else the value converted to a string is returned.
+	 * @param serializer a serializer which implements a formatting scheme for the control value
 	 */
-	public String format(TypeSerializer serializer)
+	public String format()
 	{
-		if (getErrorValue() != null)
-			return getErrorValue();
-		else
-			return type_.format(serializer, value_, getStyle());
+		return getErrorValue() != null ? getErrorValue() : formatValue();
+	}
+	
+	
+	/**
+	 * Returns the control value formatted as a string.
+	 */
+	protected String formatValue()
+	{
+		return type_.format(getResponseSerializer(), value_, getStyle());
+	}
+
+	
+	protected TypeSerializer getResponseSerializer()
+	{
+		return form_ != null ?
+			form_.getRequest().getResponse().getLocaleSerializer() :
+			StandardSerializer.INSTANCE;
 	}
 	
 	

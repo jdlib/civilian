@@ -19,6 +19,7 @@ package org.civilian.form;
 import org.civilian.response.ResponseWriter;
 import org.civilian.template.HtmlUtil;
 import org.civilian.text.keys.KeyList;
+import org.civilian.type.TypeSerializer;
 import org.civilian.util.Check;
 
 
@@ -93,6 +94,7 @@ public class RadioGroup<T> extends Control<T>
 		{
 			Check.notNull(out, "out");
 			this.out = out;
+			serializer_ = getResponseSerializer();
 		}
 		
 		
@@ -153,7 +155,7 @@ public class RadioGroup<T> extends Control<T>
 			out.print("<input");
 			HtmlUtil.attr(out, "type", "radio", false);
 			HtmlUtil.attr(out, "name", getName());
-			String v = value != null ? getType().format(out.getSerializer(), value) : "";
+			String v = value != null ? getType().format(serializer_, value) : "";
 			HtmlUtil.attr(out, "value", v);
 			if (checked)
 				out.print(" checked");
@@ -171,6 +173,7 @@ public class RadioGroup<T> extends Control<T>
 		private String[] attrs_;
 		private String[] nextAttrs_;
 		private ResponseWriter out;
+		private TypeSerializer serializer_; 
 	}
 
 

@@ -20,7 +20,6 @@ import org.civilian.Request;
 import org.civilian.request.Upload;
 import org.civilian.response.ResponseWriter;
 import org.civilian.template.HtmlUtil;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.lib.InvalidType;
 
 
@@ -90,7 +89,7 @@ public class FileField extends Control<Upload[]>
 	 * Returns "". A FileField can only receive values from
 	 * the client, but does not push values to it.
 	 */
-	@Override public String format(TypeSerializer serializer)
+	@Override public String format()
 	{
 		return "";
 	}

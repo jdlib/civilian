@@ -17,7 +17,6 @@ package org.civilian.form;
 
 
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 
 
 /**
@@ -40,7 +39,7 @@ public class PasswordField extends InputField<String>
 	 * Returns "", to suppress printing of passwords
 	 * when a form is represented again after submit.
 	 */
-	@Override public String format(TypeSerializer serializer)
+	@Override public String format()
 	{
 		return "";
 	}

@@ -20,6 +20,7 @@ import org.civilian.response.ResponseWriter;
 import org.civilian.template.HtmlUtil;
 import org.civilian.text.keys.KeyList;
 import org.civilian.type.Type;
+import org.civilian.type.TypeSerializer;
 import org.civilian.type.lib.ArrayType;
 import org.civilian.util.Check;
 
@@ -117,6 +118,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 		{
 			Check.notNull(out, "out");
 			this.out = out;
+			serializer_ = getResponseSerializer();
 		}
 		
 		
@@ -167,7 +169,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 			out.print("<input");
 			HtmlUtil.attr(out, "type", "checkbox", false);
 			HtmlUtil.attr(out, "name", getName());
-			String v = value != null ? elemType_.format(out.getSerializer(), value) : "";
+			String v = value != null ? elemType_.format(serializer_, value) : "";
 			HtmlUtil.attr(out, "value", v);
 			if (checked)
 				out.print(" checked");
@@ -185,6 +187,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 		private String[] attrs_;
 		private String[] nextAttrs_;
 		private ResponseWriter out;
+		private TypeSerializer serializer_; 
 		private Type<T> elemType_ = ((ArrayType<T>)getType()).getElementType();
 	}
 

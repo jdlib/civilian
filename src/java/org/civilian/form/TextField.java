@@ -32,4 +32,11 @@ public class TextField extends InputField<String>
 	{
 		super(TypeLib.STRING, name);
 	}
+
+
+	@Override protected String formatValue()
+	{
+		String s = getValue();   
+		return s != null ? s : "";
+	}
 }
