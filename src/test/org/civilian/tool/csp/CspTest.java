@@ -63,7 +63,7 @@ public class CspTest extends CivTest
 		File outFile = findTestFile(testCase + ".out");
 		String expected = read(outFile);
 		
-		assertEquals(expected, compiled);
+		compareFiles(expected, compiled);
 	}
 	
 		

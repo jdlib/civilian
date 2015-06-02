@@ -53,7 +53,7 @@ public class ClientConstGeneratorTest extends CivTest
 			
 			String expected = readTestFile("/org/civilian/client/Test1WebRoot.txt"); 
 			String actual   = read(file); 
-			assertEquals(expected, actual);
+			compareFiles(expected, actual);
 		}
 		finally
 		{

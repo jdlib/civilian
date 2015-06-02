@@ -171,7 +171,20 @@ public class CivTest extends Assert
 			return params;
 		}
 	}
+	
+	
+	public void compareFiles(String expected, String actual)
+	{
+		expected = normLinebreak(expected);
+		actual   = normLinebreak(actual);
+		assertEquals(expected, actual);
+	}
 
+	
+	public String normLinebreak(String s)
+	{
+		return s != null ? s.replace("\r", "") : null;
+	}
 	
 	public static class SysOut extends PrintStream
 	{
