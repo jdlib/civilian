@@ -16,53 +16,128 @@
 package org.civilian.template.mixin;
 
 
+import java.util.Locale;
+import org.civilian.provider.LocaleServiceProvider;
 import org.civilian.provider.MessageProvider;
 import org.civilian.response.ResponseWriter;
+import org.civilian.text.LocaleService;
 import org.civilian.text.NumberStyle;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.type.DateType;
 import org.civilian.type.TypeLib;
+import org.civilian.type.TypeSerializer;
+import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
 
 
 /**
  * LangMixin is a template mixin which defines utility methods for localization.
- * It uses the {@link ResponseWriter#getSerializer() TypeSerializer}
- * and {@link ResponseWriter#getMsgBundle() MsgBundle} of the ResponseWriter to generate 
- * locale dependent output.
+ * It contains a TypeSerializer to format values and a MsgBundle to translate message ids.
+ * <p>
+ * The LangMixin tries to initialize the TypeSerializer and MsgBundle from a 
+ * {@link LocaleServiceProvider} in the ResponseWriter {@link ResponseWriter#getContext(Class) context}.
+ * If the ResponseWriter was created by a Response, the Response acts as the LocaleServiceProvider,
+ * and therefore the mixin uses the TypeSerializer and MsgBundle of the response.  
+ * Else the mixin defaults to {@link LocaleSerializer#SYSTEM_LOCALE_SERIALIZER} and an empty message bundle.
+ * <p>
+ * Independent of the initialization you may explicitly set TypeSerializer and MsgBundle. 
  */
 public class LangMixin implements MessageProvider
 {
 	/**
-	 * Creates a new L10n object.
+	 * Creates a new LangMixin object.
 	 */
 	public LangMixin(ResponseWriter out)
 	{
-		this.out = Check.notNull(out, "out");
+		Check.notNull(out, "out");
+		
+		LocaleServiceProvider lsp = out.getContext(LocaleServiceProvider.class);
+		if (lsp != null)
+			init(lsp.getLocaleService()); 
+		else
+		{
+			msgBundle_  = MsgBundle.empty(Locale.getDefault());
+			serializer_ = LocaleSerializer.SYSTEM_LOCALE_SERIALIZER;
+		}
+	}
+	
+	
+	/**
+	 * Initializes the mixin to use the MsgBundle and TypeSerialiter of the LocaleSerivce.
+	 */
+	public void init(LocaleService service)
+	{
+		Check.notNull(service, "service");
+		setMsgBundle(service.getMsgBundle());
+		setTypeSerializer(service.getSerializer());
+	}
+
+	
+	//-----------------------------
+	// accessors
+	//-----------------------------
+
+	
+	/**
+	 * Returns the TypeSerializer used by the mixin.
+	 */
+	public TypeSerializer getSerializer()
+	{
+		return serializer_;
 	}
 
 	
 	/**
-	 * Returns the message text for the key using the ResponseWriters MsgBundle.
-	 * @see MsgBundle#msg(Object)
-	 * @see ResponseWriter#getMsgBundle()
+	 * Sets the TypeSerializer used by the mixin.
 	 */
-	@Override public String msg(Object key)
+	public void setTypeSerializer(TypeSerializer serializer)
 	{
-		return out.getMsgBundle().msg(key);
+		serializer_ = Check.notNull(serializer, "serializer");
 	}
 	
 	
 	/**
-	 * Returns the message text for the key using the ResponseWriters MsgBundle
+	 * Returns the MsgBundle used by the mixin.
+	 */
+	public MsgBundle getMsgBundle()
+	{
+		return msgBundle_;
+	}
+		
+	
+	/**
+	 * Sets the MsgBundle used by the mixin.
+	 */
+	public void setMsgBundle(MsgBundle msgBundle)
+	{
+		msgBundle_ = Check.notNull(msgBundle, "msgBundle");
+	}
+	
+	
+	//-----------------------------
+	// msg translation
+	//-----------------------------
+
+	
+	/**
+	 * Returns the message text for the key.
+	 * @see MsgBundle#msg(Object)
+	 */
+	@Override public String msg(Object key)
+	{
+		return msgBundle_.msg(key);
+	}
+	
+	
+	/**
+	 * Returns the message text for the key
 	 * and replaces the placeholders in the message with the given
 	 * parameters.
 	 * @see MsgBundle#msg(Object, Object...)
-	 * @see ResponseWriter#getMsgBundle()
 	 */
 	@Override public String msg(Object key, Object... params)
 	{
-		return out.getMsgBundle().msg(key, params);
+		return msgBundle_.msg(key, params);
 	}
 	
 	
@@ -93,23 +168,23 @@ public class LangMixin implements MessageProvider
 	
 	
 	/**
-	 * Formats a java.util.Date. If the date is null, then "" is returned.
+	 * Formats a java.util.Calendar. If the calendar is null, then "" is returned.
 	 * @return a locale dependent date string.
 	 */
-	public String format(java.util.Calendar date)
+	public String format(java.util.Calendar calendar)
 	{
-		return format(date, "");
+		return format(calendar, "");
 	}
 	
 	
 	/**
-	 * Formats a java.util.Date.
+	 * Formats a java.util.Calendar.
 	 * @param defaultValue the defaultValue is returned if the date is null. 
 	 * @return a locale dependent date string.
 	 */
-	public String format(java.util.Calendar date, String defaultValue)
+	public String format(java.util.Calendar calendar, String defaultValue)
 	{
-		return format(TypeLib.DATE_CALENDAR, date, defaultValue);
+		return format(TypeLib.DATE_CALENDAR, calendar, defaultValue);
 	}
 	
 	
@@ -136,7 +211,7 @@ public class LangMixin implements MessageProvider
 
 	
 	/**
-	 * Formats a org.civilian.util.Date.
+	 * Formats a Date object.
 	 * @param type the DateType which describes the date class
 	 * @param date the date value
 	 * @param defaultValue the defaultValue is returned if the date value is null. 
@@ -144,7 +219,7 @@ public class LangMixin implements MessageProvider
 	 */
 	public <T> String format(DateType<T> type, T date, String defaultValue)
 	{
-		return date != null ? type.format(out.getSerializer(), date) : defaultValue;
+		return date != null ? type.format(serializer_, date) : defaultValue;
 	}
 
 	
@@ -168,7 +243,7 @@ public class LangMixin implements MessageProvider
 	 */
 	public String format(int n, Object style)
 	{
-		return out.getSerializer().formatInt(n, style);
+		return serializer_.formatInt(n, style);
 	}
 	
 
@@ -204,7 +279,7 @@ public class LangMixin implements MessageProvider
 	 */
 	public String format(long value, Object style)
 	{
-		return out.getSerializer().formatLong(value, style);
+		return serializer_.formatLong(value, style);
 	}
 	
 
@@ -240,7 +315,7 @@ public class LangMixin implements MessageProvider
 	 */
 	public String format(double value, Object style)
 	{
-		return out.getSerializer().formatDouble(value, style);
+		return serializer_.formatDouble(value, style);
 	}
 
 	
@@ -256,5 +331,6 @@ public class LangMixin implements MessageProvider
 	}
 	
 
-	private ResponseWriter out;
+	private TypeSerializer serializer_;
+	private MsgBundle msgBundle_;
 }

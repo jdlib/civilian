@@ -68,7 +68,7 @@ public class IndexTemplate extends Template
 	
 	private void printLocale(Locale locale)
 	{
-		out.setLocaleService(services.getService(locale));              // line 27: @out.setLocaleService(services.getService(locale));
+		lang.init(services.getService(locale));                         // line 27: @lang.init(services.getService(locale));
 		out.println("<tr>");                                            // line 28: <tr>
 		out.increaseTab();
 		out.println("<td colspan=\"2\"><hr></td>");                     // line 29: <td colspan="2"><hr></td>
