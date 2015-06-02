@@ -126,7 +126,7 @@ public class FormTableMixin
 		if (control != null)
 		{
 			if ((errorControlClass_ != null) && control.hasError())
-				control.printExt(out, "class", errorControlClass_);
+				control.print(out, "class", errorControlClass_);
 			else
 				control.print(out);
 		}
