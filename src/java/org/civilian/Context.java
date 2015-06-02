@@ -38,6 +38,7 @@ import org.civilian.util.ClassUtil;
 import org.civilian.util.FileType;
 import org.civilian.util.Settings;
 import org.civilian.util.ResourceLoader;
+import org.civilian.util.TabWriter;
 
 
 /**
@@ -56,6 +57,16 @@ public abstract class Context implements ContextProvider, PathProvider
 	 * The context log. 
 	 */
 	private static final Logger log = Logs.CONTEXT;
+	
+	
+	/**
+	 * Creates a new context.
+	 * The context sets the default line separator to "\n",
+	 */
+	public Context()
+	{
+		TabWriter.setDefaultLineSeparator("\n");
+	}
 	
 	
 	//--------------------------

@@ -47,6 +47,26 @@ public class TabWriter extends PrintWriter
 
 	
 	/**
+	 * Sets the default line separator used by a new TabWriter.
+	 * By default this is the OS dependent line separator.
+	 * But when used within a Civilian web application, it is set to a single '\n' character. 
+	 */ 
+	public static void setDefaultLineSeparator(String separator)
+	{
+		defaultLineSeparator_ = getChars(separator, "separator");
+	}
+
+	
+	/**
+	 * Returns the default line separator used by a new ResponseWriter.
+	 */ 
+	public static String getDefaultLineSeparator()
+	{
+		return new String(defaultLineSeparator_);
+	}
+
+	
+	/**
 	 * Creates a new TabWriter.
 	 * @param out a Writer
 	 */
@@ -357,7 +377,7 @@ public class TabWriter extends PrintWriter
 	private boolean newLineStarted_ = true;
 	private int tabCount_ = 0;
 	private char tabChars_[] = defaultTabChars_;
-	private char lineSeparator_[] = systemLineSeparator_;
-	private static char defaultTabChars_[] = { '\t' };
-	private static final char systemLineSeparator_[] = getChars(System.getProperty("line.separator"), "separator");
+	private char lineSeparator_[] = defaultLineSeparator_;
+	private static char[] defaultTabChars_ = { '\t' };
+	private static char[] defaultLineSeparator_ = getChars(System.getProperty("line.separator"), "separator");
 }

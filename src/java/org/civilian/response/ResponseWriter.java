@@ -21,7 +21,6 @@ import org.civilian.Response;
 import org.civilian.Template;
 import org.civilian.content.ContentSerializer;
 import org.civilian.util.ArrayUtil;
-import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.TabWriter;
 
@@ -43,27 +42,6 @@ import org.civilian.util.TabWriter;
 public class ResponseWriter extends TabWriter
 {
 	/**
-	 * Sets the default line separator used by a new ResponseWriter.
-	 * Since a ResponseWriter is mostly used in a web environment, it will by default
-	 * use a single '\n' character as line separator (whereas the TabWriter by default
-	 * uses the system dependent line separator).
-	 */ 
-	public static void setDefaultLineSeparator(String separator)
-	{
-		defaultLineSeparator_ = Check.notNull(separator, "separator");
-	}
-
-	
-	/**
-	 * Returns the default line separator used by a new ResponseWriter.
-	 */ 
-	public static String getDefaultLineSeparator()
-	{
-		return defaultLineSeparator_;
-	}
-
-	
-	/**
 	 * Creates a new ResponseWriter. 
 	 * @param writer the underlying writer 
 	 */
@@ -82,7 +60,6 @@ public class ResponseWriter extends TabWriter
 	public ResponseWriter(Writer writer, boolean autoFlush)
 	{
 		super(writer, autoFlush);
-		setLineSeparator(defaultLineSeparator_);
 	}
 
 	
@@ -185,5 +162,4 @@ public class ResponseWriter extends TabWriter
 
 	
 	private Object context_;
-	private static String defaultLineSeparator_ = "\n";
 }

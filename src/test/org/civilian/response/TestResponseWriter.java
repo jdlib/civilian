@@ -18,19 +18,28 @@ package org.civilian.response;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Locale;
+
 import org.civilian.Application;
 import org.civilian.Response;
 import org.civilian.text.LocaleService;
 import org.civilian.text.msg.MsgBundle;
+import org.civilian.util.TabWriter;
 import org.junit.Assert;
 
 
 public class TestResponseWriter extends ResponseWriter
 {
+	static
+	{
+		TabWriter.setDefaultLineSeparator("\n");
+	}
+	
+	
 	public static TestResponseWriter create()
 	{
 		return create("UTF-8");
