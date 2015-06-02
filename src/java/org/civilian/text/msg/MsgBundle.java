@@ -17,6 +17,7 @@ package org.civilian.text.msg;
 
 
 import java.util.Locale;
+
 import org.civilian.provider.MessageProvider;
 import org.civilian.text.LocaleService;
 
@@ -119,5 +120,14 @@ public abstract class MsgBundle implements MessageProvider
 	public abstract <T> T unwrap(Class<T> implClass);
 
 
+	/**
+	 * Returns a description.
+	 */
+	@Override public String toString()
+	{
+		return getClass().getSimpleName() + '[' + getLocale() + ']';
+	}
+
+	
 	private static final String[] VARS = { "{0}", "{1}", "{2}", "{3}", "{4}", "{5}", "{6}", "{7}" };  
 }

@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.Locale;
+
 import org.civilian.text.DateFormat;
 import org.civilian.text.NumberStyle;
 import org.civilian.type.DateType;
@@ -241,6 +242,15 @@ public class LocaleSerializer extends AbstractSerializer
 	@Override public Short parseShort(String s)
 	{
 		return numberFormat_.parseShort(s);
+	}
+
+	
+	/**
+	 * Returns a description.
+	 */
+	@Override public String toString()
+	{
+		return getClass().getSimpleName() + '[' + getLocale() + ']';
 	}
 
 	
