@@ -28,6 +28,7 @@ import org.civilian.type.TypeLib;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
+import org.civilian.util.TabWriter;
 
 
 /**
@@ -47,7 +48,7 @@ public class LangMixin implements MessageProvider
 	/**
 	 * Creates a new LangMixin object.
 	 */
-	public LangMixin(ResponseWriter out)
+	public LangMixin(TabWriter out)
 	{
 		Check.notNull(out, "out");
 		
