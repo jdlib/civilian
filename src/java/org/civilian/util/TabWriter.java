@@ -20,9 +20,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 
+import org.civilian.Response;
+
 
 /**
  * A PrintWriter implementation to write pretty indented files.
+ * A TabWriter can be {@link #addContext(Object) associated} with multiple context objects. 
  */
 public class TabWriter extends PrintWriter
 {
@@ -160,6 +163,59 @@ public class TabWriter extends PrintWriter
 	}
 
 
+	//------------------------
+	// context
+	//------------------------
+
+	
+	/**
+	 * Associates the TabWriter with an arbitrary context object.
+     * When the TabWriter is constructed within a Civilian request
+	 * the {@link Response} is automatically added as context object. 
+	 */
+	public void addContext(Object context)
+	{
+		Check.notNull(context, "context");
+		contexts_ = contexts_ == null ?
+			new Object[] { context } :
+			ArrayUtil.addLast(contexts_, context);
+	}
+
+	
+	/**
+	 * Returns the first context object of the TabWriter that has
+	 * the given class.
+	 * @return the context object or null.
+	 */
+	public <T> T getContext(Class<? extends T> cls)
+	{
+		if (contexts_ != null)
+		{
+			for (Object context : contexts_)
+			{
+				T t = ClassUtil.unwrap(context, cls);
+    			if (t != null)
+    				return t;
+			}
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * Returns the first context object of the TabWriter that has
+	 * the given class.  
+	 * @throws IllegalStateException if there is no such object,
+	 */
+	public <T> T getSafeContext(Class<? extends T> cls)
+	{
+		T context = getContext(cls);
+		if (context != null)
+			return context;
+		throw new IllegalStateException("no context object with " + cls.getName());
+	}
+
+	
 	//-------------------------------------------------------
 	// In fact the whole printwriter class is duplicated here
 	// since this class should be a printwriter but
@@ -372,12 +428,13 @@ public class TabWriter extends PrintWriter
 	}
 
 
-	private boolean autoFlush_;
-	private IOException error_;
 	private boolean newLineStarted_ = true;
 	private int tabCount_ = 0;
 	private char tabChars_[] = defaultTabChars_;
 	private char lineSeparator_[] = defaultLineSeparator_;
+	private boolean autoFlush_;
+	private Object[] contexts_;
+	private IOException error_;
 	private static char[] defaultTabChars_ = { '\t' };
 	private static char[] defaultLineSeparator_ = getChars(System.getProperty("line.separator"), "separator");
 }

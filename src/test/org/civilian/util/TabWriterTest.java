@@ -96,6 +96,21 @@ public class TabWriterTest extends CivTest
 	}
 
 
+	@Test public void testContext() throws Exception
+	{
+		assertNull(out.getContext(String.class));
+		String a = "a";
+		out.addContext(a);
+		assertSame(a, out.getContext(String.class));
+		out.addContext("b");
+		assertSame(a, out.getContext(String.class));
+		
+		Integer one = Integer.valueOf(1);
+		out.addContext(one);
+		assertSame(one, out.getContext(Integer.class));
+	}
+
+	
 	private StringWriter stringOut;
 	private TabWriter out;
 }

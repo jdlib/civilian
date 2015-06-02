@@ -20,8 +20,6 @@ import java.io.Writer;
 import org.civilian.Response;
 import org.civilian.Template;
 import org.civilian.content.ContentSerializer;
-import org.civilian.util.ArrayUtil;
-import org.civilian.util.ClassUtil;
 import org.civilian.util.TabWriter;
 
 
@@ -35,8 +33,6 @@ import org.civilian.util.TabWriter;
  * <ul>
  * <li>it is a PrintWriter
  * <li>it is a TabWriter i.e. allows convenient indenting of content
- * <li>it can be associated with multiple {@link #addContext(Object) context} objects. The Response will add itself
- * 		as context object.  
  * </ul>    
  */
 public class ResponseWriter extends TabWriter
@@ -60,47 +56,6 @@ public class ResponseWriter extends TabWriter
 	public ResponseWriter(Writer writer, boolean autoFlush)
 	{
 		super(writer, autoFlush);
-	}
-
-	
-	//------------------------
-	// context
-	//------------------------
-
-	
-	/**
-	 * Associates the ResponseWriter with an arbitrary context object.
-     * When the ResponseWriter is constructed within a Civilian request
-	 * the {@link Response} is added as context object. 
-	 */
-	public void addContext(Object context)
-	{
-		context_ = (context_ == null) ?
-			context :
-			ArrayUtil.addLast((Object[])context_, context);
-	}
-
-	
-	/**
-	 * Returns the first context object of the ResponseWriter that has
-	 * the given class.
-	 */
-	public <T> T getContext(Class<? extends T> cls)
-	{
-		return ClassUtil.unwrap(context_, cls);
-	}
-	
-	
-	/**
-	 * Returns the ResponseWriters context object if it has
-	 * the given class. Else it throws an IllegalStateException
-	 */
-	public <T> T getSafeContext(Class<? extends T> cls)
-	{
-		T context = getContext(cls);
-		if (context != null)
-			return context;
-		throw new IllegalStateException("context is " + (context_ != null ? context_.getClass().getName() : "null") + " but not a " + cls.getName());
 	}
 
 	
@@ -159,7 +114,4 @@ public class ResponseWriter extends TabWriter
 	{
 		public void print(ResponseWriter out) throws Exception;
 	}
-
-	
-	private Object context_;
 }

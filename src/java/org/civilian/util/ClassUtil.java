@@ -174,24 +174,11 @@ public abstract class ClassUtil
 	/**
 	 * Tests if an object is an instance of a given class.
 	 * If yes the object is casted to that class and returned, else null is returned.
-	 * Additionally if the provided object is an object array all elements of the array
-	 * will be tested if they can be unwrapped to the target class.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T unwrap(Object object, Class<T> targetClass)
 	{
-		if (isA(object, targetClass))
-			return (T)object;
-		if (object instanceof Object[])
-		{
-			for (Object element : (Object[])object)
-			{
-				T t = unwrap(element, targetClass);
-				if (t != null)
-					return t;
-			}
-		}
-		return null;
+		return isA(object, targetClass) ? (T)object : null;
 	}
 	
 	
