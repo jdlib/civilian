@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.util;
+package org.civilian.template;
 
 
 import java.io.IOException;
@@ -21,15 +21,15 @@ import java.io.StringWriter;
 import org.junit.Before;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.util.TabWriter;
+import org.civilian.template.TemplateWriter;
 
 
-public class TabWriterTest extends CivTest
+public class TemplateWriterTest extends CivTest
 {
 	@Before public void before()
 	{
 		stringOut = new StringWriter();
-		out = new TabWriter(stringOut);
+		out = new TemplateWriter(stringOut);
 		out.setLineSeparator("\n");
 	}
 	
@@ -112,5 +112,5 @@ public class TabWriterTest extends CivTest
 
 	
 	private StringWriter stringOut;
-	private TabWriter out;
+	private TemplateWriter out;
 }

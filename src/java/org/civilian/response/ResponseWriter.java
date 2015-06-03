@@ -20,7 +20,7 @@ import java.io.Writer;
 import org.civilian.Response;
 import org.civilian.Template;
 import org.civilian.content.ContentSerializer;
-import org.civilian.util.TabWriter;
+import org.civilian.template.TemplateWriter;
 
 
 /**
@@ -32,10 +32,10 @@ import org.civilian.util.TabWriter;
  * The ResponseWriter provides the following functions:
  * <ul>
  * <li>it is a PrintWriter
- * <li>it is a TabWriter i.e. allows convenient indenting of content
+ * <li>it is a TemplateWriter i.e. allows convenient indenting of content
  * </ul>    
  */
-public class ResponseWriter extends TabWriter
+public class ResponseWriter extends TemplateWriter
 {
 	/**
 	 * Creates a new ResponseWriter. 

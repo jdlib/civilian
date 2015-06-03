@@ -25,10 +25,10 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.Arguments;
 import org.civilian.util.FileType;
 import org.civilian.util.IoUtil;
-import org.civilian.util.TabWriter;
 
 
 public class DocConverter
@@ -49,7 +49,7 @@ public class DocConverter
 			List<String> input = new ArrayList<>(); 
 			read(null, inputFile, "", input);	
 			
-			try(TabWriter out = new TabWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8")))
+			try(TemplateWriter out = new TemplateWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8")))
 			{
 				DocTemplate template = new DocTemplate(inputFile.getName(), input);
 				template.print(out);

@@ -25,8 +25,8 @@ import org.civilian.resource.Path;
 import org.civilian.resource.Url;
 import org.civilian.response.ResponseWriter;
 import org.civilian.template.HtmlUtil;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
-import org.civilian.util.TabWriter;
 
 
 /**
@@ -36,9 +36,9 @@ public class HtmlMixin
 {
 	/**
 	 * Creates a new HtmlMixin.
-	 * @param out the TabWriter.
+	 * @param out the TemplateWriter.
 	 */
-	public HtmlMixin(TabWriter out)
+	public HtmlMixin(TemplateWriter out)
 	{
 		this.out = Check.notNull(out, "out");
 	}
@@ -416,6 +416,6 @@ public class HtmlMixin
 	
 
 	private Response response_;
-	private TabWriter out;
+	private TemplateWriter out;
 	private Path path_;
 }

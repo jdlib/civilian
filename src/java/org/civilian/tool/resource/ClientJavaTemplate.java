@@ -8,9 +8,9 @@ package org.civilian.tool.resource;
 import org.civilian.Application;
 import org.civilian.Resource;
 import org.civilian.client.WebResource;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.DateTime;
 import org.civilian.util.StringUtil;
-import org.civilian.util.TabWriter;
 
 
 class ClientJavaTemplate
@@ -25,7 +25,7 @@ class ClientJavaTemplate
 	}
 
 
-	public synchronized void print(TabWriter out)
+	public synchronized void print(TemplateWriter out)
 	{
 		try
 		{
@@ -222,5 +222,5 @@ class ClientJavaTemplate
 	private String outputName;
 	private Application app;
 	private boolean timestamp;
-	protected TabWriter out;
+	protected TemplateWriter out;
 }

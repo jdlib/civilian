@@ -33,12 +33,12 @@ import org.civilian.internal.admin.AdminApp;
 import org.civilian.provider.ContextProvider;
 import org.civilian.provider.PathProvider;
 import org.civilian.resource.Path;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.FileType;
 import org.civilian.util.Settings;
 import org.civilian.util.ResourceLoader;
-import org.civilian.util.TabWriter;
 
 
 /**
@@ -65,7 +65,7 @@ public abstract class Context implements ContextProvider, PathProvider
 	 */
 	public Context()
 	{
-		TabWriter.setDefaultLineSeparator("\n");
+		TemplateWriter.setDefaultLineSeparator("\n");
 	}
 	
 	

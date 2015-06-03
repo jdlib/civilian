@@ -13,22 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.util;
+package org.civilian.template;
 
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import org.civilian.util.ArrayUtil;
+import org.civilian.util.Check;
+import org.civilian.util.ClassUtil;
+import org.civilian.util.ClosedWriter;
 
 
 /**
- * A PrintWriter implementation to write pretty indented files.
- * A TabWriter can be {@link #addContext(Object) associated} with multiple context objects. 
+ * TemplateWriter is a PrintWriter to write pretty indented files.
+ * TemplateWriter maintains a {@link #getTabCount() tab count}. When a new line is started
+ * then tab characters are automatically inserted at the beginning of the line, according
+ * to the tab count. The default tab characters is a single '\t' character, but you can
+ * chose any string instead (e.g. "  ").<p> 
+ * A TemplateWriter can be {@link #addContext(Object) associated} with multiple context objects. 
  */
-public class TabWriter extends PrintWriter
+public class TemplateWriter extends PrintWriter
 {
 	/**
-	 * Sets the default characters used by a new TabWriter to indent a line.
+	 * Sets the default characters used by a new TemplateWriter to indent a line.
 	 * By default a indent consists of a single tab character.
 	 * @see #setTabChars(String)
 	 */ 
@@ -39,7 +47,7 @@ public class TabWriter extends PrintWriter
 
 	
 	/**
-	 * Returns the default characters used by a new TabWriter to indent a line.
+	 * Returns the default characters used by a new TemplateWriter to indent a line.
 	 */ 
 	public static String getDefaultTabChars()
 	{
@@ -48,7 +56,7 @@ public class TabWriter extends PrintWriter
 
 	
 	/**
-	 * Sets the default line separator used by a new TabWriter.
+	 * Sets the default line separator used by a new TemplateWriter.
 	 * By default this is the OS dependent line separator.
 	 * But when used within a Civilian web application, it is set to a single '\n' character. 
 	 */ 
@@ -68,22 +76,22 @@ public class TabWriter extends PrintWriter
 
 	
 	/**
-	 * Creates a new TabWriter.
+	 * Creates a new TemplateWriter.
 	 * @param out a Writer
 	 */
-	public TabWriter(Writer out)
+	public TemplateWriter(Writer out)
 	{
 		this(out, false);
 	}
 
 
 	/**
-	 * Creates a TabWriter.
+	 * Creates a TemplateWriter.
 	 * @param out a Writer
 	 * @param autoFlush - a boolean; if true, the println() methods will flush
 	 *      the output buffer
 	 */
-	public TabWriter(Writer out, boolean autoFlush)
+	public TemplateWriter(Writer out, boolean autoFlush)
 	{
 		super(out, false);
 		autoFlush_ = autoFlush;
@@ -167,8 +175,8 @@ public class TabWriter extends PrintWriter
 
 	
 	/**
-	 * Associates the TabWriter with an arbitrary context object.
-     * When the TabWriter is constructed within a Civilian request
+	 * Associates the TemplateWriter with an arbitrary context object.
+     * When the TemplateWriter is constructed within a Civilian request
 	 * the Response is automatically added as context object. 
 	 */
 	public void addContext(Object context)
@@ -181,7 +189,7 @@ public class TabWriter extends PrintWriter
 
 	
 	/**
-	 * Returns the first context object of the TabWriter that has
+	 * Returns the first context object of the TemplateWriter that has
 	 * the given class.
 	 * @return the context object or null.
 	 */
@@ -201,7 +209,7 @@ public class TabWriter extends PrintWriter
 	
 	
 	/**
-	 * Returns the first context object of the TabWriter that has
+	 * Returns the first context object of the TemplateWriter that has
 	 * the given class.  
 	 * @throws IllegalStateException if there is no such object,
 	 */
@@ -420,6 +428,9 @@ public class TabWriter extends PrintWriter
 	}
 	
 	
+	/**
+	 * Calls and returns toString() of the wrapped writer. 
+	 */
 	@Override public String toString()
 	{
 		return out.toString();

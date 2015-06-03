@@ -31,6 +31,7 @@ import org.civilian.internal.source.OutputLocation;
 import org.civilian.internal.source.PackageDetector;
 import org.civilian.response.ResponseWriter;
 import org.civilian.template.ComponentBuilder;
+import org.civilian.template.TemplateWriter;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
@@ -42,7 +43,6 @@ import org.civilian.util.FileType;
 import org.civilian.util.IoUtil;
 import org.civilian.util.Scanner;
 import org.civilian.util.StringUtil;
-import org.civilian.util.TabWriter;
 
 
 /**
@@ -466,8 +466,8 @@ public class CspCompiler
 				
 				if ("ResponseWriter".equals(writerClass))
 					writerClass = ResponseWriter.class.getName();
-				else if ("TabWriter".equals(writerClass))
-					writerClass = TabWriter.class.getName(); 
+				else if ("TemplateWriter".equals(writerClass))
+					writerClass = TemplateWriter.class.getName(); 
 						
 				classData_.writerClass = writerClass;
 				classData_.writerClassSimple = ClassUtil.cutPackageName(writerClass);

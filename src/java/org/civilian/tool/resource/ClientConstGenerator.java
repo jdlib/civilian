@@ -21,10 +21,10 @@ import org.civilian.Application;
 import org.civilian.Resource;
 import org.civilian.internal.source.OutputFile;
 import org.civilian.internal.source.OutputLocation;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.Arguments;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
-import org.civilian.util.TabWriter;
 
 
 /**
@@ -132,7 +132,7 @@ public class ClientConstGenerator
 		log("scanning resources");
 		Resource root = options_.app.generateResourceTree(null);
 		
-		TabWriter out = new TabWriter(new StringWriter());
+		TemplateWriter out = new TemplateWriter(new StringWriter());
 		switch(options_.language)
 		{
 			case JAVA:
@@ -145,7 +145,7 @@ public class ClientConstGenerator
 	}
 	
 	
-	private void writeJava(Resource root, TabWriter out) throws Exception
+	private void writeJava(Resource root, TemplateWriter out) throws Exception
 	{
 		String javaPackage 		= ClassUtil.getPackageName(options_.javaClass);
 		String javaSimpleClass	= ClassUtil.cutPackageName(options_.javaClass);
@@ -165,7 +165,7 @@ public class ClientConstGenerator
 	}
 	
 	
-	private void writeJavascript(Resource root, TabWriter out)
+	private void writeJavascript(Resource root, TemplateWriter out)
 	{
 		throw new UnsupportedOperationException("not yet implemented");
 	}

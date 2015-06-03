@@ -2,7 +2,7 @@ import java.util.List
 import org.civilian.util.StringUtil
 
 
-template(String inputFile, List<String> lines) extends - using TabWriter throws -
+template(String inputFile, List<String> lines) extends - using TemplateWriter throws -
 {{
 	<!DOCTYPE html>
 	<html>

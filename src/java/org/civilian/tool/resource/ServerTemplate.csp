@@ -8,7 +8,7 @@ import org.civilian.util.ClassUtil
 
 template(ResourceInfo root, String outputPackage, String outputName, Application app, boolean timestamp)
 	package-access
-	extends - using TabWriter
+	extends - using TemplateWriter
 	throws -
 {{
 	@ctrlRootPackage_ = app.getControllerConfig().getRootPackage();

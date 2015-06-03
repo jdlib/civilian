@@ -24,11 +24,11 @@ import org.civilian.internal.source.OutputLocation;
 import org.civilian.resource.scan.ResourceInfo;
 import org.civilian.resource.scan.ResourceScan;
 import org.civilian.resource.scan.ScanException;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.Arguments;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.StringUtil;
-import org.civilian.util.TabWriter;
 
 
 /**
@@ -144,7 +144,7 @@ public class ServerConstGenerator
 			options_.app, 
 			options_.timestamp);
 		StringWriter out = new StringWriter();
-		t.print(new TabWriter(out));
+		t.print(new TemplateWriter(out));
 
 		// write to class file
 		OutputFile outputFile = options_.outputLocation.getOutputFile(options_.outputPackage, options_.outputName + ".java");

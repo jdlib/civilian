@@ -19,6 +19,7 @@ package org.civilian.template.mixin;
 import java.util.Locale;
 import org.civilian.provider.LocaleServiceProvider;
 import org.civilian.provider.MessageProvider;
+import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
 import org.civilian.text.NumberStyle;
 import org.civilian.text.msg.MsgBundle;
@@ -27,7 +28,6 @@ import org.civilian.type.TypeLib;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
-import org.civilian.util.TabWriter;
 
 
 /**
@@ -35,8 +35,8 @@ import org.civilian.util.TabWriter;
  * It contains a TypeSerializer to format values and a MsgBundle to translate message ids.
  * <p>
  * The LangMixin tries to initialize the TypeSerializer and MsgBundle from a 
- * {@link LocaleServiceProvider} in the TabWriter {@link TabWriter#getContext(Class) context}.
- * If the TabWriter was created by a Response, the Response acts as the LocaleServiceProvider,
+ * {@link LocaleServiceProvider} in the TemplateWriter {@link TemplateWriter#getContext(Class) context}.
+ * If the TemplateWriter was created by a Response, the Response acts as the LocaleServiceProvider,
  * and therefore the mixin uses the TypeSerializer and MsgBundle of the response.  
  * Else the mixin defaults to {@link LocaleSerializer#SYSTEM_LOCALE_SERIALIZER} and an empty message bundle.
  * <p>
@@ -47,7 +47,7 @@ public class LangMixin implements MessageProvider
 	/**
 	 * Creates a new LangMixin object.
 	 */
-	public LangMixin(TabWriter out)
+	public LangMixin(TemplateWriter out)
 	{
 		Check.notNull(out, "out");
 		

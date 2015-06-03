@@ -9,9 +9,9 @@ import org.civilian.Application;
 import org.civilian.Resource;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.resource.scan.ResourceInfo;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.DateTime;
-import org.civilian.util.TabWriter;
 
 
 class ServerTemplate
@@ -26,7 +26,7 @@ class ServerTemplate
 	}
 
 
-	public synchronized void print(TabWriter out)
+	public synchronized void print(TemplateWriter out)
 	{
 		try
 		{
@@ -251,5 +251,5 @@ class ServerTemplate
 	private String outputName;
 	private Application app;
 	private boolean timestamp;
-	protected TabWriter out;
+	protected TemplateWriter out;
 }

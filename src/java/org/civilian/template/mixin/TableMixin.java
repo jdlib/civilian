@@ -19,9 +19,9 @@ package org.civilian.template.mixin;
 import java.util.ArrayList;
 import org.civilian.template.ComponentBuilder;
 import org.civilian.template.HtmlUtil;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
 import org.civilian.util.Scanner;
-import org.civilian.util.TabWriter;
 
 
 /**
@@ -58,7 +58,7 @@ public class TableMixin implements ComponentBuilder
 	/**
 	 * Creates a new TableMixin.
 	 */
-	public TableMixin(TabWriter out)
+	public TableMixin(TemplateWriter out)
 	{
 		this.out = Check.notNull(out, "out");
 	}
@@ -871,7 +871,7 @@ public class TableMixin implements ComponentBuilder
 		}
 
 
-		void writeColDefintion(TabWriter out)
+		void writeColDefintion(TemplateWriter out)
 		{
 			out.print("<col");
 			if (width_ != null)
@@ -880,7 +880,7 @@ public class TableMixin implements ComponentBuilder
 		}
 		
 		
-		void startCell(TabWriter out, String[] cellAttrs, int colspan, int rowspan)
+		void startCell(TemplateWriter out, String[] cellAttrs, int colspan, int rowspan)
 		{
 			out.print("<td");
 			if (cellAttrs != null)
@@ -904,7 +904,7 @@ public class TableMixin implements ComponentBuilder
 	}
 	
 	
-	private TabWriter out;
+	private TemplateWriter out;
 	private boolean tableStarted_;
 	private String[] defaultRowAttrs_;
 	private String[] nextRowAttrs_;

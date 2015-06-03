@@ -33,13 +33,13 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.civilian.internal.source.OutputLocation;
 import org.civilian.internal.source.PackageDetector;
 import org.civilian.response.ResponseWriter;
+import org.civilian.template.TemplateWriter;
 import org.civilian.text.msg.MsgId;
 import org.civilian.util.Arguments;
 import org.civilian.util.DateTime;
 import org.civilian.util.FileType;
 import org.civilian.util.IoUtil;
 import org.civilian.util.StringUtil;
-import org.civilian.util.TabWriter;
 
 
 /**
@@ -201,7 +201,7 @@ public class ResBundleCompiler
 		
 		for (int i=0; i<langOutputs_.length; i++)
 		{
-			TabWriter out = langOutputs_[i].out;
+			TemplateWriter out = langOutputs_[i].out;
 			out.println("# Generated from " + config_.excelFile.getName() + " at " + generationTime_);
 			out.println("# Do not edit directly.");
 			out.println("# Encoding is " + PROPERTIES_ENCODING);
@@ -226,7 +226,7 @@ public class ResBundleCompiler
 				else
 					text = text.trim();
 				
-				TabWriter out = langOutputs_[i].out;
+				TemplateWriter out = langOutputs_[i].out;
 				out.print(id);
 				out.print("=");
 				

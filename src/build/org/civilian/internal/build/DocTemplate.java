@@ -6,8 +6,8 @@ package org.civilian.internal.build;
 
 
 import java.util.List;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.StringUtil;
-import org.civilian.util.TabWriter;
 
 
 public class DocTemplate
@@ -19,7 +19,7 @@ public class DocTemplate
 	}
 
 
-	public synchronized void print(TabWriter out)
+	public synchronized void print(TemplateWriter out)
 	{
 		try
 		{
@@ -132,5 +132,5 @@ public class DocTemplate
 
 	private String inputFile;
 	private List<String> lines;
-	protected TabWriter out;
+	protected TemplateWriter out;
 }

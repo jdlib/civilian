@@ -8,7 +8,7 @@ import ../Data2;
 
 template
 	package-access
-	extends - using TabWriter
+	extends - using TemplateWriter
 	implements Serializable
 	throws IOException
 {{
