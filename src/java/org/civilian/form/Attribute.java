@@ -16,7 +16,7 @@
 package org.civilian.form;
 
 
-import org.civilian.response.ResponseWriter;
+import org.civilian.template.TemplateWriter;
 import org.civilian.template.HtmlUtil;
 
 
@@ -25,7 +25,7 @@ import org.civilian.template.HtmlUtil;
  * Attribute has a reference to another attribute and can therefore 
  * be used to build a linked list of Attribute objects.
  */
-public class Attribute implements ResponseWriter.Printable
+public class Attribute implements TemplateWriter.Printable
 {
 	/**
 	 * Returns the attribute with a given name from the linked list
@@ -111,7 +111,7 @@ public class Attribute implements ResponseWriter.Printable
 	 * Prints this attribute and the following attributes
 	 * to the response writer.
 	 */
-	@Override public void print(ResponseWriter out)
+	@Override public void print(TemplateWriter out)
 	{
 		Attribute attr = this;
 		do

@@ -25,7 +25,6 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Locale;
-
 import org.civilian.Application;
 import org.civilian.Context;
 import org.civilian.Controller;
@@ -37,15 +36,15 @@ import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.internal.intercept.InterceptedOutput;
 import org.civilian.internal.intercept.InterceptedOutputStream;
-import org.civilian.internal.intercept.InterceptedResponseWriter;
+import org.civilian.internal.intercept.InterceptedTemplateWriter;
 import org.civilian.internal.intercept.RespStreamInterceptorChain;
 import org.civilian.internal.intercept.RespWriterInterceptorChain;
 import org.civilian.resource.Url;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.response.ResponseStreamInterceptor;
-import org.civilian.response.ResponseWriter;
 import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.response.UriEncoder;
+import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
 import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
@@ -330,11 +329,11 @@ public abstract class AbstractResponse implements Response
 	}
 
 
-	@Override public ResponseWriter getContentWriter() throws IOException
+	@Override public TemplateWriter getContentWriter() throws IOException
 	{
 		if (!(contentOutput_ instanceof Writer))
 			initContentOutput(true /*we want a writer*/);
-		return (ResponseWriter)contentOutput_;
+		return (TemplateWriter)contentOutput_;
 	}
 	
 	
@@ -393,17 +392,17 @@ public abstract class AbstractResponse implements Response
 		{
 			if (contentOutput_ != null)
 			{
-				if (!(contentOutput_ instanceof ResponseWriter))
+				if (!(contentOutput_ instanceof TemplateWriter))
 					initContentWriterForError();
-				ResponseWriter rw = (ResponseWriter)contentOutput_; 
-				rw.addContext(this);
+				TemplateWriter tw = (TemplateWriter)contentOutput_; 
+				tw.addContext(this);
 			}
 		}
 	}
 
 	
 	/**
-	 * Creates a ResponseWriter from a implementation writer.
+	 * Creates a TemplateWriter from a implementation writer.
 	 * @param writerInterceptor a writer interceptor, can be null
 	 * @return writer successful created? 
 	 */
@@ -417,15 +416,15 @@ public abstract class AbstractResponse implements Response
 		{
 			contentOutput_ = originalWriter;
 			contentOutput_ = (writerInterceptor_ != null) ?
-				new InterceptedResponseWriter(originalWriter, writerInterceptor) :
-				new ResponseWriter(originalWriter);
+				new InterceptedTemplateWriter(originalWriter, writerInterceptor) :
+				new TemplateWriter(originalWriter);
 			return true;
 		}
 	}
 	
 		
 	/**
-	 * Creates a ResponseWriter from a implementation OutputStream.
+	 * Creates a TemplateWriter from a implementation OutputStream.
 	 * @param streamInterceptor a stream interceptor, can be null
 	 * @param writerInterceptor a writer interceptor, can be null
 	 */
@@ -436,9 +435,9 @@ public abstract class AbstractResponse implements Response
 		contentOutput_ = originalStream;
 		
 		if ((streamInterceptor != null) || (writerInterceptor != null))
-			contentOutput_ = new InterceptedResponseWriter(originalStream, streamInterceptor, writerInterceptor, contentEncoding_);
+			contentOutput_ = new InterceptedTemplateWriter(originalStream, streamInterceptor, writerInterceptor, contentEncoding_);
 		else
-			contentOutput_ = new ResponseWriter(new OutputStreamWriter(originalStream, contentEncoding_));
+			contentOutput_ = new TemplateWriter(new OutputStreamWriter(originalStream, contentEncoding_));
 	}
 		
 
@@ -449,7 +448,7 @@ public abstract class AbstractResponse implements Response
 	{
 		if (contentOutput_ instanceof OutputStream)
 			contentOutput_ = new OutputStreamWriter((OutputStream)contentOutput_, getContentEncoding());
-		contentOutput_ = new ResponseWriter((Writer)contentOutput_);
+		contentOutput_ = new TemplateWriter((Writer)contentOutput_);
 	}
 	
 	

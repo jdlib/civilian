@@ -23,7 +23,6 @@ import org.civilian.Response;
 import org.civilian.Template;
 import org.civilian.content.ContentType;
 import org.civilian.internal.AbstractResponse;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.TextTemplate;
 import org.junit.Test;
 
@@ -32,7 +31,7 @@ public class TextTemplateTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
-		ResponseWriter out 	= mock(ResponseWriter.class);
+		TemplateWriter out 	= mock(TemplateWriter.class);
 		Response response	= mock(AbstractResponse.class);
 		when(response.getContentWriter()).thenReturn(out);
 		doCallRealMethod().when(response).writeContent(anyObject(), any(ContentType.class));

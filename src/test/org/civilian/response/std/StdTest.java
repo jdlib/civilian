@@ -28,7 +28,7 @@ import org.civilian.content.ContentTypeList;
 import org.civilian.request.RequestHeaders;
 import org.civilian.resource.Path;
 import org.civilian.resource.Url;
-import org.civilian.response.TestResponseWriter;
+import org.civilian.template.TestTemplateWriter;
 
 
 public class StdTest extends CivTest
@@ -37,7 +37,7 @@ public class StdTest extends CivTest
 	{
 		request = mock(Request.class);
 		headers = mock(RequestHeaders.class);
-		out = TestResponseWriter.create();
+		out = TestTemplateWriter.create();
 		when(out.response.getRequest()).thenReturn(request);
 		when(out.response.getResponse()).thenReturn(out.response);
 		when(request.getResponse()).thenReturn(out.response);
@@ -97,7 +97,7 @@ public class StdTest extends CivTest
 	 */
 	@Test public void testTemplates() throws Exception
 	{
-		TestResponseWriter out = TestResponseWriter.create();
+		TestTemplateWriter out = TestTemplateWriter.create();
 		
 		Request request  = mock(Request.class);
 		when(out.response.getRequest()).thenReturn(request);
@@ -112,7 +112,7 @@ public class StdTest extends CivTest
 	}
 
 	
-	private static TestResponseWriter out;
+	private static TestTemplateWriter out;
 	private static Request request;
 	private static RequestHeaders headers;
 }

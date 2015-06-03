@@ -18,14 +18,12 @@ package org.civilian.template.mixin;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 import java.util.Locale;
-
 import org.civilian.CivTest;
 import org.civilian.Request;
 import org.civilian.form.Form;
 import org.civilian.form.TextField;
-import org.civilian.response.TestResponseWriter;
+import org.civilian.template.TestTemplateWriter;
 import org.civilian.type.lib.LocaleSerializer;
 import org.junit.Test;
 
@@ -35,7 +33,7 @@ public class FormTableMixinTest extends CivTest
 	@Test public void test()
 	{
 		Request request = mock(Request.class);
-		TestResponseWriter out = TestResponseWriter.create();
+		TestTemplateWriter out = TestTemplateWriter.create();
 		when(out.response.getRequest()).thenReturn(request);
 		when(request.getLocaleSerializer()).thenReturn(new LocaleSerializer(Locale.ENGLISH));
 		when(request.getResponse()).thenReturn(out.response);

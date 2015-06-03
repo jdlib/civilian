@@ -67,7 +67,7 @@ public class TemplateWriter extends PrintWriter
 
 	
 	/**
-	 * Returns the default line separator used by a new ResponseWriter.
+	 * Returns the default line separator used by a new TemplateWriter.
 	 */ 
 	public static String getDefaultLineSeparator()
 	{
@@ -421,6 +421,58 @@ public class TemplateWriter extends PrintWriter
 	}
 
 
+	/**
+	 * Checks if the object is a printable and in that case calls
+	 * print(Printable), else it just calls the default implementation.
+	 */
+	@Override public void print(Object object)
+	{
+		if (object instanceof Printable)
+			print((Printable)object);
+		else
+			super.print(object);
+	}
+	
+	
+	/**
+	 * If a not-null Printable is passed to the TemplateWriter,
+	 * then the printable is asked to print itself. 
+	 */
+	public void print(Printable printable)
+	{
+		if (printable != null)
+		{
+			try
+			{
+				printable.print(this);
+			}
+			catch (RuntimeException e)
+			{
+				throw e;
+			}
+			catch (Exception e)
+			{
+				throw new IllegalStateException("error when printing '" + printable.getClass().getName() + "'", e);
+			}
+		}
+	}
+	
+	
+	/**
+	 * Printable is a interface for print-aware classes who 
+	 * implement a custom print strategy. Templates and form controls
+	 * are examples of Printables.
+	 * If you pass a Printable to {@link TemplateWriter#print(Object)} or
+	 * TemplateWriter#print(Printable), then the {@link #print(TemplateWriter)}
+	 * method of the Printable is called by the TemplateWriter, allowing
+	 * to Printable to print itself.
+	 */
+	public static interface Printable 
+	{
+		public void print(TemplateWriter out) throws Exception;
+	}
+
+	
 	private static char[] getChars(String s, String what)
 	{
 		Check.notNull(s, what);

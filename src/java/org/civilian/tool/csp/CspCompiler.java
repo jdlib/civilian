@@ -29,7 +29,6 @@ import org.civilian.Template;
 import org.civilian.internal.source.OutputFile;
 import org.civilian.internal.source.OutputLocation;
 import org.civilian.internal.source.PackageDetector;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.ComponentBuilder;
 import org.civilian.template.TemplateWriter;
 import org.civilian.template.mixin.FormTableMixin;
@@ -464,9 +463,7 @@ public class CspCompiler
 				if (scanner_.nextKeyword("using"))
 					writerClass = nextScannerToken("using");
 				
-				if ("ResponseWriter".equals(writerClass))
-					writerClass = ResponseWriter.class.getName();
-				else if ("TemplateWriter".equals(writerClass))
+				if ("TemplateWriter".equals(writerClass))
 					writerClass = TemplateWriter.class.getName(); 
 						
 				classData_.writerClass = writerClass;

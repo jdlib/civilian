@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.response;
+package org.civilian.template;
 
 
 import static org.mockito.Mockito.mock;
@@ -30,7 +30,7 @@ import org.civilian.text.msg.MsgBundle;
 import org.junit.Assert;
 
 
-public class TestResponseWriter extends ResponseWriter
+public class TestTemplateWriter extends TemplateWriter
 {
 	static
 	{
@@ -38,13 +38,13 @@ public class TestResponseWriter extends ResponseWriter
 	}
 	
 	
-	public static TestResponseWriter create()
+	public static TestTemplateWriter create()
 	{
 		return create("UTF-8");
 	}
 	
 	
-	public static TestResponseWriter create(String encoding)
+	public static TestTemplateWriter create(String encoding)
 	{
 		Application app = mock(Application.class);
 		
@@ -57,7 +57,7 @@ public class TestResponseWriter extends ResponseWriter
 		
 		StringWriter stringOut = new StringWriter();
 		StringBuffer buffer = stringOut.getBuffer();
-		TestResponseWriter out = new TestResponseWriter(stringOut, response);
+		TestTemplateWriter out = new TestTemplateWriter(stringOut, response);
 		out.app 		= app;
 		out.response 	= response;
 		out.service		= service;
@@ -76,7 +76,7 @@ public class TestResponseWriter extends ResponseWriter
 	}
 	
 	
-	public TestResponseWriter(Writer writer, Response response)
+	public TestTemplateWriter(Writer writer, Response response)
 	{
 		super(writer);
 		addContext(response);

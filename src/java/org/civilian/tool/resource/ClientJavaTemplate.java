@@ -27,15 +27,10 @@ class ClientJavaTemplate
 
 	public synchronized void print(TemplateWriter out)
 	{
-		try
-		{
-			this.out = out;
-			print();
-		}
-		finally
-		{
-			this.out = null;
-		}
+		if (out == null)
+			throw new IllegalArgumentException("out is null");
+		this.out = out;
+		print();
 	}
 
 

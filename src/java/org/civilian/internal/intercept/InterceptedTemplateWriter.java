@@ -6,11 +6,11 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import org.civilian.response.ResponseStreamInterceptor;
-import org.civilian.response.ResponseWriter;
 import org.civilian.response.ResponseWriterInterceptor;
+import org.civilian.template.TemplateWriter;
 
 
-public class InterceptedResponseWriter extends ResponseWriter implements InterceptedOutput
+public class InterceptedTemplateWriter extends TemplateWriter implements InterceptedOutput
 {
 	private static Writer createWriter(OutputStream originalStream, 
 		ResponseStreamInterceptor streamInterceptor,
@@ -21,7 +21,7 @@ public class InterceptedResponseWriter extends ResponseWriter implements Interce
 	}
 	
 	
-	public InterceptedResponseWriter(Writer originalWriter, 
+	public InterceptedTemplateWriter(Writer originalWriter, 
 		ResponseWriterInterceptor writerInterceptor) 
 		throws IOException
 	{
@@ -32,7 +32,7 @@ public class InterceptedResponseWriter extends ResponseWriter implements Interce
 	}
 
 	
-	public InterceptedResponseWriter(OutputStream originalStream, 
+	public InterceptedTemplateWriter(OutputStream originalStream, 
 		ResponseStreamInterceptor streamInterceptor, 
 		ResponseWriterInterceptor writerInterceptor,
 		String contentEncoding) throws IOException

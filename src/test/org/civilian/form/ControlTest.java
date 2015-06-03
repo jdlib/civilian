@@ -17,15 +17,13 @@ package org.civilian.form;
 
 
 import static org.mockito.Mockito.*;
-
-
 import java.util.Locale;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.Request;
 import org.civilian.request.Upload;
-import org.civilian.response.TestResponseWriter;
+import org.civilian.template.TestTemplateWriter;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
 import org.civilian.type.TypeLib;
@@ -511,6 +509,6 @@ public class ControlTest extends CivTest
 	
 	
 	private static Request request;
-	private static TestResponseWriter out = TestResponseWriter.create();
+	private static TestTemplateWriter out = TestTemplateWriter.create();
 	private static KeyList<String> KEYS = KeyLists.forContent(new String[]{ "a", "b"}, new String[]{ "alpha", "beta"});
 }

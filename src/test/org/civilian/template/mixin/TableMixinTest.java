@@ -17,7 +17,7 @@ package org.civilian.template.mixin;
 
 
 import org.civilian.CivTest;
-import org.civilian.response.TestResponseWriter;
+import org.civilian.template.TestTemplateWriter;
 import org.junit.Test;
 
 
@@ -125,7 +125,7 @@ public class TableMixinTest extends CivTest
 	
 	@Test public void testTableWriter1()
 	{
-		TestResponseWriter out = TestResponseWriter.create();
+		TestTemplateWriter out = TestTemplateWriter.create();
 		
 		TableMixin table = new TableMixin(out);
 
@@ -150,7 +150,7 @@ public class TableMixinTest extends CivTest
 
 	@Test public void testTableWriterRowspan()
 	{
-		TestResponseWriter out = TestResponseWriter.create();
+		TestTemplateWriter out = TestTemplateWriter.create();
 		TableMixin table = new TableMixin(out);
 
 		table.columns("[][class='x']");

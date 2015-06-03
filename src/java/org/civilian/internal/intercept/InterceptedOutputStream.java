@@ -12,18 +12,18 @@ import org.civilian.response.ResponseStreamInterceptor;
 /**
  * InterceptedOutputStream is a helper class to implement Response.flushBuffer().
  * If the response output is not intercepted, then the response outputstream or writer
- * is the original servlet outputstream or writer (wrapped in a ResponseWriter).
+ * is the original servlet outputstream or writer (wrapped in a TemplateWriter).
  * In this case we just need to call resetBuffer on the underlying ServletResponse.
  * If the response output is intercepted then the user has obtained the 
- * following chain of OutpuStreams (until the InterceptedOutputStream)
- * or writer (untile the ResponseWriter)
+ * following chain of OutpuStreams (upto the InterceptedOutputStream)
+ * or writer (upto the TemplateWriter)
  * <ol>
  * <li>ServletOutputStream
  * <li>InterceptedStream 1, e.g. GzipOutputStream, ... 
  * <li>InterceptedStream n
  * <li>InterceptedOutputStream, returned by Response.getContentStream()
  * <li>OutputStreamWriter
- * <li>ResponseWriter, returned by Response.getContentWriter()
+ * <li>TemplateWriter, returned by Response.getContentWriter()
  * </ol>
  * In case of a resetBuffer() call we still forward it to ServletResponse.resetBuffer().
  * But the writer and outputstream chain needs some handling:

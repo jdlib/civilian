@@ -19,7 +19,7 @@ package org.civilian.asset;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.util.Check;
 import org.civilian.provider.ApplicationProvider;
-import org.civilian.response.ResponseWriter;
+import org.civilian.template.TemplateWriter;
 
 
 /**
@@ -32,7 +32,7 @@ import org.civilian.response.ResponseWriter;
  * which - in case the application is running in production mode -
  * will be printed instead of the whole list of assets.
  */
-public class AssetList implements ResponseWriter.Printable
+public class AssetList implements TemplateWriter.Printable
 {
 	/**
 	 * A Type implementation for CSS assets.
@@ -109,9 +109,9 @@ public class AssetList implements ResponseWriter.Printable
 
 	
 	/**
-	 * Prints the asset list to the ResponseWriter.
+	 * Prints the asset list to the TemplateWriter.
 	 */
-	@Override public void print(ResponseWriter out) throws Exception
+	@Override public void print(TemplateWriter out) throws Exception
 	{
 		HtmlMixin html = new HtmlMixin(out);
 		String[] paths = (productionPaths_ != null) && !out.getSafeContext(ApplicationProvider.class).getApplication().develop() ?

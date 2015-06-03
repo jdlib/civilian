@@ -21,9 +21,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Locale;
-
 import javax.servlet.http.Cookie;
-
 import org.civilian.Application;
 import org.civilian.Context;
 import org.civilian.Controller;
@@ -33,6 +31,7 @@ import org.civilian.Response;
 import org.civilian.Template;
 import org.civilian.content.ContentType;
 import org.civilian.resource.Url;
+import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
 import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
@@ -231,7 +230,7 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public ResponseWriter getContentWriter() throws IOException
+	@Override public TemplateWriter getContentWriter() throws IOException
 	{
 		return response_.getContentWriter();
 	}

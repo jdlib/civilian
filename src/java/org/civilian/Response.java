@@ -21,10 +21,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Locale;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-
 import org.civilian.application.AppConfig;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
@@ -37,10 +35,10 @@ import org.civilian.provider.ResponseProvider;
 import org.civilian.resource.Url;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.response.ResponseStreamInterceptor;
-import org.civilian.response.ResponseWriter;
 import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.response.UriEncoder;
 import org.civilian.response.std.ErrorResponse;
+import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
 import org.civilian.type.lib.LocaleSerializer;
 
@@ -179,7 +177,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 		NONE,
 		
 		/**
-		 * A ResponseWriter is used to produce the response body.
+		 * A TemplateWriter is used to produce the response body.
 		 * @see #getContentWriter()
 		 */
 		WRITER,
@@ -443,13 +441,13 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	
 
 	/**
-	 * Returns a response writer to write textual output. 
+	 * Returns a writer to write textual output. 
 	 * If no content character encoding has been set,
 	 * the encoding of the application is used.
 	 * The method may not be called if {@link #getContentStream()} was called before.
 	 * @see Application#getEncoding()
 	 */
-	public abstract ResponseWriter getContentWriter() throws IOException;
+	public abstract TemplateWriter getContentWriter() throws IOException;
 
 	
 	/**
@@ -524,7 +522,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	
 	/**
 	 * Close the content output, either the {@link #getContentStream() OutputStream}
-	 * or {@link #getContentWriter() ResponseWriter}.
+	 * or {@link #getContentWriter() TemplateWriter}.
 	 * This method is called automatically at the end of request {@link Application#process(Request) processing}.
 	 */
 	public abstract void closeContent();

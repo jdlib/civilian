@@ -19,7 +19,7 @@ package org.civilian.asset;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.resource.Path;
-import org.civilian.response.TestResponseWriter;
+import org.civilian.template.TestTemplateWriter;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.CivTest;
 
@@ -36,7 +36,7 @@ public class AssetListTest extends CivTest
 		list.setProductionPaths("js/prod.js");
 		assertArrayEquals2(list.getProductionPaths(), "js/prod.js");
 		
-		TestResponseWriter out = TestResponseWriter.create();
+		TestTemplateWriter out = TestTemplateWriter.create();
 		when(out.app.getPath()).thenReturn(new Path("/assets"));
 		list.print(out);
 		out.assertOutNormed("<script src='/assets/js/prod.js'></script>\n");

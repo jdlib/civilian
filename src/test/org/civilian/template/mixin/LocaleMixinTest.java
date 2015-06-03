@@ -18,7 +18,7 @@ package org.civilian.template.mixin;
 
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.response.TestResponseWriter;
+import org.civilian.template.TestTemplateWriter;
 import org.civilian.util.Date;
 
 
@@ -26,7 +26,7 @@ public class LocaleMixinTest extends CivTest
 {
 	@Test public void testFormat()
 	{
-		TestResponseWriter out = TestResponseWriter.create("ISO-8859-1");
+		TestTemplateWriter out = TestTemplateWriter.create("ISO-8859-1");
 		LangMixin locale = new LangMixin(out);
 		
 		// dates
@@ -57,7 +57,7 @@ public class LocaleMixinTest extends CivTest
 
 	@Test public void testAccessors()
 	{
-		TestResponseWriter out = TestResponseWriter.create("ISO-8859-1");
+		TestTemplateWriter out = TestTemplateWriter.create("ISO-8859-1");
 		LangMixin locale = new LangMixin(out);
 
 		assertEquals("?key", locale.msg("key"));

@@ -17,7 +17,6 @@ package org.civilian.form;
 
 
 import org.civilian.Request;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.type.ListType;
@@ -40,10 +39,10 @@ import org.civilian.util.Check;
  * <li>a required-flag,
  * <li>status information,
  * <li>the capability to read its value from a Request object,
- * <li>the capability to print its markup to a ResponseWriter
+ * <li>the capability to print its markup to a TemplateWriter
  * </ul>
  */
-public abstract class Control<T> implements ResponseWriter.Printable
+public abstract class Control<T> implements TemplateWriter.Printable
 {
 	/**
 	 * Status is an Enum for the status of a Control.
@@ -842,7 +841,7 @@ public abstract class Control<T> implements ResponseWriter.Printable
 	/**
 	 * Prints the control.
 	 */
-	@Override public void print(ResponseWriter out)
+	@Override public void print(TemplateWriter out)
 	{
 		print(out, (String[])null);
 	}

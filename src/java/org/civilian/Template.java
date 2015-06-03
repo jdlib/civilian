@@ -17,7 +17,7 @@ package org.civilian;
 
 
 import java.io.Writer;
-import org.civilian.response.ResponseWriter;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
 
 
@@ -33,12 +33,12 @@ import org.civilian.util.Check;
  * Civilian provides an own templating system and syntax (CSP), but other templates engines like
  * velocity or freemarker can easily be presented as Template objects. 
  */
-public abstract class Template implements ResponseWriter.Printable
+public abstract class Template implements TemplateWriter.Printable
 {
 	/**
-	 * Returns the ResponseWriter or null, if the template is not printed.
+	 * Returns the TemplateWriter or null, if the template is not printed.
 	 */
-	public ResponseWriter out()
+	public TemplateWriter out()
 	{
 		return out;
 	}
@@ -46,25 +46,25 @@ public abstract class Template implements ResponseWriter.Printable
 	
 	/**
 	 * Prints the template, using the given Writer.
-	 * The method constructs a ResponseWriter from the writer and
-	 * then calls {@link #print(ResponseWriter)}.
+	 * The method constructs a TemplateWriter from the writer and
+	 * then calls {@link #print(TemplateWriter)}.
 	 */
 	public void print(Writer out) throws Exception
 	{
 		Check.notNull(out, "out");
-		ResponseWriter rw = out instanceof ResponseWriter ? 
-			(ResponseWriter)out : 
-			new ResponseWriter(out, false);
-		print(rw);
+		TemplateWriter tw = out instanceof TemplateWriter ? 
+			(TemplateWriter)out : 
+			new TemplateWriter(out, false);
+		print(tw);
 	}
 	
 	
 	/**
-	 * Prints the template, using the given ResponseWriter.
-	 * The method stores the ResponseWriter in the field {@link #out}
+	 * Prints the template, using the given TemplateWriter.
+	 * The method stores the TemplateWriter in the field {@link #out}
 	 * and the calls {@link #print()}.
 	 */
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override public synchronized void print(TemplateWriter out) throws Exception
 	{
 		Check.notNull(out, "out");
 		this.out = out;
@@ -75,7 +75,7 @@ public abstract class Template implements ResponseWriter.Printable
 	
 	/**
 	 * Allows derived implementation to initialize before the template is printed 
-	 * Called by {@link #print(ResponseWriter)} when {@link #out} was set, before {@link #print()} is called.
+	 * Called by {@link #print(TemplateWriter)} when {@link #out} was set, before {@link #print()} is called.
 	 * The default implementation is empty.
 	 */
 	protected void init()
@@ -89,5 +89,5 @@ public abstract class Template implements ResponseWriter.Printable
 	protected abstract void print() throws Exception;
 	
 	
-	protected ResponseWriter out;
+	protected TemplateWriter out;
 }

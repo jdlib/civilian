@@ -29,7 +29,7 @@ import org.civilian.context.test.TestApp;
 import org.civilian.context.test.TestRequest;
 import org.civilian.context.test.TestResponse;
 import org.civilian.resource.Url;
-import org.civilian.response.ResponseWriter;
+import org.civilian.template.TemplateWriter;
 import org.civilian.template.TextTemplate;
 import org.civilian.text.LocaleService;
 import org.civilian.text.keys.KeyList;
@@ -152,7 +152,7 @@ public class AbstractResponseTest extends CivTest
 		assertNull(response.getContentEncoding());
 		assertSame(Response.ContentAccess.NONE, response.getContentAccess());
 
-		ResponseWriter out = response.getContentWriter();
+		TemplateWriter out = response.getContentWriter();
 		
 		assertSame(app.getEncoding(), response.getContentEncoding());
 		response.setContentEncoding("x");
@@ -267,7 +267,7 @@ public class AbstractResponseTest extends CivTest
 		response.clear();
 		response.addInterceptor(interceptor1);
 		response.addInterceptor(interceptor2);
-		ResponseWriter writer = response.getContentWriter();
+		TemplateWriter writer = response.getContentWriter();
 		writer.print('0');
 		assertEquals("def0", response.getContentText(true));
 

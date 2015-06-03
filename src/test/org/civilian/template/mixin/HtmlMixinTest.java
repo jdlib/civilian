@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
 import org.civilian.resource.Path;
-import org.civilian.response.TestResponseWriter;
+import org.civilian.template.TestTemplateWriter;
 import org.junit.Test;
 
 
@@ -28,7 +28,7 @@ public class HtmlMixinTest extends CivTest
 {
 	@Test public void test()
 	{
-		TestResponseWriter out = TestResponseWriter.create("ISO-8859-1");
+		TestTemplateWriter out = TestTemplateWriter.create("ISO-8859-1");
 		when(out.app.getPath()).thenReturn(new Path("assets"));
 		HtmlMixin html = new HtmlMixin(out);
 

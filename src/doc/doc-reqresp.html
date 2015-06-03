@@ -29,7 +29,7 @@
 					<li><a href="#respstatus">Status</a>, 
 						<a href="#respheaders">Headers</a>, 
 						<a href="#respcontent">Content</a>, 
-						<a href="#respwriter">ResponseWriter</a>, 
+						<a href="#respwriter">TemplateWriter</a>, 
 						<a href="#resperror">sendError</a>,
 						<a href="#respredirect">sendRedirect</a>, 
 						<a href="#respbuffer">Buffer</a> 
@@ -191,21 +191,15 @@
 		These methods are based on Civilians <a href="#content">content serialization</a> framework 
 		which allows easy conversion from application objects to data-formats like JSON or XML. 
 		
-		<h3 id="respwriter">ResponseWriter</h3>
+		<h3 id="respwriter">TemplateWriter</h3>
 		The writer returned by {javadoc:Response#getContentWriter() Response.getContentWriter()} is 
-		an instance of class {javadoc:response.ResponseWriter}.<br>
-		Besides being a <code>java.io.PrintWriter</code>, ResponseWriter provides additional functionality:
+		an instance of class {javadoc:template.TemplateWriter}.<br>
+		Besides being a <code>java.io.PrintWriter</code>, TemplateWriter provides additional functionality:
 		<ul>
-		<li>It has getter methods for context objects like the {javadoc:response.ResponseWriter#getResponse() response},
-			{javadoc:response.ResponseWriter#getRequest() request}, {javadoc:response.ResponseWriter#getApplication() application}.
-		<li>It has a {javadoc:response.ResponseWriter#getCharset() charset} property which is set according the response 
-			{javadoc:Response#getContentEncoding() encoding}. {javadoc:util.Charset} allows to detect non-printable characters.
-			In the case of HTML output these can be replaced by character references.
-		<li>It has support for locale dependent {javadoc:response.ResponseWriter#getSerializer() formatting} which is initialized
-			by the response {javadoc:Response#getContentLanguage() locale}.
-		<li>ResponseWriter itself is derived from {javadoc:util.TabWriter} which allows for pretty indentend output (think HTML).  
+		<li>TemplateWriter allows to produces pretty indentend output (think HTML).
+		<li>A TemplateWriter can be {@link #addContext(Object) associated} with multiple context objects. 
 		</ul>
-		Being a PrintWriter the ResponseWriter can be passed to any <a href="doc-templates.html">template system</a> like Velocity or Freemaker.
+		Being a PrintWriter the TemplateWriter can be passed to any <a href="doc-templates.html">template system</a> like Velocity or Freemaker.
 		But its additional functionality is especially used by Civilians own template system <a href="doc-templates-csp.html">CSP</a>.
 
 		<h3 id="resperror">sendError</h3>

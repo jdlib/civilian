@@ -111,6 +111,39 @@ public class TemplateWriterTest extends CivTest
 	}
 
 	
+	@Test public void testPrintable()
+	{
+		TestTemplateWriter out = TestTemplateWriter.create("ISO-8859-1");
+		
+		out.print((Object)null);
+		out.assertOut("null");
+		
+		out.print(new TemplateWriter.Printable() {
+			@Override public void print(TemplateWriter out) throws Exception
+			{
+				out.print("hallo");
+			}
+		});
+		out.assertOut("hallo");
+
+		final Exception cause = new Exception();
+		try
+		{
+			out.print(new TemplateWriter.Printable() {
+				@Override public void print(TemplateWriter out) throws Exception
+				{
+					throw cause;
+				}
+			});
+			fail();
+		}
+		catch(IllegalStateException e)
+		{
+			assertSame(cause, e.getCause());
+		}
+	}
+
+	
 	private StringWriter stringOut;
 	private TemplateWriter out;
 }
