@@ -9,7 +9,6 @@ import org.civilian.Resource;
 import org.civilian.Response;
 import org.civilian.Template;
 import org.civilian.resource.Path;
-import org.civilian.response.ResponseWriter;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.CrmConstants;
 import org.civilian.samples.crm.web.CrmResources;
@@ -34,19 +33,11 @@ public class PageTemplate extends Template
 	}
 
 
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			html = new HtmlMixin(out);
-			lang = new LangMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			html = null;
-			lang = null;
-		}
+		super.init();
+		html = new HtmlMixin(out);
+		lang = new LangMixin(out);
 	}
 
 

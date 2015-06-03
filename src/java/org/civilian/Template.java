@@ -68,14 +68,18 @@ public abstract class Template implements ResponseWriter.Printable
 	{
 		Check.notNull(out, "out");
 		this.out = out;
-		try
-		{
-			print();
-		}
-		finally
-		{
-			this.out = null;
-		}
+		init();
+		print();
+	}
+	
+	
+	/**
+	 * Allows derived implementation to initialize before the template is printed 
+	 * Called by {@link #print(ResponseWriter)} when {@link #out} was set, before {@link #print()} is called.
+	 * The default implementation is empty.
+	 */
+	protected void init()
+	{
 	}
 	
 	

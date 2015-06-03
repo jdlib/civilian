@@ -11,7 +11,6 @@ import org.civilian.Processor;
 import org.civilian.Template;
 import org.civilian.content.ContentType;
 import org.civilian.processor.ProcessorList;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.text.LocaleServiceList;
 
@@ -24,17 +23,10 @@ public class SettingsTemplate extends Template
 	}
 
 
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			html = new HtmlMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			html = null;
-		}
+		super.init();
+		html = new HtmlMixin(out);
 	}
 
 

@@ -8,7 +8,6 @@ package org.civilian.samples.locale;
 import java.util.Date;
 import java.util.Locale;
 import org.civilian.Template;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
 import org.civilian.text.LocaleServiceList;
@@ -23,19 +22,11 @@ public class IndexTemplate extends Template
 	}
 
 
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			html = new HtmlMixin(out);
-			lang = new LangMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			html = null;
-			lang = null;
-		}
+		super.init();
+		html = new HtmlMixin(out);
+		lang = new LangMixin(out);
 	}
 
 

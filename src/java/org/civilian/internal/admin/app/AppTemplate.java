@@ -7,7 +7,6 @@ package org.civilian.internal.admin.app;
 
 import org.civilian.Application;
 import org.civilian.Template;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.mixin.HtmlMixin;
 
 
@@ -21,17 +20,10 @@ public class AppTemplate extends Template
 	}
 
 
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			html = new HtmlMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			html = null;
-		}
+		super.init();
+		html = new HtmlMixin(out);
 	}
 
 

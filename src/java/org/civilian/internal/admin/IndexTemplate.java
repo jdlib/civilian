@@ -11,7 +11,6 @@ import org.civilian.Context;
 import org.civilian.Template;
 import org.civilian.Version;
 import org.civilian.resource.Url;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.mixin.HtmlMixin;
 
 
@@ -23,17 +22,10 @@ public class IndexTemplate extends Template
 	}
 
 
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			html = new HtmlMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			html = null;
-		}
+		super.init();
+		html = new HtmlMixin(out);
 	}
 
 

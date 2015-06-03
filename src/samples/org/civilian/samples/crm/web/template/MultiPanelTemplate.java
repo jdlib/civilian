@@ -6,7 +6,6 @@ package org.civilian.samples.crm.web.template;
 
 
 import org.civilian.Template;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.mixin.LangMixin;
 import org.civilian.text.msg.MsgId;
 
@@ -19,17 +18,10 @@ public class MultiPanelTemplate extends Template
 	}
 
 
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			lang = new LangMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			lang = null;
-		}
+		super.init();
+		lang = new LangMixin(out);
 	}
 
 

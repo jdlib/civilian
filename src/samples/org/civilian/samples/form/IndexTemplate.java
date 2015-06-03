@@ -6,7 +6,6 @@ package org.civilian.samples.form;
 
 
 import org.civilian.Template;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 
@@ -19,19 +18,11 @@ public class IndexTemplate extends Template
 	}
 
 
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			html = new HtmlMixin(out);
-			formTable = new FormTableMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			html = null;
-			formTable = null;
-		}
+		super.init();
+		html = new HtmlMixin(out);
+		formTable = new FormTableMixin(out);
 	}
 
 

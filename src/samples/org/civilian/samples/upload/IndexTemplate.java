@@ -8,7 +8,6 @@ package org.civilian.samples.upload;
 import org.civilian.Request;
 import org.civilian.Template;
 import org.civilian.request.Upload;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
@@ -22,21 +21,12 @@ public class IndexTemplate extends Template
 	}
 
 
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			html = new HtmlMixin(out);
-			lang = new LangMixin(out);
-			formTable = new FormTableMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			html = null;
-			lang = null;
-			formTable = null;
-		}
+		super.init();
+		html = new HtmlMixin(out);
+		lang = new LangMixin(out);
+		formTable = new FormTableMixin(out);
 	}
 
 

@@ -360,7 +360,7 @@ public class CspCompiler
 			outBody.increaseTab();
 			compileJavaLines(outBody, true);
 			
-			printClassData(out, templFile);
+			printClass(out, templFile);
 			int tab = out.getTabCount();
 			out.setTabCount(0);
 			out.print(swBody.toString());
@@ -494,8 +494,6 @@ public class CspCompiler
 			classData_.mixins = parseMixins(scanner_, classData_.mixins);
 		if (classData_.mixins != null)
 		{
-			if (classData_.writerClass == null)
-				classData_.imports.add(ResponseWriter.class);
 			for (MixinField mixin : classData_.mixins)
 				classData_.imports.add(mixin.className);
 		}
@@ -601,7 +599,7 @@ public class CspCompiler
 	}
 
 	
-	private void printClassData(SourceWriter out, File templFile) throws IOException
+	private void printClass(SourceWriter out, File templFile) throws IOException
 	{
 		out.println("/**");
 		out.print(" * Generated from " + templFile.getName());
@@ -639,79 +637,15 @@ public class CspCompiler
 		}
 		out.println();
 		out.beginBlock();
+		
 		if (classData_.needsCtor())
-		{
-			out.print("public ");
-			out.print(classData_.className);
-			out.print("(");
-			if (classData_.args != null)
-				out.print(classData_.args);
-			out.println(")");
-			out.beginBlock();
-			if (classData_.superCall != null)
-			{
-				out.print(classData_.superCall);
-				printSrcMapComment(out, classData_.superCall, classData_.superCallLine);				
-			}
-			if (classData_.args != null)
-			{
-				for (Argument arg : classData_.arguments)
-				{
-					arg.fieldAssign(out);
-					out.println();
-				}
-			}
-			out.endBlock();
-			out.println();	
-			out.println();	
-		}
+			printClassCtor(out);
 
 		if (classData_.standalone)
-		{
-			out.print("public synchronized void print(");
-			out.print(classData_.writerClassSimple);
-			out.print(" out)");
-			if (classData_.exception != null)
-			{
-				out.print(" throws ");
-				out.print(classData_.exception);
-			}
-			out.println();
-			out.beginBlock();
-				out.println("try");
-				out.beginBlock();
-					out.println("this.out = out;");
-					if (classData_.mixins != null)
-						printMixinInit(out);
-					out.println("print();");
-				out.endBlock();
-				out.println("finally");
-				out.beginBlock();
-				out.println("this.out = null;");
-					if (classData_.mixins != null)
-						printMixinClear(out);
-				out.endBlock();
-			out.endBlock();
-			out.println();
-			out.println();
-		}
-		else if (classData_.mixins != null)
-		{
-			out.println("@Override public synchronized void print(ResponseWriter out) throws Exception");
-			out.beginBlock();
-				out.println("try");
-				out.beginBlock();
-					printMixinInit(out);
-					out.println("super.print(out);");
-					out.endBlock();
-				out.println("finally");
-				out.beginBlock();
-					printMixinClear(out);
-				out.endBlock();
-			out.endBlock();
-			out.println();
-			out.println();
-		}
+			printClassPublicPrintMethod(out);
+		
+		if (classData_.mixins != null)
+			printClassInitMethod(out);
 
 		if (classData_.extendsClass != null)
 			out.print("@Override ");
@@ -725,27 +659,77 @@ public class CspCompiler
 	}
 	
 	
-	private void printMixinInit(SourceWriter out)
+	private void printClassCtor(SourceWriter out) throws IOException
 	{
-		for (MixinField mixin : classData_.mixins)
+		out.print("public ");
+		out.print(classData_.className);
+		out.print("(");
+		if (classData_.args != null)
+			out.print(classData_.args);
+		out.println(")");
+		out.beginBlock();
+		if (classData_.superCall != null)
 		{
-			out.print(mixin.fieldName);
-			out.print(" = new ");
-			out.print(mixin.simpleName);
-			out.println("(out);");
+			out.print(classData_.superCall);
+			printSrcMapComment(out, classData_.superCall, classData_.superCallLine);				
 		}
+		if (classData_.args != null)
+		{
+			for (Argument arg : classData_.arguments)
+			{
+				arg.fieldAssign(out);
+				out.println();
+			}
+		}
+		out.endBlock();
+		out.println();	
+		out.println();	
 	}
 	
-	
-	private void printMixinClear(SourceWriter out)
-	{
-		for (MixinField mixin : classData_.mixins)
-		{
-			out.print(mixin.fieldName);
-			out.println(" = null;");
-		}
-	}
 
+	private void printClassPublicPrintMethod(SourceWriter out)
+	{
+		out.print("public synchronized void print(");
+		out.print(classData_.writerClassSimple);
+		out.print(" out)");
+		if (classData_.exception != null)
+		{
+			out.print(" throws ");
+			out.print(classData_.exception);
+		}
+		out.println();
+		out.beginBlock();
+			out.println("if (out == null)");
+			out.increaseTab();
+				out.println("throw new IllegalArgumentException(\"out is null\");");
+			out.decreaseTab();
+			out.beginBlock();
+				out.println("this.out = out;");
+				out.println("init();");
+				out.println("print();");
+			out.endBlock();
+		out.endBlock();
+		out.println();
+		out.println();
+	}
+	
+	private void printClassInitMethod(SourceWriter out)
+	{
+		out.println("@Override protected void init()");
+		out.beginBlock();
+			out.println("super.init();");
+			for (MixinField mixin : classData_.mixins)
+			{
+				out.print(mixin.fieldName);
+				out.print(" = new ");
+				out.print(mixin.simpleName);
+				out.println("(out);");
+			}
+		out.endBlock();
+		out.println();
+		out.println();
+	}
+	
 	
 	private void printFields(SourceWriter out) throws CspException, IOException
 	{

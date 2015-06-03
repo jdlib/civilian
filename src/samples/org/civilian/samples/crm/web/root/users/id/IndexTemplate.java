@@ -6,7 +6,6 @@ package org.civilian.samples.crm.web.root.users.id;
 
 
 import org.civilian.Template;
-import org.civilian.response.ResponseWriter;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.template.mixin.LangMixin;
 import org.civilian.template.mixin.TableMixin;
@@ -14,19 +13,11 @@ import org.civilian.template.mixin.TableMixin;
 
 public class IndexTemplate extends Template
 {
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			t = new TableMixin(out);
-			lang = new LangMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			t = null;
-			lang = null;
-		}
+		super.init();
+		t = new TableMixin(out);
+		lang = new LangMixin(out);
 	}
 
 

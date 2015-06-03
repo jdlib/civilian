@@ -6,7 +6,6 @@ package org.civilian.samples.jpa.shared.web;
 
 
 import org.civilian.Template;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.mixin.FormTableMixin;
 
 
@@ -18,17 +17,10 @@ public class CreateTemplate extends Template
 	}
 
 
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			formTable = new FormTableMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			formTable = null;
-		}
+		super.init();
+		formTable = new FormTableMixin(out);
 	}
 
 

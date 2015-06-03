@@ -7,7 +7,6 @@ package org.civilian.samples.crm.web.root;
 
 import org.civilian.Template;
 import org.civilian.resource.Url;
-import org.civilian.response.ResponseWriter;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.CrmResources;
 import org.civilian.template.mixin.HtmlMixin;
@@ -16,19 +15,11 @@ import org.civilian.template.mixin.LangMixin;
 
 public class IndexTemplate extends Template
 {
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			lang = new LangMixin(out);
-			html = new HtmlMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			lang = null;
-			html = null;
-		}
+		super.init();
+		lang = new LangMixin(out);
+		html = new HtmlMixin(out);
 	}
 
 
