@@ -6,23 +6,15 @@ package org.civilian.template.csp;
 
 
 import org.civilian.Template;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.mixin.TableMixin;
 
 
 public class Test4 extends Template
 {
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			t = new TableMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			t = null;
-		}
+		super.init();
+		t = new TableMixin(out);
 	}
 
 

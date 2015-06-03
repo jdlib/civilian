@@ -8,7 +8,6 @@ package org.civilian.template.csp;
 import java.util.ArrayList;
 import com.app.MyMixin;
 import org.civilian.Template;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
 
@@ -24,23 +23,13 @@ public class Test1 extends Template
 	}
 
 
-	@Override public synchronized void print(ResponseWriter out) throws Exception
+	@Override protected void init()
 	{
-		try
-		{
-			lang = new LangMixin(out);
-			htm = new HtmlMixin(out);
-			html = new HtmlMixin(out);
-			myMixin = new MyMixin(out);
-			super.print(out);
-		}
-		finally
-		{
-			lang = null;
-			htm = null;
-			html = null;
-			myMixin = null;
-		}
+		super.init();
+		lang = new LangMixin(out);
+		htm = new HtmlMixin(out);
+		html = new HtmlMixin(out);
+		myMixin = new MyMixin(out);
 	}
 
 
