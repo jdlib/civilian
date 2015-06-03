@@ -19,6 +19,7 @@ package org.civilian.form;
 import org.civilian.Request;
 import org.civilian.response.ResponseWriter;
 import org.civilian.template.HtmlUtil;
+import org.civilian.template.TemplateWriter;
 import org.civilian.type.ListType;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
@@ -852,14 +853,14 @@ public abstract class Control<T> implements ResponseWriter.Printable
 	 * @param attrs a list of attribute names and values which
 	 * 		should be printed in the start tag of the control element.
 	 */
-	public abstract void print(ResponseWriter out, String... attrs);
+	public abstract void print(TemplateWriter out, String... attrs);
 
 	
 	/**
 	 * Prints the generic attributes stored in {@link #attribute_} and
 	 * runtime attributes.
 	 */
-	protected void printAttrs(ResponseWriter out, String... attrs)
+	protected void printAttrs(TemplateWriter out, String... attrs)
 	{
 		if (attribute_ != null)
 			out.print(attribute_);
@@ -871,7 +872,7 @@ public abstract class Control<T> implements ResponseWriter.Printable
 	 * Prints a javascript snippet to set the focus to this control.
 	 * @param printScript if true the snippet is surrounded by script-tags.
 	 */
-	public void focus(ResponseWriter out, boolean printScript)
+	public void focus(TemplateWriter out, boolean printScript)
 	{
 		if (printScript)
 			out.println("<script>");

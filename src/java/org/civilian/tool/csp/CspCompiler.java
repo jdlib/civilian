@@ -460,7 +460,7 @@ public class CspCompiler
 			{
 				classData_.standalone = true;
 				
-				String writerClass = ResponseWriter.class.getSimpleName();
+				String writerClass = TemplateWriter.class.getSimpleName();
 				if (scanner_.nextKeyword("using"))
 					writerClass = nextScannerToken("using");
 				
@@ -703,19 +703,21 @@ public class CspCompiler
 			out.increaseTab();
 				out.println("throw new IllegalArgumentException(\"out is null\");");
 			out.decreaseTab();
-			out.beginBlock();
-				out.println("this.out = out;");
+			out.println("this.out = out;");
+			if (classData_.mixins != null)
 				out.println("init();");
-				out.println("print();");
-			out.endBlock();
+			out.println("print();");
 		out.endBlock();
 		out.println();
 		out.println();
 	}
 	
+	
 	private void printClassInitMethod(SourceWriter out)
 	{
-		out.println("@Override protected void init()");
+		if (!classData_.standalone)
+			out.print("@Override "); 
+		out.println("protected void init()");
 		out.beginBlock();
 			out.println("super.init();");
 			for (MixinField mixin : classData_.mixins)

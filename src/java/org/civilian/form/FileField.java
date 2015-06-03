@@ -18,8 +18,8 @@ package org.civilian.form;
 
 import org.civilian.Request;
 import org.civilian.request.Upload;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.HtmlUtil;
+import org.civilian.template.TemplateWriter;
 import org.civilian.type.lib.InvalidType;
 
 
@@ -68,7 +68,7 @@ public class FileField extends Control<Upload[]>
 	/**
 	 * Prints the field.
 	 */
-	@Override public void print(ResponseWriter out, String... attrs)
+	@Override public void print(TemplateWriter out, String... attrs)
 	{
 		out.print("<input type=\"file\"");
 		HtmlUtil.attr(out, "name", getName());

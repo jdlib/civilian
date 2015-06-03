@@ -16,8 +16,8 @@
 package org.civilian.form;
 
 
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.HtmlUtil;
+import org.civilian.template.TemplateWriter;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 
@@ -97,7 +97,7 @@ public class HiddenField<T> extends Control<T>
 	/**
 	 * Prints the field markup.
 	 */
-	@Override public void print(ResponseWriter out, String... attrs)
+	@Override public void print(TemplateWriter out, String... attrs)
 	{
 		out.print("<input");
 		HtmlUtil.attr(out, "type", "hidden", false);

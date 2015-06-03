@@ -19,8 +19,8 @@ package org.civilian.template.mixin;
 import org.civilian.form.Control;
 import org.civilian.form.Control.Category;
 import org.civilian.form.Form;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.HtmlUtil;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
 
 
@@ -32,7 +32,7 @@ public class FormTableMixin
 	/**
 	 * Creates a new FormTableMixin.
 	 */
-	public FormTableMixin(ResponseWriter out)
+	public FormTableMixin(TemplateWriter out)
 	{
 		this.out = Check.notNull(out, "out");
 	}
@@ -279,7 +279,7 @@ public class FormTableMixin
 	}
 
 
-	private ResponseWriter out;
+	private TemplateWriter out;
 	private String requiredLabelClass_; 
 	private String errorControlClass_ = "error"; 
 }

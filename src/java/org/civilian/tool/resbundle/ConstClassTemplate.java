@@ -7,7 +7,7 @@ package org.civilian.tool.resbundle;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import org.civilian.response.ResponseWriter;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.DateTime;
 
@@ -23,17 +23,12 @@ class ConstClassTemplate
 	}
 
 
-	public synchronized void print(ResponseWriter out)
+	public synchronized void print(TemplateWriter out)
 	{
-		try
-		{
-			this.out = out;
-			print();
-		}
-		finally
-		{
-			this.out = null;
-		}
+		if (out == null)
+			throw new IllegalArgumentException("out is null");
+		this.out = out;
+		print();
 	}
 
 
@@ -194,5 +189,5 @@ class ConstClassTemplate
 	private String packageName;
 	private DateTime generationTime;
 	private ArrayList<String> ids;
-	protected ResponseWriter out;
+	protected TemplateWriter out;
 }

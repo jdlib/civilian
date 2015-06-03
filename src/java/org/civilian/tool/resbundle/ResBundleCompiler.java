@@ -32,7 +32,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.civilian.internal.source.OutputLocation;
 import org.civilian.internal.source.PackageDetector;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.msg.MsgId;
 import org.civilian.util.Arguments;
@@ -282,7 +281,7 @@ public class ResBundleCompiler
 		public Output(File file)
 		{
 			this.file = file;
-			this.out  = new ResponseWriter(stringOut = new StringWriter());
+			this.out  = new TemplateWriter(stringOut = new StringWriter());
 		}
 
 		
@@ -309,7 +308,7 @@ public class ResBundleCompiler
 		
 		
 		public final File file;
-		public ResponseWriter out;
+		public TemplateWriter out;
 		private StringWriter stringOut;
 	}
 	

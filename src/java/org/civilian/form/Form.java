@@ -22,8 +22,8 @@ import org.civilian.Response;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Post;
 import org.civilian.provider.RequestProvider;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.HtmlUtil;
+import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
 
 
@@ -555,7 +555,7 @@ public class Form implements RequestProvider
 	/**
 	 * Prints the form start tag and all hidden fields.
 	 */
-	public void start(ResponseWriter out)
+	public void start(TemplateWriter out)
 	{
 		start(out, (String[])null);
 	}
@@ -566,7 +566,7 @@ public class Form implements RequestProvider
 	 * @param attrs a list of attribute names and values which
 	 * 		should be printed in the start tag of the control element.
 	 */
-	public void start(ResponseWriter out, String... attrs)
+	public void start(TemplateWriter out, String... attrs)
 	{
 		out.print("<form");
 		printAttrs(out, attrs);
@@ -599,7 +599,7 @@ public class Form implements RequestProvider
 	/**
 	 * Prints the attributes of the form start tag.
 	 */
-	protected void printAttrs(ResponseWriter out, String... attrs)
+	protected void printAttrs(TemplateWriter out, String... attrs)
 	{
 		Response response = getRequest().getResponse();
 		if (method_ != null)
@@ -624,9 +624,9 @@ public class Form implements RequestProvider
 	
 	/**
 	 * Prints the form end tag.
-	 * Calls {@link #end(ResponseWriter, Control) end(out, null)};
+	 * Calls {@link #end(TemplateWriter, Control) end(out, null)};
 	 */
-	public void end(ResponseWriter out)
+	public void end(TemplateWriter out)
 	{
 		end(out, null);		
 	}
@@ -637,7 +637,7 @@ public class Form implements RequestProvider
 	 * If the form contains controls which need scripts to be printed after the end tag,
 	 * these scripts are also printed.
 	 */
-	public void end(ResponseWriter out, Control<?> focusControl)
+	public void end(TemplateWriter out, Control<?> focusControl)
 	{
 		out.println("</form>");
 		if (getErrorControl() != null)

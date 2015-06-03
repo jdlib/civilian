@@ -23,7 +23,6 @@ import org.civilian.provider.PathProvider;
 import org.civilian.provider.ResponseProvider;
 import org.civilian.resource.Path;
 import org.civilian.resource.Url;
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
@@ -142,7 +141,7 @@ public class HtmlMixin
 	 * @see #metaHttpEquiv(String, String)
 	 * @see Response#getContentTypeAndEncoding()
 	 * @throws IllegalStateException thrown if the ResponseWriter does not 
-	 * 		have a Response as {@link ResponseWriter#getContext(java.lang.Class) context object}
+	 * 		have a Response as {@link TemplateWriter#getContext(java.lang.Class) context object}
 	 */
 	public void metaContentType()
 	{
@@ -307,7 +306,7 @@ public class HtmlMixin
 	/**
 	 * Returns a Url object with the resource path.
 	 * @throws IllegalStateException thrown if the ResponseWriter does not 
-	 * 		have a Response as {@link ResponseWriter#getContext(java.lang.Class) context object}
+	 * 		have a Response as {@link TemplateWriter#getContext(java.lang.Class) context object}
 	 */
 	public Url url(Resource resource)
 	{
@@ -318,7 +317,7 @@ public class HtmlMixin
 	/**
 	 * Returns a Url object with the path of the resource associated with the controller.
 	 * @throws IllegalStateException thrown if the ResponseWriter does not 
-	 * 		have a Response as {@link ResponseWriter#getContext(java.lang.Class) context object}
+	 * 		have a Response as {@link TemplateWriter#getContext(java.lang.Class) context object}
 	 */
 	public Url url(Class<? extends Controller> controllerClass)
 	{
@@ -329,7 +328,7 @@ public class HtmlMixin
 	/**
 	 * Returns a Url with the given value.  
 	 * @throws IllegalStateException thrown if the ResponseWriter does not 
-	 * 		have a Response as {@link ResponseWriter#getContext(java.lang.Class) context object}
+	 * 		have a Response as {@link TemplateWriter#getContext(java.lang.Class) context object}
 	 */
 	public Url url(String value)
 	{
@@ -340,7 +339,7 @@ public class HtmlMixin
 	/**
 	 * Returns a Url with the path of the given path provider.  
 	 * @throws IllegalStateException thrown if the ResponseWriter does not 
-	 * 		have a Response as {@link ResponseWriter#getContext(java.lang.Class) context object}
+	 * 		have a Response as {@link TemplateWriter#getContext(java.lang.Class) context object}
 	 */
 	public Url url(PathProvider pp)
 	{
@@ -351,7 +350,7 @@ public class HtmlMixin
 	/**
 	 * Returns a Url with the given path.  
 	 * @throws IllegalStateException thrown if the ResponseWriter does not 
-	 * 		have a Response as {@link ResponseWriter#getContext(java.lang.Class) context object}
+	 * 		have a Response as {@link TemplateWriter#getContext(java.lang.Class) context object}
 	 */
 	public Url url(Path path)
 	{

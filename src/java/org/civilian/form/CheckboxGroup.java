@@ -16,8 +16,8 @@
 package org.civilian.form;
 
 
-import org.civilian.response.ResponseWriter;
 import org.civilian.template.HtmlUtil;
+import org.civilian.template.TemplateWriter;
 import org.civilian.text.keys.KeyList;
 import org.civilian.type.Type;
 import org.civilian.type.TypeSerializer;
@@ -85,7 +85,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 	/**
 	 * Prints all checkboxes of the group, separated by a <br> element.
 	 */
-	@Override public void print(ResponseWriter out, String... attrs)
+	@Override public void print(TemplateWriter out, String... attrs)
 	{
 		Printer printer = getPrinter(out);
 		printer.setAttrs(attrs);
@@ -102,7 +102,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 	 * Returns a printer which allows you to print single radio buttons and 
 	 * control the layout. 
 	 */
-	public Printer getPrinter(ResponseWriter out)
+	public Printer getPrinter(TemplateWriter out)
 	{
 		return new Printer(out);
 	}
@@ -114,7 +114,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 	 */
 	public class Printer
 	{
-		public Printer(ResponseWriter out)
+		public Printer(TemplateWriter out)
 		{
 			Check.notNull(out, "out");
 			this.out = out;
@@ -186,7 +186,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 		
 		private String[] attrs_;
 		private String[] nextAttrs_;
-		private ResponseWriter out;
+		private TemplateWriter out;
 		private TypeSerializer serializer_; 
 		private Type<T> elemType_ = ((ArrayType<T>)getType()).getElementType();
 	}
