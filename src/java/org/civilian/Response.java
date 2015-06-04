@@ -377,7 +377,9 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	
 	/**
 	 * Writes a template to the response content. 
-	 * @param template a template object. If null, the method does nothing
+	 * @param template a template object. If null, the method does nothing. Else
+	 * 		it calls {@link Template#print(TemplateWriter)}, passing the 
+	 * 		{@link #getContentWriter() content writer} of this response.
 	 */
 	public abstract void writeTemplate(Template template) throws Exception;
 	

@@ -303,3 +303,19 @@ pre {
 	content: "\203A\0020";
 	text-decoration: none;
 }
+
+.csp-section {
+	padding: 4px;
+}
+
+.csp-section-code {
+    font-family: "Courier New",monospace;
+    line-height: 1.42857;
+}
+
+
+.csp-section-code > * {
+	padding-left: 4px;
+	padding-right: 4px;
+	white-space: pre-wrap;
+}

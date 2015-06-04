@@ -21,7 +21,7 @@
 		the content of a HTML response. 
 		<p>
 		Let's suppose we are in a {javadoc:Controller} method, evaluated the request and gathered all data needed 
-		for the response. In case of a pure data response like a JSON response we can just rely on 
+		for the response. In case of a pure data response like a JSON message we can just rely on 
 		methods like {javadoc:Response#writeJson(java*lang*Object) Response.writeJson} to produce the response content.
 		Easy.<br>But in case of HTML output more needs to be done.       
 		<p>
@@ -29,12 +29,12 @@
 		write the content, in a series of <code>print</code> calls. But this approach only works for really simple content. 
 		Templates to the rescue!
 		<p>
-		Template systems allow you to create templates which describe the static scaffold of content into which dynamic
-		data is intermingled to produce the actual output. The syntax of this description 
-		is defined by the template system. Template systems also often have a runtime component 
-		&ndash; a template engine &ndash; which,  given the data, interprets the template to produce the output.
+		Templates are a way to describe the static scaffold of a document or content. Dynamic
+		data is intermingled into this scaffold to produce the actual output. The syntax of templates 
+		is defined by a template system. These systems also often have a runtime component 
+		&ndash; a template engine &ndash; which, given the data, interprets the template syntax and produces the output.
 		<p>
-		Civilian uses the {javadoc:Template} class to represent templates. In the following section we
+		Civilian uses the {javadoc:Template} class to represent template instances. In the following section we
 		describe the architectural implications of this class and how to use it.  
 		<p>
 		
@@ -42,10 +42,14 @@
 		Templates are represented as objects of class {javadoc:Template}. The Template base class itself is abstract and agnostic
 		of the template system used.
 		<p>
-		Once you have constructed a template, it is is easy to write it to the response:
+		Once you have a constructed template, it is is easy to write it to the response:
 			
 		<div class="highlight">
-			<pre><code>Template template = ...<br>Response response = ...<br>response.writeTemplate(template);     // 1) calls 2)<br>// or<br>template.print(response.getWriter()); // 2)</code></pre>
+			<pre><code>Template template = ...<br
+			>Response response = ...<br
+			>response.writeTemplate(template);     // 1) calls 2)<br
+			>// or<br
+			>template.print(response.getWriter()); // 2)</code></pre>
 		</div>	
 		In order to print its content, a template object must hold all dynamic data needed to produce the content.
 		The typical work done in a {javadoc:Controller} method when processing a request, therefore consists of these steps:
@@ -56,7 +60,7 @@
 			<li>Write the template to the response
 		</ol>
 		
-		Like controllers, template objects are constructed to produce a single response and are not reused between different requests
+		Like controllers, template objects are constructed to produce a single response and are not reused between different requests.
 		<p>
 		The self-contained nature of templates has an important architectural implication.
 		Template objects can itself be passed to other templates. That allows to build complex response content
@@ -66,10 +70,10 @@
 		</div>	
 		
 		<h2 id="fmvel">Integration of Freemarker and Velocity</h2>
-		{link:http://freemarker.org Freemarker} and {link:https://velocity.apache.org/ Velocity}
+		{link:http://freemarker.org/ Freemarker} and {link:https://velocity.apache.org/ Velocity}
 		are well-established template systems.
 		<p>
-		Both libraries introduce own template classes. Given a Freemarker or Velocity template object you can easily produce response content
+		Both libraries provide own template classes. Given a Freemarker or Velocity template object you can easily produce response content
 		by writing the template to the {javadoc:template.TemplateWriter} of the response. 
 		<p>
 		To turn a Freemarker or Velocity template into a Civilian template you can additionally use 
