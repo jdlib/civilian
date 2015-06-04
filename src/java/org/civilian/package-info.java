@@ -24,7 +24,7 @@
  * <li>{@link org.civilian.Request} represents a request for a resource.  
  * <li>{@link org.civilian.Resource} models a resource of the application, addressable by a URL.
  * <li>{@link org.civilian.Response} represents the response to a request.
- * <li>{@link org.civilian.Template} is the main tool to build complex textual response content.
+ * <li>{@link org.civilian.template.Template} is the main tool to build complex textual response content.
  * </ul>
  */
 package org.civilian;

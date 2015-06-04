@@ -5,7 +5,7 @@
 package org.civilian.samples.crm.web.template;
 
 
-import org.civilian.Template;
+import org.civilian.template.Template;
 import org.civilian.template.mixin.LangMixin;
 import org.civilian.text.msg.MsgId;
 

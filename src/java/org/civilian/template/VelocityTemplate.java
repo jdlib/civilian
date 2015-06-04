@@ -24,7 +24,7 @@ import org.civilian.util.Check;
 /**
  * A Template implementation which uses a Velocity template.
  */
-public class VelocityTemplate extends org.civilian.Template
+public class VelocityTemplate extends org.civilian.template.Template
 {
 	public VelocityTemplate(String templateFile, VelocityContext context)
 	{

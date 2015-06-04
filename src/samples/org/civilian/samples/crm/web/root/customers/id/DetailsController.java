@@ -16,7 +16,7 @@
  package org.civilian.samples.crm.web.root.customers.id;
 
 
-import org.civilian.Template;
+import org.civilian.template.Template;
 import org.civilian.template.TextTemplate;
 
 

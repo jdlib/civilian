@@ -19,10 +19,10 @@ package org.civilian.internal.admin;
 import org.civilian.Application;
 import org.civilian.Controller;
 import org.civilian.Resource;
-import org.civilian.Template;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Produces;
 import org.civilian.content.ContentType;
+import org.civilian.template.Template;
 
 
 /**

@@ -22,7 +22,7 @@ import java.io.IOException;
 /**
  * A Template implementation which is based on a Freemarker template.
  */
-public class FreemarkerTemplate extends org.civilian.Template
+public class FreemarkerTemplate extends org.civilian.template.Template
 {
 	/**
 	 * Creates a new FreemarkerTemplate. 	 

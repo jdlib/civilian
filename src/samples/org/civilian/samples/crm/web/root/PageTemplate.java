@@ -7,7 +7,6 @@ package org.civilian.samples.crm.web.root;
 
 import org.civilian.Resource;
 import org.civilian.Response;
-import org.civilian.Template;
 import org.civilian.resource.Path;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.CrmConstants;
@@ -15,6 +14,7 @@ import org.civilian.samples.crm.web.CrmResources;
 import org.civilian.samples.crm.web.SessionUser;
 import org.civilian.samples.crm.web.util.NavItem;
 import org.civilian.samples.crm.web.util.Script;
+import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
 import org.civilian.text.msg.MsgId;

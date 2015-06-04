@@ -8,7 +8,7 @@ package org.civilian.internal.admin.app;
 import java.util.Iterator;
 import org.civilian.Application;
 import org.civilian.Resource;
-import org.civilian.Template;
+import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 
 

@@ -5,10 +5,10 @@
 package org.civilian.samples.crm.web.root;
 
 
-import org.civilian.Template;
 import org.civilian.resource.Url;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.CrmResources;
+import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
 

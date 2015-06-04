@@ -5,8 +5,8 @@
 package org.civilian.samples.crm.web.root;
 
 
-import org.civilian.Template;
 import org.civilian.samples.crm.text.Message;
+import org.civilian.template.Template;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;

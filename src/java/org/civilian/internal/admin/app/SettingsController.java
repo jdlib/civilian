@@ -16,7 +16,7 @@
 package org.civilian.internal.admin.app;
 
 
-import org.civilian.Template;
+import org.civilian.template.Template;
 
 
 /**

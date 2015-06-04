@@ -5,7 +5,7 @@
 package org.civilian.template.csp;
 
 
-import org.civilian.Template;
+import org.civilian.template.Template;
 
 
 public class Test5 extends Template

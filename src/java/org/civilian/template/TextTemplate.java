@@ -16,7 +16,6 @@
 package org.civilian.template;
 
 
-import org.civilian.Template;
 
 
 /**

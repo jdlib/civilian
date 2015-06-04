@@ -6,7 +6,7 @@ package org.civilian.response.std;
 
 
 import org.civilian.Request;
-import org.civilian.Template;
+import org.civilian.template.Template;
 
 
 /**

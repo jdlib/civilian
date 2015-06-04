@@ -6,8 +6,8 @@ package org.civilian.samples.upload;
 
 
 import org.civilian.Request;
-import org.civilian.Template;
 import org.civilian.request.Upload;
+import org.civilian.template.Template;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;

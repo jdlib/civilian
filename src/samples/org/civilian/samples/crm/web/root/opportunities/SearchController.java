@@ -16,7 +16,6 @@
  package org.civilian.samples.crm.web.root.opportunities;
 
 
-import org.civilian.Template;
 import org.civilian.annotation.Consumes;
 import org.civilian.annotation.RequestContent;
 import org.civilian.annotation.Get;
@@ -29,6 +28,7 @@ import org.civilian.samples.crm.db.OpportunityService;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.template.SearchTemplate;
 import org.civilian.samples.crm.web.util.Client;
+import org.civilian.template.Template;
 import org.civilian.text.keys.KeyListBuilder;
 
 

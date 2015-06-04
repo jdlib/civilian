@@ -5,7 +5,7 @@
 package org.civilian.samples.inject;
 
 
-import org.civilian.Template;
+import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 
 

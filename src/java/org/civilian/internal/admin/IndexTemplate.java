@@ -8,9 +8,9 @@ package org.civilian.internal.admin;
 import java.util.Date;
 import org.civilian.Application;
 import org.civilian.Context;
-import org.civilian.Template;
 import org.civilian.Version;
 import org.civilian.resource.Url;
+import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 
 

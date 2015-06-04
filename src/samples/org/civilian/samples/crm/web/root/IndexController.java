@@ -16,7 +16,7 @@
  package org.civilian.samples.crm.web.root;
 
 
-import org.civilian.Template;
+import org.civilian.template.Template;
 
 
 /**

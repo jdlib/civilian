@@ -16,8 +16,8 @@
  package org.civilian.samples.crm.web.root.customers;
 
 
-import org.civilian.Template;
 import org.civilian.samples.crm.web.template.LookupTemplate;
+import org.civilian.template.Template;
 
 
 // maps to /customers/lookup

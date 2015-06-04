@@ -16,9 +16,9 @@
  package org.civilian.samples.crm.web.root.contacts;
 
 
-import org.civilian.Template;
 import org.civilian.samples.crm.web.template.ModuleTemplate;
 import org.civilian.samples.crm.web.root.contacts.id.IndexTemplate;
+import org.civilian.template.Template;
 
 
 public class IndexController extends ContactsController

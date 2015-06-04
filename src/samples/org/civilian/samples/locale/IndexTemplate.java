@@ -7,7 +7,7 @@ package org.civilian.samples.locale;
 
 import java.util.Date;
 import java.util.Locale;
-import org.civilian.Template;
+import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
 import org.civilian.text.LocaleServiceList;

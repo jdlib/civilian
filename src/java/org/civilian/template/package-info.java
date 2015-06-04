@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * Contains {@link org.civilian.Template} related classes.
+ * Contains {@link org.civilian.template.Template} related classes.
  */
 package org.civilian.template;

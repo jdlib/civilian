@@ -17,13 +17,13 @@ package org.civilian.internal.admin.app;
 
 
 import java.util.ArrayList;
-import org.civilian.Template;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Produces;
 import org.civilian.annotation.Parameter;
 import org.civilian.content.ContentType;
 import org.civilian.controller.ControllerMethod;
 import org.civilian.controller.ControllerType;
+import org.civilian.template.Template;
 
 
 /**

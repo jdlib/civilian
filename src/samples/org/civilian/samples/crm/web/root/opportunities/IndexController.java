@@ -16,9 +16,9 @@
  package org.civilian.samples.crm.web.root.opportunities;
 
 
-import org.civilian.Template;
 import org.civilian.samples.crm.web.template.ModuleTemplate;
 import org.civilian.samples.crm.web.root.opportunities.id.IndexTemplate;
+import org.civilian.template.Template;
 
 
 public class IndexController extends OpportunitiesController

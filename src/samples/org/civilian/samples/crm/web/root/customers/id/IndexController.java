@@ -16,7 +16,6 @@
  package org.civilian.samples.crm.web.root.customers.id;
 
 
-import org.civilian.Template;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Produces;
 import org.civilian.content.ContentType;
@@ -25,6 +24,7 @@ import org.civilian.samples.crm.db.entity.Customer;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.template.MultiPanelTemplate;
 import org.civilian.samples.crm.web.util.Client;
+import org.civilian.template.Template;
 
 
 public class IndexController extends CustomerController

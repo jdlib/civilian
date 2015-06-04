@@ -18,7 +18,6 @@
 
 import org.civilian.Request;
 import org.civilian.Response;
-import org.civilian.Template;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Produces;
 import org.civilian.content.ContentType;
@@ -29,6 +28,7 @@ import org.civilian.samples.crm.web.CrmConstants;
 import org.civilian.samples.crm.web.SessionUser;
 import org.civilian.samples.crm.web.template.ControllerTemplate;
 import org.civilian.samples.crm.web.util.Script;
+import org.civilian.template.Template;
 
 
 /**

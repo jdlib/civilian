@@ -16,10 +16,10 @@
  package org.civilian.samples.crm.web.root.customers;
 
 
-import org.civilian.Template;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.template.MultiPanelTemplate;
 import org.civilian.samples.crm.web.template.ModuleTemplate;
+import org.civilian.template.Template;
 
 
 /**

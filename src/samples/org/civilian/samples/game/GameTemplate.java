@@ -5,7 +5,7 @@
 package org.civilian.samples.game;
 
 
-import org.civilian.Template;
+import org.civilian.template.Template;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 

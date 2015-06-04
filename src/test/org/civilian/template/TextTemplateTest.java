@@ -20,7 +20,6 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.Response;
-import org.civilian.Template;
 import org.civilian.content.ContentType;
 import org.civilian.internal.AbstractResponse;
 import org.civilian.template.TextTemplate;

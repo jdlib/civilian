@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian;
+package org.civilian.template;
 
 
 import java.io.Writer;
-import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
 
 

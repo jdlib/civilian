@@ -16,13 +16,13 @@
  package org.civilian.samples.crm.web.root.opportunities.id;
 
 
-import org.civilian.Template;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Produces;
 import org.civilian.content.ContentType;
 import org.civilian.response.protocol.NgReply;
 import org.civilian.samples.crm.db.entity.Opportunity;
 import org.civilian.samples.crm.web.util.Client;
+import org.civilian.template.Template;
 
 
 public class IndexController extends OpportunityController

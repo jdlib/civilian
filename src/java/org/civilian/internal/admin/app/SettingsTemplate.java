@@ -8,9 +8,9 @@ package org.civilian.internal.admin.app;
 import java.util.Iterator;
 import org.civilian.Application;
 import org.civilian.Processor;
-import org.civilian.Template;
 import org.civilian.content.ContentType;
 import org.civilian.processor.ProcessorList;
+import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.text.LocaleServiceList;
 
