@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="civilian" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="civilian" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" default="dist">
 
 	<property name="lib"               value="${basedir}/lib"/>
 	<property name="src.java"          value="${basedir}/src/java"/>
@@ -55,8 +55,8 @@
 		<!-- for client resources -->
 		<pathelement location="${src.js}"/> 
 	</path>
-
-			
+	
+	
     <target name="clear" description="clears the build directory">
     	<delete dir="${build}"/>	
     </target>
