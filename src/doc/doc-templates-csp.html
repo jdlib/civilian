@@ -37,12 +37,12 @@
 		<ol>
 		<li>You create a template file &ndash; by convention it has the extension .csp &ndash; and write 
 			your template in CSP syntax.
-		<li>You then invoke the CSP Compiler which generates a Java class derived from {javadoc:Template}.
+		<li>You then invoke the CSP Compiler which generates a Java class derived from {javadoc:template.Template}.
 			The compiler translates the CSP syntax into a series of Java commands. This Java class needs to be included in
 			your IDE project or build process.
 		<li>When you want to produce response content (e.g. in a Controller method) you instantiate this Java class.
 			Dynamic data needed by the template is passed to its constructor. Then you simply call its 
-			{javadoc:Template#print(java*io*Writer) print(Writer)} method
+			{javadoc:template.Template#print(java*io*Writer) print(Writer)} method
 			or pass the template object to {javadoc:Response#writeTemplate(org*civilian*Template) Response.writeTemplate(Template)}.<br>
 			At runtime only the generated Java template class is used, the CSP file is only needed during development time.
 		<li>Whenever you change the CSP file, you repeat the compilation process.
@@ -116,7 +116,7 @@ public class GreetingTemplate extends Template
  
  		Even if the generated code is nicely formatted, we really never look at it, we just use it, e.g. in a {javadoc:Controller}. 
  		to produce a response. (And we never ever edit this generated class, only the CSP file).<br>  
- 		Note that GreetingTemplate is derived from {javadoc:Template} (<code>out</code> is inherited from Template),
+ 		Note that GreetingTemplate is derived from {javadoc:template.Template} (<code>out</code> is inherited from Template),
  		and therefore we can generate {javadoc:Response} content in the following way: 
  		
 		<div class="highlight">
@@ -212,7 +212,7 @@ public class GreetingTemplate extends Template
 			<pre><code>package-access</code></pre>
 		</div>
 		
-		By default the generated template class is automatically derived from {javadoc:Template}. Want another parent class?
+		By default the generated template class is automatically derived from {javadoc:template.Template}. Want another parent class?
 		Maybe you prepared a base template class in your application and want to inherit all its goodies. Then use the extends keyword
 		(and don't forget to include a import instruction if needed).
 		<div class="highlight">
@@ -321,7 +321,7 @@ public class GreetingTemplate extends Template
 			<pre><code>out.print("Hey ");<br>out.print(name);<br>out.print(", 1 + 2 = ");<br>out.println(1 + 2);</code></pre>
 		</div>
 
-		The field <code>out</code> is a {javadoc:template.TemplateWriter} inherited from the {javadoc:Template} base class.
+		The field <code>out</code> is a {javadoc:template.TemplateWriter} inherited from the {javadoc:template.Template} base class.
 		TemplateWriter in the end is just a <code>java.io.PrintWriter</code>. Therefore all values are finally
 		serialized to strings calling <code>value.toString()</code> or <code>String.valueOf(value)</code> before they are written to the output.
 		So it only makes sense to print simple objects like Strings or primitive values. If you print a fancy Customer object 
@@ -643,11 +643,11 @@ private int area;</code></pre></div>
 		IDE to open CSP files in a JSP or HTML editor window for at least some coloring support.
 		 
 		<h2 id="standalone">CSP as standalone template system</h2>
-		When you don't instruct otherwise the generated template class is derived from {javadoc:Template} and operates
+		When you don't instruct otherwise the generated template class is derived from {javadoc:template.Template} and operates
 		on a {javadoc:template.TemplateWriter}. This tightly binds the template to Civilians request processing context.<br>
 		<p>
 		But CSP can simply be turned into a standalone template system: If you use the <code>extends</code> instruction
-		to not derive from {javadoc:Template}   
+		to not derive from {javadoc:template.Template}   
 		<div class="highlight">
 			<pre><code>template ... extends - ...</code></pre>
 		</div>

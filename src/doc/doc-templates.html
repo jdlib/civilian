@@ -5,7 +5,7 @@
 
 		<div class="takeaway">
 			Templates are used to produce complex textual output such as HTML. Representation
-			as {javadoc:Template} objects allows easy composition. Template systems like
+			as {javadoc:template.Template} objects allows easy composition. Template systems like
 			Freemarker or Velocity can be integrated. Civilian offers an own high-performance template system named CSP.  
 		</div>
 
@@ -34,12 +34,12 @@
 		is defined by a template system. These systems also often have a runtime component 
 		&ndash; a template engine &ndash; which, given the data, interprets the template syntax and produces the output.
 		<p>
-		Civilian uses the {javadoc:Template} class to represent template instances. In the following section we
+		Civilian uses the {javadoc:template.Template} class to represent template instances. In the following section we
 		describe the architectural implications of this class and how to use it.  
 		<p>
 		
 		<h2 id="template">The Template class</h2>
-		Templates are represented as objects of class {javadoc:Template}. The Template base class itself is abstract and agnostic
+		Templates are represented as objects of class {javadoc:template.Template}. The Template base class itself is abstract and agnostic
 		of the template system used.
 		<p>
 		Once you have a constructed template, it is is easy to write it to the response:
