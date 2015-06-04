@@ -39,7 +39,7 @@ template(String inputFile, List<String> lines) extends - throws -
 			<div class="col-md-3"></div>
 			<div class="col-md-9">
 				<hr>
-				<p class="footer">Copyright &copy; 2014. All rights reserved.</p>
+				<p class="footer">Copyright &copy; 2014-2015. All rights reserved.</p>
 			</div>
 		</div>
 	</div>
