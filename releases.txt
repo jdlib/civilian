@@ -1,0 +1,16 @@
+Version 2.0, released at 07 Jul 2015
+====================================
+API changes
+- moved   org.civilian.Template  to  org.civilian.template.Template
+- merged  org.civilian.response.ResponseWriter  and  org.civilian.util.TabWriter  into  org.civilian.template.TemplateWriter
+- removed org.civilian.form.Form#getFirstInputControl()
+- changed org.civilian.form.Control#format(ResponseWriter)  to  Control.format()
+- changed org.civilian.form.Control#printExt(ResponseWriter, String...)  to Control.print(TemplateWriter, String...)
+- added   org.civilian.text.msg.MsgBundleFactory#clearCache()
+- changed org.civilian.client.WebUrl#getTypeSerializer() to #getSerializer()
+- changed org.civilian.text.msg.MsgBundle#msg(CharSequence key) to #msg(Object)
+
+
+Version 1.0, released at 31 Oct 2014
+====================================
+
