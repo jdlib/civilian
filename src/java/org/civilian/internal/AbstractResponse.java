@@ -406,7 +406,6 @@ public abstract class AbstractResponse implements Response
 	 * @param writerInterceptor a writer interceptor, can be null
 	 * @return writer successful created? 
 	 */
-	@SuppressWarnings("resource")
 	private boolean initContentWriterNoStream(ResponseWriterInterceptor writerInterceptor) throws IOException
 	{
 		Writer originalWriter = getContentWriterImpl();

@@ -121,19 +121,12 @@ public abstract class IoUtil
 	{
         dest.createNewFile();
 
-	    FileChannel srcChannel = null;
-	    FileChannel destChannel = null;
-
-	    try 
+	    try (FileInputStream in = new FileInputStream(src);
+	    	FileOutputStream out = new FileOutputStream(dest))
 	    {
-	        srcChannel  = new FileInputStream(src).getChannel();
-	        destChannel = new FileOutputStream(dest).getChannel();
+	    	FileChannel srcChannel  = in.getChannel();
+	    	FileChannel destChannel = out.getChannel();
 	        destChannel.transferFrom(srcChannel, 0, srcChannel.size());
-	    }
-	    finally
-	    {
-	    	close(srcChannel);
-	    	close(destChannel);
 	    }
 	}	
 	

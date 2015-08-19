@@ -115,7 +115,7 @@ public class UrlTest extends CivTest
 		assertEquals("abc", 	url.getPathParam(0));
 		assertSame  (pp, 		url.getPathParamDef(0));
 		assertEquals("abc",		url.getPathParam(pp));
-		assertEquals(null,		url.getPathParam(null));
+		assertNull(url.getPathParam(null));
 		assertEquals("/app/abc",url.toString());
 		
 		url.setPathParam("xyz");
