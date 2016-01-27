@@ -20,6 +20,7 @@ import static org.mockito.Mockito.*;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
 import javax.servlet.ServletRequest;
@@ -155,11 +156,12 @@ public class ServletRequestTest extends CivTest
 		assertNull(						request.getMatrixParam("p"));
 		assertArrayEquals(aParamValues,	request.getMatrixParams("mp"));
 		assertEquals(1,					request.getMatrixParam("mp", TypeLib.INTEGER).getValue().intValue());
-		Iterator<String> mpNames = request.getMatrixParamNames();
-		assertEquals("mp", mpNames.next());
-		assertEquals("z", mpNames.next());
-		assertEquals("x", mpNames.next());
-		assertFalse(mpNames.hasNext());
+		HashSet<String> mpNames = new HashSet<>();
+		request.getMatrixParamNames().forEachRemaining(mpNames::add);
+		assertTrue(mpNames.contains("mp"));
+		assertTrue(mpNames.contains("x"));
+		assertTrue(mpNames.contains("z"));
+		assertEquals(3, mpNames.size());
 	}
 	
 
