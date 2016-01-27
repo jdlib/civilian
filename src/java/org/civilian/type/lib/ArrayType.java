@@ -28,7 +28,7 @@ import org.civilian.util.Check;
 /**
  * A Type implementation for array types.
  */
-public class ArrayType<T> implements ListType<T[],T>
+public class ArrayType<T> extends ListType<T[],T>
 {
 	private static final Pattern LIST_SPLITTER = Pattern.compile("\\s*\\,\\s*");
 

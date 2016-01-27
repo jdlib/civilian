@@ -17,6 +17,7 @@ package org.civilian.type.lib;
 
 
 import java.math.BigInteger;
+import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
@@ -26,7 +27,7 @@ import org.civilian.type.TypeVisitor;
  * A type implementation for java.math.BigInteger.
  * @see TypeLib#BIGINTEGER
  */
-public class BigIntegerType extends SimpleType<BigInteger>
+public class BigIntegerType extends Type<BigInteger>
 {
 	@Override public Class<BigInteger> getJavaType()
 	{

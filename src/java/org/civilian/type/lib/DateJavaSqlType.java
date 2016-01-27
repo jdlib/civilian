@@ -26,7 +26,7 @@ import org.civilian.type.TypeVisitor;
  * A type implementation for java.sql.Date.
  * @see TypeLib#DATE_JAVA_SQL
  */
-public class DateJavaSqlType extends SimpleType<java.sql.Date> implements DateType<java.sql.Date>
+public class DateJavaSqlType extends DateType<java.sql.Date>
 {
 	@Override public Class<java.sql.Date> getJavaType()
 	{

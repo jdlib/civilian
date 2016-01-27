@@ -28,7 +28,7 @@ import org.civilian.type.TypeVisitor;
  * A type implementation for java.util.Calendar.
  * @see TypeLib#DATE_CALENDAR
  */
-public class DateCalendarType extends SimpleType<Calendar> implements DateType<Calendar>
+public class DateCalendarType extends DateType<Calendar>
 {
 	@Override public Class<Calendar> getJavaType()
 	{

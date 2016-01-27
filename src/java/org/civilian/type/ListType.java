@@ -20,7 +20,7 @@ package org.civilian.type;
  * A type specialization for list types.
  * List types means arrays, java.util.Lists, etc.
  */
-public interface ListType<T,E> extends Type<T>
+public abstract class ListType<T,E> extends Type<T>
 {
 	/**
 	 * Returns the type of a list element.
@@ -31,5 +31,5 @@ public interface ListType<T,E> extends Type<T>
 	/**
 	 * Parses the string array and returns a list of converted values.
 	 */
-	public T parseList(TypeSerializer serializer, String... s) throws Exception;
+	public abstract T parseList(TypeSerializer serializer, String... s) throws Exception;
 }

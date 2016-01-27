@@ -26,7 +26,7 @@ import org.civilian.type.TypeVisitor;
  * A type implementation for java.util.Date.
  * @see TypeLib#DATE_JAVA_UTIL
  */
-public class DateJavaUtilType extends SimpleType<java.util.Date> implements DateType<java.util.Date>
+public class DateJavaUtilType extends DateType<java.util.Date>
 {
 	@Override public Class<java.util.Date> getJavaType()
 	{

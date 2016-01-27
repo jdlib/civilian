@@ -17,6 +17,7 @@ package org.civilian.type.lib;
 
 
 import java.math.BigDecimal;
+import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
@@ -26,7 +27,7 @@ import org.civilian.type.TypeVisitor;
  * A type implementation for java.math.BigDecimal.
  * @see TypeLib#BIGDECIMAL
  */
-public class BigDecimalType extends SimpleType<BigDecimal>
+public class BigDecimalType extends Type<BigDecimal>
 {
 	@Override public Class<BigDecimal> getJavaType()
 	{

@@ -21,12 +21,16 @@ package org.civilian.type;
  * like TypeSerializer or TypeVisitor it allows to implement
  * various tasks (like parsing or formatting) using a double dispatch pattern.
  */
-public interface Type<T>
+public abstract class Type<T>
 {
 	/**
 	 * Returns true if the Type is a simple type (i.e. not an array or list type).
+	 * The default implementation returns true.
 	 */
-	public boolean isSimpleType();
+	public boolean isSimpleType()
+	{
+		return true;
+	}
 
 
 	/**
@@ -34,7 +38,10 @@ public interface Type<T>
 	 * @param serializer a TypeSerializer to format the value
 	 * @param value the value
 	 */
-	public String format(TypeSerializer serializer, T value);
+	public String format(TypeSerializer serializer, T value)
+	{
+		return format(serializer, value, null);
+	}
 	
 
 	/**
@@ -43,7 +50,7 @@ public interface Type<T>
 	 * @param value the value
 	 * @param style an optional style hint to the serializer
 	 */
-	public String format(TypeSerializer serializer, T value, Object style);
+	public abstract String format(TypeSerializer serializer, T value, Object style);
 
 	
 	/**
@@ -52,24 +59,28 @@ public interface Type<T>
 	 * @param s the string
 	 * @exception Exception if parsing fails
 	 */
-	public T parse(TypeSerializer serializer, String s) throws Exception;
+	public abstract T parse(TypeSerializer serializer, String s) throws Exception;
  
 	
 	/**
 	 * Accepts the visitor.
  	 */
-	public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E;
+	public abstract <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E;
 
 	
 	/**
 	 * Returns the associated Java type.
 	 */
-	public Class<T> getJavaType();
+	public abstract Class<T> getJavaType();
 	
 
 	/**
 	 * Returns the associated primitive Java type, or null if does not have one.
+	 * The default implementation returns null.
 	 */
-	public Class<T> getJavaPrimitiveType();
+	public Class<T> getJavaPrimitiveType()
+	{
+		return null;
+	}
 }
  

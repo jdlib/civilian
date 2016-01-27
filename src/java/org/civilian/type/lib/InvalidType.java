@@ -25,7 +25,7 @@ import org.civilian.type.TypeVisitor;
  * A Type implementation which throws an UnsupportedOperationException
  * on all operations.
  */
-public class InvalidType<T> implements Type<T>
+public class InvalidType<T> extends Type<T>
 {
 	public static final InvalidType<Object> INSTANCE = new InvalidType<>();
 	

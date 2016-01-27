@@ -21,7 +21,6 @@ import org.civilian.text.keys.serialize.KeySerializers;
 import org.civilian.type.Type;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
-import org.civilian.type.lib.SimpleType;
 import org.civilian.util.Check;
 
 
@@ -31,7 +30,7 @@ import org.civilian.util.Check;
  * i.e. that it is contained in the key list.
  * KeyType uses a {@link KeySerializer} to implement parsing and formating of values.
  */
-public class KeyType<VALUE> extends SimpleType<VALUE>
+public class KeyType<VALUE> extends Type<VALUE>
 {
 	/**
 	 * Creates a KeyType. 

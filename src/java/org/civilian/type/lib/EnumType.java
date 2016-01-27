@@ -16,6 +16,7 @@
 package org.civilian.type.lib;
 
 
+import org.civilian.type.Type;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 import org.civilian.util.Check;
@@ -24,7 +25,7 @@ import org.civilian.util.Check;
 /**
  * A type implementation for enums.
  */
-public class EnumType<T extends Enum<T>> extends SimpleType<T>
+public class EnumType<T extends Enum<T>> extends Type<T>
 {
 	public EnumType(Class<T> enumClass)
 	{

@@ -27,7 +27,7 @@ import org.civilian.util.Date;
  * A type implementation for org.civilian.util.Date.
  * @see TypeLib#DATE_CIVILIAN
  */
-public class DateCivilianType extends SimpleType<Date> implements DateType<Date>
+public class DateCivilianType extends DateType<Date>
 {
 	@Override public Class<Date> getJavaType()
 	{

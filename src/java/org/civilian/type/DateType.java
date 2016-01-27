@@ -19,7 +19,7 @@ package org.civilian.type;
 /**
  * A Type extension for Dates.
  */
-public interface DateType<T> extends Type<T>
+public abstract class DateType<T> extends Type<T>
 {
 	/**
 	 * Creates a Date object for given year, month and day values. 
@@ -27,31 +27,31 @@ public interface DateType<T> extends Type<T>
 	 * @param month the month (1-12)
 	 * @param day the day (1-31)
 	 */
-	public T createDate(int year, int month, int day);
+	public abstract T createDate(int year, int month, int day);
 
 	
 	/**
 	 * Creates a Date object for current date.
 	 */
-	public T createToday();
+	public abstract T createToday();
 
 
 	/**
 	 * Extracts the year from a date object.
 	 */
-	public int getYear(T date);
+	public abstract int getYear(T date);
 
 
 	/**
 	 * Extracts the month from a date object.
 	 * @return the month (1-12)
 	 */
-	public int getMonth(T date);
+	public abstract int getMonth(T date);
 
 
 	/**
 	 * Extracts the day from a date object.
 	 * @return the day (1-31)
 	 */
-	public int getDay(T date);
+	public abstract int getDay(T date);
 }
