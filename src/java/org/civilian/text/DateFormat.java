@@ -16,7 +16,6 @@
 package org.civilian.text;
 
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -42,48 +41,11 @@ public class DateFormat implements Serializable
 	
 
 	/**
-	 * Returns a DateFormat for the default locale.
+	 * Creates a new DateFormat.
 	 */
-	public static DateFormat getDefaultInstance()
+	public DateFormat(Locale locale)
 	{
-		return getInstance(Locale.getDefault());
-	}
-
-
-	/**
-	 * Returns a DateFormat for a locale.
-	 */
-	public static DateFormat getInstance(Locale locale)
-	{
-		return getInstance(locale, true);
-	}
-	
-	
-	/**
-	 * Returns a DateFormat for a locale.
-	 * @param locale the locale
-	 * @param cache determines if new created DateFormat instances will
-	 * 		be put in a global cache.
-	 */
-	public static DateFormat getInstance(Locale locale, boolean cache)
-	{
-		Check.notNull(locale, "locale");
-		
-		DateFormat instance = instances_.get(locale);
-		if (instance == null)
-		{
-			instance = new DateFormat(locale);
-			if (cache)
-				instances_.put(locale, instance);
-		}
-		
-		return instance;
-	}
-
-
-	private DateFormat(Locale locale)
-	{
-		locale_					= locale;
+		locale_					= Check.notNull(locale, "locale");
 		SimpleDateFormat sdf	= getSimpleDateFormat(locale);
 		symbols_				= sdf.getDateFormatSymbols();
 		String pattern			= sdf.toPattern();
@@ -438,5 +400,4 @@ public class DateFormat implements Serializable
 	private char separatorSymbol_;
 	private DateFormatSymbols symbols_;
 	private final Locale locale_;
-	private static HashMap<Locale,DateFormat> instances_ = new HashMap<>(1);
 }

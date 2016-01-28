@@ -28,21 +28,21 @@ public class DateFormatTest extends CivTest
 	@Test public void testSerialize() throws Throwable
 	{
 		// format, parse
-		dateFormat_ = DateFormat.getInstance(Locale.GERMAN);
+		dateFormat_ = new DateFormat(Locale.GERMAN);
 		assertFormat("1.1.2001", 2001, 1, 1, "01.01.2001");
 		assertFormat("27.11.1766", 1766, 11, 27);
 		
-		dateFormat_ = DateFormat.getInstance(Locale.US);
+		dateFormat_ = new DateFormat(Locale.US);
 		assertFormat("12/31/2001", 2001, 12, 31);
 
-		dateFormat_ = DateFormat.getInstance(Locale.ENGLISH);
+		dateFormat_ = new DateFormat(Locale.ENGLISH);
 		assertFormat("12/31/2001", 2001, 12, 31);
 
-		dateFormat_ = DateFormat.getInstance(Locale.FRENCH);
+		dateFormat_ = new DateFormat(Locale.FRENCH);
 		assertFormat("31/12/2001", 2001, 12, 31);
 		
 		// names
-		dateFormat_ = DateFormat.getInstance(Locale.GERMAN);
+		dateFormat_ = new DateFormat(Locale.GERMAN);
 		assertEquals("Januar", dateFormat_.getMonthName(1));
 		assertEquals("Feb", dateFormat_.getShortMonthName(2));
 		

@@ -7,7 +7,6 @@ import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
-import java.util.HashMap;
 import java.util.Locale;
 import org.civilian.util.Check;
 import org.civilian.util.StringUtil;
@@ -21,51 +20,13 @@ public class NumberFormat implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	
-	
 
 	/**
-	 * Returns a NumberFormat for the default locale.
+	 * Creates a new NumberFormat.
 	 */
-	public static NumberFormat getDefaultInstance()
+	public NumberFormat(Locale locale)
 	{
-		return getInstance(Locale.getDefault());
-	}
-
-
-	/**
-	 * Returns a NumberFormat for a locale.
-	 */
-	public static NumberFormat getInstance(Locale locale)
-	{
-		return getInstance(locale, true);
-	}
-	
-	
-	/**
-	 * Returns a NumberFormat for a locale.
-	 * @param locale the locale
-	 * @param cache determines if new created NumberFormat instances will
-	 * 		be put in a global cache.
-	 */
-	public static NumberFormat getInstance(Locale locale, boolean cache)
-	{
-		Check.notNull(locale, "locale");
-		
-		NumberFormat instance = instances_.get(locale);
-		if (instance == null)
-		{
-			instance = new NumberFormat(locale);
-			if (cache)
-				instances_.put(locale, instance);
-		}
-		
-		return instance;
-	}
-
-
-	private NumberFormat(Locale locale)
-	{
-		locale_	= locale;
+		locale_	= Check.notNull(locale, "locale");
 		impl_ 	= java.text.NumberFormat.getNumberInstance(locale);
 
 		if (impl_ instanceof DecimalFormat)
@@ -499,5 +460,4 @@ public class NumberFormat implements Serializable
 	private char decimalSeparator_ = 0;
 	private char groupingSeparator_ = 0;
 	private String groupingSeparatorString_;
-	private static final HashMap<Locale,NumberFormat> instances_ = new HashMap<>();
 }

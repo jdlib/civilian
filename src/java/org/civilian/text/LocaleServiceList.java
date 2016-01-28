@@ -57,7 +57,7 @@ public class LocaleServiceList
 		for (int i=0; i<supportedLocales_.length; i++)
 		{
 			Locale locale 			= supportedLocales_[i];
-			LocaleService service	= supportedServices_[i] = createService(locale, true);
+			LocaleService service	= supportedServices_[i] = createService(locale);
 			klBuilder.add(service, locale.getDisplayName(locale));
 		}
 		defaultService_	= supportedServices_[0];
@@ -236,10 +236,10 @@ public class LocaleServiceList
 	}
 
 	
-	private LocaleService createService(Locale locale, boolean cached)
+	private LocaleService createService(Locale locale)
 	{
 		MsgBundle msgBundle = msgBundleFactory_.getMsgBundle(locale);
-		LocaleSerializer serializer = new LocaleSerializer(locale, cached);
+		LocaleSerializer serializer = new LocaleSerializer(locale);
 		return new LocaleService(locale, msgBundle, serializer);
 	}
 	
@@ -327,7 +327,7 @@ public class LocaleServiceList
 		{
 			LocaleService service = tryGet(locale);
 			if (service == null)
-				service = createService(locale, false /*no cache*/);
+				service = createService(locale);
 			return service;
 		}
 	}

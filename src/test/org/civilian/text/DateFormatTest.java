@@ -28,24 +28,14 @@ public class DateFormatTest extends CivTest
 {
 	@Test public void testGet()
 	{
-		DateFormat format = DateFormat.getDefaultInstance();
+		DateFormat format = new DateFormat(Locale.getDefault());
 		assertSame(Locale.getDefault(), format.getLocale());
-		
-		assertSame(format, DateFormat.getInstance(Locale.getDefault()));
-		assertSame(format, DateFormat.getInstance(Locale.getDefault(), false));
-		
-		Locale xxLocale = new Locale("xx");
-		DateFormat f1 = DateFormat.getInstance(xxLocale, false);
-		DateFormat f2 = DateFormat.getInstance(xxLocale, false);
-		assertSame(xxLocale, f1.getLocale());
-		assertSame(xxLocale, f2.getLocale());
-		assertNotSame(f1, f2);
 	}
 	
 	
 	@Test public void testSymbols()
 	{
-		DateFormat german = DateFormat.getInstance(Locale.GERMAN);
+		DateFormat german = new DateFormat(Locale.GERMAN);
 		assertEquals('.', 		german.getSeparatorSymbol());
 		assertEquals(0, 		german.getDayPosition());
 		assertEquals(1, 		german.getMonthPosition());
@@ -68,7 +58,7 @@ public class DateFormatTest extends CivTest
 	
 	@Test public void testParse() throws Exception
 	{
-		DateFormat uk = DateFormat.getInstance(Locale.UK);
+		DateFormat uk = new DateFormat(Locale.UK);
 		Date date;
 		
 		date = uk.parse("31/10/2014", TypeLib.DATE_CIVILIAN);
@@ -88,7 +78,7 @@ public class DateFormatTest extends CivTest
 	
 	@Test public void testFormat() throws Exception
 	{
-		DateFormat german = DateFormat.getInstance(Locale.GERMAN);
+		DateFormat german = new DateFormat(Locale.GERMAN);
 		Date date = new Date(2014, 12, 31);
 		assertEquals("31.12.2014", german.format(date));
 		

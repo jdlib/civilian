@@ -43,27 +43,12 @@ import org.civilian.util.Check;
 public class LocaleService implements LocaleServiceProvider
 {
 	/**
-	 * Creates a new LocaleService object which uses a {@link LocaleSerializer},
-	 * created for the locale
+	 * Creates a new LocaleService object with an empty MsgBundle.
 	 * @param locale a locale 
-	 * @param messages a MsgBundle
-	 * @param cached argument passed to the {@link LocaleSerializer#LocaleSerializer(Locale, boolean) LocaleSerializer ctor}.
 	 */
-	public LocaleService(Locale locale, MsgBundle messages, boolean cached)
+	public LocaleService(Locale locale)
 	{
-		this(locale, messages, new LocaleSerializer(locale, cached));
-	}
-
-
-	/**
-	 * Creates a new LocaleService object which uses a {@link LocaleSerializer},
-	 * created for the locale
-	 * @param locale a locale 
-	 * @param cached argument passed to the {@link LocaleSerializer#LocaleSerializer(Locale, boolean) LocaleSerializer ctor}.
-	 */
-	public LocaleService(Locale locale, boolean cached)
-	{
-		this(locale, null, new LocaleSerializer(locale, cached));
+		this(locale, null, null);
 	}
 	
 
@@ -71,13 +56,13 @@ public class LocaleService implements LocaleServiceProvider
 	 * Creates a new LocaleService object.
 	 * @param locale a locale 
 	 * @param messages a MsgBundle. Will be converted into an empty bundle if null
-	 * @param serializer a LocaleSerializer suitable for the locale. 
+	 * @param serializer a LocaleSerializer suitable for the locale. If null a new serializer will be created
 	 */
 	public LocaleService(Locale locale, MsgBundle messages, LocaleSerializer serializer)
 	{
-		locale_ 		= Check.notNull(locale, 	"locale");
-		serializer_		= Check.notNull(serializer, "serializer");
+		locale_ 		= Check.notNull(locale, "locale");
 		msgBundle_		= messages != null ? messages : MsgBundle.empty(locale);
+		serializer_		= serializer != null ? serializer : new LocaleSerializer(locale);
 		localeString_	= locale.toString();
 	}
 	

@@ -123,7 +123,7 @@ public class DateTest extends CivTest
 		assertDow(2001, 06, 18, Date.WEEKDAY_MONDAY);
 		assertDow(1966, 11, 27, Date.WEEKDAY_SUNDAY);
 
-		dateFormat_ = DateFormat.getInstance(Locale.GERMAN);
+		dateFormat_ = new DateFormat(Locale.GERMAN);
 		Date d = new Date(1966, 11, 27);
 		assertEquals("Sonntag", dateFormat_.getWeekdayName(d.getDayOfWeek()));
 		d = d.addDays(-1);

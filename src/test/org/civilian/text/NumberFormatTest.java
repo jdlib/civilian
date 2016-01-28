@@ -11,8 +11,8 @@ public class NumberFormatTest extends CivTest
 {
 	@BeforeClass public static void beforeClass()
 	{
-		formatDe_ = NumberFormat.getInstance(Locale.GERMAN, false);
-		formatUk_ = NumberFormat.getInstance(Locale.UK, true);
+		formatDe_ = new NumberFormat(Locale.GERMAN);
+		formatUk_ = new NumberFormat(Locale.UK);
 	}
 	
 	

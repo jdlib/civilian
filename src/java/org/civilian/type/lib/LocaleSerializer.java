@@ -45,24 +45,11 @@ public class LocaleSerializer extends AbstractSerializer
 	
 	
 	/**
-	 * Calls {@link LocaleSerializer#LocaleSerializer(Locale, boolean)}
-	 * with parameter cached set to true.
+	 * Creates a new LocaleSerializer.
 	 */
 	public LocaleSerializer(Locale locale)
 	{
-		this(locale, true);
-	}
-	
-
-	/**
-	 * Creates a new LocaleSerializer.
-	 * @param cached the LocaleSerializer uses a {@link DateFormat} instance internally
-	 * 		to format dates. The cache parameter determines if this DateFormat
-	 * 		is cached or not (see {@link DateFormat#getInstance(Locale, boolean)}
-	 */
-	public LocaleSerializer(Locale locale, boolean cached)
-	{
-		this(locale, NumberFormat.getInstance(locale, cached), DateFormat.getInstance(locale, cached));
+		this(locale, new NumberFormat(locale), new DateFormat(locale));
 	}
 	
 
