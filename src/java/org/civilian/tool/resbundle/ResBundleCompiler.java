@@ -238,7 +238,7 @@ public class ResBundleCompiler
 					else
 					{
 						out.print("\\u");
-						out.print(StringUtil.fillLeft(c, 4));
+						out.print(StringUtil.fillLeft(Integer.toHexString(c), 4, '0'));
 					}
 				}
 				out.println();
