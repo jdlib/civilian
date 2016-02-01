@@ -16,7 +16,6 @@
 package org.civilian.type.lib;
 
 
-import org.civilian.type.Type;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
@@ -25,7 +24,7 @@ import org.civilian.type.TypeVisitor;
  * A Type implementation which throws an UnsupportedOperationException
  * on all operations.
  */
-public class InvalidType<T> extends Type<T>
+public class InvalidType<T> extends SimpleType<T>
 {
 	public static final InvalidType<Object> INSTANCE = new InvalidType<>();
 	

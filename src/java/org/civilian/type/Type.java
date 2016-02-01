@@ -16,13 +16,67 @@
 package org.civilian.type;
 
 
+import java.util.concurrent.atomic.AtomicInteger;
+import org.civilian.util.Check;
+
+
 /**
- * Type represents a data type. In combination with interfaces
- * like TypeSerializer or TypeVisitor it allows to implement
- * various tasks (like parsing or formatting) using a double dispatch pattern.
+ * Type represents a data type.
  */
 public abstract class Type<T>
 {
+	/**
+	 * Category categorizes types.
+	 */
+	public enum Category
+	{
+		SIMPLE,
+		DATE,
+		TIME,
+		DATETIME,
+		ENUM,
+		KEY,
+		LIST,
+		OTHER;
+		
+		
+		public static int count()
+		{
+			return count_;
+		}
+		
+		
+		private static int count_ = Category.values().length;
+	}
+
+	
+	public Type(Category category)
+	{
+		category_ 	= Check.notNull(category, "category");
+		ordinal_ 	= nextOrdinal_.getAndIncrement();
+	}
+	
+	
+	/**
+	 * Returns the unique ordinal id of the type instance. It may
+	 * change during different VM runs.
+	 * @return the ordinal. The ordinal is a value >= 0.  
+	 */
+	public final int ordinal()
+	{
+		return ordinal_;
+	}
+	
+	
+	/**
+	 * Returns the type category.
+	 */
+	public final Category category()
+	{
+		return category_;
+	}
+
+	
 	/**
 	 * Returns true if the Type is a simple type (i.e. not an array or list type).
 	 * The default implementation returns true.
@@ -82,5 +136,10 @@ public abstract class Type<T>
 	{
 		return null;
 	}
+
+
+	private int ordinal_;
+	private Category category_;
+	private static AtomicInteger nextOrdinal_ = new AtomicInteger();
 }
  

@@ -16,7 +16,6 @@
 package org.civilian.type.lib;
 
 
-import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
@@ -26,7 +25,7 @@ import org.civilian.type.TypeVisitor;
  * A type implementation for java.lang.Long.
  * @see TypeLib#LONG
  */
-public class LongType extends Type<Long>
+public class LongType extends SimpleType<Long>
 {
 	@Override public Class<Long> getJavaType()
 	{

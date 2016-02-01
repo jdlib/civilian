@@ -22,6 +22,15 @@ package org.civilian.type;
 public abstract class DateType<T> extends Type<T>
 {
 	/**
+	 * Creates a new DateType.
+	 */
+	public DateType()
+	{
+		super(Category.DATE);
+	}
+	
+	
+	/**
 	 * Creates a Date object for given year, month and day values. 
 	 * @param year the year
 	 * @param month the month (1-12)

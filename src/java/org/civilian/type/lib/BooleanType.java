@@ -16,7 +16,6 @@
 package org.civilian.type.lib;
 
 
-import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
@@ -26,7 +25,7 @@ import org.civilian.type.TypeVisitor;
  * A type implementation for java.lang.Boolean.
  * @see TypeLib#BOOLEAN
  */
-public class BooleanType extends Type<Boolean>
+public class BooleanType extends SimpleType<Boolean>
 {
 	@Override public Class<Boolean> getJavaType()
 	{

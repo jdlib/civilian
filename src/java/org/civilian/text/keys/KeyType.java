@@ -40,6 +40,7 @@ public class KeyType<VALUE> extends Type<VALUE>
 	 */
 	public KeyType(KeyList<VALUE> keyList, KeySerializer serializer)
 	{
+		super(Category.KEY);
 		keyList_ 	= Check.notNull(keyList, "keyList");
 		serializer_	= serializer; 
 	}

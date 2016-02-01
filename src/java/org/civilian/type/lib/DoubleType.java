@@ -16,7 +16,6 @@
 package org.civilian.type.lib;
 
 
-import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
@@ -26,7 +25,7 @@ import org.civilian.type.TypeVisitor;
  * A type implementation for java.lang.Double.
  * @see TypeLib#DOUBLE
  */
-public class DoubleType extends Type<Double>
+public class DoubleType extends SimpleType<Double>
 {
 	@Override public Class<Double> getJavaType()
 	{

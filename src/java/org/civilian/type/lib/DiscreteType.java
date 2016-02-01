@@ -29,7 +29,7 @@ import org.civilian.util.ClassUtil;
  * Formatting and parsing of lookup objects can either be type based, or
  * generic, using the toString() method of the objects. 
  */
-public class DiscreteType<T> extends Type<T>
+public class DiscreteType<T> extends SimpleType<T>
 {
 	/**
 	 * Creates a new DiscreteType.

@@ -22,6 +22,12 @@ package org.civilian.type;
  */
 public abstract class ListType<T,E> extends Type<T>
 {
+	public ListType()
+	{
+		super(Category.LIST);
+	}
+	
+	
 	/**
 	 * Returns the type of a list element.
 	 */

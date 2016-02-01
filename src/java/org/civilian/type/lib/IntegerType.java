@@ -16,7 +16,6 @@
 package org.civilian.type.lib;
 
 
-import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
@@ -26,7 +25,7 @@ import org.civilian.type.TypeVisitor;
  * A type implementation for java.lang.Integer.
  * @see TypeLib#INTEGER
  */
-public class IntegerType extends Type<Integer>
+public class IntegerType extends SimpleType<Integer>
 {
 	@Override public Class<Integer> getJavaType()
 	{

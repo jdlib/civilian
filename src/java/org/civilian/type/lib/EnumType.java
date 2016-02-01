@@ -29,6 +29,7 @@ public class EnumType<T extends Enum<T>> extends Type<T>
 {
 	public EnumType(Class<T> enumClass)
 	{
+		super(Category.ENUM);
 		enumClass_ = Check.notNull(enumClass, "enumClass");
 	}
 	
