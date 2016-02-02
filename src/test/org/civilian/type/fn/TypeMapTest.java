@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type;
+package org.civilian.type.fn;
 
 
 import org.civilian.CivTest;
+import org.civilian.type.Type;
+import org.civilian.type.TypeLib;
+import org.civilian.type.fn.TypeMap;
 import org.junit.Test;
 
 
