@@ -28,25 +28,62 @@ public abstract class Type<T>
 	/**
 	 * Category categorizes types.
 	 */
-	public enum Category
+	public static class Category
 	{
-		SIMPLE,
-		DATE,
-		TIME,
-		DATETIME,
-		ENUM,
-		KEY,
-		LIST,
-		OTHER;
+		private static AtomicInteger nextOrdinal_ = new AtomicInteger();
+		public static final Category SIMPLE 	= new Category("SIMPLE");
+		public static final Category DATE		= new Category("DATE");
+		public static final Category TIME		= new Category("TIME");
+		public static final Category DATETIME	= new Category("DATETIME");
+		public static final Category ENUM		= new Category("ENUM");
+		public static final Category KEY		= new Category("KEY");
+		public static final Category LIST		= new Category("LIST");
 		
 		
-		public static int count()
+		public Category(String name)
 		{
-			return count_;
+			name_ 	 = Check.notNull(name, "name");
+			ordinal_ = nextOrdinal_.getAndIncrement();
 		}
 		
 		
-		private static int count_ = Category.values().length;
+		/**
+		 * Returns the unique ordinal id of the category. It may
+		 * change during different VM runs.
+		 * @return the ordinal. The ordinal is a value >= 0.  
+		 */
+		public final int ordinal()
+		{
+			return ordinal_;
+		}
+		
+		
+		/**
+		 * Returns the category name.
+		 */
+		public final String name()
+		{
+			return name_;
+		}
+
+		
+		@Override public String toString()
+		{
+			return name();
+		}
+
+		
+		/**
+		 * Returns the number of existing categories.
+		 */
+		public static int count()
+		{
+			return nextOrdinal_.get();
+		}
+		
+		
+		private int ordinal_;
+		private String name_;
 	}
 
 	
