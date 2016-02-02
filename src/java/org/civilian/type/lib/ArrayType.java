@@ -106,7 +106,7 @@ public class ArrayType<T> extends ListType<T[],T>
 			return null;
 		else
 		{
-			T[] result = createArray(s.length); 
+			T[] result = elementType_.createArray(s.length); 
 			for (int i=0; i<s.length; i++)
 				result[i] = elementType_.parse(serializer, s[i]);
 			return result;
@@ -135,13 +135,6 @@ public class ArrayType<T> extends ListType<T[],T>
 	}
 
 
-	@SuppressWarnings("unchecked")
-	public T[] createArray(int length)
-	{
-		return (T[])Array.newInstance(elementType_.getJavaType(), length);
-	}
-
-	
 	private Type<T> elementType_;
 	private Class<T[]> javaType_; 
 }

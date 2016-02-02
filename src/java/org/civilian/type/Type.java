@@ -16,6 +16,7 @@
 package org.civilian.type;
 
 
+import java.lang.reflect.Array;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.civilian.util.Check;
 
@@ -172,6 +173,25 @@ public abstract class Type<T>
 	public Class<T> getJavaPrimitiveType()
 	{
 		return null;
+	}
+	
+
+	/**
+	 * Creates an array of length n.
+	 */
+	@SuppressWarnings("unchecked")
+	public T[] createArray(int length)
+	{
+		return (T[])Array.newInstance(getJavaType(), length);
+	}
+
+
+	/**
+	 * Returns the simple name of the type class.
+	 */
+	@Override public String toString()
+	{
+		return getClass().getSimpleName();
 	}
 
 
