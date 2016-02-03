@@ -18,8 +18,6 @@ package org.civilian.request;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
@@ -27,7 +25,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.civilian.Application;
-import org.civilian.Context;
 import org.civilian.Request;
 import org.civilian.Resource;
 import org.civilian.Response;
@@ -35,13 +32,9 @@ import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
-import org.civilian.resource.Url;
 import org.civilian.text.LocaleService;
-import org.civilian.type.Type;
-import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
-import org.civilian.util.Value;
 
 
 /**
@@ -69,12 +62,6 @@ public class RequestWrapper implements Request
 	}
 	
 
-	@Override public Context getContext()
-	{
-		return request_.getContext();
-	}
-
-
 	@Override public Application getApplication()
 	{
 		return request_.getApplication();
@@ -99,12 +86,6 @@ public class RequestWrapper implements Request
 	}
 
 
-	@Override public boolean hasMethod(String method)
-	{
-		return request_.hasMethod(method);
-	}
-
-
 	@Override public Path getPath()
 	{
 		return request_.getPath();
@@ -117,24 +98,12 @@ public class RequestWrapper implements Request
 	}
 
 
-	@Override public String getRealPath()
-	{
-		return request_.getRealPath();
-	}
-
-
 	@Override public String getOriginalPath()
 	{
 		return request_.getOriginalPath();
 	}
 	
 	
-	@Override public Url getUrl(boolean addServer, boolean addParams)
-	{
-		return request_.getUrl(addServer, addParams);
-	}
-
-
 	@Override public Resource getResource()
 	{
 		return request_.getResource();
@@ -195,12 +164,6 @@ public class RequestWrapper implements Request
 	}
 
 
-	@Override public <T> Value<T> getParameter(String name, Type<T> type)
-	{
-		return request_.getParameter(name, type);
-	}
-
-
 	@Override public String[] getParameters(String name)
 	{
 		return request_.getParameters(name);
@@ -255,12 +218,6 @@ public class RequestWrapper implements Request
 	}
 
 
-	@Override public <T> Value<T> getMatrixParam(String name, Type<T> type)
-	{
-		return request_.getMatrixParam(name, type);
-	}
-
-
 	@Override public Iterator<String> getMatrixParamNames()
 	{
 		return request_.getMatrixParamNames();
@@ -306,18 +263,6 @@ public class RequestWrapper implements Request
 	@Override public void setLocaleService(LocaleService service)
 	{
 		request_.setLocaleService(service);
-	}
-
-
-	@Override public void setLocaleService(Locale locale)
-	{
-		request_.setLocaleService(locale);
-	}
-
-
-	@Override public LocaleSerializer getLocaleSerializer()
-	{
-		return request_.getLocaleSerializer();
 	}
 
 
@@ -369,18 +314,6 @@ public class RequestWrapper implements Request
 	}
 
 
-	@Override public <T> T readContent(Class<T> type) throws Exception
-	{
-		return request_.readContent(type);
-	}
-
-
-	@Override public <T> T readContent(Class<T> type, java.lang.reflect.Type genericType) throws Exception
-	{
-		return request_.readContent(type, genericType);
-	}
-	
-		
 	@Override public void addInterceptor(RequestStreamInterceptor interceptor)
 	{
 		request_.addInterceptor(interceptor);
@@ -450,18 +383,6 @@ public class RequestWrapper implements Request
 	@Override public Session getSession(boolean create)
 	{
 		return request_.getSession(create);
-	}
-
-
-	@Override public void print(PrintStream out)
-	{
-		request_.print(out);
-	}
-
-
-	@Override public void print(PrintWriter out)
-	{
-		request_.print(out);
 	}
 
 

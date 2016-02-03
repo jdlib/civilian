@@ -19,41 +19,28 @@ package org.civilian.internal;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
-
 import org.civilian.Application;
-import org.civilian.Context;
 import org.civilian.Request;
 import org.civilian.Resource;
 import org.civilian.Response;
-import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.internal.intercept.ReqReaderInterceptorChain;
 import org.civilian.internal.intercept.ReqStreamInterceptorChain;
 import org.civilian.request.AsyncContext;
-import org.civilian.request.BadRequestException;
-import org.civilian.request.RequestHeaders;
 import org.civilian.request.RequestReaderInterceptor;
 import org.civilian.request.RequestStreamInterceptor;
 import org.civilian.resource.ExtensionMapping;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
-import org.civilian.resource.Url;
 import org.civilian.text.LocaleService;
-import org.civilian.type.Type;
-import org.civilian.type.lib.LocaleSerializer;
-import org.civilian.type.lib.StandardSerializer;
 import org.civilian.util.Check;
-import org.civilian.util.Value;
 
 
 /**
@@ -94,21 +81,6 @@ public abstract class AbstractRequest implements Request
 	//-----------------------------
 	
 	
-	/**
-	 * Implements RequestProvider and returns this.
-	 */
-	@Override public Request getRequest()
-	{
-		return this;
-	}
-	
-	
-	@Override public Context getContext()
-	{
-		return application_.getContext();
-	}
-
-	
 	@Override public Application getApplication()
 	{
 		return application_;
@@ -129,15 +101,6 @@ public abstract class AbstractRequest implements Request
 		response_ = response;
 	}
 
-	
-	/**
-	 * Returns if the request has the given method.
-	 */
-	@Override public boolean hasMethod(String method)
-	{
-		return getMethod().equals(method);
-	}
-	
 	
 	//-----------------------------
 	// path related methods
@@ -167,39 +130,6 @@ public abstract class AbstractRequest implements Request
 	}
 
 	
-	@Override public String getRealPath()
-	{
-		Context context 	= getApplication().getContext();
-		Path subContextPath = getPath().cutStart(context.getPath()); 
-		return subContextPath != null ? context.getRealPath(subContextPath) : null;
-	}
-	
-	
-	@Override public Url getUrl(boolean includeServer, boolean includeParams)
-	{
-		Url url;
-		
-		if (getResource() != null)
-			url = new Url(this, getResource()); // also copies the path params
-		else
-			url = new Url(this, getPath());
-		
-		if (includeServer)
-			url.prepend(getServerInfo().toString());
-		
-		if (includeParams)
-		{
-			for (Iterator<String> pnames = getParameterNames(); pnames.hasNext(); )
-			{
-				String pname = pnames.next();
-				url.addQueryParams(pname, getParameters(pname));
-			}
-		}
-		
-		return url;
-	}
-
-
 	//----------------------------
 	// resource
 	//----------------------------
@@ -217,17 +147,6 @@ public abstract class AbstractRequest implements Request
 	}
 	
 	
-	//----------------------------
-	// parameters
-	//----------------------------
-	
-	
-	@Override public <T> Value<T> getParameter(String name, Type<T> type)
-	{
-		return new Value<>(type, getParameter(name), StandardSerializer.INSTANCE);
-	}
-	
-
 	//----------------------------
 	// path params
 	//----------------------------
@@ -286,12 +205,6 @@ public abstract class AbstractRequest implements Request
 	}
 	
 	
-	@Override public <T> Value<T> getMatrixParam(String name, Type<T> type)
-	{
-		return new Value<>(type, getMatrixParam(name), StandardSerializer.INSTANCE);
-	}
-
-	
 	@Override public Iterator<String> getMatrixParamNames()
 	{
 		return getMatrixParams().iterator();
@@ -309,8 +222,6 @@ public abstract class AbstractRequest implements Request
 	private void parseMatrixParams()
 	{
 		String uri = getOriginalPath();
-		
-		
 		
 		int slash = uri.lastIndexOf('/');
 		int colon = uri.indexOf(';', slash + 1);
@@ -403,25 +314,6 @@ public abstract class AbstractRequest implements Request
 	@Override public void setLocaleService(LocaleService localeService)
 	{
 		localeService_ = Check.notNull(localeService, "localeService");
-	}
-
-	
-	/**
-	 * Sets the localeService associated with the request.
-	 */
-	@Override public void setLocaleService(Locale locale)
-	{
-		Check.notNull(locale, "locale");
-		localeService_ = getApplication().getLocaleServices().getService(locale);
-	}
-
-
-	/**
-	 * Shortcut for getLocaleServce().getSerializer().
-	 */
-	@Override public LocaleSerializer getLocaleSerializer()
-	{
-		return getLocaleService().getSerializer();
 	}
 
 	
@@ -631,42 +523,6 @@ public abstract class AbstractRequest implements Request
 	}
 
 	
-	@Override public <T> T readContent(Class<T> type) throws Exception
-	{
-		return readContent(type, type); 
-	}
-	
-	
-	@Override public <T> T readContent(Class<T> type, java.lang.reflect.Type genericType) 
-		throws Exception
-	{
-		Check.notNull(type, "type");
-		if (genericType == null)
-			genericType = type;
-
-		ContentType contentType	= getContentType();
-		if ((contentType == null) && (type == String.class))
-			contentType = ContentType.TEXT_PLAIN;
-			
-		ContentSerializer reader = getApplication().getContentSerializer(contentType);
-		if (reader == null)
-			throw new IllegalStateException("don't know how to read content with content type '" + contentType + "'");
-		
-		try
-		{
-			return reader.read(type, genericType, getContentReader());
-		}
-		catch(Exception e)
-		{
-			String message = reader.describeReadError(e);
-			if (message != null)
-				throw new BadRequestException("RequestContent: " + message, e);
-			else
-				throw e;
-		}
-	}
-	
-	
 	private void checkNoContentStream()
 	{
 		if (contentInput_ instanceof InputStream)
@@ -771,44 +627,6 @@ public abstract class AbstractRequest implements Request
 		return extension_;
 	}
 
-	
-	//------------------------------
-	// print
-	//------------------------------
-
-	
-	/**
-	 * Prints request info to the PrintStream.
-	 */
-	@Override public void print(PrintStream out)
-	{
-		Check.notNull(out, "out");
-		print(new PrintWriter(out, true));
-	}
-
-	
-	/**
-	 * Prints request info to the PrintWriter.
-	 */
-	@Override public void print(PrintWriter out)
-	{
-		Check.notNull(out, "out");
-		out.print(getMethod());
-		out.print(" ");
-		out.println(getUrl(false /*server*/, true /*params*/));
-		RequestHeaders headers = getHeaders(); 
-		for (String name : headers)
-		{
-			String[] values = headers.getAll(name);
-			for (String value : values)
-			{
-				out.print(name);
-				out.print(' ');
-				out.println(value);
-			}
-		}
-	}
-	
 	
 	@Override public String toString()
 	{

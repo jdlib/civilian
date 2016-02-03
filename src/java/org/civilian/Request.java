@@ -25,7 +25,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
@@ -38,6 +37,9 @@ import org.civilian.resource.Url;
 import org.civilian.text.LocaleService;
 import org.civilian.type.Type;
 import org.civilian.type.lib.LocaleSerializer;
+import org.civilian.type.lib.StandardSerializer;
+import org.civilian.util.Check;
+import org.civilian.util.ClassUtil;
 import org.civilian.util.Value;
 
 
@@ -116,6 +118,15 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	
 	
 	/**
+	 * Implements RequestProvider and returns this.
+	 */
+	@Override default public Request getRequest()
+	{
+		return this;
+	}
+
+	
+	/**
 	 * Returns the associated response.
 	 */
 	@Override public Response getResponse();
@@ -133,7 +144,10 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns the context to which this request belongs.
 	 */
-	@Override public Context getContext();
+	@Override default public Context getContext()
+	{
+		return getApplication().getContext();
+	}
 
 	
 	/**
@@ -153,7 +167,10 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Returns if the request has the given method.
 	 * @see #getMethod()
 	 */
-	public boolean hasMethod(String method);
+	default public boolean hasMethod(String method)
+	{
+		return ClassUtil.equals(getMethod(), method);
+	}
 
 
 	//-----------------------------
@@ -179,7 +196,12 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * @return the path or null, if there is no correspondence.
 	 * @see Context#getRealPath(String)
 	 */
-	public String getRealPath();
+	default public String getRealPath()
+	{
+		Context context 	= getContext();
+		Path subContextPath = getPath().cutStart(context.getPath()); 
+		return subContextPath != null ? context.getRealPath(subContextPath) : null;
+	}
 
 
 	/**
@@ -198,7 +220,29 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * @param addServer should protocol, host and port be included in the URL? 
 	 * @param addParams should parameters added as query parameter? 
 	 */
-	public Url getUrl(boolean addServer, boolean addParams);
+	default public Url getUrl(boolean addServer, boolean addParams)
+	{
+		Url url;
+		
+		if (getResource() != null)
+			url = new Url(this, getResource()); // also copies the path params
+		else
+			url = new Url(this, getPath());
+		
+		if (addServer)
+			url.prepend(getServerInfo().toString());
+		
+		if (addParams)
+		{
+			for (Iterator<String> pnames = getParameterNames(); pnames.hasNext(); )
+			{
+				String pname = pnames.next();
+				url.addQueryParams(pname, getParameters(pname));
+			}
+		}
+		
+		return url;
+	}
 
 	
 	//----------------------------
@@ -279,7 +323,10 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * If the conversion of the parameter to the requested type fails, the 
 	 * Value contains the {@link Value#getError() conversion error}.
 	 */
-	public <T> Value<T> getParameter(String name, Type<T> type);
+	default public <T> Value<T> getParameter(String name, Type<T> type)
+	{
+		return new Value<>(type, getParameter(name), StandardSerializer.INSTANCE);
+	}
 
 	
 	/**
@@ -364,7 +411,10 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * If the conversion of the parameter to the requested type fails, the 
 	 * Value contains the error.
 	 */
-	public <T> Value<T> getMatrixParam(String name, Type<T> type);
+	default public <T> Value<T> getMatrixParam(String name, Type<T> type)
+	{
+		return new Value<>(type, getMatrixParam(name), StandardSerializer.INSTANCE);
+	}
 
 	
 	/**
@@ -445,14 +495,21 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Sets the locale data associated with the request to the locale data with
 	 * the given locale
 	 */
-	public void setLocaleService(Locale locale);
+	default public void setLocaleService(Locale locale)
+	{
+		Check.notNull(locale, "locale");
+		setLocaleService(getApplication().getLocaleServices().getService(locale));
+	}
 
 
 	/**
 	 * Returns a the LocaleSerializer for the current locale data.
 	 * Shortcut for getLocaleService().getSerializer().
 	 */
-	public LocaleSerializer getLocaleSerializer();
+	default public LocaleSerializer getLocaleSerializer()
+	{
+		return getLocaleService().getSerializer();
+	}
 
 	
 	/**
@@ -546,7 +603,10 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Reads the content and transforms it into an Object of the given type.
 	 * This method is a shortcut for readContent(type, type).
 	 */
-	public <T> T readContent(Class<T> type) throws Exception;
+	default public <T> T readContent(Class<T> type) throws Exception
+	{
+		return readContent(type, type); 
+	}
 
 	
 	/**
@@ -562,8 +622,34 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * @see Application#getContentSerializer(ContentType)
 	 * @see ContentSerializer#read(Class, java.lang.reflect.Type, Reader)
 	 */
-	public <T> T readContent(Class<T> type, java.lang.reflect.Type genericType) 
-		throws BadRequestException, Exception;
+	default public <T> T readContent(Class<T> type, java.lang.reflect.Type genericType) 
+		throws BadRequestException, Exception
+	{
+		Check.notNull(type, "type");
+		if (genericType == null)
+			genericType = type;
+
+		ContentType contentType	= getContentType();
+		if ((contentType == null) && (type == String.class))
+			contentType = ContentType.TEXT_PLAIN;
+			
+		ContentSerializer reader = getApplication().getContentSerializer(contentType);
+		if (reader == null)
+			throw new IllegalStateException("don't know how to read content with content type '" + contentType + "'");
+		
+		try
+		{
+			return reader.read(type, genericType, getContentReader());
+		}
+		catch(Exception e)
+		{
+			String message = reader.describeReadError(e);
+			if (message != null)
+				throw new BadRequestException("RequestContent: " + message, e);
+			else
+				throw e;
+		}
+	}
 
 	
 	/**
@@ -668,13 +754,34 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Prints request info to the PrintStream.
 	 */
-	public void print(PrintStream out);
+	default public void print(PrintStream out)
+	{
+		Check.notNull(out, "out");
+		print(new PrintWriter(out, true));
+	}
 
 	
 	/**
 	 * Prints request info to the PrintWriter.
 	 */
-	public void print(PrintWriter out);
+	default public void print(PrintWriter out)
+	{
+		Check.notNull(out, "out");
+		out.print(getMethod());
+		out.print(" ");
+		out.println(getUrl(false /*server*/, true /*params*/));
+		RequestHeaders headers = getHeaders(); 
+		for (String name : headers)
+		{
+			String[] values = headers.getAll(name);
+			for (String value : values)
+			{
+				out.print(name);
+				out.print(' ');
+				out.println(value);
+			}
+		}
+	}
 
 	
 	/**
