@@ -42,6 +42,7 @@ import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
 import org.civilian.type.lib.LocaleSerializer;
+import org.civilian.util.Check;
 
 
 /**
@@ -198,15 +199,30 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 
 	
 	/**
+	 * Implements ResponseProvider and returns this.
+	 */
+	@Override default public Response getResponse()
+	{
+		return this;
+	}
+
+	
+	/**
 	 * Returns the context.
 	 */
-	@Override public abstract Context getContext();
+	@Override default public Context getContext()
+	{
+		return getApplication().getContext();
+	}
 
 	
 	/**
 	 * Returns the application.
 	 */
-	@Override public abstract Application getApplication();
+	@Override default public Application getApplication()
+	{
+		return getRequest().getApplication();
+	}
 	
 
 	/**
@@ -280,13 +296,19 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Sets the locale data associated with the response.
 	 */
-	public abstract void setLocaleService(Locale locale);
+	default public void setLocaleService(Locale locale)
+	{
+		setLocaleService(getApplication().getLocaleServices().getService(locale));
+	}
 	
 
 	/**
 	 * Shortcut for {@link #getLocaleService()}.getSerializer().
 	 */
-	public abstract LocaleSerializer getLocaleSerializer();
+	default public LocaleSerializer getLocaleSerializer()
+	{
+		return getLocaleService().getSerializer();
+	}
 
 	
 	//------------------------------
@@ -316,7 +338,10 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * Sends an error response to the client.
 	 * This is a shortcut for {@link #sendError(int, String, Throwable) sendError(statusCode, null, null)}.
 	 */
-	public abstract void sendError(int statusCode) throws IllegalStateException, IOException;
+	default public void sendError(int statusCode) throws IllegalStateException, IOException
+	{
+		sendError(statusCode, null, null);
+	}
 
 	
 	/**
@@ -351,7 +376,10 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * After using this method, the response is committed and should not be written to.
 	 * @throws IllegalStateException if the response has already been committed 
 	 */
-	public abstract void sendRedirect(Url url) throws IOException;
+	default public void sendRedirect(Url url) throws IOException
+	{
+		sendRedirect(url.toString());
+	}
 
 
 	/**
@@ -359,7 +387,10 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * After using this method, the response is committed and should not be written to.
 	 * @throws IllegalStateException if the response has already been committed 
 	 */
-	public abstract void sendRedirect(Resource resource) throws IOException;
+	default public void sendRedirect(Resource resource) throws IOException
+	{
+		sendRedirect(new Url(this, resource));
+	}
 
 
 	/**
@@ -368,7 +399,10 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * After using this method, the response is committed and should not be written to.
 	 * @throws IllegalStateException if the response has already been committed 
 	 */
-	public abstract <C extends Controller> void sendRedirect(Class<C> controllerClass) throws IOException;
+	default public <C extends Controller> void sendRedirect(Class<C> controllerClass) throws IOException
+	{
+		sendRedirect(new Url(this, controllerClass));
+	}
 
 	
 	//------------------------------
@@ -382,14 +416,20 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * 		it calls {@link Template#print(TemplateWriter)}, passing the 
 	 * 		{@link #getContentWriter() content writer} of this response.
 	 */
-	public abstract void writeTemplate(Template template) throws Exception;
+	default public void writeTemplate(Template template) throws Exception
+	{
+		writeContent(template, null);
+	}
 	
 	
 	/**
 	 * Writes JSON data to the response content.
 	 * @param object a object which is converted to JSON.
 	 */
-	public abstract void writeJson(Object object) throws Exception;
+	default public void writeJson(Object object) throws Exception
+	{
+		writeContent(object, ContentType.APPLICATION_JSON);
+	}
 
 	
 	/**
@@ -399,19 +439,28 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * {@link AppConfig#getContentSerializers() serializers}
 	 * during application setup.  
 	 */
-	public abstract void writeXml(Object object) throws Exception;
+	default public void writeXml(Object object) throws Exception
+	{
+		writeContent(object, ContentType.APPLICATION_XML);
+	}
 
 	
 	/**
 	 * Writes text to the response content.
 	 */
-	public abstract void writeText(String text) throws Exception;
+	default public void writeText(String text) throws Exception
+	{
+		writeContent(text, ContentType.TEXT_PLAIN);
+	}
 
 	
 	/**
 	 * Calls write(object, null);
 	 */
-	public abstract void writeContent(Object object) throws Exception;
+	default public void writeContent(Object object) throws Exception
+	{
+		writeContent(object, null);
+	}
 
 	
 	/**
@@ -482,7 +531,20 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * @see #getContentType()
 	 * @see #getContentEncoding()
 	 */
-	public abstract String getContentTypeAndEncoding();
+	default public String getContentTypeAndEncoding()
+	{
+		ContentType contentType = getContentType();
+		if (contentType != null)
+		{
+			String result = contentType.getValue();
+			String encoding = getContentEncoding();
+			if (encoding != null)
+				result += "; charset=" + encoding;
+			return result;
+		}
+		else
+			return null;
+	}
 
 	
 	/**
@@ -593,13 +655,32 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Prints response info to the PrintStream.
 	 */
-	public void print(PrintStream out);
+	default public void print(PrintStream out)
+	{
+		Check.notNull(out, "out");
+		print(new PrintWriter(out, true));
+	}
 
 	
 	/**
 	 * Prints response info to the PrintWriter.
 	 */
-	public void print(PrintWriter out);
+	default public void print(PrintWriter out)
+	{
+		Check.notNull(out, "out");
+		out.println(getStatus());
+		ResponseHeaders headers = getHeaders(); 
+		for (String name : headers)
+		{
+			String[] values = headers.getAll(name);
+			for (String value : values)
+			{
+				out.print(name);
+				out.print(' ');
+				out.println(value);
+			}
+		}
+	}
 	
 	
 	/**

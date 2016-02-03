@@ -21,15 +21,9 @@ import java.io.Flushable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Locale;
-import org.civilian.Application;
-import org.civilian.Context;
-import org.civilian.Controller;
 import org.civilian.Request;
-import org.civilian.Resource;
 import org.civilian.Response;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
@@ -38,15 +32,12 @@ import org.civilian.internal.intercept.InterceptedOutputStream;
 import org.civilian.internal.intercept.InterceptedTemplateWriter;
 import org.civilian.internal.intercept.RespStreamInterceptorChain;
 import org.civilian.internal.intercept.RespWriterInterceptorChain;
-import org.civilian.resource.Url;
-import org.civilian.response.ResponseHeaders;
 import org.civilian.response.ResponseStreamInterceptor;
 import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.response.UriEncoder;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
-import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
 
 
@@ -77,30 +68,9 @@ public abstract class AbstractResponse implements Response
 	}
 
 	
-	/**
-	 * Implements ResponseProvider and returns this.
-	 */
-	@Override public Response getResponse()
-	{
-		return this;
-	}
-
-	
 	@Override public Request getRequest()
 	{
 		return request_;
-	}
-
-	
-	@Override public Application getApplication()
-	{
-		return request_.getApplication();
-	}
-	
-
-	@Override public Context getContext()
-	{
-		return getApplication().getContext();
 	}
 
 	
@@ -131,24 +101,6 @@ public abstract class AbstractResponse implements Response
 	@Override public void setLocaleService(LocaleService localeService)
 	{
 		localeService_ = Check.notNull(localeService, "localeService");
-	}
-
-	
-	@Override public void setLocaleService(Locale locale)
-	{
-		localeService_ = getApplication().getLocaleServices().getService(locale);
-	}
-	
-
-	@Override public LocaleSerializer getLocaleSerializer()
-	{
-		return getLocaleService().getSerializer();
-	}
-
-	
-	@Override public void sendError(int statusCode) throws IOException
-	{
-		sendError(statusCode, null, null);
 	}
 
 	
@@ -189,82 +141,11 @@ public abstract class AbstractResponse implements Response
 
 	
 	/**
-	 * Sends a redirect response to the client. 
-	 * After using this method, the response is committed and should not be written to.
-	 * @throws IllegalStateException if the response has already been committed 
-	 */
-	@Override public void sendRedirect(Url url) throws IOException
-	{
-		sendRedirect(url.toString());
-	}
-
-	
-	/**
-	 * Sends a redirect response to the client. 
-	 * After using this method, the response is committed and should not be written to.
-	 * @throws IllegalStateException if the response has already been committed 
-	 */
-	@Override public <C extends Controller> void sendRedirect(Class<C> controllerClass) throws IOException
-	{
-		sendRedirect(new Url(this, controllerClass));
-	}
-
-	
-	/**
-	 * Sends a redirect response to the client. 
-	 * After using this method, the response is committed and should not be written to.
-	 * @throws IllegalStateException if the response has already been committed 
-	 */
-	@Override public void sendRedirect(Resource resource) throws IOException
-	{
-		sendRedirect(new Url(this, resource));
-	}
-	
-
-	/**
 	 * Implements sendRedirect. Should commit the response.
 	 */
 	protected abstract void sendRedirectImpl(String url) throws IOException;
 
 
-	/**
-	 * Prints a template.
-	 */
-	@Override public void writeTemplate(Template template) throws Exception
-	{
-		if (template != null)
-			template.print(getContentWriter());	
-	}
-
-	
-	/**
-	 * Prints JSON data to the response content.
-	 * @param object a object which is converted to JSON.
-	 */
-	@Override public void writeJson(Object object) throws Exception
-	{
-		writeContent(object, ContentType.APPLICATION_JSON);
-	}
-	
-	
-	@Override public void writeXml(Object object) throws Exception
-	{
-		writeContent(object, ContentType.APPLICATION_XML);
-	}
-
-	
-	@Override public void writeText(String text) throws Exception
-	{
-		writeContent(text, ContentType.TEXT_PLAIN);
-	}
-	
-
-	@Override public void writeContent(Object object) throws Exception
-	{
-		writeContent(object, null);
-	}
-
-	
 	@Override public void writeContent(Object object, ContentType contentType) throws Exception
 	{
 		if (object == null)
@@ -274,7 +155,7 @@ public abstract class AbstractResponse implements Response
 		{
 			if (contentType != null)
 				setContentType(contentType);
-			writeTemplate((Template)object);
+			((Template)object).print(getContentWriter());	
 			return;
 		}
 		
@@ -488,22 +369,6 @@ public abstract class AbstractResponse implements Response
 	}
 	
 	
-	@Override public String getContentTypeAndEncoding()
-	{
-		ContentType contentType = getContentType();
-		if (contentType != null)
-		{
-			String result = contentType.getValue();
-			String encoding = getContentEncoding();
-			if (encoding != null)
-				result += "; charset=" + encoding;
-			return result;
-		}
-		else
-			return null;
-	}
-	
-
 	@Override public void setContentEncoding(String encoding)
 	{
 		if ((contentOutput_ == null) && !isCommitted()) 
@@ -547,9 +412,6 @@ public abstract class AbstractResponse implements Response
 			interceptor;
 	}
 
-	
-	
-	
 	
 	//--------------------
 	// type
@@ -611,36 +473,6 @@ public abstract class AbstractResponse implements Response
 		contentOutput_		= null;
 		streamInterceptor_	= null;
 		writerInterceptor_	= null;
-	}
-
-
-	//--------------------
-	// print
-	//--------------------
-	
-	
-	@Override public void print(PrintStream out)
-	{
-		Check.notNull(out, "out");
-		print(new PrintWriter(out, true));
-	}
-
-	
-	@Override public void print(PrintWriter out)
-	{
-		Check.notNull(out, "out");
-		out.println(getStatus());
-		ResponseHeaders headers = getHeaders(); 
-		for (String name : headers)
-		{
-			String[] values = headers.getAll(name);
-			for (String value : values)
-			{
-				out.print(name);
-				out.print(' ');
-				out.println(value);
-			}
-		}
 	}
 
 

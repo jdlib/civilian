@@ -34,7 +34,6 @@ public class TextTemplateTest extends CivTest
 		Response response	= mock(AbstractResponse.class);
 		when(response.getContentWriter()).thenReturn(out);
 		doCallRealMethod().when(response).writeContent(anyObject(), any(ContentType.class));
-		doCallRealMethod().when(response).writeTemplate(any(Template.class));
 		
 		TextTemplate template = new TextTemplate("hallo");
 		response.writeContent(template, null);

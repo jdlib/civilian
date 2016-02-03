@@ -18,29 +18,20 @@ package org.civilian.response;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
-import org.civilian.Application;
-import org.civilian.Context;
-import org.civilian.Controller;
 import org.civilian.Request;
-import org.civilian.Resource;
 import org.civilian.Response;
 import org.civilian.content.ContentType;
-import org.civilian.resource.Url;
-import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
-import org.civilian.type.lib.LocaleSerializer;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 
 
 /**
  * ResponseWrapper is a Response implementation which wraps another response.
- * All methods except {@link #getResponse()} forward to the wrapped response.
+ * All methods forward to the wrapped response.
  */
 public class ResponseWrapper implements Response
 {
@@ -53,30 +44,9 @@ public class ResponseWrapper implements Response
 	}
 
 
-	/**
-	 * Implements ResponseProvider and returns this.
-	 */
-	@Override public Response getResponse()
-	{
-		return this;
-	}
-	
-	
 	@Override public Request getRequest()
 	{
 		return response_.getRequest();
-	}
-
-
-	@Override public Context getContext()
-	{
-		return response_.getContext();
-	}
-
-	
-	@Override public Application getApplication()
-	{
-		return response_.getApplication();
 	}
 
 
@@ -122,24 +92,6 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public void setLocaleService(Locale locale)
-	{
-		response_.setLocaleService(locale);
-	}
-
-
-	@Override public LocaleSerializer getLocaleSerializer()
-	{
-		return response_.getLocaleSerializer();
-	}
-
-
-	@Override public void sendError(int errorCode) throws IOException
-	{
-		response_.sendError(errorCode);
-	}
-
-
 	@Override public void sendError(int errorCode, String message, Throwable error) throws IOException
 	{
 		response_.sendError(errorCode, message, error);
@@ -152,54 +104,6 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public void sendRedirect(Url url) throws IOException
-	{
-		response_.sendRedirect(url);
-	}
-
-
-	@Override public void sendRedirect(Resource resource) throws IOException
-	{
-		response_.sendRedirect(resource);
-	}
-
-	
-	@Override public <C extends Controller> void sendRedirect(Class<C> controllerClass) throws IOException
-	{
-		response_.sendRedirect(controllerClass);
-	}
-
-	
-	@Override public void writeTemplate(Template template) throws Exception
-	{
-		response_.writeTemplate(template);
-	}
-
-	
-	@Override public void writeJson(Object object) throws Exception
-	{
-		response_.writeJson(object);
-	}
-
-
-	@Override public void writeXml(Object object) throws Exception
-	{
-		response_.writeXml(object);
-	}
-
-
-	@Override public void writeText(String text) throws Exception
-	{
-		response_.writeText(text);
-	}
-	
-
-	@Override public void writeContent(Object object) throws Exception
-	{
-		response_.writeContent(object);
-	}
-
-	
 	@Override public void writeContent(Object object, ContentType contentType) throws Exception
 	{
 		response_.writeContent(object, contentType);
@@ -254,12 +158,6 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public String getContentTypeAndEncoding()
-	{
-		return response_.getContentTypeAndEncoding();
-	}
-
-	
 	@Override public void setContentEncoding(String encoding)
 	{
 		response_.setContentEncoding(encoding);
@@ -335,18 +233,6 @@ public class ResponseWrapper implements Response
 	@Override public ResponseHeaders getHeaders()
 	{
 		return response_.getHeaders();
-	}
-
-
-	@Override public void print(PrintStream out)
-	{
-		response_.print(out);
-	}
-
-	
-	@Override public void print(PrintWriter out)
-	{
-		response_.print(out);
 	}
 
 
