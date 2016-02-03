@@ -58,7 +58,7 @@ public class YMDPathParam<T> extends TypeBasedPathParam<T>
 				int year  = Integer.parseInt(result.group(1)); 
 				int month = Integer.parseInt(result.group(2)); 
 				int day   = Integer.parseInt(result.group(3));
-				T date    = ((DateType<T>)type_).createDate(year, month, day);
+				T date    = ((DateType<T>)type_).create(year, month, day);
 				// success: date is valid: advance the scanner
 				scanner.next(result);
 				return date;

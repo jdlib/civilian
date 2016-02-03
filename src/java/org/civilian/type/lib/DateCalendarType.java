@@ -56,7 +56,7 @@ public class DateCalendarType extends DateType<Calendar>
 	}
 
 
-	@Override public Calendar createDate(int year, int month, int day)
+	@Override public Calendar create(int year, int month, int day)
 	{
 		return new GregorianCalendar(year, month - 1, day);
 	}

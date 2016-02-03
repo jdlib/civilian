@@ -16,10 +16,13 @@
 package org.civilian.type;
 
 
+import org.civilian.text.DateFormat;
+
+
 /**
  * A Type extension for Dates.
  */
-public abstract class DateType<T> extends Type<T>
+public abstract class DateType<T> extends Type<T> implements DateFormat.Factory<T>
 {
 	/**
 	 * Creates a new DateType.
@@ -36,7 +39,7 @@ public abstract class DateType<T> extends Type<T>
 	 * @param month the month (1-12)
 	 * @param day the day (1-31)
 	 */
-	public abstract T createDate(int year, int month, int day);
+	@Override public abstract T create(int year, int month, int day);
 
 	
 	/**

@@ -59,7 +59,7 @@ public class DateFormatTest extends CivTest
 
 	private void assertFormat(String text, int year, int month, int day, String textOut) throws Throwable
 	{
-		Date d = dateFormat_.parse(text, TypeLib.DATE_CIVILIAN);
+		Date d = dateFormat_.parse(TypeLib.DATE_CIVILIAN, text);
 		assertDate(d, year, month, day);
 		assertEquals(textOut, dateFormat_.format(d));
 	}

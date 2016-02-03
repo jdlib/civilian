@@ -56,7 +56,7 @@ public class DateJavaSqlType extends DateType<java.sql.Date>
 
 
 	@SuppressWarnings("deprecation")
-	@Override public java.sql.Date createDate(int year, int month, int day)
+	@Override public java.sql.Date create(int year, int month, int day)
 	{
 		return new java.sql.Date(year - 1900, month - 1, day);
 	}

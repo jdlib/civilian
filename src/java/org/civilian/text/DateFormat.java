@@ -21,7 +21,6 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.text.DateFormatSymbols;
-import org.civilian.type.DateType;
 import org.civilian.util.Check;
 import org.civilian.util.Date;
 import org.civilian.util.StringUtil;
@@ -40,6 +39,15 @@ public class DateFormat implements Serializable
 	public static final char SYMBOL_YEAR  = 'y';
 	
 
+	/**
+	 * A Service which can create a date object.
+	 */
+	public static interface Factory<T>
+	{
+		public abstract T create(int year, int month, int day);
+	}
+
+	
 	/**
 	 * Creates a new DateFormat.
 	 */
@@ -216,7 +224,7 @@ public class DateFormat implements Serializable
 	 * Parses a date from a string representation.
 	 * @exception java.text.ParseException thrown if an parse error occurs
 	 */
-	public <T> T parse(String text, DateType<T> dateType) throws ParseException
+	public <T> T parse(Factory<T> factory, String text) throws ParseException
 	{
 		int values[] = new int[6]; // 0-2: value 3-5: length of string part
 		int errorPos = parseValues(text, values);
@@ -231,7 +239,7 @@ public class DateFormat implements Serializable
 
 		try
 		{
-			return dateType.createDate(year, month, day);
+			return factory.create(year, month, day);
 		}
 		catch(IllegalArgumentException e)
 		{

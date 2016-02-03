@@ -56,7 +56,7 @@ public class DateJavaUtilType extends DateType<java.util.Date>
 
 
 	@SuppressWarnings("deprecation")
-	@Override public java.util.Date createDate(int year, int month, int day)
+	@Override public java.util.Date create(int year, int month, int day)
 	{
 		return new java.util.Date(year - 1900, month - 1, day);
 	}

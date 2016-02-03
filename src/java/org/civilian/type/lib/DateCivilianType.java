@@ -55,7 +55,7 @@ public class DateCivilianType extends DateType<Date>
 	}
 
 
-	@Override public Date createDate(int year, int month, int day)
+	@Override public Date create(int year, int month, int day)
 	{
 		return new Date(year, month, day);
 	}

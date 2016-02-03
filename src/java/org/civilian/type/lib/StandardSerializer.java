@@ -152,7 +152,7 @@ public class StandardSerializer extends AbstractSerializer
 			int year  = Integer.parseInt(s.substring(0, 4)); 
 			int month = Integer.parseInt(s.substring(4, 6)); 
 			int day   = Integer.parseInt(s.substring(6));
-			return dateType.createDate(year, month, day);
+			return dateType.create(year, month, day);
 		}
 		catch(Exception e)
 		{

@@ -192,7 +192,7 @@ public class LocaleSerializer extends AbstractSerializer
 	
 	@Override public <T> T parseDate(String s, DateType<T> dateType) throws Exception
 	{
-		return isBlank(s) ? null : dateFormat_.parse(s, dateType);
+		return isBlank(s) ? null : dateFormat_.parse(dateType, s);
 	}
 	
 	

@@ -61,13 +61,13 @@ public class DateFormatTest extends CivTest
 		DateFormat uk = new DateFormat(Locale.UK);
 		Date date;
 		
-		date = uk.parse("31/10/2014", TypeLib.DATE_CIVILIAN);
+		date = uk.parse(TypeLib.DATE_CIVILIAN, "31/10/2014");
 		assertDate(2014, 10, 31, date);
 
-		date = uk.parse("31/10/14", TypeLib.DATE_CIVILIAN);
+		date = uk.parse(TypeLib.DATE_CIVILIAN, "31/10/14");
 		assertDate(2014, 10, 31, date);
 		
-		date = uk.parse("31/10/  14", TypeLib.DATE_CIVILIAN);
+		date = uk.parse(TypeLib.DATE_CIVILIAN, "31/10/  14");
 		assertDate(2014, 10, 31, date);
 		
 		
@@ -104,7 +104,7 @@ public class DateFormatTest extends CivTest
 	{
 		try
 		{
-			format.parse(s, TypeLib.DATE_CIVILIAN);
+			format.parse(TypeLib.DATE_CIVILIAN, s);
 			fail();
 		}
 		catch(ParseException e)
