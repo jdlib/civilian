@@ -17,6 +17,7 @@ package org.civilian.type.fn;
 
 
 import java.text.ParseException;
+import org.civilian.text.keys.KeyType;
 import org.civilian.type.Type;
 
 
@@ -54,6 +55,24 @@ public class TypeParser
 			return "";
 		}
 	};
+	
+	
+	public static final Function<Object> KEY_FUNCTION = new Function<Object>()
+	{
+		@Override public Object parse(Type<Object> type, String s) throws Exception
+		{
+			return ((KeyType<?>)type).parse(s);
+		}
+	};
+
+	
+	public static class KeyFunction<T> implements Function<T>
+	{
+		@Override public T parse(Type<T> type, String s) throws Exception
+		{
+			return ((KeyType<T>)type).parse(s);
+		}
+	};
 
 	
 	public static final SimpleFn<Character> CHAR_FUNCTION = s -> {
@@ -71,7 +90,7 @@ public class TypeParser
 	
 	public TypeParser(TypeMap map, Object owner)
 	{
-		map_ = map != null ? map : new TypeMap();
+		map_ 	= map   != null ? map   : new TypeMap();
 		owner_	= owner != null ? owner : this;
 	}
 

@@ -24,7 +24,7 @@ import org.civilian.Request;
 import org.civilian.form.Form;
 import org.civilian.form.TextField;
 import org.civilian.template.TestTemplateWriter;
-import org.civilian.type.lib.LocaleSerializer;
+import org.civilian.type.fn.LocaleSerializer;
 import org.junit.Test;
 
 

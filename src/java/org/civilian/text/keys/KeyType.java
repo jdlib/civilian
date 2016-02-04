@@ -26,8 +26,8 @@ import org.civilian.util.Check;
 
 /**
  * KeyType is a {@link Type} implementation suitable to serialize values
- * of a key list. Additionally it checks that a parsed value is valid,
- * i.e. that it is contained in the key list.
+ * of a KeyList. Additionally it checks that a parsed value is valid,
+ * i.e. that it is contained in the KeyList.
  * KeyType uses a {@link KeySerializer} to implement parsing and formating of values.
  */
 public class KeyType<VALUE> extends Type<VALUE>
@@ -55,6 +55,15 @@ public class KeyType<VALUE> extends Type<VALUE>
 	{
 		return value == null ? "" : getKeySerializer().formatValue(keyList_, value);
 	}
+
+	
+	/**
+	 * Formats a key value.
+	 */
+	public String format(VALUE value)
+	{
+		return value == null ? "" : getKeySerializer().formatValue(keyList_, value);
+	}
 	
 
 	/**
@@ -63,7 +72,7 @@ public class KeyType<VALUE> extends Type<VALUE>
 	 * @param value a value
 	 * @param index the index of the value in the keylist.
 	 */
-	public String format(TypeSerializer serializer, VALUE value, int index)
+	public String format(VALUE value, int index)
 	{
 		return value == null ? "" : getKeySerializer().formatValue(keyList_, value, index);
 	}
@@ -73,6 +82,15 @@ public class KeyType<VALUE> extends Type<VALUE>
 	 * Parses a key value. 
 	 */
 	@Override public VALUE parse(TypeSerializer serializer, String s) throws Exception
+	{
+		return s != null ? getKeySerializer().parseValue(keyList_, s) : null;
+	}
+	
+
+	/**
+	 * Parses a key value.
+	 */
+	public VALUE parse(String s) throws Exception
 	{
 		return s != null ? getKeySerializer().parseValue(keyList_, s) : null;
 	}

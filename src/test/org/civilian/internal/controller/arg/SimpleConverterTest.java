@@ -16,6 +16,7 @@
 package org.civilian.internal.controller.arg;
 
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Locale;
 import org.junit.Test;
@@ -24,8 +25,8 @@ import org.civilian.internal.controller.arg.conv.SimpleConverter;
 import org.civilian.internal.controller.arg.conv.SimpleConverters;
 import org.civilian.request.BadRequestException;
 import org.civilian.type.TypeLib;
-import org.civilian.type.lib.LocaleSerializer;
-import org.civilian.type.lib.StandardSerializer;
+import org.civilian.type.fn.LocaleSerializer;
+import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Date;
 
 
@@ -84,7 +85,8 @@ public class SimpleConverterTest extends CivTest
 		}
 		catch(BadRequestException e)
 		{
-			assertTrue(e.getCause() instanceof NumberFormatException);
+			assertTrue(e.getCause() instanceof ParseException);
+			assertTrue(e.getCause().getCause() instanceof NumberFormatException);
 			assertEquals("abc", e.getErrorValue());
 		}
 	}

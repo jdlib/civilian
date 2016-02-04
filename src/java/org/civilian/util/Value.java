@@ -17,7 +17,7 @@ package org.civilian.util;
 
 
 import org.civilian.type.Type;
-import org.civilian.type.TypeSerializer;
+import org.civilian.type.fn.TypeSerializer;
 
 
 /**
@@ -101,7 +101,7 @@ public class Value<T>
 	{
 		try
 		{
-			T value = string != null ? type.parse(serializer, string) : null;
+			T value = serializer.parse(type, string);
 			setValue(value);
 			return true;
 		}

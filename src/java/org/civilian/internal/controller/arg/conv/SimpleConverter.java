@@ -24,7 +24,7 @@ import org.civilian.internal.controller.arg.StringMethodArg;
 import org.civilian.request.BadRequestException;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
+import org.civilian.type.fn.TypeSerializer;
 
 
 public abstract class SimpleConverter<T> extends Converter<T>
@@ -106,10 +106,9 @@ class TypedConverter<T> extends SimpleConverter<T>
 	}
 
 	
-	@Override
-	protected T convertImpl(TypeSerializer serializer, String stringValue) throws Exception
+	@Override protected T convertImpl(TypeSerializer serializer, String stringValue) throws Exception
 	{
-		return type_.parse(serializer, stringValue);
+		return serializer.parse(type_, stringValue);
 	}
 
 

@@ -30,7 +30,7 @@ import org.civilian.resource.scan.ResourceScan;
 import org.civilian.response.UriEncoder;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
+import org.civilian.type.fn.TypeSerializer;
 import org.civilian.util.Check;
 
 
@@ -625,13 +625,13 @@ public class Url implements PathParamProvider, ResponseProvider
 
 		
 		/**
-		 * Sets value of the Parameter.
-		 * The Urls type serializer is used to convert the value to a string. 
+		 * Sets the value of the Parameter.
+		 * The Urls TypeSerializer is used to convert the value to a string. 
 		 * @see Url#getSerializer()
 		 */
 		public <T> void setValue(Type<T> type, T value)
 		{
-			value_ = type.format(getSerializer(), value);
+			value_ = getSerializer().format(type, value);
 		}
 
 		

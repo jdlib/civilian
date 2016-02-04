@@ -23,7 +23,7 @@ import java.util.Map;
 import org.civilian.request.RequestHeaders;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.type.Type;
-import org.civilian.type.lib.StandardSerializer;
+import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;

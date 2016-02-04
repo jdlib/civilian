@@ -41,7 +41,7 @@ import org.civilian.response.std.ErrorResponse;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
-import org.civilian.type.lib.LocaleSerializer;
+import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.util.Check;
 
 

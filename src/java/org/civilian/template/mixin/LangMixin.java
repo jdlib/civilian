@@ -25,8 +25,8 @@ import org.civilian.text.NumberStyle;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.type.DateType;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
-import org.civilian.type.lib.LocaleSerializer;
+import org.civilian.type.fn.TypeSerializer;
+import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.util.Check;
 
 
@@ -219,7 +219,7 @@ public class LangMixin implements MessageProvider
 	 */
 	public <T> String format(DateType<T> type, T date, String defaultValue)
 	{
-		return date != null ? type.format(serializer_, date) : defaultValue;
+		return date != null ? serializer_.format(type, date) : defaultValue;
 	}
 
 	
@@ -243,7 +243,7 @@ public class LangMixin implements MessageProvider
 	 */
 	public String format(int n, Object style)
 	{
-		return serializer_.formatInt(n, style);
+		return serializer_.format(TypeLib.INTEGER, Integer.valueOf(n), style);
 	}
 	
 
@@ -279,7 +279,7 @@ public class LangMixin implements MessageProvider
 	 */
 	public String format(long value, Object style)
 	{
-		return serializer_.formatLong(value, style);
+		return serializer_.format(TypeLib.LONG, Long.valueOf(value), style);
 	}
 	
 
@@ -315,7 +315,7 @@ public class LangMixin implements MessageProvider
 	 */
 	public String format(double value, Object style)
 	{
-		return serializer_.formatDouble(value, style);
+		return serializer_.format(TypeLib.DOUBLE, Double.valueOf(value), style);
 	}
 
 	

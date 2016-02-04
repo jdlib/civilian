@@ -17,13 +17,12 @@ package org.civilian.text;
 
 
 import java.util.Locale;
-
 import org.civilian.Application;
 import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.provider.LocaleServiceProvider;
 import org.civilian.text.msg.MsgBundle;
-import org.civilian.type.lib.LocaleSerializer;
+import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.util.Check;
 
 

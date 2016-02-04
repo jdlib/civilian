@@ -17,23 +17,20 @@ package org.civilian.resource;
 
 
 import java.util.Locale;
-
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-
 import static org.mockito.Mockito.*;
-
 import org.civilian.CivTest;
 import org.civilian.Request;
 import org.civilian.Resource;
 import org.civilian.Response;
 import org.civilian.response.UriEncoder;
 import org.civilian.type.TypeLib;
-import org.civilian.type.lib.LocaleSerializer;
-import org.civilian.type.lib.StandardSerializer;
+import org.civilian.type.fn.LocaleSerializer;
+import org.civilian.type.fn.StandardSerializer;
 
 
 public class UrlTest extends CivTest

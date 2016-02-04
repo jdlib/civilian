@@ -17,6 +17,13 @@ import org.civilian.util.StringUtil;
 
 public class LocaleSerializer extends TypeSerializer
 {
+	/**
+	 * A LocaleSerializer instance for the system locale.
+	 */
+	public static final LocaleSerializer SYSTEM_LOCALE_SERIALIZER = new LocaleSerializer(Locale.getDefault());
+
+	
+	
 	public LocaleSerializer(Locale locale)
 	{
 		this(locale, null, null);
@@ -40,6 +47,7 @@ public class LocaleSerializer extends TypeSerializer
 		formatter_.use(this::formatDate)			.on(Type.Category.DATE);
 		formatter_.use(this::formatDateTime)		.on(Type.Category.DATETIME);
 		formatter_.use(this::formatTime)			.on(Type.Category.TIME);
+		formatter_.use(TypeFormatter.KEY_FUNCTION)	.on(Type.Category.KEY);
 		
 		// init parser
 		parser_.use(numberFormat_::parseBigDecimal)	.on(BIGDECIMAL);	
@@ -56,6 +64,7 @@ public class LocaleSerializer extends TypeSerializer
 		parser_.use(this::parseDate)				.on(Type.Category.DATE);
 		parser_.use(this::parseDateTime)			.on(Type.Category.DATETIME);
 		parser_.use(this::parseTime)				.on(Type.Category.TIME);
+		parser_.use(TypeParser.KEY_FUNCTION)		.on(Type.Category.KEY);
 	}
 	
 	

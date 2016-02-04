@@ -16,6 +16,7 @@
 package org.civilian.type.fn;
 
 
+import org.civilian.text.keys.KeyType;
 import org.civilian.type.Type;
 
 
@@ -26,6 +27,16 @@ public class TypeFormatter
 	{
 		public String format(Type<? extends T> type, T value, Object style); 
 	}
+	
+	
+	public static final Function<Object> KEY_FUNCTION = new Function<Object>()
+	{
+		@SuppressWarnings("unchecked")
+		@Override public String format(Type<? extends Object> type, Object value, Object style)
+		{
+			return ((KeyType<Object>)type).format(value);
+		}
+	};
 	
 	
 	public TypeFormatter()

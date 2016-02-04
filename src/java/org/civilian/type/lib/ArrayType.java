@@ -47,6 +47,15 @@ public class ArrayType<T> extends ListType<T[],T>
 		return false;
 	}
 	
+	
+	/**
+	 * Create a list object from an value array.
+	 */
+	@Override public T[] create(T[] values)
+	{
+		return values;
+	}
+	
 
 	/**
 	 * Returns the element type.

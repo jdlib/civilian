@@ -119,6 +119,9 @@ public class Select<T> extends Control<T>
 	}
 
 	
+	/**
+	 * Sets if the select uses option groups.
+	 */
 	public Select<T> setUseOptionGroups(boolean on)
 	{
 		return setFlag(FLAG_USE_OPTION_GROUPS, on);
@@ -231,7 +234,7 @@ public class Select<T> extends Control<T>
 	 */
 	public void printOption(TemplateWriter out, T value, String text, boolean selected)
 	{
-		String s = getType().format(getResponseSerializer(), value);
+		String s = formatValue(value);
 		printOptionImpl(out, s, text, selected);
 	}
 	
@@ -242,7 +245,7 @@ public class Select<T> extends Control<T>
 	public void printOption(TemplateWriter out, int i)
 	{
 		T value				= keyList_.getValue(i);
-		String svalue		= keyList_.getType().format(getResponseSerializer(), value, i);
+		String svalue		= keyList_.getType().format(value, i);
 		String text 		= keyList_.getText(i);
 		boolean selected	= equals(value, getValue());
 		printOptionImpl(out, svalue, text, selected);
@@ -283,15 +286,6 @@ public class Select<T> extends Control<T>
 		out.print("</optgroup>");
 	}
 	
-	
-	/**
-	 * Returns the text of the seletec item.
-	 */
-	public String getText()
-	{
-		return keyList_.getText(getValue());
-	}
-
 	
 	/**
 	 * Returns this.

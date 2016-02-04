@@ -32,7 +32,7 @@ import org.civilian.CivTest;
 import org.civilian.internal.controller.arg.conv.CollectionConverter;
 import org.civilian.internal.controller.arg.conv.CollectionConverters;
 import org.civilian.type.TypeLib;
-import org.civilian.type.lib.LocaleSerializer;
+import org.civilian.type.fn.LocaleSerializer;
 
 
 

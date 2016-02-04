@@ -17,7 +17,7 @@ package org.civilian.internal.controller.arg.conv;
 
 
 import org.civilian.Request;
-import org.civilian.type.TypeSerializer;
+import org.civilian.type.fn.TypeSerializer;
 import org.civilian.internal.controller.arg.StringMethodArg;
 
 

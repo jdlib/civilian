@@ -23,8 +23,8 @@ import org.civilian.Request;
 import org.civilian.controller.MethodArg;
 import org.civilian.internal.controller.arg.StringMethodArg;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
-import org.civilian.type.lib.StandardSerializer;
+import org.civilian.type.fn.TypeSerializer;
+import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Value;
 
 

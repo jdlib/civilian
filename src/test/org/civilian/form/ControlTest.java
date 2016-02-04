@@ -17,6 +17,7 @@ package org.civilian.form;
 
 
 import static org.mockito.Mockito.*;
+import java.text.ParseException;
 import java.util.Locale;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,7 +28,7 @@ import org.civilian.template.TestTemplateWriter;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
 import org.civilian.type.TypeLib;
-import org.civilian.type.lib.LocaleSerializer;
+import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.util.Date;
 
 
@@ -168,7 +169,8 @@ public class ControlTest extends CivTest
 		when(request.getParameter("ifield")).thenReturn("a");
 		assertFalse(field.read(request));
 		assertEquals(Control.Status.PARSE_ERROR, field.getStatus());
-		assertTrue(field.getError() instanceof NumberFormatException);
+		assertTrue(field.getError() instanceof ParseException);
+		assertTrue(field.getError().getCause() instanceof NumberFormatException);
 		assertNull(field.getValue());
 		assertEquals("a", field.getErrorValue());
 		assertEquals("a", field.format());

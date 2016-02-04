@@ -226,7 +226,7 @@ public class KeyListTest extends CivTest
 		T value = keyList.getValue(index);
 		assertFormat(keyList, value, formattedValue);
 		
-		String s = keyList.getType().format(StandardSerializer.INSTANCE, value, index);
+		String s = keyList.getType().format(value, index);
 		assertEquals(formattedValue, s);
 	}
 

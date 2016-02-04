@@ -26,7 +26,7 @@ import org.civilian.Request;
 import org.civilian.controller.MethodArg;
 import org.civilian.internal.controller.arg.conv.ConvertingArg;
 import org.civilian.type.TypeLib;
-import org.civilian.type.lib.LocaleSerializer;
+import org.civilian.type.fn.LocaleSerializer;
 
 
 public class ConvertingArgTest extends CivTest

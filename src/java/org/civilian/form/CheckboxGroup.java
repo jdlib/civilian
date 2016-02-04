@@ -20,7 +20,7 @@ import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.keys.KeyList;
 import org.civilian.type.Type;
-import org.civilian.type.TypeSerializer;
+import org.civilian.type.fn.TypeSerializer;
 import org.civilian.type.lib.ArrayType;
 import org.civilian.util.Check;
 
@@ -169,7 +169,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 			out.print("<input");
 			HtmlUtil.attr(out, "type", "checkbox", false);
 			HtmlUtil.attr(out, "name", getName());
-			String v = value != null ? elemType_.format(serializer_, value) : "";
+			String v = value != null ? serializer_.format(elemType_, value) : "";
 			HtmlUtil.attr(out, "value", v);
 			if (checked)
 				out.print(" checked");

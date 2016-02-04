@@ -22,8 +22,8 @@ import org.civilian.template.TemplateWriter;
 import org.civilian.type.ListType;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
-import org.civilian.type.lib.StandardSerializer;
+import org.civilian.type.fn.TypeSerializer;
+import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Check;
 
 
@@ -522,57 +522,51 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	 */
 	protected void parse(Request request)
 	{
-		Type<T> type = getType();
-		if (type.isSimpleType())
-		{
-			// simple type
-			String s = getRequestString(request);
-			if (s == null)
-				setValue(null);
-			else
-				parse(s, request.getLocaleSerializer());
-		}
+		if (getType().category() != Type.Category.LIST)
+			parseSimple(request);
+		else
+			parseList(request);
+	}
+	
+	
+	private void parseSimple(Request request)
+	{
+		// simple type
+		String s = getRequestString(request);
+		if (s == null)
+			setValue(null);
 		else
 		{
-			// array type
-			// request.getParameters() always returns a non-null array
-			String s[] = request.getParameters(getName());
 			try
 			{
-				@SuppressWarnings("unchecked")
-				ListType<T,?> listType = (ListType<T,?>)getType();
-				T value = listType.parseList(request.getLocaleSerializer(), s); 
+				T value = s != null ? request.getLocaleSerializer().parse(type_, s) : null;
 				setValue(value);
 			}
 			catch(Exception e)
 			{
-				setValue(null, e, null);
+				setValue(null, e, s);
 			}
 		}
 	}
+
 	
-	
-	/**
-	 * Parses the value from a string.
-	 * @param string the string representation 
-	 * @param serializer a TypeSerializer which understands the string format.
-	 * @return true if the value was successfully parsed, false not.
-	 */
-	protected boolean parse(String string, TypeSerializer serializer)
+	private <E> void parseList(Request request)
 	{
+		// request.getParameters() always returns a non-null array
+		String s[] = request.getParameters(getName());
 		try
 		{
-			T value = string != null ? type_.parse(serializer, string) : null;
-			setValue(value);
-			return true;
+			@SuppressWarnings("unchecked")
+			ListType<T,E> listType = (ListType<T,E>)getType();
+			E[] values = request.getLocaleSerializer().getParser().parse(listType.getElementType(), s); 
+			setValue(listType.create(values));
 		}
 		catch(Exception e)
 		{
-			setValue(null, e, string);
-			return false;
+			setValue(null, e, null);
 		}
 	}
-
+	
 	
 	private String getRequestString(Request request)
 	{
@@ -811,7 +805,16 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	 */
 	protected String formatValue()
 	{
-		return type_.format(getResponseSerializer(), value_, getStyle());
+		return formatValue(value_);
+	}
+
+	
+	/**
+	 * Returns the control value formatted as a string.
+	 */
+	protected String formatValue(T value)
+	{
+		return getResponseSerializer().format(type_, value, getStyle());
 	}
 
 	
