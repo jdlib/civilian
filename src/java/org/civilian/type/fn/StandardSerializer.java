@@ -12,12 +12,12 @@ import org.civilian.util.StringUtil;
 import static org.civilian.type.TypeLib.*;
 
 
-public class StandardTypeSerializer extends TypeSerializer
+public class StandardSerializer extends TypeSerializer
 {
-	public static final StandardTypeSerializer INSTANCE = new StandardTypeSerializer();
+	public static final StandardSerializer INSTANCE = new StandardSerializer();
 	
 	
-	public StandardTypeSerializer()
+	public StandardSerializer()
 	{
 		formatter_.use((t,v,h) -> v.toString())	.byDefault();
 		formatter_.use(this::formatDate)		.on(Type.Category.DATE);

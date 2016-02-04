@@ -26,7 +26,7 @@ import org.civilian.response.UriEncoder;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.type.fn.TypeSerializer;
-import org.civilian.type.fn.StandardTypeSerializer;
+import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Check;
 
 
@@ -607,6 +607,6 @@ public class WebUrl implements PathParamProvider
 	private Object[] pathParams_;
 	private ArrayList<QueryParam> params_;
 	private TypeSerializer serializer_ = defaultSerializer_;
-	private static TypeSerializer defaultSerializer_ = StandardTypeSerializer.INSTANCE;
+	private static TypeSerializer defaultSerializer_ = StandardSerializer.INSTANCE;
 	private static final Object[] EMPTY_PATH_PARAMS = new Object[0];
 }

@@ -163,8 +163,8 @@ public class SerializerTest extends CivTest
 	}
 	
 	
-	private static final StandardTypeSerializer STANDARD = StandardTypeSerializer.INSTANCE;
-	private static final LocaleTypeSerializer LOCALE_US = new LocaleTypeSerializer(Locale.US);
-	private static final LocaleTypeSerializer LOCALE_DE = new LocaleTypeSerializer(Locale.GERMAN);
-	private static final LocaleTypeSerializer LOCALE_FR = new LocaleTypeSerializer(Locale.FRENCH);
+	private static final StandardSerializer STANDARD = StandardSerializer.INSTANCE;
+	private static final LocaleSerializer LOCALE_US = new LocaleSerializer(Locale.US);
+	private static final LocaleSerializer LOCALE_DE = new LocaleSerializer(Locale.GERMAN);
+	private static final LocaleSerializer LOCALE_FR = new LocaleSerializer(Locale.FRENCH);
 }

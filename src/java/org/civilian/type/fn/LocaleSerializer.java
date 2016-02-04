@@ -15,15 +15,15 @@ import org.civilian.util.Check;
 import org.civilian.util.StringUtil;
 
 
-public class LocaleTypeSerializer extends TypeSerializer
+public class LocaleSerializer extends TypeSerializer
 {
-	public LocaleTypeSerializer(Locale locale)
+	public LocaleSerializer(Locale locale)
 	{
 		this(locale, null, null);
 	}
 	
 	
-	public LocaleTypeSerializer(Locale locale, TypeFormatter formatter, TypeParser parser)
+	public LocaleSerializer(Locale locale, TypeFormatter formatter, TypeParser parser)
 	{
 		super(formatter, parser);
 		
