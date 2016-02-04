@@ -16,10 +16,11 @@
 package org.civilian.text.keys;
 
 
+import java.text.ParseException;
 import java.util.Locale;
 import org.civilian.CivTest;
 import org.civilian.text.keys.serialize.KeySerializers;
-import org.civilian.type.lib.StandardSerializer;
+import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Date;
 import org.junit.Test;
 
@@ -233,14 +234,14 @@ public class KeyListTest extends CivTest
 
 	private <T> void assertFormat(KeyList<T> keyList, T value, String formattedValue)
 	{
-		String s = keyList.getType().format(StandardSerializer.INSTANCE, value);
+		String s = StandardSerializer.INSTANCE.format(keyList.getType(), value);
 		assertEquals(formattedValue, s);
 	}
 
 
 	private <T> void assertParse(KeyList<T> keyList, T expected, String s) throws Exception
 	{
-		T actual = keyList.getType().parse(StandardSerializer.INSTANCE, s);
+		T actual = StandardSerializer.INSTANCE.parse(keyList.getType(), s);
 		assertEquals(expected, actual);
 	}
 
@@ -249,12 +250,12 @@ public class KeyListTest extends CivTest
 	{
 		try
 		{
-			keyList.getType().parse(StandardSerializer.INSTANCE, s);
+			StandardSerializer.INSTANCE.parse(keyList.getType(), s);
 			fail();
 		}
-		catch(Exception e)
+		catch(ParseException e)
 		{
-			assertEquals(ex, e.getClass());
+			assertEquals(ex, e.getCause().getClass());
 		}
 	}
 
@@ -263,12 +264,13 @@ public class KeyListTest extends CivTest
 	{
 		try
 		{
-			keyList.getType().parse(StandardSerializer.INSTANCE, s);
+			StandardSerializer.INSTANCE.parse(keyList.getType(), s);
 			fail();
 		}
-		catch(IllegalArgumentException e)
+		catch(ParseException e)
 		{
-			assertEquals("not a valid entry '" + s + "'", e.getMessage());
+			assert(e.getCause() instanceof IllegalArgumentException);
+			assertEquals("not a valid entry '" + s + "'", e.getCause().getMessage());
 		}
 	}
 }

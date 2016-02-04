@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import org.civilian.type.Type;
-import org.civilian.type.lib.StandardSerializer;
+import org.civilian.type.fn.StandardSerializer;
 
 
 /**
@@ -331,7 +331,7 @@ public class Settings
 	public <T> T getValue(String key, Type<T> type) throws Exception
 	{
 		String s = get(key);
-		return type.parse(StandardSerializer.INSTANCE, s); 
+		return StandardSerializer.INSTANCE.parse(type, s); 
 	}
 
 	
@@ -342,7 +342,7 @@ public class Settings
 	public <T> T getValue(String key, Type<T> type, T defaultValue) throws Exception
 	{
 		String s = get(key, null);
-		return (s != null) ? type.parse(StandardSerializer.INSTANCE, s) : defaultValue; 
+		return (s != null) ? StandardSerializer.INSTANCE.parse(type, s) : defaultValue; 
 	}
 
 	
@@ -438,7 +438,7 @@ public class Settings
 	
 	public <T> void set(String key, Type<T> type, T value)
 	{
-		String s = value != null ? type.format(StandardSerializer.INSTANCE, value) : null;
+		String s = value != null ? StandardSerializer.INSTANCE.format(type, value) : null;
 		set(key, s);
 	}
 

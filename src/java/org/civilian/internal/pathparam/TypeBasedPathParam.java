@@ -18,7 +18,7 @@ package org.civilian.internal.pathparam;
 
 import org.civilian.resource.PathParam;
 import org.civilian.type.Type;
-import org.civilian.type.lib.StandardSerializer;
+import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Check;
 
 
@@ -52,7 +52,7 @@ public abstract class TypeBasedPathParam<T> extends PathParam<T>
 	{
 		try
 		{
-			return type_.parse(StandardSerializer.INSTANCE, s);
+			return StandardSerializer.INSTANCE.parse(type_, s);
 		}
 		catch(Exception e)
 		{
@@ -63,7 +63,7 @@ public abstract class TypeBasedPathParam<T> extends PathParam<T>
 
 	protected String format(T value)
 	{
-		return type_.format(StandardSerializer.INSTANCE, value);
+		return StandardSerializer.INSTANCE.format(type_, value);
 	}
 
 

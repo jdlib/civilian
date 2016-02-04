@@ -15,9 +15,10 @@
  */
 package org.civilian.text.keys.serialize;
 
+
 import org.civilian.text.keys.KeyList;
 import org.civilian.type.Type;
-import org.civilian.type.lib.StandardSerializer;
+import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Check;
 
 
@@ -38,7 +39,7 @@ class TypeBasedSerializer<T> extends KeySerializer
 	@Override public <VALUE> VALUE parseValue(KeyList<VALUE> keyList, String s) throws Exception
 	{
 		@SuppressWarnings("unchecked")
-		VALUE v 	= (VALUE)type_.parse(StandardSerializer.INSTANCE, s);
+		VALUE v 	= (VALUE)StandardSerializer.INSTANCE.parse(type_, s);
 		int index 	= keyList.indexOf(v);
 		if (index < 0)
 			throw rejectValue(s);
@@ -62,7 +63,7 @@ class TypeBasedSerializer<T> extends KeySerializer
 	@SuppressWarnings("unchecked")
 	@Override public <VALUE> String formatValue(KeyList<VALUE> keyList, VALUE value)
 	{
-		return type_.format(StandardSerializer.INSTANCE, (T)value);
+		return StandardSerializer.INSTANCE.format(type_, (T)value);
 	}
 	
 	
