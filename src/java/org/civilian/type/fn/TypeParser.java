@@ -19,6 +19,7 @@ package org.civilian.type.fn;
 import java.text.ParseException;
 import org.civilian.text.keys.KeyType;
 import org.civilian.type.Type;
+import org.civilian.type.lib.DiscreteType;
 
 
 public class TypeParser
@@ -152,6 +153,16 @@ public class TypeParser
 	protected <T> T parseNull(Type<T> type) throws Exception
 	{
 		return null;
+	}
+
+	
+	protected <T> T parseDiscrete(Type<T> type, String s) throws Exception
+	{
+		DiscreteType<T> dt = (DiscreteType<T>)type;
+		T value = parse(dt.getElementType(), s);
+		if (dt.indexOf(value) < 0)
+			throw new ParseException("not a valid entry '" + s + "'", 0);
+		return value;
 	}
 
 	

@@ -48,6 +48,7 @@ public class LocaleSerializer extends TypeSerializer
 		formatter_.use(this::formatDateTime)		.on(Type.Category.DATETIME);
 		formatter_.use(this::formatTime)			.on(Type.Category.TIME);
 		formatter_.use(TypeFormatter.KEY_FUNCTION)	.on(Type.Category.KEY);
+		formatter_.use(formatter_::formatDiscrete)	.on(Type.Category.DISCRETE);
 		
 		// init parser
 		parser_.use(numberFormat_::parseBigDecimal)	.on(BIGDECIMAL);	
@@ -65,6 +66,7 @@ public class LocaleSerializer extends TypeSerializer
 		parser_.use(this::parseDateTime)			.on(Type.Category.DATETIME);
 		parser_.use(this::parseTime)				.on(Type.Category.TIME);
 		parser_.use(TypeParser.KEY_FUNCTION)		.on(Type.Category.KEY);
+		parser_.use(parser_::parseDiscrete)			.on(Type.Category.DISCRETE);
 	}
 	
 	
@@ -219,5 +221,4 @@ public class LocaleSerializer extends TypeSerializer
 	private DateFormat dateFormat_;
 	private NumberFormat numberFormat_;
 }
-
 

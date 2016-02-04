@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
+import org.civilian.type.lib.DiscreteType;
 
 
 public class SerializerTest extends CivTest
@@ -153,13 +154,37 @@ public class SerializerTest extends CivTest
 		assertNotNull(LOCALE_US.getDateFormat());
 		assertNotNull(LOCALE_US.getNumberFormat());
 
-		// 
 		String big = "1234567890123456789012345678901234567890";
 		assertEquals(new BigDecimal(big), LOCALE_US.parse(TypeLib.BIGDECIMAL, big));
 		assertEquals(new BigInteger(big), LOCALE_US.parse(TypeLib.BIGINTEGER, big));
 		
 		assertEquals(123L, LOCALE_US.parse(TypeLib.LONG, "+123").longValue());
 		assertEquals(123456L, LOCALE_FR.parse(TypeLib.LONG, "+123 456").longValue());
+	}
+	
+	
+	@Test public void testDiscreteType() throws Exception
+	{
+		Integer one = Integer.valueOf(1);
+		Integer thousand = Integer.valueOf(1000);
+		
+		DiscreteType<Integer> type = new DiscreteType<>(TypeLib.INTEGER, one, thousand);
+		
+		assertFormat(type, one, "1", "1", "1", "1");
+		assertParse(type, one, "1", "1", "1", "1");
+		
+		assertFormat(type, thousand, "1000", "1,000", "1.000", "1 000");
+		assertParse(type, thousand, "1000", "1,000", "1.000", "1 000");
+		
+		try
+		{
+			// if not contained in the discrete list, a value is rejected
+			STANDARD.parse(type, "0");
+			fail();
+		}
+		catch(ParseException e)
+		{
+		}
 	}
 	
 	

@@ -18,6 +18,7 @@ package org.civilian.type.fn;
 
 import org.civilian.text.keys.KeyType;
 import org.civilian.type.Type;
+import org.civilian.type.lib.DiscreteType;
 
 
 public class TypeFormatter
@@ -92,6 +93,14 @@ public class TypeFormatter
 	public <T> void useNull(String nullValue)
 	{
 		nullValue_ = nullValue;
+	}
+	
+	
+	protected <T> String formatDiscrete(Type<? extends T> type, T value, Object style)
+	{
+		@SuppressWarnings("unchecked")
+		DiscreteType<T> dt = (DiscreteType<T>)type;
+		return format(dt.getElementType(), value, style);
 	}
 
 	

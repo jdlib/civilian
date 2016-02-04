@@ -29,7 +29,7 @@ import org.civilian.util.ClassUtil;
  * Formatting and parsing of lookup objects can either be type based, or
  * generic, using the toString() method of the objects. 
  */
-public class DiscreteType<T> extends SimpleType<T>
+public class DiscreteType<T> extends Type<T>
 {
 	/**
 	 * Creates a new DiscreteType.
@@ -38,14 +38,44 @@ public class DiscreteType<T> extends SimpleType<T>
 	@SafeVarargs
 	public DiscreteType(Type<T> type, T... list)
 	{
+		super(Category.DISCRETE);
 		list_ = Check.notNull(list, "list");
 		type_ = Check.notNull(type, "type");
+	}
+	
+	
+	public Type<T> getElementType()
+	{
+		return type_;
 	}
 
 	
 	@Override public String format(TypeSerializer serializer, T value, Object style)
 	{
 		return value != null ? type_.format(serializer, value) : serializer.formatNull(); 
+	}
+
+	
+	public int size()
+	{
+		return list_.length; 
+	}
+	
+	
+	public T getValue(int i)
+	{
+		return list_[i]; 
+	}
+
+	
+	public int indexOf(T value)
+	{
+		for (int i=0; i<list_.length; i++)
+		{
+			if (ClassUtil.equals(value, list_[i]))
+				return i;
+		}
+		return -1;
 	}
 	
 

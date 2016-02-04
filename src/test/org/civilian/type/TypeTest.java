@@ -84,22 +84,8 @@ public class TypeTest extends CivTest
 	{
 		DiscreteType<String> type = new DiscreteType<>(TypeLib.STRING, "a", "b", "c");
 		
-		assertEquals("", type.format(StandardSerializer.INSTANCE, null));
-		assertEquals("a", type.format(StandardSerializer.INSTANCE, "a"));
-		
 		assertEquals(String.class, type.getJavaType()); 
-		
-		assertNull(type.parse(StandardSerializer.INSTANCE, null));
-		assertEquals("a", type.parse(StandardSerializer.INSTANCE, "a"));
-		
-		try
-		{
-			assertNull(type.parse(StandardSerializer.INSTANCE, "d"));
-			fail();
-		}
-		catch(IllegalArgumentException e)
-		{
-		}
+		assertEquals(TypeLib.STRING, type.getElementType()); 
 	}
 
 	

@@ -39,6 +39,7 @@ public abstract class Type<T>
 		public static final Category ENUM		= new Category("ENUM");
 		public static final Category KEY		= new Category("KEY");
 		public static final Category LIST		= new Category("LIST");
+		public static final Category DISCRETE	= new Category("DISCRETE");
 		
 		
 		public Category(String name)

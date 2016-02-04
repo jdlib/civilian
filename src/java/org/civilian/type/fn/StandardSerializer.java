@@ -19,27 +19,28 @@ public class StandardSerializer extends TypeSerializer
 	
 	public StandardSerializer()
 	{
-		formatter_.use((t,v,h) -> v.toString())	.byDefault();
-		formatter_.use(this::formatDate)		.on(Type.Category.DATE);
-		formatter_.use(this::formatTime)		.on(Type.Category.TIME);
-		formatter_.use(this::formatDateTime)	.on(Type.Category.DATETIME);
-		formatter_.use(TypeFormatter.KEY_FUNCTION).on(Type.Category.KEY);
-	
-		parser_.use(this::parseDate)			.on(Type.Category.DATE);
-		parser_.use(this::parseTime)			.on(Type.Category.TIME);
-		parser_.use(this::parseDateTime)		.on(Type.Category.DATETIME);
-		parser_.use(TypeParser.KEY_FUNCTION)	.on(Type.Category.KEY);
-		parser_.use(BigInteger::new)			.on(BIGINTEGER);
-		parser_.use(BigDecimal::new)			.on(BIGDECIMAL);
-		parser_.use(Boolean::valueOf)			.on(BOOLEAN);
-		parser_.use(Byte::valueOf)				.on(BYTE);
-		parser_.use(TypeParser.CHAR_FUNCTION)	.on(CHARACTER);
-		parser_.use(Double::valueOf)			.on(DOUBLE);
-		parser_.use(Float::valueOf)				.on(FLOAT);
-		parser_.use(Integer::valueOf)			.on(INTEGER);
-		parser_.use(Long::valueOf)				.on(LONG);
-		parser_.use(Short::valueOf)				.on(SHORT);
-		parser_.use(TypeParser.STRING_FUNCTION)	.on(STRING);
+		formatter_.use((t,v,h) -> v.toString())		.byDefault();
+		formatter_.use(this::formatDate)			.on(Type.Category.DATE);
+		formatter_.use(this::formatTime)			.on(Type.Category.TIME);
+		formatter_.use(this::formatDateTime)		.on(Type.Category.DATETIME);
+		formatter_.use(TypeFormatter.KEY_FUNCTION)	.on(Type.Category.KEY);
+		formatter_.use(formatter_::formatDiscrete)	.on(Type.Category.DISCRETE);
+		parser_.use(this::parseDate)				.on(Type.Category.DATE);
+		parser_.use(this::parseTime)				.on(Type.Category.TIME);
+		parser_.use(this::parseDateTime)			.on(Type.Category.DATETIME);
+		parser_.use(TypeParser.KEY_FUNCTION)		.on(Type.Category.KEY);
+		parser_.use(parser_::parseDiscrete)			.on(Type.Category.DISCRETE);
+		parser_.use(BigInteger::new)				.on(BIGINTEGER);
+		parser_.use(BigDecimal::new)				.on(BIGDECIMAL);
+		parser_.use(Boolean::valueOf)				.on(BOOLEAN);
+		parser_.use(Byte::valueOf)					.on(BYTE);
+		parser_.use(TypeParser.CHAR_FUNCTION)		.on(CHARACTER);
+		parser_.use(Double::valueOf)				.on(DOUBLE);
+		parser_.use(Float::valueOf)					.on(FLOAT);
+		parser_.use(Integer::valueOf)				.on(INTEGER);
+		parser_.use(Long::valueOf)					.on(LONG);
+		parser_.use(Short::valueOf)					.on(SHORT);
+		parser_.use(TypeParser.STRING_FUNCTION)		.on(STRING);
 	}
 	
 	
