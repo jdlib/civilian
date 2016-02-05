@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
 
@@ -32,12 +31,6 @@ public class StringType extends SimpleType<String>
 		return String.class;
 	}
 	
-	
-	@Override public String format(TypeSerializer serializer, String value, Object style)
-	{
-		return serializer.formatString(value, style);
-	}
-
 	
 	@Override public <R, P, E extends Exception> R accept(TypeVisitor<R, P, E> visitor, P param) throws E
 	{

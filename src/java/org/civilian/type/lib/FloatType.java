@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
 
@@ -36,12 +35,6 @@ public class FloatType extends SimpleType<Float>
 	@Override public Class<Float> getJavaPrimitiveType()
 	{
 		return float.class;
-	}
-
-	
-	@Override public String format(TypeSerializer serializer, Float value, Object style)
-	{
-		return serializer.formatFloat(value, style);
 	}
 
 	

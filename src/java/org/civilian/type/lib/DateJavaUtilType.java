@@ -18,7 +18,6 @@ package org.civilian.type.lib;
 
 import org.civilian.type.DateType;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
 
@@ -33,15 +32,6 @@ public class DateJavaUtilType extends DateType<java.util.Date>
 		return java.util.Date.class;
 	}
 	
-	
-	@SuppressWarnings("deprecation")
-	@Override public String format(TypeSerializer serializer, java.util.Date date, Object style)
-	{
-		return date == null ? 
-			serializer.formatNull() : 
-			serializer.formatDate(date.getYear() + 1900, date.getMonth() + 1, date.getDate(), style);  
-	}
-
 	
 	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
 	{

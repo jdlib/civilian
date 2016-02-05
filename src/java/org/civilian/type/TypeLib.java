@@ -164,23 +164,6 @@ public class TypeLib implements Iterable<Type<?>>
 
 	
 	/**
-	 * Formats a value using the type which is registered for the value's class.
-	 * @return the formatted value or null if the value is null
-	 */
-	public <T> String format(T value, TypeSerializer serializer)
-	{
-		if (value == null)
-			return null;
-		else
-		{
-			@SuppressWarnings("unchecked")
-			Type<T> type = (Type<T>)getSafe(value.getClass());
-			return type.format(serializer, value);
-		}
-	}
-
-	
-	/**
 	 * Returns the associated class of a class of primitive type.
 	 * @param c a class for a primitive type (e.g. int.class)
 	 */

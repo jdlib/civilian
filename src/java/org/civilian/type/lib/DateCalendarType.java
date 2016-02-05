@@ -20,7 +20,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.civilian.type.DateType;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
 
@@ -35,14 +34,6 @@ public class DateCalendarType extends DateType<Calendar>
 		return Calendar.class;
 	}
 	
-	
-	@Override public String format(TypeSerializer serializer, Calendar cal, Object style)
-	{
-		return cal == null ? 
-			serializer.formatNull() : 
-			serializer.formatDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DATE), style);  
-	}
-
 	
 	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
 	{

@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.Type;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
@@ -47,12 +46,6 @@ public class DiscreteType<T> extends Type<T>
 	public Type<T> getElementType()
 	{
 		return type_;
-	}
-
-	
-	@Override public String format(TypeSerializer serializer, T value, Object style)
-	{
-		return value != null ? type_.format(serializer, value) : serializer.formatNull(); 
 	}
 
 	

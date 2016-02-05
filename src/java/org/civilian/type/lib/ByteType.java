@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
 
@@ -36,12 +35,6 @@ public class ByteType extends SimpleType<Byte>
 	@Override public Class<Byte> getJavaPrimitiveType()
 	{
 		return byte.class;
-	}
-
-	
-	@Override public String format(TypeSerializer serializer, Byte value, Object style)
-	{
-		return serializer.formatByte(value, style);
 	}
 
 	

@@ -20,6 +20,11 @@ import java.text.ParseException;
 import org.civilian.type.Type;
 
 
+/**
+ * A TypeSerializer represents a certain schema of parsing and formatting
+ * values from or to a string.
+ */
+// TODO docs
 public abstract class TypeSerializer
 {
 	protected TypeSerializer()

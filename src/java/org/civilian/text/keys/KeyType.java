@@ -19,7 +19,6 @@ package org.civilian.text.keys;
 import org.civilian.text.keys.serialize.KeySerializer;
 import org.civilian.text.keys.serialize.KeySerializers;
 import org.civilian.type.Type;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 import org.civilian.util.Check;
 
@@ -45,18 +44,7 @@ public class KeyType<VALUE> extends Type<VALUE>
 		serializer_	= serializer; 
 	}
 
-	
-	/**
-	 * Formats a key value.
-	 * @param serializer a serializer, representing a formatting scheme
-	 * @param value a value
-	 */
-	@Override public String format(TypeSerializer serializer, VALUE value, Object style)
-	{
-		return value == null ? "" : getKeySerializer().formatValue(keyList_, value);
-	}
 
-	
 	/**
 	 * Formats a key value.
 	 */

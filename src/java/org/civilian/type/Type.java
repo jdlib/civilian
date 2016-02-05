@@ -127,26 +127,6 @@ public abstract class Type<T>
 
 
 	/**
-	 * Returns a string representation of a value.
-	 * @param serializer a TypeSerializer to format the value
-	 * @param value the value
-	 */
-	public String format(TypeSerializer serializer, T value)
-	{
-		return format(serializer, value, null);
-	}
-	
-
-	/**
-	 * Returns a string representation of a value.
-	 * @param serializer a TypeSerializer to format the value
-	 * @param value the value
-	 * @param style an optional style hint to the serializer
-	 */
-	public abstract String format(TypeSerializer serializer, T value, Object style);
- 
-	
-	/**
 	 * Accepts the visitor.
  	 */
 	public abstract <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E;

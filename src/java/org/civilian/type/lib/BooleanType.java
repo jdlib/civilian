@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
 
@@ -36,12 +35,6 @@ public class BooleanType extends SimpleType<Boolean>
 	@Override public Class<Boolean> getJavaPrimitiveType()
 	{
 		return boolean.class;
-	}
-
-	
-	@Override public String format(TypeSerializer serializer, Boolean value, Object style)
-	{
-		return serializer.formatBoolean(value, style);
 	}
 
 	

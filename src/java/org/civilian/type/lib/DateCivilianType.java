@@ -18,7 +18,6 @@ package org.civilian.type.lib;
 
 import org.civilian.type.DateType;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 import org.civilian.util.Date;
 
@@ -34,14 +33,6 @@ public class DateCivilianType extends DateType<Date>
 		return Date.class;
 	}
 	
-	
-	@Override public String format(TypeSerializer serializer, Date date, Object style)
-	{
-		return date == null ? 
-			serializer.formatNull() : 
-			serializer.formatDate(date.getYear(), date.getMonth(), date.getDay(), style);  
-	}
-
 	
 	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
 	{

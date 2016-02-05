@@ -19,7 +19,6 @@ package org.civilian.type.lib;
 import java.lang.reflect.Array;
 import org.civilian.type.ListType;
 import org.civilian.type.Type;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 import org.civilian.util.Check;
 
@@ -61,36 +60,6 @@ public class ArrayType<T> extends ListType<T[],T>
 		return elementType_;
 	}
 
-
-	/**
-	 * Calls {@link #format(TypeSerializer, Object, Object)} with a null style parameter.
-	 */
-	@Override public String format(TypeSerializer serializer, T[] values)
-	{
-		return format(serializer, values, null);
-	}
-
-	
-	/**
-	 * Returns a "naive" concatenation of the values, separated by ",".
-	 * Obviously this method returns a wrong result if a formatted value contains a comma.
-	 */
-	@Override public String format(TypeSerializer serializer, T[] values, Object style)
-	{
-		if (values == null)
-			return null;
-		
-		StringBuilder s = new StringBuilder();
-		for (int i=0; i<values.length; i++)
-		{
-			if (i > 0)
-				s.append(",");
-			s.append(elementType_.format(serializer, values[i]));
-		}
-		  
-		return s.toString();
-	}
-	
 
 	@Override public <R, P, E extends Exception> R accept(TypeVisitor<R, P, E> visitor, P param) throws E
 	{

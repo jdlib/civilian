@@ -18,7 +18,6 @@ package org.civilian.type.lib;
 
 import java.math.BigDecimal;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
 
@@ -33,12 +32,6 @@ public class BigDecimalType extends SimpleType<BigDecimal>
 		return BigDecimal.class;
 	}
 	
-	
-	@Override public String format(TypeSerializer serializer, BigDecimal value, Object style)
-	{
-		return serializer.formatBigDecimal(value, style);
-	}
-
 	
 	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
 	{

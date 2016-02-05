@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.Type;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 import org.civilian.util.Check;
 
@@ -34,12 +33,6 @@ public class EnumType<T extends Enum<T>> extends Type<T>
 	}
 	
 	
-	@Override public String format(TypeSerializer serializer, T value, Object style)
-	{
-		return value != null ? value.name() : serializer.formatNull();
-	}
-	
-
 	@Override public <R, P, E extends Exception> R accept(TypeVisitor<R, P, E> visitor, P param) throws E
 	{
 		throw new UnsupportedOperationException();

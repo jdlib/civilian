@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 /**
- * Contains {@link org.civilian.type.Type} and {@link org.civilian.type.TypeSerializer}
- * implementations.
+ * Provides a framework for type classification and extensible type operations.
  */
 package org.civilian.type.lib;

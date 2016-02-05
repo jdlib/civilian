@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
 
@@ -36,12 +35,6 @@ public class DoubleType extends SimpleType<Double>
 	@Override public Class<Double> getJavaPrimitiveType()
 	{
 		return double.class;
-	}
-
-	
-	@Override public String format(TypeSerializer serializer, Double value, Object style)
-	{
-		return serializer.formatDouble(value, style);
 	}
 
 	

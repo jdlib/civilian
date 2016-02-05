@@ -18,7 +18,6 @@ package org.civilian.type.lib;
 
 import java.math.BigInteger;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
 
@@ -33,12 +32,6 @@ public class BigIntegerType extends SimpleType<BigInteger>
 		return BigInteger.class;
 	}
 	
-	
-	@Override public String format(TypeSerializer serializer, BigInteger value, Object style)
-	{
-		return serializer.formatBigInteger(value, style);
-	}
-
 	
 	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
 	{

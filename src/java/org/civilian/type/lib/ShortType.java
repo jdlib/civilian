@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
 
@@ -36,12 +35,6 @@ public class ShortType extends SimpleType<Short>
 	@Override public Class<Short> getJavaPrimitiveType()
 	{
 		return short.class;
-	}
-
-	
-	@Override public String format(TypeSerializer serializer, Short value, Object style)
-	{
-		return serializer.formatShort(value, style);
 	}
 
 	

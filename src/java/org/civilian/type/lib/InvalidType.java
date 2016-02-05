@@ -16,7 +16,6 @@
 package org.civilian.type.lib;
 
 
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
 
@@ -40,18 +39,6 @@ public class InvalidType<T> extends SimpleType<T>
 	
 	
 	@Override public boolean isSimpleType()
-	{
-		throw new UnsupportedOperationException();
-	}
-	
-
-	@Override public String format(TypeSerializer serializer, T value)
-	{
-		throw new UnsupportedOperationException();
-	}
-	
-
-	@Override public String format(TypeSerializer serializer, T value, Object style)
 	{
 		throw new UnsupportedOperationException();
 	}

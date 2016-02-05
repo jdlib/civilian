@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeSerializer;
 import org.civilian.type.TypeVisitor;
 
 
@@ -36,12 +35,6 @@ public class IntegerType extends SimpleType<Integer>
 	@Override public Class<Integer> getJavaPrimitiveType()
 	{
 		return int.class;
-	}
-
-	
-	@Override public String format(TypeSerializer serializer, Integer value, Object style)
-	{
-		return serializer.formatInteger(value, style);
 	}
 
 	
