@@ -558,7 +558,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 		{
 			@SuppressWarnings("unchecked")
 			ListType<T,E> listType = (ListType<T,E>)getType();
-			E[] values = request.getLocaleSerializer().getParser().parse(listType.getElementType(), s); 
+			E[] values = request.getLocaleSerializer().parseArray(listType.getElementType(), s); 
 			setValue(listType.create(values));
 		}
 		catch(Exception e)

@@ -19,31 +19,31 @@ public class StandardSerializer extends TypeSerializer
 	
 	public StandardSerializer()
 	{
-		formatter_.use((t,v,h) -> v.toString())		.byDefault();
-		formatter_.use(this::formatDate)			.on(Type.Category.DATE);
-		formatter_.use(this::formatTime)			.on(Type.Category.TIME);
-		formatter_.use(this::formatDateTime)		.on(Type.Category.DATETIME);
-		formatter_.use(TypeFormatter.KEY_FUNCTION)	.on(Type.Category.KEY);
-		formatter_.use(formatter_::formatDiscrete)	.on(Type.Category.DISCRETE);
-		formatter_.use(formatter_::formatEnum)		.on(Type.Category.ENUM);
+		useFormatter((t,v,h) -> v.toString())	.byDefault();
+		useFormatter(this::formatDate)			.on(Type.Category.DATE);
+		useFormatter(this::formatTime)			.on(Type.Category.TIME);
+		useFormatter(this::formatDateTime)		.on(Type.Category.DATETIME);
+		useFormatter(this::formatKey)			.on(Type.Category.KEY);
+		useFormatter(this::formatDiscrete)		.on(Type.Category.DISCRETE);
+		useFormatter(this::formatEnum)			.on(Type.Category.ENUM);
 		
-		parser_.use(this::parseDate)				.on(Type.Category.DATE);
-		parser_.use(this::parseTime)				.on(Type.Category.TIME);
-		parser_.use(this::parseDateTime)			.on(Type.Category.DATETIME);
-		parser_.use(TypeParser.KEY_FUNCTION)		.on(Type.Category.KEY);
-		parser_.use(parser_::parseDiscrete)			.on(Type.Category.DISCRETE);
-		parser_.use(parser_::parseEnum)				.on(Type.Category.ENUM);
-		parser_.use(BigInteger::new)				.on(BIGINTEGER);
-		parser_.use(BigDecimal::new)				.on(BIGDECIMAL);
-		parser_.use(Boolean::valueOf)				.on(BOOLEAN);
-		parser_.use(Byte::valueOf)					.on(BYTE);
-		parser_.use(TypeParser.CHAR_FUNCTION)		.on(CHARACTER);
-		parser_.use(Double::valueOf)				.on(DOUBLE);
-		parser_.use(Float::valueOf)					.on(FLOAT);
-		parser_.use(Integer::valueOf)				.on(INTEGER);
-		parser_.use(Long::valueOf)					.on(LONG);
-		parser_.use(Short::valueOf)					.on(SHORT);
-		parser_.use(TypeParser.STRING_FUNCTION)		.on(STRING);
+		useParser(this::parseDate)				.on(Type.Category.DATE);
+		useParser(this::parseTime)				.on(Type.Category.TIME);
+		useParser(this::parseDateTime)			.on(Type.Category.DATETIME);
+		useParser(this::parseKey)				.on(Type.Category.KEY);
+		useParser(this::parseDiscrete)			.on(Type.Category.DISCRETE);
+		useParser(this::parseEnum)				.on(Type.Category.ENUM);
+		useParser(BigInteger::new)				.on(BIGINTEGER);
+		useParser(BigDecimal::new)				.on(BIGDECIMAL);
+		useParser(Boolean::valueOf)				.on(BOOLEAN);
+		useParser(Byte::valueOf)				.on(BYTE);
+		useParser(this::parseCharacter)			.on(CHARACTER);
+		useParser(Double::valueOf)				.on(DOUBLE);
+		useParser(Float::valueOf)				.on(FLOAT);
+		useParser(Integer::valueOf)				.on(INTEGER);
+		useParser(Long::valueOf)				.on(LONG);
+		useParser(Short::valueOf)				.on(SHORT);
+		useParser(PARSE_STRING)					.on(STRING);
 	}
 	
 	

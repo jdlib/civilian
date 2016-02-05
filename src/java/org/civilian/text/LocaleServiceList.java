@@ -25,8 +25,6 @@ import org.civilian.text.msg.EmptyMsgBundleFactory;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleFactory;
 import org.civilian.type.fn.LocaleSerializer;
-import org.civilian.type.fn.TypeFormatter;
-import org.civilian.type.fn.TypeParser;
 import org.civilian.util.Check;
 
 
@@ -240,7 +238,8 @@ public class LocaleServiceList
 	private LocaleService createService(Locale locale)
 	{
 		MsgBundle msgBundle = msgBundleFactory_.getMsgBundle(locale);
-		LocaleSerializer serializer = new LocaleSerializer(locale, formatter_, parser_);
+		LocaleSerializer first = supportedServices_[0] != null ? supportedServices_[0].getSerializer() : null; 
+		LocaleSerializer serializer = new LocaleSerializer(locale, first);
 		return new LocaleService(locale, msgBundle, serializer);
 	}
 	
@@ -341,7 +340,4 @@ public class LocaleServiceList
 	private final LocaleMap localeMap_;
 	private final KeyList<LocaleService> serviceKeys_;
 	private final boolean allowUnsupportedLocales_;
-	// shared by all LocaleService objects
-	private final TypeFormatter formatter_ = new TypeFormatter();
-	private final TypeParser parser_ = new TypeParser();
 }

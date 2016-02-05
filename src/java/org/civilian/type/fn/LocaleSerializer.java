@@ -26,13 +26,13 @@ public class LocaleSerializer extends TypeSerializer
 	
 	public LocaleSerializer(Locale locale)
 	{
-		this(locale, null, null);
+		this(locale, null);
 	}
 	
 	
-	public LocaleSerializer(Locale locale, TypeFormatter formatter, TypeParser parser)
+	public LocaleSerializer(Locale locale, LocaleSerializer shared)
 	{
-		super(formatter, parser);
+		super(shared);
 		
 		// init locale data
 		locale_			= Check.notNull(locale, "locale");
@@ -40,35 +40,35 @@ public class LocaleSerializer extends TypeSerializer
 		numberFormat_ 	= new NumberFormat(locale);
 		
 		// init formatter
-		formatter_.use(Object::toString)			.on(BYTE).on(CHARACTER);
-		formatter_.use(this::formatNatural)			.on(BIGINTEGER).on(INTEGER).on(LONG).on(SHORT);
-		formatter_.use(this::formatDecimal)			.on(BIGDECIMAL).on(DOUBLE).on(FLOAT);
-		formatter_.use(Object::toString)			.on(STRING).on(BOOLEAN);
-		formatter_.use(this::formatDate)			.on(Type.Category.DATE);
-		formatter_.use(this::formatDateTime)		.on(Type.Category.DATETIME);
-		formatter_.use(this::formatTime)			.on(Type.Category.TIME);
-		formatter_.use(TypeFormatter.KEY_FUNCTION)	.on(Type.Category.KEY);
-		formatter_.use(formatter_::formatDiscrete)	.on(Type.Category.DISCRETE);
-		formatter_.use(formatter_::formatEnum)		.on(Type.Category.ENUM);
+		useFormatter(Object::toString)				.on(BYTE).on(CHARACTER);
+		useFormatter(this::formatNatural)			.on(BIGINTEGER).on(INTEGER).on(LONG).on(SHORT);
+		useFormatter(this::formatDecimal)			.on(BIGDECIMAL).on(DOUBLE).on(FLOAT);
+		useFormatter(Object::toString)				.on(STRING).on(BOOLEAN);
+		useFormatter(this::formatDate)				.on(Type.Category.DATE);
+		useFormatter(this::formatDateTime)			.on(Type.Category.DATETIME);
+		useFormatter(this::formatTime)				.on(Type.Category.TIME);
+		useFormatter(this::formatKey)				.on(Type.Category.KEY);
+		useFormatter(this::formatDiscrete)			.on(Type.Category.DISCRETE);
+		useFormatter(this::formatEnum)				.on(Type.Category.ENUM);
 		
 		// init parser
-		parser_.use(numberFormat_::parseBigDecimal)	.on(BIGDECIMAL);	
-		parser_.use(numberFormat_::parseBigInteger)	.on(BIGINTEGER);	
-		parser_.use(Boolean::valueOf)				.on(BOOLEAN);	
-		parser_.use(Byte::valueOf)					.on(BYTE);	
-		parser_.use(TypeParser.CHAR_FUNCTION)		.on(CHARACTER);
-		parser_.use(numberFormat_::parseFloat)		.on(FLOAT);	
-		parser_.use(numberFormat_::parseDouble)		.on(DOUBLE);	
-		parser_.use(numberFormat_::parseInteger)	.on(INTEGER);	
-		parser_.use(numberFormat_::parseLong)		.on(LONG);	
-		parser_.use(numberFormat_::parseShort)		.on(SHORT);	
-		parser_.use(TypeParser.STRING_FUNCTION)		.on(STRING);
-		parser_.use(this::parseDate)				.on(Type.Category.DATE);
-		parser_.use(this::parseDateTime)			.on(Type.Category.DATETIME);
-		parser_.use(this::parseTime)				.on(Type.Category.TIME);
-		parser_.use(TypeParser.KEY_FUNCTION)		.on(Type.Category.KEY);
-		parser_.use(parser_::parseDiscrete)			.on(Type.Category.DISCRETE);
-		parser_.use(parser_::parseEnum)				.on(Type.Category.ENUM);
+		useParser(numberFormat_::parseBigDecimal)	.on(BIGDECIMAL);	
+		useParser(numberFormat_::parseBigInteger)	.on(BIGINTEGER);	
+		useParser(Boolean::valueOf)					.on(BOOLEAN);	
+		useParser(Byte::valueOf)					.on(BYTE);	
+		useParser(this::parseCharacter)				.on(CHARACTER);
+		useParser(numberFormat_::parseFloat)		.on(FLOAT);	
+		useParser(numberFormat_::parseDouble)		.on(DOUBLE);	
+		useParser(numberFormat_::parseInteger)		.on(INTEGER);	
+		useParser(numberFormat_::parseLong)			.on(LONG);	
+		useParser(numberFormat_::parseShort)		.on(SHORT);	
+		useParser(PARSE_STRING)						.on(STRING);
+		useParser(this::parseDate)					.on(Type.Category.DATE);
+		useParser(this::parseDateTime)				.on(Type.Category.DATETIME);
+		useParser(this::parseTime)					.on(Type.Category.TIME);
+		useParser(this::parseKey)					.on(Type.Category.KEY);
+		useParser(this::parseDiscrete)				.on(Type.Category.DISCRETE);
+		useParser(this::parseEnum)					.on(Type.Category.ENUM);
 	}
 	
 	
