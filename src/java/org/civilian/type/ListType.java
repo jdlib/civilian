@@ -38,10 +38,4 @@ public abstract class ListType<T,E> extends Type<T>
 	 * Create a list object from an value array.
 	 */
 	public abstract T create(E[] values);
-	
-	
-	/**
-	 * Parses the string array and returns a list of converted values.
-	 */
-	public abstract T parseList(TypeSerializer serializer, String... s) throws Exception;
 }

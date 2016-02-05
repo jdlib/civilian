@@ -144,15 +144,6 @@ public abstract class Type<T>
 	 * @param style an optional style hint to the serializer
 	 */
 	public abstract String format(TypeSerializer serializer, T value, Object style);
-
-	
-	/**
-	 * Returns a value parsed from its string representation.
-	 * @param serializer a TypeSerializer to parse the string
-	 * @param s the string
-	 * @exception Exception if parsing fails
-	 */
-	public abstract T parse(TypeSerializer serializer, String s) throws Exception;
  
 	
 	/**

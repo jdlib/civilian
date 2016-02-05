@@ -40,12 +40,6 @@ public class EnumType<T extends Enum<T>> extends Type<T>
 	}
 	
 
-	@Override public T parse(TypeSerializer serializer, String s) throws Exception
-	{
-		return s != null ? Enum.valueOf(enumClass_, s) : null;
-	}
-	
-
 	@Override public <R, P, E extends Exception> R accept(TypeVisitor<R, P, E> visitor, P param) throws E
 	{
 		throw new UnsupportedOperationException();

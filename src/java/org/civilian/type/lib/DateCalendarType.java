@@ -44,12 +44,6 @@ public class DateCalendarType extends DateType<Calendar>
 	}
 
 	
-	@Override public Calendar parse(TypeSerializer serializer, String s) throws Exception
-	{
-		return serializer.parseDate(s, this);
-	}
-	
-	
 	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
 	{
 		return visitor.visitDate(param, this);

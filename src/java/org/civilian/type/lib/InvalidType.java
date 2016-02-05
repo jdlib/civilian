@@ -57,12 +57,6 @@ public class InvalidType<T> extends SimpleType<T>
 	}
 	
 
-	@Override public T parse(TypeSerializer serializer, String s) throws Exception
-	{
-		throw new UnsupportedOperationException();
-	}
-	
-
 	@Override public <R, P, E extends Exception> R accept(TypeVisitor<R, P, E> visitor, P param) throws E
 	{
 		throw new UnsupportedOperationException();

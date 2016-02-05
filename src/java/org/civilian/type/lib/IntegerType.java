@@ -45,12 +45,6 @@ public class IntegerType extends SimpleType<Integer>
 	}
 
 	
-	@Override public Integer parse(TypeSerializer serializer, String s) throws Exception
-	{
-		return serializer.parseInteger(s);
-	}
-	
-	
 	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
 	{
 		return visitor.visitInteger(param);

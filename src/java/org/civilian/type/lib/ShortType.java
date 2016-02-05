@@ -45,12 +45,6 @@ public class ShortType extends SimpleType<Short>
 	}
 
 	
-	@Override public Short parse(TypeSerializer serializer, String s) throws Exception
-	{
-		return serializer.parseShort(s);
-	}
-	
-	
 	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
 	{
 		return visitor.visitShort(param);

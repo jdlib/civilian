@@ -45,12 +45,6 @@ public class FloatType extends SimpleType<Float>
 	}
 
 	
-	@Override public Float parse(TypeSerializer serializer, String s) throws Exception
-	{
-		return serializer.parseFloat(s);
-	}
-	
-	
 	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
 	{
 		return visitor.visitFloat(param);

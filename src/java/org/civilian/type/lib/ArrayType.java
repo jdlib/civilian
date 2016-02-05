@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import java.lang.reflect.Array;
-import java.util.regex.Pattern;
 import org.civilian.type.ListType;
 import org.civilian.type.Type;
 import org.civilian.type.TypeSerializer;
@@ -30,9 +29,6 @@ import org.civilian.util.Check;
  */
 public class ArrayType<T> extends ListType<T[],T>
 {
-	private static final Pattern LIST_SPLITTER = Pattern.compile("\\s*\\,\\s*");
-
-	
 	public ArrayType(Type<T> elementType)
 	{
 		elementType_ = Check.notNull(elementType, "elementType");
@@ -96,33 +92,6 @@ public class ArrayType<T> extends ListType<T[],T>
 	}
 	
 
-	/**
-	 * Assumes that the string contains formatted values, separated by ","
-	 * The method splits the string and parses the parts.
-	 */
-	@Override public T[] parse(TypeSerializer serializer, String s) throws Exception
-	{
-		return s == null ? null : parseList(serializer, LIST_SPLITTER.split(s));
-	}
-
-	
-	/**
-	 * Parses the string array and returns an array of converted values.
-	 */
-	@Override public T[] parseList(TypeSerializer serializer, String... s) throws Exception
-	{
-		if (s == null)
-			return null;
-		else
-		{
-			T[] result = elementType_.createArray(s.length); 
-			for (int i=0; i<s.length; i++)
-				result[i] = elementType_.parse(serializer, s[i]);
-			return result;
-		}
-	}
-
-	
 	@Override public <R, P, E extends Exception> R accept(TypeVisitor<R, P, E> visitor, P param) throws E
 	{
 		return visitor.visitArray(param, elementType_);

@@ -79,15 +79,6 @@ public class KeyType<VALUE> extends Type<VALUE>
 	
 
 	/**
-	 * Parses a key value. 
-	 */
-	@Override public VALUE parse(TypeSerializer serializer, String s) throws Exception
-	{
-		return s != null ? getKeySerializer().parseValue(keyList_, s) : null;
-	}
-	
-
-	/**
 	 * Parses a key value.
 	 */
 	public VALUE parse(String s) throws Exception

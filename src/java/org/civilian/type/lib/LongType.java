@@ -45,12 +45,6 @@ public class LongType extends SimpleType<Long>
 	}
 
 	
-	@Override public Long parse(TypeSerializer serializer, String s) throws Exception
-	{
-		return serializer.parseLong(s);
-	}
-	
-	
 	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
 	{
 		return visitor.visitLong(param);

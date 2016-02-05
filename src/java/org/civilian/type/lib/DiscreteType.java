@@ -79,30 +79,6 @@ public class DiscreteType<T> extends Type<T>
 	}
 	
 
-	@Override public T parse(TypeSerializer serializer, String s) throws Exception
-	{
-		if (s == null)
-			return null;
-		
-		T value = null;
-		boolean valueOk = false;
-		
-		value = type_.parse(serializer, s);
-		for (int i=0; i<list_.length; i++)
-		{
-			if (ClassUtil.equals(value, list_[i]))
-			{
-				valueOk = true;
-				break;
-			}
-		}
-		
-		if (valueOk)
-			return value;
-		throw new IllegalArgumentException("not a valid entry '" + s + "'");
-	}
-	
-
 	/**
 	 * Throws an UnsupportedOperationException.
 	 */
