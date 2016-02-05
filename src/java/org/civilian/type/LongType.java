@@ -13,7 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.civilian.type;
+
 /**
- * Provides a framework for type classification and extensible type operations.
+ * A type implementation for java.lang.Long.
+ * @see TypeLib#LONG
  */
-package org.civilian.type.lib;
+public class LongType extends SimpleType<Long>
+{
+	@Override public Class<Long> getJavaType()
+	{
+		return Long.class;
+	}
+	
+	
+	@Override public Class<Long> getJavaPrimitiveType()
+	{
+		return long.class;
+	}
+}

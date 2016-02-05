@@ -13,26 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.lib;
+package org.civilian.type;
 
 
-import org.civilian.type.TypeLib;
+import java.math.BigDecimal;
 
 
 /**
- * A type implementation for java.lang.Integer.
- * @see TypeLib#INTEGER
+ * A type implementation for java.math.BigDecimal.
+ * @see TypeLib#BIGDECIMAL
  */
-public class IntegerType extends SimpleType<Integer>
+public class BigDecimalType extends SimpleType<BigDecimal>
 {
-	@Override public Class<Integer> getJavaType()
+	@Override public Class<BigDecimal> getJavaType()
 	{
-		return Integer.class;
-	}
-	
-	
-	@Override public Class<Integer> getJavaPrimitiveType()
-	{
-		return int.class;
+		return BigDecimal.class;
 	}
 }

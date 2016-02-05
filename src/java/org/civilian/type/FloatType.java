@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.lib;
-
-
-import org.civilian.type.TypeLib;
-
+package org.civilian.type;
 
 /**
- * A type implementation for java.lang.Byte.
- * @see TypeLib#BYTE
+ * A type implementation for java.lang.Float.
+ * @see TypeLib#FLOAT
  */
-public class ByteType extends SimpleType<Byte>
+public class FloatType extends SimpleType<Float>
 {
-	@Override public Class<Byte> getJavaType()
+	@Override public Class<Float> getJavaType()
 	{
-		return Byte.class;
+		return Float.class;
 	}
 	
 	
-	@Override public Class<Byte> getJavaPrimitiveType()
+	@Override public Class<Float> getJavaPrimitiveType()
 	{
-		return byte.class;
+		return float.class;
 	}
 }

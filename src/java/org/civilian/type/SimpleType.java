@@ -13,11 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.lib;
-
-
-import org.civilian.type.Type;
-
+package org.civilian.type;
 
 public abstract class SimpleType<T> extends Type<T>
 {	

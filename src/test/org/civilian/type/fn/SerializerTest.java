@@ -23,10 +23,10 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import org.junit.Test;
 import org.civilian.CivTest;
+import org.civilian.type.DiscreteType;
+import org.civilian.type.EnumType;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
-import org.civilian.type.lib.DiscreteType;
-import org.civilian.type.lib.EnumType;
 
 
 public class SerializerTest extends CivTest

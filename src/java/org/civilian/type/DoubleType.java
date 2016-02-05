@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.lib;
-
-
-import org.civilian.type.TypeLib;
-
+package org.civilian.type;
 
 /**
- * A type implementation for java.lang.Boolean.
- * @see TypeLib#BOOLEAN
+ * A type implementation for java.lang.Double.
+ * @see TypeLib#DOUBLE
  */
-public class BooleanType extends SimpleType<Boolean>
+public class DoubleType extends SimpleType<Double>
 {
-	@Override public Class<Boolean> getJavaType()
+	@Override public Class<Double> getJavaType()
 	{
-		return Boolean.class;
+		return Double.class;
 	}
 	
 	
-	@Override public Class<Boolean> getJavaPrimitiveType()
+	@Override public Class<Double> getJavaPrimitiveType()
 	{
-		return boolean.class;
+		return double.class;
 	}
 }

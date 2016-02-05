@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.lib;
+package org.civilian.type;
 
 
 import java.lang.reflect.Array;
-import org.civilian.type.ListType;
-import org.civilian.type.Type;
 import org.civilian.util.Check;
 
 

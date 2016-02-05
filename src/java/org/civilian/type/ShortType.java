@@ -13,30 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.lib;
-
-
-import org.civilian.type.Type;
-import org.civilian.util.Check;
-
+package org.civilian.type;
 
 /**
- * A type implementation for enums.
+ * A type implementation for java.lang.Short.
+ * @see TypeLib#SHORT
  */
-public class EnumType<T extends Enum<T>> extends Type<T>
+public class ShortType extends SimpleType<Short>
 {
-	public EnumType(Class<T> enumClass)
+	@Override public Class<Short> getJavaType()
 	{
-		super(Category.ENUM);
-		enumClass_ = Check.notNull(enumClass, "enumClass");
+		return Short.class;
 	}
-
 	
-	@Override public Class<T> getJavaType()
+	
+	@Override public Class<Short> getJavaPrimitiveType()
 	{
-		return enumClass_;
+		return short.class;
 	}
-
-	
-	private Class<T> enumClass_;
 }

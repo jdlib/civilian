@@ -13,20 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.lib;
+package org.civilian.type;
 
 
-import org.civilian.type.TypeLib;
+import org.civilian.util.Check;
 
 
 /**
- * A type implementation for java.lang.String.
- * @see TypeLib#STRING
+ * A type implementation for enums.
  */
-public class StringType extends SimpleType<String>
+public class EnumType<T extends Enum<T>> extends Type<T>
 {
-	@Override public Class<String> getJavaType()
+	public EnumType(Class<T> enumClass)
 	{
-		return String.class;
+		super(Category.ENUM);
+		enumClass_ = Check.notNull(enumClass, "enumClass");
 	}
+
+	
+	@Override public Class<T> getJavaType()
+	{
+		return enumClass_;
+	}
+
+	
+	private Class<T> enumClass_;
 }

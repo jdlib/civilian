@@ -13,54 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.lib;
-
-
-import org.civilian.type.DateType;
-import org.civilian.type.TypeLib;
-
+package org.civilian.type;
 
 /**
- * A type implementation for java.util.Date.
- * @see TypeLib#DATE_JAVA_UTIL
+ * A type implementation for java.sql.Date.
+ * @see TypeLib#DATE_JAVA_SQL
  */
-public class DateJavaUtilType extends DateType<java.util.Date>
+public class DateJavaSqlType extends DateType<java.sql.Date>
 {
-	@Override public Class<java.util.Date> getJavaType()
+	@Override public Class<java.sql.Date> getJavaType()
 	{
-		return java.util.Date.class;
+		return java.sql.Date.class;
 	}
 
 
 	@SuppressWarnings("deprecation")
-	@Override public java.util.Date create(int year, int month, int day)
+	@Override public java.sql.Date create(int year, int month, int day)
 	{
-		return new java.util.Date(year - 1900, month - 1, day);
+		return new java.sql.Date(year - 1900, month - 1, day);
 	}
 
 
-	@Override public java.util.Date createToday()
+	@Override public java.sql.Date createToday()
 	{
-		return new java.util.Date();
+		return new java.sql.Date(System.currentTimeMillis());
 	}
 
 
 	@SuppressWarnings("deprecation")
-	@Override public int getYear(java.util.Date date)
+	@Override public int getYear(java.sql.Date date)
 	{
 		return date.getYear() + 1900;
 	}
 
 
 	@SuppressWarnings("deprecation")
-	@Override public int getMonth(java.util.Date date)
+	@Override public int getMonth(java.sql.Date date)
 	{
 		return date.getMonth() + 1;
 	}
 
 
 	@SuppressWarnings("deprecation")
-	@Override public int getDay(java.util.Date date)
+	@Override public int getDay(java.sql.Date date)
 	{
 		return date.getDate();
 	}

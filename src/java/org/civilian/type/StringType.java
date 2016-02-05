@@ -13,26 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.lib;
-
-
-import org.civilian.type.TypeLib;
-
+package org.civilian.type;
 
 /**
- * A type implementation for java.lang.Long.
- * @see TypeLib#LONG
+ * A type implementation for java.lang.String.
+ * @see TypeLib#STRING
  */
-public class LongType extends SimpleType<Long>
+public class StringType extends SimpleType<String>
 {
-	@Override public Class<Long> getJavaType()
+	@Override public Class<String> getJavaType()
 	{
-		return Long.class;
-	}
-	
-	
-	@Override public Class<Long> getJavaPrimitiveType()
-	{
-		return long.class;
+		return String.class;
 	}
 }

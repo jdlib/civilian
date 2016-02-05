@@ -20,10 +20,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import org.civilian.CivTest;
-import org.civilian.type.lib.ArrayType;
-import org.civilian.type.lib.DiscreteType;
-import org.civilian.type.lib.EnumType;
-import org.civilian.type.lib.InvalidType;
 import org.civilian.type.fn.StandardSerializer;
 import org.junit.Test;
 

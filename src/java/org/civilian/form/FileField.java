@@ -20,7 +20,7 @@ import org.civilian.Request;
 import org.civilian.request.Upload;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
-import org.civilian.type.lib.InvalidType;
+import org.civilian.type.InvalidType;
 
 
 /**

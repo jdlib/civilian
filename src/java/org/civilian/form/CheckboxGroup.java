@@ -19,9 +19,9 @@ package org.civilian.form;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.keys.KeyList;
+import org.civilian.type.ArrayType;
 import org.civilian.type.Type;
 import org.civilian.type.fn.TypeSerializer;
-import org.civilian.type.lib.ArrayType;
 import org.civilian.util.Check;
 
 

@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.lib;
-
-
-import org.civilian.type.TypeLib;
-
+package org.civilian.type;
 
 /**
- * A type implementation for java.lang.Short.
- * @see TypeLib#SHORT
+ * A type implementation for java.lang.Integer.
+ * @see TypeLib#INTEGER
  */
-public class ShortType extends SimpleType<Short>
+public class IntegerType extends SimpleType<Integer>
 {
-	@Override public Class<Short> getJavaType()
+	@Override public Class<Integer> getJavaType()
 	{
-		return Short.class;
+		return Integer.class;
 	}
 	
 	
-	@Override public Class<Short> getJavaPrimitiveType()
+	@Override public Class<Integer> getJavaPrimitiveType()
 	{
-		return short.class;
+		return int.class;
 	}
 }

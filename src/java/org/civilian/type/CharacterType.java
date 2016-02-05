@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.lib;
-
-
-import java.math.BigInteger;
-import org.civilian.type.TypeLib;
-
+package org.civilian.type;
 
 /**
- * A type implementation for java.math.BigInteger.
- * @see TypeLib#BIGINTEGER
+ * A type implementation for java.lang.Character.
+ * @see TypeLib#CHARACTER
  */
-public class BigIntegerType extends SimpleType<BigInteger>
+public class CharacterType extends SimpleType<Character>
 {
-	@Override public Class<BigInteger> getJavaType()
+	@Override public Class<Character> getJavaType()
 	{
-		return BigInteger.class;
+		return Character.class;
+	}
+	
+	
+	@Override public Class<Character> getJavaPrimitiveType()
+	{
+		return char.class;
 	}
 }

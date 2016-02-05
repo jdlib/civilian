@@ -13,26 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.lib;
+package org.civilian.type;
 
 
-import org.civilian.type.TypeLib;
+import java.math.BigInteger;
 
 
 /**
- * A type implementation for java.lang.Float.
- * @see TypeLib#FLOAT
+ * A type implementation for java.math.BigInteger.
+ * @see TypeLib#BIGINTEGER
  */
-public class FloatType extends SimpleType<Float>
+public class BigIntegerType extends SimpleType<BigInteger>
 {
-	@Override public Class<Float> getJavaType()
+	@Override public Class<BigInteger> getJavaType()
 	{
-		return Float.class;
-	}
-	
-	
-	@Override public Class<Float> getJavaPrimitiveType()
-	{
-		return float.class;
+		return BigInteger.class;
 	}
 }

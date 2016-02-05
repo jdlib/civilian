@@ -17,8 +17,8 @@ package org.civilian.type.fn;
 
 
 import org.civilian.text.keys.KeyType;
+import org.civilian.type.DiscreteType;
 import org.civilian.type.Type;
-import org.civilian.type.lib.DiscreteType;
 
 
 public class TypeFormatter
