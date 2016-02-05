@@ -203,22 +203,14 @@ public class SerializerTest extends CivTest
 		assertFormat(type, TestEnum.alpha, "alpha", "alpha", "alpha", "alpha");
 		assertParse (type, TestEnum.alpha, "alpha", "alpha", "alpha", "alpha");
 
-//		
-//		assertEquals("", type.format(org.civilian.type.lib.StandardSerializer.INSTANCE, null));
-//		assertEquals("alpha", type.format(org.civilian.type.lib.StandardSerializer.INSTANCE, TestEnum.alpha));
-//		
-//		assertEquals(null, type.parse(org.civilian.type.lib.StandardSerializer.INSTANCE, null));
-//		assertEquals(TestEnum.beta, type.parse(org.civilian.type.lib.StandardSerializer.INSTANCE, "beta"));
-//		try
-//		{
-//			assertNull(type.parse(org.civilian.type.lib.StandardSerializer.INSTANCE, "gamma"));
-//			fail();
-//		}
-//		catch(IllegalArgumentException e)
-//		{
-//		}
-//		
-//		assertSame(TestEnum.class, type.getJavaType());
+		try
+		{
+			STANDARD.parse(type, "gamma");
+			fail();
+		}
+		catch(ParseException e)
+		{
+		}
 	}
 
 	

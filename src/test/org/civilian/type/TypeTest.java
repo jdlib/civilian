@@ -62,21 +62,6 @@ public class TypeTest extends CivTest
 		assertArrayEquals(new String[0][], type.createArray(0));
 		assertNull(type.getJavaPrimitiveType());
 		assertEquals(empty.getClass(), type.getJavaType());
-		assertNull(type.parseList(null, (String[])null));
-		
-		ArrayType<Integer> intArrayType = new ArrayType<>(TypeLib.INTEGER);
-		Integer p[] = intArrayType.parseList(org.civilian.type.lib.StandardSerializer.INSTANCE,  "1", "2");
-		assertEquals(2, p.length);
-		assertEquals(1, p[0].intValue());
-		assertEquals(2, p[1].intValue());
-		
-		assertNull(type.format(org.civilian.type.lib.StandardSerializer.INSTANCE, null));
-		assertEquals("a", type.format(org.civilian.type.lib.StandardSerializer.INSTANCE, new String[] { "a" }));
-		assertEquals("a,b", type.format(org.civilian.type.lib.StandardSerializer.INSTANCE, new String[] { "a", "b" }));
-
-		assertNull(type.parse(org.civilian.type.lib.StandardSerializer.INSTANCE, null));
-		assertArrayEquals2(type.parse(org.civilian.type.lib.StandardSerializer.INSTANCE, "a"), "a");
-		assertArrayEquals2(type.parse(org.civilian.type.lib.StandardSerializer.INSTANCE, "a,b"), "a", "b");
 	}
 	
 	
