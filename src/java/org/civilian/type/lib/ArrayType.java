@@ -19,7 +19,6 @@ package org.civilian.type.lib;
 import java.lang.reflect.Array;
 import org.civilian.type.ListType;
 import org.civilian.type.Type;
-import org.civilian.type.TypeVisitor;
 import org.civilian.util.Check;
 
 
@@ -58,12 +57,6 @@ public class ArrayType<T> extends ListType<T[],T>
 	@Override public Type<T> getElementType()
 	{
 		return elementType_;
-	}
-
-
-	@Override public <R, P, E extends Exception> R accept(TypeVisitor<R, P, E> visitor, P param) throws E
-	{
-		return visitor.visitArray(param, elementType_);
 	}
 
 

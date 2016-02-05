@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeVisitor;
 
 
 /**
@@ -35,11 +34,5 @@ public class IntegerType extends SimpleType<Integer>
 	@Override public Class<Integer> getJavaPrimitiveType()
 	{
 		return int.class;
-	}
-
-	
-	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
-	{
-		return visitor.visitInteger(param);
 	}
 }

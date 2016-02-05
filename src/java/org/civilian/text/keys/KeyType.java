@@ -19,7 +19,6 @@ package org.civilian.text.keys;
 import org.civilian.text.keys.serialize.KeySerializer;
 import org.civilian.text.keys.serialize.KeySerializers;
 import org.civilian.type.Type;
-import org.civilian.type.TypeVisitor;
 import org.civilian.util.Check;
 
 
@@ -75,15 +74,6 @@ public class KeyType<VALUE> extends Type<VALUE>
 	}
 	
 
-	/**
-	 * Throws an UnsupportedOperationException.
-	 */
-	@Override public <R, P, E extends Exception> R accept(TypeVisitor<R, P, E> visitor, P param) throws E
-	{
-		throw new UnsupportedOperationException();
-	}
-
-	
 	/**
 	 * Returns the class of the first key list element.
 	 */

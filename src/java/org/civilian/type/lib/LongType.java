@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeVisitor;
 
 
 /**
@@ -35,11 +34,5 @@ public class LongType extends SimpleType<Long>
 	@Override public Class<Long> getJavaPrimitiveType()
 	{
 		return long.class;
-	}
-
-	
-	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
-	{
-		return visitor.visitLong(param);
 	}
 }

@@ -20,7 +20,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.civilian.type.DateType;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeVisitor;
 
 
 /**
@@ -35,12 +34,6 @@ public class DateCalendarType extends DateType<Calendar>
 	}
 	
 	
-	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
-	{
-		return visitor.visitDate(param, this);
-	}
-
-
 	@Override public Calendar create(int year, int month, int day)
 	{
 		return new GregorianCalendar(year, month - 1, day);

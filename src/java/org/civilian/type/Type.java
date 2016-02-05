@@ -125,12 +125,6 @@ public abstract class Type<T>
 		return true;
 	}
 
-
-	/**
-	 * Accepts the visitor.
- 	 */
-	public abstract <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E;
-
 	
 	/**
 	 * Returns the associated Java type.

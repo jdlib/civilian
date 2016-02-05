@@ -18,7 +18,6 @@ package org.civilian.type.lib;
 
 import java.math.BigDecimal;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeVisitor;
 
 
 /**
@@ -30,11 +29,5 @@ public class BigDecimalType extends SimpleType<BigDecimal>
 	@Override public Class<BigDecimal> getJavaType()
 	{
 		return BigDecimal.class;
-	}
-	
-	
-	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
-	{
-		return visitor.visitBigDecimal(param);
 	}
 }

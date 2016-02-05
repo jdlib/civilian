@@ -16,9 +16,6 @@
 package org.civilian.type.lib;
 
 
-import org.civilian.type.TypeVisitor;
-
-
 /**
  * A Type implementation which throws an UnsupportedOperationException
  * on all operations.
@@ -39,12 +36,6 @@ public class InvalidType<T> extends SimpleType<T>
 	
 	
 	@Override public boolean isSimpleType()
-	{
-		throw new UnsupportedOperationException();
-	}
-	
-
-	@Override public <R, P, E extends Exception> R accept(TypeVisitor<R, P, E> visitor, P param) throws E
 	{
 		throw new UnsupportedOperationException();
 	}

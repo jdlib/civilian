@@ -18,7 +18,6 @@ package org.civilian.type.lib;
 
 import java.math.BigInteger;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeVisitor;
 
 
 /**
@@ -30,11 +29,5 @@ public class BigIntegerType extends SimpleType<BigInteger>
 	@Override public Class<BigInteger> getJavaType()
 	{
 		return BigInteger.class;
-	}
-	
-	
-	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
-	{
-		return visitor.visitBigInteger(param);
 	}
 }

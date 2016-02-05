@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeVisitor;
 
 
 /**
@@ -29,11 +28,5 @@ public class StringType extends SimpleType<String>
 	@Override public Class<String> getJavaType()
 	{
 		return String.class;
-	}
-	
-	
-	@Override public <R, P, E extends Exception> R accept(TypeVisitor<R, P, E> visitor, P param) throws E
-	{
-		return visitor.visitString(param);
 	}
 }

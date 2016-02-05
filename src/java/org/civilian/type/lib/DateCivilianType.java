@@ -18,7 +18,6 @@ package org.civilian.type.lib;
 
 import org.civilian.type.DateType;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeVisitor;
 import org.civilian.util.Date;
 
 
@@ -34,12 +33,6 @@ public class DateCivilianType extends DateType<Date>
 	}
 	
 	
-	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
-	{
-		return visitor.visitDate(param, this);
-	}
-
-
 	@Override public Date create(int year, int month, int day)
 	{
 		return new Date(year, month, day);

@@ -18,7 +18,6 @@ package org.civilian.type.lib;
 
 import org.civilian.type.DateType;
 import org.civilian.type.TypeLib;
-import org.civilian.type.TypeVisitor;
 
 
 /**
@@ -30,12 +29,6 @@ public class DateJavaSqlType extends DateType<java.sql.Date>
 	@Override public Class<java.sql.Date> getJavaType()
 	{
 		return java.sql.Date.class;
-	}
-	
-	
-	@Override public <R,P,E extends Exception> R accept(TypeVisitor<R,P,E> visitor, P param) throws E
-	{
-		return visitor.visitDate(param, this);
 	}
 
 

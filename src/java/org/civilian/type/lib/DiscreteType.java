@@ -17,7 +17,6 @@ package org.civilian.type.lib;
 
 
 import org.civilian.type.Type;
-import org.civilian.type.TypeVisitor;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 
@@ -72,15 +71,6 @@ public class DiscreteType<T> extends Type<T>
 	}
 	
 
-	/**
-	 * Throws an UnsupportedOperationException.
-	 */
-	@Override public <R, P, E extends Exception> R accept(TypeVisitor<R, P, E> visitor, P param) throws E
-	{
-		throw new UnsupportedOperationException();
-	}
-
-	
 	/**
 	 * Returns the class of the first list element.
 	 */
