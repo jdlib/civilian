@@ -24,7 +24,7 @@ import org.civilian.type.lib.ArrayType;
 import org.civilian.type.lib.DiscreteType;
 import org.civilian.type.lib.EnumType;
 import org.civilian.type.lib.InvalidType;
-import org.civilian.type.lib.StandardSerializer;
+import org.civilian.type.fn.StandardSerializer;
 import org.junit.Test;
 
 
@@ -47,7 +47,7 @@ public class TypeTest extends CivTest
 		
 		assertTrue(type.isSimpleType());
 		
-		assertEquals("", type.format(StandardSerializer.INSTANCE, null));
+		assertEquals("", StandardSerializer.INSTANCE.format(type, null));
 	}
 
 
@@ -65,18 +65,18 @@ public class TypeTest extends CivTest
 		assertNull(type.parseList(null, (String[])null));
 		
 		ArrayType<Integer> intArrayType = new ArrayType<>(TypeLib.INTEGER);
-		Integer p[] = intArrayType.parseList(StandardSerializer.INSTANCE,  "1", "2");
+		Integer p[] = intArrayType.parseList(org.civilian.type.lib.StandardSerializer.INSTANCE,  "1", "2");
 		assertEquals(2, p.length);
 		assertEquals(1, p[0].intValue());
 		assertEquals(2, p[1].intValue());
 		
-		assertNull(type.format(StandardSerializer.INSTANCE, null));
-		assertEquals("a", type.format(StandardSerializer.INSTANCE, new String[] { "a" }));
-		assertEquals("a,b", type.format(StandardSerializer.INSTANCE, new String[] { "a", "b" }));
+		assertNull(type.format(org.civilian.type.lib.StandardSerializer.INSTANCE, null));
+		assertEquals("a", type.format(org.civilian.type.lib.StandardSerializer.INSTANCE, new String[] { "a" }));
+		assertEquals("a,b", type.format(org.civilian.type.lib.StandardSerializer.INSTANCE, new String[] { "a", "b" }));
 
-		assertNull(type.parse(StandardSerializer.INSTANCE, null));
-		assertArrayEquals2(type.parse(StandardSerializer.INSTANCE, "a"), "a");
-		assertArrayEquals2(type.parse(StandardSerializer.INSTANCE, "a,b"), "a", "b");
+		assertNull(type.parse(org.civilian.type.lib.StandardSerializer.INSTANCE, null));
+		assertArrayEquals2(type.parse(org.civilian.type.lib.StandardSerializer.INSTANCE, "a"), "a");
+		assertArrayEquals2(type.parse(org.civilian.type.lib.StandardSerializer.INSTANCE, "a,b"), "a", "b");
 	}
 	
 	
@@ -99,21 +99,6 @@ public class TypeTest extends CivTest
 	@Test public void testEnumType() throws Exception
 	{
 		EnumType<TestEnum> type = new EnumType<>(TestEnum.class);
-		
-		assertEquals("", type.format(StandardSerializer.INSTANCE, null));
-		assertEquals("alpha", type.format(StandardSerializer.INSTANCE, TestEnum.alpha));
-		
-		assertEquals(null, type.parse(StandardSerializer.INSTANCE, null));
-		assertEquals(TestEnum.beta, type.parse(StandardSerializer.INSTANCE, "beta"));
-		try
-		{
-			assertNull(type.parse(StandardSerializer.INSTANCE, "gamma"));
-			fail();
-		}
-		catch(IllegalArgumentException e)
-		{
-		}
-		
 		assertSame(TestEnum.class, type.getJavaType());
 	}
 

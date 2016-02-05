@@ -26,6 +26,7 @@ import org.civilian.CivTest;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.type.lib.DiscreteType;
+import org.civilian.type.lib.EnumType;
 
 
 public class SerializerTest extends CivTest
@@ -187,6 +188,39 @@ public class SerializerTest extends CivTest
 		}
 	}
 	
+	
+	private enum TestEnum
+	{
+		alpha,
+		beta
+	}
+	
+
+	@Test public void testEnumType() throws Exception
+	{
+		EnumType<TestEnum> type = new EnumType<>(TestEnum.class);
+		
+		assertFormat(type, TestEnum.alpha, "alpha", "alpha", "alpha", "alpha");
+		assertParse (type, TestEnum.alpha, "alpha", "alpha", "alpha", "alpha");
+
+//		
+//		assertEquals("", type.format(org.civilian.type.lib.StandardSerializer.INSTANCE, null));
+//		assertEquals("alpha", type.format(org.civilian.type.lib.StandardSerializer.INSTANCE, TestEnum.alpha));
+//		
+//		assertEquals(null, type.parse(org.civilian.type.lib.StandardSerializer.INSTANCE, null));
+//		assertEquals(TestEnum.beta, type.parse(org.civilian.type.lib.StandardSerializer.INSTANCE, "beta"));
+//		try
+//		{
+//			assertNull(type.parse(org.civilian.type.lib.StandardSerializer.INSTANCE, "gamma"));
+//			fail();
+//		}
+//		catch(IllegalArgumentException e)
+//		{
+//		}
+//		
+//		assertSame(TestEnum.class, type.getJavaType());
+	}
+
 	
 	private static final StandardSerializer STANDARD = StandardSerializer.INSTANCE;
 	private static final LocaleSerializer LOCALE_US = new LocaleSerializer(Locale.US);

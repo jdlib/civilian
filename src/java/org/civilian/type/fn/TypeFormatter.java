@@ -104,6 +104,12 @@ public class TypeFormatter
 	}
 
 	
+	protected <T> String formatEnum(Type<? extends T> type, T value, Object style)
+	{
+		return ((Enum<?>)value).name();
+	}
+	
+	
 	private TypeMap map_; 
 	private Object owner_;
 	private String nullValue_ = "";

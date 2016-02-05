@@ -20,6 +20,7 @@ import java.text.ParseException;
 import org.civilian.text.keys.KeyType;
 import org.civilian.type.Type;
 import org.civilian.type.lib.DiscreteType;
+import org.civilian.type.lib.EnumType;
 
 
 public class TypeParser
@@ -163,6 +164,14 @@ public class TypeParser
 		if (dt.indexOf(value) < 0)
 			throw new ParseException("not a valid entry '" + s + "'", 0);
 		return value;
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	protected <T> T parseEnum(Type<T> type, String s) throws Exception
+	{
+		EnumType<?> et = (EnumType<?>)type;
+		return (T)Enum.valueOf(et.getJavaType(), s);
 	}
 
 	
