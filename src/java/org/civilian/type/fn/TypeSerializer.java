@@ -123,7 +123,7 @@ public abstract class TypeSerializer
 	}
 
 	
-	public <T> TypeMap.Builder<T> useFormatter(Function<T,String> simpleFn)
+	public <T> TypeMap.Builder<T> useSimpleFormatter(Function<T,String> simpleFn)
 	{
 		return useFormatter((t,v,s) -> simpleFn.apply(v));
 	}
@@ -214,7 +214,7 @@ public abstract class TypeSerializer
 	}
 	
 	
-	public <T> TypeMap.Builder<T> useParser(SimpleParser<T> fn)
+	public <T> TypeMap.Builder<T> useSimpleParser(SimpleParser<T> fn)
 	{
 		Parser<T> fn2 = (t,s) -> fn.parse(s);
 		return useParser(fn2);

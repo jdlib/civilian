@@ -33,16 +33,16 @@ public class StandardSerializer extends TypeSerializer
 		useParser(this::parseKey)				.on(Type.Category.KEY);
 		useParser(this::parseDiscrete)			.on(Type.Category.DISCRETE);
 		useParser(this::parseEnum)				.on(Type.Category.ENUM);
-		useParser(BigInteger::new)				.on(BIGINTEGER);
-		useParser(BigDecimal::new)				.on(BIGDECIMAL);
-		useParser(Boolean::valueOf)				.on(BOOLEAN);
-		useParser(Byte::valueOf)				.on(BYTE);
+		useSimpleParser(BigInteger::new)		.on(BIGINTEGER);
+		useSimpleParser(BigDecimal::new)		.on(BIGDECIMAL);
+		useSimpleParser(Boolean::valueOf)		.on(BOOLEAN);
+		useSimpleParser(Byte::valueOf)			.on(BYTE);
 		useParser(this::parseCharacter)			.on(CHARACTER);
-		useParser(Double::valueOf)				.on(DOUBLE);
-		useParser(Float::valueOf)				.on(FLOAT);
-		useParser(Integer::valueOf)				.on(INTEGER);
-		useParser(Long::valueOf)				.on(LONG);
-		useParser(Short::valueOf)				.on(SHORT);
+		useSimpleParser(Double::valueOf)		.on(DOUBLE);
+		useSimpleParser(Float::valueOf)			.on(FLOAT);
+		useSimpleParser(Integer::valueOf)		.on(INTEGER);
+		useSimpleParser(Long::valueOf)			.on(LONG);
+		useSimpleParser(Short::valueOf)			.on(SHORT);
 		useParser(PARSE_STRING)					.on(STRING);
 	}
 	

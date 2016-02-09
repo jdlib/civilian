@@ -40,35 +40,35 @@ public class LocaleSerializer extends TypeSerializer
 		numberFormat_ 	= new NumberFormat(locale);
 		
 		// init formatter
-		useFormatter(Object::toString)				.on(BYTE).on(CHARACTER);
-		useFormatter(this::formatNatural)			.on(BIGINTEGER).on(INTEGER).on(LONG).on(SHORT);
-		useFormatter(this::formatDecimal)			.on(BIGDECIMAL).on(DOUBLE).on(FLOAT);
-		useFormatter(Object::toString)				.on(STRING).on(BOOLEAN);
-		useFormatter(this::formatDate)				.on(Type.Category.DATE);
-		useFormatter(this::formatDateTime)			.on(Type.Category.DATETIME);
-		useFormatter(this::formatTime)				.on(Type.Category.TIME);
-		useFormatter(this::formatKey)				.on(Type.Category.KEY);
-		useFormatter(this::formatDiscrete)			.on(Type.Category.DISCRETE);
-		useFormatter(this::formatEnum)				.on(Type.Category.ENUM);
+		useSimpleFormatter(Object::toString)			.on(BYTE).on(CHARACTER);
+		useFormatter(this::formatNatural)				.on(BIGINTEGER).on(INTEGER).on(LONG).on(SHORT);
+		useFormatter(this::formatDecimal)				.on(BIGDECIMAL).on(DOUBLE).on(FLOAT);
+		useSimpleFormatter(Object::toString)			.on(STRING).on(BOOLEAN);
+		useFormatter(this::formatDate)					.on(Type.Category.DATE);
+		useFormatter(this::formatDateTime)				.on(Type.Category.DATETIME);
+		useFormatter(this::formatTime)					.on(Type.Category.TIME);
+		useFormatter(this::formatKey)					.on(Type.Category.KEY);
+		useFormatter(this::formatDiscrete)				.on(Type.Category.DISCRETE);
+		useFormatter(this::formatEnum)					.on(Type.Category.ENUM);
 		
 		// init parser
-		useParser(numberFormat_::parseBigDecimal)	.on(BIGDECIMAL);	
-		useParser(numberFormat_::parseBigInteger)	.on(BIGINTEGER);	
-		useParser(Boolean::valueOf)					.on(BOOLEAN);	
-		useParser(Byte::valueOf)					.on(BYTE);	
-		useParser(this::parseCharacter)				.on(CHARACTER);
-		useParser(numberFormat_::parseFloat)		.on(FLOAT);	
-		useParser(numberFormat_::parseDouble)		.on(DOUBLE);	
-		useParser(numberFormat_::parseInteger)		.on(INTEGER);	
-		useParser(numberFormat_::parseLong)			.on(LONG);	
-		useParser(numberFormat_::parseShort)		.on(SHORT);	
-		useParser(PARSE_STRING)						.on(STRING);
-		useParser(this::parseDate)					.on(Type.Category.DATE);
-		useParser(this::parseDateTime)				.on(Type.Category.DATETIME);
-		useParser(this::parseTime)					.on(Type.Category.TIME);
-		useParser(this::parseKey)					.on(Type.Category.KEY);
-		useParser(this::parseDiscrete)				.on(Type.Category.DISCRETE);
-		useParser(this::parseEnum)					.on(Type.Category.ENUM);
+		useSimpleParser(numberFormat_::parseBigDecimal)	.on(BIGDECIMAL);	
+		useSimpleParser(numberFormat_::parseBigInteger)	.on(BIGINTEGER);	
+		useSimpleParser(Boolean::valueOf)				.on(BOOLEAN);	
+		useSimpleParser(Byte::valueOf)					.on(BYTE);	
+		useParser(this::parseCharacter)					.on(CHARACTER);
+		useSimpleParser(numberFormat_::parseFloat)		.on(FLOAT);	
+		useSimpleParser(numberFormat_::parseDouble)		.on(DOUBLE);	
+		useSimpleParser(numberFormat_::parseInteger)	.on(INTEGER);	
+		useSimpleParser(numberFormat_::parseLong)		.on(LONG);	
+		useSimpleParser(numberFormat_::parseShort)		.on(SHORT);	
+		useParser(PARSE_STRING)							.on(STRING);
+		useParser(this::parseDate)						.on(Type.Category.DATE);
+		useParser(this::parseDateTime)					.on(Type.Category.DATETIME);
+		useParser(this::parseTime)						.on(Type.Category.TIME);
+		useParser(this::parseKey)						.on(Type.Category.KEY);
+		useParser(this::parseDiscrete)					.on(Type.Category.DISCRETE);
+		useParser(this::parseEnum)						.on(Type.Category.ENUM);
 	}
 	
 	
@@ -90,13 +90,13 @@ public class LocaleSerializer extends TypeSerializer
 	}
 
 	
-	private String formatDecimal(Type<? extends Number> type, Number value, Object style)
+	private String formatDecimal(Type<?> type, Number value, Object style)
 	{
 		return numberFormat_.formatDecimal(value, numberStyle(style), null).toString();
 	}
 
 	
-	private String formatNatural(Type<? extends Number> type, Number value, Object style)
+	private String formatNatural(Type<?> type, Number value, Object style)
 	{
 		return numberFormat_.formatNatural(value, numberStyle(style), null).toString();
 	}
