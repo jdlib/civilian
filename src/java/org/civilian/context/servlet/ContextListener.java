@@ -29,9 +29,9 @@ import javax.servlet.ServletContextListener;
  * <p>
  * To define the context listener add these lines to your web.xml:
  * ContextListener 
- * <pre><code><![CDATA[<listener>
+ * {@code<listener>
  *    <listener-class>org.civilian.context.servlet.ContextListener</listener-class>
- * </listener>]]></code></pre>
+ * </listener>}
  */
 public class ContextListener implements ServletContextListener
 {

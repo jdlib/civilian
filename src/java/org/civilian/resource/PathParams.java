@@ -67,6 +67,7 @@ import org.civilian.internal.pathparam.YMDPathParam;
  * 		<td>/2013/01/31</td> 
  * 		<td>Date year=2013, month=01, day=31</td>
  * </tr>
+ * </table>
  */
 public abstract class PathParams
 {

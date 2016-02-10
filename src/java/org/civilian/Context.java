@@ -511,7 +511,7 @@ public abstract class Context implements ContextProvider, PathProvider
 	 * Returns the absolute path of the Context within the server.
 	 * It is the root path for all applications deployed in
 	 * the context.
-	 * Example: If the server is a webserver and listens at http://&lt;host&gt;:&ltport&gt;/
+	 * Example: If the server is a webserver and listens at http://&lt;host&gt;:&lt;port&gt;/
 	 * then the applications are located below
 	 * http://&lt;host&gt;:&lt;port&gt;/&lt;context-path&gt;/
 	 * In that example the context path corresponds to the path 

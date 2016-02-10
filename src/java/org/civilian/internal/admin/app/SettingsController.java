@@ -20,7 +20,7 @@ import org.civilian.template.Template;
 
 
 /**
- * Controller for the resource "/<app-id>/settings".
+ * Controller for the resource "/&lt;app-id&gt;/settings".
  */
 public class SettingsController extends AppController
 {

@@ -50,7 +50,7 @@ public class Check
 
 
 	/**
-	 * Checks that an array is not null and has length > 0.
+	 * Checks that an array is not null and has length &gt; 0.
 	 * @param array the array
 	 * @return the array
 	 * @param what describes the array.
@@ -66,7 +66,7 @@ public class Check
 
 
 	/**
-	 * Checks that a string is not null and has length > 0.
+	 * Checks that a string is not null and has length &gt; 0.
 	 * @param s the string
 	 * @return the string
 	 * @param what describes the string.
@@ -116,7 +116,7 @@ public class Check
 
 	
 	/**
-	 * Checks that a int value is >= another value.
+	 * Checks that a int value is &gt;= another value.
 	 * @param n the value
 	 * @param what describes the value
 	 * @return the value

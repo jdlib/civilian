@@ -191,7 +191,7 @@ public class ContentType
 		
 		/**
 		 * A comparator to sort ContentTypes by how specific they are
-		 * "main/sub" < "main/&#42;" <  "&#42;/sub" <  "&#42;/&#42;"
+		 * "main/sub" &lt; "main/&#42;" &lt; "&#42;/sub" &lt;  "&#42;/&#42;"
 		 */
 		public static final Comparator<ContentType> BY_SPECIFICITY = new SpecificityComparator();
 	}
@@ -261,7 +261,7 @@ public class ContentType
 	
 	/**
 	 * Creates a ContentType for the given main part, sub part and quality.
-	 * @param quality a value >= 0.0
+	 * @param quality a value &gt;= 0.0
 	 */
 	public ContentType(String mainPart, String subPart, double quality)
 	{
@@ -393,7 +393,7 @@ public class ContentType
 	 * For content-types used in a HTTP Accept header the quality is a number between 0 and 1. It 
 	 * codes the willigness of the client to accept a response with such content-type.
 	 * For content-types used on the server side (when specified in a {@link Produces @Produces} annotation,
-	 * it is a number >= 0. It can be used to boost specific content-types which have the same
+	 * it is a number &gt;= 0. It can be used to boost specific content-types which have the same
 	 * client quality.  
 	 */
 	public double getQuality()
@@ -404,7 +404,7 @@ public class ContentType
 	
 	/**
 	 * Returns a new ContentType with the given quality.
-	 * @param quality a number >= 0.
+	 * @param quality a number &gt;= 0.
 	 */
 	public ContentType withQuality(double quality)
 	{
@@ -432,9 +432,9 @@ public class ContentType
 
 	/**
 	 * Returns the specificity of a content-type with the given parts.
-	 * It returns 0 for content-types &#42;/&#42<br>
-	 * It returns 1 for content-types x/&#42<br>
-	 * It returns 2 for content-types &#42/y<br>
+	 * It returns 0 for content-types &#42;/&#42;<br>
+	 * It returns 1 for content-types x/&#42;<br>
+	 * It returns 2 for content-types &#42;/y<br>
 	 * It returns 3 for content-types x/y<br>
 	 * @param mainPart the main part of a ContentType or null, if wildcard "*"
 	 * @param subPart the sub part of a ContentType or null, if wildcard "*"

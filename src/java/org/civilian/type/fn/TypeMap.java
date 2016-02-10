@@ -23,9 +23,9 @@ import org.civilian.util.Check;
 /**
  * TypeMap is a helper class which allows to map a type to another
  * object. These Mappings can be established:
- * - for a single type: Type t -> value 
- * - for a type family: Type.Category -> value
- * - for a default value: any type -> value
+ * - for a single type: Type t -&gt; value 
+ * - for a type family: Type.Category -&gt; value
+ * - for a default value: any type -&gt; value
  */
 public class TypeMap
 {

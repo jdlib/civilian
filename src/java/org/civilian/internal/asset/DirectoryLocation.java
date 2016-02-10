@@ -35,7 +35,6 @@ public class DirectoryLocation extends AssetLocation
 	/**
 	 * Creates a new AssetDirectory.
 	 * @param path the path of the AssetLocation.
-	 * @param encoding the encoding of file served by this directory.
 	 * @param rootDir the root directory of the AssetDirectory. 
 	 */
 	public DirectoryLocation(String path, File rootDir)

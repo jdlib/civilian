@@ -134,7 +134,7 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	
 	/**
 	 * Creates a new application.
-	 * Shortcut for Application(pathParams, <application package>, new ControllerNaming())
+	 * Shortcut for Application(pathParams, &lt;application package&gt;, new ControllerNaming())
 	 */
 	public Application(PathParamMap pathParams)
 	{
@@ -144,7 +144,7 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	
 	/**
 	 * Creates a new application.
-	 * Shortcut for Application(PathParamMap.EMPTY, <application package>, new ControllerNaming())
+	 * Shortcut for Application(PathParamMap.EMPTY, &lt;application package&gt;, new ControllerNaming())
 	 */
 	public Application()
 	{
@@ -457,8 +457,8 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	 * Returns the application id.
 	 * The id is used to identify the application within
 	 * the {@link Context}. The id was defined within
-	 * <code<civilian.ini</code.
-	 * @see Context#getApplication(String). 
+	 * <code>civilian.ini</code>.
+	 * @see Context#getApplication(String) 
 	 */
 	public String getId()
 	{

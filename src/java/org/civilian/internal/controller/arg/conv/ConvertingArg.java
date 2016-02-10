@@ -130,11 +130,9 @@ public class ConvertingArg<T> extends MethodArg
 	
 
 	/**
-	 * Creates a new ParamArg object.
-	 * @param name the parameter name
-	 * @param source knows how to get parameter strings from a request. 
+	 * Creates a new ConvertingArg object.
+	 * @param arg the inner arg
 	 * @param defaultValue the default value, if the parameter is not part of the request
-	 * @param paramValue helps to convert the parameter value into the target value.
 	 */
 	protected ConvertingArg(StringMethodArg arg, T defaultValue, boolean isLocaleValue, Converter<T> converter)
 	{

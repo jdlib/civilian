@@ -29,7 +29,7 @@ public class DefaultApp extends Application
 {
 	/**
 	 * Creates the DefaultApp.
-	 * @param resourceBasePackage the base package
+	 * @param resourceRootPackage the base package
 	 * 		of the application resources
 	 */
 	public DefaultApp(String resourceRootPackage)

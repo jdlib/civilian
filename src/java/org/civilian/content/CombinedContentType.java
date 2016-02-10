@@ -35,7 +35,6 @@ import org.civilian.util.Check;
  * is <code>merged(main1,main2)/merged(sub1,sub2)</code>. Certain combinations increase
  * the distance of the combined type which is 0,1 or 2 and is a measure how many parts changed
  * in the merger. 
- * <p>
  * <ul>
  * <li><code>merged(&#42;,&#42;) = &#42;</code>   
  * <li><code>merged(&#42;,x) = x</code>, distance++   
@@ -46,7 +45,7 @@ import org.civilian.util.Check;
  * The score of a combined content-type c is the array
  * { specificity(c), client-quality(c), server-quality(c), 2-distance }.<br>
  * For combined types c1 and c2 we define the absolute order
- * c1 < c2, if exist i in 0..3 with score(c1)[i] < score(c2)[i] and score(c1)[j] == score(c2)[j] for j in 0..(i-1)  
+ * c1 &lt; c2, if exist i in 0..3 with score(c1)[i] &lt; score(c2)[i] and score(c1)[j] == score(c2)[j] for j in 0..(i-1)  
  */
 public class CombinedContentType extends ContentType
 {

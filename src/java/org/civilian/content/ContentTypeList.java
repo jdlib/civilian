@@ -48,10 +48,10 @@ public class ContentTypeList implements Iterable<ContentType>
 	 * http://www.w3.org/Protocols/HTTP/HTRQ_Headers.html#z3
 	 * <pre><code>
 	 * field  = Accept: entry *[ , entry ]
-     * entry  = &lt;content type> *[ ; param ]
+     * entry  = &lt;content type&gt; *[ ; param ]
 	 * param  = attr = float
 	 * attr   = q | other ignored params
-     * float  = &lt;ANSI-C floating point text representation>
+     * float  = &lt;ANSI-C floating point text representation&gt;
      * </code></pre>
 	 * @param comparator if not null, then the content types are sorted with the comparator
 	 * @param definitions string representation of the content types. Each string may 

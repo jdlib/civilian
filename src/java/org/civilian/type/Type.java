@@ -52,7 +52,7 @@ public abstract class Type<T>
 		/**
 		 * Returns the unique ordinal id of the category. It may
 		 * change during different VM runs.
-		 * @return the ordinal. The ordinal is a value >= 0.  
+		 * @return the ordinal. The ordinal is a value &gt;= 0.  
 		 */
 		public final int ordinal()
 		{
@@ -99,7 +99,7 @@ public abstract class Type<T>
 	/**
 	 * Returns the unique ordinal id of the type instance. It may
 	 * change during different VM runs.
-	 * @return the ordinal. The ordinal is a value >= 0.  
+	 * @return the ordinal. The ordinal is a value &gt;= 0.  
 	 */
 	public final int ordinal()
 	{

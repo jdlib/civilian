@@ -45,7 +45,6 @@ public class MemoryAsset extends Asset
 	
 	/**
 	 * Creates a new MemoryAsset.
-	 * @param path the asset path relative to its AssetLocation.
 	 * @param encoding the encoding
 	 * @param content the content as string
 	 */
@@ -58,7 +57,7 @@ public class MemoryAsset extends Asset
 	/**
 	 * Creates a new MemoryAsset.
 	 * @param encoding the encoding
-	 * @param content_ the content as string
+	 * @param bytes the byte content
 	 */
 	public MemoryAsset(String encoding, byte[] bytes)
 	{

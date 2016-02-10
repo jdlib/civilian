@@ -1050,8 +1050,8 @@ public class CspCompiler
 	
 	
 	/**
-	 * Prints a template code segment embedded in a literal line between "<%" and "%>".
-	 * @param raw the snippet including the boundaries "<%" and "%>".
+	 * Prints a template code segment embedded in a literal line between "&lt;%" and "%&gt;".
+	 * @param raw the snippet including the boundaries "&lt;%" and "%&gt;".
 	 * @param code the code content, trimmed.
 	 */
 	private void printTemplateSnippet(SourceWriter out, String raw, String code) throws CspException

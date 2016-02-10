@@ -25,15 +25,14 @@ import org.civilian.util.Check;
 
 /**
  * Button models the various HTML buttons:
- * <pre><code>
- * <!CDATA[
+ * {@code
  * <input value="..." type="submit">
  * <input value="..." type="reset" >
  * <input value="..." type="button">
  * <button>...</button>
  * <button type="submit">...</button>
  * <button type="reset">...</button>
- * ]]></code></pre>
+ * }
  */
 public class Button extends Control<String>
 {
@@ -43,32 +42,32 @@ public class Button extends Control<String>
 	public enum Variant
 	{
 		/**
-		 * Printed as &lt;input type="submit" value="...">
+		 * Printed as &lt;input type="submit" value="..."&gt;
 		 */
 		INPUT_SUBMIT(false, "submit"),	
 
 		/**
-		 * Printed as &lt;input type="reset" value="...">
+		 * Printed as &lt;input type="reset" value="..."&gt;
 		 */
 		INPUT_RESET(false, "reset"),
 
 		/**
-		 * Printed as &lt;input type="button" value="...">
+		 * Printed as &lt;input type="button" value="..."&gt;
 		 */
 		INPUT_BUTTON(false, "button"),
 		
 		/**
-		 * Printed as &lt;button type="submit">{value}&lt;/button>
+		 * Printed as &lt;button type="submit"&gt;{value}&lt;/button&gt;
 		 */
 		BUTTON_SUBMIT(true, "submit"),
 
 		/**
-		 * Printed as &lt;button type="reset">{value}&lt;/button>
+		 * Printed as &lt;button type="reset"&gt;{value}&lt;/button&gt;
 		 */
 		BUTTON_RESET(true, "reset"),
 		
 		/**
-		 * Printed as &lt;button>{value}&lt;/button>
+		 * Printed as &lt;button&gt;{value}&lt;/button&gt;
 		 */
 		BUTTON(true, null);
 		

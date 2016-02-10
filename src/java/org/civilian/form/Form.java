@@ -248,11 +248,11 @@ public class Form implements RequestProvider
 	/**
 	 * Sets the onsubmit attribute to the given javascript expression.
 	 * E.g. a call<p>
-	 * <code>form.addSubmitCallback("myfunction()");<code><p>
+	 * <code>form.addSubmitCallback("myfunction()");</code><p>
 	 * would be printed as<p> 
-	 * <code><form ... onsubmit="return myfunction();"></code><p>
+	 * <code>&lt;form ... onsubmit="return myfunction();"&gt;</code><p>
 	 * If you add multiple handlers the expression are chained together:
-	 * <code><form ... onsubmit="return myfunction() && myfunction2();"></code>:
+	 * <code>&lt;form ... onsubmit="return myfunction() &amp;&amp; myfunction2();"&gt;</code>:
 	 */
 	public void addSubmitCallback(String expression)
 	{

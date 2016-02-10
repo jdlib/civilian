@@ -176,7 +176,7 @@ public class NumberFormat implements Serializable
 	
 	/**
 	 * Formats a decimal number.
-	 * @param value the value.
+	 * @param raw the raw value.
 	 * @param style a NumberStyle to determine grouping and number of decimals. If null the default
 	 * 		NumberStyle is used.
 	 * @param builder a StringBuilder to which the formatted number is appended. 

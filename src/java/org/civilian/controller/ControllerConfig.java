@@ -39,7 +39,6 @@ public class ControllerConfig
 	/**
 	 * Returns the root package of the application controller classes.
 	 * The root package is specified in the application constructor.
-	 * @see Application#Application(org.civilian.resource.PathParamMap, String).
 	 */
 	public String getRootPackage()
 	{

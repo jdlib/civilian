@@ -93,7 +93,6 @@ import org.civilian.util.Check;
  * If you decide not to handle an exception in your controller
  * implementation, then the exception is passed to {@link Application#onError(Request, Throwable)}
  * for application-wide error handling.
- * <p>
  */
 public class Controller implements 
 	MessageProvider, RequestProvider, ResponseProvider, ApplicationProvider, ContextProvider

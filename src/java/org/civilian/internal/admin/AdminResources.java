@@ -11,13 +11,13 @@ package org.civilian.internal.admin;
 public interface AdminResources
 {
 	/**
-	 * "/" -> org.civilian.internal.admin.IndexController
+	 * "/" -&gt; org.civilian.internal.admin.IndexController
 	 */
 	public static final Root root = new Root();
 
 
 	/**
-	 * "/" -> org.civilian.internal.admin.IndexController
+	 * "/" -&gt; org.civilian.internal.admin.IndexController
 	 */
 	public static class Root extends org.civilian.Resource
 	{
@@ -49,12 +49,12 @@ public interface AdminResources
 			}
 
 			/**
-			 * "/{appId}/resources" -> org.civilian.internal.admin.app.ResourcesController
+			 * "/{appId}/resources" -&gt; org.civilian.internal.admin.app.ResourcesController
 			 */
 			public final org.civilian.Resource resources;
 
 			/**
-			 * "/{appId}/settings" -> org.civilian.internal.admin.app.SettingsController
+			 * "/{appId}/settings" -&gt; org.civilian.internal.admin.app.SettingsController
 			 */
 			public final org.civilian.Resource settings;
 		}

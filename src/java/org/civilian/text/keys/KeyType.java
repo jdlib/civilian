@@ -55,7 +55,6 @@ public class KeyType<VALUE> extends Type<VALUE>
 
 	/**
 	 * Formats a key value. 
-	 * @param serializer a serializer, representing a formatting scheme
 	 * @param value a value
 	 * @param index the index of the value in the keylist.
 	 */

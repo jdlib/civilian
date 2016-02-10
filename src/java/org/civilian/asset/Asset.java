@@ -106,7 +106,7 @@ public abstract class Asset
 	/**
 	 * Sets the last modified date of the asset.
 	 * @param ms the date in milliseconds since epoch.
-	 * 		Pass a value < 0 for unknown dates.
+	 * 		Pass a value &lt; 0 for unknown dates.
 	 */
 	public void setLastModified(long ms)
 	{

@@ -86,7 +86,7 @@ public abstract class AsyncContext
 	 * Sets the timeout in milliseconds. If {@link #complete()} is not called within
 	 * the timeout duration, the response is stopped and a timeout event is 
 	 * sent to any AsyncListener. 
-	 * @param milliSeconds the timout in milliSeconds. If <= 0, no timeout is applied.
+	 * @param milliSeconds the timout in milliSeconds. If &lt;= 0, no timeout is applied.
 	 */
 	public abstract void setTimeout(long milliSeconds);
 

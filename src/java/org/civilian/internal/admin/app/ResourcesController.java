@@ -27,7 +27,7 @@ import org.civilian.template.Template;
 
 
 /**
- * Controller for the resource "/<app-id>/resources".
+ * Controller for the resource "/&lt;app-id&gt;resources".
  */
 public class ResourcesController extends AppController
 {

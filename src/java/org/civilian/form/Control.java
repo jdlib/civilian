@@ -492,7 +492,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	/**
 	 * Reads the control value, using the request of the form
 	 * to which the field belongs.
-	 * @see #read(Request).
+	 * @see Control#read(Request)
 	 */
 	public boolean read()
 	{

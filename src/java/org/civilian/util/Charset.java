@@ -19,7 +19,7 @@ package org.civilian.util;
 /**
  * Charset is a small helper class  to determine if a character
  * is printable in a certain charset. (E.g. IS=-8859-1 can only
- * print characters <= 0xff). We use this class
+ * print characters &lt;= 0xff). We use this class
  * in HTML output to determine if we need to print a character reference
  * instead of the character itself.
  * This is just used as a conservative heuristic so we do not intent

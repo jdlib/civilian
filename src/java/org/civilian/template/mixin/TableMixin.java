@@ -94,7 +94,7 @@ public class TableMixin implements ComponentBuilder
 	
 	/**
 	 * Defines to use a column layout with the given number of columns.
-	 * @param count the number of columns, >= 1.
+	 * @param count the number of columns, &gt;= 1.
 	 * @return this
 	 */
 	public TableMixin columns(int count)
@@ -120,6 +120,7 @@ public class TableMixin implements ComponentBuilder
 	 * quotedstring := "'" [.^']+ "'"  
 	 * gap := integer?
 	 * integer := [0-9]+ 
+	 * </pre>
 	 */
 	public TableMixin columns(String definition)
 	{
@@ -320,7 +321,7 @@ public class TableMixin implements ComponentBuilder
 	
 	/**
 	 * Specifies that the next cell will span this number of columns.
-	 * @param colspan the number of columns to span. Must be >= 1. If it
+	 * @param colspan the number of columns to span. Must be &gt;= 1. If it
 	 * 		is greater than the number of available cells, it is
 	 * 		is silently truncated.
 	 * @see #startCell(int)
@@ -336,7 +337,7 @@ public class TableMixin implements ComponentBuilder
 	
 	/**
 	 * Specifies that the next cell will span this number of rows.
-	 * @param rowspan the number of rows to span. Must be >= 1.
+	 * @param rowspan the number of rows to span. Must be &gt;= 1.
 	 * @return this
 	 */
 	public TableMixin rowspan(int rowspan)

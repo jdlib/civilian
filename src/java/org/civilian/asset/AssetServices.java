@@ -98,9 +98,9 @@ public abstract class AssetServices
 	
 	/**
 	 * Returns the AssetLocation of an application, defined by an entry in civilian.ini.
-	 * The definition has the form type (':' param)? ('->' path)?
+	 * The definition has the form type (':' param)? ('-&gt;' path)?
 	 * @param app the application
-	 * @param definition an entry app.<appid>.asset.location[.<n>]
+	 * @param definition an entry app.&lt;appid&gt;.asset.location[.&lt;n&gt;]
 	 */
 	public static AssetLocation getLocation(Application app, String definition, Settings locSettings)
 		throws Exception

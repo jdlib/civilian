@@ -66,6 +66,7 @@ public class Settings
 	 * 		assert s1.hasKey("one.two")<br>
 	 * 		Settings s2 = new Settings2(s1, "one.");<br>
 	 * 		assert s1.getKey("one.two") == s2.getKey("two")
+	 * 		</code>
 	 */
 	public Settings(Settings wrapped, String prefix)
 	{

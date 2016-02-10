@@ -177,7 +177,7 @@ public class AppConfig
 	
 	/**
 	 * Returns the part of the application within the Civilian config file.
-	 * The key prefix "app.<app-id>." is removed from the keys. 
+	 * The key prefix "app.&lt;app-id&gt;." is removed from the keys. 
 	 */
 	public Settings getSettings()
 	{

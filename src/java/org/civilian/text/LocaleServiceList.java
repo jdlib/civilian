@@ -32,7 +32,7 @@ import org.civilian.util.Check;
  * LocaleServiceList provides LocaleService objects for Locales.
  * The list possesses a non empty list of LocaleServices for "supported" locales, defined by the 
  * application setup. (A non localized application will just use a single
- * supported locale). The first of these supported locales is defined as the default locale.<p>
+ * supported locale). The first of these supported locales is defined as the default locale.
  */
 public class LocaleServiceList
 {

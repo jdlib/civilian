@@ -17,7 +17,6 @@ package org.civilian.internal.asset;
 
 
 import org.civilian.asset.Asset;
-import org.civilian.asset.AssetConfig;
 import org.civilian.asset.AssetService;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
@@ -63,7 +62,6 @@ public class CombinedAssetService extends AssetService
 
 	/**
 	 * Returns the relative path of the asset root below the application path. 
-	 * @see AssetConfig#setRootPath(String)
 	 */
 	@Override public Path getRelativePath()
 	{
@@ -72,7 +70,7 @@ public class CombinedAssetService extends AssetService
 	
 	
 	/**
-	 * Returns true, if the number of children is > 0.
+	 * Returns true, if the number of children is &gt; 0.
 	 */
 	@Override public boolean hasAssets()
 	{

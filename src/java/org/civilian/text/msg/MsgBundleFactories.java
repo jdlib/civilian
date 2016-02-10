@@ -33,7 +33,7 @@ public abstract class MsgBundleFactories
 	 * Creates a MessageBundelFactory from a definition string in the config file.
 	 * @param definition right now these definitions strings are supported:
 	 * 		<ul>
-	 * 		<li>resbundle:<base name for java resoure bundles>
+	 * 		<li>resbundle:&lt;base name for java resoure bundles&gt;
 	 * 		</ul>
 	 * 		Else the definition string is interpreted as class name of MsgBundleFactory.
 	 */

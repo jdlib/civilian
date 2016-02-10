@@ -33,7 +33,7 @@ import org.civilian.util.Check;
  * <li>In the constructor of your application class pass the PathParamMap to the application base class.
  * <li>When a request is dispatched to a controller, path params are automatically recognized.
  * 		and stored in the {@link org.civilian.Request#getPathParam(PathParam) request}.
- * </ul>
+ * </ol>
  * @param <T> the type of the path parameter values
  */
 public abstract class PathParam<T>

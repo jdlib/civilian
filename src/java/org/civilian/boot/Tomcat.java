@@ -33,7 +33,7 @@ import org.civilian.util.StringUtil;
  * <pre> 
  * grant { permission javax.management.MBeanTrustPermission "register"; };
  * </pre> 
- * to your java.policy file unter <JRE_HOME>/lib/security.
+ * to your java.policy file unter &lt;JRE_HOME&gt;/lib/security.
  */
 public class Tomcat
 {

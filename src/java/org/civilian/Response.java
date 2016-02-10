@@ -49,7 +49,7 @@ import org.civilian.util.Check;
  * Response represents a response to a request.
  * It consists of a {@link Status}, {@link ResponseHeaders headers} and content, produced
  * either by a {@link #getContentWriter() Writer} or a {@link #getContentStream() OutputStream}.<br> 
- * In a Servlet environment Response is functionally equivalent to a HttpServletResponse.<p>
+ * In a Servlet environment Response is functionally equivalent to a HttpServletResponse.
  */
 public interface Response extends RequestProvider, ResponseProvider, ApplicationProvider, 
 	ContextProvider, LocaleServiceProvider

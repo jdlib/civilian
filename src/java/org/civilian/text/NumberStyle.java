@@ -75,7 +75,7 @@ public class NumberStyle
 
 	/**
 	 * Sets the number of minimal digits which should be printed when
-	 * formatting a decimal. Must be 0 <= min <= maxDecimals(). 
+	 * formatting a decimal. Must be 0 &lt;= min &lt;= maxDecimals(). 
 	 */
 	public NumberStyle minDecimals(int min)
 	{
