@@ -62,64 +62,65 @@ public class DocTemplate
 		out.println("</ul>");                                           // line 28: </ul>
 		out.println("<ul class=\"nav navbar-nav navbar-right\">");      // line 29: <ul class="nav navbar-nav navbar-right">
 		out.increaseTab();
-		printNav("contact",	"Contact/Imprint");                      // line 30: @printNav("contact",	"Contact/Imprint");
+		printNav("privacy",	"Privacy Policy");                       // line 30: @printNav("privacy",	"Privacy Policy");
+		printNav("contact",	"Contact/Imprint");                      // line 31: @printNav("contact",	"Contact/Imprint");
 		out.decreaseTab();
-		out.println("</ul>");                                           // line 31: </ul>
+		out.println("</ul>");                                           // line 32: </ul>
 		out.decreaseTab();
-		out.println("</div>");                                          // line 32: </div>
+		out.println("</div>");                                          // line 33: </div>
 		out.decreaseTab();
-		out.println("</nav>");                                          // line 33: </nav>
-		out.println("<div class=\"container\">");                       // line 34: <div class="container">
-		for (String line : lines)                                       // line 35: @for (String line : lines)
+		out.println("</nav>");                                          // line 34: </nav>
+		out.println("<div class=\"container\">");                       // line 35: <div class="container">
+		for (String line : lines)                                       // line 36: @for (String line : lines)
 		{
-			out.print(line);                                            // line 36: <%line%>
+			out.print(line);                                            // line 37: <%line%>
 			out.printlnIfNotEmpty();
 		}
-		if (!inputFile.startsWith("index"))                             // line 37: @if (!inputFile.startsWith("index"))
+		if (!inputFile.startsWith("index"))                             // line 38: @if (!inputFile.startsWith("index"))
 		{
-			out.println("<div class=\"row\">");                         // line 38: <div class="row">
+			out.println("<div class=\"row\">");                         // line 39: <div class="row">
 			out.increaseTab();
-			out.println("<div class=\"col-md-3\"></div>");              // line 39: <div class="col-md-3"></div>
-			out.println("<div class=\"col-md-9\">");                    // line 40: <div class="col-md-9">
+			out.println("<div class=\"col-md-3\"></div>");              // line 40: <div class="col-md-3"></div>
+			out.println("<div class=\"col-md-9\">");                    // line 41: <div class="col-md-9">
 			out.increaseTab();
-			out.println("<hr>");                                        // line 41: <hr>
-			out.println("<p class=\"footer\">Copyright &copy; 2014-2015. All rights reserved.</p>"); // line 42: <p class="footer">Copyright &copy; 2014-2015. All rights reserved.</p>
-			out.decreaseTab();
-			out.println("</div>");                                      // line 43: </div>
+			out.println("<hr>");                                        // line 42: <hr>
+			out.println("<p class=\"footer\">Copyright &copy; 2014-2016. All rights reserved.</p>"); // line 43: <p class="footer">Copyright &copy; 2014-2016. All rights reserved.</p>
 			out.decreaseTab();
 			out.println("</div>");                                      // line 44: </div>
+			out.decreaseTab();
+			out.println("</div>");                                      // line 45: </div>
 		}
-		out.println("</div>");                                          // line 45: </div>
-		out.println("</body>");                                         // line 46: </body>
-		out.println("</html>");                                         // line 47: </html>
+		out.println("</div>");                                          // line 46: </div>
+		out.println("</body>");                                         // line 47: </body>
+		out.println("</html>");                                         // line 48: </html>
 	}
 	
 	
 	private void printNav(String file, String text)
 	{
-		out.print("<li");                                               // line 53: <li
-		if (inputFile.startsWith(file))                                 // line 53: <%?inputFile.startsWith(file)%>
+		out.print("<li");                                               // line 54: <li
+		if (inputFile.startsWith(file))                                 // line 54: <%?inputFile.startsWith(file)%>
 		{
-			out.print(" class=\"active\"");                             // line 53: class="active"
+			out.print(" class=\"active\"");                             // line 54: class="active"
 		}
-		out.print("><a href=\"");                                       // line 53: ><a href="
-		out.print(file);                                                // line 53: <%file%>
-		out.print(".html\">");                                          // line 53: .html">
-		out.print(text);                                                // line 53: <%text%>
-		out.println("</a></li>");                                       // line 53: </a></li>
+		out.print("><a href=\"");                                       // line 54: ><a href="
+		out.print(file);                                                // line 54: <%file%>
+		out.print(".html\">");                                          // line 54: .html">
+		out.print(text);                                                // line 54: <%text%>
+		out.println("</a></li>");                                       // line 54: </a></li>
 	}
 	
 	
 	private void printTitle()
 	{
-		out.print("Civilian");                                          // line 59: Civilian
-		String file = StringUtil.cutRight(inputFile, ".html");          // line 60: @String file = StringUtil.cutRight(inputFile, ".html");
-		if (!"index".equals(file))                                      // line 61: @if (!"index".equals(file))
+		out.print("Civilian");                                          // line 60: Civilian
+		String file = StringUtil.cutRight(inputFile, ".html");          // line 61: @String file = StringUtil.cutRight(inputFile, ".html");
+		if (!"index".equals(file))                                      // line 62: @if (!"index".equals(file))
 		{
-			for (String part : file.split("-"))                         // line 62: @for (String part : file.split("-"))
+			for (String part : file.split("-"))                         // line 63: @for (String part : file.split("-"))
 			{
-				out.print(" - ");                                       // line 63: -
-				out.print(StringUtil.startUpperCase(part));             // line 63: <%StringUtil.startUpperCase(part)%>
+				out.print(" - ");                                       // line 64: -
+				out.print(StringUtil.startUpperCase(part));             // line 64: <%StringUtil.startUpperCase(part)%>
 			}
 		}
 	}
