@@ -20,10 +20,15 @@ package org.civilian.type;
  * A Type implementation which throws an UnsupportedOperationException
  * on all operations.
  */
-public class InvalidType<T> extends SimpleType<T>
+public class InvalidType<T> extends Type<T>
 {
 	public static final InvalidType<Object> INSTANCE = new InvalidType<>();
 	
+	
+	public InvalidType()
+	{
+		super(Category.SIMPLE);
+	}
 	
 	/**
 	 * Returns a InvalidType object for a type., 

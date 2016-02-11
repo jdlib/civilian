@@ -36,21 +36,21 @@ import org.civilian.util.Date;
  */
 public class TypeLib implements Iterable<Type<?>>
 {
-	public static final Type<BigDecimal>					BIGDECIMAL 			= new BigDecimalType();
-	public static final Type<BigInteger> 					BIGINTEGER 			= new BigIntegerType();
-	public static final Type<Boolean> 						BOOLEAN  			= new BooleanType();
-	public static final Type<Byte> 							BYTE 				= new ByteType();
-	public static final Type<Character> 					CHARACTER			= new CharacterType();
+	public static final Type<BigDecimal>					BIGDECIMAL 			= SimpleType.BIGDECIMAL;
+	public static final Type<BigInteger> 					BIGINTEGER 			= SimpleType.BIGINTEGER;
+	public static final Type<Boolean> 						BOOLEAN  			= SimpleType.BOOLEAN;
+	public static final Type<Byte> 							BYTE 				= SimpleType.BYTE;
+	public static final Type<Character> 					CHARACTER			= SimpleType.CHARACTER;
 	public static final DateType<java.util.Calendar> 		DATE_CALENDAR		= new DateCalendarType();
 	public static final DateType<Date> 						DATE_CIVILIAN		= new DateCivilianType();
 	public static final DateType<java.util.Date> 			DATE_JAVA_UTIL		= new DateJavaUtilType();
 	public static final DateType<java.sql.Date> 			DATE_JAVA_SQL		= new DateJavaSqlType();
-	public static final Type<Double> 						DOUBLE  			= new DoubleType();
-	public static final Type<Float> 						FLOAT 				= new FloatType();
-	public static final Type<Integer> 						INTEGER 			= new IntegerType();
-	public static final Type<Long> 							LONG  				= new LongType();
-	public static final Type<Short> 						SHORT  				= new ShortType();
-	public static final Type<String> 						STRING 				= new StringType();
+	public static final Type<Double> 						DOUBLE  			= SimpleType.DOUBLE;
+	public static final Type<Float> 						FLOAT 				= SimpleType.FLOAT;
+	public static final Type<Integer> 						INTEGER 			= SimpleType.INTEGER;
+	public static final Type<Long> 							LONG  				= SimpleType.LONG;
+	public static final Type<Short> 						SHORT  				= SimpleType.SHORT;
+	public static final Type<String> 						STRING 				= SimpleType.STRING;
 
 
 	/** 
