@@ -25,6 +25,14 @@ import org.civilian.util.Date;
  */
 public class DateCivilianType extends DateType<Date>
 {
+	public static final DateCivilianType INSTANCE = new DateCivilianType();
+	
+	
+	private DateCivilianType()
+	{
+	}
+	
+	
 	@Override public Class<Date> getJavaType()
 	{
 		return Date.class;

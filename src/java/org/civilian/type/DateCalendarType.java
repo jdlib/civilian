@@ -26,6 +26,14 @@ import java.util.GregorianCalendar;
  */
 public class DateCalendarType extends DateType<Calendar>
 {
+	public static final DateCalendarType INSTANCE = new DateCalendarType();
+	
+	
+	private DateCalendarType()
+	{
+	}
+	
+	
 	@Override public Class<Calendar> getJavaType()
 	{
 		return Calendar.class;

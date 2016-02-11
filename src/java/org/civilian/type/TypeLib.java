@@ -41,10 +41,10 @@ public class TypeLib implements Iterable<Type<?>>
 	public static final Type<Boolean> 						BOOLEAN  			= SimpleType.BOOLEAN;
 	public static final Type<Byte> 							BYTE 				= SimpleType.BYTE;
 	public static final Type<Character> 					CHARACTER			= SimpleType.CHARACTER;
-	public static final DateType<java.util.Calendar> 		DATE_CALENDAR		= new DateCalendarType();
-	public static final DateType<Date> 						DATE_CIVILIAN		= new DateCivilianType();
-	public static final DateType<java.util.Date> 			DATE_JAVA_UTIL		= new DateJavaUtilType();
-	public static final DateType<java.sql.Date> 			DATE_JAVA_SQL		= new DateJavaSqlType();
+	public static final DateType<java.util.Calendar> 		DATE_CALENDAR		= DateCalendarType.INSTANCE;
+	public static final DateType<Date> 						DATE_CIVILIAN		= DateCivilianType.INSTANCE;
+	public static final DateType<java.util.Date> 			DATE_JAVA_UTIL		= DateJavaUtilType.INSTANCE;
+	public static final DateType<java.sql.Date> 			DATE_JAVA_SQL		= DateJavaSqlType.INSTANCE;
 	public static final Type<Double> 						DOUBLE  			= SimpleType.DOUBLE;
 	public static final Type<Float> 						FLOAT 				= SimpleType.FLOAT;
 	public static final Type<Integer> 						INTEGER 			= SimpleType.INTEGER;

@@ -21,6 +21,14 @@ package org.civilian.type;
  */
 public class DateJavaSqlType extends DateType<java.sql.Date>
 {
+	public static final DateJavaSqlType INSTANCE = new DateJavaSqlType();
+	
+	
+	private DateJavaSqlType()
+	{
+	}
+	
+	
 	@Override public Class<java.sql.Date> getJavaType()
 	{
 		return java.sql.Date.class;

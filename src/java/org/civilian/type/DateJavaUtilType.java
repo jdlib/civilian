@@ -21,6 +21,14 @@ package org.civilian.type;
  */
 public class DateJavaUtilType extends DateType<java.util.Date>
 {
+	public static final DateJavaUtilType INSTANCE = new DateJavaUtilType();
+	
+	
+	private DateJavaUtilType()
+	{
+	}
+	
+	
 	@Override public Class<java.util.Date> getJavaType()
 	{
 		return java.util.Date.class;
