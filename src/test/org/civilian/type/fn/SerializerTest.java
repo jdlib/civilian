@@ -19,6 +19,7 @@ package org.civilian.type.fn;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import org.junit.Test;
@@ -43,6 +44,7 @@ public class SerializerTest extends CivTest
 		assertFormat(TypeLib.CHARACTER, 	new Character('a'),						"a");
 		assertFormat(TypeLib.DATE_CALENDAR, new GregorianCalendar(2012, 0, 31),		"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertFormat(TypeLib.DATE_CIVILIAN, new org.civilian.util.Date(2012, 1, 31),"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
+		assertFormat(TypeLib.DATE_LOCAL,    LocalDate.of(2012, 1, 31),              "20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertFormat(TypeLib.DATE_JAVA_SQL, new java.sql.Date(112, 0, 31), 			"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertFormat(TypeLib.DATE_JAVA_UTIL,new java.util.Date(112, 0, 31), 		"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertFormat(TypeLib.DOUBLE, 		new Double(2345.6),						"2345.6", "2,345.60","2.345,60","2\u00a0345,60");
@@ -85,6 +87,7 @@ public class SerializerTest extends CivTest
 		assertParse(TypeLib.CHARACTER, 		new Character('a'),						"a");
 		assertParse(TypeLib.DATE_CALENDAR, 	new GregorianCalendar(2012, 0, 31),		"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertParse(TypeLib.DATE_CIVILIAN, 	new org.civilian.util.Date(2012, 1, 31),"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
+		assertParse(TypeLib.DATE_LOCAL, 	LocalDate.of(2012, 1, 31),				"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertParse(TypeLib.DATE_JAVA_SQL, 	new java.sql.Date(112, 0, 31), 			"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertParse(TypeLib.DATE_JAVA_UTIL, new java.util.Date(112, 0, 31), 		"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertParse(TypeLib.DOUBLE, 		new Double(2345.6),						"2345.6", "2,345.6", "2.345,6", "2\u00a0345,6");

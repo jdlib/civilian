@@ -18,6 +18,7 @@ package org.civilian.type;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Iterator;
 import org.civilian.Application;
@@ -43,6 +44,7 @@ public class TypeLib implements Iterable<Type<?>>
 	public static final Type<Character> 					CHARACTER			= SimpleType.CHARACTER;
 	public static final DateType<java.util.Calendar> 		DATE_CALENDAR		= DateCalendarType.INSTANCE;
 	public static final DateType<Date> 						DATE_CIVILIAN		= DateCivilianType.INSTANCE;
+	public static final DateType<LocalDate> 				DATE_LOCAL			= DateLocalType.INSTANCE;
 	public static final DateType<java.util.Date> 			DATE_JAVA_UTIL		= DateJavaUtilType.INSTANCE;
 	public static final DateType<java.sql.Date> 			DATE_JAVA_SQL		= DateJavaSqlType.INSTANCE;
 	public static final Type<Double> 						DOUBLE  			= SimpleType.DOUBLE;
