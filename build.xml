@@ -14,6 +14,8 @@
 	<property name="build.bin.test"    value="${build.bin}/test"/>
 	<property name="build.bin.samples" value="${build.bin}/samples"/>
 	<property name="build.bin.build"   value="${build.bin}/build"/>
+	<property name="build.coverage"    value="${build}/coverage"/>
+	<property name="build.reports.xml" value="${build}/coverage/xml"/>
 	<property name="build.doc"         value="${build}/doc"/>
 	<property name="build.doc.javadoc" value="${build.doc}/javadoc"/>
 	<property name="web"               value="${basedir}/web"/>
@@ -77,93 +79,7 @@
 	</target>	
 
 	
-	<target name="cobertura" depends="compile">
-		<path id="cobertura.path">
-			<fileset dir="${lib}/cobertura">
-				<include name="lib/**/*.jar" />
-			</fileset>
-			<fileset dir="${lib}">
-				<include name="**/*.jar" />
-				<exclude name="samples/**/*.jar"/>
-			</fileset>
-		</path>
-
-		<taskdef resource="tasks.properties" classpathref="cobertura.path"/>
-		
-		<!-- init -->
-		<property name="instrumented.dir" value="${build}/cobertura/instrumented"/>
-		<property name="reports.dir" value="${build}/cobertura/reports"/>
-		<property name="reports.xml.dir" value="${reports.dir}/junit-xml"/>
-		<property name="reports.html.dir" value="${reports.dir}/junit-html"/>
-		<property name="coverage.html.dir" value="${reports.dir}/cobertura-html"/>
-		<property name="cobertura.ser" value="${build}/cobertura/cobertura.ser"/>
-
-		<property name="test.package" value="**"/>
-		<loadresource property="test.dir">
-			<propertyresource name="test.package"/>
-			<filterchain>
-				<tokenfilter>
-					<replacestring from="." to="/"/>
-				</tokenfilter>
-			</filterchain>
-		</loadresource>
-		
-		<!-- instrument -->
-		<!-- remove the coverage data file and any old instrumentation -->
-		<delete file="${cobertura.ser}"/>
-		<delete dir="${instrumented.dir}" />
-		
-		<!-- instrument the classes and write them into ${instrumented.dir}.-->
-		<cobertura-instrument todir="${instrumented.dir}" datafile="${cobertura.ser}">
-			<!--ignore source lines containing a reference to slf4j-->
-			<ignore regex="org.slf4j.*"/>
-			<fileset dir="${build.bin.java}">
-				<exclude name="org/civilian/internal/admin/**/*.class" />
-			</fileset>
-		</cobertura-instrument>
-		
-		<mkdir dir="${reports.xml.dir}"/>
-		<mkdir dir="${reports.html.dir}"/>
-
-		<junit fork="yes" forkmode="once" dir="${basedir}" failureProperty="test.failed">
-			<classpath location="${instrumented.dir}" />
-			<classpath location="${build.bin.java}" />
-			<classpath location="${build.bin.test}" />
-			<classpath refid="run.path" />
-			<classpath location="${src.java}" />
-			<classpath location="${src.js}" />
-			<classpath location="${src.test}" />
-			<classpath refid="cobertura.path"/>
-			<jvmarg value="-Dnet.sourceforge.cobertura.datafile=${cobertura.ser}"/>
-			<formatter type="xml" />
-			<test name="${testcase}" todir="${reports.xml.dir}" if="testcase" />
-			<batchtest todir="${reports.xml.dir}" unless="testcase">
-				<fileset dir="${src.test}">
-					<include name="${test.dir}/*Test.java" />
-					<exclude name="**/CivTest.java" />
-					<exclude name="**/PackageDetectorTest.java" />
-				</fileset>
-			</batchtest>
-		</junit>
-
-		<junitreport todir="${reports.xml.dir}">
-			<fileset dir="${reports.xml.dir}">
-				<include name="TEST-*.xml" />
-			</fileset>
-			<report format="frames" todir="${reports.html.dir}" />
-		</junitreport>
-		
-
-		<mkdir dir="${coverage.html.dir}"/>
-		<cobertura-report destdir="${coverage.html.dir}" datafile="${cobertura.ser}">
-			<fileset dir="${src.java}">
-				<include name="${test.dir}/*.java"/>
-			</fileset>
-		</cobertura-report>
-	</target>
-
-	
- 	<target name="compile" description="compiles all java classes" 
+	<target name="compile" description="compiles all java classes" 
  		depends="compile.java, compile.build, compile.test, compile.samples">
 	</target>
 		
@@ -172,6 +88,7 @@
     	<mkdir dir="${build.bin.java}"/>
 		<javac srcdir="${src.java}" destdir="${build.bin.java}" classpathref="compile.path" 
 			debug="true" includeantruntime="false">
+			<exclude name="**/package-info.java"/>
 		</javac>
 	</target>
 
@@ -239,7 +156,83 @@
 		</copy>
 	</target>
 	
+	
+	<target name="coverage" depends="compile" xmlns:jacoco="antlib:org.jacoco.ant">
+		<path id="coverage.path">
+			<fileset dir="${lib}/coverage">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${lib}/test">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+
+		<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" classpathref="coverage.path"/>
+
+		<property name="jacoco.exec" value="${build.coverage}/jacoco.exec"/>
+		<property name="reports.dir" value="${build.coverage}/reports"/>
+		<property name="reports.junit.xml.dir" value="${reports.dir}/junit-xml"/>
+		<property name="reports.junit.html.dir" value="${reports.dir}/junit-html"/>
+		<property name="reports.jacoco.dir" value="${reports.dir}/jacoco"/>
+		<property name="test.package" value="**"/>
+		<loadresource property="test.dir">
+			<propertyresource name="test.package"/>
+			<filterchain>
+				<tokenfilter>
+					<replacestring from="." to="/"/>
+				</tokenfilter>
+			</filterchain>
+		</loadresource>
 		
+		<mkdir dir="${reports.junit.xml.dir}"/>
+		
+		<jacoco:coverage destfile="${jacoco.exec}">
+			<junit fork="true" forkmode="once">
+				<classpath location="${build.bin.java}" />
+				<classpath location="${build.bin.test}" />
+				<classpath refid="run.path" />
+				<classpath location="${src.java}" />
+				<classpath location="${src.js}" />
+				<classpath location="${src.test}" />
+				<classpath refid="coverage.path"/>
+				<formatter type="xml" />
+				<test name="${testcase}" todir="${reports.junit.xml.dir}" if="testcase" />
+				<batchtest todir="${reports.junit.xml.dir}" unless="testcase">
+					<fileset dir="${src.test}">
+						<include name="${test.dir}/*Test.java" />
+						<exclude name="**/CivTest.java" />
+						<exclude name="**/PackageDetectorTest.java" />
+					</fileset>
+				</batchtest>
+			</junit>
+		</jacoco:coverage>
+		
+		<junitreport todir="${reports.junit.xml.dir}">
+			<fileset dir="${reports.junit.xml.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${reports.junit.html.dir}" />
+		</junitreport>
+
+		<jacoco:report>
+		    <executiondata>
+		        <file file="${jacoco.exec}"/>
+		    </executiondata>
+					
+		    <structure name="Civilian">
+		        <classfiles>
+		            <fileset dir="${build.bin.java}"/>
+		        </classfiles>
+		        <sourcefiles encoding="UTF-8">
+		            <fileset dir="${src.java}"/>
+		        </sourcefiles>
+		    </structure>
+		    <html destdir="${reports.jacoco.dir}"/>
+		</jacoco:report>
+			
+	</target>
+
+	
  	<target name="cspcompile.force">
  		<property name="csp.force" value="-force"/>
 		<antcall target="cspcompile"/>

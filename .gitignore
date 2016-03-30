@@ -4,6 +4,6 @@ lib/build/
 lib/jetty/
 lib/samples/
 lib/test/
-lib/cobertura/
+lib/coverage/
 tmp/
 todo.txt

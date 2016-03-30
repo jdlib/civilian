@@ -1,12 +1,14 @@
 <ivy-module version="2.0">
 	<info organisation="civilian" module="main"/>    
+
 	<configurations>
 		<conf name="build"     description="jars needed to build src/java amd src/samples"/>
 		<conf name="test"      description="jars needed to build and run src/test"/>
 		<conf name="samples"   description="jars needed to run the samples" />
 		<conf name="jetty"     description="jetty jar files"/>
-		<conf name="cobertura" description="cobertura jar files"/>
+		<conf name="coverage"  description="coverage jar files"/>
 	</configurations>
+	
 	<dependencies>
 		<dependency conf="build->master" org="com.google.code.gson" name="gson" rev="2.2.4"/>
 		<dependency conf="build->master" org="com.google.inject" name="guice" rev="3.0"/>
@@ -28,6 +30,7 @@
 		<dependency conf="test->master" org="junit" name="junit" rev="4.11"/>
 		<dependency conf="test->master" org="org.slf4j" name="slf4j-nop" rev="1.7.5"/>
 		<dependency conf="test->default" org="org.mockito" name="mockito-all" rev="1.9.5"/>
+		<dependency conf="test->default" org="org.hamcrest" name="hamcrest-core" rev="1.3"/>
 		
 		<dependency conf="samples->default" org="com.google.inject" name="guice" rev="3.0"/>
 		<dependency conf="samples->master" org="org.slf4j" name="slf4j-api" rev="1.7.5"/>
@@ -38,10 +41,11 @@
 			
 		<dependency conf="jetty->default" org="org.eclipse.jetty.aggregate" name="jetty-all-server" rev="8.1.15.v20140411"/>
 		
-		<dependency conf="cobertura->master" org="net.sourceforge.cobertura" name="cobertura" rev="2.0.3"/>
-		<dependency conf="cobertura->default" org="org.ow2.asm" name="asm-all" rev="4.1"/>
-		<dependency conf="cobertura->master" org="oro" name="oro" rev="2.0.8"/>
-		<dependency conf="cobertura->master" org="log4j" name="log4j" rev="1.2.9"/>
+		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.core" rev="0.7.6.201602180812"/>
+		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.ant" rev="0.7.6.201602180812"/>
+		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.report" rev="0.7.6.201602180812"/>
+		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.agent" rev="0.7.6.201602180812"/>
+		<dependency conf="coverage->default" org="org.ow2.asm" name="asm-all" rev="5.1"/>
 	</dependencies>    
 </ivy-module>
 

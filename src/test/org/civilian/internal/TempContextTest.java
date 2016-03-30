@@ -30,7 +30,7 @@ public class TempContextTest extends CivTest
 		TempContext context = new TempContext(); 
 		for (Method method : context.getClass().getDeclaredMethods())
 		{
-			if (!Modifier.isPrivate(method.getModifiers()) && !method.getName().contains("cobertura"))
+			if (!Modifier.isPrivate(method.getModifiers()))
 			{
 				try
 				{
