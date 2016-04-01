@@ -12,7 +12,7 @@ and runs in any servlet (3.0+) container. It is published as open source and fre
 
 ### Building
 
-You need a Java JDK 7+, Apache Ant 1.6.0+ and Apache Ivy.<br/>
+You need a Java JDK 8+, Apache Ant 1.6.0+ and Apache Ivy.<br/>
 Unpack the distribution archive in an directory, open a console in
 that directory and run
 
