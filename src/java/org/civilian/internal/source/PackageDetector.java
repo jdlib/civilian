@@ -81,13 +81,17 @@ public class PackageDetector
 			if (isRootDir(directory))
 				return StringUtil.cutLeft(suffix, ".");
 			
-			for (File file : directory.listFiles())
+			File[] files = directory.listFiles();
+			if (files != null)
 			{
-				if (file.isFile() && file.getName().endsWith(".java"))
+				for (File file : files)
 				{
-					String p = extractFromJavaFile(file);
-					if (p != null)
-						return p.trim() + suffix;
+					if (file.isFile() && file.getName().endsWith(".java"))
+					{
+						String p = extractFromJavaFile(file);
+						if (p != null)
+							return p.trim() + suffix;
+					}
 				}
 			}
 			suffix = "." + directory.getName() + suffix;

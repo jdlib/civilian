@@ -115,7 +115,7 @@ public class SimpleConverterTest extends CivTest
 		
 		@Override public boolean equals(Object other)
 		{
-			return ((Ctor)other).s.equals(s);
+			return (other instanceof Ctor) && ((Ctor)other).s.equals(s);
 		}
 
 		public final String s;
@@ -150,7 +150,7 @@ public class SimpleConverterTest extends CivTest
 		
 		@Override public boolean equals(Object other)
 		{
-			return ((ValueOfString)other).n == n;
+			return (other instanceof ValueOfString) && ((ValueOfString)other).n == n;
 		}
 
 		public final long n;
@@ -171,7 +171,7 @@ public class SimpleConverterTest extends CivTest
 		
 		@Override public boolean equals(Object other)
 		{
-			return ((FromString)other).n == n;
+			return (other instanceof FromString) && ((FromString)other).n == n;
 		}
 
 		public final long n;

@@ -52,8 +52,12 @@ public class ResBundleCompilerTest extends CivTest
 		}
 		finally
 		{
-			for (File f : tempDir.listFiles())
-				f.delete();
+			File[] files = tempDir.listFiles();
+			if (files != null)
+			{
+				for (File f : files)
+					f.delete();
+			}
 			tempDir.delete();
 		}
 	}

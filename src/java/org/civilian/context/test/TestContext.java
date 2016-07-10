@@ -155,10 +155,14 @@ public class TestContext extends Context
 		File libDir = new File(directory_, "WEB-INF/lib");
 		if (libDir.exists() && libDir.isDirectory())
 		{
-			for (File f : libDir.listFiles())
+			File[] files = libDir.listFiles();
+			if (files != null)
 			{
-				if (!f.isDirectory() && f.getName().endsWith(".jar"))
-					urls.add(f.toURI().toURL());
+				for (File f : files)
+				{
+					if (!f.isDirectory() && f.getName().endsWith(".jar"))
+						urls.add(f.toURI().toURL());
+				}
 			}
 		}
 		

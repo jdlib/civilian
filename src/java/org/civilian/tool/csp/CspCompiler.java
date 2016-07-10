@@ -216,16 +216,19 @@ public class CspCompiler
 	{
 		log(2, "scan", dir);
 		File files[] = dir.listFiles();
-		for (int i=0; i<files.length; i++)
+		if (files != null)
 		{
-			File file = files[i];
-			if (!file.isDirectory())
+			for (int i=0; i<files.length; i++)
 			{
-				if (acceptExtension(file))
-					compileFile(file);
+				File file = files[i];
+				if (!file.isDirectory())
+				{
+					if (acceptExtension(file))
+						compileFile(file);
+				}
+				else if (options_.recursive)
+					compileDirectory(file);
 			}
-			else if (options_.recursive)
-				compileDirectory(file);
 		}
 	}
 	

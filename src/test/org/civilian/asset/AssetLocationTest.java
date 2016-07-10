@@ -113,7 +113,7 @@ public class AssetLocationTest extends CivTest
 			
 			byte[] oldContent = asset.getContent();
 			asset.readContent();
-			assertEquals(oldContent, asset.getContent());
+			assertArrayEquals(oldContent, asset.getContent());
 			
 			write(file, "UTF-8", "body{}");
 			assertFalse(asset.isValid());

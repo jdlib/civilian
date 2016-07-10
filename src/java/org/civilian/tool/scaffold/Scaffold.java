@@ -234,10 +234,14 @@ public class Scaffold
 		}
 		else 
 		{
-			for (File file : fileOrDir.listFiles())
+			File[] files = fileOrDir.listFiles();
+			if (files != null)
 			{
-				if (file.isFile() && file.getName().endsWith(".jar"))
-					copyLib(file);
+				for (File file : files)
+				{
+					if (file.isFile() && file.getName().endsWith(".jar"))
+						copyLib(file);
+				}
 			}
 		}
 	}

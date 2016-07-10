@@ -95,10 +95,14 @@ public class DocConverter
 		
 		if (input.isDirectory())
 		{
-			for (File file : input.listFiles())
+			File[] files = input.listFiles();
+			if (files != null)
 			{
-				if (file.getName().endsWith(".html"))
-					converter.convert(file, outputDir, force);
+				for (File file : files)
+				{
+					if (file.getName().endsWith(".html"))
+						converter.convert(file, outputDir, force);
+				}
 			}
 		}
 		else

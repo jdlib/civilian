@@ -287,8 +287,12 @@ public abstract class IoUtil
 	{
 		if (file.isDirectory()) 
 		{
-		    for (File f : file.listFiles())
-		    	delete(f);
+			File[] files = file.listFiles();
+			if (files != null)
+			{
+				for (File f : files)
+					delete(f);
+			}
 		}
 		if (!file.delete())
 			throw new IOException("cannot delete " + file);

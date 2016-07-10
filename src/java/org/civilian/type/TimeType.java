@@ -29,7 +29,7 @@ public abstract class TimeType<T> extends Type<T>
 
 	public T create(int hour, int minute)
 	{
-		return create(hour, minute);
+		return create(hour, minute, 0);
 	}
 	
 	

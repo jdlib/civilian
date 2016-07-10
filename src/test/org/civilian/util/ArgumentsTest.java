@@ -39,7 +39,7 @@ public class ArgumentsTest extends CivTest
 		loader = ResourceLoader.builder.forString("test.txt", "@test.txt");
 		try
 		{
-			args = new Arguments(loader, "@test.txt");
+			new Arguments(loader, "@test.txt");
 			fail();
 		}
 		catch(IllegalArgumentException e)

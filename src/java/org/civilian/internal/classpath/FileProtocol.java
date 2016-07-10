@@ -50,8 +50,12 @@ class FileProtocol extends Protocol
 	{
 		if (file.isDirectory())
 		{
-			for (File f : file.listFiles())
-				scan(context, norm, f);
+			File[] files = file.listFiles();
+			if (files != null)
+			{
+				for (File f : files)
+					scan(context, norm, f);
+			}
 		}
 		else
 		{
