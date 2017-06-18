@@ -34,7 +34,6 @@ public class ResBundleCompilerTest extends CivTest
 	}
 
 
-	
 	@Test public void testGenerate() throws Exception
 	{
 		File excel 			= findTestFile("message.xls");

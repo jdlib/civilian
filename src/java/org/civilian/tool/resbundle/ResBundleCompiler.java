@@ -17,8 +17,10 @@ package org.civilian.tool.resbundle;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -317,12 +319,12 @@ public class ResBundleCompiler
 	{
 		public ExcelIterator(File file) throws IOException
 		{
-			try
+			try (InputStream in = new FileInputStream(file))
 			{
-				Workbook wb = WorkbookFactory.create(file);
+				Workbook wb = WorkbookFactory.create(in);
 				sheet_ 		= wb.getSheetAt(0);
 				nextRow_	= sheet_.getFirstRowNum();
-				inputOk	= true;
+				inputOk		= true;
 			}
 			catch(InvalidFormatException e)
 			{
