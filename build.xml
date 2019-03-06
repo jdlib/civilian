@@ -405,7 +405,22 @@
     </target>
 
 	
-	<target name="_jar.prep" description="calls dependent targets for the jar tasks" depends="compile.java, cspcompile, version">
+	<target name="jar.csp" description="build cs jar" depends="_jar.prep">
+        <property name="jarfile" value="${build}/civcsp.jar"/>
+        <jar destfile="${jarfile}">
+            <fileset dir="${build.bin.java}">
+                <include name="org/civilian/template/**/*.class"/>
+                <include name="org/civilian/internal/source/*.class"/>
+                <include name="org/civilian/tool/csp/*.class"/>
+                <include name="org/civilian/util/*.class"/>
+            	<include name="org/civilian/provider/MessageProvider.class"/>
+            </fileset>
+            </jar>
+            <echo>generated ${jarfile}</echo>
+    </target>
+
+    	
+    <target name="_jar.prep" description="calls dependent targets for the jar tasks" depends="compile.java, cspcompile, version">
 		<antcall target="compile"/>
 	</target>
 	
