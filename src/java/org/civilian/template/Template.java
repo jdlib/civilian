@@ -16,6 +16,7 @@
 package org.civilian.template;
 
 
+import java.io.StringWriter;
 import java.io.Writer;
 import org.civilian.util.Check;
 
@@ -42,6 +43,17 @@ public abstract class Template implements TemplateWriter.Printable
 		return out;
 	}
 
+	
+	/**
+	 * Prints the template and returns it as string.
+	 */
+	public String printString() throws Exception
+	{
+		StringWriter out = new StringWriter();
+		print(out);
+		return out.toString();
+	}
+	
 	
 	/**
 	 * Prints the template, using the given Writer.
