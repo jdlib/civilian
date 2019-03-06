@@ -24,7 +24,6 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.civilian.Controller;
 import org.civilian.internal.source.OutputFile;
 import org.civilian.internal.source.OutputLocation;
 import org.civilian.internal.source.PackageDetector;
@@ -147,6 +146,8 @@ public class CspCompiler
 				options.encodingIn = args.next("input encoding");
 			else if (args.consume("-enc:out"))
 				options.encodingOut = args.next("output encoding");
+			else if (args.consume("-extends"))
+				options.extendsClass = args.next("name of super class");
 			else if (args.startsWith("-out:"))
 				options.outputLocation = OutputLocation.parse(args, true, true);
 			else if (args.consume("-ts"))
@@ -349,6 +350,7 @@ public class CspCompiler
 			// csp mode: parse commands which describe the generated
 			// java class
 			classData_ = new ClassData(output.className);
+			classData_.extendsClass = options_.extendsClass;
 			parsePackageCmd(templFile, output.assumedPackage);
 			parseImportCmds();
 			parsePrologCmds();
@@ -460,7 +462,8 @@ public class CspCompiler
 		{
 			if (scanner_.next("-"))
 			{
-				classData_.standalone = true;
+				classData_.standalone   = true;
+				classData_.extendsClass = null;
 				
 				String writerClass = TemplateWriter.class.getSimpleName();
 				if (scanner_.nextKeyword("using"))
@@ -613,7 +616,7 @@ public class CspCompiler
 		out.println(";");
 		out.println();
 		out.println();
-		if (classData_.imports.write(out, ClassUtil.getPackageName(Controller.class)))
+		if (classData_.imports.write(out, null /* app package*/))
 		{
 			out.println();
 			out.println();
@@ -1220,6 +1223,13 @@ public class CspCompiler
 		{
 			encodingIn = encodingOut = encoding;
 		}
+
+		
+		/**
+		 * Name of the default template class to extends
+		 * The default is null, implying to extend the default template class. 
+		 */
+		public String extendsClass;
 		
 		
 		private void complete()
