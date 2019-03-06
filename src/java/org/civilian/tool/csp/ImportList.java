@@ -154,10 +154,10 @@ class ImportList
 				return 1;
 			else if (s.startsWith("javax."))
 				return 2;
-			else if (s.startsWith(appPackage_))
-				return 4;
-			else
+			else if ((appPackage_ == null) || !s.startsWith(appPackage_))
 				return 3;
+			else
+				return 4;
 		}
 		
 		
