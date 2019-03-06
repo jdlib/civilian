@@ -296,7 +296,7 @@
 	</target>
 		
 		
-	<target name="doc" description="build doc" depends="compile.build">
+	<target name="doc" description="build doc" depends="compile.build, javadoc">
    		<property name="force" value=""/>
    		<property name="docdir" value="${build.doc}"/>
     	<copy todir="${docdir}" file="${src.doc}/favicon.ico"/>
