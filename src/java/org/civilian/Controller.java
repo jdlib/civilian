@@ -180,6 +180,7 @@ public class Controller implements
 	/**
 	 * Sets the ControllerType. This is automatically done
 	 * when a Controller is created during resource dispatch.
+	 * @param type the ControllerType
 	 */
 	public void setControllerType(ControllerType type)
 	{
@@ -193,6 +194,7 @@ public class Controller implements
 	/**
 	 * Returns the LocaleService of the response. 
 	 * Shortcut for getResponse().getLocaleService().
+	 * @return the LocaleService
 	 */
 	public LocaleService getLocaleService()
 	{
@@ -203,6 +205,7 @@ public class Controller implements
 	/**
 	 * Returns the MsgBundle object of the LocaleService in the response.
 	 * Shortcut for getResponse().getLocaleService().getMsgBundle()
+	 * @return the MsgBundle of the locale service
 	 */
 	public MsgBundle getMsgBundle()
 	{
@@ -262,6 +265,8 @@ public class Controller implements
 	 * <li>invokes the action method
 	 * <li>calls the various exit-methods
 	 * </ul>
+	 * @param request the request
+	 * @throws Exception if an error in processing occurs
 	 */
 	public void process(Request request) throws Exception
 	{
