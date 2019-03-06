@@ -103,7 +103,7 @@
 		</tr>
 		</table>
 		Path parameters are not defined by the URL syntax, they are just segments of the path interpreted as parameter.
-		In the example the path segment <code>/1345</code> is interpreted as the id of database entity. Definition and
+		In the example the path segment <code>/1345</code> is interpreted as an id referencing a data object. Definition and
 		workings of path parameters are explained <a href="doc-resources.html#pathparams">here</a>.
 		<p>
 		When a HTML form is posted, the browser send form values as request content with content type <code>application/x-www-form-urlencoded</code>.
@@ -123,13 +123,13 @@
 
 		<h3 id="reqheaders">Headers</h3>
 		{javadoc:Request#getHeaders() Access} to the HTTP headers of the request is available via the sub-object {javadoc:request.RequestHeaders}.<br>
-		Request provides specialized methods to access the {javadoc:Request#getCookies() Cookie} header, the
+		The request class also provides specialized methods to access the {javadoc:Request#getCookies() Cookie} header, the
 		{javadoc:Request#getAcceptedContentTypes() Accept} header or the
 		{javadoc:Request#getAcceptedLocale() Accept-Language} header.   
 
 		<h3 id="reqcontent">Content</h3>
 		The content of the request is described by its {javadoc:Request#getContentType() content type}, 
-		{javadoc:Request#getContentEncoding() encoding}, {javadoc:Request#getContentLength() length}.
+		{javadoc:Request#getContentEncoding() encoding} and {javadoc:Request#getContentLength() length}.
 		For low-level handling it can be read as {javadoc:Request#getContentStream() byte} or {javadoc:Request#getContentReader() text}
 		stream.<br>
 		Alternatively you can call {javadoc:Request#readContent(java*lang*Class) Request.readContent(Class, Type?)} 
@@ -143,7 +143,7 @@
 		The request object also provides {javadoc:Request#getSession(boolean) access} to a servlet container inspired {javadoc:request.Session} object.
 	 
 		<h3 id="reqmp">Multipart requests</h3>
-		Prior to the servlet 3.0 spec multipart requests (i.e. request with content-type <code>multipart/form-data</code>) required own processing.
+		Prior to the servlet 3.0 spec multipart requests (i.e. requests with content-type <code>multipart/form-data</code>) required own processing.
 		The introduction of <code>javax.servlet.http.Part</code> helped a little, but required different handling of
 		simple parameters in normal and multipart requests.
 		<p>
@@ -166,10 +166,10 @@
 		
 		<h3 id="reqinterface">IP Interface information</h3>
 		Information about the {javadoc:Request#getRemoteInfo() remote}, {javadoc:Request#getServerInfo() server} and
-		{javadoc:Request#getLocalInfo() local} IP interfaces is made available sub-objects of the request.  
+		{javadoc:Request#getLocalInfo() local} IP interfaces is made available via sub-objects of the request.  
 
 		<h2 id="response">Response</h2>
-		The {javadoc:Response} contains a status, headers and content.
+		The {javadoc:Response} object contains a status, headers and content.
 		
 		<h3 id="respstatus">Status</h3>		
 		{javadoc:Response#setStatus(int)} allows to set the HTTP response status. {javadoc:Response*Status} defines constants 
@@ -194,11 +194,7 @@
 		<h3 id="respwriter">TemplateWriter</h3>
 		The writer returned by {javadoc:Response#getContentWriter() Response.getContentWriter()} is 
 		an instance of class {javadoc:template.TemplateWriter}.<br>
-		Besides being a <code>java.io.PrintWriter</code>, TemplateWriter provides additional functionality:
-		<ul>
-		<li>TemplateWriter allows to produces pretty indentend output (think HTML).
-		<li>A TemplateWriter can be {@link #addContext(Object) associated} with multiple context objects. 
-		</ul>
+		Besides being a <code>java.io.PrintWriter</code>, TemplateWriter allows to produces pretty indentend (HTML) output.
 		Being a PrintWriter the TemplateWriter can be passed to any <a href="doc-templates.html">template system</a> like Velocity or Freemaker.
 		But its additional functionality is especially used by Civilians own template system <a href="doc-templates-csp.html">CSP</a>.
 
@@ -221,12 +217,12 @@
 		{javadoc:Response#flushBuffer()} actively commits the request.
 		
 		<h2 id="content">Content Serialization</h2>
-		Both request and response can have content payloads, described by a {javadoc:content.ContentType content-type}, encoding and length headers.
+		Both request and response can have content payloads, described by HTTP {javadoc:content.ContentType content-type}, encoding and length headers.
 		<p>
 		Oftentimes these payloads can be textual representations of Java objects, e.g. in JSON or XML form.<br>
 		From the application programmers point of view it should be easy to 
-		format such Java models into response content or parse them from request content.
-		The following methods enable such one-liners:
+		turn such Java models into response content or parse them from request content.
+		The following methods allow such easy conversions:
 		<ul>
 			<li>{javadoc:Request#readContent(java*lang*Class) Request.readContent(Class)}
 			<li>{javadoc:Request#readContent(java*lang*Class,$java*lang*reflect*Type) Request.readContent(Class, Type)}

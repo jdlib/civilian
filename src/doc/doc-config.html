@@ -60,10 +60,10 @@
 			          >app.crm.enabled  = true<br
 			          >app.crm.encoding = UTF-8</code></pre>
 		</div>
-		The <b>locales</b> and <b>text</b> entries configure localization support and are explained <a href="doc-l10n.html#config">here</a>.
+		The <b>locales</b> and <b>messages</b> entries configure localization support and are explained <a href="doc-l10n.html#config">here</a>.
 		<div class="highlight">
 			<pre><code>app.crm.locales  = en-UK,de-CH,fr<br
-			          >app.crm.message  = resbundle:org/example/crm/text/message</code></pre>
+			          >app.crm.messages = resbundle:org/example/crm/text/message</code></pre>
 		</div>
 		
 		The <b>asset.location</b> entries define the location of static resources (asset files), explained in detail 
@@ -73,13 +73,13 @@
 			          >app.crm.asset.location.1 = dir:~/crm/files<br
 			          >app.crm.asset.location.2 = res:assets</code></pre>
 		</div>
-		Async processing of request are enabled with the <b>async</b> entry:
+		Asynchronous processing of requests is enabled with the <b>async</b> entry:
 		<div class="highlight">
 			<pre><code>app.crm.async = true</code></pre>
 		</div>
 		
-		To enable file uploads, <b>upload</b> entries are needed. The {javadoc:application.UploadConfig}
-		defines their meanings which are equal to a servlet MultipartConfig: 
+		To enable file uploads, <b>upload</b> definitions are needed. Take a look at {javadoc:application.UploadConfig}
+		to learn about these definitions which roughly correspond to a servlet MultipartConfig: 
 		<div class="highlight">
 			<pre><code>app.crm.async.enabled           = true<br
 			          >app.crm.upload.enabled           = true<br
@@ -88,7 +88,8 @@
 			          >app.crm.upload.maxFileSize       = 100000<br
 			          >app.crm.upload.fileSizeThreshold = 5000</code></pre>
 		</div>
-		Last are entries used when development mode is on, explained in detail <a href="doc-development.html#config">here</a>. 
+		Last there is a configuration which is only evaluated when development mode is turned on, 
+		explained in detail <a href="doc-development.html#config">here</a>. 
 		<div class="highlight">
 			<pre><code>app.crm.dev.classreload = true</code></pre>
 		</div>
@@ -103,7 +104,7 @@
 
 		<h2 id="prog">Programmatic configuration</h2>
 		Almost all application settings of <code>civilian.ini</code> can also be changed programmatically
-		within your implementation of the {javadoc:Application} class. Some advanced settings can
+		by your implementation of the {javadoc:Application} class. Some advanced settings can
 		only be changed programmatically.<br>
 		Programmatic configuration can be done in these methods:
 		<ul>
