@@ -26,6 +26,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -52,8 +53,8 @@ import org.civilian.util.StringUtil;
  */
 public class ResBundleCompiler
 {
-	private static final String PROPERTIES_ENCODING = "ISO-8859-1";
-	private static final String DEFAULT_JAVA_ENCODING = "UTF-8";
+	private static final String PROPERTIES_CHARSET = "ISO-8859-1";
+	private static final String DEFAULT_JAVA_CHARSET = "UTF-8";
 	
 	
 	/**
@@ -94,6 +95,8 @@ public class ResBundleCompiler
 				config.encoding = args.next("encoding");
 			else if (args.startsWith("-out:"))
 				config.outputType = OutputLocation.parse(args, true, false);
+			else if (args.consume("-javadoc"))
+				config.javadoc = true;
 			else if (args.consume("-v"))
 				config.verbose = true;
 			else 
@@ -121,10 +124,11 @@ public class ResBundleCompiler
 		System.out.println("parameters:                                                      default:");
 		System.out.println("-constClass <class>  generate class for message id constants");
 		System.out.println("                     use #file to name the class like the excel file");
-		System.out.println("-enc <encoding>      encoding of generated Java files            " + DEFAULT_JAVA_ENCODING);
+		System.out.println("-enc <encoding>      encoding of generated Java files            " + DEFAULT_JAVA_CHARSET);
 		System.out.println("-idClass <class>     use the class instead of string message id");
 		System.out.println("                     use #msgId to use org.civilian.text.msg.MsgId");
 		System.out.println("                     use #inline to generate a inline id class");
+		System.out.println("-javadoc             add translations as javadoc to constants");
 		System.out.println("-v                   print progress");
 		OutputLocation.printHelp(false);
 	}	
@@ -139,7 +143,7 @@ public class ResBundleCompiler
 		generationTime_		= new DateTime();
 		
 		log("reading excel text definition " + config_.excelFile); 
-		reader_ = new ExcelIterator(config_.excelFile);
+		reader_ = new ExcelReader(config_.excelFile);
 		if (!reader_.inputOk)
 		{
 			log("error: the input file does not seem to be a excel file");
@@ -153,18 +157,19 @@ public class ResBundleCompiler
 		createLanguageOutputs(packageName, config_.excelFile);
 		
 		log("compiling");
-		ArrayList<String> msgIds = compileBundles();
+		
+		List<Translation> translations = compileBundles();
 		if (config.constClass != null)
 		{
 			File constantsFile	= config_.outputType.getOutputFile(packageName, config.constClass + ".java", config.excelFile).file;
 			constantsOutput_ 	= new Output(constantsFile);
-			compileConstants(packageName, msgIds);
+			compileConstants(packageName, translations);
 		}
 		
 		if (constantsOutput_ != null)
 			constantsOutput_.writeToFile(config_.encoding);
 		for (Output langOutput : langOutputs_)
-			langOutput.writeToFile(PROPERTIES_ENCODING);
+			langOutput.writeToFile(PROPERTIES_CHARSET);
 		
 		log("done");
 
@@ -180,7 +185,7 @@ public class ResBundleCompiler
 			throw new IOException(config_.excelFile + " is empty");
 		reader_.nextString(); // header of keycol
 
-		ArrayList<Output> list = new ArrayList<>();
+		List<Output> list = new ArrayList<>();
 		String filePrefix = IoUtil.cutExtension(config_.excelFile) + "_";
 		String language;
 		while((language = reader_.nextString()) != null)
@@ -196,16 +201,20 @@ public class ResBundleCompiler
 	}
 
 
-	private ArrayList<String> compileBundles()
+	private List<Translation> compileBundles()
 	{
-		ArrayList<String> ids = new ArrayList<>(); 
+		List<Translation> translations = new ArrayList<>(); 
 		
-		for (int i=0; i<langOutputs_.length; i++)
+		for (Output output : langOutputs_)
 		{
-			TemplateWriter out = langOutputs_[i].out;
-			out.println("# Generated from " + config_.excelFile.getName() + " at " + generationTime_);
+			TemplateWriter out = output.out;
+			out.print("# Generated from ");
+			out.print(config_.excelFile.getName());
+			out.print(" at ");
+			out.println(generationTime_);
 			out.println("# Do not edit directly.");
-			out.println("# Encoding is " + PROPERTIES_ENCODING);
+			out.print("# Encoding is ");
+			out.println(PROPERTIES_CHARSET);
 		}
 		
 		while(reader_.nextLine())
@@ -217,7 +226,8 @@ public class ResBundleCompiler
 			if (id.length() == 0)
 				continue;
 			
-			ids.add(id);
+			Translation t = new Translation(id, langOutputs_.length);
+			translations.add(t);
 			
 			for (int i=0; i<langOutputs_.length; i++)
 			{
@@ -226,6 +236,8 @@ public class ResBundleCompiler
 					text = "?" + id;
 				else
 					text = text.trim();
+				
+				t.lang[i] = text;
 				
 				TemplateWriter out = langOutputs_[i].out;
 				out.print(id);
@@ -247,14 +259,14 @@ public class ResBundleCompiler
 			}
 		}
 		
-		return ids;
+		return translations;
 	}
 	
 	
-	private void compileConstants(String packageName, ArrayList<String> ids)
+	private void compileConstants(String packageName, List<Translation> translations)
 	{
-		Collections.sort(ids);
-		ConstClassTemplate t = new ConstClassTemplate(config_, packageName, generationTime_, ids);
+		Collections.sort(translations);
+		ConstClassTemplate t = new ConstClassTemplate(config_, packageName, generationTime_, translations);
 		t.print(constantsOutput_.out);
 	}
 	
@@ -269,12 +281,13 @@ public class ResBundleCompiler
 	static class Config
 	{
 		public OutputLocation outputType = OutputLocation.OUTPUT_TO_INPUT_DIR;
-		public String encoding = DEFAULT_JAVA_ENCODING;
+		public String encoding = DEFAULT_JAVA_CHARSET;
 		public File excelFile;
 		public boolean inlineIdClass;
 		public String idClass;
 		public String constClass;
 		public boolean verbose;
+		public boolean javadoc;
 	}
 	
 	
@@ -287,7 +300,7 @@ public class ResBundleCompiler
 		}
 
 		
-		public void writeToFile(String encoding) throws IOException
+		public void writeToFile(String charSet) throws IOException
 		{
 			out.flush();
 			
@@ -296,7 +309,7 @@ public class ResBundleCompiler
 			File parent = file.getParentFile();
 			IoUtil.mkdirs(parent);
 				
-			Writer fileOut = new OutputStreamWriter(new FileOutputStream(file), encoding);
+			Writer fileOut = new OutputStreamWriter(new FileOutputStream(file), charSet);
 			try
 			{
 				fileOut.write(stringOut.toString());
@@ -308,16 +321,15 @@ public class ResBundleCompiler
 		}
 		
 		
-		
 		public final File file;
 		public TemplateWriter out;
 		private StringWriter stringOut;
 	}
 	
 	
-	private static class ExcelIterator
+	private static class ExcelReader
 	{
-		public ExcelIterator(File file) throws IOException
+		public ExcelReader(File file) throws IOException
 		{
 			try (InputStream in = new FileInputStream(file))
 			{
@@ -382,7 +394,7 @@ public class ResBundleCompiler
 
 	private Config config_;
 	private Output constantsOutput_;
-	private ExcelIterator reader_;
+	private ExcelReader reader_;
 	private Output[] langOutputs_;
 	private DateTime generationTime_;
 }

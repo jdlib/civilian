@@ -1,10 +1,10 @@
-import java.util.ArrayList
+import java.util.List
 import java.util.HashSet
 import org.civilian.util.ClassUtil
 import org.civilian.util.DateTime
 
 
-template(ResBundleCompiler.Config config, String packageName, DateTime generationTime, ArrayList<String> ids)
+template(ResBundleCompiler.Config config, String packageName, DateTime generationTime, List<Translation> translations)
 	package-access
 	extends -
 	throws -
@@ -27,12 +27,18 @@ template(ResBundleCompiler.Config config, String packageName, DateTime generatio
 	<%%> */
 	public interface <%config.constClass%>
 	{
-		@for (String id : ids)
+		@for (Translation t : translations)
 			@// javafy key: must be a valid java identifier
 			@// escape key when passed as argument to the MsgKey ctor
 			@// keep a list of javafied keys and add _x suffixes if not unique
+			@String id = t.id;
 			@String constantName = getConstantName(id, usedConstants, s);
 			@if (constantName != null)
+				@if (config.javadoc)
+					/**<%/%>
+					@for (String lang : t.lang)
+						<%%> "<%lang%>"<%/%>
+					*/
 				public static final <%idClassSimple%> <%constantName%><%/%>
 				@for (int i=id.length(); i<=20; i++)
 					<%%> <%/%>

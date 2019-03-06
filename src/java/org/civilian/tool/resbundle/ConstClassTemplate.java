@@ -5,8 +5,8 @@
 package org.civilian.tool.resbundle;
 
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.DateTime;
@@ -14,12 +14,12 @@ import org.civilian.util.DateTime;
 
 class ConstClassTemplate
 {
-	public ConstClassTemplate(ResBundleCompiler.Config config, String packageName, DateTime generationTime, ArrayList<String> ids)
+	public ConstClassTemplate(ResBundleCompiler.Config config, String packageName, DateTime generationTime, List<Translation> translations)
 	{
 		this.config = config;
 		this.packageName = packageName;
 		this.generationTime = generationTime;
-		this.ids = ids;
+		this.translations = translations;
 	}
 
 
@@ -65,91 +65,103 @@ class ConstClassTemplate
 		out.printlnIfNotEmpty();
 		out.println("{");                                               // line 29: {
 		out.increaseTab();
-		for (String id : ids)                                           // line 30: @for (String id : ids)
+		for (Translation t : translations)                              // line 30: @for (Translation t : translations)
 		{
 			// javafy key: must be a valid java identifier              // line 31: @// javafy key: must be a valid java identifier
 			// escape key when passed as argument to the MsgKey ctor    // line 32: @// escape key when passed as argument to the MsgKey ctor
 			// keep a list of javafied keys and add _x suffixes if not unique // line 33: @// keep a list of javafied keys and add _x suffixes if not unique
-			String constantName = getConstantName(id, usedConstants, s); // line 34: @String constantName = getConstantName(id, usedConstants, s);
-			if (constantName != null)                                   // line 35: @if (constantName != null)
+			String id = t.id;                                           // line 34: @String id = t.id;
+			String constantName = getConstantName(id, usedConstants, s); // line 35: @String constantName = getConstantName(id, usedConstants, s);
+			if (constantName != null)                                   // line 36: @if (constantName != null)
 			{
-				out.print("public static final ");                      // line 36: public static final
-				out.print(idClassSimple);                               // line 36: <%idClassSimple%>
-				out.print(" ");                                         // line 36: 
-				out.print(constantName);                                // line 36: <%constantName%>
-				for (int i=id.length(); i<=20; i++)                     // line 37: @for (int i=id.length(); i<=20; i++)
+				if (config.javadoc)                                     // line 37: @if (config.javadoc)
 				{
-					out.print(" ");                                     // line 38: 
+					out.print("/**");                                   // line 38: /**
+					for (String lang : t.lang)                          // line 39: @for (String lang : t.lang)
+					{
+						out.print(" \"");                               // line 40: "
+						out.print(lang);                                // line 40: <%lang%>
+						out.print("\"");                                // line 40: "
+					}
+					out.println("*/");                                  // line 41: */
 				}
-				out.print(" = ");                                       // line 39: =
-				if (hasIdClass)                                         // line 39: <%?hasIdClass%>
+				out.print("public static final ");                      // line 42: public static final
+				out.print(idClassSimple);                               // line 42: <%idClassSimple%>
+				out.print(" ");                                         // line 42: 
+				out.print(constantName);                                // line 42: <%constantName%>
+				for (int i=id.length(); i<=20; i++)                     // line 43: @for (int i=id.length(); i<=20; i++)
 				{
-					out.print("new ");                                  // line 39: new
-					out.print(idClassSimple);                           // line 39: <%idClassSimple%>
-					out.print("(");                                     // line 39: (
+					out.print(" ");                                     // line 44: 
 				}
-				out.print("\"");                                        // line 39: "
-				out.print(escapeId(id));                                // line 39: <%escapeId(id)%>
-				out.print("\"");                                        // line 39: "
-				if (hasIdClass)                                         // line 39: <%?hasIdClass%>
+				out.print(" = ");                                       // line 45: =
+				if (hasIdClass)                                         // line 45: <%?hasIdClass%>
 				{
-					out.print(")");                                     // line 39: )
+					out.print("new ");                                  // line 45: new
+					out.print(idClassSimple);                           // line 45: <%idClassSimple%>
+					out.print("(");                                     // line 45: (
 				}
-				out.println(";");                                       // line 39: ;
+				out.print("\"");                                        // line 45: "
+				out.print(escapeId(id));                                // line 45: <%escapeId(id)%>
+				out.print("\"");                                        // line 45: "
+				if (hasIdClass)                                         // line 45: <%?hasIdClass%>
+				{
+					out.print(")");                                     // line 45: )
+				}
+				out.println(";");                                       // line 45: ;
 			}
 		}
-		if (config.inlineIdClass)                                       // line 40: @if (config.inlineIdClass)
+		if (config.inlineIdClass)                                       // line 46: @if (config.inlineIdClass)
 		{
 			out.println();
 			out.println();
-			out.print("public static class ");                          // line 43: public static class
-			out.print(idClassSimple);                                   // line 43: <%idClassSimple%>
-			out.println(" implements CharSequence");                    // line 43: implements CharSequence
-			out.println("{");                                           // line 44: {
+			out.print("public static class ");                          // line 49: public static class
+			out.print(idClassSimple);                                   // line 49: <%idClassSimple%>
+			out.println(" implements CharSequence");                    // line 49: implements CharSequence
+			out.println("{");                                           // line 50: {
 			out.increaseTab();
-			out.print("public ");                                       // line 45: public
-			out.print(idClassSimple);                                   // line 45: <%idClassSimple%>
-			out.println("(String value)");                              // line 45: (String value)
-			out.println("{");                                           // line 46: {
+			out.print("public ");                                       // line 51: public
+			out.print(idClassSimple);                                   // line 51: <%idClassSimple%>
+			out.println("(String value)");                              // line 51: (String value)
+			out.println("{");                                           // line 52: {
 			out.increaseTab();
-			out.println("value_ = value;");                             // line 47: value_ = value;
+			out.println("value_ = value;");                             // line 53: value_ = value;
 			out.decreaseTab();
-			out.println("}");                                           // line 48: }
+			out.println("}");                                           // line 54: }
 			out.println();
-			out.println("@Override public int length()");               // line 50: @Override public int length()
-			out.println("{");                                           // line 51: {
+			out.println("@Override public int length()");               // line 56: @Override public int length()
+			out.println("{");                                           // line 57: {
 			out.increaseTab();
-			out.println("return value_.length();\");");                 // line 52: return value_.length();");
+			out.println("return value_.length();\");");                 // line 58: return value_.length();");
 			out.decreaseTab();
-			out.println("}");                                           // line 53: }
+			out.println("}");                                           // line 59: }
 			out.println();
-			out.println("@Override public char charAt(int index)");     // line 55: @Override public char charAt(int index)
-			out.println("{");                                           // line 56: {
+			out.println("@Override public char charAt(int index)");     // line 61: @Override public char charAt(int index)
+			out.println("{");                                           // line 62: {
 			out.increaseTab();
-			out.println("return value_.charAt(index);\");");            // line 57: return value_.charAt(index);");
+			out.println("return value_.charAt(index);\");");            // line 63: return value_.charAt(index);");
 			out.decreaseTab();
-			out.println("}");                                           // line 58: }
+			out.println("}");                                           // line 64: }
 			out.println();
-			out.println("@Override public CharSequence subSequence(int start, int end)"); // line 60: @Override public CharSequence subSequence(int start, int end)
-			out.println("{");                                           // line 61: {
+			out.println("@Override public CharSequence subSequence(int start, int end)"); // line 66: @Override public CharSequence subSequence(int start, int end)
+			out.println("{");                                           // line 67: {
 			out.increaseTab();
-			out.println("return value_.subSequence(start, end);\");");  // line 62: return value_.subSequence(start, end);");
+			out.println("return value_.subSequence(start, end);\");");  // line 68: return value_.subSequence(start, end);");
 			out.decreaseTab();
-			out.println("}");                                           // line 63: }
+			out.println("}");                                           // line 69: }
 			out.println();
-			out.println("@Override public String toString()");          // line 65: @Override public String toString()
-			out.println("{");                                           // line 66: {
+			out.println("@Override public String toString()");          // line 71: @Override public String toString()
+			out.println("{");                                           // line 72: {
 			out.increaseTab();
-			out.println("return value_;");                              // line 67: return value_;
+			out.println("return value_;");                              // line 73: return value_;
 			out.decreaseTab();
-			out.println("}");                                           // line 68: }
+			out.println("}");                                           // line 74: }
 			out.println();
-			out.println("private String value_;");                      // line 70: private String value_;
+			out.println("private String value_;");                      // line 76: private String value_;
 			out.decreaseTab();
-			out.println("}");                                           // line 71: }
+			out.println("}");                                           // line 77: }
 		}
 		out.decreaseTab();
-		out.println("}");                                               // line 72: }
+		out.println("}");                                               // line 78: }
 	}
 	
 	
@@ -188,6 +200,6 @@ class ConstClassTemplate
 	private ResBundleCompiler.Config config;
 	private String packageName;
 	private DateTime generationTime;
-	private ArrayList<String> ids;
+	private List<Translation> translations;
 	protected TemplateWriter out;
 }

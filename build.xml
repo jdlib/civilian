@@ -381,27 +381,33 @@
 	<target name="jar.resbundlec" description="build resbundle-compiler jar" depends="_jar.prep">
         <property name="jarfile" value="${build}/resbundlec.jar"/>
         <jar destfile="${jarfile}">
-            <fileset dir="${build.bin}">
-                <include name="org/civilian/text/msg/resbundle/ResBundleCompiler*.class"/>
-                <include name="org/civilian/text/msg/resbundle/ConstClassTemplate.class"/>
+            <fileset dir="${build.bin.java}">
+            	<include name="org/civilian/internal/source/OutputLocation*.class"/>
+                <include name="org/civilian/internal/source/PackageDetector.class"/>
+                <include name="org/civilian/internal/source/OutputFile.class"/>
                 <include name="org/civilian/text/msg/MsgId.class"/>
+                <include name="org/civilian/tool/resbundle/ResBundleCompiler*.class"/>
+                <include name="org/civilian/tool/resbundle/ConstClassTemplate.class"/>
+                <include name="org/civilian/tool/resbundle/Translation.class"/>
+                <include name="org/civilian/template/TemplateWriter*.class"/>
                 <include name="org/civilian/util/Arguments.class"/>
                 <include name="org/civilian/util/Check.class"/>
                 <include name="org/civilian/util/ClassUtil.class"/>
+                <include name="org/civilian/util/ClosedWriter.class"/>
                 <include name="org/civilian/util/Date.class"/>
                 <include name="org/civilian/util/DateTime.class"/>
                 <include name="org/civilian/util/FileType.class"/>
+                <include name="org/civilian/util/IoUtil.class"/>
                 <include name="org/civilian/util/StringUtil.class"/>
                 <include name="org/civilian/util/Time.class"/>
                 <include name="org/civilian/util/io/ClosedWriter.class"/>
                 <include name="org/civilian/util/io/IoUtil.class"/>
-                <include name="org/civilian/util/io/TabWriter.class"/>
-                <include name="org/civilian/util/source/OutputFile.class"/>
-                <include name="org/civilian/util/source/OutputLocation*.class"/>
-                <include name="org/civilian/util/source/PackageDetector.class"/>
             </fileset>
-            </jar>
-            <echo>generated ${jarfile}</echo>
+			<manifest>
+				<attribute name="Main-Class" value="org.civilian.tool.resbundle.ResBundleCompiler"/>
+			</manifest>
+	    </jar>
+        <echo>generated ${jarfile}</echo>
     </target>
 
 	
