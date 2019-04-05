@@ -27,8 +27,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -338,10 +338,6 @@ public class ResBundleCompiler
 				nextRow_	= sheet_.getFirstRowNum();
 				inputOk		= true;
 			}
-			catch(InvalidFormatException e)
-			{
-				inputOk = false;
-			}
 			catch(IOException e)
 			{
 				if (e.getMessage().startsWith("Invalid header signature"))
@@ -371,7 +367,7 @@ public class ResBundleCompiler
 			Cell cell = row_.getCell(nextCell_++);
 			try
 			{
-				if ((cell != null) && (cell.getCellType() == Cell.CELL_TYPE_STRING))
+				if ((cell != null) && (cell.getCellType() == CellType.STRING))
 					return cell.getStringCellValue();
 				else
 					return defaultValue;

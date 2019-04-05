@@ -17,8 +17,8 @@
 		<dependency conf="build->master" org="javax.enterprise" name="cdi-api" rev="1.2"/>		
 		<dependency conf="build->master" org="javax.ejb" name="ejb-api" rev="3.0"/>		
 		<dependency conf="build->master" org="javax.el" name="el-api" rev="1.0"/>
-		<dependency conf="build->master" org="org.apache.poi" name="poi" rev="3.10-FINAL"/>
-		<dependency conf="build->master" org="org.apache.poi" name="poi-ooxml" rev="3.10-FINAL"/>
+		<dependency conf="build->master" org="org.apache.poi" name="poi" rev="4.0.1"/>
+		<dependency conf="build->master" org="org.apache.poi" name="poi-ooxml" rev="4.0.1"/>
 		<dependency conf="build->master" org="org.apache.tomcat" name="tomcat-catalina" rev="7.0.54"/>
 		<dependency conf="build->master" org="org.apache.velocity" name="velocity" rev="1.7"/>
 		<dependency conf="build->master" org="org.eclipse.jetty.aggregate" name="jetty-all-server" rev="8.1.15.v20140411"/>
