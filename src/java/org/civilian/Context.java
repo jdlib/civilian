@@ -448,6 +448,8 @@ public abstract class Context implements ContextProvider, PathProvider
 	
 	/**
 	 * Returns the file corresponding to the given virtual path.
+	 * @param path the path
+	 * @param fileType the expected fileType or null  
 	 * @throws IllegalArgumentException thrown if the path cannot be mapped to a real path
 	 */
 	public File getRealFile(String path, FileType fileType) throws IllegalArgumentException
@@ -487,7 +489,8 @@ public abstract class Context implements ContextProvider, PathProvider
 	
 	/**
 	 * Returns a File for a config path.
-	 * @param name a name below the {@link #getConfigPath(String) config path}.  
+	 * @param name a name below the {@link #getConfigPath(String) config path}.
+	 * @param fileType the expected fileType or null  
 	 */
 	public File getConfigFile(String name, FileType fileType) throws IllegalArgumentException
 	{

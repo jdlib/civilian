@@ -291,7 +291,7 @@ pre {
 
 
 .extlink:before {
-	content: "\00BB\0020";
+	content: "\00BB\202F";
 	text-decoration: none;
 }
 
@@ -300,7 +300,7 @@ pre {
 
 
 .javadoc:before {
-	content: "\203A\0020";
+	content: "\203A\202F";
 	text-decoration: none;
 }
 
