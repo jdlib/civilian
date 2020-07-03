@@ -27,8 +27,8 @@ public abstract class QsController extends Controller implements QsResources
 	/**
 	 * Casts the application to the QsApp class.
 	 */
-	public QsApp getQsApp()
+	@Override public QsApp getApplication()
 	{
-		return (QsApp)getApplication();
+		return (QsApp)super.getApplication();
 	}
 }

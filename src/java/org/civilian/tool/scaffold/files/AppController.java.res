@@ -12,8 +12,8 @@ public abstract class !{appController} extends Controller implements !{resources
 	/**
 	 * Casts the application to the !{appClass} class.
 	 */
-	public !{appClass} get!{appClass}()
+	@Override public !{appClass} getApplication()
 	{
-		return (!{appClass})getApplication();
+		return (!{appClass})super.getApplication();
 	}
 }

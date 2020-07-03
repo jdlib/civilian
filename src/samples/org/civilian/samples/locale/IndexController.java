@@ -37,3 +37,4 @@ public class IndexController extends Controller
 		getResponse().writeTemplate(template);
 	}
 }
+ 

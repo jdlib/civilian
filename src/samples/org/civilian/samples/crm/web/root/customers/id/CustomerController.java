@@ -26,6 +26,6 @@ public abstract class CustomerController extends CustomersController
 	protected Customer getCustomer() throws Exception
 	{
 		Integer customerId = getRequest().getPathParam(CrmPathParams.CUSTOMERID);
-		return customerId != null ? getCrmApp().getCustomerService().getCustomer(customerId) : null;
+		return customerId != null ? getApplication().getCustomerService().getCustomer(customerId) : null;
 	}
 }

@@ -26,6 +26,6 @@ public abstract class OpportunityController extends OpportunitiesController
 	protected Opportunity getOpportunity() throws Exception
 	{
 		Integer id = getRequest().getPathParam(CrmPathParams.OPPORTUNITYID);
-		return id != null ? getCrmApp().getOpportunityService().getOpportunity(id) : null;
+		return id != null ? getApplication().getOpportunityService().getOpportunity(id) : null;
 	}
 }

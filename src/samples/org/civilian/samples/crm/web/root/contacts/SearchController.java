@@ -45,7 +45,7 @@ public class SearchController extends ContactsController
 	@Consumes(ContentType.Strings.APPLICATION_JSON) 
 	@Post public void search(@RequestContent SearchParam[] params) throws Exception
 	{
-		SearchResult result = getCrmApp().getContactService().search(this, params);
+		SearchResult result = getApplication().getContactService().search(this, params);
 		getResponse().writeJson(result);
 	}
 	

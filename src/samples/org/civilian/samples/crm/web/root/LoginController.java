@@ -45,7 +45,7 @@ public class LoginController extends CrmController
 	public void render() throws Exception
 	{
 		LoginForm form = new LoginForm(this);
-		if (getCrmApp().doAutoLogin() && login("admin", "!admin", null, "en"))
+		if (getApplication().doAutoLogin() && login("admin", "!admin", null, "en"))
 		{
 			// skip login during development
 			form.path.read();
@@ -118,7 +118,7 @@ public class LoginController extends CrmController
 			localeService = getApplication().getLocaleServices().getService(locale);
 		}
 
-		User user = getCrmApp().getUserService().authenticate(name, password);
+		User user = getApplication().getUserService().authenticate(name, password);
 		if (user != null)
 		{
 			Session session = getRequest().getSession(true /*create*/);

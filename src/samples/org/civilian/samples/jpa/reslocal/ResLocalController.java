@@ -30,9 +30,9 @@ public abstract class ResLocalController extends Controller
 	/**
 	 * Returns the ResLocalApp.
 	 */
-	public ResLocalApp getJpaApp()
+	@Override public ResLocalApp getApplication()
 	{
-		return (ResLocalApp)getApplication();
+		return (ResLocalApp)super.getApplication();
 	}
 	
 	

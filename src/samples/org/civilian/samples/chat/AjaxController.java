@@ -30,9 +30,9 @@ public class AjaxController extends Controller
 	private static final String JUNK = "<!-- ============= filler comment for first request ============= -->\n";
 	
 	
-	private ChatApp getChatApp()
+	@Override public ChatApp getApplication()
 	{
-		return (ChatApp)getApplication();
+		return (ChatApp)super.getApplication();
 	}
 	
 	
@@ -45,7 +45,7 @@ public class AjaxController extends Controller
 		out.flush();
 
 		// register the async-context
-		getChatApp().addClient(getRequest().startAsync());
+		getApplication().addClient(getRequest().startAsync());
 	}
 	
 	
@@ -72,7 +72,7 @@ public class AjaxController extends Controller
 			
 		if (broadcastMsg != null)
 		{
-			getChatApp().broadcastMessage(broadcastMsg);
+			getApplication().broadcastMessage(broadcastMsg);
 			response.getContentWriter().println("success");
 		}
 		else

@@ -26,6 +26,6 @@ public abstract class ContactController extends ContactsController
 	protected Contact getContact() throws Exception
 	{
 		Integer contactId = getRequest().getPathParam(CrmPathParams.CONTACTID);
-		return contactId != null ? getCrmApp().getContactService().getContact(contactId) : null;
+		return contactId != null ? getApplication().getContactService().getContact(contactId) : null;
 	}
 }

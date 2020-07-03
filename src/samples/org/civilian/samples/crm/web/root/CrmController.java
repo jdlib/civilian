@@ -29,9 +29,9 @@ public abstract class CrmController extends Controller implements CrmResources
 	/**
 	 * Casts the application to the CrmApplication class.
 	 */
-	public CrmApp getCrmApp()
+	@Override public CrmApp getApplication()
 	{
-		return (CrmApp)getApplication();
+		return (CrmApp)super.getApplication();
 	}
 	
 	

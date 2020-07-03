@@ -46,7 +46,7 @@ public class SearchController extends OpportunitiesController
 	@Consumes(ContentType.Strings.APPLICATION_JSON) 
 	@Post public void search(@RequestContent SearchParam[] params) throws Exception
 	{
-		getResponse().writeJson(getCrmApp().getOpportunityService().search(this, params));
+		getResponse().writeJson(getApplication().getOpportunityService().search(this, params));
 	}
 	
 	

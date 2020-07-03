@@ -26,7 +26,7 @@ public class LogoutController extends CrmController
 {
 	@Get @Post public void process() throws IOException
 	{
-		getCrmApp().disableAutoLogin();
+		getApplication().disableAutoLogin();
 		
 		Session session = getRequest().getSession(false);
 		if (session != null)

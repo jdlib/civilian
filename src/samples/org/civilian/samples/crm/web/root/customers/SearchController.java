@@ -46,7 +46,7 @@ public class SearchController extends CustomersController
 	@Consumes(ContentType.Strings.APPLICATION_JSON) 
 	@Post public void search(@RequestContent SearchParam[] params) throws Exception
 	{
-		getResponse().writeJson(getCrmApp().getCustomerService().search(this, params));
+		getResponse().writeJson(getApplication().getCustomerService().search(this, params));
 	}
 	
 	
