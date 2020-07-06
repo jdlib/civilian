@@ -34,7 +34,7 @@ public class Version
 	 */
 	public static void main(String[] args)
 	{
-		boolean verbose = (args.length > 0) && args[0].equals("-v");
+		boolean verbose = (args.length > 0) && "-v".equals(args[0]);
 		if (verbose)
 			System.out.print("civilian.version = ");
 		System.out.println(VALUE);
