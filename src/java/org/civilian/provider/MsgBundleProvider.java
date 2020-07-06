@@ -48,4 +48,27 @@ public interface MsgBundleProvider
 	{
 		return getMsgBundle().msg(id, params);
 	}
+
+
+	/**
+	 * Returns the text for the id.
+	 * If the id is a String, the id is returned as text, else {@link #msg(Object)} is returned.
+	 */
+	public default String msgOrText(Object id)
+	{
+		if (id instanceof String)
+			return (String)id;
+		else
+			return msg(id);
+	}
+
+
+	/**
+	 * Returns the message for the id using {@link #msgOrText(Object)} and inserts the parameters
+	 * into the message at placeholder locations.
+	 */
+	public default String msgOrText(Object id, Object... params)
+	{
+		return getMsgBundle().replaceVars(msgOrText(id), params);
+	}
 }

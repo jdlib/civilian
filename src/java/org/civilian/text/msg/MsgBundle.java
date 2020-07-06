@@ -90,6 +90,15 @@ public abstract class MsgBundle implements MsgBundleProvider
 
 
 	/**
+	 * Returns the text for the given id or the id itself in case it is a String.
+	 */
+	@Override public String msgOrText(Object id, Object... params)
+	{
+		return replaceVars(msgOrText(id), params);
+	}
+
+
+	/**
 	 * Returns the id prefixed by a "?".
 	 */
 	protected String getUnknown(Object id)
