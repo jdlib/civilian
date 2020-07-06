@@ -18,6 +18,7 @@ package org.civilian.form;
 
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
+import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 
 
@@ -55,12 +56,18 @@ public class TextArea extends Control<String>
 	 */
 	public TextArea(String name, int rows, int cols)
 	{
-		super(TypeLib.STRING, name);
+		super(name);
 		rows_ = rows;
 		cols_ = cols;
 	}
 
 
+	@Override public Type<String> getType()
+	{
+		return TypeLib.STRING;
+	}
+
+	
 	/**
 	 * Returns the number of rows.
 	 */

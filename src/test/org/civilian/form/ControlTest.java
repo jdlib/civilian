@@ -317,7 +317,7 @@ public class ControlTest extends CivTest
 		field = HiddenField.create("hidden", "some");
 		assertEquals("some", field.getValue());
 		
-		HiddenField<Integer> ihidden = new HiddenField<>(TypeLib.INTEGER, "ihidden"); 
+		HiddenField<Integer> ihidden = new HiddenField<>("ihidden", TypeLib.INTEGER); 
 		ihidden.setIntValue(12);
 		assertOut(ihidden, "<input type='hidden' name='ihidden' value='12'>");
 	}

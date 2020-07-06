@@ -107,33 +107,19 @@ public abstract class Control<T> implements TemplateWriter.Printable
 		
 	/**
 	 * Creates a new control.
-	 * @param type the type of the control
+	 * @param name the control name or null.
 	 */
-	protected Control(Type<T> type)
+	protected Control(String name)
 	{
-		type_ = Check.notNull(type, "type");
-	}
-
-	
-	/**
-	 * Creates a new control.
-	 * @param type the type of the controls value
-	 * @param name the control name
-	 */
-	protected Control(Type<T> type, String name)
-	{
-		this(type);
-		setName(name);
+		if (name != null)
+			setName(name);
 	}
 
 	
 	/**
 	 * Returns the type.
 	 */
-	public Type<T> getType()
-	{
-		return type_;
-	}
+	public abstract Type<T> getType();
 	
 	
 	/**
@@ -141,8 +127,8 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	 */
 	protected void checkType(Type<?> type)
 	{
-		if (type_ != type)
-			throw new IllegalArgumentException("invalid type '" + type + "'");
+		if (getType() != type)
+			throw new IllegalArgumentException("invalid type '" + type + "', expected " + getType());
 	}
 	
 	
@@ -539,7 +525,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 		{
 			try
 			{
-				T value = s != null ? request.getLocaleSerializer().parse(type_, s) : null;
+				T value = s != null ? request.getLocaleSerializer().parse(getType(), s) : null;
 				setValue(value);
 			}
 			catch(Exception e)
@@ -814,7 +800,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	 */
 	protected String formatValue(T value)
 	{
-		return getResponseSerializer().format(type_, value, getStyle());
+		return getResponseSerializer().format(getType(), value, getStyle());
 	}
 
 	
@@ -946,7 +932,6 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	}
 
 	
-	private Type<T> type_;
 	private T value_;
 	private Exception error_;
 	private String errorValue_;

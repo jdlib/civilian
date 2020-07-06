@@ -19,6 +19,7 @@ package org.civilian.form;
 import org.civilian.Request;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
+import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.util.Check;
 
@@ -169,9 +170,15 @@ public class Button extends Control<String>
 	 */
 	public Button(Variant variant, String value)
 	{
-		super(TypeLib.STRING);
+		super(null);
 		variant_ = Check.notNull(variant, "variant");
 		setValue(value);
+	}
+	
+	
+	@Override public Type<String> getType()
+	{
+		return TypeLib.STRING;
 	}
 	
 

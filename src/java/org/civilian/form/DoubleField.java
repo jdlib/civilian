@@ -19,6 +19,7 @@ package org.civilian.form;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.NumberStyle;
+import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 
 
@@ -38,7 +39,16 @@ public class DoubleField extends InputField<Double>
 	 */
 	public DoubleField(String name)
 	{
-		super(TypeLib.DOUBLE, name);
+		super(name);
+	}
+	
+	
+	/**
+	 * Returns TypeLib.DOUBLE.
+	 */
+	@Override public Type<Double> getType()
+	{
+		return TypeLib.DOUBLE;
 	}
 	
 	

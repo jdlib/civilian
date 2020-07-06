@@ -17,6 +17,8 @@ package org.civilian.form;
 
 
 import org.civilian.type.DateType;
+import org.civilian.type.Type;
+import org.civilian.util.Check;
 
 
 /**
@@ -31,7 +33,17 @@ public class DateField<T> extends InputField<T>
 	 */
 	public DateField(DateType<T> type, String name)
 	{
-		super(type, name);
+		super(name);
+		type_ = Check.notNull(type, "type");
 		setMaxLength(10);
 	}
+
+
+	@Override public Type<T> getType()
+	{
+		return type_;
+	}
+	
+	
+	private final DateType<T> type_;
 }

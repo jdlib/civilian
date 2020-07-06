@@ -41,10 +41,17 @@ public class CheckboxGroup<T> extends Control<T[]>
 	 */
 	public CheckboxGroup(String name, KeyList<T> keyList)
 	{
-		super(new ArrayType<>(Check.notNull(keyList, "keyList").getType()), name);
-		keyList_ = keyList;
+		super(name);
+		keyList_ = Check.notNull(keyList, "keyList");
+		type_	 = new ArrayType<>(keyList.getType());
 	}
 	
+	
+	@Override public Type<T[]> getType()
+	{
+		return type_;
+	}
+
 	
 	/**
 	 * Returns the size of the key list.
@@ -193,4 +200,5 @@ public class CheckboxGroup<T> extends Control<T[]>
 
 
 	private KeyList<T> keyList_;
+	private final Type<T[]> type_;
 }

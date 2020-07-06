@@ -19,6 +19,7 @@ package org.civilian.form;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.NumberStyle;
+import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 
 
@@ -33,10 +34,19 @@ public class IntField extends InputField<Integer>
 	 */
 	public IntField(String name)
 	{
-		super(TypeLib.INTEGER, name);
+		super(name);
 		setInputType(INPUT_TYPE_NUMBER);
 	}
 	
+	
+	/**
+	 * Returns TypeLib.INTEGER.
+	 */
+	@Override public Type<Integer> getType()
+	{
+		return TypeLib.INTEGER;
+	}
+
 	
 	/**
 	 * Sets that the field is presented as HTML5 range field.

@@ -16,6 +16,7 @@
 package org.civilian.form;
 
 
+import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 
 
@@ -30,8 +31,17 @@ public class PasswordField extends InputField<String>
 	 */
 	public PasswordField(String name)
 	{
-		super(TypeLib.STRING, name);
+		super(name);
 		setInputType(INPUT_TYPE_PASSWORD);
+	}
+	
+	
+	/**
+	 * Returns TypeLib.STRING.
+	 */
+	@Override public Type<String> getType()
+	{
+		return TypeLib.STRING;
 	}
 
 	

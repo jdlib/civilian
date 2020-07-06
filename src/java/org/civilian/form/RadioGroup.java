@@ -19,6 +19,7 @@ package org.civilian.form;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.keys.KeyList;
+import org.civilian.type.Type;
 import org.civilian.type.fn.TypeSerializer;
 import org.civilian.util.Check;
 
@@ -36,8 +37,17 @@ public class RadioGroup<T> extends Control<T>
 	 */
 	public RadioGroup(String name, KeyList<T> keyList)
 	{
-		super(Check.notNull(keyList, "keyList").getType(), name);
-		keyList_ = keyList;
+		super(name);
+		keyList_ = Check.notNull(keyList, "keyList");
+	}
+
+	
+	/**
+	 * Returns the type of the keylist.
+	 */
+	@Override public Type<T> getType()
+	{
+		return keyList_.getType();
 	}
 	
 	

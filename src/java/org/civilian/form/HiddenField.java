@@ -20,6 +20,7 @@ import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
+import org.civilian.util.Check;
 
 
 /**
@@ -33,7 +34,7 @@ public class HiddenField<T> extends Control<T>
 	 */
 	public static HiddenField<String> create(String name)
 	{
-		return new HiddenField<>(TypeLib.STRING, name);
+		return new HiddenField<>(name, TypeLib.STRING);
 	}
 	
 	
@@ -68,7 +69,7 @@ public class HiddenField<T> extends Control<T>
 	 */
 	public static HiddenField<Integer> create(String name, Integer value)
 	{
-		HiddenField<Integer> f = new HiddenField<>(TypeLib.INTEGER, name);
+		HiddenField<Integer> f = new HiddenField<>(name, TypeLib.INTEGER);
 		f.setValue(value);
 		return f;
 	}
@@ -76,12 +77,22 @@ public class HiddenField<T> extends Control<T>
 	
 	/**
 	 * Creates a HiddenField.
-	 * @param type the field type
 	 * @param name the field name
+	 * @param type the field type
 	 */
-	public HiddenField(Type<T> type, String name)
+	public HiddenField(String name, Type<T> type)
 	{
-		super(type, name);
+		super(name);
+		type_ = Check.notNull(type, "type");
+	}
+
+	
+	/**
+	 * Returns the type of the keylist.
+	 */
+	@Override public Type<T> getType()
+	{
+		return type_;
 	}
 
 	
@@ -115,4 +126,7 @@ public class HiddenField<T> extends Control<T>
 	{
 		return null;
 	}
+	
+	
+	private final Type<T> type_;
 }

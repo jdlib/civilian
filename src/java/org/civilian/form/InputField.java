@@ -18,7 +18,6 @@ package org.civilian.form;
 
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
-import org.civilian.type.Type;
 import org.civilian.util.Check;
 
 
@@ -103,9 +102,9 @@ public abstract class InputField<T> extends Control<T>
 	 * @param type the field type
 	 * @param name the field name
 	 */
-	public InputField(Type<T> type, String name)
+	public InputField(String name)
 	{
-		super(type, name);
+		super(name);
 	}
 
 	

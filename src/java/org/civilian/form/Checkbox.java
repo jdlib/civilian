@@ -19,6 +19,7 @@ package org.civilian.form;
 import org.civilian.Request;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
+import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 
 
@@ -41,7 +42,7 @@ public class Checkbox extends Control<Boolean>
 	 */
 	public Checkbox(String name)
 	{
-		super(TypeLib.BOOLEAN, name);
+		super(name);
 	}
 	
 
@@ -53,6 +54,12 @@ public class Checkbox extends Control<Boolean>
 	{
 		this(name);
 		text_ = text;
+	}
+	
+
+	@Override public Type<Boolean> getType()
+	{
+		return TypeLib.BOOLEAN;
 	}
 	
 

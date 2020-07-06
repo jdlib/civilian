@@ -21,6 +21,7 @@ import org.civilian.request.Upload;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.type.InvalidType;
+import org.civilian.type.Type;
 
 
 /**
@@ -50,9 +51,15 @@ public class FileField extends Control<Upload[]>
 	 */
 	public FileField(String name)
 	{
-		super(InvalidType.<Upload[]>instance(), name);
+		super(name);
 	}
 	
+	
+	@Override public Type<Upload[]> getType()
+	{
+		return InvalidType.<Upload[]>instance();
+	}
+
 	
 	/**
 	 * Set if multiple files can be uploaded. The default is false.
