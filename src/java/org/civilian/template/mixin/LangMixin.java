@@ -18,7 +18,7 @@ package org.civilian.template.mixin;
 
 import java.util.Locale;
 import org.civilian.provider.LocaleServiceProvider;
-import org.civilian.provider.MessageProvider;
+import org.civilian.provider.MsgBundleProvider;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
 import org.civilian.text.NumberStyle;
@@ -42,7 +42,7 @@ import org.civilian.util.Check;
  * <p>
  * Independent of the initialization you may explicitly set TypeSerializer and MsgBundle. 
  */
-public class LangMixin implements MessageProvider
+public class LangMixin implements MsgBundleProvider
 {
 	/**
 	 * Creates a new LangMixin object.
@@ -96,10 +96,15 @@ public class LangMixin implements MessageProvider
 	}
 	
 	
+	//-----------------------------
+	// msg bundle
+	//-----------------------------
+
+	
 	/**
 	 * Returns the MsgBundle used by the mixin.
 	 */
-	public MsgBundle getMsgBundle()
+	@Override public MsgBundle getMsgBundle()
 	{
 		return msgBundle_;
 	}
@@ -111,33 +116,6 @@ public class LangMixin implements MessageProvider
 	public void setMsgBundle(MsgBundle msgBundle)
 	{
 		msgBundle_ = Check.notNull(msgBundle, "msgBundle");
-	}
-	
-	
-	//-----------------------------
-	// msg translation
-	//-----------------------------
-
-	
-	/**
-	 * Returns the message text for the key.
-	 * @see MsgBundle#msg(Object)
-	 */
-	@Override public String msg(Object key)
-	{
-		return msgBundle_.msg(key);
-	}
-	
-	
-	/**
-	 * Returns the message text for the key
-	 * and replaces the placeholders in the message with the given
-	 * parameters.
-	 * @see MsgBundle#msg(Object, Object...)
-	 */
-	@Override public String msg(Object key, Object... params)
-	{
-		return msgBundle_.msg(key, params);
 	}
 	
 	

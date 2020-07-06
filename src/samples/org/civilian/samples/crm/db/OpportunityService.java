@@ -17,7 +17,7 @@
 
 
 import java.util.Random;
-import org.civilian.provider.MessageProvider;
+import org.civilian.provider.MsgBundleProvider;
 import org.civilian.samples.crm.db.entity.Opportunity;
 import org.civilian.samples.crm.text.Message;
 
@@ -29,7 +29,7 @@ public class OpportunityService
 	public static final String FILTER_PROPABILITY 	= "probability";
 	
 		
-	public SearchResult search(MessageProvider mp, SearchParam[] params)
+	public SearchResult search(MsgBundleProvider mp, SearchParam[] params)
 	{
 		SearchResult result = new SearchResult
 		(

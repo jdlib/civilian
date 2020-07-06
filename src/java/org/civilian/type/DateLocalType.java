@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 /**
  * A type implementation for java.time.LocalDate.
- * @see TypeLib#DATE_CIVILIAN
+ * @see TypeLib#DATE_LOCAL
  */
 public class DateLocalType extends DateType<LocalDate>
 {

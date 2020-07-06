@@ -18,7 +18,7 @@ package org.civilian.text.msg;
 
 import java.util.Locale;
 
-import org.civilian.provider.MessageProvider;
+import org.civilian.provider.MsgBundleProvider;
 import org.civilian.text.LocaleService;
 
 
@@ -28,7 +28,7 @@ import org.civilian.text.LocaleService;
  * LocaleService contains a MsgBundle suitable for its locale.
  * @see LocaleService#getMsgBundle()
  */
-public abstract class MsgBundle implements MessageProvider
+public abstract class MsgBundle implements MsgBundleProvider
 {
 	/**
 	 * Creates an empty MsgBundle.
@@ -36,6 +36,15 @@ public abstract class MsgBundle implements MessageProvider
 	public static MsgBundle empty(Locale locale)
 	{
 		return new EmptyMsgBundle(locale);
+	}
+
+	
+	/**
+	 * Implements MsgBundleProvider and returns this.
+	 */
+	@Override public MsgBundle getMsgBundle()
+	{
+		return this;
 	}
 
 	

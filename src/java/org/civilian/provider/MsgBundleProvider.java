@@ -16,21 +16,36 @@
 package org.civilian.provider;
 
 
+import org.civilian.text.msg.MsgBundle;
+
+
 /** 
- * An interface for a service which can translate 
- * a message id into a message text.
+ * An interface for a service which can provide
+ * a MsgBundle and translate a message id into a message text.
  */
-public interface MessageProvider
+public interface MsgBundleProvider
 {
+	/**
+	 * Returns the MsgBundle.
+	 */
+	public MsgBundle getMsgBundle();
+
+	
 	/**
 	 * Returns the message for the id
 	 */
-	public String msg(Object id);
-	
+	public default String msg(Object id)
+	{
+		return getMsgBundle().msg(id);
+	}
+
 	
 	/**
 	 * Returns the message for the id and inserts the parameters
 	 * into the message at placeholder locations.
 	 */
-	public String msg(Object id, Object... params);
+	public default String msg(Object id, Object... params)
+	{
+		return getMsgBundle().msg(id, params);
+	}
 }

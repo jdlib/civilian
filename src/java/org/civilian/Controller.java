@@ -27,7 +27,7 @@ import org.civilian.controller.NegotiatedMethod;
 import org.civilian.internal.Logs;
 import org.civilian.provider.ApplicationProvider;
 import org.civilian.provider.ContextProvider;
-import org.civilian.provider.MessageProvider;
+import org.civilian.provider.MsgBundleProvider;
 import org.civilian.provider.RequestProvider;
 import org.civilian.provider.ResponseProvider;
 import org.civilian.text.LocaleService;
@@ -95,7 +95,7 @@ import org.civilian.util.Check;
  * for application-wide error handling.
  */
 public class Controller implements 
-	MessageProvider, RequestProvider, ResponseProvider, ApplicationProvider, ContextProvider
+	MsgBundleProvider, RequestProvider, ResponseProvider, ApplicationProvider, ContextProvider
 {
 	//------------------------------------
 	// accessors
@@ -207,33 +207,9 @@ public class Controller implements
 	 * Shortcut for getResponse().getLocaleService().getMsgBundle()
 	 * @return the MsgBundle of the locale service
 	 */
-	public MsgBundle getMsgBundle()
+	@Override public MsgBundle getMsgBundle()
 	{
 		return getLocaleService().getMsgBundle();
-	}
-	
-	
-	/**
-	 * Translates a text key into a message, using
-	 * the MsgBundle object of the response.
-	 * @see #getMsgBundle()
-	 */
-	@Override public String msg(Object key)
-	{
-		return getMsgBundle().msg(key);
-	}
-	
-	
-	/**
-	 * Translates a text key into a message, using
-	 * the MsgBundle object of the response.
-	 * @param params parameters which are inserted into the message
-	 * 		at placeholder strings.
-	 * @see #getMsgBundle()
-	 */
-	@Override public String msg(Object key, Object... params)
-	{
-		return getMsgBundle().msg(key, params);
 	}
 	
 	
