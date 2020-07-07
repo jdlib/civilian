@@ -17,13 +17,14 @@ package org.civilian.text.msg;
 
 
 import java.util.Locale;
+import org.civilian.util.Check;
 
 
 class EmptyMsgBundle extends MsgBundle
 {
 	public EmptyMsgBundle(Locale locale)
 	{
-		locale_ = locale;
+		locale_ = Check.notNull(locale, "locale");
 	}
 	
 	
@@ -57,5 +58,5 @@ class EmptyMsgBundle extends MsgBundle
 	}
 
 	
-	private Locale locale_;
+	private final Locale locale_;
 }
