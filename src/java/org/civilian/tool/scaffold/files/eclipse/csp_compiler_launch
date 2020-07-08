@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.ui.externaltools.ProgramLaunchConfigurationType">
+    <stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="${container}"/>
+    <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+        <listEntry value="org.eclipse.ui.externaltools.launchGroup"/>
+    </listAttribute>
+    <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LAUNCH_CONFIGURATION_BUILD_SCOPE" value="${project}"/>
+    <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${env_var:JAVA_HOME}/bin/java.exe"/>
+    <stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-cp lib/*&#13;&#10;org.civilian.tool.csp.CspCompiler &#13;&#10;-force &#13;&#10;-v 1&#13;&#10;${resource_loc}"/>
+    <stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/!{appId}}"/>
+</launchConfiguration>

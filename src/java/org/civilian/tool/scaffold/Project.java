@@ -34,6 +34,8 @@ class Project
 		this.settings		= new Dir(root, ".settings");
 		this.src  			= new Dir(root, "src");
 		this.lib  			= new Dir(root, "lib");
+		this.res  			= new Dir(root, "res");
+		this.resLaunch		= new Dir(res, "launch");
 		this.web  			= new Dir(root, "web");
 		this.webInf  		= new Dir(web, "WEB-INF");
 		this.webInfClasses  = new Dir(webInf, "classes");
@@ -137,6 +139,8 @@ class Project
 	public final Dir root;
 	public final Dir lib;
 	public final Dir bin;
+	public final Dir res;
+	public final Dir resLaunch;
 	public final Dir settings;
 	public final Dir src;
 	public final PackageDir srcText;

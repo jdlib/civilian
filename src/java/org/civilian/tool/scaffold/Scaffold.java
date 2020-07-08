@@ -143,13 +143,15 @@ public class Scaffold
 		pathParamsClass_ 	= vars_.put(new ClassVar("pathParamsClass", options_.appPrefix + "PathParams"));  
 		resourcesClass_ 	= vars_.put(new ClassVar("resourcesClass",	options_.appPrefix + "Resources"));
 		appCtrlClass_ 		= vars_.put(new ClassVar("appController",	options_.appPrefix + "Controller"));
-		vars_.put(new Variable("encoding", 		options_.encoding));
-		vars_.put(new Variable("appPrefix", 	options_.appPrefix));
-		vars_.put(new Variable("appId", 		appId));
-		vars_.put(new Variable("webPackage", 	project_.srcWeb.packageName));
-		vars_.put(new Variable("locales", 		options_.locales));
-		vars_.put(new Variable("minComment", 	options_.minimal ? "// " : ""));
-		vars_.put(new Variable("appMsgsIni", 	options_.text ?
+		vars_.put(new Variable("encoding", 			options_.encoding));
+		vars_.put(new Variable("appPrefix", 		options_.appPrefix));
+		vars_.put(new Variable("appId", 			appId));
+		vars_.put(new Variable("webPackage", 		project_.srcWeb.packageName));
+		vars_.put(new Variable("webPackagePath",		project_.srcWeb.packagePath));
+		vars_.put(new Variable("textPackagePath", 	project_.srcText.packagePath));
+		vars_.put(new Variable("locales", 			options_.locales));
+		vars_.put(new Variable("minComment", 		options_.minimal ? "// " : ""));
+		vars_.put(new Variable("appMsgsIni", 		options_.text ?
 			"app." + appId + ".messages = resbundle:" + project_.srcText.packagePath + "/msg\n" :
 			"\n"));
 	}
@@ -286,6 +288,19 @@ public class Scaffold
 		
 		eclipseDir.resource(".project").writeTo(project_.root, "UTF-8");
 		eclipseDir.resource("org.eclipse.core.resources.prefs").writeTo(project_.settings);
+		writeEclipseLaunchFile(eclipseDir, "csp_compiler_launch");
+		writeEclipseLaunchFile(eclipseDir, "msg_compiler_launch");
+		writeEclipseLaunchFile(eclipseDir, "res_constants_launch");
+	}
+	
+	
+	private void writeEclipseLaunchFile(ResourceDir eclipseDir, String name) throws IOException
+	{
+		Resource resource = eclipseDir.resource(name);
+		name = name.replace("_launch", ".launch");
+		name = options_.appPrefix.toLowerCase() + ' '  + name.replace('_', ' ');
+		resource.setFile(name);
+		resource.writeTo(project_.resLaunch);
 	}
 
 	
