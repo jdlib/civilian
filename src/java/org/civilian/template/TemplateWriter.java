@@ -31,7 +31,7 @@ import org.civilian.util.ClosedWriter;
  * then tab characters are automatically inserted at the beginning of the line, according
  * to the tab count. The default tab characters is a single '\t' character, but you can
  * chose any string instead (e.g. "  ").<p> 
- * A TemplateWriter can be {@link #addContext(Object) associated} with multiple context objects. 
+ * A TemplateWriter can be {@link #addAttribute(Object) associated} with multiple context objects. 
  */
 public class TemplateWriter extends PrintWriter
 {
@@ -175,31 +175,31 @@ public class TemplateWriter extends PrintWriter
 
 	
 	/**
-	 * Associates the TemplateWriter with an arbitrary context object.
+	 * Associates the TemplateWriter with an arbitrary attribute.
      * When the TemplateWriter is constructed within a Civilian request
-	 * the Response is automatically added as context object. 
+	 * the Response is automatically added as attribute. 
 	 */
-	public void addContext(Object context)
+	public void addAttribute(Object attr)
 	{
-		Check.notNull(context, "context");
-		contexts_ = contexts_ == null ?
-			new Object[] { context } :
-			ArrayUtil.addLast(contexts_, context);
+		Check.notNull(attr, "attr");
+		attributes_ = attributes_ == null ?
+			new Object[] { attr } :
+			ArrayUtil.addLast(attributes_, attr);
 	}
 
 	
 	/**
-	 * Returns the first context object of the TemplateWriter that has
+	 * Returns the first attribute of the TemplateWriter that has
 	 * the given class.
-	 * @return the context object or null.
+	 * @return the attribute object or null.
 	 */
-	public <T> T getContext(Class<? extends T> cls)
+	public <T> T getAttribute(Class<? extends T> cls)
 	{
-		if (contexts_ != null)
+		if (attributes_ != null)
 		{
-			for (Object context : contexts_)
+			for (Object attr : attributes_)
 			{
-				T t = ClassUtil.unwrap(context, cls);
+				T t = ClassUtil.unwrap(attr, cls);
     			if (t != null)
     				return t;
 			}
@@ -209,16 +209,16 @@ public class TemplateWriter extends PrintWriter
 	
 	
 	/**
-	 * Returns the first context object of the TemplateWriter that has
+	 * Returns the first attribute object of the TemplateWriter that has
 	 * the given class.  
 	 * @throws IllegalStateException if there is no such object,
 	 */
-	public <T> T getSafeContext(Class<? extends T> cls)
+	public <T> T getSafeAttribute(Class<? extends T> cls)
 	{
-		T context = getContext(cls);
-		if (context != null)
-			return context;
-		throw new IllegalStateException("no context object with " + cls.getName());
+		T attr = getAttribute(cls);
+		if (attr != null)
+			return attr;
+		throw new IllegalStateException("no attribute with " + cls.getName());
 	}
 
 	
@@ -494,7 +494,7 @@ public class TemplateWriter extends PrintWriter
 	private char tabChars_[] = defaultTabChars_;
 	private char lineSeparator_[] = defaultLineSeparator_;
 	private boolean autoFlush_;
-	private Object[] contexts_;
+	private Object[] attributes_;
 	private IOException error_;
 	private static char[] defaultTabChars_ = { '\t' };
 	private static char[] defaultLineSeparator_ = getChars(System.getProperty("line.separator"), "separator");

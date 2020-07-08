@@ -114,7 +114,7 @@ public class AssetList implements TemplateWriter.Printable
 	@Override public void print(TemplateWriter out) throws Exception
 	{
 		HtmlMixin html = new HtmlMixin(out);
-		String[] paths = (productionPaths_ != null) && !out.getSafeContext(ApplicationProvider.class).getApplication().develop() ?
+		String[] paths = (productionPaths_ != null) && !out.getSafeAttribute(ApplicationProvider.class).getApplication().develop() ?
 			productionPaths_ :
 			paths_;
 		for (String path : paths)

@@ -98,16 +98,16 @@ public class TemplateWriterTest extends CivTest
 
 	@Test public void testContext() throws Exception
 	{
-		assertNull(out.getContext(String.class));
+		assertNull(out.getAttribute(String.class));
 		String a = "a";
-		out.addContext(a);
-		assertSame(a, out.getContext(String.class));
-		out.addContext("b");
-		assertSame(a, out.getContext(String.class));
+		out.addAttribute(a);
+		assertSame(a, out.getAttribute(String.class));
+		out.addAttribute("b");
+		assertSame(a, out.getAttribute(String.class));
 		
 		Integer one = Integer.valueOf(1);
-		out.addContext(one);
-		assertSame(one, out.getContext(Integer.class));
+		out.addAttribute(one);
+		assertSame(one, out.getAttribute(Integer.class));
 	}
 
 	

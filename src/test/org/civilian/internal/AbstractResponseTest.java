@@ -159,7 +159,7 @@ public class AbstractResponseTest extends CivTest
 		assertSame(app.getEncoding(), response.getContentEncoding());
 		assertSame(Response.ContentAccess.WRITER, response.getContentAccess());
 		assertSame(out, response.getContentWriter());
-		assertSame(response, out.getContext(Response.class));
+		assertSame(response, out.getAttribute(Response.class));
 		
 		try
 		{

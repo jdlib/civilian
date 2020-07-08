@@ -276,7 +276,7 @@ public abstract class AbstractResponse implements Response
 				if (!(contentOutput_ instanceof TemplateWriter))
 					initContentWriterForError();
 				TemplateWriter tw = (TemplateWriter)contentOutput_; 
-				tw.addContext(this);
+				tw.addAttribute(this);
 			}
 		}
 	}

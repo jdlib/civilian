@@ -142,7 +142,7 @@ public class HtmlMixin
 	 * @see #metaHttpEquiv(String, String)
 	 * @see Response#getContentTypeAndEncoding()
 	 * @throws IllegalStateException thrown if the TemplateWriter does not 
-	 * 		have a Response as {@link TemplateWriter#getContext(java.lang.Class) context object}
+	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
 	 */
 	public void metaContentType()
 	{
@@ -259,7 +259,7 @@ public class HtmlMixin
 	 */
 	private void initPath()
 	{
-		ApplicationProvider ap = out.getContext(ApplicationProvider.class);
+		ApplicationProvider ap = out.getAttribute(ApplicationProvider.class);
 		path_ = ap != null ? ap.getApplication().getPath() : Path.ROOT;
 	}
 	
@@ -307,7 +307,7 @@ public class HtmlMixin
 	/**
 	 * Returns a Url object with the resource path.
 	 * @throws IllegalStateException thrown if the TemplateWriter does not 
-	 * 		have a Response as {@link TemplateWriter#getContext(java.lang.Class) context object}
+	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
 	 */
 	public Url url(Resource resource)
 	{
@@ -318,7 +318,7 @@ public class HtmlMixin
 	/**
 	 * Returns a Url object with the path of the resource associated with the controller.
 	 * @throws IllegalStateException thrown if the TemplateWriter does not 
-	 * 		have a Response as {@link TemplateWriter#getContext(java.lang.Class) context object}
+	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
 	 */
 	public Url url(Class<? extends Controller> controllerClass)
 	{
@@ -329,7 +329,7 @@ public class HtmlMixin
 	/**
 	 * Returns a Url with the given value.  
 	 * @throws IllegalStateException thrown if the TemplateWriter does not 
-	 * 		have a Response as {@link TemplateWriter#getContext(java.lang.Class) context object}
+	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
 	 */
 	public Url url(String value)
 	{
@@ -340,7 +340,7 @@ public class HtmlMixin
 	/**
 	 * Returns a Url with the path of the given path provider.  
 	 * @throws IllegalStateException thrown if the TemplateWriter does not 
-	 * 		have a Response as {@link TemplateWriter#getContext(java.lang.Class) context object}
+	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
 	 */
 	public Url url(PathProvider pp)
 	{
@@ -351,7 +351,7 @@ public class HtmlMixin
 	/**
 	 * Returns a Url with the given path.  
 	 * @throws IllegalStateException thrown if the TemplateWriter does not 
-	 * 		have a Response as {@link TemplateWriter#getContext(java.lang.Class) context object}
+	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
 	 */
 	public Url url(Path path)
 	{
@@ -410,7 +410,7 @@ public class HtmlMixin
 	private Response response()
 	{
 		if (response_ == null)
-			response_ = out.getSafeContext(ResponseProvider.class).getResponse();
+			response_ = out.getSafeAttribute(ResponseProvider.class).getResponse();
 		return response_;
 	}
 	

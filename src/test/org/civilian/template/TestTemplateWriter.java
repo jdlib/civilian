@@ -79,7 +79,7 @@ public class TestTemplateWriter extends TemplateWriter
 	public TestTemplateWriter(Writer writer, Response response)
 	{
 		super(writer);
-		addContext(response);
+		addAttribute(response);
 	}
 
 
