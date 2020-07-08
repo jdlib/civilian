@@ -290,7 +290,7 @@ public class Scaffold
 		eclipseDir.resource("org.eclipse.core.resources.prefs").writeTo(project_.settings);
 		writeEclipseLaunchFile(eclipseDir, "csp_compiler_launch");
 		writeEclipseLaunchFile(eclipseDir, "msg_compiler_launch");
-		writeEclipseLaunchFile(eclipseDir, "res_constants_launch");
+		writeEclipseLaunchFile(eclipseDir, "resources_launch");
 	}
 	
 	
