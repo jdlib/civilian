@@ -71,12 +71,6 @@ public class HtmlMixinTest extends CivTest
 		html.text(null);
 		out.assertOut("");
 
-		html.text("", "2");
-		out.assertOut("2");
-
-		html.text(null, "3");
-		out.assertOut("3");
-		
 		html.text("\"&<>\n\r");
 		out.assertOut("&quot;&amp;&lt;&gt;\n\r");
 

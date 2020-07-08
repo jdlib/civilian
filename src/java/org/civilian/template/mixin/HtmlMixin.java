@@ -214,20 +214,6 @@ public class HtmlMixin
 	}
 	
 
-	/**
-	 * Prints the text with proper escaping if the text is not null and has
-	 * a non-zero length, else print the defaultValue without escaping.
-	 * Example: out.printText(name, "&nbsp;");
-	 */
-	public void text(String s, String defaultValue)
-	{
-		if ((s != null) && (s.length() > 0))
-			text(s);
-		else
-			out.print(defaultValue);
-	}
-	
-	
 	private void printPathAttr(String attr, String path)
 	{
 		out.print(' ');
@@ -415,7 +401,7 @@ public class HtmlMixin
 	}
 	
 
+	private final TemplateWriter out;
 	private Response response_;
-	private TemplateWriter out;
 	private Path path_;
 }
