@@ -22,6 +22,7 @@ import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.provider.LocaleServiceProvider;
 import org.civilian.text.msg.MsgBundle;
+import org.civilian.type.TypeLib;
 import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.util.Check;
 
@@ -47,7 +48,7 @@ public class LocaleService implements LocaleServiceProvider
 	 */
 	public LocaleService(Locale locale)
 	{
-		this(locale, null, null);
+		this(locale, null, null, null);
 	}
 	
 
@@ -57,9 +58,10 @@ public class LocaleService implements LocaleServiceProvider
 	 * @param messages a MsgBundle. Will be converted into an empty bundle if null
 	 * @param serializer a LocaleSerializer suitable for the locale. If null a new serializer will be created
 	 */
-	public LocaleService(Locale locale, MsgBundle messages, LocaleSerializer serializer)
+	public LocaleService(Locale locale, TypeLib typeLib, MsgBundle messages, LocaleSerializer serializer)
 	{
 		locale_ 		= Check.notNull(locale, "locale");
+		typeLib_		= typeLib != null ? typeLib : TypeLib.getDefaultTypeLib();
 		msgBundle_		= messages != null ? messages : MsgBundle.empty(locale);
 		serializer_		= serializer != null ? serializer : new LocaleSerializer(locale);
 		localeString_	= locale.toString();
@@ -84,6 +86,15 @@ public class LocaleService implements LocaleServiceProvider
 	}
 	
 	
+	/**
+	 * Returns the the type library.
+	 */
+	public TypeLib getTypeLib()
+	{
+		return typeLib_;
+	}
+	
+
 	/**
 	 * Returns the LocaleSerializer.
 	 */
@@ -160,8 +171,9 @@ public class LocaleService implements LocaleServiceProvider
 
 	
 	private MsgBundle msgBundle_;
-	private Locale locale_;
-	private LocaleSerializer serializer_;
+	private final TypeLib typeLib_;
+	private final Locale locale_;
+	private final LocaleSerializer serializer_;
+	private final String localeString_;
 	private Object data_;
-	private String localeString_;
 }

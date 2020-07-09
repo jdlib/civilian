@@ -251,7 +251,7 @@ public class LocaleServiceList
 		MsgBundle msgBundle = msgBundleFactory_.getMsgBundle(locale);
 		LocaleSerializer first = supportedServices_[0] != null ? supportedServices_[0].getSerializer() : null; 
 		LocaleSerializer serializer = new LocaleSerializer(locale, first);
-		return new LocaleService(locale, msgBundle, serializer);
+		return new LocaleService(locale, typeLib_, msgBundle, serializer);
 	}
 	
 	
