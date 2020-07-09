@@ -25,7 +25,7 @@ public class LocaleServiceTest extends CivTest
 {
 	@Test public void testSupportedLocales()
 	{
-		LocaleServiceList services = new LocaleServiceList(null, false, Locale.ENGLISH, Locale.GERMAN);
+		LocaleServiceList services = new LocaleServiceList(null, null, false, Locale.ENGLISH, Locale.GERMAN);
 		assertEquals(2, services.size());
 		assertSame(Locale.ENGLISH, services.getDefaultLocale());
 		assertSame(Locale.GERMAN, services.getLocale(1));
@@ -49,7 +49,7 @@ public class LocaleServiceTest extends CivTest
 	
 	@Test public void testSingleLocale()
 	{
-		LocaleServiceList services = new LocaleServiceList(null, false, Locale.FRENCH);
+		LocaleServiceList services = new LocaleServiceList(null, null, false, Locale.FRENCH);
 		assertSame(Locale.FRENCH, services.normLocale(Locale.ITALIAN));
 	}
 	
@@ -57,7 +57,7 @@ public class LocaleServiceTest extends CivTest
 
 	@Test public void testUnsupportedLocales()
 	{
-		LocaleServiceList services = new LocaleServiceList(null, true, Locale.FRENCH, Locale.CHINESE);
+		LocaleServiceList services = new LocaleServiceList(null, null, true, Locale.FRENCH, Locale.CHINESE);
 		assertSame(Locale.FRENCH, services.getDefaultLocale());
 	}
 	

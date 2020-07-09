@@ -24,6 +24,7 @@ import org.civilian.text.keys.serialize.KeySerializers;
 import org.civilian.text.msg.EmptyMsgBundleFactory;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleFactory;
+import org.civilian.type.TypeLib;
 import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.util.Check;
 
@@ -44,8 +45,9 @@ public class LocaleServiceList
 	 * 		locales or false, if it falls back to a supported locale.
 	 * @param supportedLocales the list of supported locales. Must at least contain one entry.
 	 */
-	public LocaleServiceList(MsgBundleFactory msgBundleFactory, boolean allowUnsupportedLocales, Locale... supportedLocales)
+	public LocaleServiceList(TypeLib typeLib, MsgBundleFactory msgBundleFactory, boolean allowUnsupportedLocales, Locale... supportedLocales)
 	{
+		typeLib_					= typeLib != null ? typeLib : TypeLib.getDefaultTypeLib();
 		allowUnsupportedLocales_	= allowUnsupportedLocales;
 		msgBundleFactory_			= msgBundleFactory != null ? msgBundleFactory : new EmptyMsgBundleFactory();
 		supportedLocales_			= normLocales(supportedLocales);
@@ -85,7 +87,16 @@ public class LocaleServiceList
 	
 	
 	/**
-	 * Returns the MsgBundleFactory.
+	 * Returns the the type library of this LocaleServiceList.
+	 */
+	public TypeLib getTypeLib()
+	{
+		return typeLib_;
+	}
+	
+
+	/**
+	 * Returns the MsgBundleFactory of this LocaleServiceList.
 	 */
 	public MsgBundleFactory getMsgBundleFactory()
 	{
@@ -333,11 +344,12 @@ public class LocaleServiceList
 	}
 
 
+	private final boolean allowUnsupportedLocales_;
+	private final TypeLib typeLib_;
 	private final Locale[] supportedLocales_;
 	private final LocaleService defaultService_;
 	private final LocaleService[] supportedServices_;
 	private final MsgBundleFactory msgBundleFactory_;
 	private final LocaleMap localeMap_;
 	private final KeyList<LocaleService> serviceKeys_;
-	private final boolean allowUnsupportedLocales_;
 }

@@ -53,7 +53,6 @@ import org.civilian.resource.scan.ResourceScan;
 import org.civilian.response.std.ErrorResponse;
 import org.civilian.response.std.NotFoundResponse;
 import org.civilian.text.LocaleServiceList;
-import org.civilian.type.TypeLib;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.Iterators;
@@ -251,11 +250,11 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 			initResult.async	= appConfig.getAsync();
 			encoding_			= appConfig.getEncoding();
 			version_			= appConfig.getVersion();
-			typeLib_ 			= appConfig.getTypeLibrary();
 			assetService_		= initAssets(appConfig.getAssetConfig());
 			uploadConfig_		= appConfig.getUploadConfig();
 			contentSerializers_ = appConfig.getContentSerializers();
 			localeServices_		= new LocaleServiceList( 
+				appConfig.getTypeLibrary(),
 				appConfig.getMsgBundleFactory(), 
 				appConfig.allowUnsupportedLocales(),
 				appConfig.getSupportedLocales());
@@ -266,7 +265,7 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 		// init the controller service
 		controllerService_ = new ControllerService(
 			resourceConfig_.getPathParams(), 
-			getTypeLib(), 
+			localeServices_.getTypeLib(), 
 			appConfig.getControllerFactory(),
 			appConfig.getReloadConfig());
 			
@@ -592,17 +591,6 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 
 	
 	/**
-	 * Returns the the type library used by the application.
-	 * The library contains type implementations which are used
-	 * to serialize (format and parse) values of these types.
-	 */
-	public TypeLib getTypeLib()
-	{
-		return typeLib_;
-	}
-	
-
-	/**
 	 * Returns the LocaleServiceList.
 	 */
 	public LocaleServiceList getLocaleServices()
@@ -818,7 +806,6 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	private LocaleServiceList localeServices_;
 	private Resource rootResource_;
 	private ResourceConfig resourceConfig_;
-	private TypeLib typeLib_;
 	private AssetService assetService_;
 	private UploadConfig uploadConfig_;
 	private String version_;
