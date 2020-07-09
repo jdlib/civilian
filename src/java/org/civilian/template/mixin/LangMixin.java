@@ -16,7 +16,6 @@
 package org.civilian.template.mixin;
 
 
-import java.util.Locale;
 import org.civilian.provider.LocaleServiceProvider;
 import org.civilian.provider.MsgBundleProvider;
 import org.civilian.template.TemplateWriter;
@@ -42,7 +41,7 @@ import org.civilian.util.Check;
  * <p>
  * Independent of the initialization you may explicitly set TypeSerializer and MsgBundle. 
  */
-public class LangMixin implements MsgBundleProvider
+public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 {
 	/**
 	 * Creates a new LangMixin object.
@@ -52,24 +51,16 @@ public class LangMixin implements MsgBundleProvider
 		Check.notNull(out, "out");
 		
 		LocaleServiceProvider lsp = out.getAttribute(LocaleServiceProvider.class);
-		if (lsp != null)
-			init(lsp.getLocaleService()); 
-		else
-		{
-			msgBundle_  = MsgBundle.empty(Locale.getDefault());
-			serializer_ = LocaleSerializer.SYSTEM_LOCALE_SERIALIZER;
-		}
+		init(lsp != null ? lsp.getLocaleService() : LocaleService.SYSTEM_LOCALE_LOCALESERVICE); 
 	}
 	
 	
 	/**
-	 * Initializes the mixin to use the MsgBundle and TypeSerialiter of the LocaleSerivce.
+	 * Initializes the mixin to use the LocaleSerivce.
 	 */
 	public void init(LocaleService service)
 	{
-		Check.notNull(service, "service");
-		setMsgBundle(service.getMsgBundle());
-		setTypeSerializer(service.getSerializer());
+		ls_ = Check.notNull(service, "service");
 	}
 
 	
@@ -79,45 +70,31 @@ public class LangMixin implements MsgBundleProvider
 
 	
 	/**
-	 * Returns the TypeSerializer used by the mixin.
+	 * Returns the LocaleService used by the mixin.
 	 */
-	public TypeSerializer getSerializer()
+	@Override public LocaleService getLocaleService()
 	{
-		return serializer_;
+		return ls_;
 	}
 
 	
 	/**
-	 * Sets the TypeSerializer used by the mixin.
+	 * Returns the TypeSerializer used by the mixin.
 	 */
-	public void setTypeSerializer(TypeSerializer serializer)
+	public TypeSerializer getSerializer()
 	{
-		serializer_ = Check.notNull(serializer, "serializer");
+		return ls_.getSerializer();
 	}
 	
-	
-	//-----------------------------
-	// msg bundle
-	//-----------------------------
-
 	
 	/**
 	 * Returns the MsgBundle used by the mixin.
 	 */
 	@Override public MsgBundle getMsgBundle()
 	{
-		return msgBundle_;
+		return ls_.getMsgBundle();
 	}
 		
-	
-	/**
-	 * Sets the MsgBundle used by the mixin.
-	 */
-	public void setMsgBundle(MsgBundle msgBundle)
-	{
-		msgBundle_ = Check.notNull(msgBundle, "msgBundle");
-	}
-	
 	
 	//------------------------
 	// format methods
@@ -197,7 +174,7 @@ public class LangMixin implements MsgBundleProvider
 	 */
 	public <T> String format(DateType<T> type, T date, String defaultValue)
 	{
-		return date != null ? serializer_.format(type, date) : defaultValue;
+		return date != null ? getSerializer().format(type, date) : defaultValue;
 	}
 
 	
@@ -221,7 +198,7 @@ public class LangMixin implements MsgBundleProvider
 	 */
 	public String format(int n, Object style)
 	{
-		return serializer_.format(TypeLib.INTEGER, Integer.valueOf(n), style);
+		return getSerializer().format(TypeLib.INTEGER, Integer.valueOf(n), style);
 	}
 	
 
@@ -257,7 +234,7 @@ public class LangMixin implements MsgBundleProvider
 	 */
 	public String format(long value, Object style)
 	{
-		return serializer_.format(TypeLib.LONG, Long.valueOf(value), style);
+		return getSerializer().format(TypeLib.LONG, Long.valueOf(value), style);
 	}
 	
 
@@ -293,7 +270,7 @@ public class LangMixin implements MsgBundleProvider
 	 */
 	public String format(double value, Object style)
 	{
-		return serializer_.format(TypeLib.DOUBLE, Double.valueOf(value), style);
+		return getSerializer().format(TypeLib.DOUBLE, Double.valueOf(value), style);
 	}
 
 	
@@ -309,6 +286,5 @@ public class LangMixin implements MsgBundleProvider
 	}
 	
 
-	private TypeSerializer serializer_;
-	private MsgBundle msgBundle_;
+	private LocaleService ls_;
 }

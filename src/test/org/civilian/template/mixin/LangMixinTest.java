@@ -22,35 +22,35 @@ import org.civilian.template.TestTemplateWriter;
 import org.civilian.util.Date;
 
 
-public class LocaleMixinTest extends CivTest
+public class LangMixinTest extends CivTest
 {
 	@Test public void testFormat()
 	{
 		TestTemplateWriter out = TestTemplateWriter.create("ISO-8859-1");
-		LangMixin locale = new LangMixin(out);
+		LangMixin lang = new LangMixin(out);
 		
 		// dates
 		Date date = new Date(2012, 01, 31);
-		assertEquals("01/31/2012", locale.format(date));
-		assertEquals("01/31/2012", locale.format(date, "a"));
-		assertEquals("01/31/2012", locale.format(date.toCalendar()));
-		assertEquals("01/31/2012", locale.format(date.toJavaDate()));
-		assertEquals("a", locale.format((Date)null, "a"));
+		assertEquals("01/31/2012", lang.format(date));
+		assertEquals("01/31/2012", lang.format(date, "a"));
+		assertEquals("01/31/2012", lang.format(date.toCalendar()));
+		assertEquals("01/31/2012", lang.format(date.toJavaDate()));
+		assertEquals("a", lang.format((Date)null, "a"));
 		
 		// int
-		assertEquals("1,234", locale.format(1234));
-		assertEquals("2,345", locale.format(new Integer(2345), "a"));
-		assertEquals("a", locale.format((Integer)null, "a"));
+		assertEquals("1,234", lang.format(1234));
+		assertEquals("2,345", lang.format(new Integer(2345), "a"));
+		assertEquals("a", lang.format((Integer)null, "a"));
 
 		// long
-		assertEquals("1,234", locale.format(1234L));
-		assertEquals("2,345", locale.format(new Long(2345), "a"));
-		assertEquals("a", locale.format((Long)null, "a"));
+		assertEquals("1,234", lang.format(1234L));
+		assertEquals("2,345", lang.format(new Long(2345), "a"));
+		assertEquals("a", lang.format((Long)null, "a"));
 
 		// double
-		assertEquals("1,234.50", locale.format(1234.5));
-		assertEquals("2,345.60", locale.format(new Double(2345.6), "a"));
-		assertEquals("a", locale.format((Double)null, "a"));
+		assertEquals("1,234.50", lang.format(1234.5));
+		assertEquals("2,345.60", lang.format(new Double(2345.6), "a"));
+		assertEquals("a", lang.format((Double)null, "a"));
 	}
 	
 
