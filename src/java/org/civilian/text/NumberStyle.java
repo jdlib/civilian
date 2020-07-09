@@ -8,7 +8,7 @@ import org.civilian.util.Check;
  * NumberStyle allows for fine grained, locale dependent formatting of natural and decimal numbers.
  * It uses the formatting symbols of a {@link NumberFormat}.
  */
-public class NumberStyle
+public class NumberStyle implements Style
 {
 	/**
 	 * A NumberStyle which uses grouping and minDecimals = maxDecimals = 2.

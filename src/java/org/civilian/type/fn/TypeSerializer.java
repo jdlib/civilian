@@ -18,6 +18,7 @@ package org.civilian.type.fn;
 
 import java.text.ParseException;
 import java.util.function.Function;
+import org.civilian.text.Style;
 import org.civilian.text.keys.KeyType;
 import org.civilian.type.DiscreteType;
 import org.civilian.type.EnumType;
@@ -34,7 +35,7 @@ public abstract class TypeSerializer
 	@FunctionalInterface
 	public static interface Formatter<T>
 	{
-		public String format(Type<? extends T> type, T value, Object style); 
+		public String format(Type<? extends T> type, T value, Style style); 
 	}
 	
 	
@@ -98,7 +99,7 @@ public abstract class TypeSerializer
 	}
 	
 	
-	public <T> String format(Type<T> type, T value, Object style)
+	public <T> String format(Type<T> type, T value, Style style)
 	{
 		if (value == null)
 			return formattedNull_;
@@ -135,7 +136,7 @@ public abstract class TypeSerializer
 	}
 	
 	
-	protected <T> String formatDiscrete(Type<? extends T> type, T value, Object style)
+	protected <T> String formatDiscrete(Type<? extends T> type, T value, Style style)
 	{
 		@SuppressWarnings("unchecked")
 		DiscreteType<T> dt = (DiscreteType<T>)type;

@@ -21,6 +21,7 @@ import org.civilian.provider.MsgBundleProvider;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
 import org.civilian.text.NumberStyle;
+import org.civilian.text.Style;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.type.DateType;
 import org.civilian.type.TypeLib;
@@ -196,7 +197,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 	 * 		if you want to tweak locale dependent formatting
 	 * @return a locale dependent string representation of the integer.
 	 */
-	public String format(int n, Object style)
+	public String format(int n, Style style)
 	{
 		return getSerializer().format(TypeLib.INTEGER, Integer.valueOf(n), style);
 	}
@@ -232,7 +233,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 	 * 		if you want to tweak locale dependent formatting
 	 * @return a locale dependent string representation of the long value.
 	 */
-	public String format(long value, Object style)
+	public String format(long value, Style style)
 	{
 		return getSerializer().format(TypeLib.LONG, Long.valueOf(value), style);
 	}
@@ -268,7 +269,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 	 * 		if you want to tweak locale dependent formatting
 	 * @return a locale dependent string representation of the double value.
 	 */
-	public String format(double value, Object style)
+	public String format(double value, Style style)
 	{
 		return getSerializer().format(TypeLib.DOUBLE, Double.valueOf(value), style);
 	}

@@ -19,6 +19,7 @@ package org.civilian.form;
 import org.civilian.Request;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
+import org.civilian.text.Style;
 import org.civilian.type.ListType;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
@@ -816,7 +817,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	 * Returns a style object which is passed to the TypeSerializer when
 	 * formatting a value.
 	 */
-	protected Object getStyle()
+	protected Style getStyle()
 	{
 		return null;
 	}
