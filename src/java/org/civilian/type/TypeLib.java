@@ -37,22 +37,31 @@ import org.civilian.util.Date;
  */
 public class TypeLib implements Iterable<Type<?>>
 {
-	public static final Type<BigDecimal>					BIGDECIMAL 			= SimpleType.BIGDECIMAL;
-	public static final Type<BigInteger> 					BIGINTEGER 			= SimpleType.BIGINTEGER;
-	public static final Type<Boolean> 						BOOLEAN  			= SimpleType.BOOLEAN;
-	public static final Type<Byte> 							BYTE 				= SimpleType.BYTE;
-	public static final Type<Character> 					CHARACTER			= SimpleType.CHARACTER;
-	public static final DateType<java.util.Calendar> 		DATE_CALENDAR		= DateCalendarType.INSTANCE;
-	public static final DateType<Date> 						DATE_CIVILIAN		= DateCivilianType.INSTANCE;
-	public static final DateType<LocalDate> 				DATE_LOCAL			= DateLocalType.INSTANCE;
-	public static final DateType<java.util.Date> 			DATE_JAVA_UTIL		= DateJavaUtilType.INSTANCE;
-	public static final DateType<java.sql.Date> 			DATE_JAVA_SQL		= DateJavaSqlType.INSTANCE;
-	public static final Type<Double> 						DOUBLE  			= SimpleType.DOUBLE;
-	public static final Type<Float> 						FLOAT 				= SimpleType.FLOAT;
-	public static final Type<Integer> 						INTEGER 			= SimpleType.INTEGER;
-	public static final Type<Long> 							LONG  				= SimpleType.LONG;
-	public static final Type<Short> 						SHORT  				= SimpleType.SHORT;
-	public static final Type<String> 						STRING 				= SimpleType.STRING;
+	public static final Type<BigDecimal>				BIGDECIMAL 		= SimpleType.BIGDECIMAL;
+	public static final Type<BigInteger> 				BIGINTEGER 		= SimpleType.BIGINTEGER;
+	public static final Type<Boolean> 					BOOLEAN  		= SimpleType.BOOLEAN;
+	public static final Type<Byte> 						BYTE 			= SimpleType.BYTE;
+	public static final Type<Character> 				CHARACTER		= SimpleType.CHARACTER;
+	public static final DateType<java.util.Calendar> 	DATE_CALENDAR	= DateCalendarType.INSTANCE;
+	public static final DateType<Date> 					DATE_CIVILIAN	= DateCivilianType.INSTANCE;
+	public static final DateType<LocalDate> 			DATE_LOCAL		= DateLocalType.INSTANCE;
+	public static final DateType<java.util.Date> 		DATE_JAVA_UTIL	= DateJavaUtilType.INSTANCE;
+	public static final DateType<java.sql.Date> 		DATE_JAVA_SQL	= DateJavaSqlType.INSTANCE;
+	public static final Type<Double> 					DOUBLE  		= SimpleType.DOUBLE;
+	public static final Type<Float> 					FLOAT 			= SimpleType.FLOAT;
+	public static final Type<Integer> 					INTEGER 		= SimpleType.INTEGER;
+	public static final Type<Long> 						LONG  			= SimpleType.LONG;
+	public static final Type<Short> 					SHORT  			= SimpleType.SHORT;
+	public static final Type<String> 					STRING 			= SimpleType.STRING;
+
+
+	/**
+	 * Returns the default type library. 
+	 */
+	public static TypeLib getDefaultTypeLib()
+	{
+		return defaultTypeLib_;
+	}
 
 
 	/** 
@@ -82,6 +91,7 @@ public class TypeLib implements Iterable<Type<?>>
 			put(DATE_CIVILIAN);
 			put(DATE_JAVA_UTIL);
 			put(DATE_JAVA_SQL);
+			put(DATE_LOCAL);
 			put(DOUBLE);
 			put(FLOAT);
 			put(INTEGER);
@@ -186,6 +196,7 @@ public class TypeLib implements Iterable<Type<?>>
 	
 
 	private HashMap<Class<?>, Type<?>> map_ = new HashMap<>();
+	private static final TypeLib defaultTypeLib_ = new TypeLib();
 	private static final HashMap<Class<?>, Object> PRIMITIVE_MAP = new HashMap<>();
 	static 
 	{
