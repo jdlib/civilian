@@ -43,6 +43,17 @@ import org.civilian.util.Check;
 public class LocaleService implements LocaleServiceProvider
 {
 	/**
+	 * A LocaleService instance for the system locale, using the default type lib,
+	 * and empty msg bundle and the system locale serializer.
+	 */
+	public static final LocaleService SYSTEM_LOCALE_LOCALESERVICE = new LocaleService(
+		LocaleSerializer.SYSTEM_LOCALE_SERIALIZER.getLocale(),
+		null,
+		null,
+		LocaleSerializer.SYSTEM_LOCALE_SERIALIZER);
+		
+		
+	/**
 	 * Creates a new LocaleService object with an empty MsgBundle.
 	 * @param locale a locale 
 	 */
