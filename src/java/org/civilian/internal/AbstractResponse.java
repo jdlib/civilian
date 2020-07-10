@@ -179,7 +179,7 @@ public abstract class AbstractResponse implements Response
 		else if (object instanceof String)
 			getContentWriter().write((String)object);
 		else
-			throw new IllegalStateException("don't know how to write a " + object.getClass().getName() + " with content type '" + contentType + "'");
+			throw new IllegalStateException("no ContentSerializer for content type '" + contentType + "' to write a '" + object.getClass().getName() + "'. Are third party libraries missing?");
 	}
 
 	
