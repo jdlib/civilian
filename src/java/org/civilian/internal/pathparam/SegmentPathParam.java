@@ -59,6 +59,6 @@ public class SegmentPathParam<T> extends TypeBasedPathParam<T>
 	
 	@Override protected String getPatternString()
 	{
-		return null;
+		return "/<segment>";
 	}
 }

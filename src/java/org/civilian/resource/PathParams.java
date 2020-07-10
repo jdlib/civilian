@@ -23,6 +23,7 @@ import org.civilian.type.TypeLib;
 import org.civilian.type.fn.StandardSerializer;
 import org.civilian.internal.pathparam.ConvertingPathParam;
 import org.civilian.internal.pathparam.MultiSegmentPathParam;
+import org.civilian.internal.pathparam.PrefixedPathParam;
 import org.civilian.internal.pathparam.RegexPathParam;
 import org.civilian.internal.pathparam.SegmentPathParam;
 import org.civilian.internal.pathparam.SegmentWcPathParam;
@@ -176,7 +177,7 @@ public abstract class PathParams
 	
 	
 	/**
-	 * Wraps an String based PathParam and converts the it's value to a certain type.
+	 * Wraps a String based PathParam and converts it's value to a certain type.
 	 * The name of the converting param is the name of the inner PathParam.
 	 * @param inner another param
 	 * @param type a type
@@ -184,5 +185,18 @@ public abstract class PathParams
 	public static <T> PathParam<T> converting(PathParam<String> inner, Type<T> type)
 	{
 		return new ConvertingPathParam<>(inner, type);
+	}
+	
+	
+	/**
+	 * Returns a PathParam which recognizes a constant segment followed
+	 * by the value of another PathParams. 
+	 * The name of the converting param is the name of the inner PathParam.
+	 * @param segment a "prefix" segment
+	 * @param inner another param
+	 */
+	public static <T> PathParam<T> prefixed(String segment, PathParam<T> inner)
+	{
+		return new PrefixedPathParam<>(segment, inner);
 	}
 }

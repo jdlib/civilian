@@ -135,12 +135,12 @@ public class PathParamTest extends CivTest
 		
 		PathParam<Integer> conv = PathParams.converting(PathParams.forSegment("conv"), TypeLib.INTEGER);
 		assertEquals("/{conv}", conv.toString());
-		assertEquals("/{conv : Integer}", conv.toDetailedString());
+		assertEquals("/{conv : Integer=/<segment>}", conv.toDetailedString());
 
-		assertBuild	(conv, n, "/1234");
+		assertBuild(conv, n, "/1234");
 		
 		PathScanner scanner = new PathScanner("/a");
-		assertNull	(conv.parse(scanner));
+		assertNull(conv.parse(scanner));
 		assertTrue(scanner.matchSegment("a")); // not consumed
 		
 		scanner = new PathScanner("/1234/b");
@@ -148,6 +148,24 @@ public class PathParamTest extends CivTest
 		assertTrue(scanner.matchSegment("b")); // not consumed
 	}
 	
+	
+	@Test public void testPrefixed()
+	{
+		PathParam<String> prefixed = PathParams.prefixed("p", PathParams.forSegment("prefixed"));
+		assertEquals("/{prefixed}", prefixed.toString());
+		assertEquals("/{prefixed : String=/p/<segment>}", prefixed.toDetailedString());
+
+		assertBuild(prefixed, "a", "/p/a");
+		
+		PathScanner scanner = new PathScanner("/a");
+		assertNull(prefixed.parse(scanner));
+		assertTrue(scanner.matchSegment("a")); // not consumed
+		
+		scanner = new PathScanner("/p/a/b");
+		assertEquals("a", prefixed.parse(scanner));
+		assertTrue(scanner.matchSegment("b")); // not consumed
+	}
+
 	
 	private <T> void assertParse(PathParam<T> pattern, PathScanner scanner, T value)
 	{
