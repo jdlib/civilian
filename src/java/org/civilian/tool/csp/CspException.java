@@ -40,11 +40,12 @@ public class CspException extends RuntimeException
 			
 			if ((source != null) || (lineIndex >= 0))
 			{
+				sb.append('[');
 				if (source != null)
 					sb.append(source);
 				if (lineIndex >= 0)
-					sb.append('@').append(lineIndex + 1);
-				sb.append(": ");
+					sb.append(':').append(lineIndex + 1);
+				sb.append("] ");
 			}
 		}
 		
