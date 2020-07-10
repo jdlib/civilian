@@ -120,6 +120,12 @@ public abstract class PathParam<T>
 	protected abstract String getPatternString();
 	
 
+	protected static String getPatternString(PathParam<?> other)
+	{
+		return other.getPatternString();
+	}
+
+	
 	/**
 	 * Returns a detailed string representation of the path parameter for debug purposes. 
 	 */

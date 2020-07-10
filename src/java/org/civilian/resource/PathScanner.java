@@ -191,7 +191,6 @@ public class PathScanner
 	{
 		private Mark()
 		{
-			mEnd_		= end_;
 			msegStart_	= segmentStart_;
 			msegEnd_	= segmentEnd_;
 			msegLen_	= segmentLen_;
@@ -200,9 +199,8 @@ public class PathScanner
 		
 		public void revert()
 		{
-			if (mEnd_ < end_)
+			if (msegStart_ < segmentStart_)
 			{
-				end_ 			= mEnd_;
 				segmentStart_	= msegStart_;
 				segmentEnd_		= msegEnd_; 
 				segmentLen_		= msegLen_;
@@ -210,7 +208,6 @@ public class PathScanner
 		}
 
 	
-		private int mEnd_;
 		private int msegStart_;
 		private int msegEnd_;
 		private int msegLen_;

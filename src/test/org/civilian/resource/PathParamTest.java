@@ -129,6 +129,26 @@ public class PathParamTest extends CivTest
 	}
 	
 	
+	@Test public void testConverting()
+	{
+		Integer n = Integer.valueOf(1234);
+		
+		PathParam<Integer> conv = PathParams.converting(PathParams.forSegment("conv"), TypeLib.INTEGER);
+		assertEquals("/{conv}", conv.toString());
+		assertEquals("/{conv : Integer}", conv.toDetailedString());
+
+		assertBuild	(conv, n, "/1234");
+		
+		PathScanner scanner = new PathScanner("/a");
+		assertNull	(conv.parse(scanner));
+		assertTrue(scanner.matchSegment("a")); // not consumed
+		
+		scanner = new PathScanner("/1234/b");
+		assertEquals(n, conv.parse(scanner));
+		assertTrue(scanner.matchSegment("b")); // not consumed
+	}
+	
+	
 	private <T> void assertParse(PathParam<T> pattern, PathScanner scanner, T value)
 	{
 		assertEquals(value, pattern.parse(scanner));

@@ -21,6 +21,7 @@ import org.civilian.type.DateType;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.type.fn.StandardSerializer;
+import org.civilian.internal.pathparam.ConvertingPathParam;
 import org.civilian.internal.pathparam.MultiSegmentPathParam;
 import org.civilian.internal.pathparam.RegexPathParam;
 import org.civilian.internal.pathparam.SegmentPathParam;
@@ -171,5 +172,17 @@ public abstract class PathParams
 	public static PathParam<String[]> forMultiSegments(String name, int minSize)
 	{
 		return new MultiSegmentPathParam(name, minSize);
+	}
+	
+	
+	/**
+	 * Wraps an String based PathParam and converts the it's value to a certain type.
+	 * The name of the converting param is the name of the inner PathParam.
+	 * @param inner another param
+	 * @param type a type
+	 */
+	public static <T> PathParam<T> converting(PathParam<String> inner, Type<T> type)
+	{
+		return new ConvertingPathParam<>(inner, type);
 	}
 }
