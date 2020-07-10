@@ -21,13 +21,14 @@ import org.civilian.type.TypeLib;
 
 
 /**
- * SegmentWcPPFormat is a special String-typed RegexPPFormat
+ * SegmentWcPPFormat is a special String-typed RegexPathParam
  * which is defined with a pattern string, containing a wildcard '*'. 
  */
 public class SegmentWcPathParam extends RegexPathParam<String>
 {
 	/**
-	 * Creates a SegmentWcPPFormat.
+	 * Creates a SegmentWcPathParam.
+	 * @param name the param name
 	 * @param buildPattern a string describing the segment. It must contain
 	 * 		a single wildcard '*' which represents the variable part of the segment.
 	 */
