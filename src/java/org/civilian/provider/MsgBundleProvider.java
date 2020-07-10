@@ -27,6 +27,7 @@ public interface MsgBundleProvider
 {
 	/**
 	 * Returns the MsgBundle.
+	 * @return the bundle
 	 */
 	public MsgBundle getMsgBundle();
 

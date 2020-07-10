@@ -50,7 +50,7 @@ import org.civilian.internal.pathparam.YMDPathParam;
  * 		<td>Integer 123</td>
  * </tr>
  * <tr>
- * 		<td>{@link #forSegment(String, DateType) PathParams.forSegment(TypeLibrary.DATE_CIVILIAN)}</td> 
+ * 		<td>{@link #forSegment(String, Type) PathParams.forSegment(TypeLibrary.DATE_CIVILIAN)}</td> 
  * 		<td>/20130131</td> 
  * 		<td>Date year=2013, month=01, day=31</td>
  * </tr>

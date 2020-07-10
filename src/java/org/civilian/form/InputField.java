@@ -99,7 +99,6 @@ public abstract class InputField<T> extends Control<T>
 	
 	/**
 	 * Creates an InputField.
-	 * @param type the field type
 	 * @param name the field name
 	 */
 	public InputField(String name)
