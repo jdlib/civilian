@@ -30,39 +30,50 @@ public class CspException extends RuntimeException
 	
 	private static String buildMessage(String msg, Throwable cause, Scanner scanner)
 	{
+		StringBuilder sb = new StringBuilder();
+
+		// show location
+		if (scanner != null)
+		{
+			String source = scanner.getSource();
+			int lineIndex = scanner.getLineIndex();
+			
+			if ((source != null) || (lineIndex >= 0))
+			{
+				if (source != null)
+					sb.append(source);
+				if (lineIndex >= 0)
+					sb.append('@').append(lineIndex + 1);
+				sb.append(": ");
+			}
+		}
+		
+		// show message
 		if ((msg == null) && (cause != null))
 		{
 			msg = cause.getMessage();
 			if (msg == null)
 				msg = cause.toString();
 		}
-		if (msg == null)
-			msg = "error";
+		sb.append(msg != null ? msg : "error");
 		
+		
+		// show line content
 		if (scanner != null)
 		{
-			String source = scanner.getSource();
-			int lineIndex = scanner.getLineIndex();
-			if ((source != null) || (lineIndex >= 0))
-			{
-				msg += " (";
-				if (source != null)
-					msg += source;
-				if ((source != null) && (lineIndex >= 0))
-					msg += ":"; 
-				if (lineIndex >= 0)
-					msg += (lineIndex + 1);
-				msg += ")";
-			}
 			String line = scanner.getLine();
 			if ((line != null) && (line.length() > 0))
 			{
-				String s = line.length() > 20 ? line.substring(0, 20) + "..." : line;
-				msg += ": \"" + s + '"';
+				sb.append(": \"");
+				if (line.length() > 20)
+					sb.append(line.substring(0, 20)).append("...");
+				else
+					sb.append(line);
+				sb.append('"');
 			}
 		}
 		
-		return msg;
+		return sb.toString();
 	}
 
 	

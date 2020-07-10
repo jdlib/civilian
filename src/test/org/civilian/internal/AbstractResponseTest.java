@@ -220,7 +220,7 @@ public class AbstractResponseTest extends CivTest
 		}
 		catch(IllegalStateException e)
 		{
-			assertEquals("don't know how to write a java.lang.Object with content type 'application/x-mpeg'", e.getMessage());
+			assertEquals("no ContentSerializer for content type 'application/x-mpeg' to write a 'java.lang.Object'. Are third party libraries missing?", e.getMessage());
 		}
 	}
 	

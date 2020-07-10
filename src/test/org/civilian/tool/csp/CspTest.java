@@ -93,37 +93,37 @@ public class CspTest extends CivTest
 	
 	@Test public void testError1() throws Exception
 	{
-		assertError("err1", 0, "cannot detect package for template 'err1.csp', please provide a explicit package in the template (err1.csp:1): 'x'");
+		assertError("err1", 0, "err1.csp@1: cannot detect package for template 'err1.csp', please provide a explicit package in the template: 'x'");
 	}
 	
 
 	@Test public void testError2() throws Exception
 	{
-		assertError("err2", 2, "relative import '../../../data.Data1' can't be applied to package 'com.test' (err2.csp:3): 'import ../../../data...'");
+		assertError("err2", 2, "err2.csp@3: relative import '../../../data.Data1' can't be applied to package 'com.test': 'import ../../../data...'");
 	}
 	
 	
 	@Test public void testError3() throws Exception
 	{
-		assertError("err3", 2, "expected the template command, but reached end of file (err3.csp:3): 'package-access'");
+		assertError("err3", 2, "err3.csp@3: expected the template command, but reached end of file: 'package-access'");
 	}
 	
 	
 	@Test public void testError4() throws Exception
 	{
-		assertError("err4", 2, "invalid input: 'x' (err4.csp:3): 'template x'");
+		assertError("err4", 2, "err4.csp@3: invalid input: 'x': 'template x'");
 	}
 	
 	
 	@Test public void testError5() throws Exception
 	{
-		assertError("err5", 2, "argument 'String' needs a name and type (err5.csp:3): 'template(String)'");
+		assertError("err5", 2, "err5.csp@3: argument 'String' needs a name and type: 'template(String)'");
 	}
 	
 	
 	@Test public void testError6() throws Exception
 	{
-		assertError("err6", 2, "expected closing bracket ')' of template argument list (err6.csp:3): 'template(String[] s'");
+		assertError("err6", 2, "err6.csp@3: expected closing bracket ')' of template argument list: 'template(String[] s'");
 	}
 	
 	
