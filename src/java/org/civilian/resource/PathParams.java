@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 import org.civilian.type.DateType;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
+import org.civilian.type.fn.StandardSerializer;
 import org.civilian.internal.pathparam.MultiSegmentPathParam;
 import org.civilian.internal.pathparam.RegexPathParam;
 import org.civilian.internal.pathparam.SegmentPathParam;
@@ -48,14 +49,9 @@ import org.civilian.internal.pathparam.YMDPathParam;
  * 		<td>Integer 123</td>
  * </tr>
  * <tr>
- * 		<td>{@link #forDateSegment(String, DateType) PathParams.forDateSegment(TypeLibrary.DATE_CIVILIAN)}</td> 
+ * 		<td>{@link #forSegment(String, DateType) PathParams.forSegment(TypeLibrary.DATE_CIVILIAN)}</td> 
  * 		<td>/20130131</td> 
  * 		<td>Date year=2013, month=01, day=31</td>
- * </tr>
- * <tr>
- * 		<td>{@link #forSegment(String, Type) PathParams.forSegment(TypeLibrary.DOUBLE)}</td> 
- * 		<td>/1.23</td> 
- * 		<td>Double 1.23</td>
  * </tr>
  * <tr>
  * 		<td>{@link #forSegmentPattern(String, String) PathParams.forSegment(TypeLibrary.INTEGER, "id*")}</td> 
@@ -95,21 +91,10 @@ public abstract class PathParams
 	
 	/**
 	 * Creates a PathParam which matches a path segment. The associated 
-	 * path parameter value is the path segment, converted into a date object.
-	 * The formatting scheme is "yyyyMMdd".
-	 * @param name the name of the path parameter 
-	 */
-	public static <T> PathParam<T> forDateSegment(String name, DateType<T> dateType)
-	{
-		return forSegment(name, dateType);
-	}
-
-	
-	/**
-	 * Creates a PathParam which matches a path segment. The associated 
 	 * path parameter value is the path segment, converted into a object
-	 * of the given type.
+	 * of the given type using the {@link StandardSerializer}.
 	 * @param name the name of the path parameter 
+	 * @param type the type
 	 */
 	public static <T> PathParam<T> forSegment(String name, Type<T> type)
 	{
@@ -120,8 +105,7 @@ public abstract class PathParams
 	/**
 	 * Creates a PathParam which matches a path segment. The associated 
 	 * path parameter value is the part of the segment which is matched by the
-	 * wildcard '*' inside the segmentPattern, converted into an object
-	 * of the given type.
+	 * wildcard '*' inside the segmentPattern.
 	 * @param name the name of the path parameter 
 	 * @param segmentPattern a string containing exactly one wildcard '*' character
 	 * 		and no '/' characters.

@@ -45,8 +45,8 @@ public class PathParamTest extends CivTest
 		assertNull (intPP.parse(scanner));
 		assertBuild(intPP, 456, "/456");
 
-		// PathParams.forDateSegment()
-		PathParam<Date> datePP = PathParams.forDateSegment("dateparam", TypeLib.DATE_CIVILIAN);
+		// PathParams.forSegment(Type)
+		PathParam<Date> datePP = PathParams.forSegment("dateparam", TypeLib.DATE_CIVILIAN);
 		assertEquals("/{dateparam}", datePP.toString());
 		scanner = new PathScanner("/20121103/abc");
 		assertParse(datePP, scanner, new Date(2012, 11, 03));
