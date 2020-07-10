@@ -34,7 +34,7 @@ import org.civilian.util.Date;
  * values are parsed or formatted in a locale dependent way. 
  * If you need additional Type implementations not covered by the standard library,
  * you should implement them for yourself and add them to the applications type library
- * during application setup (see {@link AppConfig#setTypeLibrary(TypeLib)}
+ * during application setup (see {@link AppConfig#setTypeLib(TypeLib)}
  */
 public class TypeLib implements Iterable<Type<?>>
 {

@@ -93,7 +93,7 @@ public class AppConfig
 		async_					= settings_.getBoolean(ConfigKeys.ASYNC, false); 
 		connect_				= settings_.getBoolean(ConfigKeys.CONNECT, true); 
 		encoding_				= settings_.get(ConfigKeys.ENCODING, ConfigKeys.ENCODING_DEFAULT);
-		typeLibrary_ 			= new TypeLib();
+		typeLib_ 			= new TypeLib();
 		extensionMapping_		= app.getResourceConfig().getExtensionMapping();
 		defaultResExtension_	= IoUtil.normExtension(settings_.get(ConfigKeys.EXTENSION, null));
 
@@ -299,18 +299,18 @@ public class AppConfig
 	 * Returns the type library: You can modify the type library, for instance to
 	 * add new types if needed.
 	 */
-	public TypeLib getTypeLibrary()
+	public TypeLib getTypeLib()
 	{
-		return typeLibrary_;
+		return typeLib_;
 	}
 
 	
 	/**
 	 * Allows to replace the type library.
 	 */
-	public void setTypeLibrary(TypeLib library)
+	public void setTypeLib(TypeLib library)
 	{
-		typeLibrary_ = Check.notNull(library, "library");
+		typeLib_ = Check.notNull(library, "library");
 	}
 	
 	
@@ -559,7 +559,7 @@ public class AppConfig
 	private Locale[] supportedLocales_;
 	private boolean allowUnsupportedLocales_;
 	private MsgBundleFactory msgBundleFactory_;
-	private TypeLib typeLibrary_;
+	private TypeLib typeLib_;
 	private AssetConfig assetConfig_;
 	private UploadConfig uploadConfig_;
 	private Resource rootResource_;

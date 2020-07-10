@@ -55,7 +55,7 @@ public class AppConfigTest extends CivTest
 		config.setAllowUnsupportedLocales(true);
 		assertTrue(config.allowUnsupportedLocales());
 		
-		config.setTypeLibrary(config.getTypeLibrary());
+		config.setTypeLib(config.getTypeLib());
 		config.setUploadConfig(config.getUploadConfig());
 		
 		assertNotNull(config.getExtensionMapping());

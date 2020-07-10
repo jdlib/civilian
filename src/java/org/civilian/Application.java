@@ -254,7 +254,7 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 			uploadConfig_		= appConfig.getUploadConfig();
 			contentSerializers_ = appConfig.getContentSerializers();
 			localeServices_		= new LocaleServiceList( 
-				appConfig.getTypeLibrary(),
+				appConfig.getTypeLib(),
 				appConfig.getMsgBundleFactory(), 
 				appConfig.allowUnsupportedLocales(),
 				appConfig.getSupportedLocales());
