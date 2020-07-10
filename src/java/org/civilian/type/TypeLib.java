@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import org.civilian.Application;
 import org.civilian.application.AppConfig;
+import org.civilian.util.Check;
 import org.civilian.util.Date;
 
 
@@ -98,6 +99,14 @@ public class TypeLib implements Iterable<Type<?>>
 			put(LONG);
 			put(SHORT);
 			put(STRING);
+
+			put(boolean.class, 	BOOLEAN);
+			put(byte.class, 	BYTE);
+			put(double.class, 	DOUBLE);
+			put(float.class,	FLOAT);
+			put(int.class,		INTEGER);
+			put(long.class,		LONG);
+			put(short.class,	SHORT);
 		}
 	}
 
@@ -116,20 +125,39 @@ public class TypeLib implements Iterable<Type<?>>
 	 */
 	public <T> void put(Type<T> type)
 	{
-		map_.put(type.getJavaType(), type);
+		Check.notNull(type, "type");
+		put(type.getJavaType(), type);
 	}
 	
+	
+	private <T> void put(Class<? extends T> cls, Type<T> type)
+	{
+		map_.put(cls, type);
+	}
+
 	
 	/** 
 	 * Returns a Type for a Java class. 
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> Type<T> get(Class<T> c)
+	public <T> Type<? super T> get(Class<T> c)
 	{
-		if (c == null)
-			return null;
-		else
-			return (Type<T>)map_.get(c.isPrimitive() ? getObjectClassForPrimitiveType(c) : c);
+		Type<T> type = (Type<T>)map_.get(c);
+		return type != null ? type : getExtended(c);
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	private <T> Type<? super T> getExtended(Class<T> c)
+	{
+		while (c != null)
+		{
+			c = (Class<T>)c.getSuperclass();
+			Type<? super T> type = (Type<? super T>)map_.get(c);
+			if (type != null)
+				return type;
+		}
+		return null;
 	}
 	
 		
@@ -137,11 +165,11 @@ public class TypeLib implements Iterable<Type<?>>
 	 * Returns a Type for a Java class. 
 	 * @throws IllegalArgumentException if no type is registered for the class.
 	 */
-	public <T> Type<T> getSafe(Class<T> clas)
+	public <T> Type<? super T> getSafe(Class<T> c)
 	{
-		Type<T> type = get(clas);
+		Type<? super T> type = get(c);
 		if (type == null)
-			throw new IllegalArgumentException("no type for '" + clas + "' defined");
+			throw new IllegalArgumentException("no type for '" + c + "' defined");
 		return type;
 	}
 
