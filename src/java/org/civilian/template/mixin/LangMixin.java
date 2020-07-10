@@ -23,8 +23,7 @@ import org.civilian.text.LocaleService;
 import org.civilian.text.NumberStyle;
 import org.civilian.text.Style;
 import org.civilian.text.msg.MsgBundle;
-import org.civilian.type.DateType;
-import org.civilian.type.TypeLib;
+import org.civilian.type.Type;
 import org.civilian.type.fn.TypeSerializer;
 import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.util.Check;
@@ -103,115 +102,80 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 
 	
 	/**
-	 * Formats a java.util.Date. If the date is null, then "" is returned.
-	 * @return a locale dependent date string.
+	 * Formats the value.
+	 * @param value a value
+	 * @return the formatted value or "" if the value is null
 	 */
-	public String format(java.util.Date date)
+	public String format(Object value)
 	{
-		return format(date, "");
+		return format(value, null, null);
 	}
 	
 	
 	/**
-	 * Formats a java.util.Date.
-	 * @param defaultValue the defaultValue is returned if the date is null. 
-	 * @return a locale dependent date string.
+	 * Formats the value.
+	 * @param value a value
+	 * @param style a style passed to the formatter or null
+	 * @return the formatted value or "" if the value is null
 	 */
-	public String format(java.util.Date date, String defaultValue)
+	public String format(Object value, Style style)
 	{
-		return format(TypeLib.DATE_JAVA_UTIL, date, defaultValue);
-	}
-	
-	
-	/**
-	 * Formats a java.util.Calendar. If the calendar is null, then "" is returned.
-	 * @return a locale dependent date string.
-	 */
-	public String format(java.util.Calendar calendar)
-	{
-		return format(calendar, "");
-	}
-	
-	
-	/**
-	 * Formats a java.util.Calendar.
-	 * @param defaultValue the defaultValue is returned if the date is null. 
-	 * @return a locale dependent date string.
-	 */
-	public String format(java.util.Calendar calendar, String defaultValue)
-	{
-		return format(TypeLib.DATE_CALENDAR, calendar, defaultValue);
-	}
-	
-	
-	/**
-	 * Formats a org.civilian.util.Date.
-	 * If the date is null, then "" is returned.
-	 * @return a locale dependent date string.
-	 */
-	public String format(org.civilian.util.Date date)
-	{
-		return format(date, "");
-	}
-	
-	
-	/**
-	 * Formats a org.civilian.util.Date.
-	 * @param defaultValue the defaultValue is returned if the date is null. 
-	 * @return a locale dependent date string.
-	 */
-	public String format(org.civilian.util.Date date, String defaultValue)
-	{
-		return format(TypeLib.DATE_CIVILIAN, date, defaultValue);
+		return format(value, style, null);
 	}
 
 	
 	/**
-	 * Formats a Date object.
-	 * @param type the DateType which describes the date class
-	 * @param date the date value
-	 * @param defaultValue the defaultValue is returned if the date value is null. 
-	 * @return a locale dependent date string.
+	 * Formats the value.
+	 * @param value a value
+	 * @param defaultFormat returned if the value is null
+	 * @return the formatted value or defaultFormat if the value is null
 	 */
-	public <T> String format(DateType<T> type, T date, String defaultValue)
+	public <T> String format(T value, String defaultFormat)
 	{
-		return date != null ? getSerializer().format(type, date) : defaultValue;
+		return format(value, null, defaultFormat);
+	}
+
+	
+	/**
+	 * Formats the value.
+	 * @param value a value
+	 * @param style a style passed to the formatter or null
+	 * @param defaultFormat returned if the value is null
+	 * @return the formatted value or defaultFormat if the value is null
+	 */
+	public <T> String format(T value, Style style, String defaultFormat)
+	{
+		if (value == null)
+			return defaultFormat;
+		@SuppressWarnings("unchecked")
+		Type<? super T> type = ls_.getTypeLib().get((Class<T>)value.getClass());
+		return type == null ?
+			value.toString() :
+			getSerializer().format(type, value, style);
 	}
 
 	
 	/**
 	 * Formats a int value.
-	 * @param n a int value
+	 * @param value a int value
 	 * @return a locale dependent string representation of the integer.
 	 */
-	public String format(int n)
+	public String format(int value)
 	{
-		return format(n, null);
+		return format(value, null);
 	}
 	
 
 	/**
 	 * Formats a int value.
-	 * @param n a int value
+	 * @param value a int value
 	 * @param style an optional style object. Use a {@link NumberStyle} variant
 	 * 		if you want to tweak locale dependent formatting
 	 * @return a locale dependent string representation of the integer.
 	 */
-	public String format(int n, Style style)
+	public String format(int value, Style style)
 	{
-		return getSerializer().format(TypeLib.INTEGER, Integer.valueOf(n), style);
-	}
-	
-
-	/**
-	 * Formats a Integer value.
-	 * @param value a Integer value
-	 * @param defaultValue the defaultValue is returned if the Integer is null. 
-	 * @return a locale dependent string representation of the integer.
-	 */
-	public String format(Integer value, String defaultValue)
-	{
-		return value != null ? format(value.intValue()) : defaultValue;
+		return format(Integer.valueOf(value), style);
 	}
 
 	
@@ -235,19 +199,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 	 */
 	public String format(long value, Style style)
 	{
-		return getSerializer().format(TypeLib.LONG, Long.valueOf(value), style);
-	}
-	
-
-	/**
-	 * Formats a Long.
-	 * @param value a Long
-	 * @param defaultValue the defaultValue is returned if the Long is null. 
-	 * @return a locale dependent string representation of the long value.
-	 */
-	public String format(Long value, String defaultValue)
-	{
-		return value != null ? format(value.longValue()) : defaultValue;
+		return format(Long.valueOf(value), style);
 	}
 	
 	
@@ -271,19 +223,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 	 */
 	public String format(double value, Style style)
 	{
-		return getSerializer().format(TypeLib.DOUBLE, Double.valueOf(value), style);
-	}
-
-	
-	/**
-	 * Formats a Double.
-	 * @param value a Double
-	 * @param defaultValue the defaultValue is returned if the Double is null. 
-	 * @return a locale dependent string representation of the double value.
-	 */
-	public String format(Double value, String defaultValue)
-	{
-		return value != null ? format(value.doubleValue()) : defaultValue;
+		return format(Double.valueOf(value), style);
 	}
 	
 
