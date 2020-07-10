@@ -179,10 +179,46 @@ public class PathScanner
 	{
 		return (pos > segmentStart_) && ((pos == end_ ) || ((pos < end_) && (path_.charAt(pos) == '/')));
 	}
+	
+	
+	public Mark mark()
+	{
+		return new Mark();
+	}
+	
+	
+	public class Mark
+	{
+		private Mark()
+		{
+			mEnd_		= end_;
+			msegStart_	= segmentStart_;
+			msegEnd_	= segmentEnd_;
+			msegLen_	= segmentLen_;
+		}
 		
+		
+		public void revert()
+		{
+			if (mEnd_ < end_)
+			{
+				end_ 			= mEnd_;
+				segmentStart_	= msegStart_;
+				segmentEnd_		= msegEnd_; 
+				segmentLen_		= msegLen_;
+			}
+		}
 
+	
+		private int mEnd_;
+		private int msegStart_;
+		private int msegEnd_;
+		private int msegLen_;
+	}
+	
+	
 	private int end_;
-	private String path_;
+	private final String path_;
 	private int segmentStart_;
 	private int segmentEnd_;
 	private int segmentLen_;
