@@ -19,6 +19,7 @@ package org.civilian.resource;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.civilian.util.Check;
 
 
 /**
@@ -102,10 +103,11 @@ public class PathScanner
 
 	/**
 	 * Returns the current segment.
+	 * @return the segment or null if the scanner has no more segments 
 	 */
 	public String getSegment()
 	{
-		return path_.substring(segmentStart_, segmentEnd_);
+		return segmentStart_ < segmentEnd_ ? path_.substring(segmentStart_, segmentEnd_) : null;
 	}
 	
 	
@@ -114,6 +116,7 @@ public class PathScanner
 	 */
 	public boolean matchSegment(String segment)
 	{
+		Check.notNull(segment, "segment");
 		return (segment.length() == segmentLen_) && 
 				path_.regionMatches(false, segmentStart_, segment, 0, segmentLen_);
 	}
@@ -181,6 +184,9 @@ public class PathScanner
 	}
 	
 	
+	/**
+	 * Returns a Mark object which stores the current state of the scanner. 
+	 */
 	public Mark mark()
 	{
 		return new Mark();
@@ -191,20 +197,29 @@ public class PathScanner
 	{
 		private Mark()
 		{
+			update();
+		}
+		
+
+		/**
+		 * Updates the mark state to reflect the current scanner state.
+		 */
+		public void update()
+		{
 			msegStart_	= segmentStart_;
 			msegEnd_	= segmentEnd_;
 			msegLen_	= segmentLen_;
 		}
+
 		
-		
+		/**
+		 * Reverts the scanner state to the mark state.
+		 */
 		public void revert()
 		{
-			if (msegStart_ < segmentStart_)
-			{
-				segmentStart_	= msegStart_;
-				segmentEnd_		= msegEnd_; 
-				segmentLen_		= msegLen_;
-			}
+			segmentStart_	= msegStart_;
+			segmentEnd_		= msegEnd_; 
+			segmentLen_		= msegLen_;
 		}
 
 	

@@ -77,6 +77,7 @@ public class PathScannerTest extends CivTest
 		assertTrue  (scanner.matchSegment("abc"));
 		scanner.next();
 		assertFalse (scanner.hasMore());
+		assertNull  (scanner.getSegment());	
 	}
 
 
