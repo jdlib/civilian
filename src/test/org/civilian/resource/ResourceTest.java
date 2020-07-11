@@ -24,6 +24,7 @@ import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.Resource;
+import org.civilian.Resource.Match;
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerType;
 import org.civilian.testcase1.AlphaController;
@@ -68,23 +69,23 @@ public class ResourceTest extends CivTest
 	@Test public void testPathParamChild()
 	{
 		Resource root  = new Resource();
-		Resource child = new Resource(root, PP1);
+		Resource child = new Resource(root, PP_SEG);
 
 		assertFalse	(child.isRoot());
 		assertSame	(root, child.getParent());
 		assertSame	(root, child.getRoot());
 		assertNull	(child.getSegment());
-		assertSame	(PP1, child.getPathParam());
+		assertSame	(PP_SEG, child.getPathParam());
 		assertEquals(2, root.size());
 		assertEquals(1, root.getChildCount());
 		assertEquals(1, child.size());
 		assertEquals(0, child.getChildCount());
-		assertEquals("/{pp1}", child.toString());
+		assertEquals("/{ppseg}", child.toString());
 		
 		// cannot use the same path param in a route 
 		try
 		{
-			new Resource(child, PP1);
+			new Resource(child, PP_SEG);
 			fail();
 		}
 		catch(IllegalArgumentException e)
@@ -107,7 +108,7 @@ public class ResourceTest extends CivTest
 
 		try
 		{
-			new Resource(root, "x", PP1);
+			new Resource(root, "x", PP_SEG);
 			fail();
 		}
 		catch(IllegalArgumentException e)
@@ -118,32 +119,23 @@ public class ResourceTest extends CivTest
 	
 	@Test public void testChildOrder()
 	{
-		Resource root	= new Resource();
+		Resource root = new Resource();
+		assertArrayEquals2(root.getChildren());
 		
-		Resource pp2 = new Resource(root, PP2);
-		assertEquals(1, root.getChildCount());
-		assertSame	(pp2, root.getChild(0));
+		Resource ppInt = new Resource(root, PP_INT);
+		assertArrayEquals2(root.getChildren(), ppInt);
 		
 		// segments came before path params
 		Resource seg2 = new Resource(root, "seg2");
-		assertEquals(2, root.getChildCount());
-		assertSame	(seg2, root.getChild(0));
-		assertSame	(pp2, root.getChild(1));
+		assertArrayEquals2(root.getChildren(), seg2, ppInt);
 
 		// path params are ordered by name
-		Resource pp1 = new Resource(root, PP1);
-		assertEquals(3, root.getChildCount());
-		assertSame	(seg2, root.getChild(0));
-		assertSame	(pp1, root.getChild(1));
-		assertSame	(pp2, root.getChild(2));
+		Resource ppSeg = new Resource(root, PP_SEG);
+		assertArrayEquals2(root.getChildren(), seg2, ppInt, ppSeg);
 
 		// segment params are ordered by name
 		Resource seg1 = new Resource(root, "seg1");
-		assertEquals(4, root.getChildCount());
-		assertSame	(seg1, root.getChild(0));
-		assertSame	(seg2, root.getChild(1));
-		assertSame	(pp1, root.getChild(2));
-		assertSame	(pp2, root.getChild(3));
+		assertArrayEquals2(root.getChildren(), seg1, seg2, ppInt, ppSeg);
 	}
 	
 	
@@ -271,29 +263,72 @@ public class ResourceTest extends CivTest
 	
 	@Test public void testMatch()
 	{
-		Resource root = new Resource();
-		Resource seg  = new Resource(root, "seg");
-		Resource pp2  = new Resource(root, PP2);
-		pp2.setControllerSignature("test.Controller", null);
+		Resource root 	= new Resource();
+		Resource seg  	= new Resource(root, "seg");
+		Resource ppInt  = new Resource(root, PP_INT);
+		ppInt.setControllerSignature("test.Controller", null);
 		
-		Resource.Match match;
+		new MatchAssert(root, "/")
+			.complete(true)
+			.resource(root)
+			.params(0);
 		
-		match = root.match("/");
-		assertEquals(true, match.completeMatch);
-		assertTrue(match.pathParams.isEmpty());
+		new MatchAssert(root, "/123")
+			.complete(true)
+			.resource(ppInt)
+			.params(1)
+			.param(PP_INT, new Integer(123));
+		
+		new MatchAssert(root, "/123/abc")
+			.complete(false)
+			.resource(ppInt)
+			.params(1)
+			.param(PP_INT, new Integer(123));
+		
+		new MatchAssert(root, "/seg")
+			.complete(true)
+			.resource(seg)
+			.params(0);
+	}
+	
+	
+	private static class MatchAssert
+	{
+		private MatchAssert(Resource resource, String path)
+		{
+			match_ = resource.match(path);
+		}
+		
+		
+		public MatchAssert complete(boolean expected)
+		{
+			assertEquals(expected, match_.completeMatch);
+			return this;
+		}
+		
+		
+		public MatchAssert params(int size)
+		{
+			assertEquals(size, match_.pathParams.size());
+			return this;
+		}
 
-		match = root.match("/123");
-		assertEquals(true, match.completeMatch);
-		assertEquals(1, match.pathParams.size());
-		assertEquals(new Integer(123), match.pathParams.get(PP2));
+		
+		public <T> MatchAssert param(PathParam<T> pp, T expected)
+		{
+			assertEquals(expected, match_.pathParams.get(pp));
+			return this;
+		}
 
-		match = root.match("/123/abc");
-		assertEquals(false, match.completeMatch);
-		assertSame(pp2, match.resource);
+		
+		public MatchAssert resource(Resource expected)
+		{
+			assertSame(expected, match_.resource);
+			return this;
+		}
 
-		match = root.match("/seg");
-		assertEquals(true, match.completeMatch);
-		assertSame(seg, match.resource);
+		
+		private final Match match_;
 	}
 		
 	
@@ -316,6 +351,6 @@ public class ResourceTest extends CivTest
 	}
 	
 	
-	private static PathParam<String>  PP1 = PathParams.forSegment("pp1"); 
-	private static PathParam<Integer> PP2 = PathParams.forSegment("pp2", TypeLib.INTEGER); 
+	private static PathParam<String>  PP_SEG = PathParams.forSegment("ppseg"); 
+	private static PathParam<Integer> PP_INT = PathParams.forSegment("ppint", TypeLib.INTEGER); 
 }
