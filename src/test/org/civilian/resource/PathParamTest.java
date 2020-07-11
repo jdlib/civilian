@@ -120,7 +120,7 @@ public class PathParamTest extends CivTest
 	
 	@Test public void testPrefixed()
 	{
-		PathParamAssert.of(PathParams.prefixed("p", PathParams.forSegment("prefixed")))
+		PathParamAssert.of(PathParams.forSegment("prefixed").precededBySegment("p"))
 			.toString("/{prefixed}")
 			.toDetailedString("/{prefixed : String=/p/<segment>}")
 			.build("a", "/p/a")

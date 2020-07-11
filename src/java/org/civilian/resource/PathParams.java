@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
 import org.civilian.type.DateType;
 import org.civilian.type.Type;
 import org.civilian.internal.pathparam.MultiSegmentPathParam;
-import org.civilian.internal.pathparam.PrefixedPathParam;
 import org.civilian.internal.pathparam.RegexPathParam;
 import org.civilian.internal.pathparam.SegmentPathParam;
 import org.civilian.internal.pathparam.SegmentWcPathParam;
@@ -130,18 +129,5 @@ public abstract class PathParams
 	public static PathParam<String[]> forMultiSegments(String name, int minSize)
 	{
 		return new MultiSegmentPathParam(name, minSize);
-	}
-	
-	
-	/**
-	 * Returns a PathParam which recognizes a constant segment followed
-	 * by the value of another PathParams. 
-	 * The name of the converting param is the name of the inner PathParam.
-	 * @param segment a "prefix" segment
-	 * @param inner another param
-	 */
-	public static <T> PathParam<T> prefixed(String segment, PathParam<T> inner)
-	{
-		return new PrefixedPathParam<>(segment, inner);
 	}
 }

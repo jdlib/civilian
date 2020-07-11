@@ -8,15 +8,15 @@ import org.civilian.util.Check;
 
 
 /**
- * PrefixedPathParam is a proxy PathParam which
+ * PrecededPathParam is a proxy PathParam which
  * recognizes a constant segment followed by segments recognized
  * by another PathParam.
  */
-public class PrefixedPathParam<T> extends PathParam<T>
+public class PrecededPathParam<T> extends PathParam<T>
 {
-	public PrefixedPathParam(String segment, PathParam<T> inner)
+	public PrecededPathParam(String name, String segment, PathParam<T> inner)
 	{
-		super(Check.notNull(inner, "inner").getName());
+		super(buildName(name, inner));
 		inner_      = inner;
 		segment_ 	= Check.notNull(segment, "segment");
 	}

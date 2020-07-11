@@ -5,21 +5,13 @@ import org.civilian.resource.PathParam;
 import org.civilian.resource.PathScanner;
 import org.civilian.response.UriEncoder;
 import org.civilian.type.Type;
-import org.civilian.util.Check;
 
 
 public class ConvertingPathParam<T> extends TypeBasedPathParam<T>
 {
-	private static String getName(String name, PathParam<String> inner)
-	{
-		Check.notNull(inner, "inner");
-		return name != null ? name : inner.getName();
-	}
-	
-	
 	public ConvertingPathParam(String name, PathParam<String> inner, Type<T> type)
 	{
-		super(getName(name, inner), type);
+		super(buildName(name, inner), type);
 		inner_ = inner;
 	}
 	

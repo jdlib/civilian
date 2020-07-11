@@ -17,6 +17,7 @@ package org.civilian.resource;
 
 
 import org.civilian.internal.pathparam.ConvertingPathParam;
+import org.civilian.internal.pathparam.PrecededPathParam;
 import org.civilian.response.UriEncoder;
 import org.civilian.type.Type;
 import org.civilian.type.fn.StandardSerializer;
@@ -159,6 +160,19 @@ public abstract class PathParam<T>
 	
 	
 	/**
+	 * Returns a PathParam which recognizes a constant segment followed
+	 * by the value of another PathParams. 
+	 * The name of the converting param is the name of the inner PathParam.
+	 * @param segment a "prefix" segment
+	 * @param inner another param
+	 */
+	public PathParam<T> precededBySegment(String segment)
+	{
+		return new PrecededPathParam<>(null, segment, this);
+	}
+	
+	
+	/**
 	 * Returns a detailed string representation of the path parameter for debug purposes. 
 	 */
 	public String toDetailedString()
@@ -174,6 +188,19 @@ public abstract class PathParam<T>
 	@Override public String toString()
 	{
 		return "/{" + name_ + '}';
+	}
+	
+	
+	/**
+	 * Helper method to determine the name of a proxy path param.
+	 * @param name an optional name.  
+	 * @param inner a wrapped param
+	 * @return if the name param is not null, else the name of the param is returned.
+	 */
+	protected static String buildName(String name, PathParam<?> inner)
+	{
+		Check.notNull(inner, "inner");
+		return name != null ? name : inner.getName();
 	}
 	
 	

@@ -295,7 +295,7 @@ public class ResourceTest extends CivTest
 		// PathParams are allowed to consume segments from the PathScanner
 		// even if they don't recognize a value. The match algorithm must take this
 		// into account.
-		PathParam<Integer> ppa 	= PathParams.prefixed("p", PathParams.forSegment("a").converting(TypeLib.INTEGER)); 
+		PathParam<Integer> ppa 	= PathParams.forSegment("a").converting(TypeLib.INTEGER).precededBySegment("p"); 
 		PathParam<String>  ppb 	= PathParams.forSegment("b"); 
 		Resource root2 			= new Resource();
 		Resource ra  			= new Resource(root2, ppa);
