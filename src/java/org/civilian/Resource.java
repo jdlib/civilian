@@ -36,6 +36,7 @@ import org.civilian.provider.ResponseProvider;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathScanner;
+import org.civilian.resource.PathScanner.Mark;
 import org.civilian.resource.Route;
 import org.civilian.resource.Url;
 import org.civilian.util.ArrayUtil;
@@ -307,6 +308,15 @@ public class Resource implements Iterable<Resource>
 
 
 	/**
+	 * Returns a the children 
+	 */
+	public Resource[] getChildren()
+	{
+		return children_.clone();
+	}
+
+	
+	/**
 	 * Finds the descendant resource of this resource which matches
 	 * the path. 
 	 * @param path a path string 
@@ -317,11 +327,12 @@ public class Resource implements Iterable<Resource>
 		Resource resource 		= this;
 		boolean completeMatch	= true;
 		PathScanner scanner 	= new PathScanner(path);
+		Mark mark				= scanner.mark();
 		Map<PathParam<?>,Object> pathParams = new LinkedHashMap<>();
 		
 		while (scanner.hasMore())
 		{
-			Resource child = resource.matchChild(scanner, pathParams);
+			Resource child = resource.matchChild(scanner, mark, pathParams);
 			if (child == null)
 			{
 				completeMatch = false;
@@ -340,12 +351,12 @@ public class Resource implements Iterable<Resource>
 	 * 		has been moved past the matched segments. If path params have been recognized
 	 * 		they were added to param map. Else null is returned.
 	 */
-	public Resource matchChild(PathScanner scanner, Map<PathParam<?>, Object> pathParams)
+	private Resource matchChild(PathScanner scanner, Mark mark, Map<PathParam<?>, Object> pathParams)
 	{
 		Resource[] children = children_;
 		for (Resource child : children)
 		{
-			if (child.matches(scanner, pathParams))
+			if (child.matches(scanner, mark, pathParams))
 				return child;
 		}
 		return null;
@@ -358,7 +369,7 @@ public class Resource implements Iterable<Resource>
 	 * 		has been moved past those segments. If path params have been recognized
 	 * 		they were added to param map.
 	 */
- 	public boolean matches(PathScanner scanner, Map<PathParam<?>, Object> pathParams)
+ 	private boolean matches(PathScanner scanner, Mark mark, Map<PathParam<?>, Object> pathParams)
 	{
  		if (segment_ != null)
  		{
@@ -370,12 +381,15 @@ public class Resource implements Iterable<Resource>
  		}
  		else
  		{
+ 			mark.update();
  			Object paramValue = pathParam_.parse(scanner);
  			if (paramValue != null)
  			{
  				pathParams.put(pathParam_, paramValue);
  				return true;
  			}
+ 			else
+ 				mark.revert();
  		}
 		return false;
 	}

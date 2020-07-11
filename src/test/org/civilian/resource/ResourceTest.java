@@ -125,7 +125,7 @@ public class ResourceTest extends CivTest
 		Resource ppInt = new Resource(root, PP_INT);
 		assertArrayEquals2(root.getChildren(), ppInt);
 		
-		// segments came before path params
+		// segments come before path params
 		Resource seg2 = new Resource(root, "seg2");
 		assertArrayEquals2(root.getChildren(), seg2, ppInt);
 
@@ -268,35 +268,68 @@ public class ResourceTest extends CivTest
 		Resource ppInt  = new Resource(root, PP_INT);
 		ppInt.setControllerSignature("test.Controller", null);
 		
-		new MatchAssert(root, "/")
+		MatchAssert a = new MatchAssert(root);
+		
+		a.init("/")
 			.complete(true)
 			.resource(root)
 			.params(0);
 		
-		new MatchAssert(root, "/123")
+		a.init("/123")
 			.complete(true)
 			.resource(ppInt)
 			.params(1)
 			.param(PP_INT, new Integer(123));
 		
-		new MatchAssert(root, "/123/abc")
+		a.init("/123/abc")
 			.complete(false)
 			.resource(ppInt)
 			.params(1)
 			.param(PP_INT, new Integer(123));
 		
-		new MatchAssert(root, "/seg")
+		a.init("/seg")
 			.complete(true)
 			.resource(seg)
 			.params(0);
+		
+		// PathParams are allowed to consume segments from the PathScanner
+		// even if they don't recognize a value. The match algorithm must take this
+		// into account.
+		PathParam<Integer> ppa 	= PathParams.prefixed("p", PathParams.forSegment("a", TypeLib.INTEGER)); 
+		PathParam<String>  ppb 	= PathParams.forSegment("b"); 
+		Resource root2 			= new Resource();
+		Resource ra  			= new Resource(root2, ppa);
+		Resource rb  			= new Resource(root2, ppb);
+		assertArrayEquals2(root2.getChildren(), ra, rb); // sorted by param name
+		
+		a = new MatchAssert(root2);
+		
+		a.init("/p/123")
+			.complete(true)
+			.resource(ra)
+			.params(1)
+			.param(ppa, new Integer(123));
+
+		a.init("/p")
+			.complete(true)
+			.resource(rb)
+			.params(1)
+			.param(ppb, "p");
 	}
 	
 	
 	private static class MatchAssert
 	{
-		private MatchAssert(Resource resource, String path)
+		private MatchAssert(Resource resource)
 		{
-			match_ = resource.match(path);
+			resource_ = resource;
+		}
+		
+		
+		public MatchAssert init(String path)
+		{
+			match_ = resource_.match(path);
+			return this;
 		}
 		
 		
@@ -328,7 +361,8 @@ public class ResourceTest extends CivTest
 		}
 
 		
-		private final Match match_;
+		private final Resource resource_;
+		private Match match_;
 	}
 		
 	
@@ -353,4 +387,5 @@ public class ResourceTest extends CivTest
 	
 	private static PathParam<String>  PP_SEG = PathParams.forSegment("ppseg"); 
 	private static PathParam<Integer> PP_INT = PathParams.forSegment("ppint", TypeLib.INTEGER); 
+	private static PathParam<Integer> PP_PRF = PathParams.prefixed("p", PathParams.forSegment("ppint", TypeLib.INTEGER)); 
 }

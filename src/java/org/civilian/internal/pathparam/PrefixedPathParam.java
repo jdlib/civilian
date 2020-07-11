@@ -3,7 +3,6 @@ package org.civilian.internal.pathparam;
 
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathScanner;
-import org.civilian.resource.PathScanner.Mark;
 import org.civilian.response.UriEncoder;
 import org.civilian.util.Check;
 
@@ -31,16 +30,7 @@ public class PrefixedPathParam<T> extends PathParam<T>
 	
 	@Override public T parse(PathScanner scanner)
 	{
-		T value	= null;
-		Mark mark	= scanner.mark();
-		if (scanner.matchSegment(segment_))
-		{
-			scanner.next();
-			value = inner_.parse(scanner);
-			if (value == null)
-				mark.revert();
-		}
-		return value;
+		return scanner.consumeSegment(segment_) ? inner_.parse(scanner) : null; 
 	}
 	
 	

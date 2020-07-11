@@ -121,6 +121,22 @@ public class PathScanner
 				path_.regionMatches(false, segmentStart_, segment, 0, segmentLen_);
 	}
 	
+	
+	/**
+	 * If the current segment equals the given segment then advance to the next segment and return true.
+	 * Else returns false.
+	 */
+	public boolean consumeSegment(String segment)
+	{
+		if (matchSegment(segment))
+		{
+			next();
+			return true;
+		}
+		else
+			return false;
+	}
+	
 
 	/**
 	 * Returns if the path substring starting at the current scan position

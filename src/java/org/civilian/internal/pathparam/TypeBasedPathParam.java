@@ -52,7 +52,7 @@ public abstract class TypeBasedPathParam<T> extends PathParam<T>
 	{
 		try
 		{
-			return StandardSerializer.INSTANCE.parse(type_, s);
+			return s != null ? StandardSerializer.INSTANCE.parse(type_, s) : null;
 		}
 		catch(Exception e)
 		{

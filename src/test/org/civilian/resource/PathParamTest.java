@@ -113,7 +113,7 @@ public class PathParamTest extends CivTest
 			.toString("/{conv}")
 			.toDetailedString("/{conv : Integer=/<segment>}")
 			.build(n, "/1234")
-			.scan("/abc/def", null, "abc")
+			.scan("/abc/def", null, "def")		// abc could not be converted to an integer but was consumed
 			.scan("/1234/def", n, "def");
 	}
 	
@@ -124,8 +124,9 @@ public class PathParamTest extends CivTest
 			.toString("/{prefixed}")
 			.toDetailedString("/{prefixed : String=/p/<segment>}")
 			.build("a", "/p/a")
-			.scan("/abc/def", null, "abc")
-			.scan("/p/def/ghi", "def", "ghi")
+			.scan("/abc/def", null, "abc")		// prefix segment not recognized, nothing consumed
+			.scan("/p", null, null)				// prefix segment recognized and consumed, but no value returned
+			.scan("/p/def/ghi", "def", "ghi")	// prefix segment recognized and consumed, value segment consumed and returned
 		;
 	}
 }

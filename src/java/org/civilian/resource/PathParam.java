@@ -68,8 +68,10 @@ public abstract class PathParam<T>
 	 * If a valid path parameter is recognized, the method should
 	 * position the scanner after the matching segments and return
 	 * the value. If no valid path parameter is recognized
-	 * the method should return null and leave the scanner position
-	 * unchanged.
+	 * the method should return null. In this case the PathParam is allowed
+	 * to have consumed segments from the scanner - the caller 
+	 * must make sure to revert the scanner to the previous state if 
+	 * he wants to try other scans.
 	 * @param scanner a PathScanner object which provides access to the 
 	 * 		path segments.
 	 */

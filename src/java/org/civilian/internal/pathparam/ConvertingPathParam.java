@@ -3,7 +3,6 @@ package org.civilian.internal.pathparam;
 
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathScanner;
-import org.civilian.resource.PathScanner.Mark;
 import org.civilian.response.UriEncoder;
 import org.civilian.type.Type;
 import org.civilian.util.Check;
@@ -20,18 +19,7 @@ public class ConvertingPathParam<T> extends TypeBasedPathParam<T>
 
 	@Override public T parse(PathScanner scanner)
 	{
-		T value   = null;
-		Mark mark = scanner.mark();
-
-		String s = inner_.parse(scanner);
-		if (s != null)
-		{
-			value = parse(s);
-			if (value == null)
-				mark.revert();
-		}
-		
-		return value;
+		return parse(inner_.parse(scanner));
 	}
 	
 
