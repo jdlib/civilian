@@ -77,7 +77,7 @@ public class PathParamTest extends CivTest
 			.scan("/abc/def", null, "abc")
 			.scan("/id0123/def", "0123", "def");
 
-		PathParamAssert.of(PathParams.forPattern("nr", Pattern.compile("nr([0-9]+)"), "nr*", TypeLib.INTEGER))
+		PathParamAssert.of(PathParams.forPattern("nr", Pattern.compile("nr([0-9]+)"), "nr*").converting(TypeLib.INTEGER))
 			.toString("/{nr}")
 			.toDetailedString("/{nr : Integer=nr([0-9]+)}")
 			.build(new Integer(456), "/nr456")
@@ -85,10 +85,10 @@ public class PathParamTest extends CivTest
 			.scan("/nr0123/def", new Integer(123), "def");
 		
 		// type is integer, but pattern does not completely enforce it: but still the type check fails
-		PathParamAssert.of(PathParams.forPattern("nr", Pattern.compile("nr([^/]+)"), "nr*", TypeLib.INTEGER))
-			.scan("/abc/def", null, "abc")
-			.scan("/nrx/def", null, "nrx")
-			.scan("/nr9/def", new Integer(9), "def");
+		PathParamAssert.of(PathParams.forPattern("nr", Pattern.compile("nr([^/]+)"), "nr*").converting(TypeLib.INTEGER))
+			.scan("/abc/def", null, "abc")				// not consumed
+			.scan("/nrx/def", null, "def")				// consumed but not converted
+			.scan("/nr9/def", new Integer(9), "def");	// consumed and converted
 	}
 	
 	

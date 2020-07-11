@@ -18,16 +18,16 @@ package org.civilian.internal.pathparam;
 
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
+import org.civilian.resource.PathParam;
 import org.civilian.resource.PathScanner;
 import org.civilian.response.UriEncoder;
-import org.civilian.type.Type;
 import org.civilian.util.Check;
 
 
 /**
  * A PathParam based on a regular expression.
  */
-public class RegexPathParam<T> extends TypeBasedPathParam<T>
+public class RegexPathParam extends PathParam<String>
 {
 	/**
 	 * Creates a new RegexPPFormat.
@@ -39,11 +39,17 @@ public class RegexPathParam<T> extends TypeBasedPathParam<T>
 	 * 		exactly one "*" which is replaced by the stringified path parameter value when building
 	 * 		a path.
 	 */
-	public RegexPathParam(String name, Type<T> type, Pattern matchPattern, String buildPattern)
+	public RegexPathParam(String name, Pattern matchPattern, String buildPattern)
 	{
-		super(name, type);
+		super(name);
 		matchPattern_ = Check.notNull(matchPattern, "matchPattern");
 		buildPattern_ = Check.notNull(buildPattern, "buildPattern");
+	}
+
+	
+	@Override public Class<String> getType()
+	{
+		return String.class;
 	}
 
 	
@@ -52,32 +58,30 @@ public class RegexPathParam<T> extends TypeBasedPathParam<T>
 	 * If it matches, then the first result group of the regex will be used
 	 * as value of the path parameter.
 	 */
-	@Override public T parse(PathScanner scanner)
+	@Override public String parse(PathScanner scanner)
 	{
+		String value = null;
+		
 		MatchResult result = scanner.matchPattern(matchPattern_);
 		if (result != null)
 		{
-			T value = parse(result.group(1));
+			value = result.group(1);
 			if (value != null)
 			{
-				// a) pattern matched
-				// b) value was a valid instance of our type 
-				// now advance the scanner
+				// pattern matched: advance the scanner
 				scanner.next(result);
-				return value;
 			}
 		}
-		// did not match, or was invalid for our type
-		return null;
+		return value;
 	}
 
 
 	/**
 	 * Builds a string path for the path parameter, given the value of a path parameter.
 	 */
-	@Override public void buildPath(T value, UriEncoder encoder, StringBuilder path)
+	@Override public void buildPath(String value, UriEncoder encoder, StringBuilder path)
 	{
-		String segment = buildPattern_.replace("*", format(value));
+		String segment = buildPattern_.replace("*", value);
 		buildPathSegment(segment, encoder, path);
 	}
 	
@@ -88,6 +92,6 @@ public class RegexPathParam<T> extends TypeBasedPathParam<T>
 	}
 
 	
-	protected Pattern matchPattern_;
-	protected String buildPattern_;
+	protected final Pattern matchPattern_;
+	protected final String buildPattern_;
 }

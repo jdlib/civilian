@@ -17,14 +17,13 @@ package org.civilian.internal.pathparam;
 
 
 import java.util.regex.Pattern;
-import org.civilian.type.TypeLib;
 
 
 /**
  * SegmentWcPPFormat is a special String-typed RegexPathParam
  * which is defined with a pattern string, containing a wildcard '*'. 
  */
-public class SegmentWcPathParam extends RegexPathParam<String>
+public class SegmentWcPathParam extends RegexPathParam
 {
 	/**
 	 * Creates a SegmentWcPathParam.
@@ -34,7 +33,7 @@ public class SegmentWcPathParam extends RegexPathParam<String>
 	 */
 	public SegmentWcPathParam(String name, String buildPattern)
 	{
-		super(name, TypeLib.STRING, Pattern.compile(buildPattern.replace("*", "([^/]+)")), buildPattern);						
+		super(name, Pattern.compile(buildPattern.replace("*", "([^/]+)")), buildPattern);						
 	}
 
 	

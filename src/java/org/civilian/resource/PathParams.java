@@ -19,7 +19,6 @@ package org.civilian.resource;
 import java.util.regex.Pattern;
 import org.civilian.type.DateType;
 import org.civilian.type.Type;
-import org.civilian.type.TypeLib;
 import org.civilian.internal.pathparam.MultiSegmentPathParam;
 import org.civilian.internal.pathparam.PrefixedPathParam;
 import org.civilian.internal.pathparam.RegexPathParam;
@@ -94,32 +93,16 @@ public abstract class PathParams
 
 	/**
 	 * Creates a PathParam which uses a regex pattern to match a path segment.
-	 * Example: to match segments 
 	 * @param name the name of the path parameter 
 	 * @param matchPattern a regex pattern for the segment. The pattern must have a single
 	 * 		match group and should not match any slashes.
 	 * 		Example: Pattern.compile("id([^/]+)" to match segments of the form "id*" 
 	 * @param buildPattern equals the matchPattern, whose match group is replaced by a '*'
+	 * 		Example: "id*" 
 	 */
 	public static PathParam<String> forPattern(String name, Pattern matchPattern, String buildPattern)
 	{
-		return forPattern(name, matchPattern, buildPattern, TypeLib.STRING);
-	}
-
-
-	/**
-	 * Creates a PathParam which uses a regex pattern to match a path segment.
-	 * Example: to match segments
-	 * @param name the name of the path parameter 
-	 * @param matchPattern a regex pattern for the segment. The pattern must have a single
-	 * 		match group and should not match any slashes.
-	 * 		Example: Pattern.compile("id([^/]+)" to match segments of the form "id*" 
-	 * @param buildPattern equals the matchPattern, whose match group is replaced by a '*'
-	 * @param type a type for the path param values
-	 */
-	public static <T> PathParam<T> forPattern(String name, Pattern matchPattern, String buildPattern, Type<T> type)
-	{
-		return new RegexPathParam<>(name, type, matchPattern, buildPattern);
+		return new RegexPathParam(name, matchPattern, buildPattern);
 	}
 
 
