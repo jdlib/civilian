@@ -19,7 +19,6 @@ package org.civilian.resource;
 import java.util.regex.Pattern;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.response.UriEncoder;
 import org.civilian.type.TypeLib;
 import org.civilian.util.Date;
 
@@ -30,102 +29,79 @@ public class PathParamTest extends CivTest
 	@Test public void testSegment()
 	{
 		// PathParams.forSegment()
-		PathParam<String> stringPP = PathParams.forSegment("stringparam");
-		assertEquals("/{stringparam}", stringPP.toString());
-		PathScanner scanner = new PathScanner("/abc/def");
-		assertParse(stringPP, scanner,	"abc");
-		assertParse(stringPP, scanner,	"def");
-		assertBuild(stringPP, "a b", 	"/a%20b");
-
+		PathParamAssert.of(PathParams.forSegment("stringparam"))
+			.toString("/{stringparam}")
+			.build("a b", "/a%20b")
+			.scan("/abc/def", "abc", "def");
+		
 		// PathParams.forIntSegment()
-		PathParam<Integer> intPP = PathParams.forIntSegment("intparam");
-		assertEquals("/{intparam}", intPP.toString());
-		scanner = new PathScanner("/123/def");
-		assertParse(intPP, scanner, new Integer(123));
-		assertNull (intPP.parse(scanner));
-		assertBuild(intPP, 456, "/456");
-
+		PathParamAssert.of(PathParams.forIntSegment("intparam"))
+			.toString("/{intparam}")
+			.build(456, "/456")
+			.scan("/abc/def", null, "abc")
+			.scan("/456/def", 456,  "def");
+		
 		// PathParams.forSegment(Type)
-		PathParam<Date> datePP = PathParams.forSegment("dateparam", TypeLib.DATE_CIVILIAN);
-		assertEquals("/{dateparam}", datePP.toString());
-		scanner = new PathScanner("/20121103/abc");
-		assertParse(datePP, scanner, new Date(2012, 11, 03));
-		assertNull (datePP.parse(scanner));
-		assertBuild(datePP, new Date(2012, 12, 04), "/20121204");
-
-		// PathParams.forSegment(Type)
-		PathParam<Double> doublePP = PathParams.forSegment("doubleparam", TypeLib.DOUBLE);
-		assertEquals("/{doubleparam}", doublePP.toString());
-		scanner = new PathScanner("/1.234/abc");
-		assertParse(doublePP, scanner, new Double(1.234));
-		assertNull (doublePP.parse(scanner));
-		assertBuild(doublePP, new Double(12.34), "/12.34");
+		PathParamAssert.of(PathParams.forSegment("dateparam", TypeLib.DATE_CIVILIAN))
+			.toString("/{dateparam}")
+			.build(new Date(2012, 12, 04), "/20121204")
+			.scan("/abc/def", null, "abc")
+			.scan("/20121103/def", new Date(2012, 11, 03), "def");
 
 		// PathParams.forSegmentPattern()
-		PathParam<String> wcPP = PathParams.forSegmentPattern("idparam", "id*");
-		assertEquals("/{idparam}", wcPP.toString());
-		assertEquals("/{idparam : String=id*}", wcPP.toDetailedString());
-		scanner = new PathScanner("/id123/def");
-		assertParse(wcPP, scanner, "123");
-		assertNull (wcPP.parse(scanner));
-		assertBuild(wcPP, "789", "/id789");
+		PathParamAssert.of(PathParams.forSegmentPattern("idparam", "id*"))
+			.toString("/{idparam}")
+			.toDetailedString("/{idparam : String=id*}")
+			.build("789", "/id789")
+			.scan("/abc/def", null, "abc")
+			.scan("/id123/def", "123", "def");
 	}
 
 
 	@Test public void testYMD()
 	{
-		PathParam<Date> pathParam = PathParams.forYearMonthDay("ymd", TypeLib.DATE_CIVILIAN);
-		assertEquals("/{ymd}", pathParam.toString());
-		assertEquals("/{ymd : Date=yyyy/mm/dd}", pathParam.toDetailedString());
-		PathScanner scanner = new PathScanner("/2012/11/10/2012/13/13");
-		assertParse(pathParam, scanner, new Date(2012, 11, 10));
-		assertNull(pathParam.parse(scanner));
-		assertBuild(pathParam, new Date(2011, 10, 9), "/2011/10/09");
+		PathParamAssert.of(PathParams.forYearMonthDay("ymd", TypeLib.DATE_CIVILIAN))
+			.toString("/{ymd}")
+			.toDetailedString("/{ymd : Date=yyyy/mm/dd}")
+			.build(new Date(2011, 10, 9), "/2011/10/09")
+			.scan("/abc/def", null, "abc")
+			.scan("/2012/11/10/def", new Date(2012, 11, 10), "def");
 	}
 
 
 	@Test public void testRegex()
 	{
-		PathParam<String> ppId = PathParams.forPattern("id", Pattern.compile("id([^/]+)"), "id*");
-		assertEquals("/{id}", ppId.toString());
-		PathScanner scanner = new PathScanner("/id0123/else");
-		assertParse	(ppId, scanner, "0123");
-		assertNull	(ppId.parse(scanner));
-		assertBuild	(ppId, "456", "/id456");
+		PathParamAssert.of(PathParams.forPattern("id", Pattern.compile("id([^/]+)"), "id*"))
+			.toString("/{id}")
+			.build("456", "/id456")
+			.scan("/abc/def", null, "abc")
+			.scan("/id0123/def", "0123", "def");
 
-		PathParam<Integer> ppNr = PathParams.forPattern("nr", Pattern.compile("nr([0-9]+)"), "nr*", TypeLib.INTEGER);
-		assertEquals("/{nr}", ppNr.toString());
-		assertEquals("/{nr : Integer=nr([0-9]+)}", ppNr.toDetailedString());
-
-		scanner = new PathScanner("/nr0123/else");
-		assertParse	(ppNr, scanner, new Integer(123));
-		assertNull	(ppNr.parse(scanner));
-		assertBuild	(ppNr, new Integer(456), "/nr456");
+		PathParamAssert.of(PathParams.forPattern("nr", Pattern.compile("nr([0-9]+)"), "nr*", TypeLib.INTEGER))
+			.toString("/{nr}")
+			.toDetailedString("/{nr : Integer=nr([0-9]+)}")
+			.build(new Integer(456), "/nr456")
+			.scan("/abc/def", null, "abc")
+			.scan("/nr0123/def", new Integer(123), "def");
 		
-		// type is integer, but patter does not completely enforce it: but still the type check fails
-		PathParam<Integer> ppNrSloppy = PathParams.forPattern("nr", Pattern.compile("nr([^/]+)"), "nr*", TypeLib.INTEGER);
-		scanner = new PathScanner("/nr9/nrx");
-		assertParse	(ppNrSloppy, scanner, Integer.valueOf(9));
-		assertNull	(ppNrSloppy.parse(scanner));
+		// type is integer, but pattern does not completely enforce it: but still the type check fails
+		PathParamAssert.of(PathParams.forPattern("nr", Pattern.compile("nr([^/]+)"), "nr*", TypeLib.INTEGER))
+			.scan("/abc/def", null, "abc")
+			.scan("/nrx/def", null, "nrx")
+			.scan("/nr9/def", new Integer(9), "def");
 	}
 	
 	
 	@Test public void testMultiSegment()
 	{
-		PathParam<String[]> multi = PathParams.forMultiSegments("multi", 2);
-		assertEquals("/{multi}", multi.toString());
-		assertEquals("/{multi : String[]=minSize=2}", multi.toDetailedString());
-		
 		String s[] = { "a", "b", "c" };
-		assertBuild	(multi, s, "/a/b/c");
-		
-		PathScanner scanner = new PathScanner("/a");
-		assertNull	(multi.parse(scanner));
-		assertTrue(scanner.matchSegment("a")); // not consumed
 
-		scanner = new PathScanner("/a/b/c");
-		assertArrayEquals2(s, multi.parse(scanner));
-		assertFalse(scanner.hasMore());
+		PathParamAssert.of(PathParams.forMultiSegments("multi", 2))
+			.toString("/{multi}")
+			.toDetailedString("/{multi : String[]=minSize=2}")
+			.build(s, "/a/b/c")
+			.scan("/a", null, "a") // not consumed
+			.scan("/a/b/c", s);
 	}
 	
 	
@@ -133,51 +109,23 @@ public class PathParamTest extends CivTest
 	{
 		Integer n = Integer.valueOf(1234);
 		
-		PathParam<Integer> conv = PathParams.converting(PathParams.forSegment("conv"), TypeLib.INTEGER);
-		assertEquals("/{conv}", conv.toString());
-		assertEquals("/{conv : Integer=/<segment>}", conv.toDetailedString());
-
-		assertBuild(conv, n, "/1234");
-		
-		PathScanner scanner = new PathScanner("/a");
-		assertNull(conv.parse(scanner));
-		assertTrue(scanner.matchSegment("a")); // not consumed
-		
-		scanner = new PathScanner("/1234/b");
-		assertEquals(n, conv.parse(scanner));
-		assertTrue(scanner.matchSegment("b")); // not consumed
+		PathParamAssert.of(PathParams.converting(PathParams.forSegment("conv"), TypeLib.INTEGER))
+			.toString("/{conv}")
+			.toDetailedString("/{conv : Integer=/<segment>}")
+			.build(n, "/1234")
+			.scan("/abc/def", null, "abc")
+			.scan("/1234/def", n, "def");
 	}
 	
 	
 	@Test public void testPrefixed()
 	{
-		PathParam<String> prefixed = PathParams.prefixed("p", PathParams.forSegment("prefixed"));
-		assertEquals("/{prefixed}", prefixed.toString());
-		assertEquals("/{prefixed : String=/p/<segment>}", prefixed.toDetailedString());
-
-		assertBuild(prefixed, "a", "/p/a");
-		
-		PathScanner scanner = new PathScanner("/a");
-		assertNull(prefixed.parse(scanner));
-		assertTrue(scanner.matchSegment("a")); // not consumed
-		
-		scanner = new PathScanner("/p/a/b");
-		assertEquals("a", prefixed.parse(scanner));
-		assertTrue(scanner.matchSegment("b")); // not consumed
+		PathParamAssert.of(PathParams.prefixed("p", PathParams.forSegment("prefixed")))
+			.toString("/{prefixed}")
+			.toDetailedString("/{prefixed : String=/p/<segment>}")
+			.build("a", "/p/a")
+			.scan("/abc/def", null, "abc")
+			.scan("/p/def/ghi", "def", "ghi")
+		;
 	}
-
-	
-	private <T> void assertParse(PathParam<T> pattern, PathScanner scanner, T value)
-	{
-		assertEquals(value, pattern.parse(scanner));
-	}
-
-	
-	private <T> void assertBuild(PathParam<T> pattern, T value, String path)
-	{
-		assertEquals(path, pattern.buildPath(value, uriEncoder_));
-	}
-	
-
-	private static final UriEncoder uriEncoder_ = new UriEncoder(); 
 }
