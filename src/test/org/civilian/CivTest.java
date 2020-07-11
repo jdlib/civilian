@@ -44,7 +44,8 @@ public class CivTest extends Assert
 {
 	public static <T> void assertEquals(boolean expected, boolean actual)
 	{
-		assertTrue(expected == actual);
+		if (expected != actual)
+			fail("expected " + expected + " but was " + actual);
 	}
 	
 	 
