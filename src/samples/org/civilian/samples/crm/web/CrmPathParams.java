@@ -19,13 +19,14 @@
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathParamMap;
 import org.civilian.resource.PathParams;
+import org.civilian.type.TypeLib;
 
 
 public interface CrmPathParams
 {
 	public static final PathParamMap MAP 					= new PathParamMap(CrmPathParams.class);
-	public static final PathParam<Integer> CUSTOMERID 		= MAP.add(PathParams.forIntSegment("customerId"));
-	public static final PathParam<Integer> OPPORTUNITYID 	= MAP.add(PathParams.forIntSegment("opportunityId"));
-	public static final PathParam<Integer> CONTACTID 		= MAP.add(PathParams.forIntSegment("contactId"));
-	public static final PathParam<Integer> USERID		 	= MAP.addAndSeal(PathParams.forIntSegment("userId"));
+	public static final PathParam<Integer> CUSTOMERID 		= MAP.add(PathParams.forSegment("customerId").converting(TypeLib.INTEGER));
+	public static final PathParam<Integer> OPPORTUNITYID 	= MAP.add(PathParams.forSegment("opportunityId").converting(TypeLib.INTEGER));
+	public static final PathParam<Integer> CONTACTID 		= MAP.add(PathParams.forSegment("contactId").converting(TypeLib.INTEGER));
+	public static final PathParam<Integer> USERID		 	= MAP.addAndSeal(PathParams.forSegment("userId").converting(TypeLib.INTEGER));
 }

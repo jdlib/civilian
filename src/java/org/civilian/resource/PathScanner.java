@@ -139,6 +139,19 @@ public class PathScanner
 	
 
 	/**
+	 * If there is a current segment return it and advance to the next segment. 
+	 * Else return null.
+	 */
+	public String consumeSegment()
+	{
+		String s = getSegment();
+		if (s != null)
+			next();
+		return s;
+	}
+
+	
+	/**
 	 * Returns if the path substring starting at the current scan position
 	 * matches the pattern. The pattern can match one or more path segments
 	 * (therefore allowing a lookahead for multiple segments).

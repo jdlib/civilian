@@ -16,9 +16,9 @@
 package org.civilian.internal.pathparam;
 
 
+import org.civilian.resource.PathParam;
 import org.civilian.resource.PathScanner;
 import org.civilian.response.UriEncoder;
-import org.civilian.type.Type;
 
 
 /**
@@ -26,34 +26,32 @@ import org.civilian.type.Type;
  * of a path. The value of the associated path parameter is the segment,
  * converted to the type of the SegmentPathParam.  
  */
-public class SegmentPathParam<T> extends TypeBasedPathParam<T>
+public class SegmentPathParam extends PathParam<String>
 {
 	/**
 	 * Creates a new SegmentPathParam.
 	 */
-	public SegmentPathParam(String name, Type<T> type)
+	public SegmentPathParam(String name)
 	{
-		super(name, type);
+		super(name);
+	}
+
+
+	@Override public Class<String> getType()
+	{
+		return String.class;
 	}
 
 	
-	@Override public T parse(PathScanner scanner)
+	@Override public String parse(PathScanner scanner)
 	{
-		// try to parse the current scanner segment 
-		T value = parse(scanner.getSegment());
-		if (value != null)
-		{
-			scanner.next(); // success: consume the segment
-			return value;
-		}
-		else
-			return null; // invalid for our type
+		return scanner.consumeSegment();
 	}
 
 
-	@Override public void buildPath(T value, UriEncoder encoder, StringBuilder path)
+	@Override public void buildPath(String value, UriEncoder encoder, StringBuilder path)
 	{
-		buildPathSegment(format(value), encoder, path);
+		buildPathSegment(value, encoder, path);
 	}
 
 	

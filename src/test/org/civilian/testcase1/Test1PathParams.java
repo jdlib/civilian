@@ -19,6 +19,7 @@ package org.civilian.testcase1;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathParamMap;
 import org.civilian.resource.PathParams;
+import org.civilian.type.TypeLib;
 
 
 public class Test1PathParams
@@ -26,5 +27,5 @@ public class Test1PathParams
 	public static final PathParamMap MAP = new PathParamMap(Test1PathParams.class);
 	
 	public static final PathParam<String> BETA 		= MAP.add(PathParams.forSegment("beta")); 
-	public static final PathParam<Integer> GAMMA 	= MAP.addAndSeal(PathParams.forIntSegment("gammaId")); 
+	public static final PathParam<Integer> GAMMA 	= MAP.addAndSeal(PathParams.forSegment("gammaId").converting(TypeLib.INTEGER)); 
 }

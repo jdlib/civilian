@@ -20,8 +20,6 @@ import java.util.regex.Pattern;
 import org.civilian.type.DateType;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
-import org.civilian.type.fn.StandardSerializer;
-import org.civilian.internal.pathparam.ConvertingPathParam;
 import org.civilian.internal.pathparam.MultiSegmentPathParam;
 import org.civilian.internal.pathparam.PrefixedPathParam;
 import org.civilian.internal.pathparam.RegexPathParam;
@@ -46,14 +44,14 @@ import org.civilian.internal.pathparam.YMDPathParam;
  * 		<td>String "abc"</td>
  * </tr>
  * <tr>
- * 		<td>{@link #forIntSegment(String)}</td> 
+ * 		<td>{@link #forSegment(String)}.{@link PathParam#converting(Type) converting(TypeLib.INTEGER)}</td> 
  * 		<td>/123</td> 
  * 		<td>Integer 123</td>
  * </tr>
  * <tr>
- * 		<td>{@link #forSegment(String, Type) PathParams.forSegment(TypeLibrary.DATE_CIVILIAN)}</td> 
+ * 		<td>{@link #forSegment(String)}.{@link PathParam#converting(Type) converting(TypeLib.DATE_LOCAL)}</td> 
  * 		<td>/20130131</td> 
- * 		<td>Date year=2013, month=01, day=31</td>
+ * 		<td>LocalDate year=2013, month=01, day=31</td>
  * </tr>
  * <tr>
  * 		<td>{@link #forSegmentPattern(String, String) PathParams.forSegment(TypeLibrary.INTEGER, "id*")}</td> 
@@ -70,37 +68,13 @@ import org.civilian.internal.pathparam.YMDPathParam;
 public abstract class PathParams
 {
 	/**
-	 * Creates a PathParam which matches a path segment. The associated 
+	 * Creates a PathParam which matches any path segment. The associated 
 	 * path parameter value is the path segment.
 	 * @param name the name of the path parameter 
 	 */
 	public static PathParam<String> forSegment(String name)
 	{
-		return forSegment(name, TypeLib.STRING);
-	}
-
-
-	/**
-	 * Creates a PathParam which matches a path segment. The associated 
-	 * path parameter value is the path segment, converted into an integer.
-	 * @param name the name of the path parameter 
-	 */
-	public static PathParam<Integer> forIntSegment(String name)
-	{
-		return forSegment(name, TypeLib.INTEGER);
-	}
-
-	
-	/**
-	 * Creates a PathParam which matches a path segment. The associated 
-	 * path parameter value is the path segment, converted into a object
-	 * of the given type using the {@link StandardSerializer}.
-	 * @param name the name of the path parameter 
-	 * @param type the type
-	 */
-	public static <T> PathParam<T> forSegment(String name, Type<T> type)
-	{
-		return new SegmentPathParam<>(name, type);
+		return new SegmentPathParam(name);
 	}
 
 	
@@ -173,18 +147,6 @@ public abstract class PathParams
 	public static PathParam<String[]> forMultiSegments(String name, int minSize)
 	{
 		return new MultiSegmentPathParam(name, minSize);
-	}
-	
-	
-	/**
-	 * Wraps a String based PathParam and converts it's value to a certain type.
-	 * The name of the converting param is the name of the inner PathParam.
-	 * @param inner another param
-	 * @param type a type
-	 */
-	public static <T> PathParam<T> converting(PathParam<String> inner, Type<T> type)
-	{
-		return new ConvertingPathParam<>(inner, type);
 	}
 	
 	

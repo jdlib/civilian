@@ -35,18 +35,18 @@ public class PathParamTest extends CivTest
 			.scan("/abc/def", "abc", "def");
 		
 		// PathParams.forIntSegment()
-		PathParamAssert.of(PathParams.forIntSegment("intparam"))
+		PathParamAssert.of(PathParams.forSegment("some").converting(TypeLib.INTEGER, "intparam"))
 			.toString("/{intparam}")
 			.build(456, "/456")
-			.scan("/abc/def", null, "abc")
-			.scan("/456/def", 456,  "def");
+			.scan("/abc/def", null, "def")		// first segment consumed but could not convert	
+			.scan("/456/def", 456,  "def");		// first segment consumed and successfully converted
 		
 		// PathParams.forSegment(Type)
-		PathParamAssert.of(PathParams.forSegment("dateparam", TypeLib.DATE_CIVILIAN))
+		PathParamAssert.of(PathParams.forSegment("dateparam").converting(TypeLib.DATE_CIVILIAN))
 			.toString("/{dateparam}")
 			.build(new Date(2012, 12, 04), "/20121204")
-			.scan("/abc/def", null, "abc")
-			.scan("/20121103/def", new Date(2012, 11, 03), "def");
+			.scan("/abc/def", 	   null, "def")						// first segment consumed but could not convert	
+			.scan("/20121103/def", new Date(2012, 11, 03), "def");	// first segment consumed and successfully converted
 
 		// PathParams.forSegmentPattern()
 		PathParamAssert.of(PathParams.forSegmentPattern("idparam", "id*"))
@@ -109,7 +109,7 @@ public class PathParamTest extends CivTest
 	{
 		Integer n = Integer.valueOf(1234);
 		
-		PathParamAssert.of(PathParams.converting(PathParams.forSegment("conv"), TypeLib.INTEGER))
+		PathParamAssert.of(PathParams.forSegment("conv").converting(TypeLib.INTEGER))
 			.toString("/{conv}")
 			.toDetailedString("/{conv : Integer=/<segment>}")
 			.build(n, "/1234")

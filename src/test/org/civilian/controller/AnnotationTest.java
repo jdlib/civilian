@@ -53,7 +53,7 @@ public class AnnotationTest extends CivTest
 	{
 		typeLib_ 	= new TypeLib();
 		pathParams_ = new PathParamMap(null);
-		pathParams_.addAndSeal(PathParams.forIntSegment("customerId"));
+		pathParams_.addAndSeal(PathParams.forSegment("customerId").converting(TypeLib.INTEGER));
 	}
 	
 	

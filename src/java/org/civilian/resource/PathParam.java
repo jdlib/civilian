@@ -16,7 +16,10 @@
 package org.civilian.resource;
 
 
+import org.civilian.internal.pathparam.ConvertingPathParam;
 import org.civilian.response.UriEncoder;
+import org.civilian.type.Type;
+import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Check;
 
 
@@ -126,7 +129,34 @@ public abstract class PathParam<T>
 	{
 		return other.getPatternString();
 	}
+	
+	
+	/**
+	 * Returns a PathParam based on this PathParam which converts the value
+	 * to a value of the given type. Parsing and formatting is done using
+	 * the {@link StandardSerializer}.
+	 * @param type a Type
+	 * @param name if not null use that name else use the name of this PathParam. 
+	 * @return the new PathParam
+	 */
+	@SuppressWarnings("unchecked")
+	public <S> PathParam<S> converting(Type<S> type, String name)
+	{
+		if (getType() != String.class)
+			throw new IllegalStateException(this.toDetailedString() + ": only can convert String based path params");
+		Check.notNull(type, "type");
+		return new ConvertingPathParam<>(name, (PathParam<String>)this, type);
+	}
 
+	
+	/**
+	 * Calls {@link #converting(Type, String)} with a null name.
+	 */
+	public <S> PathParam<S> converting(Type<S> type)
+	{
+		return converting(type, null);
+	}
+	
 	
 	/**
 	 * Returns a detailed string representation of the path parameter for debug purposes. 

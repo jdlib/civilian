@@ -10,9 +10,16 @@ import org.civilian.util.Check;
 
 public class ConvertingPathParam<T> extends TypeBasedPathParam<T>
 {
-	public ConvertingPathParam(PathParam<String> inner, Type<T> type)
+	private static String getName(String name, PathParam<String> inner)
 	{
-		super(Check.notNull(inner, "inner").getName(), type);
+		Check.notNull(inner, "inner");
+		return name != null ? name : inner.getName();
+	}
+	
+	
+	public ConvertingPathParam(String name, PathParam<String> inner, Type<T> type)
+	{
+		super(getName(name, inner), type);
 		inner_ = inner;
 	}
 	
@@ -35,5 +42,5 @@ public class ConvertingPathParam<T> extends TypeBasedPathParam<T>
 	}
 	
 	
-	private PathParam<String> inner_;
+	private final PathParam<String> inner_;
 }
