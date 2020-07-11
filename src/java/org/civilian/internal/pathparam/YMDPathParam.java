@@ -18,10 +18,12 @@ package org.civilian.internal.pathparam;
 
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
+import org.civilian.resource.PathParam;
 import org.civilian.resource.PathScanner;
 import org.civilian.response.UriEncoder;
 import org.civilian.type.DateType;
 import org.civilian.type.TypeLib;
+import org.civilian.util.Check;
 
 
 /**
@@ -29,7 +31,7 @@ import org.civilian.type.TypeLib;
  * three path segments: yyyy/mm/dd, a 4 digit year, a 2 digit month (from 01 to 12)
  * and a 2 digit day of month (01-31).
  */
-public class YMDPathParam<T> extends TypeBasedPathParam<T>
+public class YMDPathParam<T> extends PathParam<T>
 {
 	/**
 	 * Creates a YMDPPFormat.  
@@ -37,9 +39,16 @@ public class YMDPathParam<T> extends TypeBasedPathParam<T>
 	 * 		used for path parameter values of this pattern. The {@link TypeLib} provides constants
 	 * 		for common DateTypes.
 	 */
-	public YMDPathParam(String name, DateType<T> dateType)
+	public YMDPathParam(String name, DateType<T> type)
 	{
-		super(name, dateType);
+		super(name);
+		type_ = Check.notNull(type, "type");
+	}
+
+	
+	@Override public Class<T> getType()
+	{
+		return type_.getJavaType();
 	}
 
 	
@@ -58,7 +67,7 @@ public class YMDPathParam<T> extends TypeBasedPathParam<T>
 				int year  = Integer.parseInt(result.group(1)); 
 				int month = Integer.parseInt(result.group(2)); 
 				int day   = Integer.parseInt(result.group(3));
-				T date    = ((DateType<T>)type_).create(year, month, day);
+				T date    = type_.create(year, month, day);
 				// success: date is valid: advance the scanner
 				scanner.next(result);
 				return date;
@@ -76,7 +85,7 @@ public class YMDPathParam<T> extends TypeBasedPathParam<T>
 	 */
 	@Override public void buildPath(T value, UriEncoder encoder, StringBuilder path)
 	{
-		DateType<T> dateType = (DateType<T>)type_;
+		DateType<T> dateType = type_;
 		appendSegment(dateType.getYear(value),  4, path);
 		appendSegment(dateType.getMonth(value), 2, path);
 		appendSegment(dateType.getDay(value),   2, path);
@@ -102,5 +111,6 @@ public class YMDPathParam<T> extends TypeBasedPathParam<T>
 	}
 	
 	
+	protected final DateType<T> type_;
 	private static final Pattern PATTERN = Pattern.compile("([0-9]{4})/([0-1][0-9])/([0-3][0-9])");
 }
