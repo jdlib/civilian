@@ -10,6 +10,7 @@ import java.util.List;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.DateTime;
+import org.civilian.util.StringUtil;
 
 
 class ConstClassTemplate
@@ -34,159 +35,147 @@ class ConstClassTemplate
 
 	protected void print()
 	{
-		boolean hasIdClass   = config.idClass != null;                  // line 12: @boolean hasIdClass   = config.idClass != null;
-		String idClassSimple = hasIdClass ? ClassUtil.cutPackageName(config.idClass) : "String"; // line 13: @String idClassSimple = hasIdClass ? ClassUtil.cutPackageName(config.idClass) : "String";
-		HashSet<String> usedConstants = new HashSet<>();                // line 14: @HashSet<String> usedConstants = new HashSet<>();
-		StringBuilder s = new StringBuilder();                          // line 15: @StringBuilder s = new StringBuilder();
-		//                                                              // line 16: @//
-		out.print("package ");                                          // line 17: package
-		out.print(packageName);                                         // line 17: <%packageName%>
-		out.println(";");                                               // line 17: ;
+		boolean hasIdClass   = config.idClass != null;                  // line 13: @boolean hasIdClass   = config.idClass != null;
+		String idClassSimple = hasIdClass ? ClassUtil.cutPackageName(config.idClass) : "String"; // line 14: @String idClassSimple = hasIdClass ? ClassUtil.cutPackageName(config.idClass) : "String";
+		HashSet<String> usedConstants = new HashSet<>();                // line 15: @HashSet<String> usedConstants = new HashSet<>();
+		StringBuilder s = new StringBuilder();                          // line 16: @StringBuilder s = new StringBuilder();
+		//                                                              // line 17: @//
+		out.print("package ");                                          // line 18: package
+		out.print(packageName);                                         // line 18: <%packageName%>
+		out.println(";");                                               // line 18: ;
 		out.println();
 		out.println();
-		if (hasIdClass && !config.inlineIdClass)                        // line 20: @if (hasIdClass && !config.inlineIdClass)
+		if (hasIdClass && !config.inlineIdClass)                        // line 21: @if (hasIdClass && !config.inlineIdClass)
 		{
-			out.print("import ");                                       // line 21: import
-			out.print(config.idClass);                                  // line 21: <%config.idClass%>
-			out.println(";");                                           // line 21: ;
+			out.print("import ");                                       // line 22: import
+			out.print(config.idClass);                                  // line 22: <%config.idClass%>
+			out.println(";");                                           // line 22: ;
 			out.println();
 			out.println();
 		}
-		out.println("/**");                                             // line 24: /**
-		out.print(" * Contains constants for resource bundle ids in "); // line 25: * Contains constants for resource bundle ids in
-		out.print(config.excelFile.getName());                          // line 25: <%config.excelFile.getName()%>
-		out.println(".");                                               // line 25: .
-		out.print(" * Generated at ");                                  // line 26: * Generated at
-		out.print(generationTime);                                      // line 26: <%generationTime%>
-		out.println(". Do not edit directly.");                         // line 26: . Do not edit directly.
-		out.println(" */");                                             // line 27: */
-		out.print("public interface ");                                 // line 28: public interface
-		out.print(config.constClass);                                   // line 28: <%config.constClass%>
+		out.println("/**");                                             // line 25: /**
+		out.print(" * Contains constants for resource bundle ids in "); // line 26: * Contains constants for resource bundle ids in
+		out.print(config.excelFile.getName());                          // line 26: <%config.excelFile.getName()%>
+		out.println(".");                                               // line 26: .
+		out.print(" * Generated at ");                                  // line 27: * Generated at
+		out.print(generationTime);                                      // line 27: <%generationTime%>
+		out.println(". Do not edit directly.");                         // line 27: . Do not edit directly.
+		out.println(" */");                                             // line 28: */
+		out.print("public interface ");                                 // line 29: public interface
+		out.print(config.constClass);                                   // line 29: <%config.constClass%>
 		out.printlnIfNotEmpty();
-		out.println("{");                                               // line 29: {
+		out.println("{");                                               // line 30: {
 		out.increaseTab();
-		for (Translation t : translations)                              // line 30: @for (Translation t : translations)
+		for (Translation t : translations)                              // line 31: @for (Translation t : translations)
 		{
-			// javafy key: must be a valid java identifier              // line 31: @// javafy key: must be a valid java identifier
-			// escape key when passed as argument to the MsgKey ctor    // line 32: @// escape key when passed as argument to the MsgKey ctor
-			// keep a list of javafied keys and add _x suffixes if not unique // line 33: @// keep a list of javafied keys and add _x suffixes if not unique
-			String id = t.id;                                           // line 34: @String id = t.id;
-			String constantName = getConstantName(id, usedConstants, s); // line 35: @String constantName = getConstantName(id, usedConstants, s);
-			if (constantName != null)                                   // line 36: @if (constantName != null)
+			// javafy key: must be a valid java identifier              // line 32: @// javafy key: must be a valid java identifier
+			// escape key when passed as argument to the MsgKey ctor    // line 33: @// escape key when passed as argument to the MsgKey ctor
+			// keep a list of javafied keys and add _x suffixes if not unique // line 34: @// keep a list of javafied keys and add _x suffixes if not unique
+			String id = t.id;                                           // line 35: @String id = t.id;
+			String constantName = getConstantName(id, s, usedConstants); // line 36: @String constantName = getConstantName(id, s, usedConstants);
+			if (constantName != null)                                   // line 37: @if (constantName != null)
 			{
-				if (config.javadoc)                                     // line 37: @if (config.javadoc)
+				if (config.javadoc)                                     // line 38: @if (config.javadoc)
 				{
-					out.print("/**");                                   // line 38: /**
-					for (String lang : t.lang)                          // line 39: @for (String lang : t.lang)
+					out.print("/**");                                   // line 39: /**
+					for (String lang : t.lang)                          // line 40: @for (String lang : t.lang)
 					{
-						out.print(" \"");                               // line 40: "
-						out.print(lang);                                // line 40: <%lang%>
-						out.print("\"");                                // line 40: "
+						out.print(" \"");                               // line 41: "
+						out.print(lang);                                // line 41: <%lang%>
+						out.print("\"");                                // line 41: "
 					}
-					out.println("*/");                                  // line 41: */
+					out.println("*/");                                  // line 42: */
 				}
-				out.print("public static final ");                      // line 42: public static final
-				out.print(idClassSimple);                               // line 42: <%idClassSimple%>
-				out.print(" ");                                         // line 42: 
-				out.print(constantName);                                // line 42: <%constantName%>
-				for (int i=id.length(); i<=20; i++)                     // line 43: @for (int i=id.length(); i<=20; i++)
+				out.print("public static final ");                      // line 43: public static final
+				out.print(idClassSimple);                               // line 43: <%idClassSimple%>
+				out.print(" ");                                         // line 43: 
+				out.print(constantName);                                // line 43: <%constantName%>
+				for (int i=id.length(); i<=20; i++)                     // line 44: @for (int i=id.length(); i<=20; i++)
 				{
-					out.print(" ");                                     // line 44: 
+					out.print(" ");                                     // line 45: 
 				}
-				out.print(" = ");                                       // line 45: =
-				if (hasIdClass)                                         // line 45: <%?hasIdClass%>
+				out.print(" = ");                                       // line 46: =
+				if (hasIdClass)                                         // line 46: <%?hasIdClass%>
 				{
-					out.print("new ");                                  // line 45: new
-					out.print(idClassSimple);                           // line 45: <%idClassSimple%>
-					out.print("(");                                     // line 45: (
+					out.print("new ");                                  // line 46: new
+					out.print(idClassSimple);                           // line 46: <%idClassSimple%>
+					out.print("(");                                     // line 46: (
 				}
-				out.print("\"");                                        // line 45: "
-				out.print(escapeId(id));                                // line 45: <%escapeId(id)%>
-				out.print("\"");                                        // line 45: "
-				if (hasIdClass)                                         // line 45: <%?hasIdClass%>
+				out.print("\"");                                        // line 46: "
+				out.print(escapeId(id));                                // line 46: <%escapeId(id)%>
+				out.print("\"");                                        // line 46: "
+				if (hasIdClass)                                         // line 46: <%?hasIdClass%>
 				{
-					out.print(")");                                     // line 45: )
+					out.print(")");                                     // line 46: )
 				}
-				out.println(";");                                       // line 45: ;
+				out.println(";");                                       // line 46: ;
 			}
 		}
-		if (config.inlineIdClass)                                       // line 46: @if (config.inlineIdClass)
+		if (config.inlineIdClass)                                       // line 47: @if (config.inlineIdClass)
 		{
 			out.println();
 			out.println();
-			out.print("public static class ");                          // line 49: public static class
-			out.print(idClassSimple);                                   // line 49: <%idClassSimple%>
-			out.println(" implements CharSequence");                    // line 49: implements CharSequence
-			out.println("{");                                           // line 50: {
+			out.print("public static class ");                          // line 50: public static class
+			out.print(idClassSimple);                                   // line 50: <%idClassSimple%>
+			out.println(" implements CharSequence");                    // line 50: implements CharSequence
+			out.println("{");                                           // line 51: {
 			out.increaseTab();
-			out.print("public ");                                       // line 51: public
-			out.print(idClassSimple);                                   // line 51: <%idClassSimple%>
-			out.println("(String value)");                              // line 51: (String value)
-			out.println("{");                                           // line 52: {
+			out.print("public ");                                       // line 52: public
+			out.print(idClassSimple);                                   // line 52: <%idClassSimple%>
+			out.println("(String value)");                              // line 52: (String value)
+			out.println("{");                                           // line 53: {
 			out.increaseTab();
-			out.println("value_ = value;");                             // line 53: value_ = value;
+			out.println("value_ = value;");                             // line 54: value_ = value;
 			out.decreaseTab();
-			out.println("}");                                           // line 54: }
+			out.println("}");                                           // line 55: }
 			out.println();
-			out.println("@Override public int length()");               // line 56: @Override public int length()
-			out.println("{");                                           // line 57: {
+			out.println("@Override public int length()");               // line 57: @Override public int length()
+			out.println("{");                                           // line 58: {
 			out.increaseTab();
-			out.println("return value_.length();\");");                 // line 58: return value_.length();");
+			out.println("return value_.length();\");");                 // line 59: return value_.length();");
 			out.decreaseTab();
-			out.println("}");                                           // line 59: }
+			out.println("}");                                           // line 60: }
 			out.println();
-			out.println("@Override public char charAt(int index)");     // line 61: @Override public char charAt(int index)
-			out.println("{");                                           // line 62: {
+			out.println("@Override public char charAt(int index)");     // line 62: @Override public char charAt(int index)
+			out.println("{");                                           // line 63: {
 			out.increaseTab();
-			out.println("return value_.charAt(index);\");");            // line 63: return value_.charAt(index);");
+			out.println("return value_.charAt(index);\");");            // line 64: return value_.charAt(index);");
 			out.decreaseTab();
-			out.println("}");                                           // line 64: }
+			out.println("}");                                           // line 65: }
 			out.println();
-			out.println("@Override public CharSequence subSequence(int start, int end)"); // line 66: @Override public CharSequence subSequence(int start, int end)
-			out.println("{");                                           // line 67: {
+			out.println("@Override public CharSequence subSequence(int start, int end)"); // line 67: @Override public CharSequence subSequence(int start, int end)
+			out.println("{");                                           // line 68: {
 			out.increaseTab();
-			out.println("return value_.subSequence(start, end);\");");  // line 68: return value_.subSequence(start, end);");
+			out.println("return value_.subSequence(start, end);\");");  // line 69: return value_.subSequence(start, end);");
 			out.decreaseTab();
-			out.println("}");                                           // line 69: }
+			out.println("}");                                           // line 70: }
 			out.println();
-			out.println("@Override public String toString()");          // line 71: @Override public String toString()
-			out.println("{");                                           // line 72: {
+			out.println("@Override public String toString()");          // line 72: @Override public String toString()
+			out.println("{");                                           // line 73: {
 			out.increaseTab();
-			out.println("return value_;");                              // line 73: return value_;
+			out.println("return value_;");                              // line 74: return value_;
 			out.decreaseTab();
-			out.println("}");                                           // line 74: }
+			out.println("}");                                           // line 75: }
 			out.println();
-			out.println("private String value_;");                      // line 76: private String value_;
+			out.println("private String value_;");                      // line 77: private String value_;
 			out.decreaseTab();
-			out.println("}");                                           // line 77: }
+			out.println("}");                                           // line 78: }
 		}
 		out.decreaseTab();
-		out.println("}");                                               // line 78: }
+		out.println("}");                                               // line 79: }
 	}
 	
 	
-	private String getConstantName(String id, HashSet<String> usedConstants, StringBuilder s)
+	private String getConstantName(String id, StringBuilder s, HashSet<String> usedConstants)
 	{
-		int length = id.length();
-		if (length == 0)
-			return null;
-		
-		if (!Character.isJavaIdentifierStart(id.charAt(0)))
-			return null;
-		
-		s.setLength(0);
-		for (int i=0; i<length; i++)
+		String constantName = StringUtil.makeJavaName(id, s);
+		if (constantName != null)
 		{
-			char c = id.charAt(i);
-			if (!Character.isJavaIdentifierPart(c))
-				c = '_';
-			s.append(c);
+			if (usedConstants.contains(constantName))
+				constantName = null;
+			else
+				usedConstants.add(constantName);
 		}
-		String constantName = s.toString();
-		if (usedConstants.contains(constantName))
-			return null;
-		
-		usedConstants.add(constantName);
 		return constantName;
 	}
 	

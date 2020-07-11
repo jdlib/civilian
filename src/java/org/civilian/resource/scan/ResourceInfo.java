@@ -164,9 +164,9 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 		if (isRoot())
 			return "Root";
 		else if (segment_ != null)
-			return StringUtil.startUpperCase(segment_);
+			return getJavaIdentifier(segment_, true);
 		else
-			return '$' + StringUtil.startUpperCase(pathParam_.getName());
+			return '$' + getJavaIdentifier(pathParam_.getName(), true);
 	}
 	
 	
@@ -179,9 +179,19 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 		if (isRoot())
 			return "root";
 		else if (segment_ != null)
-			return StringUtil.startLowerCase(segment_);
+			return getJavaIdentifier(segment_, false);
 		else
-			return '$' + StringUtil.startLowerCase(pathParam_.getName());
+			return '$' + getJavaIdentifier(pathParam_.getName(), false);
+	}
+	
+	
+	private String getJavaIdentifier(String name, boolean startUppercase)
+	{
+		StringBuilder sb  = new StringBuilder();
+		String javaName  = StringUtil.makeJavaName(name, sb);
+		if (javaName == null)
+			javaName = name;
+		return startUppercase ? StringUtil.startUpperCase(javaName) : StringUtil.startLowerCase(javaName);
 	}
 	
 

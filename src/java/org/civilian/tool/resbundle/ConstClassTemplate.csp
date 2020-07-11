@@ -1,6 +1,7 @@
 import java.util.List
 import java.util.HashSet
 import org.civilian.util.ClassUtil
+import org.civilian.util.StringUtil
 import org.civilian.util.DateTime
 
 
@@ -32,7 +33,7 @@ template(ResBundleCompiler.Config config, String packageName, DateTime generatio
 			@// escape key when passed as argument to the MsgKey ctor
 			@// keep a list of javafied keys and add _x suffixes if not unique
 			@String id = t.id;
-			@String constantName = getConstantName(id, usedConstants, s);
+			@String constantName = getConstantName(id, s, usedConstants);
 			@if (constantName != null)
 				@if (config.javadoc)
 					/**<%/%>
@@ -79,28 +80,16 @@ template(ResBundleCompiler.Config config, String packageName, DateTime generatio
 }}
 
 
-private String getConstantName(String id, HashSet<String> usedConstants, StringBuilder s)
+private String getConstantName(String id, StringBuilder s, HashSet<String> usedConstants)
 {
-	int length = id.length();
-	if (length == 0)
-		return null;
-	
-	if (!Character.isJavaIdentifierStart(id.charAt(0)))
-		return null;
-	
-	s.setLength(0);
-	for (int i=0; i<length; i++)
+	String constantName = StringUtil.makeJavaName(id, s);
+	if (constantName != null)
 	{
-		char c = id.charAt(i);
-		if (!Character.isJavaIdentifierPart(c))
-			c = '_';
-		s.append(c);
+		if (usedConstants.contains(constantName))
+			constantName = null;
+		else
+			usedConstants.add(constantName);
 	}
-	String constantName = s.toString();
-	if (usedConstants.contains(constantName))
-		return null;
-	
-	usedConstants.add(constantName);
 	return constantName;
 }
 

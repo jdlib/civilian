@@ -251,4 +251,30 @@ public abstract class StringUtil
 	{
 		return (s == null) || (s.length() == 0);
 	}
+	
+	
+	/**
+	 * Turns the given name in a valid Java identifier, by replacing any invalid character by '_'.
+	 * @param name the name
+	 * @param tmp a helper StringBuilder
+	 */
+	public static String makeJavaName(String name, StringBuilder tmp)
+	{
+		int length = name.length();
+		if (length == 0)
+			return null;
+		
+		if (!Character.isJavaIdentifierStart(name.charAt(0)))
+			return null;
+		
+		tmp.setLength(0);
+		for (int i=0; i<length; i++)
+		{
+			char c = name.charAt(i);
+			if (!Character.isJavaIdentifierPart(c))
+				c = '_';
+			tmp.append(c);
+		}
+		return tmp.toString();
+	}
 }
