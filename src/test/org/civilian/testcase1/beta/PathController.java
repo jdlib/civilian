@@ -19,7 +19,7 @@ package org.civilian.testcase1.beta;
 import org.civilian.annotation.Path;
 
 
-@Path("imspecial")
+@Path("imspecial.txt")
 public class PathController extends AbstractBetaController
 {
 }

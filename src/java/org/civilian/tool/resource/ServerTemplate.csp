@@ -4,6 +4,7 @@ import org.civilian.controller.ControllerSignature
 import org.civilian.resource.scan.ResourceInfo
 import org.civilian.util.DateTime
 import org.civilian.util.ClassUtil
+import org.civilian.util.JavaName
 
 
 template(ResourceInfo root, String outputPackage, String outputName, Application app, boolean timestamp)
@@ -38,9 +39,10 @@ private void printResourceClass(ResourceInfo info)
 
 	@int childCount = info.getChildCount();
 	@printResourceComment(info);
-	public static class <%info.getJavaClass()%> extends <%Resource.class.getName()%> 
+	@String className = getJavaClass(info);
+	public static class <%className%> extends <%Resource.class.getName()%> 
 	{
-		public <%info.getJavaClass()%>(<%?!info.isRoot()%><%Resource.class.getName()%> parent<%?%>)
+		public <%className%>(<%?!info.isRoot()%><%Resource.class.getName()%> parent<%?%>)
 		{
 			@if (!info.isRoot())
 				super(<%printCtorArgs(info, false);%>);
@@ -50,21 +52,21 @@ private void printResourceClass(ResourceInfo info)
 			@// print field definitions
 			@for (int i=0; i<childCount; i++)
 				@ResourceInfo child = info.getChild(i);
-				@String field = child.getJavaField();
+				@String field = getJavaField(child);
 				this.<%field%> = new <%/%>
 				@if (child.getChildCount() == 0)
 					<%Resource.class.getName()%>(<%printCtorArgs(child, true);%>);
 					@if (child.getControllerSignature() != null)
 						this.<%field%>.<%printSetCtrlSeg(child);%>
 				@else
-					<%child.getJavaClass()%>(this);
+					<%getJavaClass(child)%>(this);
 		}
 		@// print field declarations
 		@for (int i=0; i<childCount; i++)
 			<%%>
 			@ResourceInfo child = info.getChild(i);
 			@printResourceComment(child);
-			public final <%child.getChildCount() > 0 ? child.getJavaClass() : Resource.class.getName()%> <%child.getJavaField()%>;
+			public final <%child.getChildCount() > 0 ? getJavaClass(child) : Resource.class.getName()%> <%getJavaField(child)%>;
 		@for (int i=0; i<childCount; i++)
 			@ResourceInfo child = info.getChild(i);
 			@if (child.getChildCount() > 0)
@@ -118,4 +120,27 @@ private String stringArg(String s)
 }
 
 
+private String getJavaField(ResourceInfo info)
+{
+	if (info.isRoot())
+		return "root";
+	else if (info.getSegment() != null)
+		return javaName_.makeVar(info.getSegment());
+	else
+		return javaName_.makeParamVar(info.getPathParam().getName());
+}
+
+
+private String getJavaClass(ResourceInfo info)
+{
+	if (info.isRoot())
+		return "Root";
+	else if (info.getSegment() != null)
+		return javaName_.makeClass(info.getSegment());
+	else
+		return javaName_.makeParamClass(info.getPathParam().getName());
+}
+
+
 private String ctrlRootPackage_;
+private final JavaName javaName_ = new JavaName();

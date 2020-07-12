@@ -21,7 +21,6 @@ import java.util.Collections;
 import org.civilian.Resource;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.resource.PathParam;
-import org.civilian.util.StringUtil;
 
 
 /**
@@ -152,46 +151,6 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 	public String getControllerSignature()
 	{
 		return controllerSignature_;
-	}
-	
-	
-	/**
-	 * Returns a Java (inner) class name for this resource, 
-	 * used by the generator of the Java resources class.
-	 */
-	public String getJavaClass()
-	{
-		if (isRoot())
-			return "Root";
-		else if (segment_ != null)
-			return getJavaIdentifier(segment_, true);
-		else
-			return '$' + getJavaIdentifier(pathParam_.getName(), true);
-	}
-	
-	
-	/**
-	 * Returns a Java field name for this resource object, 
-	 * used by the generator of the Java resources class.
-	 */
-	public String getJavaField()
-	{
-		if (isRoot())
-			return "root";
-		else if (segment_ != null)
-			return getJavaIdentifier(segment_, false);
-		else
-			return '$' + getJavaIdentifier(pathParam_.getName(), false);
-	}
-	
-	
-	private String getJavaIdentifier(String name, boolean startUppercase)
-	{
-		StringBuilder sb  = new StringBuilder();
-		String javaName  = StringUtil.makeJavaName(name, sb);
-		if (javaName == null)
-			javaName = name;
-		return startUppercase ? StringUtil.startUpperCase(javaName) : StringUtil.startLowerCase(javaName);
 	}
 	
 

@@ -64,17 +64,17 @@ public interface Test1Resources
 				super(parent, "beta");
 				setControllerSignature(cls(".beta", "IndexController"), null);
 
-				this.imspecial = new org.civilian.Resource(this, "imspecial");
-				this.imspecial.setControllerSignature(cls(".beta", "PathController"), null);
+				this.imspecial_txt = new org.civilian.Resource(this, "imspecial.txt");
+				this.imspecial_txt.setControllerSignature(cls(".beta", "PathController"), null);
 				this.some = new Some(this);
 				this.$beta = new org.civilian.Resource(this, org.civilian.testcase1.Test1PathParams.BETA);
 				this.$beta.setControllerSignature(cls(".beta.object", "IndexController"), null);
 			}
 
 			/**
-			 * "/beta/imspecial" -> org.civilian.testcase1.beta.PathController
+			 * "/beta/imspecial.txt" -> org.civilian.testcase1.beta.PathController
 			 */
-			public final org.civilian.Resource imspecial;
+			public final org.civilian.Resource imspecial_txt;
 
 			/**
 			 * "/beta/some" -> org.civilian.testcase1.beta.SomeController

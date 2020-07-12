@@ -1,7 +1,7 @@
 import java.util.List
 import java.util.HashSet
 import org.civilian.util.ClassUtil
-import org.civilian.util.StringUtil
+import org.civilian.util.JavaName
 import org.civilian.util.DateTime
 
 
@@ -13,7 +13,6 @@ template(ResBundleCompiler.Config config, String packageName, DateTime generatio
 	@boolean hasIdClass   = config.idClass != null;
 	@String idClassSimple = hasIdClass ? ClassUtil.cutPackageName(config.idClass) : "String";
 	@HashSet<String> usedConstants = new HashSet<>();
-	@StringBuilder s = new StringBuilder();
 	@//
 	package <%packageName%>;
 	<%%>	
@@ -33,7 +32,7 @@ template(ResBundleCompiler.Config config, String packageName, DateTime generatio
 			@// escape key when passed as argument to the MsgKey ctor
 			@// keep a list of javafied keys and add _x suffixes if not unique
 			@String id = t.id;
-			@String constantName = getConstantName(id, s, usedConstants);
+			@String constantName = getConstantName(id, usedConstants);
 			@if (constantName != null)
 				@if (config.javadoc)
 					/**<%/%>
@@ -80,9 +79,9 @@ template(ResBundleCompiler.Config config, String packageName, DateTime generatio
 }}
 
 
-private String getConstantName(String id, StringBuilder s, HashSet<String> usedConstants)
+private String getConstantName(String id, HashSet<String> usedConstants)
 {
-	String constantName = StringUtil.makeJavaName(id, s);
+	String constantName = javaName_.make(id);
 	if (constantName != null)
 	{
 		if (usedConstants.contains(constantName))
@@ -98,3 +97,6 @@ private String escapeId(String id)
 {
 	return id.replace("\\",  "\\\\").replace("\"", "\\\"");
 }
+
+
+private final JavaName javaName_ = new JavaName();

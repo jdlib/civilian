@@ -34,16 +34,16 @@ public class ResourceScanTest extends CivTest
 		// resource.print(System.out);
 		
 		Iterator<Resource> it = resource.iterator();
-		assertNext(it, "/", 				"org.civilian.testcase1.IndexController");
-		assertNext(it, "/alpha", 			"org.civilian.testcase1.AlphaController");
-		assertNext(it, "/beta",				"org.civilian.testcase1.beta.IndexController");
-		assertNext(it, "/beta/imspecial",	"org.civilian.testcase1.beta.PathController");
-		assertNext(it, "/beta/some",		"org.civilian.testcase1.beta.SomeController");
-		assertNext(it, "/beta/some/thing",	"org.civilian.testcase1.beta.SomeController:thing");
-		assertNext(it, "/beta/{beta}", 		"org.civilian.testcase1.beta.object.IndexController");
-		assertNext(it, "/mixed", 			"org.civilian.testcase1.miXed.IndexController");
-		assertNext(it, "/mixed/something",	"org.civilian.testcase1.miXed.someThingController");
-		assertNext(it, "/{gammaId}", 		"org.civilian.testcase1.GammaController");
+		assertNext(it, "/", 					"org.civilian.testcase1.IndexController");
+		assertNext(it, "/alpha", 				"org.civilian.testcase1.AlphaController");
+		assertNext(it, "/beta",					"org.civilian.testcase1.beta.IndexController");
+		assertNext(it, "/beta/imspecial.txt",	"org.civilian.testcase1.beta.PathController");
+		assertNext(it, "/beta/some",			"org.civilian.testcase1.beta.SomeController");
+		assertNext(it, "/beta/some/thing",		"org.civilian.testcase1.beta.SomeController:thing");
+		assertNext(it, "/beta/{beta}", 			"org.civilian.testcase1.beta.object.IndexController");
+		assertNext(it, "/mixed", 				"org.civilian.testcase1.miXed.IndexController");
+		assertNext(it, "/mixed/something",		"org.civilian.testcase1.miXed.someThingController");
+		assertNext(it, "/{gammaId}", 			"org.civilian.testcase1.GammaController");
 		assertFalse(it.hasNext());
 		try
 		{

@@ -10,7 +10,7 @@ import org.civilian.Resource;
 import org.civilian.client.WebResource;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.DateTime;
-import org.civilian.util.StringUtil;
+import org.civilian.util.JavaName;
 
 
 class ClientJavaTemplate
@@ -197,19 +197,21 @@ class ClientJavaTemplate
 	
 	private String buildClassName(Resource resource)
 	{
-		return resource.getSegment() != null ? 
-			StringUtil.startUpperCase(resource.getSegment()) : 
-			"$" + StringUtil.startUpperCase(resource.getPathParam().getName());
+		return resource.getSegment() != null ?
+			javaName_.makeClass(resource.getSegment()) : 
+			javaName_.makeParamClass(resource.getPathParam().getName());
 	} 
 	
 	
 	private String buildFieldName(Resource resource)
 	{
-		return resource.getSegment() != null ? 
-			StringUtil.startLowerCase(resource.getSegment()) : 
-			"$" + StringUtil.startLowerCase(resource.getPathParam().getName());
+		return resource.getSegment() != null ?
+			javaName_.makeVar(resource.getSegment()) : 
+			javaName_.makeParamVar(resource.getPathParam().getName());
 	} 
 	
+	
+	private final JavaName javaName_ = new JavaName();
 
 
 	private Resource root;
