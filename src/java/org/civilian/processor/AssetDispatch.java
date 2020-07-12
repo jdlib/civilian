@@ -69,7 +69,7 @@ public class AssetDispatch extends Processor
 			return true;
 		}
 		
-		// if this request does not match a asset, run the processor in the chain 
+		// if this request does not match an asset, run the next processor in the chain 
 		Asset asset = assetService_.getAsset(relativePath);
 		if (asset == null)
 			return chain.next(request); // not an asset
