@@ -25,8 +25,8 @@ import org.civilian.Request;
 
 /**
  * Place the RequestMethod annotation on a controller action method to specify 
- * for which {@link Request#getMethod() request methods} the action method
- * can be invoked. 
+ * the allowed {@link Request#getMethod() request methods} of the action. 
+ * Or use one of its shortcuts: {@link Get}, {@link Post}, {@link Put}, {@link Delete}, {@link Head}, {@link Options} 
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
