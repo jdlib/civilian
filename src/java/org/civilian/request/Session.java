@@ -22,39 +22,39 @@ import java.util.Enumeration;
 /**
  * Represents a session of a user. Wraps HttpSEssion in a servlet environment. 
  */
-public abstract class Session
+public interface Session
 {
 	/**
 	 * Returns when the session was created
 	 * @return the time measured in milliseconds since midnight January 1, 1970 GMT.
 	 */
-	public abstract long getCreationTime();
+	public long getCreationTime();
 	
 
 	/**
-	 * Returns the session id.
+	 * Returns the unique session id.
 	 */
-	public abstract String getId();
+	public String getId();
 	
 
 	/**
 	 * Returns the last time the client sent a request associated with this session
 	 * @return the time as number of milliseconds since midnight January 1, 1970 GMT.
 	 */
-	public abstract long getLastAccessedTime();
+	public long getLastAccessedTime();
 	
 	
 	/**
 	 * Sets the time between client requests before the servlet container will invalidate the session.
 	 * @param seconds the time in seconds
 	 */
-	public abstract void setMaxInactiveInterval(int seconds);
+	public void setMaxInactiveInterval(int seconds);
 	
 	
 	/**
 	 * Returns the time in seconds between client requests before the servlet container will invalidate the session.
 	 */
-	public abstract int getMaxInactiveInterval();
+	public int getMaxInactiveInterval();
 	
 
 	/**
@@ -62,7 +62,7 @@ public abstract class Session
 	 * @param name the attribute name
 	 * @return the attribute value or null if the name is not bound to a value.
 	 */
-	public abstract Object getAttribute(String name);
+	public Object getAttribute(String name);
 	
 
 	/**
@@ -70,7 +70,7 @@ public abstract class Session
 	 * If no attribute is bound, a new object is created.
 	 * @param c the attribute class
 	 */
-	public <T> T getCreateAttr(Class<T> c) throws InstantiationException, IllegalAccessException
+	public default <T> T getCreateAttr(Class<T> c) throws InstantiationException, IllegalAccessException
 	{
 		return getCreateAttr(c, c.getName());
 	}
@@ -82,7 +82,7 @@ public abstract class Session
 	 * @param c the attribute class
 	 * @param name the attribute name
 	 */
-	public <T> T getCreateAttr(Class<T> c, String name) throws InstantiationException, IllegalAccessException
+	public default <T> T getCreateAttr(Class<T> c, String name) throws InstantiationException, IllegalAccessException
 	{
 		T value = c.cast(getAttribute(name));
 		if (value == null)
@@ -97,32 +97,32 @@ public abstract class Session
 	/**
 	 * Returns an enumeration of all names of attributes bound to the session. 
 	 */
-	public abstract Enumeration<String> getAttributeNames();
+	public Enumeration<String> getAttributeNames();
 	
 	
 	/**
 	 * Sets a session attribute. 
 	 */
-	public abstract void setAttribute(String name, Object value);
+	public void setAttribute(String name, Object value);
 	
 	
 	/**
 	 * Removes an attribute. 
 	 */
-	public abstract void removeAttribute(String name);
+	public void removeAttribute(String name);
 	
 	
 	/**
 	 * Invalidates the session.
 	 * Any objects bound to it is removed. 
 	 */
-	public abstract void invalidate();
+	public void invalidate();
 	
 	
 	/**
 	 * Returns if this session is new and the client does not yet know about it.
 	 */
-	public abstract boolean isNew();
+	public boolean isNew();
 
 	
 	/**
@@ -130,5 +130,5 @@ public abstract class Session
 	 * or null, if the implementation has a different class.
 	 * In a servlet environment Session wraps a HttpSession.
 	 */
-	public abstract <T> T unwrap(Class<T> implClass);
+	public <T> T unwrap(Class<T> implClass);
 }

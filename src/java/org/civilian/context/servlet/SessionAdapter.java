@@ -26,7 +26,7 @@ import org.civilian.util.ClassUtil;
 /**
  * Presents a HttpSession as Session.
  */
-public class SessionAdapter extends Session
+public class SessionAdapter implements Session
 {
 	public SessionAdapter(HttpSession session)
 	{

@@ -26,12 +26,12 @@ import org.civilian.util.Iterators;
 /**
  * TestSession is a {@link Session} implementation to be used in a test environment.
  */
-public class TestSession extends Session
+public class TestSession implements Session
 {
 	public TestSession()
 	{
-		creationTime_ = System.currentTimeMillis();
-		id_ = String.valueOf(creationTime_);
+		creationTime_ 	= System.currentTimeMillis();
+		id_ 			= String.valueOf(creationTime_);
 	}
 	
 	
