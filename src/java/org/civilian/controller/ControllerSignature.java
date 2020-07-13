@@ -22,7 +22,7 @@ import org.civilian.Resource;
 /**
  * ControllerSignature is a helper class to build or parse controller signature strings.
  * A signature string is either null, a controller class name, or a controller class name
- * appended by a filter string. The last case is used to specify a controller class,
+ * suffixed by a filter string. The last case is used to specify a controller class,
  * and specify that only a subset of its controller methods should be used.  
  * Signature strings are used by {@link Resource#getControllerSignature() resources} to
  * specify which controller is used to handle requests for the resource-

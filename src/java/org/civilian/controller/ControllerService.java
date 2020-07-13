@@ -110,6 +110,7 @@ public class ControllerService
 		 * all action methods are extracted from the controller class and then joined with all inherited action
 		 * methods of the parent list. 
 		 * @param controllerClass the controller class
+		 * @param methodPath consider only methods whose value of its {@link Path} annotation equals the given value.	
 		 * @param parentList the method list of the parent class
 		 * @param typeLib a type library.
 		 */
