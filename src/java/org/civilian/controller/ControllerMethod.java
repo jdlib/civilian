@@ -63,7 +63,7 @@ public class ControllerMethod
 	 */
 	public static ControllerMethod create(MethodArgFactory argFactory, Method javaMethod)
 	{
-		MethodAnnotations ma = MethodAnnotations.create(javaMethod);
+		MethodAnnotations ma = MethodAnnotations.of(javaMethod);
 		return ma != null ? new ControllerMethod(argFactory, javaMethod, ma) : null;
 	}
 	

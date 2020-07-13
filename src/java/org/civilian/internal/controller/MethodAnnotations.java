@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import org.civilian.annotation.Consumes;
 import org.civilian.annotation.Path;
 import org.civilian.annotation.Produces;
@@ -31,24 +32,29 @@ import org.civilian.util.ClassUtil;
 
 
 /**
- * Helper class to extract annotated information from a controller action method. 
+ * Helper class to extract annotated information from a controller action method
+ * (or any of its overriden ancestor methods).
  */
 public class MethodAnnotations
 {
 	/**
-	 * Returns a method annotations object for a controller action method, or
-	 * null if the method is not a action method.
+	 * Returns a MethodAnnotations object for a controller action method, 
+	 * if the method is an action method, i.e. if
+	 * <ul>
+	 * <li>the method is public and not static and has return type void
+	 * <li>at least one {@link RequestMethod} annotation is present on the method itself or one of its overriden ancestors
+	 * </ul>
+	 * @return a MethodAnnotations object or null
 	 */
-	public static MethodAnnotations create(Method javaMethod)
+	public static MethodAnnotations of(Method javaMethod)
 	{
 		int mod = javaMethod.getModifiers();
-		if (Modifier.isPublic(mod) &&
-			!Modifier.isStatic(mod) && 
-			(javaMethod.getReturnType() == void.class))
+		if (Modifier.isPublic(mod) && !Modifier.isStatic(mod) && (javaMethod.getReturnType() == void.class))
 		{
-			MethodAnnotations ma = new MethodAnnotations(javaMethod); 
-			if (ma.isActionMethod())
-				return ma;
+			AnnotationLookup lookup = new AnnotationLookup(javaMethod); 
+			List<String> reqMethods = lookup.addRequestMethods(null);
+			if (reqMethods != null)
+				return new MethodAnnotations(lookup, reqMethods);
 		}
 		return null;
 	}
@@ -65,39 +71,30 @@ public class MethodAnnotations
 		{
 			String path = pathAnno.value();
 			// ignore path's with length 0
-			if ((path.length() > 0) && (create(javaMethod) != null)) 
+			if ((path.length() > 0) && (of(javaMethod) != null)) 
 				return path;
 		}
 		return null;
 	}
 
 	
-	public MethodAnnotations(Method javaMethod)
+	private MethodAnnotations(AnnotationLookup lookup, List<String> reqMethods)
 	{
-		list_ = new AntnList(javaMethod); 
-
-		ArrayList<String> reqMethods = list_.addRequestMethods(null);
-		if (reqMethods != null)
-			reqMethods.toArray(requestMethods_ = new String[reqMethods.size()]);
+		lookup_ 	= lookup; 
+		reqMethods_	= reqMethods.toArray(new String[reqMethods.size()]);
 	}
 
-	
-	public boolean isActionMethod()
-	{
-		return requestMethods_ != null;
-	}
-	
 	
 	public String[] getRequestMethods()
 	{
-		return requestMethods_;
+		return reqMethods_;
 	}
 
 	
 	public ContentTypeList getProduces()
 	{
 		ContentTypeList produces = null;
-		Produces annotation = list_.getAnnotation(Produces.class);
+		Produces annotation = lookup_.getAnnotation(Produces.class);
 		if (annotation != null)
 		{
 			// we sort by specificity to speed up content negotiation
@@ -110,7 +107,7 @@ public class MethodAnnotations
 	public ContentTypeList getConsumes()
 	{
 		ContentTypeList consumes = null;
-		Consumes annotation = list_.getAnnotation(Consumes.class);
+		Consumes annotation = lookup_.getAnnotation(Consumes.class);
 		if (annotation != null)
 			consumes = extractContentTypes(null, annotation.value());
 		return consumes;
@@ -124,21 +121,24 @@ public class MethodAnnotations
 	}
 
 	
-	private class AntnList
+	/**
+	 * AnnotationLookup can return annotations declared on a Java method
+	 * or on any of its overriden method ancestors. 
+	 */
+	private static class AnnotationLookup
 	{
-		public AntnList(Method javaMethod)
+		public AnnotationLookup(Method javaMethod)
 		{
 			this(javaMethod, javaMethod.getParameterTypes());
 		}
 
 
-		private AntnList(Method javaMethod, Class<?>[] paramTypes)
+		private AnnotationLookup(Method javaMethod, Class<?>[] paramTypes)
 		{
-			javaMethod_  = javaMethod;
-			annotations_ = javaMethod.getAnnotations();
+			javaMethod_ = javaMethod;
 
 			Method superMethod = findOverwrittenMethod(javaMethod.getName(), paramTypes, javaMethod.getDeclaringClass().getSuperclass());
-			next_ = superMethod != null ? new AntnList(superMethod, paramTypes) : null;
+			next_ = superMethod != null ? new AnnotationLookup(superMethod, paramTypes) : null;
 		}
 		
 		
@@ -159,7 +159,7 @@ public class MethodAnnotations
 		}
 		
 
-	    public <T extends Annotation> T getAnnotation(Class<T> annotationClass) 
+	    private <T extends Annotation> T getAnnotation(Class<T> annotationClass) 
 	    {
 	    	T annotation = javaMethod_.getAnnotation(annotationClass);
 			if ((annotation == null) && (next_ != null))
@@ -168,9 +168,9 @@ public class MethodAnnotations
 	    }
 	    
 		
-		public ArrayList<String> addRequestMethods(ArrayList<String> list)
+		private List<String> addRequestMethods(List<String> list)
 		{
-			for (Annotation annotation : annotations_)
+			for (Annotation annotation : javaMethod_.getAnnotations())
 				list = addRequestMethods(annotation, list);
 			if ((list == null) && (next_ != null))
 				list = next_.addRequestMethods(null);
@@ -178,7 +178,7 @@ public class MethodAnnotations
 		}
 		
 		
-		private ArrayList<String> addRequestMethods(Annotation annotation, ArrayList<String> list)
+		private List<String> addRequestMethods(Annotation annotation, List<String> list)
 		{
 			if (annotation != null)
 			{
@@ -191,7 +191,7 @@ public class MethodAnnotations
 		}
 			
 
-		private ArrayList<String> addRequestMethods(ArrayList<String> list, String... methods)
+		private List<String> addRequestMethods(List<String> list, String... methods)
 		{
 			if (list == null)
 				list = new ArrayList<>();
@@ -205,11 +205,10 @@ public class MethodAnnotations
 		
 		
 		private final Method javaMethod_;
-		private final Annotation[] annotations_;
-		private final AntnList next_;
+		private final AnnotationLookup next_;
 	}
 	
 	
-	private AntnList list_;
-	private String[] requestMethods_;
+	private AnnotationLookup lookup_;
+	private String[] reqMethods_;
 }
