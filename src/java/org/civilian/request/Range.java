@@ -1,8 +1,17 @@
 package org.civilian.request;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.RandomAccessFile;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import org.civilian.Request;
+import org.civilian.Response;
+import org.civilian.Response.Status;
+import org.civilian.response.ResponseHeaders;
 import org.civilian.util.Check;
 
 
@@ -13,6 +22,69 @@ import org.civilian.util.Check;
 @SuppressWarnings("serial")
 public class Range extends ArrayList<Range.Part>
 {
+	private static final String MIME_BOUNDARY = "MIME_BOUNDARY";
+	
+	
+	public static boolean writeRange(File file, Request request) throws Exception
+	{
+		String rangeHeader = request.getHeaders().get("Range");
+		if (rangeHeader == null)
+			return false;
+
+		long fileLength 		= file.length();
+		Range range 			= Range.parse(rangeHeader);
+		Response response 		= request.getResponse();
+		ResponseHeaders headers = response.getHeaders();
+		if (range == null)
+		{
+			// range contains syntax errors
+			headers.set("Content-Range", "bytes */" + fileLength); // Required in 416.
+	        response.sendError(Status.SC416_REQUESTED_RANGE_NOT_SATISFIABLE);
+	        return true;
+		}
+
+		response.setStatus(Status.PARTIAL_CONTENT);
+		response.getHeaders().set("Accept-Ranges", "bytes");
+		
+		try (RandomAccessFile ra = new RandomAccessFile(file, "r"))
+		{
+			OutputStream out = response.getContentStream();
+			byte[] buffer = new byte[8192];
+			
+			if (range.size() == 1)
+			{
+				Part part 		= range.get(0).adjust(fileLength);
+				long partLength = part.length();
+				headers.set("Content-Range", "bytes " + part.start + "-" + part.end + "/" + partLength);
+	            response.setContentLength(partLength);
+	            part.copy(ra, out, buffer);
+			}
+			else
+			{
+				String partContentType = response.getContentType();   
+	            response.setContentType("multipart/byteranges; boundary=" + MIME_BOUNDARY);
+	            for (Part part : range)
+	            {
+	                write(out, "\r\n");
+	                write(out, "--" + MIME_BOUNDARY + "\r\n");
+	                if (partContentType != null)
+	                    write(out, "Content-Type: " + partContentType);
+	                write(out, "Content-Range: bytes " + part.start + "-" + part.end + "/" + part.length() + "\r\n");
+
+		            part.copy(ra, out, buffer);
+	            }
+			}
+			return true;
+		}
+	}
+	
+	
+	private static void write(OutputStream out, String s) throws IOException
+	{
+		out.write(s.getBytes(StandardCharsets.ISO_8859_1));
+	}
+	
+
 	public static class Part
 	{
 		public Part(long start, long end)
@@ -22,6 +94,52 @@ public class Range extends ArrayList<Range.Part>
 		}
 
 	
+		public long length()
+		{
+			return Math.max(0, end - start + 1);
+		}
+		
+		
+		public Part adjust(long fileLength)
+		{
+			long start = this.start;
+			long end   = this.end;
+
+			if (start < 0)
+			{
+				// suffix part
+				start = end >= fileLength ? 0L : fileLength - end;
+				end   = fileLength - 1;
+			}
+			else
+			{
+				if ((end < 0) || (end >= fileLength))
+					end = fileLength - 1;
+				if (start > end)
+					start = end;
+			}
+			return new Part(start, end);
+		}
+		
+		
+		private void copy(RandomAccessFile file, OutputStream out, byte[] buffer) throws IOException
+		{
+			file.seek(start);
+			
+			int length = (int)length();
+			int done   = 0;  
+			while (done < length)
+			{
+				int len  = Math.min(buffer.length, done);
+				int read = file.read(buffer, 0, len);
+				if (read < 0)
+					break;
+				out.write(buffer, 0, read);
+				done += read;
+			}
+		}
+
+		
 		public final long start;
 		public final long end;
 	}
