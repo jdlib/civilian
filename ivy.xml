@@ -29,7 +29,7 @@
 		
 		<dependency conf="test->master" org="junit" name="junit" rev="4.11"/>
 		<dependency conf="test->master" org="org.slf4j" name="slf4j-nop" rev="1.7.5"/>
-		<dependency conf="test->default" org="org.mockito" name="mockito-all" rev="1.9.5"/>
+		<dependency conf="test->default" org="org.mockito" name="mockito-all" rev="1.10.18"/>
 		<dependency conf="test->default" org="org.hamcrest" name="hamcrest-core" rev="1.3"/>
 		
 		<dependency conf="samples->default" org="com.google.inject" name="guice" rev="3.0"/>

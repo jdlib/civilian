@@ -20,10 +20,10 @@
 	<classpathentry kind="lib" path="lib/build/tomcat-catalina-7.0.54.jar"/>
 	<classpathentry kind="lib" path="lib/build/velocity-1.7.jar"/>
 	<classpathentry kind="lib" path="lib/test/junit-4.11.jar"/>
-	<classpathentry kind="lib" path="lib/test/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="lib" path="lib/test/slf4j-nop-1.7.5.jar"/>
 	<classpathentry kind="lib" path="lib/build/javax.persistence-2.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/build/poi-4.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/build/poi-ooxml-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/test/mockito-all-1.10.18.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
