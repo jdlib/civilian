@@ -8,6 +8,7 @@ import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.Response.Status;
@@ -22,12 +23,13 @@ import org.civilian.util.Check;
 @SuppressWarnings("serial")
 public class Range extends ArrayList<Range.Part>
 {
+	public static final String HEADER = "Range";
 	private static final String MIME_BOUNDARY = "MIME_BOUNDARY";
 	
 	
 	public static boolean writeRange(File file, Request request) throws Exception
 	{
-		String rangeHeader = request.getHeaders().get("Range");
+		String rangeHeader = request.getHeaders().get(HEADER);
 		if (rangeHeader == null)
 			return false;
 
@@ -84,6 +86,19 @@ public class Range extends ArrayList<Range.Part>
 		out.write(s.getBytes(StandardCharsets.ISO_8859_1));
 	}
 	
+	
+	public Range add(long start, long end)
+	{
+		add(new Part(start, end));
+		return this;
+	}
+	
+	
+	@Override public String toString()
+	{
+		return "bytes=" + stream().map(Object::toString).collect(Collectors.joining(","));
+	}
+	
 
 	public static class Part
 	{
@@ -130,13 +145,19 @@ public class Range extends ArrayList<Range.Part>
 			int done   = 0;  
 			while (done < length)
 			{
-				int len  = Math.min(buffer.length, done);
+				int len  = Math.min(buffer.length, length - done);
 				int read = file.read(buffer, 0, len);
 				if (read < 0)
 					break;
 				out.write(buffer, 0, read);
 				done += read;
 			}
+		}
+		
+		
+		@Override public String toString()
+		{
+			return (start < 0 ? "" : String.valueOf(start)) + '-' + (end < 0 ? "" : String.valueOf(end)); 
 		}
 
 		

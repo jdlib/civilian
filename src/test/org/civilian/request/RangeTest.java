@@ -1,42 +1,48 @@
 package org.civilian.request;
 
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.charset.StandardCharsets;
 import org.civilian.CivTest;
+import org.civilian.context.test.TestApp;
+import org.civilian.context.test.TestRequest;
+import org.civilian.context.test.TestResponse;
 import org.civilian.request.Range.Part;
 import org.junit.Test;
 
 
 public class RangeTest extends CivTest
 {
-	@Test public void testErrors()
+	@Test public void testParseError()
 	{
-		assertRangeNull("");
-		assertRangeNull("a");
-		assertRangeNull("bytes");
-		assertRangeNull("bytes=");
-		assertRangeNull("bytes=1");
-		assertRangeNull("bytes=1;");
+		assertParseError("");
+		assertParseError("a");
+		assertParseError("bytes");
+		assertParseError("bytes=");
+		assertParseError("bytes=1");
+		assertParseError("bytes=1;");
 	}
 	
 	
-	@Test public void testOk()
-	{
-		assertRange("bytes=0-", 0, -1);
-		assertRange("bytes=-500", -1, 500);
-		assertRange("bytes=200-500", 200, 500);
-		assertRange("bytes=200-100", 200, 100);
-		assertRange("bytes=0-0, -1", 0, 0, -1, 1);
-	}
-	
-	
-	private void assertRangeNull(String rangeHeader)
+	private void assertParseError(String rangeHeader)
 	{
 		Range range = Range.parse(rangeHeader);
 		assertNull(range);
 	}
 
 
-	private void assertRange(String rangeHeader, long... startEnds)
+	@Test public void testParseOk()
+	{
+		assertParseOk("bytes=0-", 0, -1);
+		assertParseOk("bytes=-500", -1, 500);
+		assertParseOk("bytes=200-500", 200, 500);
+		assertParseOk("bytes=200-100", 200, 100);
+		assertParseOk("bytes=0-0,-1", 0, 0, -1, 1);
+	}
+	
+	
+	private void assertParseOk(String rangeHeader, long... startEnds)
 	{
 		Range range = Range.parse(rangeHeader);
 		assertNotNull(range);
@@ -47,6 +53,61 @@ public class RangeTest extends CivTest
 		{
 			assertEquals(startEnds[n++], part.start);
 			assertEquals(startEnds[n++], part.end);
+		}
+	}
+
+	
+	@Test public void testToString()
+	{
+		assertToString("bytes=0-");
+		assertToString("bytes=-500");
+		assertToString("bytes=200-500");
+		assertToString("bytes=0-0,-1");
+		assertToString("bytes=0-0, -1", "bytes=0-0,-1");
+	}
+
+
+	private void assertToString(String rangeHeader)
+	{
+		assertToString(rangeHeader, rangeHeader);
+	}
+	
+	
+	private void assertToString(String rangeHeader, String expected)
+	{
+		Range range = Range.parse(rangeHeader);
+		assertNotNull(range);
+		assertEquals(expected, range.toString());
+	}
+	
+	
+	@Test public void testWrite() throws Exception
+	{
+		File file = File.createTempFile("test", ".tmp");
+		file.deleteOnExit();
+		try
+		{
+			try (FileOutputStream out = new FileOutputStream(file)) 
+			{
+				out.write("ABCDEF".getBytes(StandardCharsets.ISO_8859_1));
+			}
+			assertEquals(6, file.length());
+			
+			TestApp app = new TestApp();
+			TestRequest request = new TestRequest(app);
+			request.getHeaders().set(Range.HEADER, new Range().add(0, 2).toString());
+			
+			Range.writeRange(file, request);
+			
+			TestResponse response = request.getTestResponse();
+			assertEquals(3, response.getHeaders().getInt("content-length"));
+			assertEquals("bytes", response.getHeaders().get("accept-ranges"));
+			assertEquals("bytes 0-2/3", response.getHeaders().get("content-range"));
+			assertEquals("ABC", response.getContentText(true));
+		}
+		finally
+		{
+			file.delete();
 		}
 	}
 }
