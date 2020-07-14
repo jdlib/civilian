@@ -110,6 +110,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 		public static final int SC203_NON_AUTHORITATIVE_INFORMATION = HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION;
 		public static final int SC204_NO_CONTENT 					= HttpServletResponse.SC_NO_CONTENT;
 		public static final int SC205_RESET_CONTENT 				= HttpServletResponse.SC_RESET_CONTENT;
+		public static final int SC206_PARTIAL_CONTENT				= HttpServletResponse.SC_PARTIAL_CONTENT;
 		public static final int SC300_MULTIPLE_CHOICES				= HttpServletResponse.SC_MULTIPLE_CHOICES;
 		public static final int SC301_MOVED_PERMANENTLY 			= HttpServletResponse.SC_MOVED_PERMANENTLY;
 		public static final int SC302_MOVED_TEMPORARILY 			= HttpServletResponse.SC_MOVED_TEMPORARILY;
