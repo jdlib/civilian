@@ -25,7 +25,6 @@ import java.io.Writer;
 import javax.servlet.http.Cookie;
 import org.civilian.Request;
 import org.civilian.Response;
-import org.civilian.content.ContentType;
 import org.civilian.internal.AbstractResponse;
 import org.civilian.internal.ParamList;
 import org.civilian.request.CookieList;
@@ -117,13 +116,13 @@ public class TestResponse extends AbstractResponse
 	//-----------------------------------
 	
 	
-	@Override public void setContentType(ContentType contentType)
+	@Override public void setContentType(String contentType)
 	{
 		contentType_ = contentType;
 	}
 
 
-	@Override public ContentType getContentType()
+	@Override public String getContentType()
 	{
 		return contentType_;
 	}
@@ -332,7 +331,7 @@ public class TestResponse extends AbstractResponse
 	private int statusCode_ = Status.OK;
 	private boolean isCommitted_;
 	private ParamList headers_ = new ParamList(true);
-	private ContentType contentType_;
+	private String contentType_;
 	private long contentLength_ = -1;
 	private int bufferSize_ = 4096;
 	private BufferedStream bufferedStream_;

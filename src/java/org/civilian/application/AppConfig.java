@@ -526,7 +526,7 @@ public class AppConfig
 	 * If you want to implement serialization of XML using JAXB, simply define 
 	 * a suitable JAXBContext, create a {@link JaxbXmlSerializer} and add it to the map.<br>
 	 */
-	public Map<ContentType,ContentSerializer> getContentSerializers()
+	public Map<String,ContentSerializer> getContentSerializers()
 	{
 		return contentSerializers_;
 	}
@@ -536,6 +536,16 @@ public class AppConfig
 	 * Registers a ContentSerializer for a ContentType.
 	 */
 	public void registerContentSerializer(ContentType contentType, ContentSerializer serializer)
+	{
+		Check.notNull(contentType, "contentType");
+		registerContentSerializer(contentType.getValue(), serializer);
+	}
+
+	
+	/**
+	 * Registers a ContentSerializer for a ContentType.
+	 */
+	public void registerContentSerializer(String contentType, ContentSerializer serializer)
 	{
 		Check.notNull(contentType, "contentType");
 		Check.notNull(serializer, "serializer");
@@ -548,7 +558,7 @@ public class AppConfig
 	 */
 	public ContentSerializer getContentSerializer(ContentType contentType)
 	{
-		return contentSerializers_.get(contentType);
+		return contentSerializers_.get(contentType.getValue());
 	}
 
 	
@@ -569,5 +579,5 @@ public class AppConfig
 	private boolean connect_;
 	private boolean async_;
 	private ControllerFactory controllerFactory_;
-	private Map<ContentType,ContentSerializer> contentSerializers_ = new HashMap<>();
+	private Map<String,ContentSerializer> contentSerializers_ = new HashMap<>();
 }

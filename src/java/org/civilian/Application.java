@@ -315,10 +315,10 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	private void initDefaultContentSerializers()
 	{
 		if (getContentSerializer(ContentType.TEXT_PLAIN) == null)
-			contentSerializers_.put(ContentType.TEXT_PLAIN, new TextSerializer());
+			contentSerializers_.put(ContentType.TEXT_PLAIN.getValue(), new TextSerializer());
 		if ((getContentSerializer(ContentType.APPLICATION_JSON) == null) && 
 			ClassUtil.getPotentialClass("com.google.gson.Gson", Object.class, null) != null)
-			contentSerializers_.put(ContentType.APPLICATION_JSON, new GsonJsonSerializer());
+			contentSerializers_.put(ContentType.APPLICATION_JSON.getValue(), new GsonJsonSerializer());
 	}
 	
 	
@@ -608,14 +608,27 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	 */
 	public ContentSerializer getContentSerializer(ContentType contentType)
 	{
-		return contentSerializers_.get(contentType);
+		return contentSerializers_.get(contentType != null ? contentType.getValue() : null);
 	}
 	
 	
 	/**
+	 * Returns a ContentSerializer for the content type.
+	 * @return the ContentSerializer or null if no suitable serializer is available
+	 * By default the application possesses ContentSerializers for text/plain and
+	 * application/json (based on GSON).
+	 * @see AppConfig#registerContentSerializer(String, ContentSerializer)
+	 */
+	public ContentSerializer getContentSerializer(String contentType)
+	{
+		return contentSerializers_.get(contentType);
+	}
+
+	
+	/**
 	 * Returns an iterator for all ContentTypes with a registered ContentSerializer.
 	 */
-	public Iterator<ContentType> getContentSerializerTypes()
+	public Iterator<String> getContentSerializerTypes()
 	{
 		return Iterators.unmodifiable(contentSerializers_.keySet().iterator());
 	}
@@ -812,7 +825,7 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	private Object connector_;
 	private ProcessorList processors_ = ProcessorList.EMPTY;
 	private final HashMap<String, Object> attributes_ = new HashMap<>();
-	private Map<ContentType,ContentSerializer> contentSerializers_ = Collections.<ContentType,ContentSerializer>emptyMap();
+	private Map<String,ContentSerializer> contentSerializers_ = Collections.<String,ContentSerializer>emptyMap();
 
 	// lifecycle property 
 	private Status status_ = Status.CREATED;

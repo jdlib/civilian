@@ -84,7 +84,7 @@ public class AbstractResponseTest extends CivTest
 
 		assertNull(response.getContentType());
 		response.setContentType(ContentType.TEXT_PLAIN);
-		assertSame(ContentType.TEXT_PLAIN, response.getContentType());
+		assertSame(ContentType.TEXT_PLAIN.getValue(), response.getContentType());
 		
 		assertEquals("text/plain; charset=UTF-8", response.getContentTypeAndEncoding());
 	}
@@ -185,7 +185,7 @@ public class AbstractResponseTest extends CivTest
 		
 		response.writeTemplate(null); // ignored
 		response.writeTemplate(t);
-		response.writeContent(t, null);
+		response.writeContent(t);
 		
 		assertEquals("abcabc", response.getContentText(true));
 	}

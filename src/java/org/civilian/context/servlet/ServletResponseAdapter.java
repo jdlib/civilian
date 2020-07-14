@@ -26,7 +26,6 @@ import java.util.Locale;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import org.civilian.content.ContentType;
 import org.civilian.internal.AbstractResponse;
 import org.civilian.internal.Logs;
 import org.civilian.response.ResponseHeaders;
@@ -141,9 +140,9 @@ class ServletResponseAdapter extends AbstractResponse
 	/**
 	 * Forwards to the HttpServletResponse.
 	 */
-	@Override public void setContentType(ContentType type)
+	@Override public void setContentType(String type)
 	{
-		servletResponse_.setContentType(type != null ? type.getValue() : null);
+		servletResponse_.setContentType(type);
 		contentType_ = type;
 	}
 	
@@ -151,7 +150,7 @@ class ServletResponseAdapter extends AbstractResponse
 	/**
 	 * Forwards to the HttpServletResponse.
 	 */
-	@Override public ContentType getContentType()
+	@Override public String getContentType()
 	{
 		return contentType_;
 	}
@@ -368,7 +367,7 @@ class ServletResponseAdapter extends AbstractResponse
 	
 	private HttpServletResponse servletResponse_;
 	private Headers headers_;
-	private ContentType contentType_;
+	private String contentType_;
 	private static final java.lang.reflect.Method SETCONTENT_LENGTH_LONG_METHOD;
 	static 
 	{

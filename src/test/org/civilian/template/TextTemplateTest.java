@@ -20,7 +20,6 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.Response;
-import org.civilian.content.ContentType;
 import org.civilian.internal.AbstractResponse;
 import org.civilian.template.TextTemplate;
 import org.junit.Test;
@@ -33,10 +32,10 @@ public class TextTemplateTest extends CivTest
 		TemplateWriter out 	= mock(TemplateWriter.class);
 		Response response	= mock(AbstractResponse.class);
 		when(response.getContentWriter()).thenReturn(out);
-		doCallRealMethod().when(response).writeContent(anyObject(), any(ContentType.class));
+		doCallRealMethod().when(response).writeContent(anyObject(), anyString());
 		
 		TextTemplate template = new TextTemplate("hallo");
-		response.writeContent(template, null);
+		response.writeContent(template, "");
 		
 		verify(out).print("hallo");
 	}

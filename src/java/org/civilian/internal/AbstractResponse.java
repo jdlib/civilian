@@ -146,7 +146,7 @@ public abstract class AbstractResponse implements Response
 	protected abstract void sendRedirectImpl(String url) throws IOException;
 
 
-	@Override public void writeContent(Object object, ContentType contentType) throws Exception
+	@Override public void writeContent(Object object, String contentType) throws Exception
 	{
 		if (object == null)
 			return;
@@ -165,7 +165,7 @@ public abstract class AbstractResponse implements Response
 			if (contentType == null)
 			{
 				if (object instanceof String)
-					setContentType(contentType = ContentType.TEXT_PLAIN);
+					setContentType(contentType = ContentType.TEXT_PLAIN.getValue());
 				else
 					throw new IllegalStateException("no content-type set");
 			}

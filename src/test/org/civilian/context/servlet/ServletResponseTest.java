@@ -133,7 +133,7 @@ public class ServletResponseTest extends CivTest
 		
 		assertNull(response.getContentType());
 		response.setContentType(ContentType.APPLICATION_EXCEL);
-		assertSame(ContentType.APPLICATION_EXCEL, response.getContentType());
+		assertSame(ContentType.APPLICATION_EXCEL.getValue(), response.getContentType());
 		
 		response.setContentLength(2L);
 		verify(servletResp).setContentLength(2);

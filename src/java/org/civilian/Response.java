@@ -419,7 +419,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 */
 	default public void writeTemplate(Template template) throws Exception
 	{
-		writeContent(template, null);
+		writeContent(template);
 	}
 	
 	
@@ -460,7 +460,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 */
 	default public void writeContent(Object object) throws Exception
 	{
-		writeContent(object, null);
+		writeContent(object, (String)null);
 	}
 
 	
@@ -479,7 +479,16 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * @param contentType a content type. Can be null, if the content-type was already set on
 	 * 		the response
 	 */
-	public abstract void writeContent(Object object, ContentType contentType) throws Exception;
+	public abstract void writeContent(Object object, String contentType) throws Exception;
+
+	
+	/**
+	 * Calls write(object, contentType.getValue());
+	 */
+	public default void writeContent(Object object, ContentType contentType) throws Exception
+	{
+		writeContent(object, contentType != null ? contentType.getValue() : null); 
+	}
 
 	
 	//-----------------------------------
@@ -513,8 +522,20 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Sets the content type of the response content. 
 	 * If the content type is null or the response has been committed, it is ignored.
+	 * Forwards to {@link #setContentType(String)}.
 	 */
-	public abstract void setContentType(ContentType contentType);
+	public default void setContentType(ContentType contentType)
+	{
+		String s = contentType != null ? contentType.getValue() : null;
+		setContentType(s);
+	}
+
+	
+	/**
+	 * Sets the content type of the response content. 
+	 * If the content type is null or the response has been committed, it is ignored.
+	 */
+	public abstract void setContentType(String contentType);
 	
 	
 	/**
@@ -523,7 +544,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * the content type will be initialized to that negotiated content type.
 	 * Else it is initialized to null.
 	 */
-	public abstract ContentType getContentType();
+	public abstract String getContentType();
 
 	
 	/**
@@ -534,10 +555,10 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 */
 	default public String getContentTypeAndEncoding()
 	{
-		ContentType contentType = getContentType();
+		String contentType = getContentType();
 		if (contentType != null)
 		{
-			String result = contentType.getValue();
+			String result = contentType;
 			String encoding = getContentEncoding();
 			if (encoding != null)
 				result += "; charset=" + encoding;

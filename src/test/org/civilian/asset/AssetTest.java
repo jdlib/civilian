@@ -100,7 +100,7 @@ public class AssetTest extends CivTest
 
 		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get("Last-Modified"));
 		assertEquals(2592000, response.getHeaders().getInt("max-age"));
-		assertEquals(ContentType.TEXT_CSS, response.getContentType());
+		assertEquals(ContentType.TEXT_CSS.getValue(), response.getContentType());
 		assertEquals("ISO-8859-1", response.getContentEncoding());
 		assertEquals(Response.Status.SC200_OK, response.getStatus());
 		assertEquals("content", response.getContentText(true));

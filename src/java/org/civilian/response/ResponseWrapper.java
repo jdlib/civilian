@@ -22,7 +22,6 @@ import java.util.Locale;
 import javax.servlet.http.Cookie;
 import org.civilian.Request;
 import org.civilian.Response;
-import org.civilian.content.ContentType;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
 import org.civilian.util.Check;
@@ -104,7 +103,7 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public void writeContent(Object object, ContentType contentType) throws Exception
+	@Override public void writeContent(Object object, String contentType) throws Exception
 	{
 		response_.writeContent(object, contentType);
 	}
@@ -146,13 +145,13 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public void setContentType(ContentType contentType)
+	@Override public void setContentType(String contentType)
 	{
 		response_.setContentType(contentType);
 	}
 
 
-	@Override public ContentType getContentType()
+	@Override public String getContentType()
 	{
 		return response_.getContentType();
 	}

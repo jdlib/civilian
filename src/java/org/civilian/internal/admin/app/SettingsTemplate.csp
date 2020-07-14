@@ -3,7 +3,6 @@ import org.civilian.Application
 import org.civilian.Processor
 import org.civilian.processor.ProcessorList
 import org.civilian.text.LocaleServiceList
-import org.civilian.content.ContentType
 
 
 template(Application app) mixin html
@@ -46,9 +45,9 @@ template(Application app) mixin html
 	<tr>
 		<td>ContentSerializers</td>
 		<td>
-			@Iterator<ContentType> cts = app.getContentSerializerTypes();
+			@Iterator<String> cts = app.getContentSerializerTypes();
 			@for (int i=0; cts.hasNext(); i++)
-				@ContentType ct = cts.next();
+				@String ct = cts.next();
 				<%?i > 0%><br><%?%><%ct%>: <%app.getContentSerializer(ct).getClass().getName()%> 
 		</td>
 		<td>org.civilian.Application.getContentSerializerTypes()</td>
