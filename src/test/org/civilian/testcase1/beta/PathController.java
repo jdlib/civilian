@@ -16,10 +16,10 @@
 package org.civilian.testcase1.beta;
 
 
-import org.civilian.annotation.Path;
+import org.civilian.annotation.Segment;
 
 
-@Path("imspecial.txt")
+@Segment("imspecial.txt")
 public class PathController extends AbstractBetaController
 {
 }

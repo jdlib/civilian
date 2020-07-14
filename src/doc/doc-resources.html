@@ -19,9 +19,9 @@
 			<ul>
 			<li><a href="#basemapping">Base mapping from controller classes to resource paths</a>
 			<li><a href="#indexcontrollers">IndexControllers</a>
-			<li><a href="#pathanno">Using the @Path annotation on packages and class names</a>
+			<li><a href="#pathanno">Using the @Segment annotation on packages and class names</a>
 			<li><a href="#pathparamanno">Using the @PathParam annotation on packages and class names</a>
-			<li><a href="#pathannomethods">Using the @Path annotation on controller methods</a>
+			<li><a href="#segannomethods">Using the @Segment annotation on controller methods</a>
 			<li><a href="#exensions">URLs and extensions</a>
 			<li><a href="#finepoints">Fine points of resource mappings</a>
 			<li><a href="#checking">Checking resource mappings</a>
@@ -246,29 +246,29 @@
 		</tr>
 		</table>
 		
-		<h3 id="pathanno">Using the @Path annotation on packages and class names</h3>
-		When you specify the {javadoc:annotation.Path @Path} annotation on a controller class or package (in its 
+		<h3 id="pathanno">Using the @Segment annotation on packages and class names</h3>
+		When you specify the {javadoc:annotation.Segment @Segment} annotation on a controller class or package (in its 
 		<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.4">package-info.java</a>),
 		the annotation value then is used to extend the path, instead of the simple class name or the last package part:
 		<p>
 		<table class="table">
 		<tr>
-			<td><code>@Path("<b>Civilian</b>") package com.demo.web.<b>civ</b></code></td>
+			<td><code>@Segment("<b>Civilian</b>") package com.demo.web.<b>civ</b></code></td>
 			<td width="40%"><code>/Civilian</code></td>
 		</tr>
 		<tr>
-			<td><code>@Path("<b>temp</b>") public class com.demo.web.<b>civ.TmpController</b></code></td>
+			<td><code>@Segment("<b>temp</b>") public class com.demo.web.<b>civ.TmpController</b></code></td>
 			<td><code>/Civilian/temp</code></td>
 		</tr>
 		<tr>
-			<td><code>@Path("<b>index</b>") public class com.demo.web.<b>civ.IndexController</b></code></td>
+			<td><code>@Segment("<b>index</b>") public class com.demo.web.<b>civ.IndexController</b></code></td>
 			<td><code>/Civilian/index</code></td>
 		</tr>
 		</table>
-		Therefore use the @Path annotation to override the naming conventions when necessary.<br>
+		Therefore use the @Segment annotation to override the naming conventions when necessary.<br>
 		<small>(Or as an advanced technique alter the {javadoc:controller.ControllerNaming naming conventions}).</small>
 		<p>
-		Please not that the @Path value is not interpreted as absolute path (like in JAX-RS) but rather
+		Please not that the @Segment value is not interpreted as absolute path (like in JAX-RS) but rather
 		extends the path defined by the parent package.  		
 		 
 		<h3 id="pathparamanno">Using the @PathParam annotation on packages and class names</h3>
@@ -288,13 +288,13 @@
 		</tr>
 		</table>
 
-		<h3 id="pathannomethods">Using the @Path annotation on controller methods</h3>
+		<h3 id="segannomethods">Using the @Segment annotation on controller methods</h3>
 		Given all these features every dynamic resource exposed by the application still requires an own controller class.
 		Nothing wrong with that, but for very small controller implementations this might seem a liitle bit oversized.<br>
 		As we will see in the <a href="doc-controllers.html">Controller</a> chapter, controller classes define
 		special methods as entry points for request processing.
 		<br>
-		You can place {javadoc:annotation.Path @Path} on such methods and create a virtual sub-controller class
+		You can place {javadoc:annotation.Segment @Segment} on such methods and create a virtual sub-controller class
 		which processes requests for the corresponding sub-resource: 
 		
 		<table class="table">
@@ -303,12 +303,12 @@
 			<td width="40%"><code>/search</code></td>
 		</tr>
 		<tr>
-			<td><code>@Path("filter") com.demo.web.SearchController#processFilter()</code></td>
+			<td><code>@Segment("filter") com.demo.web.SearchController#processFilter()</code></td>
 			<td><code>/search/filter</code></td>
 		</tr>
 		</table>
 		<p>
-		So using @Path annotations on methods you can implements multiple resource URLs in a single controller class.
+		So using @Segment annotations on methods you can implements multiple resource URLs in a single controller class.
 
 		<h3 id="exensions">URLs and extensions</h3>
 		In all the examples we followed the {link:https://en.wikipedia.org/wiki/Clean_URL clean URL}
@@ -327,7 +327,7 @@
 		   
 		<h3 id="finepoints">Fine points of resource mappings</h3>
 		No resource may be mapped to more than one controller. 
-		Doing so (e.g. using @Path annotations), results in an error.
+		Doing so (e.g. using @Segment annotations), results in an error.
 		<p>
 		<b>Abstract</b> controller classes will not be mapped to a resource.
 

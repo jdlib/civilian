@@ -21,7 +21,7 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.HashMap;
 import org.civilian.Controller;
-import org.civilian.annotation.Path;
+import org.civilian.annotation.Segment;
 import org.civilian.application.ConfigKeys;
 import org.civilian.controller.classloader.ReloadConfig;
 import org.civilian.resource.PathParamMap;
@@ -110,7 +110,7 @@ public class ControllerService
 		 * all action methods are extracted from the controller class and then joined with all inherited action
 		 * methods of the parent list. 
 		 * @param controllerClass the controller class
-		 * @param methodPath consider only methods whose value of its {@link Path} annotation equals the given value.	
+		 * @param methodPath consider only methods whose value of its {@link Segment} annotation equals the given value.	
 		 * @param parentList the method list of the parent class
 		 * @param typeLib a type library.
 		 */
@@ -132,7 +132,7 @@ public class ControllerService
 			int inClassIndex = 0;
 			for (Method javaMethod : controllerClass.getDeclaredMethods())
 			{
-				Path pathAnno = javaMethod.getAnnotation(Path.class);
+				Segment pathAnno = javaMethod.getAnnotation(Segment.class);
 				if (pathAnno == null ? methodPath == null : pathAnno.value().equals(methodPath))
 				{
 					ControllerMethod method = ControllerMethod.create(argFactory, javaMethod);

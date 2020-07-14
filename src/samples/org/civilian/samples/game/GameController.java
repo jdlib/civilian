@@ -18,7 +18,7 @@
 
 import org.civilian.Controller;
 import org.civilian.annotation.Get;
-import org.civilian.annotation.Path;
+import org.civilian.annotation.Segment;
 import org.civilian.annotation.Post;
 import org.civilian.annotation.Produces;
 import org.civilian.samples.game.Game.Result;
@@ -27,7 +27,7 @@ import org.civilian.samples.game.Game.Result;
 /**
  * See https://github.com/wildfly/quickstart/blob/master/guide/NumberguessQuickstart.asciidoc
  */
-@Path("/")
+@Segment("/")
 public class GameController extends Controller
 {
 	@Get @Post @Produces("text/html") 

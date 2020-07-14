@@ -148,7 +148,7 @@ class ResourceFactory
 	
 	
 	/**
-	 * Reads @PathParam and @Path annotations for package-info and controller classes.
+	 * Reads @PathParam and @Segment annotations for package-info and controller classes.
 	 * @param segment the default segment derived from the last package part or 
 	 * 		the simple name of the controller class. 
 	 */
@@ -168,16 +168,16 @@ class ResourceFactory
 					throw new ScanException(c.getName() + ": annotation @PathParam specifies unknown path parameter '" + paramAnnotation.value() + "'");
 			}
 			
-			// check if @Path is annotated
-			org.civilian.annotation.Path pathAnnotation = c.getAnnotation(org.civilian.annotation.Path.class);
-			if (pathAnnotation != null)
+			// check if @Segment is annotated
+			org.civilian.annotation.Segment segmentAnnotation = c.getAnnotation(org.civilian.annotation.Segment.class);
+			if (segmentAnnotation != null)
 			{
 				if (paramAnnotation != null)
-					throw new ScanException(c.getName() + ": cannot specify both @PathParam and @Path annotations");
+					throw new ScanException(c.getName() + ": cannot specify both @PathParam and @Segment annotations");
 				
-				segment = normPathAnnotation(pathAnnotation.value());
+				segment = normPathAnnotation(segmentAnnotation.value());
 				if ((segment == null) && isPackage)
-					throw new ScanException(c.getName() + ": @Path annotation '" + pathAnnotation.value() + "' results in an empy path");
+					throw new ScanException(c.getName() + ": @Segment annotation '" + segmentAnnotation.value() + "' results in an empy path");
 			}
 		}
 		

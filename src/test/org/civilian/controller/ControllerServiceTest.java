@@ -19,7 +19,7 @@ package org.civilian.controller;
 import org.civilian.CivTest;
 import org.civilian.Controller;
 import org.civilian.annotation.Get;
-import org.civilian.annotation.Path;
+import org.civilian.annotation.Segment;
 import org.civilian.controller.classloader.ReloadConfig;
 import org.civilian.resource.PathParamMap;
 import org.civilian.testcase1.Test1PathParams;
@@ -38,15 +38,15 @@ public class ControllerServiceTest extends CivTest
 	
 	public static class Derived extends Base
 	{
-		@Get @Path("path") public void somePath()
+		@Get @Segment("path") public void somePath()
 		{
 		}
 
-		@Get @Path("other") public void otherPath()
+		@Get @Segment("other") public void otherPath()
 		{
 		}
 
-		@Path("path") public void pseudo()
+		@Segment("path") public void pseudo()
 		{
 		}
 	}

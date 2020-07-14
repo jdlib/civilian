@@ -19,7 +19,7 @@
 import org.civilian.annotation.Consumes;
 import org.civilian.annotation.RequestContent;
 import org.civilian.annotation.Get;
-import org.civilian.annotation.Path;
+import org.civilian.annotation.Segment;
 import org.civilian.annotation.Post;
 import org.civilian.content.ContentType;
 import org.civilian.response.protocol.NgReply;
@@ -51,7 +51,7 @@ public class SearchController extends UsersController
 	
 	
 	// maps to /users/search/filter
-	@Path("filter")
+	@Segment("filter")
 	@Consumes(ContentType.Strings.APPLICATION_JSON) 
 	@Get public void getFilters(NgReply reply) throws Exception
 	{

@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 
 
 /**
- * Path is an annotation to define a resource mapping.
+ * Segment is an annotation to define a resource mapping.
  * It can be used on
  * <ol>
  * <li><a href="#p">packages</a> containing controller classes
@@ -41,14 +41,14 @@ import java.lang.annotation.Target;
  * It is interpreted as follows:
  * <a name="p"></a>
  * <h1>Used on controller packages</h1>
- * The path string overrides the default mapping of the controller
+ * The segment string overrides the default mapping of the controller
  * package to a resource, relative to its parent package.
  * The path string must not be empty.<br>
  * Example:<br>
  * Suppose the parent controller package "com.app.contacts" is mapped to resource "/contacts".
  * Package "com.app.contacts.detail" would by default be mapped to 
  * resource "/contacts/detail".<br>
- * But annotated with @Path("showdetails") it would be mapped to resource 
+ * But annotated with @Segment("showdetails") it would be mapped to resource 
  * "/contacts/showdetails".
  * <a name="c"></a>
  * <h1>Used on controller classes</h1>
@@ -59,8 +59,8 @@ import java.lang.annotation.Target;
  * Suppose the controller package "com.app.contacts" is mapped to resource "/contacts".
  * The controller class "com.app.contacts.ViewController" would by default be mapped to 
  * resource "/contacts/view".<br>
- * But annotated with @Path("show") it would be mapped to resource 
- * "/contacts/show". If annotated with @Path("") it would be mapped to resource 
+ * But annotated with @Segment("show") it would be mapped to resource 
+ * "/contacts/show". If annotated with @Segment("") it would be mapped to resource 
  * "/contacts".
  * <a name="m"></a>
  * <h1>Used on controller action methods</h1>
@@ -69,7 +69,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface Path
+public @interface Segment
 {
 	/**
 	 * Returns the path value.

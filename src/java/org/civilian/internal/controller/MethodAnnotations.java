@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import org.civilian.annotation.Consumes;
-import org.civilian.annotation.Path;
+import org.civilian.annotation.Segment;
 import org.civilian.annotation.Produces;
 import org.civilian.annotation.RequestMethod;
 import org.civilian.content.ContentType;
@@ -61,12 +61,12 @@ public class MethodAnnotations
 	
 	
 	/**
-	 * Returns the value of {@link Path} annotation of a controller action method
+	 * Returns the value of {@link Segment} annotation of a controller action method
 	 * or null if the method has no path annotation or is not a action method.
 	 */
 	public static String getPath(Method javaMethod)
 	{
-		Path pathAnno = javaMethod.getAnnotation(Path.class);
+		Segment pathAnno = javaMethod.getAnnotation(Segment.class);
 		if (pathAnno != null)
 		{
 			String path = pathAnno.value();
