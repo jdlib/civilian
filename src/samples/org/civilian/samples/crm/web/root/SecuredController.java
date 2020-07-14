@@ -99,7 +99,7 @@ public abstract class SecuredController extends CrmController
 		}
 		else
 		{
-			boolean templateRequested = ContentType.TEXT_X_TEMPLATE.equals(getResponse().getContentType()); 
+			boolean templateRequested = ContentType.TEXT_X_TEMPLATE.getValue().equals(getResponse().getContentType()); 
 			String moduleController   = getModuleController();
 			if ((moduleController != null) && (!templateRequested || isModuleRoot()))
 				template = new ControllerTemplate(template, moduleController);
