@@ -34,6 +34,8 @@ public interface MsgBundleProvider
 	
 	/**
 	 * Returns the message for the id
+	 * @param id denotes a message text
+	 * @return the translated message
 	 */
 	public default String msg(Object id)
 	{
@@ -44,6 +46,9 @@ public interface MsgBundleProvider
 	/**
 	 * Returns the message for the id and inserts the parameters
 	 * into the message at placeholder locations.
+	 * @param id denotes a message text
+	 * @param params param values inserted into the message
+	 * @return the translated message
 	 */
 	public default String msg(Object id, Object... params)
 	{
@@ -54,6 +59,8 @@ public interface MsgBundleProvider
 	/**
 	 * Returns the text for the id.
 	 * If the id is a String, the id is returned as text, else {@link #msg(Object)} is returned.
+	 * @param id denotes a message text
+	 * @return the translated message
 	 */
 	public default String msgOrText(Object id)
 	{
@@ -67,6 +74,9 @@ public interface MsgBundleProvider
 	/**
 	 * Returns the message for the id using {@link #msgOrText(Object)} and inserts the parameters
 	 * into the message at placeholder locations.
+	 * @param id denotes a message text
+	 * @param params param values inserted into the message
+	 * @return the translated message
 	 */
 	public default String msgOrText(Object id, Object... params)
 	{

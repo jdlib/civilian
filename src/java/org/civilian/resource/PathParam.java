@@ -164,7 +164,6 @@ public abstract class PathParam<T>
 	 * by the value of another PathParams. 
 	 * The name of the converting param is the name of the inner PathParam.
 	 * @param segment a "prefix" segment
-	 * @param inner another param
 	 */
 	public PathParam<T> precededBySegment(String segment)
 	{
