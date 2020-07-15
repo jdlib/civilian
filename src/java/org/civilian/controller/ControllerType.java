@@ -32,15 +32,13 @@ import org.civilian.util.Iterators;
 
 /**
  * ControllerType provides meta-information about a controller class.
- * It provides access to all the ControllerMethods of the controller.
- * Whereas a Controller object is instantiated to process a single request, and then discarded,
- * ControllerTypes can be reused and cached.    
+ * It provides access to all it's {@link ControllerMethod controller methods}.
  */
 public class ControllerType implements Iterable<ControllerMethod>
 {
 	/**
 	 * Creates a new ControllerType.
-	 * @param controllerClass the controller class
+	 * @param controllerClass the class of the Controller
 	 * @param methods the ControllerMethods. The order of the method is obeyed during
 	 * 		content-negotiation.
 	 */
