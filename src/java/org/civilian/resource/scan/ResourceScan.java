@@ -35,7 +35,8 @@ import org.civilian.resource.PathParamMap;
  */
 public class ResourceScan
 {
-	public ResourceScan(String rootPackage, 
+	public ResourceScan(
+		String rootPackageName, 
 		ControllerNaming naming,
 		PathParamMap pathParams,
 		ClassLoader classLoader,
@@ -43,7 +44,7 @@ public class ResourceScan
 		throws ScanException
 	{
 		classLoader_	= classLoader != null ? classLoader : getClass().getClassLoader();
-		resFactory_ 	= new ResourceFactory(rootPackage, naming, pathParams); 
+		resFactory_ 	= new ResourceFactory(rootPackageName, naming, pathParams); 
 		verbose_		= verbose;
 		
 		scanClassPath();
@@ -66,11 +67,11 @@ public class ResourceScan
 	
 	private void scanClassPath() throws ScanException
 	{
-		String rootPackage = resFactory_.getRootPackage();
+		String rootPackageName = resFactory_.getRootPackage();
 		if (verbose_)
-			log("scanning classes below " + rootPackage);
+			log("scanning classes below " + rootPackageName);
 		
-		ClassPathScan scan = new ClassPathScan(rootPackage);
+		ClassPathScan scan = new ClassPathScan(rootPackageName);
 		Set<String> candidateClasses;
 		try
 		{
