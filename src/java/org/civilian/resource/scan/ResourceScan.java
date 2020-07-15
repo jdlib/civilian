@@ -29,12 +29,26 @@ import org.civilian.resource.PathParamMap;
 /**
  * ResourceScan scans the class path, collects all controller classes
  * of an application and creates a resource tree.
- * The resource tree determines which dynamic resources are known to the
- * application. 
- * @see Application#generateResourceTree(org.civilian.controller.classloader.ReloadConfig)
  */
 public class ResourceScan
 {
+	/**
+	 * Creates a ResourceScan using the application settings.
+	 */
+	public static ResourceScan of(Application app, ClassLoader loader)
+	{
+		return new ResourceScan(
+			app.getControllerConfig().getRootPackage(),
+			app.getControllerConfig().getNaming(),
+			app.getResourceConfig().getPathParams(), 
+			loader,
+			false);
+	}
+	
+	
+	/**
+	 * Creates a ResourceScan.
+	 */
 	public ResourceScan(
 		String rootPackageName, 
 		ControllerNaming naming,

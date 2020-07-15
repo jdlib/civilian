@@ -33,7 +33,6 @@ import org.civilian.content.TextSerializer;
 import org.civilian.controller.ControllerConfig;
 import org.civilian.controller.ControllerNaming;
 import org.civilian.controller.ControllerService;
-import org.civilian.controller.classloader.ReloadConfig;
 import org.civilian.internal.Logs;
 import org.civilian.internal.TempContext;
 import org.civilian.processor.AssetDispatch;
@@ -272,7 +271,12 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 		// init the resource tree
 		rootResource_ = appConfig.getRootResource();
 		if (rootResource_ == null)
-			rootResource_ = generateResourceTree(appConfig.getReloadConfig());
+		{
+			// resource tree not specified: generate on the fly
+			ClassLoader loader = appConfig.getReloadConfig() != null ?
+				appConfig.getReloadConfig().createClassLoader() :
+				getClass().getClassLoader();
+			rootResource_ = ResourceScan.of(this, loader).getRootResource();		}
 		
 		Resource.Tree tree = rootResource_.getTree();
 		tree.setAppPath(getPath());
@@ -378,33 +382,6 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	{
 	}
 	
-	
-	//--------------------------------
-	// resource/path-setup
-	//--------------------------------
-	
-	
-	/**
-	 * Generates the resource tree at application startup.
-	 * Called during application initialization when no 
-	 * resource tree was configured.
-	 * @see AppConfig#setResourceRoot(Resource)
-	 */
-	public Resource generateResourceTree(ReloadConfig reloadConfig) throws Exception
-	{
-		ClassLoader loader = getClass().getClassLoader();
-		if (reloadConfig != null)
-			loader = reloadConfig.createClassLoader();
-
-		ResourceScan scan = new ResourceScan(
-			getControllerConfig().getRootPackage(),
-			getControllerConfig().getNaming(),
-			getResourceConfig().getPathParams(), 
-			loader,
-			false);
-		return scan.getRootResource();
-	}
-
 	
 	//--------------------------------
 	// close

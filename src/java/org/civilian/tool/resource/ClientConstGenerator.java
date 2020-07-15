@@ -21,6 +21,7 @@ import org.civilian.Application;
 import org.civilian.Resource;
 import org.civilian.internal.source.OutputFile;
 import org.civilian.internal.source.OutputLocation;
+import org.civilian.resource.scan.ResourceScan;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.Arguments;
 import org.civilian.util.Check;
@@ -130,7 +131,7 @@ public class ClientConstGenerator
 	private void run() throws Exception
 	{
 		log("scanning resources");
-		Resource root = options_.app.generateResourceTree(null);
+		Resource root = ResourceScan.of(options_.app, null).getRootResource();
 		
 		TemplateWriter out = new TemplateWriter(new StringWriter());
 		switch(options_.language)
