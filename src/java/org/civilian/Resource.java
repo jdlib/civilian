@@ -83,7 +83,7 @@ public class Resource implements Iterable<Resource>
 	 */
 	public Resource(Resource parent, String segment)
 	{
-		this(parent, Check.notNull(segment, "segment"), null);
+		this(parent, Check.notEmpty(segment, "segment"), null);
 	}
 	
 	
@@ -106,7 +106,7 @@ public class Resource implements Iterable<Resource>
 	 * @param segment the segment  
 	 * @param pathParam the path param
 	 */
-	public Resource(Resource parent, String segment, PathParam<?> pathParam)
+	private Resource(Resource parent, String segment, PathParam<?> pathParam)
 	{
 		if ((segment == null) == (pathParam == null))
 			throw new IllegalArgumentException("a segment or path param must be provided");

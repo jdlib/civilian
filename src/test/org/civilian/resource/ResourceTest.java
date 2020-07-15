@@ -94,29 +94,6 @@ public class ResourceTest extends CivTest
 	}
 	
 
-	@Test public void testUndecidedChild()
-	{
-		Resource root = new Resource();
-		try
-		{
-			new Resource(root, null, null);
-			fail();
-		}
-		catch(IllegalArgumentException e)
-		{
-		}
-
-		try
-		{
-			new Resource(root, "x", PP_SEG);
-			fail();
-		}
-		catch(IllegalArgumentException e)
-		{
-		}
-	}
-	
-	
 	@Test public void testChildOrder()
 	{
 		Resource root = new Resource();

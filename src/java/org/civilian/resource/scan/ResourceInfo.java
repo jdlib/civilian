@@ -220,7 +220,9 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 		for (int i=0; i<n; i++)
 		{
 			ResourceInfo childInfo = resInfo.getChild(i);
-			Resource childRes = new Resource(resource, childInfo.segment_, childInfo.pathParam_);
+			Resource childRes = childInfo.segment_ != null ?
+				new Resource(resource, childInfo.segment_) :
+				new Resource(resource, childInfo.pathParam_);
 			toResource(childRes, childInfo);
 		}
 	}
