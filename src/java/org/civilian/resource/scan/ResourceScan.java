@@ -22,7 +22,6 @@ import org.civilian.Application;
 import org.civilian.Controller;
 import org.civilian.Resource;
 import org.civilian.controller.ControllerNaming;
-import org.civilian.internal.classpath.ClassFilter;
 import org.civilian.internal.classpath.ClassPathScan;
 import org.civilian.resource.PathParamMap;
 
@@ -72,7 +71,7 @@ public class ResourceScan
 		Set<String> candidateClasses;
 		try
 		{
-			candidateClasses = scan.collect(new CtrlClassFilter(resFactory_.getNaming()));
+			candidateClasses = scan.collect(resFactory_.getNaming()::isControllerClass);
 		}
 		catch (Exception e)
 		{
@@ -101,26 +100,10 @@ public class ResourceScan
 			throw new ScanException("class '" + className + "' not found, but was part of classpath scan", e);
 		}
 		
-		// ignore if not a resource class (naming failed) or if abstract 
+		// ignore if not a Controller class (naming false positive) or if abstract 
 		// (map annotations on abstract classes are ignored)
 		if (Controller.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers()))
 			resFactory_.mapController((Class<? extends Controller>)c);
-	}
-	
-	
-	private static class CtrlClassFilter implements ClassFilter
-	{
-		public CtrlClassFilter(ControllerNaming naming)
-		{
-			naming_ = naming;
-		}
-		
-		@Override public boolean accept(String className)
-		{
-			return naming_.isControllerClass(className);
-		}
-		
-		private ControllerNaming naming_;
 	}
 	
 	

@@ -19,6 +19,8 @@ package org.civilian.resource.scan;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import org.civilian.Controller;
 import org.civilian.controller.ControllerNaming;
 import org.civilian.internal.controller.MethodAnnotations;
@@ -85,8 +87,8 @@ class ResourceFactory
 		}
 		
 		Class<?> infoClass		= getPackageInfoClass(packageName);
-		ResourcePart part		= map(infoClass, segment, true);
-		ControllerPackage cp	= new ControllerPackage(parent, packageName, part);
+		ResourceExt extension	= map(infoClass, segment, true);
+		ControllerPackage cp	= new ControllerPackage(parent, packageName, extension);
 		packages_.put(packageName, cp);
 		return cp;
 	}
@@ -113,37 +115,37 @@ class ResourceFactory
 	 * - mapping of classes with a PathParam annotation
 	 * - mapping of classes with a Path annotation
 	 * @param cp the controller package, containing the resource to which the package is mapped
-	 * @param c the controller class
+	 * @param cls the controller class
 	 */
-	public void mapController(Class<? extends Controller> c)
+	public void mapController(Class<? extends Controller> cls)
 	{
-		ControllerPackage cp 	= getPackage(ClassUtil.getPackageName(c));
-		String segment 			= naming_.className2Segment(c.getSimpleName());
+		ControllerPackage cp 	= getPackage(ClassUtil.getPackageName(cls));
+		String segment 			= naming_.className2Segment(cls.getSimpleName());
 		
-		ResourcePart part 		= map(c, segment, false);
-		ResourceInfo ctrlRes	= part == null ? cp.resInfo : cp.resInfo.getChild(part);
+		ResourceExt extension	= map(cls, segment, false);
+		ResourceInfo resInfo	= extension == null ? cp.resInfo : cp.resInfo.getChild(extension);
 		
-		ctrlRes.setControllerInfo(c.getName(), null);
+		resInfo.setControllerInfo(cls.getName(), null);
 		
-		for (ResourcePart methodPart : collectMethodParts(c))
+		tmpMethodExts_.clear();
+		collectMethodExtensions(cls, tmpMethodExts_);
+		for (ResourceExt methodExt : tmpMethodExts_)
 		{
-			ResourceInfo methodRes = ctrlRes.getChild(methodPart);
-			methodRes.setControllerInfo(c.getName(), methodPart.pathAnnotation);
+			ResourceInfo methodRes = resInfo.getChild(methodExt);
+			methodRes.setControllerInfo(cls.getName(), methodExt.pathAnnotation);
 		}
 	}
 	
 	
-	private HashSet<ResourcePart> collectMethodParts(Class<? extends Controller> c)
+	private void collectMethodExtensions(Class<? extends Controller> c, Set<ResourceExt> methodExtensions)
 	{
-		methodParts_.clear();
 		for (Method method : c.getDeclaredMethods())
 		{
 			String pathAnno = MethodAnnotations.getPath(method);
 			String path = normPathAnnotation(pathAnno);
 			if (path != null)
-				methodParts_.add(new ResourcePart(encoder_.encode(path), pathAnno));
+				methodExtensions.add(new ResourceExt(encoder_.encode(path), pathAnno));
 		}
-		return methodParts_;
 	}
 	
 	
@@ -152,7 +154,7 @@ class ResourceFactory
 	 * @param segment the default segment derived from the last package part or 
 	 * 		the simple name of the controller class. 
 	 */
-	private ResourcePart map(Class<?> c, String segment, boolean isPackage)
+	private ResourceExt map(Class<?> c, String segment, boolean isPackage)
 	{
 		// check if @PathParam is annotated
 		PathParam<?> pp = null;
@@ -182,9 +184,9 @@ class ResourceFactory
 		}
 		
 		if (pp != null)
-			return new ResourcePart(pp);
+			return new ResourceExt(pp);
 		else if (segment != null)
-			return new ResourcePart(encoder_.encode(segment), pathAnno);
+			return new ResourceExt(encoder_.encode(segment), pathAnno);
 		else
 			return null;
 	}
@@ -204,11 +206,11 @@ class ResourceFactory
 	}
 	
 	
-	private ResourceInfo root_ = new ResourceInfo();
-	private String rootPackage_;
-	private PathParamMap pathParamMap_;
-	private ControllerNaming naming_;
-	private HashMap<String,ControllerPackage> packages_ = new HashMap<>(); 
-	private HashSet<ResourcePart> methodParts_ = new HashSet<>();
-	private UriEncoder encoder_ = new UriEncoder();
+	private final ResourceInfo root_ = new ResourceInfo();
+	private final String rootPackage_;
+	private final PathParamMap pathParamMap_;
+	private final ControllerNaming naming_;
+	private final Map<String,ControllerPackage> packages_ = new HashMap<>(); 
+	private final Set<ResourceExt> tmpMethodExts_ = new HashSet<>();
+	private final UriEncoder encoder_ = new UriEncoder();
 }

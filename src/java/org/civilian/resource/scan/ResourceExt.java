@@ -21,24 +21,33 @@ import org.civilian.util.Check;
 
 
 /**
- * ResExtension describes how an existing resource is extended by a step,
- * either a segment or a path param.
+ * ResourceExt describes the extension step of an existing resource,
+ * either by a segment or by a path param.
  */
-class ResourcePart
+class ResourceExt
 {
-	public ResourcePart(String segment, String pathAnnotation)
+	/**
+	 * Creates a ResourceExt for a URL segment.
+	 * @param segment the segment
+	 * @param pathAnnotation optional: the pathAnnotation present on the segment
+	 */
+	public ResourceExt(String segment, String pathAnnotation)
 	{
 		this(Check.notNull(segment, "segment"), pathAnnotation, null);
 	}
 
 	
-	public ResourcePart(PathParam<?> pathParam)
+	/**
+	 * Creates a ResourceExt for a PathParam.
+	 * @param pathParam the PathParam
+	 */
+	public ResourceExt(PathParam<?> pathParam)
 	{
 		this(null, null, Check.notNull(pathParam, "pathParam"));
 	}
 
 	
-	private ResourcePart(String segment, String pathAnnotation, PathParam<?> pathParam)
+	private ResourceExt(String segment, String pathAnnotation, PathParam<?> pathParam)
 	{
 		this.segment 		= segment;
 		this.pathAnnotation	= pathAnnotation;

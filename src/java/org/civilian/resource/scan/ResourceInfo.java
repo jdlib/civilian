@@ -44,14 +44,13 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 	
 	
 	/**
-	 * Creates a info object for a child resource which
-	 * is mapped to the part.
+	 * Creates a ResourceInfo for a child resource.
 	 */
-	private ResourceInfo(ResourceInfo parent, ResourcePart part)
+	private ResourceInfo(ResourceInfo parent, ResourceExt ext)
 	{
 		parent_ 	= parent;
-		segment_	= part.segment;
-		pathParam_	= part.pathParam;
+		segment_	= ext.segment;
+		pathParam_	= ext.pathParam;
 		path_		= parent.appendPath(segment_ != null ? '/' + segment_ : pathParam_.toString());  
 	}
 
@@ -104,15 +103,15 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 	}
 
 	
-	public ResourceInfo getChild(ResourcePart part)
+	public ResourceInfo getChild(ResourceExt ext)
 	{
 		for (int i=0; i<getChildCount(); i++)
 		{
 			ResourceInfo child = getChild(i);
-			if ((part.segment != null) ? part.segment.equals(child.segment_) : (part.pathParam == child.pathParam_))
+			if ((ext.segment != null) ? ext.segment.equals(child.segment_) : (ext.pathParam == child.pathParam_))
 				return child;
 		}
-		return addChild(new ResourceInfo(this, part));
+		return addChild(new ResourceInfo(this, ext));
 	}
 	
 	
@@ -157,7 +156,7 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 	/**
 	 * Recursively sorts the resource children.
 	 */
-	public void sortChildren()
+	void sortChildren()
 	{
 		if (children_ != null)
 		{

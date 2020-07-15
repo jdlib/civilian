@@ -32,11 +32,11 @@ class ControllerPackage
 	}
 	
 	
-	public ControllerPackage(ControllerPackage parent, String name, ResourcePart part)
+	public ControllerPackage(ControllerPackage parent, String name, ResourceExt ext)
 	{
 		this.name 		= name;
 		this.parent 	= parent;
-		this.resInfo 	= parent.resInfo.getChild(part);
+		this.resInfo 	= parent.resInfo.getChild(ext);
 		this.resInfo.setPackage(this);
 	}
 	
