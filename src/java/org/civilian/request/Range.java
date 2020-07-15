@@ -67,6 +67,7 @@ public class Range extends ArrayList<Range.Part>
 	            response.setContentType("multipart/byteranges; boundary=" + MIME_BOUNDARY);
 	            for (Part part : range)
 	            {
+					part = part.adjust(fileLength);
 	                write(out, "\r\n");
 	                write(out, "--" + MIME_BOUNDARY + "\r\n");
 	                if (partContentType != null)
@@ -93,6 +94,20 @@ public class Range extends ArrayList<Range.Part>
 		return this;
 	}
 	
+	
+	public Range addStart(long start)
+	{
+		add(new Part(start, -1));
+		return this;
+	}
+
+	
+	public Range addEnd(long end)
+	{
+		add(new Part(-1, end));
+		return this;
+	}
+
 	
 	@Override public String toString()
 	{
