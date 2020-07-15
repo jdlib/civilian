@@ -101,7 +101,7 @@ public class RangeTest extends CivTest
 			Range.writeRange(file, request);
 			assertEquals(3, response.getHeaders().getInt("content-length"));
 			assertEquals("bytes", response.getHeaders().get("accept-ranges"));
-			assertEquals("bytes 0-2/3", response.getHeaders().get("content-range"));
+			assertEquals("bytes 0-2/6", response.getHeaders().get("content-range"));
 			assertEquals("ABC", response.getContentText(true));
 
 			response.clear();
@@ -112,10 +112,10 @@ public class RangeTest extends CivTest
 			assertEquals("bytes", response.getHeaders().get("accept-ranges"));
 			assertEquals("\r\n" + 
 				"--MIME_BOUNDARY\r\n" + 
-				"Content-Range: bytes 2-5/4\r\n" + 
+				"Content-Range: bytes 2-5/6\r\n" + 
 				"CDEF\r\n" + 
 				"--MIME_BOUNDARY\r\n" + 
-				"Content-Range: bytes 4-5/2\r\n" + 
+				"Content-Range: bytes 4-5/6\r\n" + 
 				"EF", response.getContentText(true));
 		}
 		

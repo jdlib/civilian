@@ -57,7 +57,7 @@ public class Range extends ArrayList<Range.Part>
 			{
 				Part part 		= range.get(0).adjust(fileLength);
 				long partLength = part.length();
-				headers.set("Content-Range", "bytes " + part.start + "-" + part.end + "/" + partLength);
+				headers.set("Content-Range", part.toContentRange(fileLength));
 	            response.setContentLength(partLength);
 	            part.copy(ra, out, buffer);
 			}
@@ -72,7 +72,7 @@ public class Range extends ArrayList<Range.Part>
 	                write(out, "--" + MIME_BOUNDARY + "\r\n");
 	                if (partContentType != null)
 	                    write(out, "Content-Type: " + partContentType);
-	                write(out, "Content-Range: bytes " + part.start + "-" + part.end + "/" + part.length() + "\r\n");
+	                write(out, "Content-Range: " + part.toContentRange(fileLength) + "\r\n");
 
 		            part.copy(ra, out, buffer);
 	            }
@@ -167,6 +167,12 @@ public class Range extends ArrayList<Range.Part>
 				out.write(buffer, 0, read);
 				done += read;
 			}
+		}
+		
+
+		private String toContentRange(long fileLength)
+		{
+			return "bytes " + start + "-" + end + "/" + fileLength;
 		}
 		
 		
