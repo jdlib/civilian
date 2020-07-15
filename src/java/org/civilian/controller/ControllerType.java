@@ -80,7 +80,10 @@ public class ControllerType implements Iterable<ControllerMethod>
 	}
 	
 	
-	public boolean contains(ControllerMethod method)
+	/**
+	 * Support unit test.
+	 */
+	boolean contains(ControllerMethod method)
 	{
 		for (ControllerMethod m : methods_)
 		{
