@@ -200,40 +200,28 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 
 	
 	/**
-	 * Creates a resource tree out of this info.
+	 * Creates a resource tree out of the tree represented by this info.
 	 */
-	public Resource toResource()
+	Resource toResource()
 	{
 		if (!isRoot())
 			throw new IllegalStateException("not root");
-		return new RtResource(this); 
+		Resource root = new Resource();
+		toResource(root, this);
+		return root; 
 	}
 	
 	
-	/**
-	 * Runtime class for conversion of a ResourceInfo tree into a Resource tree.
-	 */
-	private static class RtResource extends Resource
+	private static void toResource(Resource resource, ResourceInfo resInfo)
 	{
-		public RtResource(ResourceInfo resInfo)
-		{
-			setControllerSignature(resInfo.controllerSignature_);
-			addChildren(resInfo);
-		}
+		resource.setControllerSignature(resInfo.controllerSignature_);
 		
-		
-		public RtResource(Resource parent, ResourceInfo resInfo)
+		int n = resInfo.getChildCount();
+		for (int i=0; i<n; i++)
 		{
-			super(parent, resInfo.segment_, resInfo.pathParam_);
-			setControllerSignature(resInfo.controllerSignature_);
-			addChildren(resInfo);
-		}
-		
-		private void addChildren(ResourceInfo resInfo)
-		{
-			int n = resInfo.getChildCount();
-			for (int i=0; i<n; i++)
-				new RtResource(this, resInfo.getChild(i));
+			ResourceInfo childInfo = resInfo.getChild(i);
+			Resource childRes = new Resource(resource, childInfo.segment_, childInfo.pathParam_);
+			toResource(childRes, childInfo);
 		}
 	}
 

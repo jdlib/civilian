@@ -29,8 +29,8 @@ public class ResourceScanTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
-		ResourceScan scan = new ResourceScan("org.civilian.testcase1", new ControllerNaming(), Test1PathParams.MAP, null);
-		Resource resource = scan.run();
+		ResourceScan scan = new ResourceScan("org.civilian.testcase1", new ControllerNaming(), Test1PathParams.MAP, null, false);
+		Resource resource = scan.getRootResource();
 		// resource.print(System.out);
 		
 		Iterator<Resource> it = resource.iterator();

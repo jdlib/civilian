@@ -38,33 +38,36 @@ public class ResourceScan
 	public ResourceScan(String rootPackage, 
 		ControllerNaming naming,
 		PathParamMap pathParams,
-		ClassLoader classLoader) 
+		ClassLoader classLoader,
+		boolean verbose) 
 		throws ScanException
 	{
 		classLoader_	= classLoader != null ? classLoader : getClass().getClassLoader();
 		resFactory_ 	= new ResourceFactory(rootPackage, naming, pathParams); 
+		verbose_		= verbose;
+		
+		scanClassPath();
+		rootInfo_		= resFactory_.getRoot();
+		rootInfo_.sortChildren();
 	}
 
 	
-	public Resource run() throws ScanException
+	public ResourceInfo getRootInfo() throws ScanException
 	{
-		return getInfo().toResource();
+		return rootInfo_;
 	}
 	
 	
-	public ResourceInfo getInfo() throws ScanException
+	public Resource getRootResource() throws ScanException
 	{
-		scanClassPath();
-		ResourceInfo root = resFactory_.getRoot();
-		root.sortChildren();
-		return root;
+		return rootInfo_.toResource();
 	}
-	
+
 	
 	private void scanClassPath() throws ScanException
 	{
 		String rootPackage = resFactory_.getRootPackage();
-		if (verbose)
+		if (verbose_)
 			log("scanning classes below " + rootPackage);
 		
 		ClassPathScan scan = new ClassPathScan(rootPackage);
@@ -78,7 +81,7 @@ public class ResourceScan
 			throw new ScanException("error during classpath scan", e);
 		}
 		
-		if (verbose)
+		if (verbose_)
 			log("found " + candidateClasses.size() + " potential resource classes");
 		
 		for (String c : candidateClasses)
@@ -113,7 +116,8 @@ public class ResourceScan
 	}
 		
 	
-	private ClassLoader classLoader_;
-	private ResourceFactory resFactory_;
-	boolean verbose;
+	private final ClassLoader classLoader_;
+	private final ResourceFactory resFactory_;
+	private final boolean verbose_;
+	private final ResourceInfo rootInfo_;
 }

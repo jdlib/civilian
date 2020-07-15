@@ -34,14 +34,14 @@ import org.civilian.util.StringUtil;
 
 class ResourceFactory
 {
-	public ResourceFactory(String rootPackage, 
+	public ResourceFactory(String rootPackageName, 
 		ControllerNaming naming,
 		PathParamMap pathParams)
 	{
-		rootPackage_ 	= Check.notNull(rootPackage, "rootPackage");
-		naming_		 	= Check.notNull(naming, "naming");
-		pathParamMap_ 	= Check.notNull(pathParams, "pathParams");
-		packages_.put(rootPackage_, new ControllerPackage(root_, rootPackage_));  
+		rootPackageName_ 	= Check.notNull(rootPackageName, "rootPackageName");
+		naming_		 		= Check.notNull(naming, "naming");
+		pathParamMap_ 		= Check.notNull(pathParams, "pathParams");
+		packages_.put(rootPackageName_, new ControllerPackage(root_, rootPackageName_));  
 	}
 	
 	
@@ -53,7 +53,7 @@ class ResourceFactory
 
 	public String getRootPackage()
 	{
-		return rootPackage_;
+		return rootPackageName_;
 	}
 	
 	
@@ -63,14 +63,14 @@ class ResourceFactory
 	}
 	
 	
-	private ControllerPackage getPackage(String name)
+	private ControllerPackage getPackage(String packageName)
 	{
-		if (!name.startsWith(rootPackage_))
-			throw new IllegalArgumentException("invalid package " + name);
+		if (!packageName.startsWith(rootPackageName_))
+			throw new IllegalArgumentException("invalid package " + packageName);
 		
-		ControllerPackage cp = packages_.get(name);
+		ControllerPackage cp = packages_.get(packageName);
 		if (cp == null)
-			cp = mapPackage(name);
+			cp = mapPackage(packageName);
 		return cp;
 	}
 	
@@ -79,7 +79,7 @@ class ResourceFactory
 	{
 		ControllerPackage parent 	= null;
 		String segment		 		= null;
-		if (!packageName.equals(rootPackage_))
+		if (!packageName.equals(rootPackageName_))
 		{
 			int p = packageName.lastIndexOf('.');
 			segment = naming_.packagePart2Segment(packageName.substring(p + 1));
@@ -207,7 +207,7 @@ class ResourceFactory
 	
 	
 	private final ResourceInfo root_ = new ResourceInfo();
-	private final String rootPackage_;
+	private final String rootPackageName_;
 	private final PathParamMap pathParamMap_;
 	private final ControllerNaming naming_;
 	private final Map<String,ControllerPackage> packages_ = new HashMap<>(); 

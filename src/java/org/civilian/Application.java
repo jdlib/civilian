@@ -400,8 +400,9 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 			getControllerConfig().getRootPackage(),
 			getControllerConfig().getNaming(),
 			getResourceConfig().getPathParams(), 
-			loader);
-		return scan.run();
+			loader,
+			false);
+		return scan.getRootResource();
 	}
 
 	

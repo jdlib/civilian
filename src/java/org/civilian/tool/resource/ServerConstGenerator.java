@@ -128,8 +128,9 @@ public class ServerConstGenerator
 			options_.app.getControllerConfig().getRootPackage(),
 			options_.app.getControllerConfig().getNaming(),
 			options_.app.getResourceConfig().getPathParams(),
-			null);
-		ResourceInfo root = scan.getInfo();
+			null,
+			options_.verbose);
+		ResourceInfo root = scan.getRootInfo();
 		if (options_.outputLocation != null)
 			generate(root);
 	}
