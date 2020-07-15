@@ -26,7 +26,6 @@ import org.civilian.controller.ControllerSignature;
 import org.civilian.provider.PathParamProvider;
 import org.civilian.provider.PathProvider;
 import org.civilian.provider.ResponseProvider;
-import org.civilian.resource.scan.ResourceScan;
 import org.civilian.response.UriEncoder;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
@@ -38,9 +37,7 @@ import org.civilian.util.Check;
  * Url allows to build URLs either to address resources within an {@link Application} 
  * or arbitrary URLs.<p> 
  * In the first case the target resource can be specified by a {@link Resource} object. 
- * The Url will automatically derive the (absolute) path to that resource.
- * Please see the documentation for {@link ResourceScan} how to generate a class
- * at development time which contains constants for all resources used in your application.<p>
+ * The Url will automatically derive the (absolute) path to that resource.<p>
  * The path to the resource may contain segments mapped to path parameters. The Url class provides
  * an API to conveniently set these path parameters. If the request was dispatched to
  * a resource, the path parameters shared by the request are automatically initialized.
