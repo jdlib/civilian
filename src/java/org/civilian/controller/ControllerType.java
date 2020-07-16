@@ -107,7 +107,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 
 	
 	/**
-	 * Creates a Controller and initializes the type.
+	 * Creates a Controller and initializes it's type.
 	 * @see Controller#setControllerType(ControllerType)
 	 */
 	public Controller createController()
@@ -117,7 +117,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 			Controller controller = factory_ != null ? 
 				factory_.createController(controllerClass_) :
 				controllerClass_.newInstance();
-			controller.setControllerType(this);
+			Controller.setControllerType(controller, this);
 			return controller;
 		}
 		catch (Exception e)
@@ -276,9 +276,9 @@ public class ControllerType implements Iterable<ControllerMethod>
 	}
 	
 	
-	private Class<? extends Controller> controllerClass_;
-	private HashMap<String, ControllerMethod[]> reqMethod2ctrlMethod_ = new HashMap<>();
-	private ControllerMethod[] methods_;
-	private String methodPath_;
-	private ControllerFactory factory_;
+	private final Class<? extends Controller> controllerClass_;
+	private final HashMap<String, ControllerMethod[]> reqMethod2ctrlMethod_ = new HashMap<>();
+	private final ControllerMethod[] methods_;
+	private final String methodPath_;
+	private final ControllerFactory factory_;
 }

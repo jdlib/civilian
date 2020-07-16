@@ -178,16 +178,17 @@ public class Controller implements
 	
 	
 	/**
-	 * Sets the ControllerType. This is automatically done
+	 * Sets the ControllerType of a Controller. This is automatically done
 	 * when a Controller is created during resource dispatch.
 	 * @param type the ControllerType
 	 */
-	public void setControllerType(ControllerType type)
+	public static void setControllerType(Controller controller, ControllerType type)
 	{
+		Check.notNull(controller, "controller");
 		Check.notNull(type, "type");
-		if (type.getControllerClass() != getClass())
+		if (type.getControllerClass() != controller.getClass())
 			throw new IllegalArgumentException();
-		type_ = type;
+		controller.type_ = type;
 	}
 	
 	
