@@ -49,8 +49,6 @@ public class ControllerTypeTest extends CivTest
 		ControllerType type = service_.getControllerType(TestController.class);
 
 		assertSame(TestController.class, type.getControllerClass());
-		assertNull(type.getMethodPath());
-		assertEquals(TestController.class.getName(), type.getSignature());
 		assertTrue(type.createController() instanceof TestController);
 		
 		// actions

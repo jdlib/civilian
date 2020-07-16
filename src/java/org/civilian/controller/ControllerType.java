@@ -42,14 +42,12 @@ public class ControllerType implements Iterable<ControllerMethod>
 	 * @param methods the ControllerMethods. The order of the method is obeyed during
 	 * 		content-negotiation.
 	 */
-	public ControllerType(Class<? extends Controller> controllerClass, 
-		String methodPath,
+	ControllerType(Class<? extends Controller> controllerClass, 
 		ControllerFactory factory,
 		ControllerMethod... methods)
 	{
 		controllerClass_	= Check.notNull(controllerClass, "controllerClass");
 		methods_ 			= Check.notNull(methods, "methods"); // we accept empty arrays, even if the controller is then useless
-		methodPath_			= methodPath;
 		factory_			= factory;
 		
 		// build the map request-method -> controller-method[] 
@@ -91,18 +89,6 @@ public class ControllerType implements Iterable<ControllerMethod>
 				return true;
 		}
 		return false;
-	}
-
-	
-	public String getMethodPath()
-	{
-		return methodPath_;
-	}
-	
-
-	public String getSignature()
-	{
-		return ControllerSignature.build(controllerClass_.getName(), methodPath_);
 	}
 
 	
@@ -279,6 +265,5 @@ public class ControllerType implements Iterable<ControllerMethod>
 	private final Class<? extends Controller> controllerClass_;
 	private final HashMap<String, ControllerMethod[]> reqMethod2ctrlMethod_ = new HashMap<>();
 	private final ControllerMethod[] methods_;
-	private final String methodPath_;
 	private final ControllerFactory factory_;
 }

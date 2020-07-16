@@ -92,12 +92,12 @@ public class ControllerService
 		private static final LeveledMethod[] EMPTY_METHODS = new LeveledMethod[0]; 
 		
 
-		private CMethods(Class<? extends Controller> controllerClass, String methodPath, ControllerFactory factory, int hierarchLevel)
+		private CMethods(Class<? extends Controller> controllerClass, ControllerSignature signature, ControllerFactory factory, int hierarchLevel)
 		{
 			controllerClass_	= Check.notNull(controllerClass, "controllerClass");
+			signature_			= Check.notNull(signature, "signatue");
 			hierarchLevel_		= hierarchLevel;
 			methods_ 			= EMPTY_METHODS;
-			methodPath_			= methodPath;
 			factory_			= factory;
 		}
 		
@@ -107,7 +107,7 @@ public class ControllerService
 		 */
 		public CMethods(ControllerFactory factory)
 		{
-			this(Controller.class, null, factory, 0);
+			this(Controller.class, new ControllerSignature(Controller.class.getName()), factory, 0);
 		}
 		
 		
@@ -120,10 +120,10 @@ public class ControllerService
 		 * @param parentList the method list of the parent class
 		 * @param typeLib a type library.
 		 */
-		public CMethods(Class<? extends Controller> controllerClass, String methodSegment, CMethods parentList, 
+		public CMethods(Class<? extends Controller> controllerClass, ControllerSignature signature, CMethods parentList, 
 			PathParamMap pathParams, TypeLib typeLib)
 		{
-			this(controllerClass, methodSegment, parentList.factory_, parentList.hierarchLevel_ + 1);
+			this(controllerClass, signature, parentList.factory_, parentList.hierarchLevel_ + 1);
 			Check.notNull(parentList, "parentList");
 			
 			// add inheritable action methods
@@ -138,8 +138,7 @@ public class ControllerService
 			int inClassIndex = 0;
 			for (Method javaMethod : controllerClass.getDeclaredMethods())
 			{
-				Segment segmentAnno = javaMethod.getAnnotation(Segment.class);
-				if (segmentAnno == null ? methodSegment == null : segmentAnno.value().equals(methodSegment))
+				if (signature.matchJavaMethod(javaMethod))
 				{
 					ControllerMethod method = ControllerMethod.create(argFactory, javaMethod);
 					if (method != null)
@@ -160,21 +159,21 @@ public class ControllerService
 				ControllerMethod[] methods = new ControllerMethod[methods_.length];
 				for (int i=0; i<methods.length; i++)
 					methods[i] = methods_[i].method;
-				return new ControllerType(controllerClass_, methodPath_, factory_, methods);
+				return new ControllerType(controllerClass_, factory_, methods);
 			}
 		}
 
 
 		public ControllerSignature getSignature()
 		{
-			return new ControllerSignature(controllerClass_.getName(), methodPath_);
+			return signature_;
 		}
 		
 		
 		private LeveledMethod[] methods_;
 		private Class<? extends Controller> controllerClass_;
 		private int hierarchLevel_;
-		private String methodPath_;
+		private ControllerSignature signature_;
 		private ControllerFactory factory_;
 	}
 	
@@ -311,7 +310,7 @@ public class ControllerService
 			if (methods == null)
 			{
 				Class<? extends Controller> ctrlClass = constructControllerClass(signature.getClassName());
-				methods = findMethods(ctrlClass, signature.getMethodName());
+				methods = findMethods(ctrlClass, signature);
 			}
 			return methods;
 		}
@@ -331,13 +330,13 @@ public class ControllerService
 		}
 		
 			
-		private CMethods findMethods(Class<? extends Controller> controllerClass, String methodSegment)
+		private CMethods findMethods(Class<? extends Controller> controllerClass, ControllerSignature signature)
 		{
 			Class<? extends Controller> superClass = checkClass(controllerClass.getSuperclass());
 			
 			CMethods parentMethods = getMethods(new ControllerSignature(superClass.getName()));
 			
-			CMethods methods = new CMethods(controllerClass, methodSegment, parentMethods, pathParams_, typeLib_);
+			CMethods methods = new CMethods(controllerClass, signature, parentMethods, pathParams_, typeLib_);
 			addMethods(methods);
 			
 			return methods;

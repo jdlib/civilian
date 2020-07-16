@@ -16,8 +16,10 @@
 package org.civilian.controller;
 
 
+import java.lang.reflect.Method;
 import java.util.Objects;
 import org.civilian.Resource;
+import org.civilian.annotation.Segment;
 import org.civilian.util.Check;
 import org.civilian.util.StringUtil;
 
@@ -95,7 +97,14 @@ public class ControllerSignature
 		return methodName_;
 	}
 	
-	
+
+	public boolean matchJavaMethod(Method javaMethod)
+	{
+		Segment segmentAnno = javaMethod.getAnnotation(Segment.class);
+		return segmentAnno == null ? methodName_ == null : segmentAnno.value().equals(methodName_);
+	}
+		
+		
 	@Override public int hashCode()
 	{
 		return methodName_ != null ? Objects.hash(className_, methodName_) : className_.hashCode();
