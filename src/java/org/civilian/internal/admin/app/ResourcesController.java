@@ -22,6 +22,7 @@ import org.civilian.annotation.Produces;
 import org.civilian.annotation.Parameter;
 import org.civilian.content.ContentType;
 import org.civilian.controller.ControllerMethod;
+import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
 import org.civilian.template.Template;
 
@@ -39,8 +40,9 @@ public class ResourcesController extends AppController
 	
 	
 	@Produces(ContentType.Strings.APPLICATION_JSON)
-	@Get public void getDetails(@Parameter("controller") String signature) throws Exception
+	@Get public void getDetails(@Parameter("controller") String sigString) throws Exception
 	{
+		ControllerSignature signature = ControllerSignature.parse(sigString) ;
 		ControllerType type = viewedApp_.getControllerService().getControllerType(signature);
 		if (type == null)
 			getResponse().writeJson("?");

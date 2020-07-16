@@ -61,6 +61,6 @@ public class ResourceScanTest extends CivTest
 		assertTrue(it.hasNext());
 		Resource r = it.next();
 		assertEquals(route, 	r.getRoute().toString()); 
-		assertEquals(ctrlSig, 	r.getControllerSignature()); 
+		assertEquals(ctrlSig, 	r.getControllerSignature().toString()); 
 	}
 }

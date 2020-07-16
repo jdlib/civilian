@@ -125,14 +125,14 @@ class ResourceFactory
 		ResourceExt extension	= map(cls, segment, false);
 		ResourceInfo resInfo	= extension == null ? cp.resInfo : cp.resInfo.getChild(extension);
 		
-		resInfo.setControllerInfo(cls.getName(), null);
+		resInfo.setControllerSignature(cls.getName(), null);
 		
 		tmpMethodExts_.clear();
 		collectMethodExtensions(cls, tmpMethodExts_);
 		for (ResourceExt methodExt : tmpMethodExts_)
 		{
 			ResourceInfo methodRes = resInfo.getChild(methodExt);
-			methodRes.setControllerInfo(cls.getName(), methodExt.pathAnnotation);
+			methodRes.setControllerSignature(cls.getName(), methodExt.pathAnnotation);
 		}
 	}
 	

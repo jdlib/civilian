@@ -115,9 +115,9 @@ public class Url implements PathParamProvider, ResponseProvider
 	 */
 	public <C extends Controller> Url(ResponseProvider rp, Class<C> controllerClass)
 	{
-		Response response = Check.notNull(rp, "response provider").getResponse();
-		String sig        = ControllerSignature.build(controllerClass.getName(), null);
-		Resource resource = response.getApplication().getRootResource().getTree().getResource(sig);
+		Response response 		= Check.notNull(rp, "response provider").getResponse();
+		ControllerSignature sig = new ControllerSignature(controllerClass.getName());
+		Resource resource 		= response.getApplication().getRootResource().getTree().getResource(sig);
 		
 		if (resource == null)
 			throw new IllegalArgumentException(controllerClass.getName() + " not mapped to a resource");

@@ -70,11 +70,11 @@ public class ControllerServiceTest extends CivTest
 		ControllerService service = new ControllerService(Test1PathParams.MAP, TYPELIB, null, reloadConfig);
 		assertTrue(service.isReloading());
 		
-		assertNull(service.getControllerType(Base.class.getName()));
-		assertNull(service.getControllerType((String)null));
+		assertNull(service.getControllerType(Base.class));
+		assertNull(service.getControllerType((ControllerSignature)null));
 		
-		service.getControllerType(Derived.class.getName());
+		service.getControllerType(Derived.class);
 
-		service.getControllerType(ControllerSignature.build(Derived.class.getName(), "path"));
+		service.getControllerType(new ControllerSignature(Derived.class.getName(), "path"));
 	}
 }

@@ -184,7 +184,7 @@ class ServerTemplate
 	
 	private void printResourceComment(ResourceInfo resInfo)
 	{
-		String ctrlSig = resInfo.getControllerSignature();              // line 88: @String ctrlSig = resInfo.getControllerSignature();
+		ControllerSignature ctrlSig = resInfo.getControllerSignature(); // line 88: @ControllerSignature ctrlSig = resInfo.getControllerSignature();
 		out.println("/**");                                             // line 89: /**
 		out.print(" * \"");                                             // line 90: * "
 		out.print(resInfo);                                             // line 90: <%resInfo%>
@@ -218,19 +218,17 @@ class ServerTemplate
 	
 	private void printSetCtrlSeg(ResourceInfo info)
 	{
-		String csig        = info.getControllerSignature();             // line 107: @String csig        = info.getControllerSignature();
-		String className   = ControllerSignature.getClassName(csig);    // line 108: @String className   = ControllerSignature.getClassName(csig);
-		String methodPath  = ControllerSignature.getMethodFilter(csig); // line 109: @String methodPath  = ControllerSignature.getMethodFilter(csig);
-		String packageName = ClassUtil.getPackageName(className);       // line 110: @String packageName = ClassUtil.getPackageName(className);
-		String simpleName  = ClassUtil.cutPackageName(className);       // line 111: @String simpleName  = ClassUtil.cutPackageName(className);
-		String packagePart = packageName.substring(ctrlRootPackage_.length()); // line 112: @String packagePart = packageName.substring(ctrlRootPackage_.length());
-		out.print("setControllerSignature(cls(");                       // line 113: setControllerSignature(cls(
-		out.print(stringArg(packagePart));                              // line 113: <%stringArg(packagePart)%>
-		out.print(", ");                                                // line 113: ,
-		out.print(stringArg(simpleName));                               // line 113: <%stringArg(simpleName)%>
-		out.print("), ");                                               // line 113: ),
-		out.print(stringArg(methodPath));                               // line 113: <%stringArg(methodPath)%>
-		out.println(");");                                              // line 113: );
+		ControllerSignature sig = info.getControllerSignature();        // line 107: @ControllerSignature sig = info.getControllerSignature();
+		String packageName = ClassUtil.getPackageName(sig.getClassName()); // line 108: @String packageName = ClassUtil.getPackageName(sig.getClassName());
+		String simpleName  = ClassUtil.cutPackageName(sig.getClassName()); // line 109: @String simpleName  = ClassUtil.cutPackageName(sig.getClassName());
+		String packagePart = packageName.substring(ctrlRootPackage_.length()); // line 110: @String packagePart = packageName.substring(ctrlRootPackage_.length());
+		out.print("setControllerSignature(cls(");                       // line 111: setControllerSignature(cls(
+		out.print(stringArg(packagePart));                              // line 111: <%stringArg(packagePart)%>
+		out.print(", ");                                                // line 111: ,
+		out.print(stringArg(simpleName));                               // line 111: <%stringArg(simpleName)%>
+		out.print("), ");                                               // line 111: ),
+		out.print(stringArg(sig.getMethodName()));                      // line 111: <%stringArg(sig.getMethodName())%>
+		out.println(");");                                              // line 111: );
 	}
 	
 	

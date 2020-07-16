@@ -32,18 +32,17 @@ public class ControllerSignatureTest extends CivTest
 
 	@Test public void testParse()
 	{
-		String[] s;
+		ControllerSignature sig;
 		
-		s = ControllerSignature.parse(null);
-		assertNull(s[0]);
-		assertNull(s[1]);
+		sig = ControllerSignature.parse(null);
+		assertNull(sig);
 		
-		s = ControllerSignature.parse("c");
-		assertEquals("c", s[0]);
-		assertNull(s[1]);
+		sig = ControllerSignature.parse("c");
+		assertEquals("c", sig.getClassName());
+		assertNull(sig.getMethodName());
 		
-		s = ControllerSignature.parse("c:m");
-		assertEquals("c", s[0]);
-		assertEquals("m", s[1]);
+		sig = ControllerSignature.parse("c:m");
+		assertEquals("c", sig.getClassName());
+		assertEquals("m", sig.getMethodName());
 	}
 }

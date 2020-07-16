@@ -235,9 +235,8 @@ public class Resource implements Iterable<Resource>
 	 * for more info.
 	 * @return the signature. If the resource is not a associated with
 	 * 		a controller, null is returned.
-	 * 
 	 */
-	public String getControllerSignature()
+	public ControllerSignature getControllerSignature()
 	{
 		return ctrlSignature_;
 	}
@@ -246,13 +245,13 @@ public class Resource implements Iterable<Resource>
 	/**
 	 * Sets the controller signature of the resource.
 	 */
-	public void setControllerSignature(String signature)
+	public void setControllerSignature(ControllerSignature signature)
 	{
 		tree_.mapResource(this, ctrlSignature_, signature);
 		ctrlSignature_ = signature;
 		initTypeProvider(false);
 	}
-	
+
 	
 	/**
 	 * Sets the ControllerInfo of the resource. The ControllerInfo
@@ -260,7 +259,7 @@ public class Resource implements Iterable<Resource>
 	 */
 	public void setControllerSignature(String className, String methodPath)
 	{
-		setControllerSignature(ControllerSignature.build(className, methodPath));
+		setControllerSignature(new ControllerSignature(className, methodPath));
 	}
 
 	
@@ -403,7 +402,7 @@ public class Resource implements Iterable<Resource>
 	public void touchControllerClasses() throws ClassNotFoundException
 	{
 		if (ctrlSignature_ != null)
-			Class.forName(ControllerSignature.getClassName(ctrlSignature_));
+			Class.forName(ctrlSignature_.getClassName());
 		for (int i=0; i<getChildCount(); i++)
 			getChild(i).touchControllerClasses();
 	}
@@ -656,13 +655,13 @@ public class Resource implements Iterable<Resource>
 		 * Returns the resource to which the controller with the given 
 		 * signature is mapped.
 		 */
-		public Resource getResource(String controllerSignature)
+		public Resource getResource(ControllerSignature controllerSignature)
 		{
 			return sig2resource_.get(controllerSignature);
 		}
 		
 		
-		private void mapResource(Resource resource, String oldSignature, String newSignature)
+		private void mapResource(Resource resource, ControllerSignature oldSignature, ControllerSignature newSignature)
 		{
 			if (oldSignature != null)
 				sig2resource_.remove(oldSignature);
@@ -675,7 +674,7 @@ public class Resource implements Iterable<Resource>
 		private Path appPath_ = Path.ROOT;
 		private String defaultExtension_;
 		private ControllerService controllerService_;
-		private ConcurrentHashMap<String,Resource> sig2resource_ = new ConcurrentHashMap<>();
+		private ConcurrentHashMap<ControllerSignature,Resource> sig2resource_ = new ConcurrentHashMap<>();
 	}
 
 	
@@ -693,7 +692,7 @@ public class Resource implements Iterable<Resource>
 	private final String segment_;
 	private final PathParam<?> pathParam_;
 	private final Route route_;
-	private String ctrlSignature_;
+	private ControllerSignature ctrlSignature_;
 	private ControllerTypeProvider typeProvider_ = ControllerTypeProvider.EMPTY;
 	private Resource[] children_ = EMPTY;
 	private static Resource[] EMPTY = new Resource[0];

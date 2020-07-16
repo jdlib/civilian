@@ -26,6 +26,7 @@ import org.civilian.CivTest;
 import org.civilian.Resource;
 import org.civilian.Resource.Match;
 import org.civilian.controller.ControllerService;
+import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
 import org.civilian.testcase1.AlphaController;
 import org.civilian.type.TypeLib;
@@ -177,7 +178,9 @@ public class ResourceTest extends CivTest
 		assertNull(root.getControllerSignature());
 		
 		root.setControllerSignature("test.Controller", "path");
-		assertEquals("test.Controller:path", root.getControllerSignature());
+		ControllerSignature sig = root.getControllerSignature();
+		assertEquals("test.Controller", sig.getClassName());
+		assertEquals("path", sig.getMethodName());
 	}
 	
 	
@@ -354,7 +357,7 @@ public class ResourceTest extends CivTest
 	@Test public void testTouch() throws Exception
 	{
 		Resource root = new Resource();
-		root.setControllerSignature(AlphaController.class.getName());
+		root.setControllerSignature(AlphaController.class.getName(), null);
 		
 		new Resource(root, "a");
 		

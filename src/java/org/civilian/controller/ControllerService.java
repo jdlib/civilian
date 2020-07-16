@@ -72,9 +72,15 @@ public class ControllerService
 	/**
 	 * Returns a ControllerType for a {@link ControllerSignature controller signature}. 
 	 */
-	public ControllerType getControllerType(String signature)
+	public ControllerType getControllerType(ControllerSignature signature)
 	{
 		return loader_.getControllerType(signature);
+	}
+
+	
+	public ControllerType getControllerType(Class<? extends Controller> ctrlClass)
+	{
+		return getControllerType(new ControllerSignature(ctrlClass.getName()));
 	}
 
 	
@@ -110,14 +116,14 @@ public class ControllerService
 		 * all action methods are extracted from the controller class and then joined with all inherited action
 		 * methods of the parent list. 
 		 * @param controllerClass the controller class
-		 * @param methodPath consider only methods whose value of its {@link Segment} annotation equals the given value.	
+		 * @param methodSegment consider only methods whose value of its {@link Segment} annotation equals the given value.	
 		 * @param parentList the method list of the parent class
 		 * @param typeLib a type library.
 		 */
-		public CMethods(Class<? extends Controller> controllerClass, String methodPath, CMethods parentList, 
+		public CMethods(Class<? extends Controller> controllerClass, String methodSegment, CMethods parentList, 
 			PathParamMap pathParams, TypeLib typeLib)
 		{
-			this(controllerClass, methodPath, parentList.factory_, parentList.hierarchLevel_ + 1);
+			this(controllerClass, methodSegment, parentList.factory_, parentList.hierarchLevel_ + 1);
 			Check.notNull(parentList, "parentList");
 			
 			// add inheritable action methods
@@ -132,8 +138,8 @@ public class ControllerService
 			int inClassIndex = 0;
 			for (Method javaMethod : controllerClass.getDeclaredMethods())
 			{
-				Segment pathAnno = javaMethod.getAnnotation(Segment.class);
-				if (pathAnno == null ? methodPath == null : pathAnno.value().equals(methodPath))
+				Segment segmentAnno = javaMethod.getAnnotation(Segment.class);
+				if (segmentAnno == null ? methodSegment == null : segmentAnno.value().equals(methodSegment))
 				{
 					ControllerMethod method = ControllerMethod.create(argFactory, javaMethod);
 					if (method != null)
@@ -159,9 +165,9 @@ public class ControllerService
 		}
 
 
-		public String getSignature()
+		public ControllerSignature getSignature()
 		{
-			return ControllerSignature.build(controllerClass_.getName(), methodPath_);
+			return new ControllerSignature(controllerClass_.getName(), methodPath_);
 		}
 		
 		
@@ -215,7 +221,7 @@ public class ControllerService
 	 */
 	private abstract static class Loader
 	{
-		public abstract ControllerType getControllerType(String signature);
+		public abstract ControllerType getControllerType(ControllerSignature signature);
 
 		
 		public abstract boolean isReloading();
@@ -242,7 +248,7 @@ public class ControllerService
 		}
 		
 		
-		@Override public ControllerType getControllerType(String signature)
+		@Override public ControllerType getControllerType(ControllerSignature signature)
 		{
 			RealLoader loader = new RealLoader(pathParams_, typeLib_, factory_, reloadConfig_.createClassLoader());
 			return loader.getControllerType(signature);
@@ -284,7 +290,7 @@ public class ControllerService
 		}
 		
 		
-		@Override public synchronized ControllerType getControllerType(String signature)
+		@Override public synchronized ControllerType getControllerType(ControllerSignature signature)
 		{
 			if (signature != null)
 			{
@@ -299,13 +305,13 @@ public class ControllerService
 		/**
 		 * Returns the controller methods for a controller class.
 		 */
-		private CMethods getMethods(String signature)
+		private CMethods getMethods(ControllerSignature signature)
 		{
 			CMethods methods = signature2methods_.get(signature); 
 			if (methods == null)
 			{
-				String parts[] = ControllerSignature.parse(signature);
-				methods = findMethods(constructControllerClass(parts[0]), parts[1]);
+				Class<? extends Controller> ctrlClass = constructControllerClass(signature.getClassName());
+				methods = findMethods(ctrlClass, signature.getMethodName());
 			}
 			return methods;
 		}
@@ -325,13 +331,13 @@ public class ControllerService
 		}
 		
 			
-		private CMethods findMethods(Class<? extends Controller> controllerClass, String methodPath)
+		private CMethods findMethods(Class<? extends Controller> controllerClass, String methodSegment)
 		{
 			Class<? extends Controller> superClass = checkClass(controllerClass.getSuperclass());
 			
-			CMethods parentMethods = getMethods(superClass.getName());
+			CMethods parentMethods = getMethods(new ControllerSignature(superClass.getName()));
 			
-			CMethods methods = new CMethods(controllerClass, methodPath, parentMethods, pathParams_, typeLib_);
+			CMethods methods = new CMethods(controllerClass, methodSegment, parentMethods, pathParams_, typeLib_);
 			addMethods(methods);
 			
 			return methods;
@@ -350,7 +356,7 @@ public class ControllerService
 		private PathParamMap pathParams_;
 		private TypeLib typeLib_;
 		private ClassLoader classLoader_;
-		private HashMap<String, CMethods> signature2methods_ = new HashMap<>();
+		private HashMap<ControllerSignature, CMethods> signature2methods_ = new HashMap<>();
 	}
 
 	

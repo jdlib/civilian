@@ -16,21 +16,53 @@
 package org.civilian.controller;
 
 
+import java.util.Objects;
 import org.civilian.Resource;
+import org.civilian.util.Check;
+import org.civilian.util.StringUtil;
 
 
 /**
- * ControllerSignature is a helper class to build or parse controller signature strings.
- * A signature string is either null, a controller class name, or a controller class name
- * suffixed by a filter string. The last case is used to specify a controller class,
- * and specify that only a subset of its controller methods should be used.  
- * Signature strings are used by {@link Resource#getControllerSignature() resources} to
- * specify which controller is used to handle requests for the resource-
+ * ControllerSignature represents the name of Controller class and an 
+ * optional name filter for its action methods.
+ * ControllerSignature are used by {@link Resource#getControllerSignature() resources}
+ * to specify which controller is used to handle requests for the resource.
  */
-public abstract class ControllerSignature
+public class ControllerSignature
 {
 	public static final char SEPARATOR = ':';
 	
+	
+	public static ControllerSignature parse(String signature)
+	{
+		if (StringUtil.isBlank(signature))
+			return null;
+		
+		String className = signature;
+		String methodName = null;
+		
+		int p = signature.indexOf(SEPARATOR);
+		if (p >= 0)
+		{
+			className 	= signature.substring(0, p);
+			methodName 	= signature.substring(p + 1);
+		}
+		return new ControllerSignature(className, methodName);
+	}
+
+	
+	public ControllerSignature(String className)
+	{
+		this(className, null);
+	}
+	
+	
+	public ControllerSignature(String className, String methodName)
+	{
+		className_  = Check.notEmpty(className, "className");
+		methodName_ = methodName != null ? Check.notEmpty(methodName, "methodName") : null; 
+	}
+
 	
 	/**
 	 * Builds a signature out of class name and method filter.
@@ -47,41 +79,54 @@ public abstract class ControllerSignature
 
 
 	/**
-	 * Parses a signature into a class name and a method filter.
-	 * @return an array with length 2
+	 * Returns the class name.
 	 */
-	public static String[] parse(String signature)
+	public String getClassName()
 	{
-		String[] s = new String[2];
-		if (signature != null)
+		return className_;
+	}
+
+
+	/**
+	 * Returns the method name or null.
+	 */
+	public String getMethodName()
+	{
+		return methodName_;
+	}
+	
+	
+	@Override public int hashCode()
+	{
+		return methodName_ != null ? Objects.hash(className_, methodName_) : className_.hashCode();
+	}
+	
+
+	@Override public boolean equals(Object other)
+	{
+		if (other instanceof ControllerSignature)
 		{
-			int p = signature.indexOf(SEPARATOR);
-			if (p < 0)
-				s[0] = signature;
-			else
-			{
-				s[0] = signature.substring(0, p);
-				s[1] = signature.substring(p + 1);
-			}
+			ControllerSignature o = (ControllerSignature)other;
+			return className_.equals(o.className_) && Objects.equals(methodName_, o.methodName_);
 		}
+		else
+			return false;
+	}
+
+	
+	
+	/**
+	 * Builds a signature out of class name and method filter.
+	 */
+	@Override public String toString()
+	{
+		String s = className_;
+		if (methodName_ != null)
+			s += SEPARATOR + methodName_;
 		return s;
 	}
 
-
-	/**
-	 * Extracts the class name from a signature.
-	 */
-	public static String getClassName(String signature)
-	{
-		return signature != null ? parse(signature)[0] : null;
-	}
-
-
-	/**
-	 * Extracts the method filter from a signature.
-	 */
-	public static String getMethodFilter(String signature)
-	{
-		return signature != null ? parse(signature)[1] : null;
-	}
+	
+	private final String className_;
+	private final String methodName_;
 }

@@ -1,6 +1,7 @@
 import java.util.Iterator
 import org.civilian.Application
 import org.civilian.Resource
+import org.civilian.controller.ControllerSignature
 
 
 template(Application app)
@@ -66,8 +67,8 @@ mixin html
 }}
 
 
-private void printControllerEntry(String ctrlSig, String path)
+private void printControllerEntry(ControllerSignature sig, String path)
 {{
-	@if (ctrlSig != null)
-		{ controller: "<%ctrlSig%>", path: "<%path.length() != 0 ? path : "/"%>" },
+	@if (sig != null)
+		{ controller: "<%sig%>", path: "<%path.length() != 0 ? path : "/"%>" },
 }}

@@ -46,7 +46,7 @@ public class ControllerTypeTest extends CivTest
 	
 	@Test public void test()
 	{
-		ControllerType type = service_.getControllerType(TestController.class.getName());
+		ControllerType type = service_.getControllerType(TestController.class);
 
 		assertSame(TestController.class, type.getControllerClass());
 		assertNull(type.getMethodPath());
@@ -75,7 +75,7 @@ public class ControllerTypeTest extends CivTest
 	
 	@Test public void testMethodForRequest()
 	{
-		ControllerType type = service_.getControllerType(TestController.class.getName());
+		ControllerType type = service_.getControllerType(TestController.class);
 		
 		Request request = mock(Request.class);
 		when(request.getMethod()).thenReturn("POST");
@@ -98,7 +98,7 @@ public class ControllerTypeTest extends CivTest
 
 	@Test public void testBase()
 	{
-		ControllerType type = service_.getControllerType(Controller.class.getName());
+		ControllerType type = service_.getControllerType(Controller.class);
 		
 		assertEquals(0, type.getMethodCount());
 		assertFalse(type.contains(null));

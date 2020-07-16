@@ -85,7 +85,7 @@ private void printResourceClass(ResourceInfo info)
 
 private void printResourceComment(ResourceInfo resInfo)
 {{
-	@String ctrlSig = resInfo.getControllerSignature();
+	@ControllerSignature ctrlSig = resInfo.getControllerSignature();
 	<%%>/**
 	<%%> * "<%resInfo%>"<%?ctrlSig != null%> -> <%ctrlSig%><%?%>
 	<%%> */ 
@@ -104,13 +104,11 @@ private void printCtorArgs(ResourceInfo info, boolean isChild)
 
 private void printSetCtrlSeg(ResourceInfo info)
 {{
-	@String csig        = info.getControllerSignature();
-	@String className   = ControllerSignature.getClassName(csig);
-	@String methodPath  = ControllerSignature.getMethodFilter(csig);
-	@String packageName = ClassUtil.getPackageName(className);
-	@String simpleName  = ClassUtil.cutPackageName(className);
+	@ControllerSignature sig = info.getControllerSignature();
+	@String packageName = ClassUtil.getPackageName(sig.getClassName());
+	@String simpleName  = ClassUtil.cutPackageName(sig.getClassName());
 	@String packagePart = packageName.substring(ctrlRootPackage_.length());
-	setControllerSignature(cls(<%stringArg(packagePart)%>, <%stringArg(simpleName)%>), <%stringArg(methodPath)%>);
+	setControllerSignature(cls(<%stringArg(packagePart)%>, <%stringArg(simpleName)%>), <%stringArg(sig.getMethodName())%>);
 }}
 
 
