@@ -257,9 +257,9 @@ public class Resource implements Iterable<Resource>
 	 * Sets the ControllerInfo of the resource. The ControllerInfo
 	 * describes the controller associated with the resource.
 	 */
-	public void setControllerSignature(String className, String methodPath)
+	public void setControllerSignature(String className, String methodSegment)
 	{
-		setControllerSignature(new ControllerSignature(className, methodPath));
+		setControllerSignature(new ControllerSignature(className).withMethodSegment(methodSegment));
 	}
 
 	

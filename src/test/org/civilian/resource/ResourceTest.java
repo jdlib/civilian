@@ -180,7 +180,7 @@ public class ResourceTest extends CivTest
 		root.setControllerSignature("test.Controller", "path");
 		ControllerSignature sig = root.getControllerSignature();
 		assertEquals("test.Controller", sig.getClassName());
-		assertEquals("path", sig.getMethodName());
+		assertEquals("path", sig.getMethodSegment());
 	}
 	
 	

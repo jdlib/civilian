@@ -57,178 +57,194 @@ class ServerTemplate
 		out.println(";");                                               // line 20: ;
 		out.println();
 		out.println();
-		out.println("/**");                                             // line 23: /**
-		out.print(" * Defines the resources of application ");          // line 24: * Defines the resources of application
-		out.print(app.getClass().getName());                            // line 24: <%app.getClass().getName()%>
-		out.println(".");                                               // line 24: .
-		out.println(" */");                                             // line 25: */
-		out.print("public interface ");                                 // line 26: public interface
-		out.print(outputName);                                          // line 26: <%outputName%>
+		out.print("import ");                                           // line 23: import
+		out.print(ControllerSignature.class.getName());                 // line 23: <%ControllerSignature.class.getName()%>
+		out.println(";");                                               // line 23: ;
+		out.println();
+		out.println();
+		out.println("/**");                                             // line 26: /**
+		out.print(" * Defines the resources of application ");          // line 27: * Defines the resources of application
+		out.print(app.getClass().getName());                            // line 27: <%app.getClass().getName()%>
+		out.println(".");                                               // line 27: .
+		out.println(" */");                                             // line 28: */
+		out.print("public interface ");                                 // line 29: public interface
+		out.print(outputName);                                          // line 29: <%outputName%>
 		out.printlnIfNotEmpty();
-		out.println("{");                                               // line 27: {
+		out.println("{");                                               // line 30: {
 		out.increaseTab();
-		printResourceComment(root);                                     // line 28: @printResourceComment(root);
-		out.println("public static final Root root = new Root();");     // line 29: public static final Root root = new Root();
-		printResourceClass(root);                                       // line 30: @printResourceClass(root);
+		printResourceComment(root);                                     // line 31: @printResourceComment(root);
+		out.println("public static final Root root = new Root();");     // line 32: public static final Root root = new Root();
+		printResourceClass(root);                                       // line 33: @printResourceClass(root);
 		out.decreaseTab();
-		out.println("}");                                               // line 31: }
+		out.println("}");                                               // line 34: }
 	}
 	
 	
 	private void printResourceClass(ResourceInfo info)
 	{
-		// two line spacer                                              // line 37: @// two line spacer
+		// two line spacer                                              // line 40: @// two line spacer
 		out.println();
 		out.println();
-		int childCount = info.getChildCount();                          // line 40: @int childCount = info.getChildCount();
-		printResourceComment(info);                                     // line 41: @printResourceComment(info);
-		String className = getJavaClass(info);                          // line 42: @String className = getJavaClass(info);
-		out.print("public static class ");                              // line 43: public static class
-		out.print(className);                                           // line 43: <%className%>
-		out.print(" extends ");                                         // line 43: extends
-		out.print(Resource.class.getName());                            // line 43: <%Resource.class.getName()%>
+		int childCount = info.getChildCount();                          // line 43: @int childCount = info.getChildCount();
+		printResourceComment(info);                                     // line 44: @printResourceComment(info);
+		String className = getJavaClass(info);                          // line 45: @String className = getJavaClass(info);
+		out.print("public static class ");                              // line 46: public static class
+		out.print(className);                                           // line 46: <%className%>
+		out.print(" extends ");                                         // line 46: extends
+		out.print(Resource.class.getName());                            // line 46: <%Resource.class.getName()%>
 		out.printlnIfNotEmpty();
-		out.println("{");                                               // line 44: {
+		out.println("{");                                               // line 47: {
 		out.increaseTab();
-		out.print("public ");                                           // line 45: public
-		out.print(className);                                           // line 45: <%className%>
-		out.print("(");                                                 // line 45: (
-		if (!info.isRoot())                                             // line 45: <%?!info.isRoot()%>
+		out.print("public ");                                           // line 48: public
+		out.print(className);                                           // line 48: <%className%>
+		out.print("(");                                                 // line 48: (
+		if (!info.isRoot())                                             // line 48: <%?!info.isRoot()%>
 		{
-			out.print(Resource.class.getName());                        // line 45: <%Resource.class.getName()%>
-			out.print(" parent");                                       // line 45: parent
+			out.print(Resource.class.getName());                        // line 48: <%Resource.class.getName()%>
+			out.print(" parent");                                       // line 48: parent
 		}
-		out.println(")");                                               // line 45: )
-		out.println("{");                                               // line 46: {
+		out.println(")");                                               // line 48: )
+		out.println("{");                                               // line 49: {
 		out.increaseTab();
-		if (!info.isRoot())                                             // line 47: @if (!info.isRoot())
+		if (!info.isRoot())                                             // line 50: @if (!info.isRoot())
 		{
-			out.print("super(");                                        // line 48: super(
-			printCtorArgs(info, false);                                 // line 48: <%printCtorArgs(info, false);%>
-			out.println(");");                                          // line 48: );
+			out.print("super(");                                        // line 51: super(
+			printCtorArgs(info, false);                                 // line 51: <%printCtorArgs(info, false);%>
+			out.println(");");                                          // line 51: );
 		}
-		if (info.getControllerSignature() != null)                      // line 49: @if (info.getControllerSignature() != null)
+		if (info.getControllerSignature() != null)                      // line 52: @if (info.getControllerSignature() != null)
 		{
-			printSetCtrlSeg(info);                                      // line 50: @printSetCtrlSeg(info);
+			printSetCtrlSeg(info);                                      // line 53: @printSetCtrlSeg(info);
 			out.println();
 		}
-		// print field definitions                                      // line 52: @// print field definitions
-		for (int i=0; i<childCount; i++)                                // line 53: @for (int i=0; i<childCount; i++)
+		// print field definitions                                      // line 55: @// print field definitions
+		for (int i=0; i<childCount; i++)                                // line 56: @for (int i=0; i<childCount; i++)
 		{
-			ResourceInfo child = info.getChild(i);                      // line 54: @ResourceInfo child = info.getChild(i);
-			String field = getJavaField(child);                         // line 55: @String field = getJavaField(child);
-			out.print("this.");                                         // line 56: this.
-			out.print(field);                                           // line 56: <%field%>
-			out.print(" = new ");                                       // line 56: = new
-			if (child.getChildCount() == 0)                             // line 57: @if (child.getChildCount() == 0)
+			ResourceInfo child = info.getChild(i);                      // line 57: @ResourceInfo child = info.getChild(i);
+			String field = getJavaField(child);                         // line 58: @String field = getJavaField(child);
+			out.print("this.");                                         // line 59: this.
+			out.print(field);                                           // line 59: <%field%>
+			out.print(" = new ");                                       // line 59: = new
+			if (child.getChildCount() == 0)                             // line 60: @if (child.getChildCount() == 0)
 			{
-				out.print(Resource.class.getName());                    // line 58: <%Resource.class.getName()%>
-				out.print("(");                                         // line 58: (
-				printCtorArgs(child, true);                             // line 58: <%printCtorArgs(child, true);%>
-				out.println(");");                                      // line 58: );
-				if (child.getControllerSignature() != null)             // line 59: @if (child.getControllerSignature() != null)
+				out.print(Resource.class.getName());                    // line 61: <%Resource.class.getName()%>
+				out.print("(");                                         // line 61: (
+				printCtorArgs(child, true);                             // line 61: <%printCtorArgs(child, true);%>
+				out.println(");");                                      // line 61: );
+				if (child.getControllerSignature() != null)             // line 62: @if (child.getControllerSignature() != null)
 				{
-					out.print("this.");                                 // line 60: this.
-					out.print(field);                                   // line 60: <%field%>
-					out.print(".");                                     // line 60: .
-					printSetCtrlSeg(child);                             // line 60: <%printSetCtrlSeg(child);%>
+					out.print("this.");                                 // line 63: this.
+					out.print(field);                                   // line 63: <%field%>
+					out.print(".");                                     // line 63: .
+					printSetCtrlSeg(child);                             // line 63: <%printSetCtrlSeg(child);%>
 					out.printlnIfNotEmpty();
 				}
 			}
-			else                                                        // line 61: @else
+			else                                                        // line 64: @else
 			{
-				out.print(getJavaClass(child));                         // line 62: <%getJavaClass(child)%>
-				out.println("(this);");                                 // line 62: (this);
+				out.print(getJavaClass(child));                         // line 65: <%getJavaClass(child)%>
+				out.println("(this);");                                 // line 65: (this);
 			}
 		}
 		out.decreaseTab();
-		out.println("}");                                               // line 63: }
-		// print field declarations                                     // line 64: @// print field declarations
-		for (int i=0; i<childCount; i++)                                // line 65: @for (int i=0; i<childCount; i++)
+		out.println("}");                                               // line 66: }
+		// print field declarations                                     // line 67: @// print field declarations
+		for (int i=0; i<childCount; i++)                                // line 68: @for (int i=0; i<childCount; i++)
 		{
 			out.println();
-			ResourceInfo child = info.getChild(i);                      // line 67: @ResourceInfo child = info.getChild(i);
-			printResourceComment(child);                                // line 68: @printResourceComment(child);
-			out.print("public final ");                                 // line 69: public final
-			out.print(child.getChildCount() > 0 ? getJavaClass(child) : Resource.class.getName()); // line 69: <%child.getChildCount() > 0 ? getJavaClass(child) : Resource.class.getName()%>
-			out.print(" ");                                             // line 69: 
-			out.print(getJavaField(child));                             // line 69: <%getJavaField(child)%>
-			out.println(";");                                           // line 69: ;
+			ResourceInfo child = info.getChild(i);                      // line 70: @ResourceInfo child = info.getChild(i);
+			printResourceComment(child);                                // line 71: @printResourceComment(child);
+			out.print("public final ");                                 // line 72: public final
+			out.print(child.getChildCount() > 0 ? getJavaClass(child) : Resource.class.getName()); // line 72: <%child.getChildCount() > 0 ? getJavaClass(child) : Resource.class.getName()%>
+			out.print(" ");                                             // line 72: 
+			out.print(getJavaField(child));                             // line 72: <%getJavaField(child)%>
+			out.println(";");                                           // line 72: ;
 		}
-		for (int i=0; i<childCount; i++)                                // line 70: @for (int i=0; i<childCount; i++)
+		for (int i=0; i<childCount; i++)                                // line 73: @for (int i=0; i<childCount; i++)
 		{
-			ResourceInfo child = info.getChild(i);                      // line 71: @ResourceInfo child = info.getChild(i);
-			if (child.getChildCount() > 0)                              // line 72: @if (child.getChildCount() > 0)
+			ResourceInfo child = info.getChild(i);                      // line 74: @ResourceInfo child = info.getChild(i);
+			if (child.getChildCount() > 0)                              // line 75: @if (child.getChildCount() > 0)
 			{
-				printResourceClass(child);                              // line 73: @printResourceClass(child);
+				printResourceClass(child);                              // line 76: @printResourceClass(child);
 			}
 		}
-		if (info.isRoot())                                              // line 74: @if (info.isRoot())
+		if (info.isRoot())                                              // line 77: @if (info.isRoot())
 		{
 			out.println();
 			out.println();
-			out.println("private static String cls(String subPackage, String className)"); // line 77: private static String cls(String subPackage, String className)
-			out.println("{");                                           // line 78: {
+			out.println("private static ControllerSignature sig(String subPackage, String className)"); // line 80: private static ControllerSignature sig(String subPackage, String className)
+			out.println("{");                                           // line 81: {
 			out.increaseTab();
-			out.print("return \"");                                     // line 79: return "
-			out.print(ctrlRootPackage_);                                // line 79: <%ctrlRootPackage_%>
-			out.println("\" + subPackage + '.' + className;");          // line 79: " + subPackage + '.' + className;
+			out.print("return new ControllerSignature(\"");             // line 82: return new ControllerSignature("
+			out.print(ctrlRootPackage_);                                // line 82: <%ctrlRootPackage_%>
+			out.println("\" + subPackage + '.' + className);");         // line 82: " + subPackage + '.' + className);
 			out.decreaseTab();
-			out.println("}");                                           // line 80: }
+			out.println("}");                                           // line 83: }
 		}
 		out.decreaseTab();
-		out.println("}");                                               // line 81: }
+		out.println("}");                                               // line 84: }
 	}
 	
 	
 	
 	private void printResourceComment(ResourceInfo resInfo)
 	{
-		ControllerSignature ctrlSig = resInfo.getControllerSignature(); // line 88: @ControllerSignature ctrlSig = resInfo.getControllerSignature();
-		out.println("/**");                                             // line 89: /**
-		out.print(" * \"");                                             // line 90: * "
-		out.print(resInfo);                                             // line 90: <%resInfo%>
-		out.print("\"");                                                // line 90: "
-		if (ctrlSig != null)                                            // line 90: <%?ctrlSig != null%>
+		ControllerSignature ctrlSig = resInfo.getControllerSignature(); // line 91: @ControllerSignature ctrlSig = resInfo.getControllerSignature();
+		out.println("/**");                                             // line 92: /**
+		out.print(" * \"");                                             // line 93: * "
+		out.print(resInfo);                                             // line 93: <%resInfo%>
+		out.print("\"");                                                // line 93: "
+		if (ctrlSig != null)                                            // line 93: <%?ctrlSig != null%>
 		{
-			out.print(" -> ");                                          // line 90: ->
-			out.print(ctrlSig);                                         // line 90: <%ctrlSig%>
+			out.print(" -> ");                                          // line 93: ->
+			out.print(ctrlSig);                                         // line 93: <%ctrlSig%>
 		}
 		out.printlnIfNotEmpty();
-		out.println(" */");                                             // line 91: */
+		out.println(" */");                                             // line 94: */
 	}
 	
 	
 	private void printCtorArgs(ResourceInfo info, boolean isChild)
 	{
-		out.print(isChild ? "this" : "parent");                         // line 97: <%isChild ? "this" : "parent"%>
-		out.print(", ");                                                // line 97: ,
-		if (info.getSegment() != null)                                  // line 98: @if (info.getSegment() != null)
+		out.print(isChild ? "this" : "parent");                         // line 100: <%isChild ? "this" : "parent"%>
+		out.print(", ");                                                // line 100: ,
+		if (info.getSegment() != null)                                  // line 101: @if (info.getSegment() != null)
 		{
-			out.print("\"");                                            // line 99: "
-			out.print(info.getSegment());                               // line 99: <%info.getSegment()%>
-			out.print("\"");                                            // line 99: "
+			out.print("\"");                                            // line 102: "
+			out.print(info.getSegment());                               // line 102: <%info.getSegment()%>
+			out.print("\"");                                            // line 102: "
 		}
-		else                                                            // line 100: @else
+		else                                                            // line 103: @else
 		{
-			out.print(app.getResourceConfig().getPathParams().getConstant(info.getPathParam())); // line 101: <%app.getResourceConfig().getPathParams().getConstant(info.getPathParam())%>
+			out.print(app.getResourceConfig().getPathParams().getConstant(info.getPathParam())); // line 104: <%app.getResourceConfig().getPathParams().getConstant(info.getPathParam())%>
 		}
 	}
 	
 	
 	private void printSetCtrlSeg(ResourceInfo info)
 	{
-		ControllerSignature sig = info.getControllerSignature();        // line 107: @ControllerSignature sig = info.getControllerSignature();
-		String packageName = ClassUtil.getPackageName(sig.getClassName()); // line 108: @String packageName = ClassUtil.getPackageName(sig.getClassName());
-		String simpleName  = ClassUtil.cutPackageName(sig.getClassName()); // line 109: @String simpleName  = ClassUtil.cutPackageName(sig.getClassName());
-		String packagePart = packageName.substring(ctrlRootPackage_.length()); // line 110: @String packagePart = packageName.substring(ctrlRootPackage_.length());
-		out.print("setControllerSignature(cls(");                       // line 111: setControllerSignature(cls(
-		out.print(stringArg(packagePart));                              // line 111: <%stringArg(packagePart)%>
-		out.print(", ");                                                // line 111: ,
-		out.print(stringArg(simpleName));                               // line 111: <%stringArg(simpleName)%>
-		out.print("), ");                                               // line 111: ),
-		out.print(stringArg(sig.getMethodName()));                      // line 111: <%stringArg(sig.getMethodName())%>
-		out.println(");");                                              // line 111: );
+		ControllerSignature sig = info.getControllerSignature();        // line 110: @ControllerSignature sig = info.getControllerSignature();
+		String packageName = ClassUtil.getPackageName(sig.getClassName()); // line 111: @String packageName = ClassUtil.getPackageName(sig.getClassName());
+		String simpleName  = ClassUtil.cutPackageName(sig.getClassName()); // line 112: @String simpleName  = ClassUtil.cutPackageName(sig.getClassName());
+		String packagePart = packageName.substring(ctrlRootPackage_.length()); // line 113: @String packagePart = packageName.substring(ctrlRootPackage_.length());
+		out.print("setControllerSignature(sig(");                       // line 114: setControllerSignature(sig(
+		out.print(stringArg(packagePart));                              // line 114: <%stringArg(packagePart)%>
+		out.print(", ");                                                // line 114: ,
+		out.print(stringArg(simpleName));                               // line 114: <%stringArg(simpleName)%>
+		out.print(")");                                                 // line 114: )
+		if (sig.getMethodSegment() != null)                             // line 115: @if (sig.getMethodSegment() != null)
+		{
+			out.print(".withMethodSegment(\"");                         // line 116: .withMethodSegment("
+			out.print(sig.getMethodSegment());                          // line 116: <%sig.getMethodSegment()%>
+			out.print("\")");                                           // line 116: ")
+		}
+		else if (sig.getMethodPathParam() != null)                      // line 117: @else if (sig.getMethodPathParam() != null)
+		{
+			out.print(".withMethodPathParam(\"");                       // line 118: .withMethodPathParam("
+			out.print(sig.getMethodPathParam());                        // line 118: <%sig.getMethodPathParam()%>
+			out.print("\")");                                           // line 118: ")
+		}
+		out.println(");");                                              // line 119: );
 	}
 	
 	

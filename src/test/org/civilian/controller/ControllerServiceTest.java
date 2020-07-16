@@ -75,6 +75,6 @@ public class ControllerServiceTest extends CivTest
 		
 		service.getControllerType(Derived.class);
 
-		service.getControllerType(new ControllerSignature(Derived.class.getName(), "path"));
+		service.getControllerType(new ControllerSignature(Derived.class).withMethodSegment("path"));
 	}
 }

@@ -138,12 +138,12 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 	}
 
 	
-	public void setControllerSignature(String className, String methodPath)
+	public void setControllerSignature(String className, String methodSegment)
 	{
 		if (controllerSignature_ != null)
 			throw new ScanException("resource '" + path_ + "' is mapped to class '" + className + "' and '" + controllerSignature_ + "'");
 			
-		controllerSignature_ = new ControllerSignature(className, methodPath);
+		controllerSignature_ = new ControllerSignature(className).withMethodSegment(methodSegment);
 	}
 	
 	

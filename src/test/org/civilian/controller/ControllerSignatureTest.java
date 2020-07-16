@@ -22,14 +22,6 @@ import org.civilian.CivTest;
 
 public class ControllerSignatureTest extends CivTest
 {
-	@Test public void testBuild()
-	{
-		assertNull(ControllerSignature.build(null, "m"));
-		assertEquals("c:m", ControllerSignature.build("c", "m"));
-		assertEquals("c", ControllerSignature.build("c", null));
-	}
-
-
 	@Test public void testParse()
 	{
 		ControllerSignature sig;
@@ -39,10 +31,10 @@ public class ControllerSignatureTest extends CivTest
 		
 		sig = ControllerSignature.parse("c");
 		assertEquals("c", sig.getClassName());
-		assertNull(sig.getMethodName());
+		assertNull(sig.getMethodSegment());
 		
 		sig = ControllerSignature.parse("c:m");
 		assertEquals("c", sig.getClassName());
-		assertEquals("m", sig.getMethodName());
+		assertEquals("m", sig.getMethodSegment());
 	}
 }

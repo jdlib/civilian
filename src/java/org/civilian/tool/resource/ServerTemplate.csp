@@ -19,7 +19,10 @@ template(ResourceInfo root, String outputPackage, String outputName, Application
 	<%%> */
 	package <%outputPackage%>;
 	
+
+	import <%ControllerSignature.class.getName()%>;
 	
+		
 	<%%>/**
 	<%%> * Defines the resources of application <%app.getClass().getName()%>.
 	<%%> */	
@@ -74,9 +77,9 @@ private void printResourceClass(ResourceInfo info)
 		@if (info.isRoot())
 			<%%>
 			<%%>
-			private static String cls(String subPackage, String className)
+			private static ControllerSignature sig(String subPackage, String className)
 			{
-				return "<%ctrlRootPackage_%>" + subPackage + '.' + className;
+				return new ControllerSignature("<%ctrlRootPackage_%>" + subPackage + '.' + className);
 			}
 	}
 }}
@@ -108,7 +111,12 @@ private void printSetCtrlSeg(ResourceInfo info)
 	@String packageName = ClassUtil.getPackageName(sig.getClassName());
 	@String simpleName  = ClassUtil.cutPackageName(sig.getClassName());
 	@String packagePart = packageName.substring(ctrlRootPackage_.length());
-	setControllerSignature(cls(<%stringArg(packagePart)%>, <%stringArg(simpleName)%>), <%stringArg(sig.getMethodName())%>);
+	setControllerSignature(sig(<%stringArg(packagePart)%>, <%stringArg(simpleName)%>)<%/%>
+	@if (sig.getMethodSegment() != null)
+		.withMethodSegment("<%sig.getMethodSegment()%>")<%/%>
+	@else if (sig.getMethodPathParam() != null)
+		.withMethodPathParam("<%sig.getMethodPathParam()%>")<%/%>
+	);
 }}
 
 
