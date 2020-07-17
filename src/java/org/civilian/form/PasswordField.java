@@ -21,7 +21,7 @@ import org.civilian.type.TypeLib;
 
 
 /**
- * An text field for editing passwords.
+ * A text field for editing passwords.
  */
 public class PasswordField extends InputField<String>
 {
