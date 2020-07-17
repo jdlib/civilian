@@ -49,7 +49,7 @@ public class ServerConstGeneratorTest extends CivTest
 			};
 			ServerConstGenerator.main(args);
 			
-			String expected = readTestFile("/org/civilian/tool/resource/Test1Resources.txt"); 
+			String expected = readTestFile("/org/civilian/tool/resource/ServerConstResources.txt"); 
 			String actual   = read(file); 
 			compareFiles(expected, actual);
 		}
