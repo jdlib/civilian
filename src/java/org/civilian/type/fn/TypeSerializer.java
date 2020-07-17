@@ -29,9 +29,11 @@ import org.civilian.type.Type;
  * A TypeSerializer represents a certain schema of parsing and formatting
  * values from or to a string.
  */
-// TODO docs
 public abstract class TypeSerializer
 {
+	/**
+	 * Formatter is a service to turn a typed value into a string.
+	 */
 	@FunctionalInterface
 	public static interface Formatter<T>
 	{
@@ -39,6 +41,9 @@ public abstract class TypeSerializer
 	}
 	
 	
+	/**
+	 * Parser is a service to parse a typed value from a string.
+	 */
 	@FunctionalInterface
 	public static interface Parser<T>
 	{
@@ -52,6 +57,9 @@ public abstract class TypeSerializer
 	}
 
 	
+	/**
+	 * SimpleParser is a service to parse a value from a string.
+	 */
 	public static interface SimpleParser<T>
 	{
 		public T parse(String s) throws Exception; 
@@ -73,8 +81,6 @@ public abstract class TypeSerializer
 	};
 	
 	
-	
-	
 	protected TypeSerializer()
 	{
 		this(null);
@@ -92,13 +98,22 @@ public abstract class TypeSerializer
 	// format 
 	//-------------------------
 	
-	
+
+	/**
+	 * Formats a typed value into a string.
+	 * Calls {@link #format(Type, Object, Style)} using a null style.
+	 * @return the formatted value
+	 */
 	public <T> String format(Type<T> type, T value)
 	{
 		return format(type, value, null);
 	}
 	
 	
+	/**
+	 * Formats a typed value into a string using the given style.
+	 * @return the formatted value
+	 */
 	public <T> String format(Type<T> type, T value, Style style)
 	{
 		if (value == null)
@@ -112,6 +127,9 @@ public abstract class TypeSerializer
 	}
 	
 	
+	/**
+	 * Returns a Formatter for a type.
+	 */
 	public <T> Formatter<T> getFormatter(Type<T> type)
 	{
 		return formatMap_.get(type);
