@@ -18,8 +18,8 @@ package org.civilian.internal;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
-import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -30,7 +30,7 @@ public class PercentEncoder
 {
 	public PercentEncoder()
 	{
-		encoder_ 	= UTF8_CHAR_SET.newEncoder();
+		encoder_ 	= StandardCharsets.UTF_8.newEncoder();
 		charBuffer_	= CharBuffer.allocate(1);
 		byteBuffer_	= ByteBuffer.allocate(4);
 	}
@@ -84,6 +84,5 @@ public class PercentEncoder
 	private ByteBuffer byteBuffer_; 
 	private CharBuffer charBuffer_; 
 	private CharsetEncoder encoder_;
-	private static final Charset UTF8_CHAR_SET = Charset.forName("UTF-8"); 
 	private static final char HEX_DIGITS[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 }
