@@ -1,6 +1,7 @@
 import org.civilian.Application
 import org.civilian.Resource
 import org.civilian.controller.ControllerSignature
+import org.civilian.resource.PathParam
 import org.civilian.resource.scan.ResourceInfo
 import org.civilian.util.DateTime
 import org.civilian.util.ClassUtil
@@ -101,7 +102,7 @@ private void printCtorArgs(ResourceInfo info, boolean isChild)
 	@if (info.getSegment() != null)
 		"<%info.getSegment()%>"<%/%>
 	@else
-		<%app.getResourceConfig().getPathParams().getConstant(info.getPathParam())%><%/%>
+		<%pathParamConst(info.getPathParam())%><%/%>
 }}
 
 
@@ -115,9 +116,15 @@ private void printSetCtrlSeg(ResourceInfo info)
 	@if (sig.getMethodSegment() != null)
 		.withMethodSegment("<%sig.getMethodSegment()%>")<%/%>
 	@else if (sig.getMethodPathParam() != null)
-		.withMethodPathParam("<%sig.getMethodPathParam()%>")<%/%>
+		.withMethodPathParam(<%pathParamConst(sig.getMethodPathParam())%>)<%/%>
 	);
 }}
+
+
+private String pathParamConst(PathParam<?> param)
+{
+	return app.getResourceConfig().getPathParams().getConstant(param);
+}
 
 
 private String stringArg(String s)

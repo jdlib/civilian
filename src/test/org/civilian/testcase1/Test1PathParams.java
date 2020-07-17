@@ -27,5 +27,6 @@ public class Test1PathParams
 	public static final PathParamMap MAP = new PathParamMap(Test1PathParams.class);
 	
 	public static final PathParam<String> BETA 		= MAP.add(PathParams.forSegment("beta")); 
-	public static final PathParam<Integer> GAMMA 	= MAP.addAndSeal(PathParams.forSegment("gammaId").converting(TypeLib.INTEGER)); 
+	public static final PathParam<Integer> GAMMA 	= MAP.add(PathParams.forSegment("gammaId").converting(TypeLib.INTEGER)); 
+	public static final PathParam<String> ONE 		= MAP.addAndSeal(PathParams.forSegment("one")); 
 }

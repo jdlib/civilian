@@ -19,8 +19,9 @@ package org.civilian.controller;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import org.civilian.Resource;
-import org.civilian.annotation.PathParam;
 import org.civilian.annotation.Segment;
+import org.civilian.resource.PathParam;
+import org.civilian.resource.PathParamMap;
 import org.civilian.util.Check;
 import org.civilian.util.StringUtil;
 
@@ -40,24 +41,30 @@ public class ControllerSignature
 	private static final String PARAMPREFIX   	= "$";
 	
 	
-	public static ControllerSignature parse(String signature)
+	public static ControllerSignature parse(String signature, PathParamMap pathParams)
 	{
+		Check.notNull(pathParams, "pathParams");
 		if (StringUtil.isBlank(signature))
 			return null;
 		
-		String className 		= signature;
-		String methodSegment 	= null;
-		String methodPathParam 	= null;
+		String className 				= signature;
+		String methodSegment 			= null;
+		PathParam<?> methodPathParam 	= null;
 		
 		int p = signature.indexOf(SEPARATOR);
 		if (p >= 0)
 		{
 			className 	= signature.substring(0, p);
 			String p2 	= signature.substring(p + 1);
-			if (p2.startsWith(PARAMPREFIX))
-				methodPathParam = p2.substring(PARAMPREFIX.length());
-			else
+			if (!p2.startsWith(PARAMPREFIX))
 				methodSegment = p2;
+			else
+			{
+				String name = p2.substring(PARAMPREFIX.length());
+				methodPathParam = pathParams.get(name);
+				if (methodPathParam == null)
+					throw new IllegalArgumentException("signature '" + signature + "' references unknown path parameter '" + name + "'"); 
+			}
 		}
 		return new ControllerSignature(className, methodSegment, methodPathParam);
 	}
@@ -75,11 +82,11 @@ public class ControllerSignature
 	}
 
 	
-	private ControllerSignature(String className, String methodSegment, String methodPathParam)
+	private ControllerSignature(String className, String methodSegment, PathParam<?> methodPathParam)
 	{
 		className_  		= Check.notEmpty(className, "className");
 		methodSegment_ 		= methodSegment != null ? Check.notEmpty(methodSegment, "methodName") : null; 
-		methodPathParam_	= methodPathParam != null ? Check.notEmpty(methodPathParam, "methodPathParam") : null;	
+		methodPathParam_	= methodPathParam;	
 	}
 	
 	
@@ -89,7 +96,7 @@ public class ControllerSignature
 	}
 
 	
-	public ControllerSignature withMethodPathParam(String methodPathParam)
+	public ControllerSignature withMethodPathParam(PathParam<?> methodPathParam)
 	{
 		return new ControllerSignature(className_, null, methodPathParam);
 	}
@@ -116,19 +123,30 @@ public class ControllerSignature
 	/**
 	 * Returns the method path param or null.
 	 */
-	public String getMethodPathParam()
+	public PathParam<?> getMethodPathParam()
 	{
 		return methodPathParam_;
 	}
 
 	
+	/**
+	 * Returns if the given Java method of the associated controller matches the filter
+	 * defined by the method segment and path or param of this signature.
+	 * @param javaMethod a controller action method
+	 */
 	public boolean matchJavaMethod(Method javaMethod)
 	{
-		Segment segmentAnno = javaMethod.getAnnotation(Segment.class);
-		return segmentAnno == null ? methodSegment_ == null : segmentAnno.value().equals(methodSegment_);
+		org.civilian.annotation.Segment aSegment 	 = javaMethod.getAnnotation(org.civilian.annotation.Segment.class);
+		org.civilian.annotation.PathParam aPathParam = javaMethod.getAnnotation(org.civilian.annotation.PathParam.class);
+		if (methodSegment_ != null)
+			return methodSegment_.equals(aSegment.value());
+		else if (methodPathParam_ != null)
+			return methodPathParam_.getName().equals(aPathParam.value());
+		else
+			return (aSegment == null) && (aPathParam == null);
 	}
-		
-		
+	
+	
 	@Override public int hashCode()
 	{
 		int hashCode = className_.hashCode();
@@ -145,7 +163,7 @@ public class ControllerSignature
 		if (other instanceof ControllerSignature)
 		{
 			ControllerSignature o = (ControllerSignature)other;
-			return className_.equals(o.className_) && Objects.equals(methodSegment_, o.methodSegment_) && Objects.equals(methodPathParam_, o.methodPathParam_);
+			return className_.equals(o.className_) && Objects.equals(methodSegment_, o.methodSegment_) && (methodPathParam_ == o.methodPathParam_);
 		}
 		else
 			return false;
@@ -162,12 +180,12 @@ public class ControllerSignature
 		if (methodSegment_ != null)
 			s += SEPARATOR + methodSegment_;
 		else if (methodPathParam_ != null)
-			s += SEPARATOR + PARAMPREFIX + methodPathParam_;
+			s += SEPARATOR + PARAMPREFIX + methodPathParam_.getName();
 		return s;
 	}
 
 	
 	private final String className_;
 	private final String methodSegment_;
-	private final String methodPathParam_;
+	private final PathParam<?> methodPathParam_;
 }

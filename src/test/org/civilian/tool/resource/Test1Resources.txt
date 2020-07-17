@@ -102,12 +102,19 @@ public interface Test1Resources
 
 					this.thing = new org.civilian.Resource(this, "thing");
 					this.thing.setControllerSignature(sig(".beta", "SomeController").withMethodSegment("thing"));
+					this.$one = new org.civilian.Resource(this, org.civilian.testcase1.Test1PathParams.ONE);
+					this.$one.setControllerSignature(sig(".beta", "SomeController").withMethodPathParam(org.civilian.testcase1.Test1PathParams.ONE));
 				}
 
 				/**
 				 * "/beta/some/thing" -> org.civilian.testcase1.beta.SomeController:thing
 				 */
 				public final org.civilian.Resource thing;
+
+				/**
+				 * "/beta/some/{one}" -> org.civilian.testcase1.beta.SomeController:$one
+				 */
+				public final org.civilian.Resource $one;
 			}
 		}
 

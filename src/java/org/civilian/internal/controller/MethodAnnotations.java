@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import org.civilian.annotation.Consumes;
-import org.civilian.annotation.Segment;
 import org.civilian.annotation.Produces;
 import org.civilian.annotation.RequestMethod;
 import org.civilian.content.ContentType;
@@ -55,24 +54,6 @@ public class MethodAnnotations
 			List<String> reqMethods = lookup.addRequestMethods(null);
 			if (reqMethods != null)
 				return new MethodAnnotations(lookup, reqMethods);
-		}
-		return null;
-	}
-	
-	
-	/**
-	 * Returns the value of {@link Segment} annotation of a controller action method
-	 * or null if the method has no path annotation or is not a action method.
-	 */
-	public static String getPath(Method javaMethod)
-	{
-		Segment pathAnno = javaMethod.getAnnotation(Segment.class);
-		if (pathAnno != null)
-		{
-			String path = pathAnno.value();
-			// ignore path's with length 0
-			if ((path.length() > 0) && (of(javaMethod) != null)) 
-				return path;
 		}
 		return null;
 	}

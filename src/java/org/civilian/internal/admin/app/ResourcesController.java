@@ -42,7 +42,7 @@ public class ResourcesController extends AppController
 	@Produces(ContentType.Strings.APPLICATION_JSON)
 	@Get public void getDetails(@Parameter("controller") String sigString) throws Exception
 	{
-		ControllerSignature signature = ControllerSignature.parse(sigString) ;
+		ControllerSignature signature = ControllerSignature.parse(sigString, viewedApp_.getResourceConfig().getPathParams()) ;
 		ControllerType type = viewedApp_.getControllerService().getControllerType(signature);
 		if (type == null)
 			getResponse().writeJson("?");

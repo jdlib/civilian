@@ -18,6 +18,9 @@ package org.civilian.controller;
 
 import org.junit.Test;
 import org.civilian.CivTest;
+import org.civilian.resource.PathParam;
+import org.civilian.resource.PathParamMap;
+import org.civilian.resource.PathParams;
 
 
 public class ControllerSignatureTest extends CivTest
@@ -25,16 +28,22 @@ public class ControllerSignatureTest extends CivTest
 	@Test public void testParse()
 	{
 		ControllerSignature sig;
+		PathParamMap map = new PathParamMap();
+		PathParam<String> pp = map.add(PathParams.forSegment("p"));
 		
-		sig = ControllerSignature.parse(null);
+		sig = ControllerSignature.parse(null, map);
 		assertNull(sig);
 		
-		sig = ControllerSignature.parse("c");
+		sig = ControllerSignature.parse("c", map);
 		assertEquals("c", sig.getClassName());
 		assertNull(sig.getMethodSegment());
 		
-		sig = ControllerSignature.parse("c:m");
+		sig = ControllerSignature.parse("c:m", map);
 		assertEquals("c", sig.getClassName());
 		assertEquals("m", sig.getMethodSegment());
+
+		sig = ControllerSignature.parse("c:$p", map);
+		assertEquals("c", sig.getClassName());
+		assertSame(pp, sig.getMethodPathParam());
 	}
 }

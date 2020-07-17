@@ -55,6 +55,24 @@ class ResourceExt
 	}
 	
 	
+	@Override public int hashCode()
+	{
+		return pathParam != null ? pathParam.hashCode() : segment.hashCode();
+	}
+	
+	
+	@Override public boolean equals(Object other)
+	{
+		if (other instanceof ResourceExt)
+		{
+			ResourceExt o = (ResourceExt)other;
+			return pathParam != null ? pathParam == o.pathParam : segment.equals(o.segment); 
+		}
+		else
+			return false;
+	}
+	
+	
 	public final String segment;
 	public final String pathAnnotation;
 	public final PathParam<?> pathParam;

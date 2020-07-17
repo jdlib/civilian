@@ -17,12 +17,18 @@ package org.civilian.testcase1.beta;
 
 
 import org.civilian.annotation.Get;
+import org.civilian.annotation.PathParam;
 import org.civilian.annotation.Segment;
 
 
 public class SomeController extends AbstractBetaController
 {
 	@Get @Segment("thing") public void thing()
+	{
+	}
+
+
+	@Get @PathParam("one") public void param()
 	{
 	}
 }

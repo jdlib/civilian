@@ -21,6 +21,7 @@ import java.util.Collections;
 import org.civilian.Resource;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.resource.PathParam;
+import org.civilian.util.Check;
 
 
 /**
@@ -138,14 +139,14 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 	}
 
 	
-	public void setControllerSignature(String className, String methodSegment)
+	public void setControllerSignature(ControllerSignature signature)
 	{
+		Check.notNull(signature, "signature");
 		if (controllerSignature_ != null)
-			throw new ScanException("resource '" + path_ + "' is mapped to class '" + className + "' and '" + controllerSignature_ + "'");
-			
-		controllerSignature_ = new ControllerSignature(className).withMethodSegment(methodSegment);
+			throw new ScanException("resource '" + path_ + "' is mapped to '" + signature + "' and '" + controllerSignature_ + "'");
+		controllerSignature_ = signature;
 	}
-	
+
 	
 	public ControllerSignature getControllerSignature()
 	{

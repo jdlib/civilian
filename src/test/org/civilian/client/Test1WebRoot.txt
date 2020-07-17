@@ -81,12 +81,18 @@ public class Test1WebRoot extends org.civilian.client.WebResource
 				super(parent, "some");
 
 				addChild(this.thing = new org.civilian.client.WebResource(this, "thing"));
+				addChild(this.$one = new org.civilian.client.WebResource(this, org.civilian.testcase1.Test1PathParams.ONE));
 			}
 
 			/**
 			 * Resource "/beta/some/thing".
 			 */
 			public final org.civilian.client.WebResource thing;
+
+			/**
+			 * Resource "/beta/some/{one}".
+			 */
+			public final org.civilian.client.WebResource $one;
 		}
 	}
 

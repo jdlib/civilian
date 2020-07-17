@@ -16,6 +16,7 @@
 package org.civilian.resource.scan;
 
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import org.civilian.Controller;
 import org.civilian.controller.ControllerNaming;
+import org.civilian.controller.ControllerSignature;
 import org.civilian.internal.controller.MethodAnnotations;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathParamMap;
@@ -87,7 +89,7 @@ class ResourceFactory
 		}
 		
 		Class<?> infoClass		= getPackageInfoClass(packageName);
-		ResourceExt extension	= map(infoClass, segment, true);
+		ResourceExt extension	= getExtension(infoClass, segment, false);
 		ControllerPackage cp	= new ControllerPackage(parent, packageName, extension);
 		packages_.put(packageName, cp);
 		return cp;
@@ -122,17 +124,21 @@ class ResourceFactory
 		ControllerPackage cp 	= getPackage(ClassUtil.getPackageName(cls));
 		String segment 			= naming_.className2Segment(cls.getSimpleName());
 		
-		ResourceExt extension	= map(cls, segment, false);
+		ResourceExt extension	= getExtension(cls, segment, true);
 		ResourceInfo resInfo	= extension == null ? cp.resInfo : cp.resInfo.getChild(extension);
 		
-		resInfo.setControllerSignature(cls.getName(), null);
+		ControllerSignature sig = new ControllerSignature(cls);
+		resInfo.setControllerSignature(sig);
 		
 		tmpMethodExts_.clear();
 		collectMethodExtensions(cls, tmpMethodExts_);
 		for (ResourceExt methodExt : tmpMethodExts_)
 		{
 			ResourceInfo methodRes = resInfo.getChild(methodExt);
-			methodRes.setControllerSignature(cls.getName(), methodExt.pathAnnotation);
+			if (methodExt.pathParam != null)
+				methodRes.setControllerSignature(sig.withMethodPathParam(methodExt.pathParam));
+			else
+				methodRes.setControllerSignature(sig.withMethodSegment(methodExt.pathAnnotation));
 		}
 	}
 	
@@ -141,10 +147,12 @@ class ResourceFactory
 	{
 		for (Method method : c.getDeclaredMethods())
 		{
-			String pathAnno = MethodAnnotations.getPath(method);
-			String path = normPathAnnotation(pathAnno);
-			if (path != null)
-				methodExtensions.add(new ResourceExt(encoder_.encode(path), pathAnno));
+			if (MethodAnnotations.of(method) != null)
+			{
+				ResourceExt ext = getExtension(method, null, false);
+				if (ext != null)
+					methodExtensions.add(ext);
+			}
 		}
 	}
 	
@@ -154,55 +162,76 @@ class ResourceFactory
 	 * @param segment the default segment derived from the last package part or 
 	 * 		the simple name of the controller class. 
 	 */
-	private ResourceExt map(Class<?> c, String segment, boolean isPackage)
+	private ResourceExt getExtension(AnnotatedElement annotated, String defaultSegment, boolean allowEmptySegment)
 	{
-		// check if @PathParam is annotated
 		PathParam<?> pp = null;
-		String pathAnno = null;
+		String segment 	= null;
 		
-		if (c != null)
+		if (annotated != null)
 		{
-			org.civilian.annotation.PathParam paramAnnotation = c.getAnnotation(org.civilian.annotation.PathParam.class);
-			if (paramAnnotation != null)
-			{
-				pp = pathParamMap_.get(paramAnnotation.value());
-				if (pp == null)
-					throw new ScanException(c.getName() + ": annotation @PathParam specifies unknown path parameter '" + paramAnnotation.value() + "'");
-			}
+			pp = extractPathParam(annotated);
+			segment = extractSegment(annotated, allowEmptySegment);
 			
-			// check if @Segment is annotated
-			org.civilian.annotation.Segment segmentAnnotation = c.getAnnotation(org.civilian.annotation.Segment.class);
-			if (segmentAnnotation != null)
-			{
-				if (paramAnnotation != null)
-					throw new ScanException(c.getName() + ": cannot specify both @PathParam and @Segment annotations");
-				
-				segment = normPathAnnotation(segmentAnnotation.value());
-				if ((segment == null) && isPackage)
-					throw new ScanException(c.getName() + ": @Segment annotation '" + segmentAnnotation.value() + "' results in an empy path");
-			}
+			if ((pp != null) && (segment != null))
+				throw new ScanException(annotated + ": cannot specify both @PathParam and @Segment annotations");
 		}
 		
 		if (pp != null)
 			return new ResourceExt(pp);
 		else if (segment != null)
-			return new ResourceExt(encoder_.encode(segment), pathAnno);
+			return new ResourceExt(encoder_.encode(segment), segment);
+		else if (defaultSegment != null)
+			return new ResourceExt(encoder_.encode(defaultSegment), defaultSegment);
 		else
 			return null;
 	}
 	
 	
-	private String normPathAnnotation(String path)
+	/**
+	 * Evaluate @PathParam.
+	 */
+	private PathParam<?> extractPathParam(AnnotatedElement annotated)
 	{
-		if (path != null)
+		PathParam<?> pp = null;
+		org.civilian.annotation.PathParam aParam = annotated.getAnnotation(org.civilian.annotation.PathParam.class);
+		if (aParam != null)
 		{
-			path = path.trim(); 
-			path = StringUtil.cutLeft(path, "/");
-			path = StringUtil.cutRight(path, "/").trim();
-			if (path.length() == 0)
-				path = null;
+			pp = pathParamMap_.get(aParam.value());
+			if (pp == null)
+				throw new ScanException(annotated + ": annotation @PathParam specifies unknown path parameter '" + aParam.value() + "'");
 		}
-		return path;
+		return pp;
+	}
+	
+	
+	/**
+	 * Evaluate @Segment.
+	 */
+	private String extractSegment(AnnotatedElement annotated, boolean allowEmptySegment)
+	{
+		String segment = null;
+		org.civilian.annotation.Segment aSegment = annotated.getAnnotation(org.civilian.annotation.Segment.class);
+		if (aSegment != null)
+		{
+			segment = aSegment.value().trim();
+			segment = StringUtil.cutLeft(segment, "/");
+			segment = StringUtil.cutRight(segment, "/").trim();
+			if (StringUtil.isBlank(segment))
+			{
+				if (!allowEmptySegment)
+					segmentError(annotated,  aSegment, "results in an empy segment");
+				segment = null;
+			}
+			else if (segment.indexOf('/') >= 0)
+				segmentError(annotated, aSegment, "may not contain a '/' character");
+		}
+		return segment;
+	}
+	
+	
+	private void segmentError(AnnotatedElement annotated, org.civilian.annotation.Segment aSegment, String msg)
+	{
+		throw new ScanException(annotated + ": @Segment annotation '" + aSegment.value() + "' " + msg);
 	}
 	
 	
