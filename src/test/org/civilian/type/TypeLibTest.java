@@ -29,20 +29,21 @@ public class TypeLibTest extends CivTest
 		TypeLib typeLib 	= new TypeLib();
 		TypeLib emptyLib 	= new TypeLib(false);
 		
-		assertEquals(23, typeLib.size());
+		int n = 25;
+		assertEquals(n, typeLib.size());
 		assertEquals(0, emptyLib.size());
 		
 		assertSame(TypeLib.INTEGER, typeLib.get(Integer.class));
 		assertSame(TypeLib.INTEGER, typeLib.get(int.class));
 		assertSame(TypeLib.INTEGER, typeLib.remove(Integer.class));
-		assertEquals(22, typeLib.size());
+		assertEquals(--n, typeLib.size());
 		assertSame(TypeLib.LONG, typeLib.remove(long.class));
-		assertEquals(21, typeLib.size());
+		assertEquals(--n, typeLib.size());
 		assertSame(TypeLib.SHORT, typeLib.remove(TypeLib.SHORT));
-		assertEquals(20, typeLib.size());
+		assertEquals(--n, typeLib.size());
 		assertNull(typeLib.remove(TypeLib.SHORT));
 		assertEquals(TypeLib.STRING, typeLib.remove(TypeLib.STRING));
-		assertEquals(19, typeLib.size());
+		assertEquals(--n, typeLib.size());
 		
 		assertNull(typeLib.get(Integer.class));
 		

@@ -19,6 +19,8 @@ package org.civilian.type;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Iterator;
 import org.civilian.Application;
@@ -48,12 +50,14 @@ public class TypeLib implements Iterable<Type<?>>
 	public static final DateType<LocalDate> 			DATE_LOCAL		= DateLocalType.INSTANCE;
 	public static final DateType<java.util.Date> 		DATE_JAVA_UTIL	= DateJavaUtilType.INSTANCE;
 	public static final DateType<java.sql.Date> 		DATE_JAVA_SQL	= DateJavaSqlType.INSTANCE;
+	public static final DateTimeType<LocalDateTime> 	DATETIME_LOCAL	= DateTimeLocalType.INSTANCE;
 	public static final Type<Double> 					DOUBLE  		= SimpleType.DOUBLE;
 	public static final Type<Float> 					FLOAT 			= SimpleType.FLOAT;
 	public static final Type<Integer> 					INTEGER 		= SimpleType.INTEGER;
 	public static final Type<Long> 						LONG  			= SimpleType.LONG;
 	public static final Type<Short> 					SHORT  			= SimpleType.SHORT;
 	public static final Type<String> 					STRING 			= SimpleType.STRING;
+	public static final TimeType<LocalTime>				TIME_LOCAL		= TimeLocalType.INSTANCE;
 
 
 	/**
@@ -93,12 +97,14 @@ public class TypeLib implements Iterable<Type<?>>
 			put(DATE_JAVA_UTIL);
 			put(DATE_JAVA_SQL);
 			put(DATE_LOCAL);
+			put(DATETIME_LOCAL);
 			put(DOUBLE);
 			put(FLOAT);
 			put(INTEGER);
 			put(LONG);
 			put(SHORT);
 			put(STRING);
+			put(TIME_LOCAL);
 
 			put(boolean.class, 	BOOLEAN);
 			put(byte.class, 	BYTE);

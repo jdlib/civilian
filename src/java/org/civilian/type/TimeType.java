@@ -36,17 +36,14 @@ public abstract class TimeType<T> extends Type<T>
 	public abstract T create(int hour, int minute, int second);
 
 
-	public abstract T create(java.sql.Time time);
-
-	
 	public abstract T now();
 	
 
-	public abstract int getHour(T time);
+	public abstract int getHour(T value);
 
 	
-	public abstract int getMinute(T time);
+	public abstract int getMinute(T value);
 
 	
-	public abstract int getSecond(T time);
+	public abstract int getSecond(T value);
 }
