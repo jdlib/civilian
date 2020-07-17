@@ -177,7 +177,7 @@ public class ResourceTest extends CivTest
 		root.setControllerSignature(null);
 		assertNull(root.getControllerSignature());
 		
-		root.setControllerSignature("test.Controller", "path");
+		root.setControllerSignature(new ControllerSignature("test.Controller").withMethodSegment("path"));
 		ControllerSignature sig = root.getControllerSignature();
 		assertEquals("test.Controller", sig.getClassName());
 		assertEquals("path", sig.getMethodSegment());
@@ -206,7 +206,7 @@ public class ResourceTest extends CivTest
 		assertNull(root.getControllerType());
 		
 		// unavailable
-		root.setControllerSignature("MyController", null);
+		root.setControllerSignature(new ControllerSignature("MyController"));
 		try
 		{
 			root.getControllerType();
@@ -229,7 +229,7 @@ public class ResourceTest extends CivTest
 		// caching: controller type is asked one time and then cached in the source
 		ControllerType type = mock(ControllerType.class);
 		when(service.isReloading()).thenReturn(false);
-		root.setControllerSignature("Ctrl2", null);
+		root.setControllerSignature(new ControllerSignature("Ctrl2"));
 		when(service.getControllerType(root.getControllerSignature())).thenReturn(type);
 		
 		assertSame(type, root.getControllerType());
@@ -246,7 +246,7 @@ public class ResourceTest extends CivTest
 		Resource root 	= new Resource();
 		Resource seg  	= new Resource(root, "seg");
 		Resource ppInt  = new Resource(root, PP_INT);
-		ppInt.setControllerSignature("test.Controller", null);
+		ppInt.setControllerSignature(new ControllerSignature("test.Controller"));
 		
 		MatchAssert a = new MatchAssert(root);
 		
@@ -357,7 +357,7 @@ public class ResourceTest extends CivTest
 	@Test public void testTouch() throws Exception
 	{
 		Resource root = new Resource();
-		root.setControllerSignature(AlphaController.class.getName(), null);
+		root.setControllerSignature(new ControllerSignature(AlphaController.class));
 		
 		new Resource(root, "a");
 		
