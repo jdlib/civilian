@@ -17,6 +17,7 @@ package org.civilian.response;
 
 
 import org.civilian.internal.PercentEncoder;
+import org.civilian.util.Check;
 
 
 /**
@@ -30,9 +31,11 @@ public class UriEncoder
 	/**
 	 * Creates a UriEncoder and invokes {@link #encode(String)}.
 	 */
-	public static String encodeString(String s)
+	public static String encodeString(String value)
 	{
-		return new UriEncoder().encode(s);
+		Check.notNull(value, "value");
+		int n = firstToEncode(value);
+		return n < 0 ? value : new UriEncoder().encodeSlow(value, n);
 	}
 	
 
@@ -41,9 +44,18 @@ public class UriEncoder
 	 */
 	public String encode(String value)
 	{
-		StringBuilder s = new StringBuilder();
-		encode(value, s);
-		return s.toString();
+		Check.notNull(value, "value");
+		int n = firstToEncode(value);
+		return n < 0 ? value : encodeSlow(value, n);
+	}
+	
+	
+	private String encodeSlow(String value, int first)
+	{
+		StringBuilder out = new StringBuilder();
+		out.append(value, 0, first);
+		encode(value, out, first);
+		return out.toString();
 	}
 	
 	
@@ -52,11 +64,18 @@ public class UriEncoder
 	 */
 	public void encode(String value, StringBuilder out)
 	{
+		Check.notNull(value, "value");
+		encode(value, out, 0);
+	}
+	
+	
+	public void encode(String value, StringBuilder out, int first)
+	{
 		int length = value.length();
-		for (int i=0; i<length; i++)
+		for (int i=first; i<length; i++)
 		{
 			char c = value.charAt(i);
-			if ((c < 128) && UNRESERVED_CHARS[c])
+			if (needsNoEncoding(c))
 				out.append(c);
 			else
 			{
@@ -65,6 +84,24 @@ public class UriEncoder
 				percentEncoder_.escape(c, out);
 			}
 		}
+	}
+	
+	
+	private static boolean needsNoEncoding(char c)
+	{
+		return (c < 128) && UNRESERVED_CHARS[c];
+	}
+	
+	
+	private static int firstToEncode(String value)
+	{
+		int length = value.length();
+		for (int i=0; i<length; i++)
+		{
+			if (!needsNoEncoding(value.charAt(i)))
+				return i;
+		}
+		return -1;
 	}
 
 	
