@@ -5,6 +5,9 @@
 package org.civilian.samples.jpa.jta;
 
 
+import org.civilian.controller.ControllerSignature;
+
+
 /**
  * Defines the resources of application org.civilian.samples.jpa.jta.JtaApp.
  */
@@ -23,10 +26,10 @@ public interface JtaResources
 	{
 		public Root()
 		{
-			setControllerSignature(cls("", "IndexController"), null);
+			setControllerSignature(sig("", "IndexController"));
 
 			this.create = new org.civilian.Resource(this, "create");
-			this.create.setControllerSignature(cls("", "CreateController"), null);
+			this.create.setControllerSignature(sig("", "CreateController"));
 		}
 
 		/**
@@ -35,9 +38,9 @@ public interface JtaResources
 		public final org.civilian.Resource create;
 
 
-		private static String cls(String subPackage, String className)
+		private static ControllerSignature sig(String subPackage, String className)
 		{
-			return "org.civilian.samples.jpa.jta" + subPackage + '.' + className;
+			return new ControllerSignature("org.civilian.samples.jpa.jta" + subPackage + '.' + className);
 		}
 	}
 }

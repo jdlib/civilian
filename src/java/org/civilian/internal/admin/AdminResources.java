@@ -5,25 +5,28 @@
 package org.civilian.internal.admin;
 
 
+import org.civilian.controller.ControllerSignature;
+
+
 /**
  * Defines the resources of application org.civilian.internal.admin.AdminApp.
  */
 public interface AdminResources
 {
 	/**
-	 * "/" -&gt; org.civilian.internal.admin.IndexController
+	 * "/" -> org.civilian.internal.admin.IndexController
 	 */
 	public static final Root root = new Root();
 
 
 	/**
-	 * "/" -&gt; org.civilian.internal.admin.IndexController
+	 * "/" -> org.civilian.internal.admin.IndexController
 	 */
 	public static class Root extends org.civilian.Resource
 	{
 		public Root()
 		{
-			setControllerSignature(cls("", "IndexController"), null);
+			setControllerSignature(sig("", "IndexController"));
 
 			this.$appId = new $AppId(this);
 		}
@@ -43,26 +46,26 @@ public interface AdminResources
 			{
 				super(parent, org.civilian.internal.admin.AdminPathParams.APPID);
 				this.resources = new org.civilian.Resource(this, "resources");
-				this.resources.setControllerSignature(cls(".app", "ResourcesController"), null);
+				this.resources.setControllerSignature(sig(".app", "ResourcesController"));
 				this.settings = new org.civilian.Resource(this, "settings");
-				this.settings.setControllerSignature(cls(".app", "SettingsController"), null);
+				this.settings.setControllerSignature(sig(".app", "SettingsController"));
 			}
 
 			/**
-			 * "/{appId}/resources" -&gt; org.civilian.internal.admin.app.ResourcesController
+			 * "/{appId}/resources" -> org.civilian.internal.admin.app.ResourcesController
 			 */
 			public final org.civilian.Resource resources;
 
 			/**
-			 * "/{appId}/settings" -&gt; org.civilian.internal.admin.app.SettingsController
+			 * "/{appId}/settings" -> org.civilian.internal.admin.app.SettingsController
 			 */
 			public final org.civilian.Resource settings;
 		}
 
 
-		private static String cls(String subPackage, String className)
+		private static ControllerSignature sig(String subPackage, String className)
 		{
-			return "org.civilian.internal.admin" + subPackage + '.' + className;
+			return new ControllerSignature("org.civilian.internal.admin" + subPackage + '.' + className);
 		}
 	}
 }
