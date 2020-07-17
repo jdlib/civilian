@@ -29,11 +29,10 @@ class ResourceExt
 	/**
 	 * Creates a ResourceExt for a URL segment.
 	 * @param segment the segment
-	 * @param pathAnnotation optional: the pathAnnotation present on the segment
 	 */
-	public ResourceExt(String segment, String pathAnnotation)
+	public ResourceExt(String segment)
 	{
-		this(Check.notNull(segment, "segment"), pathAnnotation, null);
+		this(Check.notNull(segment, "segment"), null);
 	}
 
 	
@@ -43,15 +42,14 @@ class ResourceExt
 	 */
 	public ResourceExt(PathParam<?> pathParam)
 	{
-		this(null, null, Check.notNull(pathParam, "pathParam"));
+		this(null, Check.notNull(pathParam, "pathParam"));
 	}
 
 	
-	private ResourceExt(String segment, String pathAnnotation, PathParam<?> pathParam)
+	private ResourceExt(String segment, PathParam<?> pathParam)
 	{
-		this.segment 		= segment;
-		this.pathAnnotation	= pathAnnotation;
-		this.pathParam 		= pathParam;
+		this.segment 	= segment;
+		this.pathParam 	= pathParam;
 	}
 	
 	
@@ -74,6 +72,5 @@ class ResourceExt
 	
 	
 	public final String segment;
-	public final String pathAnnotation;
 	public final PathParam<?> pathParam;
 }

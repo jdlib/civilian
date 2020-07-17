@@ -37,22 +37,23 @@ public class PercentEncoderTest extends CivTest
 		assertEscape(' ', "%20"); 
 		assertEscape('ä', "%C3%A4"); 
 		assertEscape('%', "%25"); 
+		assertEscape('\u1234', "%E1%88%B4"); 
 	}
 
 	
 	private void assertEscape(char c, String result)
 	{
-		assertEquals(result, escaping_.escape(c));
+		assertEquals(result, encoder_.escape(c));
 	}
 	
 	
 	private void assertConvert(char c, int... bytes)
 	{
-		assertEquals(bytes.length, escaping_.convert(c));
+		assertEquals(bytes.length, encoder_.convert(c));
 		for (int i=0; i<bytes.length; i++)
-			assertEquals(bytes[i], escaping_.getResult(i));
+			assertEquals(bytes[i], encoder_.getResult(i));
 	}
 
 	
-	private PercentEncoder escaping_ = new PercentEncoder();
+	private PercentEncoder encoder_ = new PercentEncoder();
 }

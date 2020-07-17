@@ -77,13 +77,13 @@ public class WebResource
 		{
 			segment_ 	= segment;
 			pathParam_	= null;
-			route_		= parent.route_.add(segment);
+			route_		= parent.route_.addSegment(segment);
 		}
 		else
 		{
 			segment_ 	= null;
 			pathParam_	= pathParam;
-			route_		= parent.route_.add(pathParam);
+			route_		= parent.route_.addPathParam(pathParam);
 			
 			WebResource p = parent;
 			while(p != null)

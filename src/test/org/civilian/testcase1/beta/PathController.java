@@ -19,7 +19,7 @@ package org.civilian.testcase1.beta;
 import org.civilian.annotation.Segment;
 
 
-@Segment("imspecial.txt")
+@Segment("have space")
 public class PathController extends AbstractBetaController
 {
 }

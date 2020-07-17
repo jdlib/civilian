@@ -118,13 +118,13 @@ public class Resource implements Iterable<Resource>
 		{
 			segment_ 	= segment;
 			pathParam_	= null;
-			route_		= parent.route_.add(segment);
+			route_		= parent.route_.addSegment(segment);
 		}
 		else
 		{
 			segment_ 	= null;
 			pathParam_	= pathParam;
-			route_		= parent.route_.add(pathParam);
+			route_		= parent.route_.addPathParam(pathParam);
 			
 			Resource p  = parent;
 			while(p != null)
@@ -660,7 +660,7 @@ public class Resource implements Iterable<Resource>
 		}
 
 		
-		private Resource root_;
+		private final Resource root_;
 		private Path appPath_ = Path.ROOT;
 		private String defaultExtension_;
 		private ControllerService controllerService_;

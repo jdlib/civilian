@@ -37,7 +37,7 @@ public class ResourceScanTest extends CivTest
 		assertNext(it, "/", 					"org.civilian.testcase1.IndexController");
 		assertNext(it, "/alpha", 				"org.civilian.testcase1.AlphaController");
 		assertNext(it, "/beta",					"org.civilian.testcase1.beta.IndexController");
-		assertNext(it, "/beta/imspecial.txt",	"org.civilian.testcase1.beta.PathController");
+		assertNext(it, "/beta/have%20space",	"org.civilian.testcase1.beta.PathController");
 		assertNext(it, "/beta/some",			"org.civilian.testcase1.beta.SomeController");
 		assertNext(it, "/beta/some/thing",		"org.civilian.testcase1.beta.SomeController:thing");
 		assertNext(it, "/beta/some/{one}",		"org.civilian.testcase1.beta.SomeController:$one");

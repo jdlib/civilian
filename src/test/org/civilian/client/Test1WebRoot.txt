@@ -50,15 +50,15 @@ public class Test1WebRoot extends org.civilian.client.WebResource
 		{
 			super(parent, "beta");
 
-			addChild(this.imspecial_txt = new org.civilian.client.WebResource(this, "imspecial.txt"));
+			addChild(this.have_space = new org.civilian.client.WebResource(this, "have space"));
 			addChild(this.some = new Some(this));
 			addChild(this.$beta = new org.civilian.client.WebResource(this, org.civilian.testcase1.Test1PathParams.BETA));
 		}
 
 		/**
-		 * Resource "/beta/imspecial.txt".
+		 * Resource "/beta/have%20space".
 		 */
-		public final org.civilian.client.WebResource imspecial_txt;
+		public final org.civilian.client.WebResource have_space;
 
 		/**
 		 * Resource "/beta/some".

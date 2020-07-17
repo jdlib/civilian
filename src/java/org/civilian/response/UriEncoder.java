@@ -29,6 +29,16 @@ import org.civilian.util.Check;
 public class UriEncoder
 {
 	/**
+	 * Returns if the string needs encoding.
+	 */
+	public static boolean needsEncoding(String value)
+	{
+		Check.notNull(value, "value");
+		return firstToEncode(value) >= 0;
+	}
+	
+	
+	/**
 	 * Creates a UriEncoder and invokes {@link #encode(String)}.
 	 */
 	public static String encodeString(String value)

@@ -28,7 +28,6 @@ import org.civilian.controller.ControllerSignature;
 import org.civilian.internal.controller.MethodAnnotations;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathParamMap;
-import org.civilian.response.UriEncoder;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.StringUtil;
@@ -138,7 +137,7 @@ class ResourceFactory
 			if (methodExt.pathParam != null)
 				methodRes.setControllerSignature(sig.withMethodPathParam(methodExt.pathParam));
 			else
-				methodRes.setControllerSignature(sig.withMethodSegment(methodExt.pathAnnotation));
+				methodRes.setControllerSignature(sig.withMethodSegment(methodExt.segment));
 		}
 	}
 	
@@ -179,9 +178,9 @@ class ResourceFactory
 		if (pp != null)
 			return new ResourceExt(pp);
 		else if (segment != null)
-			return new ResourceExt(encoder_.encode(segment), segment);
+			return new ResourceExt(segment);
 		else if (defaultSegment != null)
-			return new ResourceExt(encoder_.encode(defaultSegment), defaultSegment);
+			return new ResourceExt(defaultSegment);
 		else
 			return null;
 	}
@@ -241,5 +240,4 @@ class ResourceFactory
 	private final ControllerNaming naming_;
 	private final Map<String,ControllerPackage> packages_ = new HashMap<>(); 
 	private final Set<ResourceExt> tmpMethodExts_ = new HashSet<>();
-	private final UriEncoder encoder_ = new UriEncoder();
 }

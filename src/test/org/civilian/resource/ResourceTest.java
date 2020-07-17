@@ -67,6 +67,15 @@ public class ResourceTest extends CivTest
 	}
 
 	
+	@Test public void testSegmentEscaping()
+	{
+		Resource root  = new Resource();
+		Resource child = new Resource(root, "x z");
+		assertEquals("x z", child.getSegment());
+		assertEquals("/x%20z", child.getRoute().build(null, null));
+	}
+	
+	
 	@Test public void testPathParamChild()
 	{
 		Resource root  = new Resource();

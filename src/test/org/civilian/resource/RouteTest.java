@@ -23,9 +23,9 @@ import org.civilian.response.UriEncoder;
 
 public class RouteTest extends CivTest
 {
-	public static final PathParam<String> PATTERN1 = PathParams.forSegment("p1");
-	public static final PathParam<String> PATTERN2 = PathParams.forSegment("p2");
-	public static final PathParam<String> PATTERN3 = PathParams.forSegment("p3");
+	public static final PathParam<String> PARAM1 = PathParams.forSegment("p1");
+	public static final PathParam<String> PARAM2 = PathParams.forSegment("p2");
+	public static final PathParam<String> PARAM3 = PathParams.forSegment("p3");
 	public static final UriEncoder ENCODER = new UriEncoder();
 	
 	
@@ -61,16 +61,14 @@ public class RouteTest extends CivTest
 		assertEquals(1, route.size());
 		assertEquals(0, route.getPathParamCount());
 		assertEquals(null, route.getPathParam(0));
-		assertEquals(-1, route.indexOf(PATTERN1));
+		assertEquals(-1, route.indexOf(PARAM1));
 		
 		// can be invoked without failure and side-effects
 		route.extractPathParams(null, null);
 
-		assertSame(route, route.add((String)null));
-		assertSame(route, route.add(""));
-		assertSame(route, route.add("/"));
+		assertSame(route, route.addSegment(""));
 
-		Route route2 = route.add("def");
+		Route route2 = route.addSegment("def");
 		assertNotSame(route2, route);
 		assertEquals("/def", route2.build(null, ENCODER));
 	}
@@ -88,26 +86,28 @@ public class RouteTest extends CivTest
 		assertEquals(1, route.size());
 		assertEquals(0, route.getPathParamCount());
 		assertEquals(null, route.getPathParam(0));
-		assertEquals(-1, route.indexOf(PATTERN1));
+		assertEquals(-1, route.indexOf(PARAM1));
 		
 		// can be invoked without failure and side-effects
 		route.extractPathParams(null, null);
 
-		assertSame(route, route.add((String)null));
-		assertSame(route, route.add(""));
-		assertSame(route, route.add("/"));
+		assertSame(route, route.addSegment(""));
 
-		Route route2 = route.add("def");
+		Route route2 = route.addSegment("def");
 		assertNotSame(route2, route);
 		assertEquals("/abc/def", route2.build(null, ENCODER));
 	
-		assertCreate("/abc/{p1}", RouteList.class, route.add(PATTERN1));
+		assertCreate("/abc/{p1}", RouteList.class, route.addPathParam(PARAM1));
 
 		route = assertCreate("http://www.test.com/", ConstantRoute.class, Route.constant("http://www.test.com/"));
-		route2 = route.add("/def");
+		route2 = route.addSegment("def");
 		assertNotSame(route2, route);
 		assertEquals("http://www.test.com/def", route2.build(null, ENCODER));
 		assertTrue(route2 instanceof ConstantRoute);
+		
+		// test escapng
+		Route routeEscaped = Route.root().addSegment("x y");  
+		assertEquals("/x%20y", routeEscaped.build(null, ENCODER));
 	}
 	
 	
@@ -121,14 +121,14 @@ public class RouteTest extends CivTest
 		assertEquals("http://test.com",  url1.build(null, ENCODER));
 		assertEquals("http://test.com/", url1.build(null, ENCODER));
 		
-		assertEquals("http://test.com/customers",  url1.add("/customers").build(null, ENCODER));
-		assertEquals("http://test.com/customers/", url1.add("/customers/").build(null, ENCODER));
-		assertEquals("http://test.com/customers",  url2.add("/customers").build(null, ENCODER));
-		assertEquals("http://test.com/customers/", url2.add("/customers/").build(null, ENCODER));
+		assertEquals("http://test.com/customers",  url1.addSegment("/customers").build(null, ENCODER));
+		assertEquals("http://test.com/customers/", url1.addSegment("/customers/").build(null, ENCODER));
+		assertEquals("http://test.com/customers",  url2.addSegment("/customers").build(null, ENCODER));
+		assertEquals("http://test.com/customers/", url2.addSegment("/customers/").build(null, ENCODER));
 		
 		Object[] params = new Object[] { "pp" }; 
-		assertEquals("http://test.com/pp",  url1.add(PATTERN1).build(params, ENCODER));
-		assertEquals("http://test.com/pp",  url2.add(PATTERN1).build(params, ENCODER));
+		assertEquals("http://test.com/pp",  url1.addPathParam(PARAM1).build(params, ENCODER));
+		assertEquals("http://test.com/pp",  url2.addPathParam(PARAM1).build(params, ENCODER));
 	}
 	
 	
@@ -144,18 +144,18 @@ public class RouteTest extends CivTest
 		assertEquals("http://test.com/customers/", s.toString());
 
 		Object[] params = new Object[] { "pp" }; 
-		Route.root().add(PATTERN1).build(params, ENCODER);
+		Route.root().addPathParam(PARAM1).build(params, ENCODER);
 		assertEquals("http://test.com/pp", s.toString());
 	}
 	
 
 	
 	/**
-	 * Test properties of pattern routes.
+	 * Test properties of routes containing path params.
 	 */
-	@Test public void testPatternRoute()
+	@Test public void testParamRoute()
 	{
-		Route route = assertCreate("/{p1}", PathParamRoute.class, Route.root().add(PATTERN1)); 
+		Route route = assertCreate("/{p1}", PathParamRoute.class, Route.root().addPathParam(PARAM1)); 
 		assertEquals(1, route.size());
 		assertFalse(route.isRoot());
 		
@@ -185,14 +185,12 @@ public class RouteTest extends CivTest
 		assertEquals("/www", route.build(params, ENCODER));
 		
 		assertEquals(1, route.getPathParamCount());
-		assertEquals(PATTERN1, route.getPathParam(0));
+		assertEquals(PARAM1, route.getPathParam(0));
 		assertEquals(null, route.getPathParam(1));
-		assertEquals(0,  route.indexOf(PATTERN1));
-		assertEquals(-1, route.indexOf(PATTERN2));
+		assertEquals(0,  route.indexOf(PARAM1));
+		assertEquals(-1, route.indexOf(PARAM2));
 
-		assertSame(route, route.add((String)null));
-		assertSame(route, route.add(""));
-		assertSame(route, route.add("/"));
+		assertSame(route, route.addSegment(""));
 	}
 	
 	
@@ -201,7 +199,7 @@ public class RouteTest extends CivTest
 	 */
 	@Test public void testRouteList()
 	{
-		Route route = assertCreate("/{p1}/x/{p2}", RouteList.class, Route.root().add(PATTERN1).add("x").add(PATTERN2)); 
+		Route route = assertCreate("/{p1}/x/{p2}", RouteList.class, Route.root().addPathParam(PARAM1).addSegment("x").addPathParam(PARAM2)); 
 		Object[] params = new Object[2]; 
 		params[0] = "www";
 		params[1] = "yyy";
@@ -209,22 +207,21 @@ public class RouteTest extends CivTest
 		assertEquals(3, route.size());
 		assertEquals("/www/x/yyy", route.build(params, ENCODER));
 		assertEquals(2, route.getPathParamCount());
-		assertEquals(PATTERN1, route.getPathParam(0));
-		assertEquals(PATTERN2, route.getPathParam(1));
+		assertEquals(PARAM1, route.getPathParam(0));
+		assertEquals(PARAM2, route.getPathParam(1));
 		assertEquals(null, route.getPathParam(2));
-		assertEquals(0,  route.indexOf(PATTERN1));
-		assertEquals(1,  route.indexOf(PATTERN2));
-		assertEquals(-1, route.indexOf(PATTERN3));
+		assertEquals(0,  route.indexOf(PARAM1));
+		assertEquals(1,  route.indexOf(PARAM2));
+		assertEquals(-1, route.indexOf(PARAM3));
 
-		assertSame(route, route.add((String)null));
-		route = route.add("y");
+		route = route.addSegment("y");
 		assertEquals(4, route.size());
 		assertEquals("/{p1}/x/{p2}/y", route.toString());
 
 		// test append of 
-		route = assertCreate("/{p1}/x", RouteList.class, Route.root().add(PATTERN1).add("x")); 
+		route = assertCreate("/{p1}/x", RouteList.class, Route.root().addPathParam(PARAM1).addSegment("x")); 
 		assertEquals(2, route.size());
-		route = route.add("y");
+		route = route.addSegment("y");
 		assertEquals(2, route.size());
 		assertEquals("/{p1}/x/y", route.toString());
 	}
@@ -235,7 +232,7 @@ public class RouteTest extends CivTest
 	 */
 	@Test public void testPatternEscaping()
 	{
-		Route route = assertCreate("/{p1}/x", RouteList.class, Route.root().add(PATTERN1).add("x")); 
+		Route route = assertCreate("/{p1}/x", RouteList.class, Route.root().addPathParam(PARAM1).addSegment("x")); 
 
 		Object[] params = new Object[1]; 
 		params[0] = "%/ ";

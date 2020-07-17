@@ -67,17 +67,17 @@ public interface Test1Resources
 				super(parent, "beta");
 				setControllerSignature(sig(".beta", "IndexController"));
 
-				this.imspecial_txt = new org.civilian.Resource(this, "imspecial.txt");
-				this.imspecial_txt.setControllerSignature(sig(".beta", "PathController"));
+				this.have_space = new org.civilian.Resource(this, "have space");
+				this.have_space.setControllerSignature(sig(".beta", "PathController"));
 				this.some = new Some(this);
 				this.$beta = new org.civilian.Resource(this, org.civilian.testcase1.Test1PathParams.BETA);
 				this.$beta.setControllerSignature(sig(".beta.object", "IndexController"));
 			}
 
 			/**
-			 * "/beta/imspecial.txt" -> org.civilian.testcase1.beta.PathController
+			 * "/beta/have space" -> org.civilian.testcase1.beta.PathController
 			 */
-			public final org.civilian.Resource imspecial_txt;
+			public final org.civilian.Resource have_space;
 
 			/**
 			 * "/beta/some" -> org.civilian.testcase1.beta.SomeController

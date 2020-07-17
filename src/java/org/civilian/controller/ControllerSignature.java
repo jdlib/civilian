@@ -139,9 +139,9 @@ public class ControllerSignature
 		org.civilian.annotation.Segment aSegment 	 = javaMethod.getAnnotation(org.civilian.annotation.Segment.class);
 		org.civilian.annotation.PathParam aPathParam = javaMethod.getAnnotation(org.civilian.annotation.PathParam.class);
 		if (methodSegment_ != null)
-			return methodSegment_.equals(aSegment.value());
+			return (aSegment != null) && methodSegment_.equals(aSegment.value());
 		else if (methodPathParam_ != null)
-			return methodPathParam_.getName().equals(aPathParam.value());
+			return (aPathParam != null) && methodPathParam_.getName().equals(aPathParam.value());
 		else
 			return (aSegment == null) && (aPathParam == null);
 	}

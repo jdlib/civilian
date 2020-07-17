@@ -78,8 +78,8 @@ public class Path implements CharSequence, Serializable, Comparable<Path>
 			return ROOT_VALUE;
 		else
 		{
-			path 	= StringUtil.cutRight(path, "/");
-			path 	= StringUtil.haveLeft(path, "/");
+			path = StringUtil.cutRight(path, "/");
+			path = StringUtil.haveLeft(path, "/");
 			return !path.equals("/") ? path : ROOT_VALUE;
 		}
 	}

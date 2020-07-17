@@ -21,7 +21,6 @@ import org.civilian.response.UriEncoder;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
-import org.civilian.util.StringUtil;
 
 
 /**
@@ -65,17 +64,18 @@ public abstract class Route
 	
 	/**
 	 * Returns a Route which represents this route + the given path.
+	 * @param segment a non null segment.
 	 */
-	public Route add(String path)
+	public Route addSegment(String segment)
 	{
-		path = Path.norm(path);
-		return path.length() == 0 ? this : addNormed(path);
+		Check.notNull(segment, "segment");
+		return segment.length() == 0 ? this : addEscapedSegment(UriEncoder.encodeString(segment));
 	}
 
 	
-	protected Route addNormed(String path)
+	protected Route addEscapedSegment(String segment)
 	{
-		return add(new ConstantRoute(path));
+		return add(new ConstantRoute('/' + segment));
 	}
 
 	
@@ -83,8 +83,9 @@ public abstract class Route
 	 * Returns a Route which represents this route + the path schema defined
 	 * by the PathParam.
 	 */
-	public <T> Route add(PathParam<T> pathParam)
+	public Route addPathParam(PathParam<?> pathParam)
 	{
+		Check.notNull(pathParam, "pathParam");
 		return add(new PathParamRoute<>(pathParam, getPathParamCount()));
 	}
 
@@ -258,9 +259,13 @@ class ConstantRoute extends Route
 	}
 	
 
-	@Override protected Route addNormed(String path)
+	@Override protected Route addEscapedSegment(String segment)
 	{
-		return new ConstantRoute(StringUtil.cutRight(path_, "/") + path);
+		StringBuilder s = new StringBuilder(path_);
+		if (s.charAt(s.length() - 1) != '/')
+			s.append('/');
+		s.append(segment);
+		return new ConstantRoute(s.toString());
 	}
 
 	
@@ -283,7 +288,7 @@ class ConstantRoute extends Route
 	}
 	
 	
-	private String path_;
+	private final String path_;
 }
 
 
@@ -413,17 +418,17 @@ class RouteList extends Route
 	}
 	
 
-	@Override protected Route addNormed(String path)
+	@Override protected Route addEscapedSegment(String path)
 	{
 		Route last = list_[list_.length - 1]; 
 		if (last instanceof ConstantRoute)
 		{
 			Route[] newList = list_.clone();
-			newList[newList.length - 1] = last.addNormed(path);
+			newList[newList.length - 1] = last.addEscapedSegment(path);
 			return new RouteList(pathParamCount_, newList);
 		}
 		else
-			return super.addNormed( path);
+			return super.addEscapedSegment( path);
 	}
 
 	
