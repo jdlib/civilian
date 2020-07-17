@@ -62,19 +62,19 @@ public class ServerConstGenerator
 	private static void printHelp()
 	{
 		System.out.println("Scans the classpath for controller classes and builds the resource tree.");
-		System.out.println("If an -out parameter is provided, a class file building the resource tree");
+		System.out.println("If an -out parameter is provided, a Java class file which builds the resource tree");
 		System.out.println("is generated.");
 		System.out.println();
 		System.out.println("Usage:");
-		System.out.println("java " + ServerConstGenerator.class.getName() + " [<parameter>]* <app-class>");
+		System.out.println("java " + ServerConstGenerator.class.getName() + " [<parameters>]* <app-class>");
 		System.out.println();
-		System.out.println("parameters:                                                      default:");
+		System.out.println("Parameters:                                                      default:");
 		System.out.println("-name <name|qname>   name of generated class                     (derived from app name)");
 		System.out.println("-enc                 encoding of generated file                  " + DEFAULT_ENCODING);
 		System.out.println("-out:dir <dir>       write to directory, or");
 		System.out.println("-out:package <dir>   write to package subdirectory below dir");
 		System.out.println("-out:file <file>     write to file");
-		System.out.println("-ts                  print generation timestamp into file");
+		System.out.println("-ts                  add comment with generation timestamp");
 		System.out.println("-v                   turn on verbose messages");
 	}
 	

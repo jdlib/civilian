@@ -5,6 +5,9 @@
 package org.civilian.samples.crm.web;
 
 
+import org.civilian.controller.ControllerSignature;
+
+
 /**
  * Defines the resources of application org.civilian.samples.crm.web.CrmApp.
  */
@@ -23,14 +26,14 @@ public interface CrmResources
 	{
 		public Root()
 		{
-			setControllerSignature(cls("", "IndexController"), null);
+			setControllerSignature(sig("", "IndexController"));
 
 			this.contacts = new Contacts(this);
 			this.customers = new Customers(this);
 			this.login = new org.civilian.Resource(this, "login");
-			this.login.setControllerSignature(cls("", "LoginController"), null);
+			this.login.setControllerSignature(sig("", "LoginController"));
 			this.logout = new org.civilian.Resource(this, "logout");
-			this.logout.setControllerSignature(cls("", "LogoutController"), null);
+			this.logout.setControllerSignature(sig("", "LogoutController"));
 			this.opportunities = new Opportunities(this);
 			this.users = new Users(this);
 		}
@@ -74,11 +77,11 @@ public interface CrmResources
 			public Contacts(org.civilian.Resource parent)
 			{
 				super(parent, "contacts");
-				setControllerSignature(cls(".contacts", "IndexController"), null);
+				setControllerSignature(sig(".contacts", "IndexController"));
 
 				this.search = new Search(this);
 				this.$contactId = new org.civilian.Resource(this, org.civilian.samples.crm.web.CrmPathParams.CONTACTID);
-				this.$contactId.setControllerSignature(cls(".contacts.id", "IndexController"), null);
+				this.$contactId.setControllerSignature(sig(".contacts.id", "IndexController"));
 			}
 
 			/**
@@ -100,10 +103,10 @@ public interface CrmResources
 				public Search(org.civilian.Resource parent)
 				{
 					super(parent, "search");
-					setControllerSignature(cls(".contacts", "SearchController"), null);
+					setControllerSignature(sig(".contacts", "SearchController"));
 
 					this.filter = new org.civilian.Resource(this, "filter");
-					this.filter.setControllerSignature(cls(".contacts", "SearchController"), "filter");
+					this.filter.setControllerSignature(sig(".contacts", "SearchController").withMethodSegment("filter"));
 				}
 
 				/**
@@ -122,12 +125,12 @@ public interface CrmResources
 			public Customers(org.civilian.Resource parent)
 			{
 				super(parent, "customers");
-				setControllerSignature(cls(".customers", "IndexController"), null);
+				setControllerSignature(sig(".customers", "IndexController"));
 
 				this.lookup = new org.civilian.Resource(this, "lookup");
-				this.lookup.setControllerSignature(cls(".customers", "LookupController"), null);
+				this.lookup.setControllerSignature(sig(".customers", "LookupController"));
 				this.navigation = new org.civilian.Resource(this, "navigation");
-				this.navigation.setControllerSignature(cls(".customers", "NavigationController"), null);
+				this.navigation.setControllerSignature(sig(".customers", "NavigationController"));
 				this.search = new Search(this);
 				this.$customerId = new $CustomerId(this);
 			}
@@ -161,10 +164,10 @@ public interface CrmResources
 				public Search(org.civilian.Resource parent)
 				{
 					super(parent, "search");
-					setControllerSignature(cls(".customers", "SearchController"), null);
+					setControllerSignature(sig(".customers", "SearchController"));
 
 					this.filter = new org.civilian.Resource(this, "filter");
-					this.filter.setControllerSignature(cls(".customers", "SearchController"), "filter");
+					this.filter.setControllerSignature(sig(".customers", "SearchController").withMethodSegment("filter"));
 				}
 
 				/**
@@ -182,12 +185,12 @@ public interface CrmResources
 				public $CustomerId(org.civilian.Resource parent)
 				{
 					super(parent, org.civilian.samples.crm.web.CrmPathParams.CUSTOMERID);
-					setControllerSignature(cls(".customers.id", "IndexController"), null);
+					setControllerSignature(sig(".customers.id", "IndexController"));
 
 					this.details = new org.civilian.Resource(this, "details");
-					this.details.setControllerSignature(cls(".customers.id", "DetailsController"), null);
+					this.details.setControllerSignature(sig(".customers.id", "DetailsController"));
 					this.masterdata = new org.civilian.Resource(this, "masterdata");
-					this.masterdata.setControllerSignature(cls(".customers.id", "MasterdataController"), null);
+					this.masterdata.setControllerSignature(sig(".customers.id", "MasterdataController"));
 				}
 
 				/**
@@ -211,11 +214,11 @@ public interface CrmResources
 			public Opportunities(org.civilian.Resource parent)
 			{
 				super(parent, "opportunities");
-				setControllerSignature(cls(".opportunities", "IndexController"), null);
+				setControllerSignature(sig(".opportunities", "IndexController"));
 
 				this.search = new Search(this);
 				this.$opportunityId = new org.civilian.Resource(this, org.civilian.samples.crm.web.CrmPathParams.OPPORTUNITYID);
-				this.$opportunityId.setControllerSignature(cls(".opportunities.id", "IndexController"), null);
+				this.$opportunityId.setControllerSignature(sig(".opportunities.id", "IndexController"));
 			}
 
 			/**
@@ -237,10 +240,10 @@ public interface CrmResources
 				public Search(org.civilian.Resource parent)
 				{
 					super(parent, "search");
-					setControllerSignature(cls(".opportunities", "SearchController"), null);
+					setControllerSignature(sig(".opportunities", "SearchController"));
 
 					this.filter = new org.civilian.Resource(this, "filter");
-					this.filter.setControllerSignature(cls(".opportunities", "SearchController"), "filter");
+					this.filter.setControllerSignature(sig(".opportunities", "SearchController").withMethodSegment("filter"));
 				}
 
 				/**
@@ -259,11 +262,11 @@ public interface CrmResources
 			public Users(org.civilian.Resource parent)
 			{
 				super(parent, "users");
-				setControllerSignature(cls(".users", "IndexController"), null);
+				setControllerSignature(sig(".users", "IndexController"));
 
 				this.search = new Search(this);
 				this.$userId = new org.civilian.Resource(this, org.civilian.samples.crm.web.CrmPathParams.USERID);
-				this.$userId.setControllerSignature(cls(".users.id", "IndexController"), null);
+				this.$userId.setControllerSignature(sig(".users.id", "IndexController"));
 			}
 
 			/**
@@ -285,10 +288,10 @@ public interface CrmResources
 				public Search(org.civilian.Resource parent)
 				{
 					super(parent, "search");
-					setControllerSignature(cls(".users", "SearchController"), null);
+					setControllerSignature(sig(".users", "SearchController"));
 
 					this.filter = new org.civilian.Resource(this, "filter");
-					this.filter.setControllerSignature(cls(".users", "SearchController"), "filter");
+					this.filter.setControllerSignature(sig(".users", "SearchController").withMethodSegment("filter"));
 				}
 
 				/**
@@ -299,9 +302,9 @@ public interface CrmResources
 		}
 
 
-		private static String cls(String subPackage, String className)
+		private static ControllerSignature sig(String subPackage, String className)
 		{
-			return "org.civilian.samples.crm.web.root" + subPackage + '.' + className;
+			return new ControllerSignature("org.civilian.samples.crm.web.root" + subPackage + '.' + className);
 		}
 	}
 }
