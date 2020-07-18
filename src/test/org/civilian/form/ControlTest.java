@@ -119,12 +119,12 @@ public class ControlTest extends CivTest
 		field.setId("xyz");
 		assertEquals("xyz", field.getId());
 		
-		assertEquals("", field.getLabel());
+		assertNull(field.getLabel());
 		assertFalse(field.hasLabel());
 		field.setLabel("label");
 		assertEquals("label", field.getLabel());
 		field.setLabel(null);
-		assertEquals("", field.getLabel());
+		assertNull(field.getLabel());
 
 		assertNull(field.getData());
 		field.setData(this);

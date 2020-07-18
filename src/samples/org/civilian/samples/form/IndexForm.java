@@ -28,7 +28,7 @@ public class IndexForm extends Form
 		
 		add(counter		= HiddenField.create("counter", 0));
 		add(lastName 	= new TextField("lastName"), 	"Last Name")	.setRequired();
-		add(firstName 	= new TextField("firstName"), "First Name");
+		add(firstName 	= new TextField("firstName"),   "First Name");
 		add(zip		 	= new TextField("zip"), 		"ZIP")			.setPlaceholder("00000").setPattern("[0-9]{5}").setMaxLength(5);
 		add(city	 	= new TextField("city"), 		"City")			.setSize(30);
 		add(range	 	= new IntField("range"), 		"Range")		.asRangeField().setStep(10).setMinMax(0, 200);

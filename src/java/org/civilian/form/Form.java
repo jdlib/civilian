@@ -324,9 +324,9 @@ public class Form implements RequestProvider
 	/**
 	 * Adds a control to the form and sets the label of the control. 
 	 * @param control the control. It is ignored if null.
-	 * @see Control#setLabel(String)
+	 * @see Control#setLabel(Object)
 	 */
-	public <T extends Control<?>> T add(T control, String label)
+	public <T extends Control<?>> T add(T control, Object label)
 	{
 		if (control != null)
 		{

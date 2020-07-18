@@ -57,6 +57,19 @@ public class FormTableMixin
 		errorControlClass_ = s;
 		return this;
 	}
+
+	
+	private String translate(Object label)
+	{
+		if (label == null)
+			return null;
+		else if (label instanceof String)
+			return (String)label;
+		
+		if (lang_ == null)
+			lang_ = new LangMixin(out);
+		return lang_.msg(label);
+	}
 	
 	
 	/**
@@ -68,16 +81,17 @@ public class FormTableMixin
 	 */
 	public void label(Control<?> control)
 	{
+		String label = translate(control.getLabel());
 		if ((requiredLabelClass_ != null) && control.isRequired())
 		{
 			out.print("<span class=\"");
 			out.print(requiredLabelClass_);
 			out.print("\">");
-			label(control.getLabel());
+			label(label);
 			out.print("</span>");
 		}
 		else
-			label(control.getLabel());
+			label(label);
 	}
 
 	
@@ -86,7 +100,8 @@ public class FormTableMixin
 	 */
 	public void label(String text)
 	{
-		HtmlUtil.escape(out, text, false);
+		if (text != null)
+			HtmlUtil.escape(out, text, false);
 	}
 	
 	
@@ -110,7 +125,8 @@ public class FormTableMixin
 	public void labelCell(String label)
 	{
 		out.print("<td>");
-		label(label);
+		if (label != null)
+			label(label);
 		out.println("</td>");
 	}
 	
@@ -282,4 +298,5 @@ public class FormTableMixin
 	private TemplateWriter out;
 	private String requiredLabelClass_; 
 	private String errorControlClass_ = "error"; 
+	private LangMixin lang_; 
 }

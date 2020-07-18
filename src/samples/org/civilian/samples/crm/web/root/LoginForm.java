@@ -31,16 +31,16 @@ import org.civilian.text.keys.KeyList;
 
 public class LoginForm extends Form
 {
-	public LoginForm(Controller res)
+	public LoginForm(Controller controller)
 	{
-		super(res);
+		super(controller);
 		
-		KeyList<LocaleService> langKeys = res.getApplication().getLocaleServices().getServiceKeys();
+		KeyList<LocaleService> langKeys = controller.getApplication().getLocaleServices().getServiceKeys();
 		
-		add(name 		= new TextField("name"), res.msg(Message.Login));
-		add(password 	= new PasswordField("password"), res.msg(Message.Password));
-		add(ok 			= Button.submit(res.msg(Message.OK)));
-		add(language	= new Select<>("language", langKeys), res.msg(Message.Language));
+		add(name 		= new TextField("name"), Message.Login);
+		add(password 	= new PasswordField("password"), Message.Password);
+		add(ok 			= Button.submit(controller.msg(Message.OK)));
+		add(language	= new Select<>("language", langKeys), Message.Language);
 		add(path		= HiddenField.create(CrmConstants.LOGIN_PATH_PARAM));
 		
 		name.setRequired(true);

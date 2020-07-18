@@ -357,9 +357,8 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	
 	/**
 	 * Returns the label of the control.
-	 * The label is always a non-null string. By default it equals to "". 
 	 */
-	public String getLabel()
+	public Object getLabel()
 	{
 		return label_;
 	}
@@ -369,9 +368,9 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	 * Sets the label of the control.
 	 * @return this
 	 */
-	public Control<T> setLabel(String label)
+	public Control<T> setLabel(Object label)
 	{
-		label_ = label == null ? "" : label;
+		label_ = label;
 		return this;
 	}
 	
@@ -381,7 +380,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	 */
 	public boolean hasLabel()
 	{
-		return label_.length() > 0;
+		return label_ != null;
 	}
 	
 
@@ -941,7 +940,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	private boolean isReadOnly_;
 	private boolean isRequired_;
 	protected Attribute attribute_;
-	protected String label_ = "";
+	protected Object label_;
 	private Form form_;
 	private Object data_;
 	private Status status_ = Status.OK;
