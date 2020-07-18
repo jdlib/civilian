@@ -6,6 +6,8 @@ import java.util.Locale;
 import org.civilian.text.DateFormat;
 import org.civilian.text.NumberFormat;
 import org.civilian.text.NumberStyle;
+import org.civilian.text.Style;
+import org.civilian.text.TimeStyle;
 import org.civilian.type.DateType;
 import org.civilian.type.Type;
 import org.civilian.type.DateTimeType;
@@ -90,19 +92,19 @@ public class LocaleSerializer extends TypeSerializer
 	}
 
 	
-	private String formatDecimal(Type<?> type, Number value, Object style)
+	private String formatDecimal(Type<?> type, Number value, Style style)
 	{
 		return numberFormat_.formatDecimal(value, numberStyle(style), null).toString();
 	}
 
 	
-	private String formatNatural(Type<?> type, Number value, Object style)
+	private String formatNatural(Type<?> type, Number value, Style style)
 	{
 		return numberFormat_.formatNatural(value, numberStyle(style), null).toString();
 	}
 
 	
-	private <T> String formatDate(Type<?> type, T value, Object style)
+	private <T> String formatDate(Type<?> type, T value, Style style)
 	{
 		@SuppressWarnings("unchecked")
 		DateType<T> dateType = (DateType<T>)type;
@@ -113,7 +115,7 @@ public class LocaleSerializer extends TypeSerializer
 	}
 
 	
-	private <T> String formatDateTime(Type<?> type, T value, Object style)
+	private <T> String formatDateTime(Type<?> type, T value, Style style)
 	{
 		@SuppressWarnings("unchecked")
 		DateTimeType<T> dateType = (DateTimeType<T>)type;
@@ -124,11 +126,11 @@ public class LocaleSerializer extends TypeSerializer
 		int minute	= dateType.getMinute(value);
 		int second	= dateType.getSecond(value);
 		
-		return dateFormat_.format(year, month, day) + ' ' + formatTime(hour, minute, second);
+		return dateFormat_.format(year, month, day) + ' ' + formatTime(hour, minute, second,style);
 	}
 
 	
-	private <T> String formatTime(Type<?> type, T value, Object style)
+	private <T> String formatTime(Type<?> type, T value, Style style)
 	{
 		@SuppressWarnings("unchecked")
 		TimeType<T> dateType = (TimeType<T>)type;
@@ -136,24 +138,34 @@ public class LocaleSerializer extends TypeSerializer
 		int minute	= dateType.getMinute(value);
 		int second	= dateType.getSecond(value);
 		
-		return formatTime(hour, minute, second);
+		return formatTime(hour, minute, second, style);
 	}
 
 	
-	private <T> String formatTime(int hour, int minute, int second)
+	private <T> String formatTime(int hour, int minute, int second, Style style)
 	{
-		return StringUtil.fillLeft(hour, 2) + ':' +
-			StringUtil.fillLeft(minute, 2) + ':' + 
-			StringUtil.fillLeft(second, 2);
+		StringBuilder sb = new StringBuilder();
+		sb.append(StringUtil.fillLeft(hour, 2));
+		sb.append(':');
+		sb.append(StringUtil.fillLeft(minute, 2));
+		if (timeStyle(style).showSeconds())
+			sb.append(':').append(StringUtil.fillLeft(second, 2));
+		return sb.toString();
 	}
 	
 	
-	private NumberStyle numberStyle(Object style)
+	private NumberStyle numberStyle(Style style)
 	{
 		return style instanceof NumberStyle ? (NumberStyle)style : NumberStyle.DEFAULT;
 	}
-
 	
+	
+	private TimeStyle timeStyle(Style style)
+	{
+		return style instanceof TimeStyle ? (TimeStyle)style : TimeStyle.HM;
+	}
+
+
 	private <T> T parseDate(Type<T> type, String s) throws ParseException
 	{
 		return dateFormat_.parse((DateType<T>)type, s);
@@ -219,8 +231,8 @@ public class LocaleSerializer extends TypeSerializer
 	}
 
 	
-	private Locale locale_;
-	private DateFormat dateFormat_;
-	private NumberFormat numberFormat_;
+	private final Locale locale_;
+	private final DateFormat dateFormat_;
+	private final NumberFormat numberFormat_;
 }
 

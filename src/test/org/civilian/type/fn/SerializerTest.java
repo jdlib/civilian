@@ -20,10 +20,14 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import org.junit.Test;
 import org.civilian.CivTest;
+import org.civilian.text.NumberStyle;
+import org.civilian.text.TimeStyle;
 import org.civilian.type.DiscreteType;
 import org.civilian.type.EnumType;
 import org.civilian.type.Type;
@@ -47,13 +51,15 @@ public class SerializerTest extends CivTest
 		assertFormat(TypeLib.DATE_LOCAL,    LocalDate.of(2012, 1, 31),              "20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertFormat(TypeLib.DATE_JAVA_SQL, new java.sql.Date(112, 0, 31), 			"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertFormat(TypeLib.DATE_JAVA_UTIL,new java.util.Date(112, 0, 31), 		"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
+		assertFormat(TypeLib.DATETIME_LOCAL,LocalDateTime.of(2012,1,31,12,13,14), 	"20120131121314", "01/31/2012 12:13", "31.01.2012 12:13", "31/01/2012 12:13");
 		assertFormat(TypeLib.DOUBLE, 		new Double(2345.6),						"2345.6", "2,345.60","2.345,60","2\u00a0345,60");
 		assertFormat(TypeLib.DOUBLE, 		new Double(2345),						"2345.0", "2,345.00","2.345,00","2\u00a0345,00");
 		assertFormat(TypeLib.FLOAT, 		new Float(2345.6),						"2345.6", "2,345.60","2.345,60","2\u00a0345,60");
 		assertFormat(TypeLib.INTEGER, 		new Integer(2345),						"2345",   "2,345",   "2.345",   "2\u00a0345");
 		assertFormat(TypeLib.LONG, 			new Long(2345),							"2345",   "2,345",   "2.345",   "2\u00a0345");
-		assertFormat(TypeLib.LONG, 			new Long(-5432),						"-5432",  "-5,432",   "-5.432", "-5\u00a0432");
+		assertFormat(TypeLib.LONG, 			new Long(-5432),						"-5432",  "-5,432",  "-5.432", "-5\u00a0432");
 		assertFormat(TypeLib.SHORT, 		new Short((short)2345),					"2345",   "2,345",   "2.345",   "2\u00a0345");
+		assertFormat(TypeLib.TIME_LOCAL,	LocalTime.of(12, 13, 14),				"121314", "12:13",   "12:13",   "12:13");
 		assertFormat(TypeLib.STRING,		"abc",									"abc");
 	}
 	
@@ -164,6 +170,25 @@ public class SerializerTest extends CivTest
 		
 		assertEquals(123L, LOCALE_US.parse(TypeLib.LONG, "+123").longValue());
 		assertEquals(123456L, LOCALE_FR.parse(TypeLib.LONG, "+123 456").longValue());
+	}
+	
+	
+	@Test public void testStyles() throws Exception
+	{
+		LocalTime time = LocalTime.of(12, 13, 14);
+		assertEquals("12:13", LOCALE_US.format(TypeLib.TIME_LOCAL, time));
+		assertEquals("12:13", LOCALE_US.format(TypeLib.TIME_LOCAL, time, TimeStyle.HM));
+		assertEquals("12:13:14", LOCALE_US.format(TypeLib.TIME_LOCAL, time, TimeStyle.HMS));
+		
+		LocalDateTime dateTime = LocalDateTime.of(2012, 1, 31, 12, 13, 14);
+		assertEquals("31.01.2012 12:13", LOCALE_DE.format(TypeLib.DATETIME_LOCAL, dateTime));
+		assertEquals("31.01.2012 12:13", LOCALE_DE.format(TypeLib.DATETIME_LOCAL, dateTime, TimeStyle.HM));
+		assertEquals("31.01.2012 12:13:14", LOCALE_DE.format(TypeLib.DATETIME_LOCAL, dateTime, TimeStyle.HMS));
+		
+		Double d = Double.valueOf(1234.56);
+		assertEquals("1.234,56", LOCALE_DE.format(TypeLib.DOUBLE, d));
+		assertEquals("1234,56", LOCALE_DE.format(TypeLib.DOUBLE, d, NumberStyle.RAW));
+		assertEquals("1234,5", LOCALE_DE.format(TypeLib.DOUBLE, d, NumberStyle.RAW.decimals(1)));
 	}
 	
 	
