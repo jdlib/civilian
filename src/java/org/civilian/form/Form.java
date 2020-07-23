@@ -128,7 +128,7 @@ public class Form implements RequestProvider
 	 */
 	public void setTarget(String target)
 	{
-		setAttribute("target", target);
+		target_ = target;  
 	}
 
 	
@@ -139,7 +139,7 @@ public class Form implements RequestProvider
 	 */
 	public String getTarget()
 	{
-		return Attribute.getValue(attribute_, "target");
+		return target_;
 	}
 	
 	
@@ -242,25 +242,6 @@ public class Form implements RequestProvider
 	{
 		Attribute attr = Attribute.getAttribute(attribute_, name);
 		return attr == null ? null : attr.value;
-	}
-	
-	
-	/**
-	 * Sets the onsubmit attribute to the given javascript expression.
-	 * E.g. a call<p>
-	 * <code>form.addSubmitCallback("myfunction()");</code><p>
-	 * would be printed as<p> 
-	 * <code>&lt;form ... onsubmit="return myfunction();"&gt;</code><p>
-	 * If you add multiple handlers the expression are chained together:
-	 * <code>&lt;form ... onsubmit="return myfunction() &amp;&amp; myfunction2();"&gt;</code>:
-	 */
-	public void addSubmitCallback(String expression)
-	{
-		Attribute attr = Attribute.getAttribute(attribute_, "onsubmit");
-		if (attr == null)
-			setAttribute("onsubmit", "return " + expression + ';');
-		else
-			attr.value = attr.value.substring(0, attr.value.length() - 1) + " & " + expression + ';'; 
 	}
 	
 	
@@ -569,9 +550,15 @@ public class Form implements RequestProvider
 	public void start(TemplateWriter out, String... attrs)
 	{
 		out.print("<form");
-		printAttrs(out, attrs);
+		printAttrs(out);
+		HtmlUtil.attrs(out, attrs);
 		out.println('>');
-		
+		printHiddenFields(out);
+	}
+	
+	
+	public void printHiddenFields(TemplateWriter out)
+	{
 		// each form has a hidden field equal to the form name
 		// it is used to decide if the form was submitted by
 		// hitting enter inside a text field
@@ -599,16 +586,15 @@ public class Form implements RequestProvider
 	/**
 	 * Prints the attributes of the form start tag.
 	 */
-	protected void printAttrs(TemplateWriter out, String... attrs)
+	public void printAttrs(TemplateWriter out)
 	{
 		Response response = getRequest().getResponse();
-		if (method_ != null)
-			HtmlUtil.attr(out, "method", method_);
+		HtmlUtil.attr(out, "method", method_);
 		String action = getAction();
 		if (action != null)
 			HtmlUtil.attr(out, "action", response.addSessionId(action));
-			
 		HtmlUtil.attr(out, "name", name_);
+		HtmlUtil.attr(out, "target", target_);
 		if (isMultipartEncoded())
 		{
 			HtmlUtil.attr(out, "enctype", "multipart/form-data", false);
@@ -618,7 +604,6 @@ public class Form implements RequestProvider
 		}
 		if (attribute_ != null) 
 			out.print(attribute_);
-		HtmlUtil.attrs(out, attrs);
 	}
 	
 	
@@ -640,11 +625,16 @@ public class Form implements RequestProvider
 	public void end(TemplateWriter out, Control<?> focusControl)
 	{
 		out.println("</form>");
+		focus(out, focusControl);
+	}
+	
+	
+	public void focus(TemplateWriter out, Control<?> focusControl)
+	{
 		if (getErrorControl() != null)
 			focusControl = getErrorControl();
 		if (focusControl != null)
 			focusControl = focusControl.toFocusControl();
-		
 		if (focusControl != null)
 			focusControl.focus(out, true);
 	}
@@ -653,6 +643,7 @@ public class Form implements RequestProvider
 	private String name_;
 	private String action_;
 	private String method_ = "POST";
+	private String target_;
 	private Attribute attribute_;
 	private Button defaultButton_;
 	private Control<?> errorControl_;
