@@ -472,7 +472,7 @@ public class ControlTest extends CivTest
 	}
 	
 	
-	@Test public void testFormProperties()
+	@Test public void testFormAttrs()
 	{
 		Form form = new Form(request);
 		assertNull(form.getTarget());
@@ -488,12 +488,6 @@ public class ControlTest extends CivTest
 		assertEquals("GET", form.getMethod());
 		form.setPostMethod();
 		assertEquals("POST", form.getMethod());
-		
-		assertEquals(null, form.getAttribute("onsubmit"));
-		form.addSubmitCallback("false");
-		assertEquals("return false;", form.getAttribute("onsubmit"));
-		form.addSubmitCallback("hello()");
-		assertEquals("return false & hello();", form.getAttribute("onsubmit"));
 	}
 	
 	
