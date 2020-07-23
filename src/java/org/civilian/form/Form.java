@@ -594,7 +594,8 @@ public class Form implements RequestProvider
 		if (action != null)
 			HtmlUtil.attr(out, "action", response.addSessionId(action));
 		HtmlUtil.attr(out, "name", name_);
-		HtmlUtil.attr(out, "target", target_);
+		if (target_ != null)
+			HtmlUtil.attr(out, "target", target_);
 		if (isMultipartEncoded())
 		{
 			HtmlUtil.attr(out, "enctype", "multipart/form-data", false);
