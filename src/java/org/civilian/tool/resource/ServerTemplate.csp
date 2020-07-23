@@ -44,13 +44,18 @@ private void printResourceClass(ResourceInfo info)
 	@int childCount = info.getChildCount();
 	@printResourceComment(info);
 	@String className = getJavaClass(info);
-	public static class <%className%> extends <%Resource.class.getName()%> 
+	@boolean hasController = info.getControllerSignature() != null; 
+	public static class <%className%><%?hasController%> extends <%Resource.class.getName()%><%?%> 
 	{
 		public <%className%>(<%?!info.isRoot()%><%Resource.class.getName()%> parent<%?%>)
 		{
-			@if (!info.isRoot())
-				super(<%printCtorArgs(info, false);%>);
-			@if (info.getControllerSignature() != null)
+			@String thisRes = hasController ? "this" : "this.resource_"; 
+			@if (hasController)
+				super<%/%>
+			@else
+				<%thisRes%> = new <%Resource.class.getName()%><%/%>
+			(<%printCtorArgs(info, "parent");%>);
+			@if (hasController)
 				@printSetCtrlSeg(info);
 			
 			@// print field definitions
@@ -59,18 +64,28 @@ private void printResourceClass(ResourceInfo info)
 				@String field = getJavaField(child);
 				this.<%field%> = new <%/%>
 				@if (child.getChildCount() == 0)
-					<%Resource.class.getName()%>(<%printCtorArgs(child, true);%>);
+					<%Resource.class.getName()%>(<%printCtorArgs(child, thisRes);%>);
 					@if (child.getControllerSignature() != null)
 						this.<%field%>.<%printSetCtrlSeg(child);%>
 				@else
 					<%getJavaClass(child)%>(this);
 		}
+		@if (!hasController && info.isRoot())
+			<%%>
+			public <%Resource.class.getName()%> getResource() 			
+			{
+				return resource_;
+			}
 		@// print field declarations
 		@for (int i=0; i<childCount; i++)
 			<%%>
 			@ResourceInfo child = info.getChild(i);
 			@printResourceComment(child);
 			public final <%child.getChildCount() > 0 ? getJavaClass(child) : Resource.class.getName()%> <%getJavaField(child)%>;
+		@if (!hasController)
+			<%%>
+			// hidden since not mapped to a controller
+			private final <%Resource.class.getName()%> resource_;
 		@for (int i=0; i<childCount; i++)
 			@ResourceInfo child = info.getChild(i);
 			@if (child.getChildCount() > 0)
@@ -96,13 +111,14 @@ private void printResourceComment(ResourceInfo resInfo)
 }}
 
 
-private void printCtorArgs(ResourceInfo info, boolean isChild)
+private void printCtorArgs(ResourceInfo info, String parent)
 {{
-	<%isChild ? "this" : "parent"%>, <%/%> 
-	@if (info.getSegment() != null)
-		"<%info.getSegment()%>"<%/%>
-	@else
-		<%pathParamConst(info.getPathParam())%><%/%>
+	@if (!info.isRoot())
+		<%parent%>, <%/%> 
+		@if (info.getSegment() != null)
+			"<%info.getSegment()%>"<%/%>
+		@else
+			<%pathParamConst(info.getPathParam())%><%/%>
 }}
 
 

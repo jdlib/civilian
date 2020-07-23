@@ -16,6 +16,7 @@ public class Test1WebRoot extends org.civilian.client.WebResource
 
 		addChild(this.alpha = new org.civilian.client.WebResource(this, "alpha"));
 		addChild(this.beta = new Beta(this));
+		addChild(this.delta = new Delta(this));
 		addChild(this.mixed = new Mixed(this));
 		addChild(this.$gammaId = new org.civilian.client.WebResource(this, org.civilian.testcase1.Test1PathParams.GAMMA));
 	}
@@ -29,6 +30,11 @@ public class Test1WebRoot extends org.civilian.client.WebResource
 	 * Resource "/beta".
 	 */
 	public final Beta beta;
+
+	/**
+	 * Resource "/delta".
+	 */
+	public final Delta delta;
 
 	/**
 	 * Resource "/mixed".
@@ -94,6 +100,25 @@ public class Test1WebRoot extends org.civilian.client.WebResource
 			 */
 			public final org.civilian.client.WebResource $one;
 		}
+	}
+
+
+	/**
+	 * Resource "/delta".
+	 */
+	public static class Delta extends org.civilian.client.WebResource
+	{
+		public Delta(org.civilian.client.WebResource parent)
+		{
+			super(parent, "delta");
+
+			addChild(this.run = new org.civilian.client.WebResource(this, "run"));
+		}
+
+		/**
+		 * Resource "/delta/run".
+		 */
+		public final org.civilian.client.WebResource run;
 	}
 
 

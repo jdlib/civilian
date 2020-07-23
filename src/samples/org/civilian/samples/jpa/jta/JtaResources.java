@@ -26,6 +26,7 @@ public interface JtaResources
 	{
 		public Root()
 		{
+			super();
 			setControllerSignature(sig("", "IndexController"));
 
 			this.create = new org.civilian.Resource(this, "create");

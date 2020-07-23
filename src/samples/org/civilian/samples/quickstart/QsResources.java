@@ -26,6 +26,7 @@ public interface QsResources
 	{
 		public Root()
 		{
+			super();
 			setControllerSignature(sig("", "IndexController"));
 
 			this.users = new Users(this);

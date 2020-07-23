@@ -26,11 +26,13 @@ public interface Test1Resources
 	{
 		public Root()
 		{
+			super();
 			setControllerSignature(sig("", "IndexController"));
 
 			this.alpha = new org.civilian.Resource(this, "alpha");
 			this.alpha.setControllerSignature(sig("", "AlphaController"));
 			this.beta = new Beta(this);
+			this.delta = new Delta(this);
 			this.mixed = new Mixed(this);
 			this.$gammaId = new org.civilian.Resource(this, org.civilian.testcase1.Test1PathParams.GAMMA);
 			this.$gammaId.setControllerSignature(sig("", "GammaController"));
@@ -45,6 +47,11 @@ public interface Test1Resources
 		 * "/beta" -> org.civilian.testcase1.beta.IndexController
 		 */
 		public final Beta beta;
+
+		/**
+		 * "/delta"
+		 */
+		public final Delta delta;
 
 		/**
 		 * "/mixed" -> org.civilian.testcase1.miXed.IndexController
@@ -116,6 +123,28 @@ public interface Test1Resources
 				 */
 				public final org.civilian.Resource $one;
 			}
+		}
+
+
+		/**
+		 * "/delta"
+		 */
+		public static class Delta
+		{
+			public Delta(org.civilian.Resource parent)
+			{
+				this.resource_ = new org.civilian.Resource(parent, "delta");
+				this.run = new org.civilian.Resource(this.resource_, "run");
+				this.run.setControllerSignature(sig(".delta", "RunController"));
+			}
+
+			/**
+			 * "/delta/run" -> org.civilian.testcase1.delta.RunController
+			 */
+			public final org.civilian.Resource run;
+
+			// hidden since not mapped to a controller
+			private final org.civilian.Resource resource_;
 		}
 
 

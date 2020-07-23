@@ -26,6 +26,7 @@ public interface AdminResources
 	{
 		public Root()
 		{
+			super();
 			setControllerSignature(sig("", "IndexController"));
 
 			this.$appId = new $AppId(this);
@@ -40,14 +41,14 @@ public interface AdminResources
 		/**
 		 * "/{appId}"
 		 */
-		public static class $AppId extends org.civilian.Resource
+		public static class $AppId
 		{
 			public $AppId(org.civilian.Resource parent)
 			{
-				super(parent, org.civilian.internal.admin.AdminPathParams.APPID);
-				this.resources = new org.civilian.Resource(this, "resources");
+				this.resource_ = new org.civilian.Resource(parent, org.civilian.internal.admin.AdminPathParams.APPID);
+				this.resources = new org.civilian.Resource(this.resource_, "resources");
 				this.resources.setControllerSignature(sig(".app", "ResourcesController"));
-				this.settings = new org.civilian.Resource(this, "settings");
+				this.settings = new org.civilian.Resource(this.resource_, "settings");
 				this.settings.setControllerSignature(sig(".app", "SettingsController"));
 			}
 
@@ -60,6 +61,9 @@ public interface AdminResources
 			 * "/{appId}/settings" -> org.civilian.internal.admin.app.SettingsController
 			 */
 			public final org.civilian.Resource settings;
+
+			// hidden since not mapped to a controller
+			private final org.civilian.Resource resource_;
 		}
 
 
