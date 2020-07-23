@@ -68,7 +68,7 @@ private void printResourceClass(ResourceInfo info)
 					@if (child.getControllerSignature() != null)
 						this.<%field%>.<%printSetCtrlSeg(child);%>
 				@else
-					<%getJavaClass(child)%>(this);
+					<%getJavaClass(child)%>(<%thisRes%>);
 		}
 		@if (!hasController && info.isRoot())
 			<%%>

@@ -156,7 +156,9 @@ class ServerTemplate
 			else                                                        // line 70: @else
 			{
 				out.print(getJavaClass(child));                         // line 71: <%getJavaClass(child)%>
-				out.println("(this);");                                 // line 71: (this);
+				out.print("(");                                         // line 71: (
+				out.print(thisRes);                                     // line 71: <%thisRes%>
+				out.println(");");                                      // line 71: );
 			}
 		}
 		out.decreaseTab();

@@ -42,6 +42,8 @@ public class ResourceScanTest extends CivTest
 		assertNext(it, "/beta/some/thing",		"org.civilian.testcase1.beta.SomeController:thing");
 		assertNext(it, "/beta/some/{one}",		"org.civilian.testcase1.beta.SomeController:$one");
 		assertNext(it, "/beta/{beta}", 			"org.civilian.testcase1.beta.object.IndexController");
+		assertNext(it, "/delta", 				null);
+		assertNext(it, "/delta/run", 			"org.civilian.testcase1.delta.RunController");
 		assertNext(it, "/mixed", 				"org.civilian.testcase1.miXed.IndexController");
 		assertNext(it, "/mixed/something",		"org.civilian.testcase1.miXed.someThingController");
 		assertNext(it, "/{gammaId}", 			"org.civilian.testcase1.GammaController");
@@ -62,6 +64,6 @@ public class ResourceScanTest extends CivTest
 		assertTrue(it.hasNext());
 		Resource r = it.next();
 		assertEquals(route, 	r.getRoute().toString()); 
-		assertEquals(ctrlSig, 	r.getControllerSignature().toString()); 
+		assertEquals(ctrlSig, 	r.getControllerSignature() != null ? r.getControllerSignature().toString() : null); 
 	}
 }
