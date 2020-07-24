@@ -51,6 +51,7 @@ class ClassData
 	public int superCallLine;
 	public boolean standalone;
 	public boolean isPublic = true;
+	public boolean isAbstract;
 }
 
 

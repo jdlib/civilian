@@ -448,6 +448,11 @@ public class CspCompiler
 			classData_.isPublic = false; 
 		
 		//-------------------------------------
+		// "abstract"
+		if (scanner_.nextKeyword("abstract"))
+			classData_.isAbstract = true; 
+
+		//-------------------------------------
 		// "extends"
 		if (scanner_.nextKeyword("extends"))
 		{
@@ -617,6 +622,8 @@ public class CspCompiler
 		
 		if (classData_.isPublic)
 			out.print("public ");
+		if (classData_.isAbstract)
+			out.print("abstract ");
 		out.print("class ");
 		out.print(classData_.className);
 		if (classData_.extendsClass != null)

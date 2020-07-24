@@ -8,7 +8,7 @@ package test;
 import org.civilian.template.Template;
 
 
-public class Test6 extends Template
+public abstract class Test6 extends Template
 {
 
 }
