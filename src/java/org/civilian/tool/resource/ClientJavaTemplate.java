@@ -214,10 +214,10 @@ class ClientJavaTemplate
 	private final JavaName javaName_ = new JavaName();
 
 
-	private Resource root;
-	private String outputPackage;
-	private String outputName;
-	private Application app;
-	private boolean timestamp;
+	protected Resource root;
+	protected String outputPackage;
+	protected String outputName;
+	protected Application app;
+	protected boolean timestamp;
 	protected TemplateWriter out;
 }

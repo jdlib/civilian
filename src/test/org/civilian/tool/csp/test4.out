@@ -48,5 +48,5 @@ public class Test4 extends Template
 	}
 
 
-	private TableMixin t;
+	protected TableMixin t;
 }

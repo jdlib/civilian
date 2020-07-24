@@ -101,9 +101,9 @@ public class ErrorTemplate extends Template
 	}
 
 
-	private Request request;
-	private int status;
-	private String message;
-	private Throwable error;
-	private HtmlMixin html;
+	protected Request request;
+	protected int status;
+	protected String message;
+	protected Throwable error;
+	protected HtmlMixin html;
 }

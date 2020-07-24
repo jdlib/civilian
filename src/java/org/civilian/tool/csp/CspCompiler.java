@@ -746,7 +746,7 @@ public class CspCompiler
 		{
 			for (MixinField mixin : classData_.mixins)
 			{
-				out.print("private ");
+				out.print("protected ");
 				out.print(mixin.simpleName);
 				out.print(" ");
 				out.print(mixin.fieldName);

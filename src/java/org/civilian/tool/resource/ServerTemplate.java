@@ -324,10 +324,10 @@ class ServerTemplate
 	private final JavaName javaName_ = new JavaName();
 
 
-	private ResourceInfo root;
-	private String outputPackage;
-	private String outputName;
-	private Application app;
-	private boolean timestamp;
+	protected ResourceInfo root;
+	protected String outputPackage;
+	protected String outputName;
+	protected Application app;
+	protected boolean timestamp;
 	protected TemplateWriter out;
 }

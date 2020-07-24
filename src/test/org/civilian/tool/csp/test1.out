@@ -56,11 +56,11 @@ public class Test1 extends Template
 	private ArrayList<String> list_ = new ArrayList<>();
 
 
-	private String[] names;
-	private ArrayList<String,String > someList1;
-	private ArrayList<? extends X<String>> someList2;
-	private LangMixin lang;
-	private HtmlMixin htm;
-	private HtmlMixin html;
-	private MyMixin myMixin;
+	protected String[] names;
+	protected ArrayList<String,String > someList1;
+	protected ArrayList<? extends X<String>> someList2;
+	protected LangMixin lang;
+	protected HtmlMixin htm;
+	protected HtmlMixin html;
+	protected MyMixin myMixin;
 }

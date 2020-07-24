@@ -24,5 +24,5 @@ public class Test5 extends Template
 	}
 
 
-	private String name;
+	protected String name;
 }

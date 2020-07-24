@@ -139,6 +139,6 @@ public class ResourcesTemplate extends Template
 	}
 
 
-	private Application app;
-	private HtmlMixin html;
+	protected Application app;
+	protected HtmlMixin html;
 }

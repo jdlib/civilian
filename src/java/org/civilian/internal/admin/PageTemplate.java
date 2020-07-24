@@ -118,9 +118,9 @@ public class PageTemplate extends Template
 	}
 
 
-	private Template content;
-	private AdminApp adminApp;
-	private Application viewedApp;
-	private Resource appResource;
-	private HtmlMixin html;
+	protected Template content;
+	protected AdminApp adminApp;
+	protected Application viewedApp;
+	protected Resource appResource;
+	protected HtmlMixin html;
 }

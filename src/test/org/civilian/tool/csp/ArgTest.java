@@ -54,6 +54,6 @@ public class ArgTest extends CivTest
 
 		s.setLength(0);
 		argument.fieldDecl(s);
-		assertEquals("private " + fieldDecl + ";", s.toString());
+		assertEquals("protected " + fieldDecl + ";", s.toString());
 	}
 }

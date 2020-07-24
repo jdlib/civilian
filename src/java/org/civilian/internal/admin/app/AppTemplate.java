@@ -79,8 +79,8 @@ public class AppTemplate extends Template
 	}
 
 
-	private Application app;
-	private Template content;
-	private int activeTab;
-	private HtmlMixin html;
+	protected Application app;
+	protected Template content;
+	protected int activeTab;
+	protected HtmlMixin html;
 }

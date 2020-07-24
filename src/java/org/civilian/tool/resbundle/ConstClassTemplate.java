@@ -188,9 +188,9 @@ class ConstClassTemplate
 	private final JavaName javaName_ = new JavaName();
 
 
-	private ResBundleCompiler.Config config;
-	private String packageName;
-	private DateTime generationTime;
-	private List<Translation> translations;
+	protected ResBundleCompiler.Config config;
+	protected String packageName;
+	protected DateTime generationTime;
+	protected List<Translation> translations;
 	protected TemplateWriter out;
 }

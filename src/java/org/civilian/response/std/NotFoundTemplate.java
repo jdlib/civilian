@@ -42,5 +42,5 @@ public class NotFoundTemplate extends Template
 	}
 
 
-	private Request request;
+	protected Request request;
 }

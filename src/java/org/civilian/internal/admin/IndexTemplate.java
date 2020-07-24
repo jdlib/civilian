@@ -170,6 +170,6 @@ public class IndexTemplate extends Template
 	}
 
 
-	private Context context;
-	private HtmlMixin html;
+	protected Context context;
+	protected HtmlMixin html;
 }

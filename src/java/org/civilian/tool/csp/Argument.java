@@ -116,7 +116,7 @@ class Argument
 	
 	public void fieldDecl(Appendable out) throws IOException
 	{
-		out.append("private ");
+		out.append("protected ");
 		out.append(type_);
 		if (varArgs_)
 			out.append("[]");
@@ -128,5 +128,5 @@ class Argument
 	
 	public String type_;
 	public boolean varArgs_;
-	public  String name_;
+	public String name_;
 }
