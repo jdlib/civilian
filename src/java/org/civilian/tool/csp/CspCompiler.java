@@ -276,27 +276,18 @@ public class CspCompiler
 	{
 		try
 		{
+			// phase 1: compile to memory
 			compile(input, output);
 			
 			// phase 2: write output, in order to not produce a null output if reading fails
-			BufferedWriter out = null;
-			try
+			File dir = output.file.getParentFile();
+			IoUtil.mkdirs(dir);
+			try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output.file), options_.encodingOut)))
 			{
-				File dir = output.file.getParentFile();
-				IoUtil.mkdirs(dir);
-				out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output.file), options_.encodingOut));
 				out.write(output_);
 			}
-			finally
-			{
-				IoUtil.close(out);
-			}
 		}
-		catch(CspException e)
-		{
-			throw e;
-		}
-		catch(IOException e)
+		catch(CspException | IOException e)
 		{
 			throw e;
 		}
@@ -510,7 +501,7 @@ public class CspCompiler
 				classData_.exception = null;
 		}
 		
-		if (scanner_.getPos() > 0)
+		if ((scanner_.getPos() > 0) && scanner_.hasMoreChars())
 			throw new CspException("invalid input: '" + scanner_.getRest() + "'", scanner_);
 	}
 	
@@ -650,15 +641,18 @@ public class CspCompiler
 		if (classData_.mixins != null)
 			printClassInitMethod(out);
 
-		if (classData_.extendsClass != null)
-			out.print("@Override ");
-		out.print("protected void print()");
-		if (classData_.exception != null)
+		if (classData_.hasMainTemplate)
 		{
-			out.print(" throws ");
-			out.print(classData_.exception);
+			if (classData_.extendsClass != null)
+				out.print("@Override ");
+			out.print("protected void print()");
+			if (classData_.exception != null)
+			{
+				out.print(" throws ");
+				out.print(classData_.exception);
+			}
+			out.println();
 		}
-		out.println();
 	}
 	
 	
@@ -768,23 +762,22 @@ public class CspCompiler
 	}
 	
 	
-	private void compileJavaLines(SourceWriter out, boolean expectMainTemplate) throws CspException, IOException
+	private void compileJavaLines(SourceWriter out, boolean allowMainTemplate) throws CspException, IOException
 	{
-		do
+		while(!scanner_.isEOF())
 		{
 			String line = scanner_.getLine();
-			
 			if (line.trim().equals(START_TEMPLATE_SECTION))
 			{
-				compileTemplateLines(out, expectMainTemplate);
-				expectMainTemplate = false;
+				if (allowMainTemplate)
+					classData_.hasMainTemplate = true; 
+				compileTemplateLines(out, allowMainTemplate);
+				allowMainTemplate = false;
 			}
-			else if (expectMainTemplate)
-				throw new CspException("expected main template body", scanner_);
-			else
+			else 
 				out.println(line);
+			scanner_.nextLine();
 		}
-		while(scanner_.nextLine());
 	}
 	
 	

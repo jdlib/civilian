@@ -1,0 +1,14 @@
+/**
+ * Generated from test6.csp
+ * Do not edit.
+ */
+package test;
+
+
+import org.civilian.template.Template;
+
+
+public class Test6 extends Template
+{
+
+}

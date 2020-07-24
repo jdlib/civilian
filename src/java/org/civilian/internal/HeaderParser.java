@@ -104,7 +104,7 @@ public class HeaderParser
 	public Token next()
 	{
 		scanner_.skipWhitespace();
-		if (!scanner_.hasMore())
+		if (!scanner_.hasMoreChars())
 		{
 			item = null;
 			return (token_ = Token.END);

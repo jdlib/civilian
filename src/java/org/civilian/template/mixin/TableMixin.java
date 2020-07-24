@@ -644,7 +644,7 @@ public class TableMixin implements ComponentBuilder
 		{
 			ArrayList<Column> columns = new ArrayList<>(); 
 			Scanner scanner = new Scanner(definition);
-			while(scanner.hasMore())
+			while(scanner.hasMoreChars())
 			{
 				Column column;
 				if (scanner.next("["))

@@ -47,6 +47,7 @@ class ClassData
 	public String implementsList;
 	public String exception = "Exception";
 	public String superCall;
+	public boolean hasMainTemplate;
 	public int superCallLine;
 	public boolean standalone;
 	public boolean isPublic = true;

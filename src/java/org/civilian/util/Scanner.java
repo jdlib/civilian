@@ -189,11 +189,21 @@ public class Scanner
 
 	
 	/**
+	 * Returns if the scanner has parsed all line and is now 
+	 * positioned after the last line.
+	 */
+	public boolean isEOF()
+	{
+		return lineIndex_ >= lines_.length;
+	}
+
+	
+	/**
 	 * Returns the current character or -1 if there are no more characters.
 	 */
 	public int current()
 	{
-		return hasMore() ? currentLine_.charAt(pos_) : -1;
+		return hasMoreChars() ? currentLine_.charAt(pos_) : -1;
 	}
 	
 	
@@ -240,7 +250,7 @@ public class Scanner
 	 * Returns if there are more characters left in the 
 	 * current line.
 	 */
-	public boolean hasMore()
+	public boolean hasMoreChars()
 	{
 		return pos_ < length_;
 	}
@@ -249,7 +259,7 @@ public class Scanner
 	/**
 	 * Returns if there are that much characters left in the current input string.
 	 */
-	public boolean hasMore(int length)
+	public boolean hasMoreChars(int length)
 	{
 		return pos_ + length <= length_;
 	}
@@ -269,9 +279,9 @@ public class Scanner
 	 */
 	public boolean skip()
 	{
-		if (hasMore())
+		if (hasMoreChars())
 			advancePos(1);
-		return hasMore();
+		return hasMoreChars();
 	}
 	
 	
@@ -283,7 +293,7 @@ public class Scanner
 	{
 		autoSkipWhitespace();
 		int length = s.length();
-		return hasMore(length) && currentLine_.regionMatches(pos_, s, 0, length);
+		return hasMoreChars(length) && currentLine_.regionMatches(pos_, s, 0, length);
 	}
 	
 	
@@ -293,12 +303,22 @@ public class Scanner
 	 */
 	public boolean nextLine()
 	{
-		if (lineIndex_ + 1 >= lines_.length)
-			return false;
-		else
+		if (lineIndex_ < lines_.length - 1)
 		{
 			initInput(lines_[++lineIndex_], 0);
 			return true;
+		}
+		else 
+		{
+			if (lineIndex_ == lines_.length - 1)
+			{
+				// empty line
+				lineIndex_++;
+				length_ = 0;
+				pos_ = 0;
+				currentLine_ = "";
+			}
+			return false;
 		}
 	}
 
@@ -333,7 +353,7 @@ public class Scanner
 		autoSkipWhitespace();
 		
 		int length = s.length();
-		if (hasMore(length) && currentLine_.regionMatches(pos_, s, 0, length))
+		if (hasMoreChars(length) && currentLine_.regionMatches(pos_, s, 0, length))
 		{
 			int last = pos_ + length;
 			if (last <= length_)
@@ -414,7 +434,7 @@ public class Scanner
 		if (delimiters == null)
 			delimiters = "";
 		
-		while(hasMore())
+		while(hasMoreChars())
 		{
 			char c = currentLine_.charAt(pos_++);
 			if ((delimiters.indexOf(c) >= 0))
@@ -506,7 +526,7 @@ public class Scanner
 	
 	private void increaseWhile(byte charType, boolean equals)
 	{
-		while (hasMore())
+		while (hasMoreChars())
 		{
 			if ((Character.getType(currentLine_.charAt(pos_)) == charType) != equals)
 				break;
@@ -525,7 +545,7 @@ public class Scanner
 		autoSkipWhitespace();
 
 		int start = pos_;
-		while (hasMore())
+		while (hasMoreChars())
 		{
 			if (chars.indexOf(currentLine_.charAt(pos_)) == -1)
 				break;
@@ -553,7 +573,7 @@ public class Scanner
 	 */
 	public String consumeQuotedString(boolean includeQuotes)
 	{
-		if (!hasMore())
+		if (!hasMoreChars())
 			return null;
 		
 		char quote = currentLine_.charAt(pos_++);
@@ -615,7 +635,7 @@ public class Scanner
 	public char expectOneOf(String s)
 	{
 		autoSkipWhitespace();
-		if (hasMore())
+		if (hasMoreChars())
 		{
 			char c = currentLine_.charAt(pos_);
 			if (s.indexOf(c) >= 0)
@@ -638,7 +658,7 @@ public class Scanner
 		needSkipWhitespace_ = false;
 		while (true)
 		{
-			if (hasMore())
+			if (hasMoreChars())
 			{
 				switch (currentLine_.charAt(pos_))
 				{
@@ -662,7 +682,7 @@ public class Scanner
 	 */
 	public String getRest()
 	{
-		return hasMore() ? currentLine_.substring(pos_) : ""; 
+		return hasMoreChars() ? currentLine_.substring(pos_) : ""; 
 	}
 	
 

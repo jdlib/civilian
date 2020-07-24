@@ -44,7 +44,7 @@ public class ScannerTest extends CivTest
 
 		s = new Scanner("encoding");
 		assertTrue(s.nextKeyword("encoding"));
-		assertFalse(s.hasMore());
+		assertFalse(s.hasMoreChars());
 
 		s = new Scanner("encoding ISO-8859-1");
 		assertTrue(s.nextKeyword("encoding"));

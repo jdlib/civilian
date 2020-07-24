@@ -56,6 +56,12 @@ public class CspTest extends CivTest
 	}
 	
 	
+	@Test public void testCompile6() throws Exception
+	{
+		assertCompile("test6");
+	}
+
+	
 	private void assertCompile(String testCase) throws Exception
 	{
 		String compiled = compile(testCase);
@@ -123,7 +129,7 @@ public class CspTest extends CivTest
 	
 	@Test public void testError6() throws Exception
 	{
-		assertError("err6", 2, "[err6.csp:3] expected closing bracket ')' of template argument list: 'template(String[] s'");
+		assertError("err6", 3, "[err6.csp:4] expected closing bracket ')' of template argument list");
 	}
 	
 	
