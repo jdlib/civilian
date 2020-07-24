@@ -1,5 +1,5 @@
 import org.civilian.Application
-import org.civilian.Template
+import org.civilian.template.Template
 
 
 template(Application app, Template content, int activeTab) mixin html
