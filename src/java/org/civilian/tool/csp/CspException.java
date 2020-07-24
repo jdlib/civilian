@@ -20,8 +20,8 @@ import org.civilian.util.Scanner;
 
 
 /**
- * CompilerExceptions are used by TemplateCompiler
- * to indicate errors when compiling a Template.
+ * CspException is used by TemplateCompiler
+ * to indicate CSP syntax errors when compiling a template file.
  */
 public class CspException extends RuntimeException
 {
@@ -79,7 +79,7 @@ public class CspException extends RuntimeException
 
 	
 	/**
-	 * Creates a new CompilerException.
+	 * Creates a new CspException.
 	 * @param msg an error message.
 	 */
 	public CspException(String msg)
@@ -89,7 +89,7 @@ public class CspException extends RuntimeException
 
 	
 	/**
-	 * Creates a new CompilerException.
+	 * Creates a new CspException.
 	 * @param msg an error message.
 	 * @param cause the original error cause
 	 */
@@ -100,7 +100,7 @@ public class CspException extends RuntimeException
 
 	
 	/**
-	 * Creates a new CompilerException.
+	 * Creates a new CspException.
 	 * @param msg an error message.
 	 * @param scanner the used scanner, providing context information about the compiled input
 	 */
@@ -111,7 +111,7 @@ public class CspException extends RuntimeException
 	
 	
 	/**
-	 * Creates a new CompilerException.
+	 * Creates a new CspException.
 	 * @param msg an error message.
 	 * @param cause the original error cause
 	 * @param scanner the used scanner, providing context information about the compiled input
