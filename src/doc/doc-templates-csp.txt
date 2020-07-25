@@ -14,6 +14,7 @@ prolog  */
 prolog @SuppressWarnings("unused")
 template(String name, List<Flower> flowers, GreetingHelper helper, int x, int y)
 	package-access
+	abstract
 	extends MyBaseTemplate
 	implements Adorable, BattleNotificationSender 
 	mixin html, lang, MyMixin

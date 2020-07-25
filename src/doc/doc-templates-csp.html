@@ -27,6 +27,7 @@
 			<li><a href="#compiler">The CSP compiler</a></li>
 			<li><a href="#project">Project organisation and IDE support</a></li>
 			<li><a href="#standalone">CSP as standalone template system</a></li>
+			<li><a href="#composition">Template reuse</a></li>
 		</ul>	
 
 		<h2 id="intro">Introduction</h2>
@@ -43,12 +44,12 @@
 		<li>When you want to produce response content (e.g. in a Controller method) you instantiate this Java class.
 			Dynamic data needed by the template is passed to its constructor. Then you simply call its 
 			{javadoc:template.Template#print(java*io*Writer) print(Writer)} method
-			or pass the template object to {javadoc:Response#writeTemplate(org*civilian*Template) Response.writeTemplate(Template)}.<br>
-			At runtime only the generated Java template class is used, the CSP file is only needed during development time.
+			or pass the template object to {javadoc:Response#writeTemplate(org*civilian*template*Template) Response.writeTemplate(Template)}.<br>
+			At runtime the generated Java template class is used, the CSP file is only needed during development time.
 		<li>Whenever you change the CSP file, you repeat the compilation process.
 		</ol>
 		Of course, different CSP templates are created for different response outputs. Usually each Controller will
-		can have an own CSP template.   
+		have an own CSP template.   
 		<p>
 		The CSP approach has the following important advantages:<br>
 		<ul>
@@ -70,7 +71,7 @@
 		
 		<h2 id="basic">CSP syntax &ndash; the basic idea</h2>
 		CSP &ndash; like most other templates systems &ndash; is based on the following very simple idea: A template describes the static 
-		scaffold of a document, intermingled with embedded code snippets. These snippets are executed at runtime and insert dynamic data into the scaffold,
+		scaffold of a document, intermingled with embedded code snippets. These snippets are responsible to insert dynamic data into the scaffold,
 		to produce the actual document:
 		<div class="highlight">
 			<pre><code>Hello <b>&lt;%name%&gt;</b>!</code></pre>
@@ -95,7 +96,7 @@
 		<div class="highlight">
 			<pre><code>package com.myapp.greeting;
 
-import org.civilian.Template;
+import org.civilian.template.Template;
 
 public class GreetingTemplate extends Template
 {
@@ -111,12 +112,12 @@ public class GreetingTemplate extends Template
     	out.println("!");
     }
     
-    private String name;
+    protected String name;
  }</code></pre></div>
  
  		Even if the generated code is nicely formatted, we really never look at it, we just use it, e.g. in a {javadoc:Controller}. 
  		to produce a response. (And we never ever edit this generated class, only the CSP file).<br>  
- 		Note that GreetingTemplate is derived from {javadoc:template.Template} (<code>out</code> is inherited from Template),
+ 		Note that GreetingTemplate is derived from {javadoc:template.Template} (<code>out</code> is defined in Template),
  		and therefore we can generate {javadoc:Response} content in the following way: 
  		
 		<div class="highlight">
@@ -139,7 +140,7 @@ public class GreetingTemplate extends Template
 		</td>
 		<td width="20px">
 		<td>
-			A complete template with all four sections looks like:
+			A CSP template containing all four sections looks like:
 			<div class="csp-section-code">
 				<div class="bg-success">import org.example.data.Person;
 				</div>
@@ -172,8 +173,8 @@ public class GreetingTemplate extends Template
 			<pre><code>package com.myapp.greeting</code></pre>
 		</div>
 
-		If your template uses classes from packages different than the template package, you need to include <b>import instructions</b>. Again a closing 
-		semicolon is optional. 
+		If your template uses classes from packages different than the template package, you need to add <b>import instructions</b>. Again a closing 
+		semicolon is optional: 
 		<div class="highlight">
 			<pre><code>import java.util.List;<br>import com.myapp.util.GreetingHelper</code></pre>
 		</div>
@@ -212,6 +213,11 @@ public class GreetingTemplate extends Template
 			<pre><code>package-access</code></pre>
 		</div>
 		
+		To generate an abstract templates class (e.g. to be used as base class for other templates) add:
+		<div class="highlight">
+			<pre><code>abstract</code></pre>
+		</div>
+		
 		By default the generated template class is automatically derived from {javadoc:template.Template}. Want another parent class?
 		Maybe you prepared a base template class in your application and want to inherit all its goodies. Then use the extends keyword
 		(and don't forget to include a import instruction if needed).
@@ -229,7 +235,7 @@ public class GreetingTemplate extends Template
 			<pre><code>implements Adorable, BattleNotificationSender</code></pre>
 		</div>
 		 
-		Next you can declare what <a href="#mixin">mixins</a> will be available in your template. (Mixins will be 
+		Next you declare the <a href="#mixin">mixins</a> available in your template. (Mixins will be 
 		explained in detail in the next section): The mixin keyword is followed by a list of mixin classes. 
 		The {javadoc:template.mixin.HtmlMixin}, {javadoc:template.mixin.LangMixin}, {javadoc:template.mixin.TableMixin} 
 		and {javadoc:template.mixin.FormTableMixin} mixins offered by Civilian can be 
@@ -253,16 +259,16 @@ public class GreetingTemplate extends Template
 			<pre><code>throws -</code></pre>
 		</div>
 
-		Putting it all together the declaration might look like.
+		Putting it all together the declaration might look like:
 		<div class="highlight">
-			<pre><code>template(String name, List&lt;Flower&gt; flowers, GreetingHelper helper)<br>  package-access<br>  extends MyBaseTemplate<br>  implements Adorable, BattleNotificationSender mixin html, lang, MyMixin<br>  throws IOException, IllegalArgumentException</code></pre>
+			<pre><code>template(String name, List&lt;Flower&gt; flowers, GreetingHelper helper)<br>    package-access<br>    abstract<br>    extends MyBaseTemplate<br>    implements Adorable, BattleNotificationSender<br>    mixin html, lang, MyMixin<br>    throws IOException, IllegalArgumentException</code></pre>
 		</div>
 
 		Looks complicated but that was really the full treatment, the minimum declaration is simply
 		<div class="highlight">
 			<pre><code>template </code></pre>
 		</div>
-		A mindful reader might miss a way to specify the name of the generated class. Glad that you asked: The name is just taken from the CSP file.
+		You might miss a way to specify the name of the generated class. Glad that you asked: The name is just taken from the CSP file.
 		So if the file is called <code>GreetingTemplate.csp</code> we end up with a class named <code>GreetingTemplate.java</code>.
 		(Yes, the suffix "Template" is pure convention).       
 		<p>
@@ -412,7 +418,7 @@ public class GreetingTemplate extends Template
 		<div class="highlight">
 			<pre><code>&lt;div><br>    Hey <b>&lt;%name%></b><br><b>    &lt;%%></b> what's up?<br>&lt;/div></code></pre>    
 		</div>
-		In the same way you can enforce whitespace at the end of a line. Another use case is if your literal line starts with a operator
+		In the same way you can enforce whitespace at the end of a line. Another use case is if your literal line starts with an operator
 		character:
 		<div class="highlight">
 			<pre><code>hello  <b>&lt;%%></b><br><b>&lt;%%></b>@...<br><b>&lt;%%></b>[...</code></pre>    
@@ -654,6 +660,57 @@ private int area;</code></pre></div>
 		then the generated toplevel class will operate on a {javadoc:template.TemplateWriter} and will have no other dependencies to Civilian classes.
 		The TemplateWriter actually implements the pretty indentation stuff. You construct a TemplateWriter simply by passing a Writer class
 		to its constructor.
+
+		<h2 id="composition">Template reuse</h2>
+		Complex applications will need to think about how to efficiently organize templates.
+		If for example multiple HTML pages are served, parts of the HTML like the head or a navigation bar
+		might be relatively constant whereas the content differs from page to page. It would
+		make no sense to repeat constant parts like the HTML head in multiple templates
+		therefore we would like to reuse templates code in other templates.<br>
+		<h3>Template composition</h3>
+		Template objects can be passed to other templates and placed in the output.
+		In the example we can define a PageTemplate which generates the 
+		<div class="highlight">
+			<pre><code>template(Template content)
+{{
+    &lt;html>
+        &lt;head>&lt;title>The App&lt;/title>&lt;head>
+        &lt;body>
+            &lt;%content%>
+        &lt;/body>
+    &lt;/html>
+}}</code></pre></div>
+		We can then create Templates for page contents and wrap it into a PageTemplate
+		to generate the whole page
+		<div class="highlight"><code>getResponse().writeTemplate(new PageTemplate(new LoginTemplate());</code></div>
+		
+		<h3>Template inheritance</h3>
+		Templates can derive from other templates. In the HTML example a base PageTemplate may define the basic
+		structure of the HTML page and derived templates fill in the blanks. The PageTemplate might be defined as:
+		<div class="highlight">
+			<pre><code>template abstract mixin html
+{{
+    &lt;html>
+        &lt;head>&lt;title>The App&lt;/title>&lt;head>
+        &lt;body>
+        	@printContent();
+        &lt;/body>
+    &lt;/html>
+    
+    protected abstract void printContent();
+}}</code></pre></div>
+
+		and an implementation might look like
+		<div class="highlight">
+			<pre><code>template(String name) extends PageTemplate
+			
+@Override protected void printContent()
+{{
+    <b>Hello <%html.text(name);%></b>
+}}</code></pre></div>
+		Notice that in the derived template the template declaration is not followed by a template method which is in fact inherited from PageTemplate.
+		Instead we implement the abstract method <code>printContent</code>. 
+
 		<p>
 		<hr>
 		<p>
