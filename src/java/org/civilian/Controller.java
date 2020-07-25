@@ -132,15 +132,6 @@ public class Controller implements
 
 	
 	/**
-	 * Returns the application, casted to the given application class.
-	 */
-	public <A extends Application> A getApplication(Class<A> appClass)
-	{
-		return appClass.cast(getApplication());
-	}
-
-	
-	/**
 	 * Returns the request.
 	 */
 	@Override public Request getRequest()
@@ -161,6 +152,7 @@ public class Controller implements
 
 	/**
 	 * Returns the response.
+	 * @return the Response
 	 */
 	@Override public Response getResponse()
 	{
@@ -170,6 +162,7 @@ public class Controller implements
 	
 	/**
 	 * Returns the type of the controller.
+	 * @return the ControllerType
 	 */
 	public ControllerType getControllerType()
 	{
@@ -180,6 +173,7 @@ public class Controller implements
 	/**
 	 * Sets the ControllerType of a Controller. This is automatically done
 	 * when a Controller is created during resource dispatch.
+	 * @param controller the Controller
 	 * @param type the ControllerType
 	 */
 	public static void setControllerType(Controller controller, ControllerType type)
@@ -217,6 +211,7 @@ public class Controller implements
 	/**
 	 * Returns any uncatched exception thrown during request processing. 
 	 * This is the same exception passed to {@link #onError(Exception)}.
+	 * @return the Exception
 	 */
 	public Exception getException()
 	{
@@ -233,7 +228,7 @@ public class Controller implements
 	/**
 	 * Processes a request. This method is called by the resource dispatch
 	 * on the controller defined for the resource which matches the request.
-	 * The ControllerType must have been {@link #setControllerType(ControllerType) initialized}
+	 * The ControllerType must have been {@link #setControllerType(Controller, ControllerType) initialized}
 	 * before this method can be called.
 	 * This method 
 	 * <ul>
@@ -243,7 +238,7 @@ public class Controller implements
 	 * <li>calls the various exit-methods
 	 * </ul>
 	 * @param request the request
-	 * @throws Exception if an error in processing occurs
+	 * @throws Exception if an error during processing occurs
 	 */
 	public void process(Request request) throws Exception
 	{
@@ -313,7 +308,7 @@ public class Controller implements
 	
 
 	/**
-	 * Returns if the controller is processing a request.
+	 * Returns if the controller is currently processing a request.
 	 */
 	public boolean isProcessing()
 	{
