@@ -136,7 +136,8 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Allows to set the response.
 	 * The {@link Response#getRequest() request} of the response must equal this.
 	 * Use this method if you need to wrap the original response to intercept
-	 * invocation of response methods. 
+	 * invocation of response methods.
+	 * @param response the Response 
 	 */
 	public void setResponse(Response response);
 
@@ -159,12 +160,14 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns the name of the method with which this request was made.
 	 * Examples are "GET", "PUT", "POST", etc.
+	 * @return the method name
 	 */
 	public String getMethod();
 	
 
 	/**
 	 * Returns if the request has the given method.
+	 * @param method the method name
 	 * @see #getMethod()
 	 */
 	default public boolean hasMethod(String method)
@@ -207,7 +210,8 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns the request path in its original form, as specified by the client. 
 	 * For a HTTP request this equals the part of the request URL from the protocol 
-	 * name up to the query string in the first line of the HTTP request. 
+	 * name up to the query string in the first line of the HTTP request.
+	 * @return the original path 
 	 */
 	public String getOriginalPath();
 	
@@ -218,7 +222,8 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * from that Resource, and all path params of the request are set in the URL.
 	 * Else it is constructed from the request path.
 	 * @param addServer should protocol, host and port be included in the URL? 
-	 * @param addParams should parameters added as query parameter? 
+	 * @param addParams should parameters added as query parameter?
+	 * @return the URL 
 	 */
 	default public Url getUrl(boolean addServer, boolean addParams)
 	{
@@ -255,6 +260,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * is determined during resource dispatch. It returns null,
 	 * if resource dispatch has not run yet, or no resource corresponds
 	 * to the request path.
+	 * @return the Resource
 	 */
 	public Resource getResource();
 
@@ -262,6 +268,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Sets the resource associated with request. The resource
 	 * is automatically set when detected during resource dispatch.
+	 * @param resource the associated Resource
 	 */
 	public void setResource(Resource resource);
 	
@@ -274,19 +281,23 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns an attribute which was previously associated with the request.
 	 * @param name the attribute name
+	 * @return the attribute 
 	 * @see #setAttribute(String, Object)
 	 */
 	public Object getAttribute(String name);
 
 	
 	/**
-	 * Returns an iterator for the attribute names stored in the request. 
+	 * Returns an iterator for the attribute names stored in the request.
+	 * @return the iterator 
 	 */
 	public Iterator<String> getAttributeNames();
 
 	
 	/**
 	 * Stores an attribute under the given name in the request. 
+	 * @param name the name
+	 * @param value the value
 	 */
 	public void setAttribute(String name, Object value);
 
@@ -298,7 +309,8 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	
 	/**
 	 * Returns the CookieList containing all the Cookies sent with this request. 
-	 * The method returns an empty list if no cookies were sent. 
+	 * The method returns an empty list if no cookies were sent.
+	 * @return the CookieList 
 	 */
 	public CookieList getCookies();
 
@@ -312,7 +324,9 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Returns the first value of a request parameter, or null if the parameter does not exist.
 	 * In HTTP terms this includes query parameters contained in the request URL
 	 * and also post parameters (i.e. parameters contained in the request content with
-	 * content type application/x-www-form-urlencoded). 
+	 * content type application/x-www-form-urlencoded).
+	 * @param name the parameter name
+	 * @return the parameter value 
 	 */
 	public String getParameter(String name);
 
@@ -322,6 +336,10 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * If the parameter does not exist, the Value is {@link Value#hasValue() empty}. 
 	 * If the conversion of the parameter to the requested type fails, the 
 	 * Value contains the {@link Value#getError() conversion error}.
+	 * @param<T> the type of the parameter value
+	 * @param name the parameter name
+	 * @param type the parameter type
+	 * @return the parameter value
 	 */
 	default public <T> Value<T> getParameter(String name, Type<T> type)
 	{
@@ -358,6 +376,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * This is usually automatically done during resource dispatch, when 
 	 * the request path is parsed, and path segments are recognized to match 
 	 * defined PathParams. 
+	 * @param<T> the type of the parameter value
 	 */
 	public <T> void setPathParam(PathParam<T> pathParam, T value);
 

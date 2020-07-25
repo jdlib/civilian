@@ -94,7 +94,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 	
 	/**
 	 * Creates a Controller and initializes it's type.
-	 * @see Controller#setControllerType(ControllerType)
+	 * @see Controller#setControllerType(Controller, ControllerType)
 	 */
 	public Controller createController()
 	{
