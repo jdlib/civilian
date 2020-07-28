@@ -22,7 +22,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import org.civilian.internal.source.OutputFile;
 import org.civilian.internal.source.OutputLocation;
@@ -44,27 +43,26 @@ import org.civilian.util.StringUtil;
 
 
 /**
- * CspCompiler is a TemplateCompiler which compiles
- * Civilian Server Pages (CSP) into Java template classes. 
+ * CspCompiler compiles Civilian Server Pages (CSP) files into Java template classes.
  */
 public class CspCompiler
 {
 	private static final String START_TEMPLATE_SECTION = "{{";
 	private static final String END_TEMPLATE_SECTION = "}}";
-	
-	
+
+
 	/**
 	 * The default extension of CSP files.
 	 */
 	public static final String EXTENSION = "csp";
 
-	
+
 	/**
 	 * The default encoding used for template files and generated files.
 	 */
 	public static final String DEFAULT_ENCODING = "UTF-8";
-	
-	
+
+
 	/**
 	 * Runs the CspCompiler from the command-line
 	 */
@@ -73,7 +71,7 @@ public class CspCompiler
 		compile(args);
 	}
 
-	
+
 	/**
 	 * Creates a new CspCompiler.
 	 */
@@ -81,8 +79,8 @@ public class CspCompiler
 	{
 		this(null);
 	}
-	
-	
+
+
 	/**
 	 * Creates a new CspCompiler.
 	 */
@@ -94,8 +92,8 @@ public class CspCompiler
 		registerMixin(new MixinField(TableMixin.class, "table"));
 		registerMixin(new MixinField(FormTableMixin.class, "formTable"));
 	}
-	
-	
+
+
 	/**
 	 * Returns the options of the compiler.
 	 */
@@ -103,8 +101,8 @@ public class CspCompiler
 	{
 		return options_;
 	}
-	
-	
+
+
 	/**
 	 * Configures the compiler with the command line arguments and then runs the compiler.
 	 * @param args command line arguments.
@@ -115,8 +113,8 @@ public class CspCompiler
 	{
 		compile(new Arguments(args));
 	}
-	
-	
+
+
 	/**
 	 * Configures the compiler with the command line arguments and then runs the compiler.
 	 * @param args command line arguments, wrapped in a Arguments object
@@ -130,7 +128,7 @@ public class CspCompiler
 			printHelp();
 			return;
 		}
-		
+
 		Options options = new Options();
 		while(args.startsWith("-"))
 		{
@@ -154,17 +152,17 @@ public class CspCompiler
 				options.timestamp = args.nextBoolean("timestamp mode");
 			else if (args.consume("-v"))
 				options.verbose = args.nextInt("verbose level");
-			else 
+			else
 				throw new IllegalArgumentException("unknown option " + args.next());
 		}
-		
+
 		File input = args.nextFile("input file", FileType.EXISTENT);
 
 		CspCompiler compiler = new CspCompiler(options);
 		compiler.compile(input);
 	}
-	
-	
+
+
 	/**
 	 * Prints a help screen.
 	 */
@@ -193,12 +191,12 @@ public class CspCompiler
 		System.out.println("-v 0|1|2             verbose                                     0");
 	}
 
-	
+
 	public synchronized void compile(File input) throws CspException, IOException
 	{
 		FileType.EXISTENT.check(input);
 		options_.complete();
-		
+
 		log(1, "run csp compiler");
 
 		if (input.isDirectory())
@@ -208,8 +206,8 @@ public class CspCompiler
 		else
 			System.err.println("not a template file: " + input);
 	}
-	
-	
+
+
 	/**
 	 * Compiles a directory.
 	 */
@@ -232,14 +230,14 @@ public class CspCompiler
 			}
 		}
 	}
-	
-	
+
+
 	private boolean acceptExtension(File templateFile)
 	{
 		String extension = IoUtil.getExtension(templateFile);
 		return EXTENSION.equals(extension);
 	}
-	
+
 
 	/**
 	 * Compiles a template file.
@@ -251,34 +249,34 @@ public class CspCompiler
 		String fileName 		= IoUtil.cutExtension(templateFile.getName());
 		String className		= StringUtil.startUpperCase(fileName);
 		OutputFile outputFile	= options_.outputLocation.getOutputFile(null /*don't know the package yet*/, className + ".java", templateFile);
-		
+
 		if (outputFile == null)
 			log(2, "skip", templateFile);
 		else
 		{
-			if (options_.force || outputFile.generate(templateFile)) 
+			if (options_.force || outputFile.generate(templateFile))
 			{
 				TemplateInput input		= new TemplateInput(templateFile);
 
 				JavaOutput output		= new JavaOutput();
-				output.file				= outputFile.file; 
+				output.file				= outputFile.file;
 				output.className		= className;
 				output.assumedPackage	= outputFile.packageName;
-				
+
 				log(1, "generate", outputFile.file.getAbsolutePath());
 				compileFile(input, output);
 			}
 		}
 	}
-	
-	
+
+
 	private synchronized void compileFile(TemplateInput input, JavaOutput output) throws CspException, IOException
 	{
 		try
 		{
 			// phase 1: compile to memory
 			compile(input, output);
-			
+
 			// phase 2: write output, in order to not produce a null output if reading fails
 			File dir = output.file.getParentFile();
 			IoUtil.mkdirs(dir);
@@ -299,19 +297,19 @@ public class CspCompiler
 		{
 			scanner_ = null;
 		}
-	}	
-	
-	
+	}
+
+
 	private void compile(TemplateInput input, JavaOutput output) throws CspException, IOException
 	{
 		scanner_ = new Scanner(input.readLines(options_.encodingIn));
 		scanner_.setSource(input.file.getName());
 		scanner_.setErrorHandler(new ErrorHandler());
-		
+
 		if (scanner_.nextKeyword("encoding"))
 		{
 			String encoding = nextScannerToken("encoding");
-			
+
 			if (!options_.encodingIn.equalsIgnoreCase(encoding))
 			{
 				scanner_.init(input.readLines(encoding));
@@ -319,16 +317,16 @@ public class CspCompiler
 				nextScannerToken("encoding");
 			}
 		}
-		
+
 		compile(input.file, output);
 	}
-	
-	
+
+
 	private void compile(File templFile, JavaOutput output) throws CspException, IOException
 	{
 		StringWriter sw  = new StringWriter();
 		SourceWriter out = new SourceWriter(sw);
-		
+
 		if (scanner_.nextKeyword("java"))
 		{
 			// pure java mode: csp file is essentially a Java class
@@ -346,7 +344,7 @@ public class CspCompiler
 			parseImportCmds();
 			parsePrologCmds();
 			parseTemplateCmd();
-	
+
 			// we compile the body and write it to another temporary writer
 			// since the template body can contain a super-call which
 			// we need in printClassData
@@ -354,19 +352,19 @@ public class CspCompiler
 			SourceWriter outBody = new SourceWriter(swBody);
 			outBody.increaseTab();
 			compileJavaLines(outBody, true);
-			
+
 			printClass(out, templFile);
 			int tab = out.getTabCount();
 			out.setTabCount(0);
 			out.print(swBody.toString());
 			out.setTabCount(tab);
-			if ((classData_.args != null) || (classData_.mixins != null) || classData_.standalone)
+			if (classData_.hasFields())
 				printFields(out);
-			
+
 			out.endBlock(); // class block, started in compileClassData
 		}
 		out.flush();
-			
+
 		output_ = sw.toString();
 	}
 
@@ -375,9 +373,9 @@ public class CspCompiler
 	{
 		if (scanner_.nextKeyword("package"))
 		{
-			classData_.packageName = StringUtil.cutRight(nextScannerToken("package"), ";"); 
+			classData_.packageName = StringUtil.cutRight(nextScannerToken("package"), ";");
 			if ((assumedPackage != null) && !assumedPackage.equals(classData_.packageName))
-				throw new CspException("package was set by compiler parameters to '" + assumedPackage + ", but the template specified '" + classData_.packageName + "'"); 
+				throw new CspException("package was set by compiler parameters to '" + assumedPackage + ", but the template specified '" + classData_.packageName + "'");
 		}
 		else if (assumedPackage != null)
 			classData_.packageName = assumedPackage;
@@ -390,8 +388,8 @@ public class CspCompiler
 			classData_.packageName = p;
 		}
 	}
-	
-	
+
+
 	private void parseImportCmds() throws CspException
 	{
 		while(scanner_.nextKeyword("import"))
@@ -401,8 +399,8 @@ public class CspCompiler
 			classData_.imports.add(s);
 		}
 	}
-	
-	
+
+
 	private String resolveRelativeImport(String s) throws CspException
 	{
 		if (s.startsWith("./"))
@@ -425,15 +423,15 @@ public class CspCompiler
 		else
 			return s;
 	}
-	
-	
+
+
 	private void parsePrologCmds() throws CspException
 	{
 		while(scanner_.nextKeyword("prolog"))
 			classData_.prolog.add(scanner_.consumeRest());
 	}
-	
-	
+
+
 	private void parseTemplateCmd() throws CspException, IOException
 	{
 		//-------------------------------------
@@ -445,12 +443,12 @@ public class CspCompiler
 		//-------------------------------------
 		// "package-access"
 		if (scanner_.nextKeyword("package-access"))
-			classData_.isPublic = false; 
-		
+			classData_.isPublic = false;
+
 		//-------------------------------------
 		// "abstract"
 		if (scanner_.nextKeyword("abstract"))
-			classData_.isAbstract = true; 
+			classData_.isAbstract = true;
 
 		//-------------------------------------
 		// "extends"
@@ -460,43 +458,41 @@ public class CspCompiler
 			{
 				classData_.standalone   = true;
 				classData_.extendsClass = null;
-				
+
 				String writerClass = TemplateWriter.class.getSimpleName();
 				if (scanner_.nextKeyword("using"))
 					writerClass = nextScannerToken("using");
-				
+
 				if ("TemplateWriter".equals(writerClass))
-					writerClass = TemplateWriter.class.getName(); 
-						
+					writerClass = TemplateWriter.class.getName();
+
 				classData_.writerClass = writerClass;
 				classData_.writerClassSimple = ClassUtil.cutPackageName(writerClass);
 				classData_.imports.add(writerClass);
 			}
 			else
+			{
 				classData_.extendsClass = nextScannerToken("extends");
-			
+				parseTemplateSuperArgs();
+			}
+
 		}
 		if ((classData_.extendsClass == null) && !classData_.standalone)
 		{
 			classData_.imports.add(Template.class);
 			classData_.extendsClass = Template.class.getSimpleName();
 		}
-		
+
 		//-------------------------------------
 		// "implements"
 		if (scanner_.nextKeyword("implements"))
 			classData_.implementsList = parseClassList();
-		
+
 		//-------------------------------------
 		// "mixin"
 		if (scanner_.nextKeyword("mixin"))
-			classData_.mixins = parseMixins(scanner_, classData_.mixins);
-		if (classData_.mixins != null)
-		{
-			for (MixinField mixin : classData_.mixins)
-				classData_.imports.add(mixin.className);
-		}
-		
+			parseMixins(scanner_);
+
 		//-------------------------------------
 		// "throws"
 		if (scanner_.nextKeyword("throws"))
@@ -505,40 +501,78 @@ public class CspCompiler
 			if ("-".equals(classData_.exception))
 				classData_.exception = null;
 		}
-		
+
 		if ((scanner_.getPos() > 0) && scanner_.hasMoreChars())
 			throw new CspException("invalid input: '" + scanner_.getRest() + "'", scanner_);
 	}
-	
-		
+
+
 	private void parseTemplateArgs() throws CspException, IOException
 	{
 		if (!scanner_.next("("))
 			return;
 		if (scanner_.next(")"))
 			return;
-		
-		StringBuilder argsString	= new StringBuilder();
-		classData_.arguments 		= new ArrayList<>();
-		
+
+		StringBuilder argsString = new StringBuilder();
+
 		while(true)
 		{
 			Argument argument = new Argument(scanner_);
 			classData_.arguments.add(argument);
-			
+
 			if (argsString.length() > 0)
 				argsString.append(", ");
 			argument.ctorArg(argsString);
-				
+
 			if (scanner_.next(")"))
 				break;
 			if (!scanner_.next(","))
 				throw new CspException("expected closing bracket ')' of template argument list", scanner_);
 		}
-		
+
 		classData_.args = argsString.toString();
 	}
-	
+
+
+	private void parseTemplateSuperArgs() throws CspException, IOException
+	{
+		if (!scanner_.next("("))
+			return;
+		if (scanner_.next(")"))
+			return;
+
+		StringBuilder superArgs	= new StringBuilder();
+
+		int bracketLevel = 1;
+		while(bracketLevel > 0)
+		{
+			String part = scanner_.consumeUpto("\"'()", false, false, false);
+			superArgs.append(part);
+			if (!scanner_.hasMoreChars())
+				throw new CspException("template super must be finished on the beginning line", scanner_);
+			switch (scanner_.current())
+			{
+				case '"':
+				case '\'':
+					superArgs.append(scanner_.consumeQuotedString(true));
+					break;
+				case '(':
+					bracketLevel++;
+					superArgs.append('(');
+					break;
+
+				case ')':
+					bracketLevel--;
+					if (bracketLevel > 0)
+						superArgs.append(')');
+					break;
+			}
+		}
+
+		classData_.superArgs = superArgs.toString();
+	}
+
 
 	private String parseClassList() throws CspException
 	{
@@ -554,9 +588,9 @@ public class CspCompiler
 		}
 		return list.toString();
 	}
-	
-	
-	private ArrayList<MixinField> parseMixins(Scanner scanner, ArrayList<MixinField> list) throws CspException
+
+
+	private void parseMixins(Scanner scanner) throws CspException
 	{
 		do
 		{
@@ -566,15 +600,14 @@ public class CspCompiler
 			{
 				String className = parts[0];
 				String fieldName = parts.length > 1 ? parts[1] : null;
-				list = parseMixin(className, fieldName, list); 
+				parseMixin(className, fieldName);
 			}
 		}
 		while(scanner.next(","));
-		return list;
 	}
-	
-	
-	private ArrayList<MixinField> parseMixin(String className, String fieldName, ArrayList<MixinField> list)
+
+
+	private void parseMixin(String className, String fieldName)
 	{
 		MixinField registeredMixin = registeredMixins_.get(className);
 		if (registeredMixin != null)
@@ -583,21 +616,19 @@ public class CspCompiler
 				fieldName = registeredMixin.fieldName;
 			className = registeredMixin.className;
 		}
-		
-		if (list == null)
-			list = new ArrayList<>();
-		list.add(new MixinField(className, fieldName));
-		return list;
+
+		classData_.mixins.add(new MixinField(className, fieldName));
+		classData_.imports.add(className);
 	}
-	
-	
+
+
 	private void registerMixin(MixinField mixin)
 	{
 		registeredMixins_.put(mixin.fieldName, mixin);
 		registeredMixins_.put(mixin.className, mixin);
 	}
 
-	
+
 	private void printClass(SourceWriter out, File templFile) throws IOException
 	{
 		out.println("/**");
@@ -619,7 +650,7 @@ public class CspCompiler
 		}
 		for (String prolog : classData_.prolog)
 			out.println(prolog);
-		
+
 		if (classData_.isPublic)
 			out.print("public ");
 		if (classData_.isAbstract)
@@ -638,14 +669,14 @@ public class CspCompiler
 		}
 		out.println();
 		out.beginBlock();
-		
+
 		if (classData_.needsCtor())
 			printClassCtor(out);
 
 		if (classData_.standalone)
 			printClassPublicPrintMethod(out);
-		
-		if (classData_.mixins != null)
+
+		if (!classData_.mixins.isEmpty())
 			printClassInitMethod(out);
 
 		if (classData_.hasMainTemplate)
@@ -661,8 +692,8 @@ public class CspCompiler
 			out.println();
 		}
 	}
-	
-	
+
+
 	private void printClassCtor(SourceWriter out) throws IOException
 	{
 		out.print("public ");
@@ -672,24 +703,27 @@ public class CspCompiler
 			out.print(classData_.args);
 		out.println(")");
 		out.beginBlock();
-		if (classData_.superCall != null)
+		if (classData_.superArgs != null)
+		{
+			out.print("super(");
+			out.print(classData_.superArgs);
+			out.println(");");
+		}
+		else if ((classData_.superCall != null) || (classData_.superArgs != null))
 		{
 			out.print(classData_.superCall);
-			printSrcMapComment(out, classData_.superCall, classData_.superCallLine);				
+			printSrcMapComment(out, classData_.superCall, classData_.superCallLine);
 		}
-		if (classData_.args != null)
+		for (Argument arg : classData_.arguments)
 		{
-			for (Argument arg : classData_.arguments)
-			{
-				arg.fieldAssign(out);
-				out.println();
-			}
+			arg.fieldAssign(out);
+			out.println();
 		}
 		out.endBlock();
-		out.println();	
-		out.println();	
+		out.println();
+		out.println();
 	}
-	
+
 
 	private void printClassPublicPrintMethod(SourceWriter out)
 	{
@@ -708,19 +742,19 @@ public class CspCompiler
 				out.println("throw new IllegalArgumentException(\"out is null\");");
 			out.decreaseTab();
 			out.println("this.out = out;");
-			if (classData_.mixins != null)
+			if (!classData_.mixins.isEmpty())
 				out.println("init();");
 			out.println("print();");
 		out.endBlock();
 		out.println();
 		out.println();
 	}
-	
-	
+
+
 	private void printClassInitMethod(SourceWriter out)
 	{
 		if (!classData_.standalone)
-			out.print("@Override "); 
+			out.print("@Override ");
 		out.println("protected void init()");
 		out.beginBlock();
 			out.println("super.init();");
@@ -735,30 +769,24 @@ public class CspCompiler
 		out.println();
 		out.println();
 	}
-	
-	
+
+
 	private void printFields(SourceWriter out) throws CspException, IOException
 	{
 		out.println();
 		out.println();
-		if (classData_.args != null)
+		for (Argument arg : classData_.arguments)
 		{
-			for (Argument arg : classData_.arguments)
-			{
-				arg.fieldDecl(out);
-				out.println();
-			}
+			arg.fieldDecl(out);
+			out.println();
 		}
-		if (classData_.mixins != null)
+		for (MixinField mixin : classData_.mixins)
 		{
-			for (MixinField mixin : classData_.mixins)
-			{
-				out.print("protected ");
-				out.print(mixin.simpleName);
-				out.print(" ");
-				out.print(mixin.fieldName);
-				out.println(";");
-			}
+			out.print("protected ");
+			out.print(mixin.simpleName);
+			out.print(" ");
+			out.print(mixin.fieldName);
+			out.println(";");
 		}
 		if (classData_.standalone)
 		{
@@ -767,8 +795,8 @@ public class CspCompiler
 			out.println(" out;");
 		}
 	}
-	
-	
+
+
 	private void compileJavaLines(SourceWriter out, boolean allowMainTemplate) throws CspException, IOException
 	{
 		while(!scanner_.isEOF())
@@ -777,56 +805,56 @@ public class CspCompiler
 			if (line.trim().equals(START_TEMPLATE_SECTION))
 			{
 				if (allowMainTemplate)
-					classData_.hasMainTemplate = true; 
+					classData_.hasMainTemplate = true;
 				compileTemplateLines(out, allowMainTemplate);
-				allowMainTemplate = false;
 			}
-			else 
+			else
 				out.println(line);
+			allowMainTemplate = false;
 			scanner_.nextLine();
 		}
 	}
-	
-	
+
+
 	private void compileTemplateLines(SourceWriter out, boolean isMainTemplate) throws CspException, IOException
 	{
 		TemplateLine tline = new TemplateLine();
-		
+
 		// current line is the template start "{{"
 		parse(scanner_.getLine(), tline);
 		int tabBase1 = out.getTabCount();
 		while(out.getTabCount() < tline.indent)
 			out.increaseTab();
-		
+
 		int tabBase2 = out.getTabCount();
 		out.beginBlock();
-		
+
 		int componentLevel = -1;
 		int maxCompLevel = -1;
-		
-		boolean canHaveSuperCall = isMainTemplate; 
-		
+
+		boolean canHaveSuperCall = isMainTemplate;
+
 		Block block = null;
 		while(true)
 		{
 			if (!scanner_.nextLine())
 				throw new CspException("template end '" + END_TEMPLATE_SECTION + "' expected", scanner_);
-			
+
 			String line = scanner_.getLine();
 			parse(line, tline);
 
 			if (END_TEMPLATE_SECTION.equals(tline.content))
 				break;
 
-			if (tline.type == TemplateLine.Type.empty) 
+			if (tline.type == TemplateLine.Type.empty)
 				out.println("out.println();");
 			else
 			{
 				if (block == null)
 					block = new Block(null, tline.indent);
 				block = adjustTemplateIndent(block, tline, out);
-				block.isCodeBlock = false; 
-				
+				block.isCodeBlock = false;
+
 				if (tline.type == TemplateLine.Type.code)
 				{
 					if (canHaveSuperCall && tline.content.startsWith("super("))
@@ -836,7 +864,7 @@ public class CspCompiler
 					}
 					else
 					{
-						block.isCodeBlock = true; 
+						block.isCodeBlock = true;
 						out.print(tline.content);
 						printSrcMapComment(out, tline.original);
 					}
@@ -845,7 +873,7 @@ public class CspCompiler
 				{
 					printTemplateLiteralLine(out, tline.content, true);
 				}
-				else if (tline.type == TemplateLine.Type.componentStart) 
+				else if (tline.type == TemplateLine.Type.componentStart)
 				{
 					boolean declare = false;
 					if (++componentLevel > maxCompLevel)
@@ -853,16 +881,16 @@ public class CspCompiler
 						maxCompLevel = componentLevel;
 						declare = true;
 					}
-						
+
 					int p = tline.content.indexOf(']');
-					
+
 					if (p < 0)
 					{
 						printTemplateComponentStart(out, componentLevel, tline.content, true, declare);
 					}
 					else
 					{
-						String cbExpr = tline.content.substring(0, p).trim();  
+						String cbExpr = tline.content.substring(0, p).trim();
 						printTemplateComponentStart(out, componentLevel, cbExpr, false, declare);
 						printTemplateLiteralLine(out, tline.content.substring(p + 1).trim(), false);
 						printTemplateComponentEnd(out, componentLevel--, false, null);
@@ -876,7 +904,7 @@ public class CspCompiler
 				}
 				else
 					throw new CspException("unexpected line type " + tline.type, scanner_);
-				
+
 				canHaveSuperCall = false;
 			}
 		}
@@ -887,14 +915,14 @@ public class CspCompiler
 		while(out.getTabCount() > tabBase1)
 			out.decreaseTab();
 	}
-	
-	
+
+
 	private void parse(String line, TemplateLine tline) throws CspException
 	{
 		if (!tline.parse(line))
 			throw new CspException(tline.error, scanner_);
 	}
-	
+
 
 	private Block adjustTemplateIndent(Block block, TemplateLine tline, SourceWriter out) throws CspException
 	{
@@ -926,7 +954,7 @@ public class CspCompiler
 		return block;
 	}
 
-	
+
 	private void printTemplateComponentStart(SourceWriter out, int level, String cbExpr, boolean multiLine, boolean declare)
 	{
 		String var = getCbVar(level);
@@ -943,11 +971,11 @@ public class CspCompiler
 		out.print(".startComponent(");
 		out.print(multiLine);
 		out.print(");");
-		
+
 		printSrcMapComment(out, cbExpr);
 	}
 
-	
+
 	private void printTemplateComponentEnd(SourceWriter out, int level, boolean multiLine, String comment)
 	{
 		String var = getCbVar(level);
@@ -955,21 +983,21 @@ public class CspCompiler
 		out.print(".endComponent(");
 		out.print(multiLine);
 		out.print(");"); // ends the wrapper block
-		
+
 		if (comment != null)
 			printSrcMapComment(out, comment);
 		else
 			out.println();
 	}
-	
-	
+
+
 	private void printTemplateLiteralLine(SourceWriter out, String line, boolean usePrintln) throws CspException
 	{
 		int length = line.length();
 		int start = 0;
 		int p = 0;
 		boolean lastPartWasCode = false;
-		
+
 		while((start < length) && ((p = line.indexOf("<%", start)) != -1))
 		{
 			lastPartWasCode = false;
@@ -993,23 +1021,23 @@ public class CspCompiler
 			{
 				if (start < p)
 					printTemplateText(out, line, start, p, false);
-				
+
 				int q = line.indexOf("%>", p);
-				
+
 				// code end signal not found
 				if (q == -1)
 					throw new CspException("closing '%>' not found", scanner_);
-				
+
 				// ignore empty code segments <%%>
 				if (q > p + 2)
 				{
 					// line end signal <%/%> found
 					if ((q == p + 3) && (line.charAt(p + 2) == '/'))
 						return;
-					
+
 					String snippetRaw  = line.substring(p, q + 2);
 					String snippetCode = line.substring(p +2, q).trim();
-					
+
 					printTemplateSnippet(out, snippetRaw, snippetCode);
 					lastPartWasCode = true;
 				}
@@ -1026,8 +1054,8 @@ public class CspCompiler
 				out.println("out.println();");
 		}
 	}
-	
-	
+
+
 	private void printTemplateText(SourceWriter out, String content, int start, int end, boolean usePrintln)
 	{
 		out.print(usePrintln ? "out.println(\"" : "out.print(\"");
@@ -1053,8 +1081,8 @@ public class CspCompiler
 		out.print("\");");
 		printSrcMapComment(out, content.substring(start, end));
 	}
-	
-	
+
+
 	/**
 	 * Prints a template code segment embedded in a literal line between "&lt;%" and "%&gt;".
 	 * @param raw the snippet including the boundaries "&lt;%" and "%&gt;".
@@ -1088,14 +1116,14 @@ public class CspCompiler
 			printSrcMapComment(out, raw);
 		}
 	}
-	
-	
+
+
 	private void printSrcMapComment(SourceWriter out, String s)
 	{
 		printSrcMapComment(out, s, scanner_.getLineIndex());
 	}
-	
-	
+
+
 	private void printSrcMapComment(SourceWriter out, String s, int lineIndex)
 	{
 		if (options_.srcMap)
@@ -1110,14 +1138,14 @@ public class CspCompiler
 		}
 		out.println();
 	}
-	
-	
+
+
 	private String nextScannerToken(String what) throws CspException
 	{
 		return nextScannerToken(what, "");
 	}
 
-	
+
 	private String nextScannerToken(String what, String delims) throws CspException
 	{
 		String token = scanner_.consumeToken(delims);
@@ -1126,13 +1154,13 @@ public class CspCompiler
 		return token;
 	}
 
-	
+
 	private static String getCbVar(int level)
 	{
 		return "cspCb" + level;
 	}
-	
-	
+
+
 	/**
 	 * Writes progress information to System.out.
 	 */
@@ -1144,15 +1172,15 @@ public class CspCompiler
 			System.out.println(text.toString());
 		}
 	}
-	
-	
+
+
 	private void log(int level, String text)
 	{
 		if (options_.verbose >= level)
 			System.out.println(text.toString());
 	}
-	
-	
+
+
 	/**
 	 * Options for the CspCompiler.
 	 */
@@ -1164,8 +1192,8 @@ public class CspCompiler
 		 * The default is false.
 		 */
 		public boolean force;
-		
-		
+
+
 		/**
 		 * If the compiler input is a directory, the recursive flag
 		 * tells if the compiler should recurse in sub-directories
@@ -1174,29 +1202,29 @@ public class CspCompiler
 		 */
 		public boolean recursive = true;
 
-		
+
 		/**
 		 * Determines if a timestamp is printed into the generated file.
 		 * The default is false.
 		 */
 		public boolean timestamp;
 
-		
+
 		/**
 		 * Determines if the compiler should print line comments
 		 * in the generated class which show the source line.
 		 * The default is true.
 		 */
 		public boolean srcMap = true;
-		
-		
+
+
 		/**
 		 * The encoding of input template files.
 		 * By default it is UTF-8.
 		 */
 		public String encodingIn;
 
-		
+
 		/**
 		 * The encoding of output template files.
 		 * By default it is UTF-8.
@@ -1214,8 +1242,8 @@ public class CspCompiler
 		 * is placed in the same directory as the input file.
 		 */
 		public OutputLocation outputLocation;
-		
-		
+
+
 		/**
 		 * Sets the encoding of of input and of generated files.
 		 */
@@ -1224,14 +1252,14 @@ public class CspCompiler
 			encodingIn = encodingOut = encoding;
 		}
 
-		
+
 		/**
 		 * Name of the default template class to extends
-		 * The default is null, implying to extend the default template class. 
+		 * The default is null, implying to extend the default template class.
 		 */
 		public String extendsClass;
-		
-		
+
+
 		private void complete()
 		{
 			if (encodingIn == null)
@@ -1239,11 +1267,11 @@ public class CspCompiler
 			if (encodingOut == null)
 				encodingOut = DEFAULT_ENCODING;
 			if (outputLocation == null)
-				outputLocation = OutputLocation.OUTPUT_TO_INPUT_DIR; 
+				outputLocation = OutputLocation.OUTPUT_TO_INPUT_DIR;
 		}
 	}
-	
-	
+
+
 	private Options options_;
 	private Scanner scanner_;
 	private ClassData classData_;

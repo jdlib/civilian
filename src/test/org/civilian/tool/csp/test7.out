@@ -1,0 +1,22 @@
+/**
+ * Generated from test7.csp
+ * Do not edit.
+ */
+package test;
+
+
+public class Test7 extends SuperTemplate(name)
+{
+	public Test7(String name)
+	{
+		this.name = name;
+	}
+
+
+	@Override protected void print() throws Exception
+	{
+	}
+
+
+	protected String name;
+}

@@ -17,6 +17,7 @@ package org.civilian.tool.csp;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 class ClassData
@@ -26,20 +27,26 @@ class ClassData
 		this.className = className;
 	}
 
-	
+
 	public boolean needsCtor()
 	{
 		return (args != null) || (superArgs != null) || (superCall != null);
 	}
-	
+
+
+	public boolean hasFields()
+	{
+		return (args != null) || !mixins.isEmpty() || standalone;
+	}
+
 
 	public String packageName;
 	public String className;
-	public ImportList imports = new ImportList();
-	public ArrayList<String> prolog = new ArrayList<>();
+	public final ImportList imports = new ImportList();
+	public final List<String> prolog = new ArrayList<>();
 	public String args;
-	public ArrayList<Argument> arguments;
-	public ArrayList<MixinField> mixins;
+	public final List<Argument> arguments = new ArrayList<>();
+	public final List<MixinField> mixins = new ArrayList<>();
 	public String superArgs;
 	public String extendsClass;
 	public String writerClass;

@@ -18,10 +18,8 @@ package org.civilian.tool.csp;
 
 import java.io.File;
 import java.util.ArrayList;
-import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.tool.csp.CspCompiler;
-import org.civilian.tool.csp.CspException;
+import org.junit.Test;
 
 
 public class CspTest extends CivTest
@@ -30,49 +28,55 @@ public class CspTest extends CivTest
 	{
 		assertCompile("test1");
 	}
-	
-	
+
+
 	@Test public void testCompile2() throws Exception
 	{
 		assertCompile("test2");
 	}
-		
-		
+
+
 	@Test public void testCompile3() throws Exception
 	{
 		assertCompile("test3");
 	}
-	
-	
+
+
 	@Test public void testCompile4() throws Exception
 	{
 		assertCompile("test4");
 	}
-	
-	
+
+
 	@Test public void testCompile5() throws Exception
 	{
 		assertCompile("test5");
 	}
-	
-	
+
+
 	@Test public void testCompile6() throws Exception
 	{
 		assertCompile("test6");
 	}
 
-	
+
+	@Test public void testCompile7() throws Exception
+	{
+		assertCompile("test7");
+	}
+
+
 	private void assertCompile(String testCase) throws Exception
 	{
 		String compiled = compile(testCase);
-		
+
 		File outFile = findTestFile(testCase + ".out");
 		String expected = read(outFile);
-		
+
 		compareFiles(expected, compiled);
 	}
-	
-		
+
+
 	private String compile(String testCase) throws Exception
 	{
 		File cspFile = findTestFile(testCase + ".csp");
@@ -87,7 +91,7 @@ public class CspTest extends CivTest
 			args.add(tmpFile.getAbsolutePath());
 			args.add(cspFile.getAbsolutePath());
 			CspCompiler.main(args.toArray(new String[args.size()]));
-			
+
 			return read(tmpFile);
 		}
 		finally
@@ -95,44 +99,44 @@ public class CspTest extends CivTest
 			tmpFile.delete();
 		}
 	}
-	
-	
+
+
 	@Test public void testError1() throws Exception
 	{
 		assertError("err1", 0, "[err1.csp:1] cannot detect package for template 'err1.csp', please provide a explicit package in the template: 'x'");
 	}
-	
+
 
 	@Test public void testError2() throws Exception
 	{
 		assertError("err2", 2, "[err2.csp:3] relative import '../../../data.Data1' can't be applied to package 'com.test': 'import ../../../data...'");
 	}
-	
-	
+
+
 	@Test public void testError3() throws Exception
 	{
 		assertError("err3", 2, "[err3.csp:3] expected the template command, but reached end of file: 'package-access'");
 	}
-	
-	
+
+
 	@Test public void testError4() throws Exception
 	{
 		assertError("err4", 2, "[err4.csp:3] invalid input: 'x': 'template x'");
 	}
-	
-	
+
+
 	@Test public void testError5() throws Exception
 	{
 		assertError("err5", 2, "[err5.csp:3] argument 'String' needs a name and type: 'template(String)'");
 	}
-	
-	
+
+
 	@Test public void testError6() throws Exception
 	{
 		assertError("err6", 3, "[err6.csp:4] expected closing bracket ')' of template argument list");
 	}
-	
-	
+
+
 	private void assertError(String file, int lineIndex, String error) throws Exception
 	{
 		try
