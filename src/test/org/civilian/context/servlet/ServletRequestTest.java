@@ -40,6 +40,7 @@ import org.civilian.request.RequestHeaders;
 import org.civilian.request.RequestSecurity;
 import org.civilian.request.Upload;
 import org.civilian.request.RequestSecurity.SessionIdSource;
+import org.civilian.request.Session;
 import org.civilian.type.TypeLib;
 import org.civilian.util.Iterators;
 import org.civilian.util.Value;
@@ -316,7 +317,12 @@ public class ServletRequestTest extends CivTest
 
 		request.getSession(false);
 		verify(servletReq).getSession(false);
-
+		
+		Session.Optional optional = request.getSessionOptional();
+		assertFalse(optional.isPresent());
+		assertNull(optional.getAttribute("x"));
+		assertFalse(optional.invalidate());
+		
 		assertEquals(SessionIdSource.NONE, security.getRequestedSessionIdSource());
 		when(servletReq.isRequestedSessionIdFromURL()).thenReturn(true);
 		assertEquals(SessionIdSource.FROM_URL, security.getRequestedSessionIdSource());

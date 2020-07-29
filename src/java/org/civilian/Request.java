@@ -765,6 +765,16 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	public Session getSession(boolean create);
 
 	
+	/**
+	 * Returns a Session.Optional for the current session.
+	 * @return the optional
+	 */
+	default public Session.Optional getSessionOptional()
+	{
+		return new Session.Optional(getSession(false));
+	}
+
+	
 	//--------------------------------------
 	// misc
 	//--------------------------------------

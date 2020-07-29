@@ -131,4 +131,70 @@ public interface Session
 	 * In a servlet environment Session wraps a HttpSession.
 	 */
 	public <T> T unwrap(Class<T> implClass);
+	
+
+	/**
+	 * Session.Optional represents a Session or null.
+	 */
+	public static class Optional
+	{
+		/**
+		 * Creates a new Optional.
+		 * @param session the session or null
+		 */
+		public Optional(Session session)
+		{
+			session_ = session;
+		}
+		
+		
+		/**
+		 * Returns a session attribute.
+		 * @param name the attribute name
+		 * @return the attribute value or null if the name is not bound to a value or the session is null.
+		 */
+		public Object getAttribute(String name)
+		{
+			return session_ != null ? session_.getAttribute(name) : null;
+		}
+		
+		
+		/**
+		 * Removes an attribute. 
+		 */
+		public Optional removeAttribute(String name)
+		{
+			if (session_ != null)
+				session_.removeAttribute(name);
+			return this;
+		}
+		
+		
+		/**
+		 * Invalidates the session if it exists.
+		 * @return did the session exists.
+		 */
+		public boolean invalidate()
+		{
+			if (session_ != null)
+			{
+				session_.invalidate();
+				return true;
+			}
+			else
+				return false;
+		}
+		
+		
+		/**
+		 * Returns if the session exists.
+		 */
+		public boolean isPresent()
+		{
+			return session_ != null;
+		}
+		
+		
+		private final Session session_;
+	}
 }
