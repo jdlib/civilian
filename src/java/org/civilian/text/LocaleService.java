@@ -21,6 +21,7 @@ import org.civilian.Application;
 import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.provider.LocaleServiceProvider;
+import org.civilian.provider.MsgBundleProvider;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.type.TypeLib;
 import org.civilian.type.fn.LocaleSerializer;
@@ -40,7 +41,7 @@ import org.civilian.util.Check;
  * @see Request#getLocaleService()
  * @see Response#getLocaleService()
  */
-public class LocaleService implements LocaleServiceProvider
+public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 {
 	/**
 	 * A LocaleService instance for the system locale, using the default type lib,
@@ -118,7 +119,7 @@ public class LocaleService implements LocaleServiceProvider
 	/**
 	 * Returns the MsgBundle.
 	 */
-	public MsgBundle getMsgBundle()
+	@Override public MsgBundle getMsgBundle()
 	{
 		return msgBundle_;
 	}
