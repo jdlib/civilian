@@ -253,8 +253,9 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	
 	/**
 	 * Adds a cookie to the response.
+	 * @return this response
 	 */
-	public abstract void addCookie(Cookie cookie); 
+	public abstract Response addCookie(Cookie cookie); 
 
 
 	/**
@@ -326,8 +327,9 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Sets the status code of the response.
 	 * @param statusCode the code. See {@link Status} for a list of common status codes.
+	 * @return this response
 	 */
-	public abstract void setStatus(int statusCode);
+	public abstract Response setStatus(int statusCode);
 	
 	
 	//------------------------------
@@ -417,9 +419,9 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * 		it calls {@link Template#print(TemplateWriter)}, passing the 
 	 * 		{@link #getContentWriter() content writer} of this response.
 	 */
-	default public void writeTemplate(Template template) throws Exception
+	default public Response writeTemplate(Template template) throws Exception
 	{
-		writeContent(template);
+		return writeContent(template);
 	}
 	
 	
@@ -458,9 +460,9 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Calls write(object, null);
 	 */
-	default public void writeContent(Object object) throws Exception
+	default public Response writeContent(Object object) throws Exception
 	{
-		writeContent(object, (String)null);
+		return writeContent(object, (String)null);
 	}
 
 	
@@ -479,15 +481,15 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * @param contentType a content type. Can be null, if the content-type was already set on
 	 * 		the response
 	 */
-	public abstract void writeContent(Object object, String contentType) throws Exception;
+	public abstract Response writeContent(Object object, String contentType) throws Exception;
 
 	
 	/**
 	 * Calls write(object, contentType.getValue());
 	 */
-	public default void writeContent(Object object, ContentType contentType) throws Exception
+	public default Response writeContent(Object object, ContentType contentType) throws Exception
 	{
-		writeContent(object, contentType != null ? contentType.getValue() : null); 
+		return writeContent(object, contentType != null ? contentType.getValue() : null); 
 	}
 
 	
@@ -523,19 +525,21 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * Sets the content type of the response content. 
 	 * If the content type is null or the response has been committed, it is ignored.
 	 * Forwards to {@link #setContentType(String)}.
+	 * @return this Response
 	 */
-	public default void setContentType(ContentType contentType)
+	public default Response setContentType(ContentType contentType)
 	{
 		String s = contentType != null ? contentType.getValue() : null;
-		setContentType(s);
+		return setContentType(s);
 	}
 
 	
 	/**
 	 * Sets the content type of the response content. 
 	 * If the content type is null or the response has been committed, it is ignored.
+	 * @return this response
 	 */
-	public abstract void setContentType(String contentType);
+	public abstract Response setContentType(String contentType);
 	
 	
 	/**
@@ -572,8 +576,9 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Sets the character encoding.
 	 * If the response has been committed or {@link #getContentWriter()} has been called, it has no effect
+	 * @return this response
 	 */
-	public abstract void setContentEncoding(String encoding);
+	public abstract Response setContentEncoding(String encoding);
 	
 	
 	/**
@@ -587,14 +592,16 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 
 	/**
 	 * Sets the content length.
+	 * @return this response
 	 */
-	public abstract void setContentLength(long length);
+	public abstract Response setContentLength(long length);
 	
 	
 	/**
 	 * Sets the content language.
+	 * @return this response
 	 */
-	public abstract void setContentLanguage(Locale locale);
+	public abstract Response setContentLanguage(Locale locale);
 
 
 	/**
@@ -637,19 +644,20 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Resets the output buffer, discarding any buffered content. 
 	 */
-	public void resetBuffer();
+	public Response resetBuffer();
 
 
 	/**
 	 * Flushes any buffered content.
 	 */
-	public void flushBuffer() throws IOException;
+	public Response flushBuffer() throws IOException;
 	
 	
 	/**
 	 * Sets the buffer size. 
+	 * @return this response
 	 */
-	public void setBufferSize(int size);
+	public Response setBufferSize(int size);
 	
 
 	/**

@@ -146,17 +146,17 @@ public abstract class AbstractResponse implements Response
 	protected abstract void sendRedirectImpl(String url) throws IOException;
 
 
-	@Override public void writeContent(Object object, String contentType) throws Exception
+	@Override public Response writeContent(Object object, String contentType) throws Exception
 	{
 		if (object == null)
-			return;
+			return this;
 		
 		if (object instanceof Template)
 		{
 			if (contentType != null)
 				setContentType(contentType);
 			((Template)object).print(getContentWriter());	
-			return;
+			return this;
 		}
 		
 		if (contentType == null) 
@@ -180,6 +180,8 @@ public abstract class AbstractResponse implements Response
 			getContentWriter().write((String)object);
 		else
 			throw new IllegalStateException("no ContentSerializer for content type '" + contentType + "' to write a '" + object.getClass().getName() + "'. Are third party libraries missing?");
+		
+		return this;
 	}
 
 	
@@ -357,9 +359,10 @@ public abstract class AbstractResponse implements Response
 	protected abstract Writer getContentWriterImpl() throws IOException;
 	
 	
-	@Override public void setContentLanguage(Locale locale)
+	@Override public Response setContentLanguage(Locale locale)
 	{
 		contentLanguage_ = Check.notNull(locale, "locale");
+		return this;
 	}
 
 
@@ -369,13 +372,14 @@ public abstract class AbstractResponse implements Response
 	}
 	
 	
-	@Override public void setContentEncoding(String encoding)
+	@Override public Response setContentEncoding(String encoding)
 	{
 		if ((contentOutput_ == null) && !isCommitted()) 
 		{
 			contentEncoding_ = encoding;
 			setContentEncodingImpl(encoding);
 		}
+		return this;
 	}
 	
 	
@@ -441,20 +445,22 @@ public abstract class AbstractResponse implements Response
 	//--------------------
 	
 	
-	@Override public void flushBuffer() throws IOException
+	@Override public Response flushBuffer() throws IOException
 	{
 		flushBuffer(contentOutput_);
+		return this;
 	}
 
 	
 	protected abstract void flushBuffer(Flushable flushable) throws IOException;
 
 	
-	@Override public void resetBuffer()
+	@Override public Response resetBuffer()
 	{
 		resetBufferImpl();
 		if (contentOutput_ instanceof InterceptedOutput)
 			((InterceptedOutput)contentOutput_).reset();
+		return this;
 	}
 	
 	

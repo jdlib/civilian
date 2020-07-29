@@ -66,9 +66,10 @@ public class TestResponse extends AbstractResponse
 	}
 
 	
-	@Override public void addCookie(Cookie cookie)
+	@Override public Response addCookie(Cookie cookie)
 	{
 		getCookies().add(Check.notNull(cookie, "cookie"));
+		return this;
 	}
 	
 	
@@ -105,9 +106,10 @@ public class TestResponse extends AbstractResponse
 	}
 
 	
-	@Override public void setStatus(int statusCode)
+	@Override public Response setStatus(int statusCode)
 	{
 		statusCode_ = statusCode;
+		return this;
 	}
 	
 
@@ -116,9 +118,10 @@ public class TestResponse extends AbstractResponse
 	//-----------------------------------
 	
 	
-	@Override public void setContentType(String contentType)
+	@Override public Response setContentType(String contentType)
 	{
 		contentType_ = contentType;
+		return this;
 	}
 
 
@@ -150,10 +153,11 @@ public class TestResponse extends AbstractResponse
 	}
 
 	
-	@Override public void setContentLength(long length)
+	@Override public Response setContentLength(long length)
 	{
 		contentLength_ = length;
 		getHeaders().set("Content-Length", length < 0 ? null : String.valueOf(length));
+		return this;
 	}
 	
 	
@@ -265,11 +269,12 @@ public class TestResponse extends AbstractResponse
 	}
 	
 	
-	@Override public void setBufferSize(int size)
+	@Override public Response setBufferSize(int size)
 	{
 		if (getContentAccess() != ContentAccess.NONE)
 			throw new IllegalStateException("content already written");
 		bufferSize_ = Math.max(0, size);
+		return this;
 	}
 
 

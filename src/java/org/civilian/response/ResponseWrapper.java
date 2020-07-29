@@ -61,9 +61,10 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public void addCookie(Cookie cookie)
+	@Override public Response addCookie(Cookie cookie)
 	{
 		response_.addCookie(cookie);
+		return this;
 	}
 
 
@@ -103,9 +104,10 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public void writeContent(Object object, String contentType) throws Exception
+	@Override public Response writeContent(Object object, String contentType) throws Exception
 	{
 		response_.writeContent(object, contentType);
+		return this;
 	}
 
 
@@ -121,9 +123,10 @@ public class ResponseWrapper implements Response
 	}
 
 	
-	@Override public void setStatus(int statusCode)
+	@Override public Response setStatus(int statusCode)
 	{
 		response_.setStatus(statusCode);
+		return this;
 	}
 
 
@@ -145,9 +148,10 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public void setContentType(String contentType)
+	@Override public Response setContentType(String contentType)
 	{
 		response_.setContentType(contentType);
+		return this;
 	}
 
 
@@ -157,9 +161,10 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public void setContentEncoding(String encoding)
+	@Override public Response setContentEncoding(String encoding)
 	{
 		response_.setContentEncoding(encoding);
+		return this;
 	}
 
 
@@ -169,15 +174,17 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public void setContentLength(long length)
+	@Override public Response setContentLength(long length)
 	{
 		response_.setContentLength(length);
+		return this;
 	}
 
 
-	@Override public void setContentLanguage(Locale locale)
+	@Override public Response setContentLanguage(Locale locale)
 	{
 		response_.setContentLanguage(locale);
+		return this;
 	}
 
 
@@ -205,21 +212,24 @@ public class ResponseWrapper implements Response
 	}
 
 	
-	@Override public void resetBuffer()
+	@Override public Response resetBuffer()
 	{
 		response_.resetBuffer();
+		return this;
 	}
 
 
-	@Override public void flushBuffer() throws IOException
+	@Override public Response flushBuffer() throws IOException
 	{
 		response_.flushBuffer();
+		return this;
 	}
 	
 	
-	@Override public void setBufferSize(int size)
+	@Override public Response setBufferSize(int size)
 	{
 		response_.setBufferSize(size);
+		return this;
 	}
 	
 

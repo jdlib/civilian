@@ -26,6 +26,7 @@ import java.util.Locale;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import org.civilian.Response;
 import org.civilian.internal.AbstractResponse;
 import org.civilian.internal.Logs;
 import org.civilian.response.ResponseHeaders;
@@ -68,9 +69,10 @@ class ServletResponseAdapter extends AbstractResponse
 	/**
 	 * Forwards to the HttpServletResponse.
 	 */
-	@Override public void addCookie(Cookie cookie)
+	@Override public Response addCookie(Cookie cookie)
 	{
 		servletResponse_.addCookie(cookie);
+		return this;
 	}
 	  
 	
@@ -108,9 +110,10 @@ class ServletResponseAdapter extends AbstractResponse
 	/**
 	 * Forwards to the HttpServletResponse.
 	 */
-	@Override public void setStatus(int statusCode)
+	@Override public Response setStatus(int statusCode)
 	{
 		servletResponse_.setStatus(statusCode);
+		return this;
 	}
 	
 
@@ -140,10 +143,11 @@ class ServletResponseAdapter extends AbstractResponse
 	/**
 	 * Forwards to the HttpServletResponse.
 	 */
-	@Override public void setContentType(String type)
+	@Override public Response setContentType(String type)
 	{
 		servletResponse_.setContentType(type);
 		contentType_ = type;
+		return this;
 	}
 	
 	
@@ -168,7 +172,7 @@ class ServletResponseAdapter extends AbstractResponse
 	/**
 	 * Forwards to the HttpServletResponse.
 	 */
-	@Override public void setContentLength(long length)
+	@Override public Response setContentLength(long length)
 	{
 		if (SETCONTENT_LENGTH_LONG_METHOD != null)
 		{
@@ -182,16 +186,18 @@ class ServletResponseAdapter extends AbstractResponse
 			}
 		}
 		servletResponse_.setContentLength((int)length);
+		return this;
 	}
 
 
 	/**
 	 * Sets the content language and forwards to the HttpServletResponse.
 	 */
-	@Override public void setContentLanguage(Locale locale)
+	@Override public Response setContentLanguage(Locale locale)
 	{
 		super.setContentLanguage(locale);
 		servletResponse_.setLocale(locale);
+		return this;
 	}
 
 	
@@ -219,9 +225,10 @@ class ServletResponseAdapter extends AbstractResponse
 	/**
 	 * Forwards to the HttpServletResponse.
 	 */
-	@Override public void setBufferSize(int size)
+	@Override public Response setBufferSize(int size)
 	{
 		servletResponse_.setBufferSize(size);
+		return this;
 	}
 	
 	
