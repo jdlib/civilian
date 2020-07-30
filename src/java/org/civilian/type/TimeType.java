@@ -17,7 +17,7 @@ package org.civilian.type;
 
 
 /**
- * A type implementation for Time.
+ * A type implementation for Time types.
  */
 public abstract class TimeType<T> extends Type<T>
 {
