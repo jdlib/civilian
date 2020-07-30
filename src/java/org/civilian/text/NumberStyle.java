@@ -122,7 +122,7 @@ public class NumberStyle implements Style
 	}
 	
 	
-	private boolean useGrouping_;
-	private int minDecimals_;
-	private int maxDecimals_;
+	private final boolean useGrouping_;
+	private final int minDecimals_;
+	private final int maxDecimals_;
 }
