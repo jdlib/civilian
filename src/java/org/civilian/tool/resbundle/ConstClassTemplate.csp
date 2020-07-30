@@ -1,11 +1,11 @@
+import java.time.LocalDateTime
 import java.util.List
 import java.util.HashSet
 import org.civilian.util.ClassUtil
 import org.civilian.util.JavaName
-import org.civilian.util.DateTime
 
 
-template(ResBundleCompiler.Config config, String packageName, DateTime generationTime, List<Translation> translations)
+template(ResBundleCompiler.Config config, String packageName, LocalDateTime generationTime, List<Translation> translations)
 	package-access
 	extends -
 	throws -

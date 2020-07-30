@@ -1,6 +1,6 @@
+import java.time.LocalDateTime
 import org.civilian.Application
 import org.civilian.Resource
-import org.civilian.util.DateTime
 import org.civilian.util.JavaName
 import org.civilian.client.WebResource
 
@@ -11,7 +11,7 @@ template(Resource root, String outputPackage, String outputName, Application app
 	throws -
 {{
 	<%%>/**
-	<%%> * Generated <%?timestamp%>at <%new DateTime()%> <%?%>by <%ClientConstGenerator.class.getName()%>.
+	<%%> * Generated <%?timestamp%>at <%LocalDateTime.now()%> <%?%>by <%ClientConstGenerator.class.getName()%>.
 	<%%> * Do not edit.
 	<%%> */
 	package <%outputPackage%>;

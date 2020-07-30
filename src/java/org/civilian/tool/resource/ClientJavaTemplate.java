@@ -5,11 +5,11 @@
 package org.civilian.tool.resource;
 
 
+import java.time.LocalDateTime;
 import org.civilian.Application;
 import org.civilian.Resource;
 import org.civilian.client.WebResource;
 import org.civilian.template.TemplateWriter;
-import org.civilian.util.DateTime;
 import org.civilian.util.JavaName;
 
 
@@ -41,7 +41,7 @@ class ClientJavaTemplate
 		if (timestamp)                                                  // line 14: <%?timestamp%>
 		{
 			out.print("at ");                                           // line 14: at
-			out.print(new DateTime());                                  // line 14: <%new DateTime()%>
+			out.print(LocalDateTime.now());                             // line 14: <%LocalDateTime.now()%>
 			out.print(" ");                                             // line 14: 
 		}
 		out.print("by ");                                               // line 14: by

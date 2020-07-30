@@ -5,6 +5,7 @@
 package org.civilian.tool.resource;
 
 
+import java.time.LocalDateTime;
 import org.civilian.Application;
 import org.civilian.Resource;
 import org.civilian.controller.ControllerSignature;
@@ -12,7 +13,6 @@ import org.civilian.resource.PathParam;
 import org.civilian.resource.scan.ResourceInfo;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.ClassUtil;
-import org.civilian.util.DateTime;
 import org.civilian.util.JavaName;
 
 
@@ -45,7 +45,7 @@ class ServerTemplate
 		if (timestamp)                                                  // line 18: <%?timestamp%>
 		{
 			out.print("at ");                                           // line 18: at
-			out.print(new DateTime());                                  // line 18: <%new DateTime()%>
+			out.print(LocalDateTime.now());                             // line 18: <%LocalDateTime.now()%>
 			out.print(" ");                                             // line 18: 
 		}
 		out.print("by ");                                               // line 18: by

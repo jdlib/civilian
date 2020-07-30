@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +39,6 @@ import org.civilian.internal.source.PackageDetector;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.msg.MsgId;
 import org.civilian.util.Arguments;
-import org.civilian.util.DateTime;
 import org.civilian.util.FileType;
 import org.civilian.util.IoUtil;
 import org.civilian.util.StringUtil;
@@ -139,8 +139,8 @@ public class ResBundleCompiler
 	 */
 	public boolean run(Config config) throws IOException 
 	{
-		config_ 			= config;
-		generationTime_		= new DateTime();
+		config_ 		= config;
+		generationTime_	= LocalDateTime.now();
 		
 		log("reading excel text definition " + config_.excelFile); 
 		reader_ = new ExcelReader(config_.excelFile);
@@ -392,5 +392,5 @@ public class ResBundleCompiler
 	private Output constantsOutput_;
 	private ExcelReader reader_;
 	private Output[] langOutputs_;
-	private DateTime generationTime_;
+	private LocalDateTime generationTime_;
 }

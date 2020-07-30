@@ -5,17 +5,17 @@
 package org.civilian.tool.resbundle;
 
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.ClassUtil;
-import org.civilian.util.DateTime;
 import org.civilian.util.JavaName;
 
 
 class ConstClassTemplate
 {
-	public ConstClassTemplate(ResBundleCompiler.Config config, String packageName, DateTime generationTime, List<Translation> translations)
+	public ConstClassTemplate(ResBundleCompiler.Config config, String packageName, LocalDateTime generationTime, List<Translation> translations)
 	{
 		this.config = config;
 		this.packageName = packageName;
@@ -190,7 +190,7 @@ class ConstClassTemplate
 
 	protected ResBundleCompiler.Config config;
 	protected String packageName;
-	protected DateTime generationTime;
+	protected LocalDateTime generationTime;
 	protected List<Translation> translations;
 	protected TemplateWriter out;
 }

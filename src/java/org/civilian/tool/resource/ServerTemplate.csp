@@ -1,9 +1,9 @@
+import java.time.LocalDateTime
 import org.civilian.Application
 import org.civilian.Resource
 import org.civilian.controller.ControllerSignature
 import org.civilian.resource.PathParam
 import org.civilian.resource.scan.ResourceInfo
-import org.civilian.util.DateTime
 import org.civilian.util.ClassUtil
 import org.civilian.util.JavaName
 
@@ -15,7 +15,7 @@ template(ResourceInfo root, String outputPackage, String outputName, Application
 {{
 	@ctrlRootPackage_ = app.getControllerConfig().getRootPackage();
 	<%%>/**
-	<%%> * Generated <%?timestamp%>at <%new DateTime()%> <%?%>by <%ServerConstGenerator.class.getName()%>.
+	<%%> * Generated <%?timestamp%>at <%LocalDateTime.now()%> <%?%>by <%ServerConstGenerator.class.getName()%>.
 	<%%> * Do not edit.
 	<%%> */
 	package <%outputPackage%>;

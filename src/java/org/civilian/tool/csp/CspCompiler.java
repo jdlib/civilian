@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import org.civilian.internal.source.OutputFile;
 import org.civilian.internal.source.OutputLocation;
@@ -35,7 +36,6 @@ import org.civilian.template.mixin.LangMixin;
 import org.civilian.template.mixin.TableMixin;
 import org.civilian.util.Arguments;
 import org.civilian.util.ClassUtil;
-import org.civilian.util.DateTime;
 import org.civilian.util.FileType;
 import org.civilian.util.IoUtil;
 import org.civilian.util.Scanner;
@@ -634,7 +634,10 @@ public class CspCompiler
 		out.println("/**");
 		out.print(" * Generated from " + templFile.getName());
 		if (options_.timestamp)
-			out.print(" at " + new DateTime());
+		{
+			out.print(" at ");
+			out.print(LocalDateTime.now());
+		}
 		out.println();
 		out.println(" * Do not edit.");
 		out.println(" */");
