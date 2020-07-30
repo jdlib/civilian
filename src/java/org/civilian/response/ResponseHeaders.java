@@ -31,24 +31,27 @@ public interface ResponseHeaders extends Iterable<String>
 	 * Adds a header to the response.
 	 * @param name the header name
 	 * @param value the header value
+	 * @return this 
 	 */
-	public void add(String name, String value); 
+	public ResponseHeaders add(String name, String value); 
 
 
 	/**
 	 * Adds a date header to the response.
 	 * @param name the header name
 	 * @param value the date specified in milliseconds since epoch 
+	 * @return this 
 	 */
-	public void addDate(String name, long value); 
+	public ResponseHeaders addDate(String name, long value); 
 
 
 	/**
 	 * Adds a integer header to the response.
 	 * @param name the header name
 	 * @param value the value 
+	 * @return this 
 	 */
-	public void addInt(String name, int value); 
+	public ResponseHeaders addInt(String name, int value); 
 
 
 	/**
@@ -81,8 +84,9 @@ public interface ResponseHeaders extends Iterable<String>
 	 * if the header was already set,
 	 * @param name the header name
 	 * @param values the header values
+	 * @return this 
 	 */
-	public void set(String name, String... values); 
+	public ResponseHeaders set(String name, String... values); 
 
 
 	/**
@@ -90,8 +94,9 @@ public interface ResponseHeaders extends Iterable<String>
 	 * if the header was already set,
 	 * @param name the header name
 	 * @param value the date specified in milliseconds since the epoch 
+	 * @return this 
 	 */
-	public void setDate(String name, long value); 
+	public ResponseHeaders setDate(String name, long value); 
 
 
 	/**
@@ -99,6 +104,7 @@ public interface ResponseHeaders extends Iterable<String>
 	 * if the header was already set,
 	 * @param name the header name
 	 * @param value the value 
+	 * @return this 
 	 */
-	public void setInt(String name, int value); 
+	public ResponseHeaders setInt(String name, int value); 
 }

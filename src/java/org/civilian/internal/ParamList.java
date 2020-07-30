@@ -92,7 +92,7 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	
 	/**
 	 * Allows chaining of ParamLists.
-	 * The default implementation returns false
+	 * The default implementation returns null.
 	 */
 	protected String getNext(String name)
 	{
@@ -199,23 +199,24 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	}
 	
 	
-	@Override public void set(String name, String... values)
+	@Override public ParamList set(String name, String... values)
 	{
 		if (values == null)
 			values = EMPTY_VALUES;
 		getMap().put(normName(name), values);
+		return this;
 	}
 
 
-	@Override public void setDate(String name, long value)
+	@Override public ParamList setDate(String name, long value)
 	{
-		set(name, String.valueOf(value));
+		return set(name, String.valueOf(value));
 	}
 	
 	
-	@Override public void setInt(String name, int value)
+	@Override public ParamList setInt(String name, int value)
 	{
-		set(name, String.valueOf(value));
+		return set(name, String.valueOf(value));
 	}
 
 	
@@ -225,7 +226,7 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	}
 	
 	
-	@Override public void add(String name, String value)
+	@Override public ParamList add(String name, String value)
 	{
 		if (value != null)
 		{
@@ -233,18 +234,20 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 			String[] v = getAll(name);
 			set(name, ArrayUtil.addLast(v, value));
 		}
+		return this;
 	}
 	
 	
-	@Override public void addDate(String name, long value)
+	@Override public ParamList addDate(String name, long value)
 	{
 		add(name, String.valueOf(value));
+		return this;
 	}
 	
 	
-	@Override public void addInt(String name, int value)
+	@Override public ParamList addInt(String name, int value)
 	{
-		add(name, String.valueOf(value));
+		return add(name, String.valueOf(value));
 	}
 	
 
