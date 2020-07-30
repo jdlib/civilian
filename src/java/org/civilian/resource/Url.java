@@ -27,6 +27,7 @@ import org.civilian.provider.PathParamProvider;
 import org.civilian.provider.PathProvider;
 import org.civilian.provider.ResponseProvider;
 import org.civilian.response.UriEncoder;
+import org.civilian.text.LocaleService;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.type.fn.TypeSerializer;
@@ -204,14 +205,15 @@ public class Url implements PathParamProvider, ResponseProvider
 	/**
 	 * Returns the TypeSerializer used by the Url when it formats
 	 * typed parameters to a parameter string. 
-	 * By the default the Url uses the serializer of the response.
+	 * By the default the Url uses the serializer of the response's LocaleService.
 	 * @see QueryParam#setValue(Type, Object) 
-	 * @see Response#getLocaleSerializer()
+	 * @see Response#getLocaleService()
+	 * @see LocaleService#getSerializer()
 	 */
 	public TypeSerializer getSerializer()
 	{
 		if (serializer_ == null)
-			serializer_ = response_.getLocaleSerializer();
+			serializer_ = response_.getLocaleService().getSerializer();
 		return serializer_;
 	}
 

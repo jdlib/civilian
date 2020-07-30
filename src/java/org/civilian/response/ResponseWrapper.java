@@ -86,9 +86,10 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public void setLocaleService(LocaleService service)
+	@Override public Response setLocaleService(LocaleService service)
 	{
 		response_.setLocaleService(service);
+		return this;
 	}
 
 

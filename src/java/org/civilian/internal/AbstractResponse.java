@@ -98,9 +98,10 @@ public abstract class AbstractResponse implements Response
 	}
 
 	
-	@Override public void setLocaleService(LocaleService localeService)
+	@Override public Response setLocaleService(LocaleService localeService)
 	{
 		localeService_ = Check.notNull(localeService, "localeService");
+		return this;
 	}
 
 	

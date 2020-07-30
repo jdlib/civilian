@@ -807,7 +807,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	protected TypeSerializer getResponseSerializer()
 	{
 		return form_ != null ?
-			form_.getRequest().getResponse().getLocaleSerializer() :
+			form_.getRequest().getResponse().getLocaleService().getSerializer() :
 			StandardSerializer.INSTANCE;
 	}
 	

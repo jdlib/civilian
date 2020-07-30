@@ -41,7 +41,6 @@ import org.civilian.response.std.ErrorResponse;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
-import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.util.Check;
 
 
@@ -202,7 +201,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Implements ResponseProvider and returns this.
 	 */
-	@Override default public Response getResponse()
+	@Override public default Response getResponse()
 	{
 		return this;
 	}
@@ -211,7 +210,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Returns the context.
 	 */
-	@Override default public Context getContext()
+	@Override public default Context getContext()
 	{
 		return getApplication().getContext();
 	}
@@ -220,7 +219,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Returns the application.
 	 */
-	@Override default public Application getApplication()
+	@Override public default Application getApplication()
 	{
 		return getRequest().getApplication();
 	}
@@ -281,35 +280,28 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	
 	
 	/**
-	 * Returns the locale data associated with the response.
-	 * The locale data can be set explicitly by {@link #setLocaleService(LocaleService)}.
-	 * If not explicitly set it is the same as the LocalData of the request.
+	 * Returns the LocaleService associated with the response.
+	 * The LocaleService can be set explicitly by {@link #setLocaleService(LocaleService)}.
+	 * If not explicitly set it is the same as the LocaleService of the request.
 	 * @see Request#getLocaleService()
 	 */
 	@Override public abstract LocaleService getLocaleService();
 	
 
 	/**
-	 * Sets the locale data associated with the response.
+	 * Sets the LocaleService associated with the response.
 	 */
-	public abstract void setLocaleService(LocaleService service);
+	public abstract Response setLocaleService(LocaleService service);
 
 	
 	/**
-	 * Sets the locale data associated with the response.
+	 * Sets the LocaleService associated with the response
+	 * to the application LocaleService for the given locale.
+	 * @param locale a locale
 	 */
-	default public void setLocaleService(Locale locale)
+	public default Response setLocaleService(Locale locale)
 	{
-		setLocaleService(getApplication().getLocaleServices().getService(locale));
-	}
-	
-
-	/**
-	 * Shortcut for {@link #getLocaleService()}.getSerializer().
-	 */
-	default public LocaleSerializer getLocaleSerializer()
-	{
-		return getLocaleService().getSerializer();
+		return setLocaleService(getApplication().getLocaleServices().getService(locale));
 	}
 
 	
@@ -341,7 +333,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * Sends an error response to the client.
 	 * This is a shortcut for {@link #sendError(int, String, Throwable) sendError(statusCode, null, null)}.
 	 */
-	default public void sendError(int statusCode) throws IllegalStateException, IOException
+	public default void sendError(int statusCode) throws IllegalStateException, IOException
 	{
 		sendError(statusCode, null, null);
 	}
@@ -379,7 +371,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * After using this method, the response is committed and should not be written to.
 	 * @throws IllegalStateException if the response has already been committed 
 	 */
-	default public void sendRedirect(Url url) throws IOException
+	public default void sendRedirect(Url url) throws IOException
 	{
 		sendRedirect(url.toString());
 	}
@@ -390,7 +382,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * After using this method, the response is committed and should not be written to.
 	 * @throws IllegalStateException if the response has already been committed 
 	 */
-	default public void sendRedirect(Resource resource) throws IOException
+	public default void sendRedirect(Resource resource) throws IOException
 	{
 		sendRedirect(new Url(this, resource));
 	}
@@ -402,7 +394,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * After using this method, the response is committed and should not be written to.
 	 * @throws IllegalStateException if the response has already been committed 
 	 */
-	default public <C extends Controller> void sendRedirect(Class<C> controllerClass) throws IOException
+	public default <C extends Controller> void sendRedirect(Class<C> controllerClass) throws IOException
 	{
 		sendRedirect(new Url(this, controllerClass));
 	}
@@ -419,7 +411,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * 		it calls {@link Template#print(TemplateWriter)}, passing the 
 	 * 		{@link #getContentWriter() content writer} of this response.
 	 */
-	default public Response writeTemplate(Template template) throws Exception
+	public default Response writeTemplate(Template template) throws Exception
 	{
 		return writeContent(template);
 	}
@@ -429,7 +421,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * Writes JSON data to the response content.
 	 * @param object a object which is converted to JSON.
 	 */
-	default public void writeJson(Object object) throws Exception
+	public default void writeJson(Object object) throws Exception
 	{
 		writeContent(object, ContentType.APPLICATION_JSON);
 	}
@@ -442,7 +434,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * {@link AppConfig#getContentSerializers() serializers}
 	 * during application setup.  
 	 */
-	default public void writeXml(Object object) throws Exception
+	public default void writeXml(Object object) throws Exception
 	{
 		writeContent(object, ContentType.APPLICATION_XML);
 	}
@@ -451,7 +443,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Writes text to the response content.
 	 */
-	default public void writeText(String text) throws Exception
+	public default void writeText(String text) throws Exception
 	{
 		writeContent(text, ContentType.TEXT_PLAIN);
 	}
@@ -460,7 +452,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Calls write(object, null);
 	 */
-	default public Response writeContent(Object object) throws Exception
+	public default Response writeContent(Object object) throws Exception
 	{
 		return writeContent(object, (String)null);
 	}
@@ -557,7 +549,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * @see #getContentType()
 	 * @see #getContentEncoding()
 	 */
-	default public String getContentTypeAndEncoding()
+	public default String getContentTypeAndEncoding()
 	{
 		String contentType = getContentType();
 		if (contentType != null)
@@ -685,7 +677,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Prints response info to the PrintStream.
 	 */
-	default public void print(PrintStream out)
+	public default void print(PrintStream out)
 	{
 		Check.notNull(out, "out");
 		print(new PrintWriter(out, true));
@@ -695,7 +687,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Prints response info to the PrintWriter.
 	 */
-	default public void print(PrintWriter out)
+	public default void print(PrintWriter out)
 	{
 		Check.notNull(out, "out");
 		out.println(getStatus());

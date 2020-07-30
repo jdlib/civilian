@@ -16,20 +16,20 @@
 package org.civilian.resource;
 
 
-import java.util.Locale;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import static org.mockito.Mockito.*;
+import java.util.Locale;
 import org.civilian.CivTest;
 import org.civilian.Request;
 import org.civilian.Resource;
 import org.civilian.Response;
 import org.civilian.response.UriEncoder;
+import org.civilian.text.LocaleService;
 import org.civilian.type.TypeLib;
-import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.type.fn.StandardSerializer;
 
 
@@ -44,7 +44,7 @@ public class UrlTest extends CivTest
 		when(response_.getResponse()).thenReturn(response_);
 		when(response_.getRequest()).thenReturn(request_);
 		when(response_.getUriEncoder()).thenReturn(new UriEncoder());
-		when(response_.getLocaleSerializer()).thenReturn(new LocaleSerializer(Locale.ENGLISH));
+		when(response_.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
 		when(response_.addSessionId(anyString())).then(new Answer<String>()
 		{
 			@Override public String answer(InvocationOnMock invocation) throws Throwable
