@@ -17,6 +17,7 @@ package org.civilian.internal.controller.arg;
 
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
 import org.junit.Test;
@@ -27,7 +28,6 @@ import org.civilian.request.BadRequestException;
 import org.civilian.type.TypeLib;
 import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.type.fn.StandardSerializer;
-import org.civilian.util.Date;
 
 
 public class SimpleConverterTest extends CivTest
@@ -41,7 +41,7 @@ public class SimpleConverterTest extends CivTest
 		assertConvert(create(double.class),  		"1.234,5", 		new Double(1234.5),				Double.valueOf(0.0));
 		assertConvert(create(Boolean.class), 		"true", 		Boolean.TRUE,					null);
 		assertConvert(create(boolean.class), 		"false", 		Boolean.FALSE,					Boolean.FALSE);
-		assertConvert(create(Date.class), 			"31.12.2012", 	new Date(2012, 12, 31),			null);
+		assertConvert(create(LocalDate.class), 		"31.12.2012", 	LocalDate.of(2012, 12, 31),		null);
 		assertConvert(create(Ctor.class), 			"#", 			new Ctor("#"),					null);
 		assertConvert(create(ValueOfString.class), 	"123", 			ValueOfString.valueOf("123"),	null);
 		assertConvert(create(FromString.class), 	"456", 			FromString.fromString("456"),	null);

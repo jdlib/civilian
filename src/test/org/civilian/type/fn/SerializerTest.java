@@ -47,7 +47,6 @@ public class SerializerTest extends CivTest
 		assertFormat(TypeLib.BYTE, 	 		new Byte(Byte.MIN_VALUE),				"-128");
 		assertFormat(TypeLib.CHARACTER, 	new Character('a'),						"a");
 		assertFormat(TypeLib.DATE_CALENDAR, new GregorianCalendar(2012, 0, 31),		"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
-		assertFormat(TypeLib.DATE_CIVILIAN, new org.civilian.util.Date(2012, 1, 31),"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertFormat(TypeLib.DATE_LOCAL,    LocalDate.of(2012, 1, 31),              "20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertFormat(TypeLib.DATE_JAVA_SQL, new java.sql.Date(112, 0, 31), 			"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertFormat(TypeLib.DATE_JAVA_UTIL,new java.util.Date(112, 0, 31), 		"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
@@ -92,7 +91,6 @@ public class SerializerTest extends CivTest
 		assertParse(TypeLib.BYTE, 	 		new Byte(Byte.MIN_VALUE),				"-128");
 		assertParse(TypeLib.CHARACTER, 		new Character('a'),						"a");
 		assertParse(TypeLib.DATE_CALENDAR, 	new GregorianCalendar(2012, 0, 31),		"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
-		assertParse(TypeLib.DATE_CIVILIAN, 	new org.civilian.util.Date(2012, 1, 31),"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertParse(TypeLib.DATE_LOCAL, 	LocalDate.of(2012, 1, 31),				"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertParse(TypeLib.DATE_JAVA_SQL, 	new java.sql.Date(112, 0, 31), 			"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertParse(TypeLib.DATE_JAVA_UTIL, new java.util.Date(112, 0, 31), 		"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
@@ -135,7 +133,7 @@ public class SerializerTest extends CivTest
 	{
 		try
 		{
-			STANDARD.parse(TypeLib.DATE_CIVILIAN, "123");
+			STANDARD.parse(TypeLib.DATE_LOCAL, "123");
 			fail();
 		}
 		catch(ParseException e)
@@ -145,7 +143,7 @@ public class SerializerTest extends CivTest
 
 		try
 		{
-			STANDARD.parse(TypeLib.DATE_CIVILIAN, "20131401");
+			STANDARD.parse(TypeLib.DATE_LOCAL, "20131401");
 			fail();
 		}
 		catch(ParseException e)

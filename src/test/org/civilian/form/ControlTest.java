@@ -18,6 +18,7 @@ package org.civilian.form;
 
 import static org.mockito.Mockito.*;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Locale;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,7 +30,6 @@ import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
 import org.civilian.type.TypeLib;
 import org.civilian.type.fn.LocaleSerializer;
-import org.civilian.util.Date;
 
 
 public class ControlTest extends CivTest
@@ -142,9 +142,9 @@ public class ControlTest extends CivTest
 	
 	@Test public void testDateField()
 	{
-		DateField<Date> field = new DateField<>(TypeLib.DATE_CIVILIAN, "d");
+		DateField<LocalDate> field = new DateField<>(TypeLib.DATE_LOCAL, "d");
 		
-		field.setValue(new Date(2014, 01, 31));
+		field.setValue(LocalDate.of(2014, 01, 31));
 		assertOut(field, "<input type='text' name='d' value='20140131' size='10' maxlength='10'>");
 	}
 	

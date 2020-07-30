@@ -17,11 +17,11 @@ package org.civilian.text.keys;
 
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Locale;
 import org.civilian.CivTest;
 import org.civilian.text.keys.serialize.KeySerializers;
 import org.civilian.type.fn.StandardSerializer;
-import org.civilian.util.Date;
 import org.junit.Test;
 
 
@@ -118,12 +118,12 @@ public class KeyListTest extends CivTest
 	
 	@Test public void testToStringSerializer() throws Exception
 	{
-		Date date = new Date(2014, 1, 31);
-		ValueKeyList<Date> keys = new ValueKeyList<>(KeySerializers.TO_STRING, date);
+		LocalDate date = LocalDate.of(2014, 1, 31);
+		ValueKeyList<LocalDate> keys = new ValueKeyList<>(KeySerializers.TO_STRING, date);
 		
-		assertItem(keys, 0, date, "20140131");
-		assertFormat(keys, 0, "20140131");
-		assertParse(keys, date, "20140131");
+		assertItem(keys, 0, date, "2014-01-31");
+		assertFormat(keys, 0, "2014-01-31");
+		assertParse(keys, date, "2014-01-31");
 		assertParseFailure(keys, "a", IllegalArgumentException.class);
 		assertParseReject(keys, "2");
 	}

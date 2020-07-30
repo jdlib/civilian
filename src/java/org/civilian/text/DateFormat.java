@@ -16,13 +16,14 @@
 package org.civilian.text;
 
 
+import java.util.Calendar;
 import java.util.Locale;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.text.ParseException;
 import java.text.DateFormatSymbols;
 import org.civilian.util.Check;
-import org.civilian.util.Date;
 import org.civilian.util.StringUtil;
 
 
@@ -40,7 +41,7 @@ public class DateFormat implements Serializable
 	
 
 	/**
-	 * A Service which can create a date object.
+	 * Factory can create a date object from its parts.
 	 */
 	public static interface Factory<T>
 	{
@@ -49,7 +50,8 @@ public class DateFormat implements Serializable
 
 	
 	/**
-	 * Creates a new DateFormat.
+	 * Creates a new DateFormat for a Locale.
+	 * @param locale the Locale
 	 */
 	public DateFormat(Locale locale)
 	{
@@ -115,7 +117,7 @@ public class DateFormat implements Serializable
 
 	
 	/**
-	 * Returns the locale of the date format.
+	 * Returns the locale of this DateFormat.
 	 */
 	public Locale getLocale()
 	{
@@ -182,24 +184,31 @@ public class DateFormat implements Serializable
 	
 	/**
 	 * Returns the name of a weekday.
-	 * @param weekday the weekday
-	 * @see Date#WEEKDAY_SUNDAY
+	 * @param dow the weekday
 	 */
-	public String getWeekdayName(int weekday)
+	public String getWeekdayName(DayOfWeek dow)
 	{
-		return getName(symbols_.getWeekdays(), weekday);
+		return getWeekdayName(dow, symbols_.getWeekdays());
 	}
 		
 		
 	/**
 	 * Returns the short name of a weekday
-	 * @param weekday the weekday 
-	 * @see Date#WEEKDAY_SUNDAY
+	 * @param dow the weekday
 	 */
-	public String getShortWeekdayName(int weekday)
+	public String getShortWeekdayName(DayOfWeek dow)
 	{
-		return getName(symbols_.getShortWeekdays(), weekday);
+		return getWeekdayName(dow, symbols_.getShortWeekdays());
 	}
+	
+	
+	private String getWeekdayName(DayOfWeek dow, String[] symbols)
+	{
+		Check.notNull(dow, "dow");
+		int dayNum = dow == DayOfWeek.SUNDAY ? Calendar.SUNDAY : dow.getValue() + 1;
+		return getName(symbols, dayNum);
+	}
+	
 
 	
 	private String getName(String names[], int index)
@@ -241,9 +250,11 @@ public class DateFormat implements Serializable
 		{
 			return factory.create(year, month, day);
 		}
-		catch(IllegalArgumentException e)
+		catch(Exception e)
 		{
-			throw new ParseException("'" + text + "' is an invalid date", 0);
+			ParseException pe = new ParseException("'" + text + "' is an invalid date", 0);
+			pe.initCause(e);
+			throw pe;
 		}
 	}
 
@@ -288,41 +299,6 @@ public class DateFormat implements Serializable
 	//------------------------------
 	// format
 	//------------------------------
-	
-
-	/**
-	 * Returns a string representation of a date.
-	 */
-	public String format(Date date)
-	{
-		return format(date.getYear(), date.getMonth(), date.getDay());
-	}
-
-
-	/**
-	 * Returns a string representation of a date.
-	 * @param date the date
-	 * @param s a StringBuilder to hold the result
-	 */
-	public void format(Date date, StringBuilder s)
-	{
-		format(date.getYear(), date.getMonth(), date.getDay(), s);
-	}
-
-
-	/**
-	 * Returns a string representation of a date.
-	 * @param date the date
-	 * @param s a StringBuilder to hold the result
-	 * @param ignorePart exclude a date part from the result string
-	 * @see #SYMBOL_MONTH
-	 * @see #SYMBOL_DAY
-	 * @see #SYMBOL_YEAR
-	 */
-	public void format(Date date, StringBuilder s, char ignorePart)
-	{
-		format(date.getYear(), date.getMonth(), date.getDay(), s, ignorePart);
-	}
 
 
 	/**

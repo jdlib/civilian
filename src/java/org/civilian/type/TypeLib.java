@@ -26,7 +26,6 @@ import java.util.Iterator;
 import org.civilian.Application;
 import org.civilian.application.AppConfig;
 import org.civilian.util.Check;
-import org.civilian.util.Date;
 
 
 /**
@@ -46,7 +45,6 @@ public class TypeLib implements Iterable<Type<?>>
 	public static final Type<Byte> 						BYTE 			= SimpleType.BYTE;
 	public static final Type<Character> 				CHARACTER		= SimpleType.CHARACTER;
 	public static final DateType<java.util.Calendar> 	DATE_CALENDAR	= DateCalendarType.INSTANCE;
-	public static final DateType<Date> 					DATE_CIVILIAN	= DateCivilianType.INSTANCE;
 	public static final DateType<LocalDate> 			DATE_LOCAL		= DateLocalType.INSTANCE;
 	public static final DateType<java.util.Date> 		DATE_JAVA_UTIL	= DateJavaUtilType.INSTANCE;
 	public static final DateType<java.sql.Date> 		DATE_JAVA_SQL	= DateJavaSqlType.INSTANCE;
@@ -93,7 +91,6 @@ public class TypeLib implements Iterable<Type<?>>
 			put(BYTE);
 			put(CHARACTER);
 			put(DATE_CALENDAR);
-			put(DATE_CIVILIAN);
 			put(DATE_JAVA_UTIL);
 			put(DATE_JAVA_SQL);
 			put(DATE_LOCAL);

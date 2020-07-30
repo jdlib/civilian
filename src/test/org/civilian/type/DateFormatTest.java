@@ -16,11 +16,12 @@
 package org.civilian.type;
 
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Locale;
 import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.text.DateFormat;
-import org.civilian.util.Date;
 
 
 public class DateFormatTest extends CivTest
@@ -46,8 +47,8 @@ public class DateFormatTest extends CivTest
 		assertEquals("Januar", dateFormat_.getMonthName(1));
 		assertEquals("Feb", dateFormat_.getShortMonthName(2));
 		
-		assertEquals("Sonntag", dateFormat_.getWeekdayName(Date.WEEKDAY_SUNDAY));
-		assertEquals("So", dateFormat_.getShortWeekdayName(Date.WEEKDAY_SUNDAY));
+		assertEquals("Sonntag", dateFormat_.getWeekdayName(DayOfWeek.SUNDAY));
+		assertEquals("So", dateFormat_.getShortWeekdayName(DayOfWeek.SUNDAY));
 	}
 	
 	
@@ -59,16 +60,16 @@ public class DateFormatTest extends CivTest
 
 	private void assertFormat(String text, int year, int month, int day, String textOut) throws Throwable
 	{
-		Date d = dateFormat_.parse(TypeLib.DATE_CIVILIAN, text);
+		LocalDate d = dateFormat_.parse(TypeLib.DATE_LOCAL, text);
 		assertDate(d, year, month, day);
-		assertEquals(textOut, dateFormat_.format(d));
+		assertEquals(textOut, dateFormat_.format(year, month, day));
 	}
 	
 	
-	private void assertDate(Date d, int year, int month, int day)
+	private void assertDate(LocalDate d, int year, int month, int day)
 	{
-		assertEquals("day",		day,	d.getDay());
-		assertEquals("month",	month,	d.getMonth());
+		assertEquals("day",		day,	d.getDayOfMonth());
+		assertEquals("month",	month,	d.getMonthValue());
 		assertEquals("year",	year,	d.getYear());
 	}
 	

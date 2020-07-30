@@ -17,9 +17,9 @@ package org.civilian.template.mixin;
 
 
 import org.junit.Test;
+import java.time.LocalDate;
 import org.civilian.CivTest;
 import org.civilian.template.TestTemplateWriter;
-import org.civilian.util.Date;
 
 
 public class LangMixinTest extends CivTest
@@ -30,12 +30,10 @@ public class LangMixinTest extends CivTest
 		LangMixin lang = new LangMixin(out);
 		
 		// dates
-		Date date = new Date(2012, 01, 31);
+		LocalDate date = LocalDate.of(2012, 01, 31);
 		assertEquals("01/31/2012", lang.format(date));
 		assertEquals("01/31/2012", lang.format(date, "a"));
-		assertEquals("01/31/2012", lang.format(date.toCalendar()));
-		assertEquals("01/31/2012", lang.format(date.toJavaDate()));
-		assertEquals("a", lang.format((Date)null, "a"));
+		assertEquals("a", lang.format((LocalDate)null, "a"));
 		
 		// int
 		assertEquals("1,234", lang.format(1234));

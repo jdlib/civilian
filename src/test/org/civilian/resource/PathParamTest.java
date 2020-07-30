@@ -16,11 +16,11 @@
 package org.civilian.resource;
 
 
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.type.TypeLib;
-import org.civilian.util.Date;
 
 
 public class PathParamTest extends CivTest
@@ -42,11 +42,11 @@ public class PathParamTest extends CivTest
 			.scan("/456/def", 456,  "def");		// first segment consumed and successfully converted
 		
 		// PathParams.forSegment(Type)
-		PathParamAssert.of(PathParams.forSegment("dateparam").converting(TypeLib.DATE_CIVILIAN))
+		PathParamAssert.of(PathParams.forSegment("dateparam").converting(TypeLib.DATE_LOCAL))
 			.toString("/{dateparam}")
-			.build(new Date(2012, 12, 04), "/20121204")
-			.scan("/abc/def", 	   null, "def")						// first segment consumed but could not convert	
-			.scan("/20121103/def", new Date(2012, 11, 03), "def");	// first segment consumed and successfully converted
+			.build(LocalDate.of(2012, 12, 04), "/20121204")
+			.scan("/abc/def", 	   null, "def")							// first segment consumed but could not convert	
+			.scan("/20121103/def", LocalDate.of(2012, 11, 03), "def");	// first segment consumed and successfully converted
 
 		// PathParams.forSegmentPattern()
 		PathParamAssert.of(PathParams.forSegmentPattern("idparam", "id*"))
@@ -60,12 +60,12 @@ public class PathParamTest extends CivTest
 
 	@Test public void testYMD()
 	{
-		PathParamAssert.of(PathParams.forYearMonthDay("ymd", TypeLib.DATE_CIVILIAN))
+		PathParamAssert.of(PathParams.forYearMonthDay("ymd", TypeLib.DATE_LOCAL))
 			.toString("/{ymd}")
-			.toDetailedString("/{ymd : Date=yyyy/mm/dd}")
-			.build(new Date(2011, 10, 9), "/2011/10/09")
+			.toDetailedString("/{ymd : LocalDate=yyyy/mm/dd}")
+			.build(LocalDate.of(2011, 10, 9), "/2011/10/09")
 			.scan("/abc/def", null, "abc")
-			.scan("/2012/11/10/def", new Date(2012, 11, 10), "def");
+			.scan("/2012/11/10/def", LocalDate.of(2012, 11, 10), "def");
 	}
 
 

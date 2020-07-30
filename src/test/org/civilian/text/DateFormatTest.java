@@ -17,11 +17,12 @@ package org.civilian.text;
 
 
 import java.text.ParseException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Locale;
 import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.type.TypeLib;
-import org.civilian.util.Date;
 
 
 public class DateFormatTest extends CivTest
@@ -42,8 +43,8 @@ public class DateFormatTest extends CivTest
 		assertEquals(2, 		german.getYearPosition());
 		assertEquals("Januar", 	german.getMonthName(1));
 		assertEquals("Dez", 	german.getShortMonthName(12));
-		assertEquals("Freitag", german.getWeekdayName(Date.WEEKDAY_FRIDAY));
-		assertEquals("Sa", 		german.getShortWeekdayName(Date.WEEKDAY_SATURDAY));
+		assertEquals("Freitag", german.getWeekdayName(DayOfWeek.FRIDAY));
+		assertEquals("Sa", 		german.getShortWeekdayName(DayOfWeek.SATURDAY));
 		
 		try
 		{
@@ -59,15 +60,15 @@ public class DateFormatTest extends CivTest
 	@Test public void testParse() throws Exception
 	{
 		DateFormat uk = new DateFormat(Locale.UK);
-		Date date;
+		LocalDate date;
 		
-		date = uk.parse(TypeLib.DATE_CIVILIAN, "31/10/2014");
+		date = uk.parse(TypeLib.DATE_LOCAL, "31/10/2014");
 		assertDate(2014, 10, 31, date);
 
-		date = uk.parse(TypeLib.DATE_CIVILIAN, "31/10/14");
+		date = uk.parse(TypeLib.DATE_LOCAL, "31/10/14");
 		assertDate(2014, 10, 31, date);
 		
-		date = uk.parse(TypeLib.DATE_CIVILIAN, "31/10/  14");
+		date = uk.parse(TypeLib.DATE_LOCAL, "31/10/  14");
 		assertDate(2014, 10, 31, date);
 		
 		
@@ -79,24 +80,23 @@ public class DateFormatTest extends CivTest
 	@Test public void testFormat() throws Exception
 	{
 		DateFormat german = new DateFormat(Locale.GERMAN);
-		Date date = new Date(2014, 12, 31);
-		assertEquals("31.12.2014", german.format(date));
+		assertEquals("31.12.2014", german.format(2014, 12, 31));
 		
 		StringBuilder s = new StringBuilder();
-		german.format(date, s);
+		german.format(2014, 12, 31, s);
 		assertEquals("31.12.2014", s.toString());
 		
 		s.setLength(0);
-		german.format(date, s, DateFormat.SYMBOL_DAY);
+		german.format(2014, 12, 31, s, DateFormat.SYMBOL_DAY);
 		assertEquals("12.2014", s.toString());
 	}
 
 	
-	private void assertDate(int year, int month, int day, Date date)
+	private void assertDate(int year, int month, int day, LocalDate date)
 	{
 		assertEquals(year, 	date.getYear());
-		assertEquals(month, date.getMonth());
-		assertEquals(day, 	date.getDay());
+		assertEquals(month, date.getMonthValue());
+		assertEquals(day, 	date.getDayOfMonth());
 	}
 	
 	
@@ -104,7 +104,7 @@ public class DateFormatTest extends CivTest
 	{
 		try
 		{
-			format.parse(TypeLib.DATE_CIVILIAN, s);
+			format.parse(TypeLib.DATE_LOCAL, s);
 			fail();
 		}
 		catch(ParseException e)

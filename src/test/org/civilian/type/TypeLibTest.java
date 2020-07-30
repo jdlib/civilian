@@ -29,7 +29,7 @@ public class TypeLibTest extends CivTest
 		TypeLib typeLib 	= new TypeLib();
 		TypeLib emptyLib 	= new TypeLib(false);
 		
-		int n = 25;
+		int n = 24;
 		assertEquals(n, typeLib.size());
 		assertEquals(0, emptyLib.size());
 		
