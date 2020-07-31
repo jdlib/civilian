@@ -30,6 +30,6 @@ public class WebResourceTest extends CivTest
 		assertNull(root.getParent());
 		assertNull(root.getSegment());
 		assertNull(root.getPathParam());
-		assertEquals(4, root.getChildCount());
+		assertEquals(5, root.getChildCount());
 	}
 }

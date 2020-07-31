@@ -21,49 +21,66 @@ template(Resource root, String outputPackage, String outputName, Application app
 }}
 
 
+private static final String WEBRESOURCE = WebResource.class.getName();
+
+
 private void printResourceClass(Resource resource)
 {{
 	@if (!resource.isRoot())
 		@// two line spacer
 		<%%>
 		<%%>
-	@int childCount = resource.getChildCount();
 	@printResourceComment(resource);
-	@String className; 
-	@if (resource.isRoot())
-		@className = outputName;
-		public class <%className%> extends <%WebResource.class.getName()%>
-	@else
-		@className = buildClassName(resource);
-		public static class <%className%> extends <%WebResource.class.getName()%>
+	@int childCount        = resource.getChildCount();
+	@boolean isRoot        = resource.isRoot(); 
+	@String className      = isRoot ? outputName : buildClassName(resource);
+	@boolean hasController = resource.getControllerSignature() != null;
+	public<%?!isRoot%> static<%?%> class <%className%><%?hasController%> extends <%WEBRESOURCE%><%?%> 
 	{
 		public <%className%><%/%>
-		@if (resource.isRoot())
+		@if (isRoot)
 			(String url)
 		@else
-			(<%WebResource.class.getName()%> parent)
+			(<%WEBRESOURCE%> parent)
 		{
-			super(<%printCtorArgs(resource, false);%>);
+			@if (hasController)
+				super<%/%>
+			@else
+				this.resource_ = new <%WEBRESOURCE%><%/%>
+			(<%printCtorArgs(resource, "parent");%>);
 			
 			@// print field definitions
 			@for (int i=0; i<childCount; i++)
 				@Resource child = resource.getChild(i);
-				addChild(this.<%buildFieldName(child)%> = new <%/%>
+				@boolean childHasController = child.getControllerSignature() != null;
+				@if (!hasController)
+					this.resource_.<%/%> 
+				addChild(<%/%>
+				@if (!childHasController)
+					(<%/%>
+				this.<%buildFieldName(child)%> = new <%/%>
 				@if (child.getChildCount() == 0)
-					<%WebResource.class.getName()%>(<%printCtorArgs(child, true);%>));
+					<%WEBRESOURCE%>(<%printCtorArgs(child, hasController ? "this" : "this.resource_");%>)<%/%>
 				@else
-					<%buildClassName(child)%>(this));
+					<%buildClassName(child)%>(this)<%/%>
+				@if (!childHasController)
+					).resource_<%/%>
+				);
 		}
 		@// print field declarations
 		@for (int i=0; i<childCount; i++)
 			<%%>
 			@Resource child = resource.getChild(i);
 			@printResourceComment(child);
-			public final <%child.getChildCount() > 0 ? buildClassName(child) : WebResource.class.getName()%> <%buildFieldName(child)%>;
+			public final <%child.getChildCount() > 0 ? buildClassName(child) : WEBRESOURCE%> <%buildFieldName(child)%>;
 		@for (int i=0; i<childCount; i++)
 			@Resource child = resource.getChild(i);
 			@if (child.getChildCount() > 0)
 				@printResourceClass(child);
+		@if (!hasController)
+			<%%>
+			// hidden since not mapped to a controller
+			private final <%WEBRESOURCE%> resource_;
 	}
 }}
 
@@ -77,10 +94,10 @@ private void printResourceComment(Resource resource)
 }}
 
 
-private void printCtorArgs(Resource resource, boolean isChild)
+private void printCtorArgs(Resource resource, String parent)
 {{
 	@if (!resource.isRoot())
-		<%isChild ? "this" : "parent"%>, <%/%> 
+		<%parent%>, <%/%> 
 		@if (resource.getSegment() != null)
 			"<%resource.getSegment()%>"<%/%>
 		@else
