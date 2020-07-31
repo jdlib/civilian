@@ -37,6 +37,13 @@ public abstract class TypeSerializer
 	@FunctionalInterface
 	public static interface Formatter<T>
 	{
+		/**
+		 * Returns a string representation of a typed value 
+		 * @param type a type
+		 * @param value a value 
+		 * @param style a style or null
+		 * @return the string
+		 */
 		public String format(Type<? extends T> type, T value, Style style); 
 	}
 	
@@ -47,9 +54,20 @@ public abstract class TypeSerializer
 	@FunctionalInterface
 	public static interface Parser<T>
 	{
+		/**
+		 * Parses and returns a typed value from a String. 
+		 * @param type a type
+		 * @param s a string
+		 * @return the parsed value
+		 * @throws Exception thrown when a parse error occurs
+		 */
 		public T parse(Type<T> type, String s) throws Exception; 
 		
 		
+		/**
+		 * Returns a value which represents the empty string.
+		 * @return the default implementation returns null.
+		 */
 		default public T parseEmpty() throws Exception
 		{
 			return null;
@@ -62,6 +80,12 @@ public abstract class TypeSerializer
 	 */
 	public static interface SimpleParser<T>
 	{
+		/**
+		 * Parses and returns a value from a String. 
+		 * @param s a string
+		 * @return the parsed value
+		 * @throws Exception thrown when a parse error occurs
+		 */
 		public T parse(String s) throws Exception; 
 	}
 	
