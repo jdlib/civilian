@@ -77,7 +77,7 @@ public class PageTemplate extends Template
 		printNavItem("Context", html.url(adminApp), viewedApp == null); // line 34: @printNavItem("Context", html.url(adminApp), viewedApp == null);
 		out.println("<li class=\"nav-header\">Applications</li>");      // line 35: <li class="nav-header">Applications</li>
 		Url appUrl = html.url(appResource);                             // line 36: @Url appUrl = html.url(appResource);
-		for (Application app : adminApp.getContext().getApplications()) // line 37: @for (Application app : adminApp.getContext().getApplications())
+		for (Application app : adminApp.getServer().getApplications()) // line 37: @for (Application app : adminApp.getContext().getApplications())
 		{
 			appUrl.setPathParam(app.getId());                           // line 38: @appUrl.setPathParam(app.getId());
 			printNavItem(app.getId(), appUrl, viewedApp == app);        // line 39: @printNavItem(app.getId(), appUrl, viewedApp == app);

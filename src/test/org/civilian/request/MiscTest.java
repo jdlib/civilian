@@ -20,8 +20,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import javax.servlet.http.Cookie;
 import org.civilian.CivTest;
-import org.civilian.context.test.TestLocalInfo;
-import org.civilian.context.test.TestRemoteInfo;
+import org.civilian.server.test.TestLocalInfo;
+import org.civilian.server.test.TestRemoteInfo;
 import org.junit.Test;
 
 

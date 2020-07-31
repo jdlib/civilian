@@ -4,7 +4,7 @@ package org.civilian.processor;
 import java.io.ByteArrayOutputStream;
 import java.util.zip.DeflaterOutputStream;
 import org.civilian.CivTest;
-import org.civilian.context.test.TestRequest;
+import org.civilian.server.test.TestRequest;
 import org.junit.Test;
 
 

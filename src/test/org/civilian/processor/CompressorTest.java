@@ -2,8 +2,8 @@ package org.civilian.processor;
 
 
 import org.civilian.CivTest;
-import org.civilian.context.test.TestRequest;
 import org.civilian.response.ResponseHeaders;
+import org.civilian.server.test.TestRequest;
 import org.junit.Test;
 
 

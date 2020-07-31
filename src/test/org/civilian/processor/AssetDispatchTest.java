@@ -19,7 +19,7 @@ package org.civilian.processor;
 import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.Context;
+import org.civilian.Server;
 import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.asset.Asset;
@@ -52,11 +52,11 @@ public class AssetDispatchTest extends CivTest
 		Request request 		= mock(Request.class);
 		Response response 		= mock(Response.class);
 		ResponseHeaders headers = mock(ResponseHeaders.class);
-		Context container     = mock(Context.class);
+		Server server     		= mock(Server.class);
 		Asset asset 			= mock(Asset.class);
 		AssetService service	= mock(AssetService.class);
 		when(request.getResponse()).thenReturn(response);
-		when(request.getContext()).thenReturn(container);
+		when(request.getServer()).thenReturn(server);
 		when(response.getHeaders()).thenReturn(headers);
 		when(service.hasAssets()).thenReturn(Boolean.TRUE);
 		
@@ -73,12 +73,12 @@ public class AssetDispatchTest extends CivTest
 		when(request.getRelativePath()).thenReturn(new Path("/test"));
 		
 		// test prohibited-asset requests
-		when(container.isProhibitedPath(anyString())).thenReturn(Boolean.TRUE);
+		when(server.isProhibitedPath(anyString())).thenReturn(Boolean.TRUE);
 		assertTrue(dispatch.process(request, ProcessorChain.EMPTY));
 		verify(response).sendError(Response.Status.SC404_NOT_FOUND);
 		
 		// switch to allowed requests
-		when(container.isProhibitedPath(anyString())).thenReturn(Boolean.FALSE);
+		when(server.isProhibitedPath(anyString())).thenReturn(Boolean.FALSE);
 		
 		// no asset found: dispatch to next
 		assertFalse(dispatch.process(request, ProcessorChain.EMPTY));

@@ -18,7 +18,7 @@ package org.civilian.application;
 
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.context.test.TestApp;
+import org.civilian.server.test.TestApp;
 
 
 public class AppConfigTest extends CivTest

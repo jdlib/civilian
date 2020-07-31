@@ -26,7 +26,7 @@ import org.civilian.controller.ControllerType;
 import org.civilian.controller.NegotiatedMethod;
 import org.civilian.internal.Logs;
 import org.civilian.provider.ApplicationProvider;
-import org.civilian.provider.ContextProvider;
+import org.civilian.provider.ServerProvider;
 import org.civilian.provider.MsgBundleProvider;
 import org.civilian.provider.RequestProvider;
 import org.civilian.provider.ResponseProvider;
@@ -95,7 +95,7 @@ import org.civilian.util.Check;
  * for application-wide error handling.
  */
 public class Controller implements 
-	MsgBundleProvider, RequestProvider, ResponseProvider, ApplicationProvider, ContextProvider
+	MsgBundleProvider, RequestProvider, ResponseProvider, ApplicationProvider, ServerProvider
 {
 	//------------------------------------
 	// accessors
@@ -113,12 +113,12 @@ public class Controller implements
 
 
 	/**
-	 * Returns the context to which the application belongs.
-	 * @see Application#getContext()
+	 * Returns the server to which the application belongs.
+	 * @see Application#getServer()
 	 */
-	@Override public Context getContext()
+	@Override public Server getServer()
 	{
-		return getApplication().getContext();
+		return getApplication().getServer();
 	}
 	
 	

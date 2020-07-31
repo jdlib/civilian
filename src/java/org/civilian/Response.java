@@ -28,7 +28,7 @@ import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.JaxbXmlSerializer;
 import org.civilian.provider.ApplicationProvider;
-import org.civilian.provider.ContextProvider;
+import org.civilian.provider.ServerProvider;
 import org.civilian.provider.LocaleServiceProvider;
 import org.civilian.provider.RequestProvider;
 import org.civilian.provider.ResponseProvider;
@@ -51,7 +51,7 @@ import org.civilian.util.Check;
  * In a Servlet environment Response is functionally equivalent to a HttpServletResponse.
  */
 public interface Response extends RequestProvider, ResponseProvider, ApplicationProvider, 
-	ContextProvider, LocaleServiceProvider
+	ServerProvider, LocaleServiceProvider
 {
 	/**
 	 * Defines constants for the response status. Their numeric value equals the correspondent HTTP status code.
@@ -208,11 +208,11 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 
 	
 	/**
-	 * Returns the context.
+	 * Returns the server.
 	 */
-	@Override public default Context getContext()
+	@Override public default Server getServer()
 	{
-		return getApplication().getContext();
+		return getApplication().getServer();
 	}
 
 	

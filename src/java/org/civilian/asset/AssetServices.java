@@ -20,7 +20,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.civilian.Application;
-import org.civilian.Context;
+import org.civilian.Server;
 import org.civilian.application.ConfigKeys;
 import org.civilian.content.ContentType;
 import org.civilian.internal.asset.AssetCache;
@@ -131,7 +131,7 @@ public abstract class AssetServices
 		AssetLocation location;
 		if (DIR_LOCATION_KEY.equals(type))
 		{
-			location = getDirectoryLocation(relPath, app.getContext(), param != null ? param : "");
+			location = getDirectoryLocation(relPath, app.getServer(), param != null ? param : "");
 		}
 		else if (JAVARES_LOCATION_KEY.equals(type))
 		{
@@ -175,21 +175,21 @@ public abstract class AssetServices
 	/**
 	 * Returns a new AssetDirectory for asset files in the local file-system.
 	 * @param path the path of the AssetLocation below the asset-root. 
-	 * @param context the context 
-	 * @param directory a directory. If null, then the context root directory is used. If relative
-	 * 		then the (context directory)/directory is used. Else if absolute the directory itself is used.
+	 * @param server the server 
+	 * @param directory a directory. If null, then the server root directory is used. If relative
+	 * 		then the (server directory)/directory is used. Else if absolute the directory itself is used.
 	 */
-	public static AssetLocation getDirectoryLocation(String path, Context context, String directory)
+	public static AssetLocation getDirectoryLocation(String path, Server server, String directory)
 	{
 		File result;
 		
 		if (directory == null)
-			result = context.getRootDir();
+			result = server.getRootDir();
 		else
 		{
 			result = new File(directory);
 			if (!result.exists())
-				result = new File(context.getRootDir(), directory);
+				result = new File(server.getRootDir(), directory);
 		}		
 		
 		return getDirectoryLocation(path, result);

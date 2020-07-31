@@ -20,8 +20,8 @@ import java.io.File;
 import java.util.List;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
-import org.civilian.context.test.TestApp;
-import org.civilian.context.test.TestContext;
+import org.civilian.server.test.TestApp;
+import org.civilian.server.test.TestServer;
 import org.civilian.util.Settings;
 import org.junit.Test;
 
@@ -30,9 +30,9 @@ public class AssetServicesTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
-		TestContext context = new TestContext();
+		TestServer server = new TestServer();
 		TestApp app = new TestApp();
-		context.addApp(app, "app", "", null);
+		server.addApp(app, "app", "", null);
 		
 		File dir = new File(".").getAbsoluteFile();
 		

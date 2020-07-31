@@ -28,12 +28,11 @@ public abstract class Logs
 	public static final Logger APPLICATION	= getLog("application"); 
 	public static final Logger ASSET 		= getLog("asset");
 	public static final Logger CLASSLOADER 	= getLog("classloader");
-	public static final Logger CONTEXT		= getLog("context");
 	public static final Logger CONTROLLER	= getLog("controller");
 	public static final Logger PROCESSOR	= getLog("processor");
 	public static final Logger REQUEST 		= getLog("request");
 	public static final Logger RESPONSE 	= getLog("response");
-	public static final Logger SERVLET 		= getLog("servlet");
+	public static final Logger SERVER		= getLog("server");
 	
 	
 	private static Logger getLog(String suffix)

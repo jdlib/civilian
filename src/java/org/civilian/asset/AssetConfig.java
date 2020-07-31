@@ -18,7 +18,7 @@ package org.civilian.asset;
 
 import java.util.Collection;
 import java.util.HashMap;
-import org.civilian.Context;
+import org.civilian.Server;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
 import org.civilian.util.Check;
@@ -122,7 +122,7 @@ public class AssetConfig
 	/**
 	 * Returns the lookup service which should be used to derive
 	 * content-types from asset file names. By default the ContentLookup of the 
-	 * {@link Context#getContentTypeLookup() context} is used. 
+	 * {@link Server#getContentTypeLookup() server} is used. 
 	 */
 	public ContentTypeLookup getContentTypeLookup()
 	{

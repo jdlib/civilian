@@ -27,7 +27,7 @@ public class ScanTest extends CivTest
 {
 	@Test public void testFileScan() throws Exception
 	{
-		ClassPathScan scan = new ClassPathScan("org.civilian.context.servlet");
+		ClassPathScan scan = new ClassPathScan("org.civilian.server.servlet");
 		Set<String> adapters = scan.collect(new ClassFilter()
 		{
 			@Override public boolean accept(String className)
@@ -36,15 +36,14 @@ public class ScanTest extends CivTest
 			}
 		});
 		
-		assertEquals(8, adapters.size());
-		assertTrue(adapters.contains("org.civilian.context.servlet.ServletResponseAdapter"));
-		assertTrue(adapters.contains("org.civilian.context.servlet.ServletRequestAdapter"));
-		assertTrue(adapters.contains("org.civilian.context.servlet.MpRequestAdapter"));
-		assertTrue(adapters.contains("org.civilian.context.servlet.SpRequestAdapter"));
-		assertTrue(adapters.contains("org.civilian.context.servlet.SessionAdapter"));
-		assertTrue(adapters.contains("org.civilian.context.servlet.AsyncContextAdapter"));
-		assertTrue(adapters.contains("org.civilian.context.servlet.AsyncListenerAdapter"));
-		assertTrue(adapters.contains("org.civilian.context.servlet.ServletContextAdapter"));
+		assertEquals(7, adapters.size());
+		assertTrue(adapters.contains("org.civilian.server.servlet.ServletResponseAdapter"));
+		assertTrue(adapters.contains("org.civilian.server.servlet.ServletRequestAdapter"));
+		assertTrue(adapters.contains("org.civilian.server.servlet.MpRequestAdapter"));
+		assertTrue(adapters.contains("org.civilian.server.servlet.SpRequestAdapter"));
+		assertTrue(adapters.contains("org.civilian.server.servlet.SessionAdapter"));
+		assertTrue(adapters.contains("org.civilian.server.servlet.AsyncContextAdapter"));
+		assertTrue(adapters.contains("org.civilian.server.servlet.AsyncListenerAdapter"));
 	}
 
 

@@ -25,10 +25,10 @@ import org.civilian.CivTest;
 import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.content.ContentType;
-import org.civilian.context.test.TestResponse;
 import org.civilian.internal.ParamList;
 import org.civilian.internal.asset.MemoryAsset;
 import org.civilian.internal.asset.UrlAsset;
+import org.civilian.server.test.TestResponse;
 
 
 public class AssetTest extends CivTest

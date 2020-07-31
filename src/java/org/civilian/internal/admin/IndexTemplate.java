@@ -7,7 +7,7 @@ package org.civilian.internal.admin;
 
 import java.util.Date;
 import org.civilian.Application;
-import org.civilian.Context;
+import org.civilian.Server;
 import org.civilian.Version;
 import org.civilian.resource.Url;
 import org.civilian.template.Template;
@@ -16,9 +16,9 @@ import org.civilian.template.mixin.HtmlMixin;
 
 public class IndexTemplate extends Template
 {
-	public IndexTemplate(Context context)
+	public IndexTemplate(Server server)
 	{
-		this.context = context;
+		this.server = server;
 	}
 
 
@@ -44,27 +44,27 @@ public class IndexTemplate extends Template
 		out.increaseTab();
 		out.println("<td>Develop</td>");                                // line 18: <td>Develop</td>
 		out.print("<td>");                                              // line 19: <td>
-		out.print(context.develop());                                   // line 19: <%context.develop()%>
+		out.print(server.develop());                                    // line 19: <%server.develop()%>
 		out.println("</td>");                                           // line 19: </td>
-		out.println("<td>org.civilian.Context.develop()</td>");         // line 20: <td>org.civilian.Context.develop()</td>
+		out.println("<td>org.civilian.Server.develop()</td>");          // line 20: <td>org.civilian.Server.develop()</td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 21: </tr>
 		out.println("<tr>");                                            // line 22: <tr>
 		out.increaseTab();
-		out.println("<td>Context Path</td>");                           // line 23: <td>Context Path</td>
+		out.println("<td>Server Path</td>");                            // line 23: <td>Server Path</td>
 		out.print("<td>");                                              // line 24: <td>
-		out.print(context.getPath());                                   // line 24: <%context.getPath()%>
+		out.print(server.getPath());                                    // line 24: <%server.getPath()%>
 		out.println("</td>");                                           // line 24: </td>
-		out.println("<td>org.civilian.Context.getPath()</td>");         // line 25: <td>org.civilian.Context.getPath()</td>
+		out.println("<td>org.civilian.Server.getPath()</td>");          // line 25: <td>org.civilian.Server.getPath()</td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 26: </tr>
 		out.println("<tr>");                                            // line 27: <tr>
 		out.increaseTab();
-		out.println("<td>Context Class</td>");                          // line 28: <td>Context Class</td>
+		out.println("<td>Server Class</td>");                           // line 28: <td>Server Class</td>
 		out.print("<td>");                                              // line 29: <td>
-		out.print(context.getClass().getName());                        // line 29: <%context.getClass().getName()%>
+		out.print(server.getClass().getName());                         // line 29: <%server.getClass().getName()%>
 		out.println("</td>");                                           // line 29: </td>
-		out.println("<td>org.civilian.Context.getClass()</td>");        // line 30: <td>org.civilian.Context.getClass()</td>
+		out.println("<td>org.civilian.Server.getClass()</td>");         // line 30: <td>org.civilian.Server.getClass()</td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 31: </tr>
 		out.println("<tr>");                                            // line 32: <tr>
@@ -80,11 +80,11 @@ public class IndexTemplate extends Template
 		out.increaseTab();
 		out.println("<td>Server</td>");                                 // line 38: <td>Server</td>
 		out.print("<td>");                                              // line 39: <td>
-		out.print(context.getServerInfo());                             // line 39: <%context.getServerInfo()%>
+		out.print(server.getServerInfo());                              // line 39: <%server.getServerInfo()%>
 		out.print(" ");                                                 // line 39: 
-		out.print(context.getServerVersion());                          // line 39: <%context.getServerVersion()%>
+		out.print(server.getServerVersion());                           // line 39: <%server.getServerVersion()%>
 		out.println("</td>");                                           // line 39: </td>
-		out.println("<td>org.civilian.Context.getServerInfo(), .getServerVersion()</td>"); // line 40: <td>org.civilian.Context.getServerInfo(), .getServerVersion()</td>
+		out.println("<td>org.civilian.Server.getServerInfo(), .getServerVersion()</td>"); // line 40: <td>org.civilian.Server.getServerInfo(), .getServerVersion()</td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 41: </tr>
 		out.println("<tr>");                                            // line 42: <tr>
@@ -129,7 +129,7 @@ public class IndexTemplate extends Template
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 66: </tr>
 		Url appUrl = html.url(AdminResources.root.$appId.settings);     // line 67: @Url appUrl = html.url(AdminResources.root.$appId.settings);
-		for (Application app : context.getApplications())               // line 68: @for (Application app : context.getApplications())
+		for (Application app : server.getApplications())                // line 68: @for (Application app : server.getApplications())
 		{
 			appUrl.setPathParam(app.getId());                           // line 69: @appUrl.setPathParam(app.getId());
 			out.println("<tr>");                                        // line 70: <tr>
@@ -170,6 +170,6 @@ public class IndexTemplate extends Template
 	}
 
 
-	protected Context context;
+	protected Server server;
 	protected HtmlMixin html;
 }

@@ -23,9 +23,9 @@ import java.io.Reader;
 import org.civilian.Application;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
-import org.civilian.context.test.TestContext;
 import org.civilian.internal.asset.CivResourceLocation;
 import org.civilian.resource.Path;
+import org.civilian.server.test.TestServer;
 import org.civilian.util.IoUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,10 +35,10 @@ public class AssetLocationTest extends CivTest
 {
 	@BeforeClass public static void beforeClass()
 	{
-		TestContext context = new TestContext(); 
+		TestServer server = new TestServer(); 
 		
 		app_ = mock(Application.class);
-		when(app_.getContext()).thenReturn(context);
+		when(app_.getServer()).thenReturn(server);
 	}
 	
 	

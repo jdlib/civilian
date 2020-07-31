@@ -34,7 +34,7 @@ import org.civilian.controller.ControllerConfig;
 import org.civilian.controller.ControllerNaming;
 import org.civilian.controller.ControllerService;
 import org.civilian.internal.Logs;
-import org.civilian.internal.TempContext;
+import org.civilian.internal.TempServer;
 import org.civilian.processor.AssetDispatch;
 import org.civilian.processor.ErrorProcessor;
 import org.civilian.processor.IpFilter;
@@ -42,7 +42,7 @@ import org.civilian.processor.ProcessorConfig;
 import org.civilian.processor.ProcessorList;
 import org.civilian.processor.ResourceDispatch;
 import org.civilian.provider.ApplicationProvider;
-import org.civilian.provider.ContextProvider;
+import org.civilian.provider.ServerProvider;
 import org.civilian.provider.PathProvider;
 import org.civilian.request.BadRequestException;
 import org.civilian.resource.Path;
@@ -62,7 +62,7 @@ import org.slf4j.Logger;
 /**
  * Application represents a Civilian application.
  */
-public abstract class Application implements ApplicationProvider, ContextProvider, PathProvider
+public abstract class Application implements ApplicationProvider, ServerProvider, PathProvider
 {
 	private static final Logger log = Logs.APPLICATION; 
 	
@@ -151,7 +151,7 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 
 	
 	/** 
-	 * Called by the Context.
+	 * Called by the Server.
 	 */
 	void setConnector(Object connector)
 	{
@@ -181,18 +181,18 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 
 	
 	/**
-	 * Called by the context when the application is added to the context.
-	 * @param context the context
+	 * Called by the server when the application is added to the server.
+	 * @param server the server
 	 * @param id the application id
-	 * @param relativePath the relative path of the application within the context
+	 * @param relativePath the relative path of the application within the server
 	 * @param settings the application settings
 	 */
-	final InitResult init(Context context, String id, Path relativePath, Settings settings)
+	final InitResult init(Server server, String id, Path relativePath, Settings settings)
 	{
-		context_ 			= context;
+		server_ 			= server;
 		id_ 				= id;
 		relativePath_		= relativePath;
-		path_				= context.getPath().add(relativePath);
+		path_				= server.getPath().add(relativePath);
 		InitResult result	= new InitResult();
 
 		if (getStatus() != Status.CREATED)
@@ -389,8 +389,8 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	
 	
 	/**
-	 * Closes the application. Called when the context shuts down
-	 * or the application is removed from the context.
+	 * Closes the application. Called when the server shuts down
+	 * or the application is removed from the server.
 	 */
 	void runClose() throws Exception
 	{
@@ -407,8 +407,8 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 
 	
 	/**
-	 * Closes the application. Called when the context shuts down
-	 * or the application is removed from the context.
+	 * Closes the application. Called when the server shuts down
+	 * or the application is removed from the server.
 	 * The method is also called when {@link #init(AppConfig)} threw an exception.
 	 * Therefore you need to take into account that your app resource may
 	 * not have been fully initialized.
@@ -433,9 +433,9 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	/**
 	 * Returns the application id.
 	 * The id is used to identify the application within
-	 * the {@link Context}. The id was defined within
+	 * the {@link Server}. The id was defined within
 	 * <code>civilian.ini</code>.
-	 * @see Context#getApplication(String) 
+	 * @see Server#getApplication(String) 
 	 */
 	public String getId()
 	{
@@ -455,24 +455,24 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 
 	
 	/**
-	 * Returns the develop flag of the context.
+	 * Returns the develop flag of the server.
 	 * The develop flag is defined in the Civilian config file.
 	 * @return if true the application runs in development mode,
 	 * 		else in production mode.
-	 * @see Context#develop()
+	 * @see Server#develop()
 	 */
 	public boolean develop()
 	{
-		return context_.develop();
+		return server_.develop();
 	}
 
 
 	/**
-	 * Returns the context in which the application is running.
+	 * Returns the server in which the application is running.
 	 */
-	@Override public Context getContext()
+	@Override public Server getServer()
 	{
-		return context_;
+		return server_;
 	}
 	
 	
@@ -495,7 +495,7 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 
 	
 	/**
-	 * Returns the relative path from the context to the application.
+	 * Returns the relative path from the server to the application.
 	 */
 	@Override public Path getRelativePath()
 	{ 
@@ -784,12 +784,12 @@ public abstract class Application implements ApplicationProvider, ContextProvide
 	}
 	
 	
-	// properties all have reasonable defaults, initialized again when added to the context
+	// properties all have reasonable defaults, initialized again when added to the server
 	private String id_ = "?";
 	private String encoding_ = ConfigKeys.ENCODING_DEFAULT;
 	private Path relativePath_ = Path.ROOT;
 	private Path path_ = Path.ROOT;
-	private Context context_ = TempContext.INSTANCE;
+	private Server server_ = TempServer.INSTANCE;
 	
 	// properties set after init(AppConfig)
 	private ControllerService controllerService_;

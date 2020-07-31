@@ -25,10 +25,10 @@ import org.civilian.CivTest;
 import org.civilian.Resource;
 import org.civilian.Response;
 import org.civilian.content.ContentType;
-import org.civilian.context.test.TestApp;
-import org.civilian.context.test.TestRequest;
-import org.civilian.context.test.TestResponse;
 import org.civilian.resource.Url;
+import org.civilian.server.test.TestApp;
+import org.civilian.server.test.TestRequest;
+import org.civilian.server.test.TestResponse;
 import org.civilian.template.TemplateWriter;
 import org.civilian.template.TextTemplate;
 import org.civilian.text.LocaleService;
@@ -66,7 +66,7 @@ public class AbstractResponseTest extends CivTest
 		assertSame(request, 			response.getRequest());
 		assertSame(app, 				response.getApplication());
 		assertSame(response, 			response.getResponse());
-		assertSame(app.getContext(), 	response.getContext());
+		assertSame(app.getServer(), 	response.getServer());
 		
 		assertNotNull(response.getUriEncoder());
 

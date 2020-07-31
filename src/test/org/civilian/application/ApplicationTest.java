@@ -22,10 +22,10 @@ import org.junit.Test;
 import org.civilian.Application;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
-import org.civilian.context.test.TestApp;
-import org.civilian.context.test.TestContext;
-import org.civilian.context.test.TestRequest;
 import org.civilian.resource.PathParamMap;
+import org.civilian.server.test.TestApp;
+import org.civilian.server.test.TestRequest;
+import org.civilian.server.test.TestServer;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.Settings;
 
@@ -108,17 +108,17 @@ public class ApplicationTest extends CivTest
 	
 	@Test public void testInit() throws Exception
 	{
-		TestContext context = new TestContext();
-		context.setDevelop(true);
+		TestServer server = new TestServer();
+		server.setDevelop(true);
 		
 		ErrorApp errorApp = new ErrorApp();
-		context.addApp(errorApp, "err", "err", null);
+		server.addApp(errorApp, "err", "err", null);
 		assertEquals(Application.Status.ERROR, errorApp.getStatus());
 
 		TestApp testApp = new TestApp();
 		Settings settings = new Settings();
 		settings.set(ConfigKeys.DEV_CLASSRELOAD, true);
-		context.addApp(testApp, "test", "test", settings);
+		server.addApp(testApp, "test", "test", settings);
 		assertEquals(Application.Status.RUNNING, testApp.getStatus());
 		assertTrue(testApp.getControllerService().isReloading());
 		assertNotNull(testApp.getProcessors());

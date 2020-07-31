@@ -1,11 +1,11 @@
 import java.util.Date
 import org.civilian.Version
-import org.civilian.Context
+import org.civilian.Server
 import org.civilian.Application
 import org.civilian.resource.Url
 
 
-template(Context context) mixin html
+template(Server server) mixin html
 {{
 	<h3>Context Settings</h3>
 	<table class="table table-striped table-bordered table-condensed">
@@ -16,18 +16,18 @@ template(Context context) mixin html
 	</tr>
 	<tr>
 		<td>Develop</td>
-		<td><%context.develop()%></td>
-		<td>org.civilian.Context.develop()</td>
+		<td><%server.develop()%></td>
+		<td>org.civilian.Server.develop()</td>
 	</tr>
 	<tr>
-		<td>Context Path</td>
-		<td><%context.getPath()%></td>
-		<td>org.civilian.Context.getPath()</td>
+		<td>Server Path</td>
+		<td><%server.getPath()%></td>
+		<td>org.civilian.Server.getPath()</td>
 	</tr>
 	<tr>
-		<td>Context Class</td>
-		<td><%context.getClass().getName()%></td>
-		<td>org.civilian.Context.getClass()</td>
+		<td>Server Class</td>
+		<td><%server.getClass().getName()%></td>
+		<td>org.civilian.Server.getClass()</td>
 	</tr>
 	<tr>
 		<td>Civilian Version</td>
@@ -36,8 +36,8 @@ template(Context context) mixin html
 	</tr>
 	<tr>
 		<td>Server</td>
-		<td><%context.getServerInfo()%> <%context.getServerVersion()%></td>
-		<td>org.civilian.Context.getServerInfo(), .getServerVersion()</td>
+		<td><%server.getServerInfo()%> <%server.getServerVersion()%></td>
+		<td>org.civilian.Server.getServerInfo(), .getServerVersion()</td>
 	</tr>
 	<tr>
 		<td>Java Version, VM</td>
@@ -65,7 +65,7 @@ template(Context context) mixin html
 		<th>App Class</th>
 	</tr>
 	@Url appUrl = html.url(AdminResources.root.$appId.settings);
-	@for (Application app : context.getApplications())
+	@for (Application app : server.getApplications())
 		@appUrl.setPathParam(app.getId()); 
 		<tr>
 			@// link within the admin app

@@ -21,7 +21,7 @@ import java.io.StringWriter;
 import java.util.List;
 import javax.servlet.Servlet;
 import org.civilian.CivTest;
-import org.civilian.Context;
+import org.civilian.Server;
 import org.civilian.tool.csp.ImportList;
 import org.junit.Test;
 
@@ -46,7 +46,7 @@ public class ImportListTest extends CivTest
 		assertFalse(list.write(w));
 		assertEquals("", s.toString());
 		
-		list.add(Context.class);
+		list.add(Server.class);
 		list.add("org.junit.Test");
 		list.add(Servlet.class);
 		list.add(List.class);
@@ -55,6 +55,6 @@ public class ImportListTest extends CivTest
 		assertEquals("import java.util.List;\n" +
 			"import javax.servlet.Servlet;\n" +
 			"import org.junit.Test;\n" + 
-			"import org.civilian.Context;\n", output);
+			"import org.civilian.Server;\n", output);
 	}
 }

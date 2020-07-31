@@ -63,7 +63,7 @@ public class AssetDispatch extends Processor
 		Path relativePath = request.getRelativePath();
 		
 		// catch if someone tries to sneak into private folders (e.g. WEB-INF)
-		if (request.getContext().isProhibitedPath(relativePath.toString()))
+		if (request.getServer().isProhibitedPath(relativePath.toString()))
 		{
 			request.getResponse().sendError(Response.Status.SC404_NOT_FOUND);
 			return true;

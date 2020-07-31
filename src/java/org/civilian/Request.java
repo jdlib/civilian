@@ -68,7 +68,7 @@ import org.civilian.util.Value;
  * </ul>
  */
 public interface Request extends RequestProvider, ResponseProvider, ApplicationProvider, 
-	ContextProvider, PathParamProvider, PathProvider, LocaleServiceProvider
+	ServerProvider, PathParamProvider, PathProvider, LocaleServiceProvider
 {
 	/**
 	 * Defines constants for common request methods as defined by the HTTP protocol. 
@@ -142,11 +142,11 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 
 	
 	/**
-	 * Returns the context to which this request belongs.
+	 * Returns the server to which this request belongs.
 	 */
-	@Override public default Context getContext()
+	@Override public default Server getServer()
 	{
-		return getApplication().getContext();
+		return getApplication().getServer();
 	}
 
 	
@@ -196,13 +196,13 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns the real path on the server which corresponds to the request path
 	 * @return the path or null, if there is no correspondence.
-	 * @see Context#getRealPath(String)
+	 * @see Server#getRealPath(String)
 	 */
 	public default String getRealPath()
 	{
-		Context context 	= getContext();
-		Path subContextPath = getPath().cutStart(context.getPath()); 
-		return subContextPath != null ? context.getRealPath(subContextPath) : null;
+		Server server = getServer();
+		Path subContextPath = getPath().cutStart(server.getPath()); 
+		return subContextPath != null ? server.getRealPath(subContextPath) : null;
 	}
 
 

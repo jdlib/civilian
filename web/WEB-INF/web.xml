@@ -4,7 +4,7 @@
     version="3.0">
 
 	<listener>
-		<listener-class>org.civilian.context.servlet.ContextListener</listener-class>
+		<listener-class>org.civilian.server.servlet.ContextListener</listener-class>
 	</listener>
 
 	<session-config>
@@ -18,7 +18,7 @@
 	 
 	<servlet>
 		<servlet-name>crm-servlet</servlet-name>
-		<servlet-class>org.civilian.container.servlet.AppServlet</servlet-class>
+		<servlet-class>org.civilian.server.servlet.AppServlet</servlet-class>
 		<init-param>
 			<param-name>app.id</param-name>
 			<param-value>crm</param-value>

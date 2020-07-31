@@ -126,7 +126,7 @@ public class AppConfig
 	private void initAssetConfig()
 	{
 		assetConfig_ = new AssetConfig();
-		assetConfig_.setContentTypeLookup(app_.getContext().getContentTypeLookup());
+		assetConfig_.setContentTypeLookup(app_.getServer().getContentTypeLookup());
 		
 	}
 	

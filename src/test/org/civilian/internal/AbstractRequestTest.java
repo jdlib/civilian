@@ -22,9 +22,9 @@ import java.io.PrintStream;
 import java.io.Reader;
 import org.civilian.CivTest;
 import org.civilian.Request;
-import org.civilian.context.test.TestApp;
-import org.civilian.context.test.TestRequest;
-import org.civilian.context.test.TestResponse;
+import org.civilian.server.test.TestApp;
+import org.civilian.server.test.TestRequest;
+import org.civilian.server.test.TestResponse;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -50,7 +50,7 @@ public class AbstractRequestTest extends CivTest
 	{
 		assertSame(request, request.getRequest());
 		assertSame(app, request.getApplication());
-		assertSame(app.getContext(), request.getContext());
+		assertSame(app.getServer(), request.getServer());
 		
 		request.setResponse(response); // ok
 	}

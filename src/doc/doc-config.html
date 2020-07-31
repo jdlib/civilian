@@ -14,7 +14,7 @@
 			<li><a href="#prog">Programmatic configuration</a></li>
 			<li><a href="#logging">Logging</a></li>
 			<li><a href="#servlet-explicit">Explicit servlet configuration</a></li>
-			<li><a href="#multiapp">Multiple applications in a context</a></li>
+			<li><a href="#multiapp">Multiple applications in a server</a></li>
 		</ul>
 		
 		<h2 id="servlet">Minimal servlet configuration and web.xml</h2>
@@ -23,10 +23,10 @@
 		The minimal <code>web.xml</code> looks like <a href="web.xml">this</a>:
 		<div class="highlight"><pre><code>&lt;web-app version="3.0" <i>...3.0 schema-decls omitted...</i>>
     &lt;listener>
-        &lt;listener-class>org.civilian.context.servlet.ContextListener&lt;/listener-class>
+        &lt;listener-class>org.civilian.server.servlet.ContextListener&lt;/listener-class>
     &lt;/listener>
 &lt;/web-app></code></pre></div>
-		The {javadoc:context.servlet.ContextListener} will be run at server startup and bootstraps Civilian.
+		The {javadoc:server.servlet.ContextListener} will be run at server startup and bootstraps Civilian.
 		It reads the config file <code>WEB-INF/civilian.ini</code> (see next section), initializes the application
 		and dynamically creates all needed servlets.<p>
 		  	
@@ -41,17 +41,17 @@
 		and their default values.
 		We give an overview of the most important entries:
 		<p>
-		The <b>develop flag</b> controls if the Civilian {javadoc:Context} and its applications run in
-		{javadoc:Context#develop() development mode}:
+		The <b>develop flag</b> controls if the Civilian {javadoc:Server} and its applications run in
+		{javadoc:Server#develop() development mode}:
 		<div class="highlight">
 			<pre><code>develop = true</code></pre>
 		</div>
 		
-		You can run one or more applications inside a Civilian context (<a href="#multiapp">This</a>
+		You can run one or more applications inside a Civilian server (<a href="#multiapp">This</a>
 		topic motivates why you would want to run more than one app). Every <b>application config</b>
 		uses keys <code>app.<i>id</i>.*</code> with id being a unique {javadoc:Application#getId() identifier} for each application.<br>
 		The <b>class</b> entry gives the application class, <b>path</b> the {javadoc:Application#getRelativePath() relative path} of the 
-		application under the context path. 
+		application under the server path. 
 		<b>enabled</b> allows to include/exclude the application from deployment. <b>encoding</b> is the default application
 		{javadoc:Application#getEncoding() encoding} used for assets, HTML pages, etc.
 		<div class="highlight">
@@ -132,13 +132,12 @@
 		<ul>
 		<li>org.civilian.application
 		<li>org.civilian.asset
-		<li>org.civilian.servlet
 		<li>org.civilian.classloader
-		<li>org.civilian.context
 		<li>org.civilian.controller
 		<li>org.civilian.processor
 		<li>org.civilian.request
 		<li>org.civilian.response
+		<li>org.civilian.server
 		</ul>
 
 		<h2 id="servlet-explicit">Explicit servlet configuration</h2>
@@ -154,7 +153,7 @@
     ...
     &lt;servlet>
         &lt;servlet-name><b><i>myapp-servlet-name</i></b>&lt;/servlet-name>
-        &lt;servlet-class>org.civilian.context.servlet.AppServlet&lt;/servlet-class>
+        &lt;servlet-class>org.civilian.server.servlet.AppServlet&lt;/servlet-class>
         &lt;init-param>
             &lt;param-name>app.id&lt;/param-name>
             &lt;param-value><b>myapp</b>&lt;/param-value>
@@ -167,17 +166,17 @@
     ...
 &lt;web-app></code></pre></div>
 
-		<h2 id="multiapp">Multiple applications in a context</h2>
-		Civilian allows to install more than one applications in a context.
+		<h2 id="multiapp">Multiple applications in a server</h2>
+		Civilian allows to install more than one applications in a server.
 		Of course it is perfectly fine to only use a single application, whose path equals
-		the context path.
+		the server path.
 		Installing multiple application effectively means to segment the resource URL space
-		below the context into multiple application spaces.  
+		below the server into multiple application spaces.  
 		The following gives some use-cases where multi-installations are usefull:
 		<ul>
 		<li>The <a href="doc-development.html#admin">admin app</a> can be plugged-in into
 			the application space and comes in handy during development to diagnose configuration problems.
-		<li>The <a href="doc-samples.html">samples</a> all run within the same Civilian context,
+		<li>The <a href="doc-samples.html">samples</a> all run within the same Civilian server,
 			not needing separate servlet contexts. 
 		<li>One can develop "module" applications which are not meant to run alone but to be added
 			to another app, providing certain functionality.

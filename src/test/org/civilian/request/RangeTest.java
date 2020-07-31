@@ -5,10 +5,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import org.civilian.CivTest;
-import org.civilian.context.test.TestApp;
-import org.civilian.context.test.TestRequest;
-import org.civilian.context.test.TestResponse;
 import org.civilian.request.Range.Part;
+import org.civilian.server.test.TestApp;
+import org.civilian.server.test.TestRequest;
+import org.civilian.server.test.TestResponse;
 import org.junit.Test;
 
 

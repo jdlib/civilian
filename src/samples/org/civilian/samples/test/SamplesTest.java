@@ -19,11 +19,11 @@
 import java.io.File;
 import org.civilian.Application;
 import org.civilian.content.ContentType;
-import org.civilian.context.test.TestContext;
-import org.civilian.context.test.TestRequest;
-import org.civilian.context.test.TestResponse;
 import org.civilian.samples.crm.web.CrmApp;
 import org.civilian.samples.crm.web.CrmResources;
+import org.civilian.server.test.TestRequest;
+import org.civilian.server.test.TestResponse;
+import org.civilian.server.test.TestServer;
 
 
 public class SamplesTest extends Assert
@@ -42,27 +42,27 @@ public class SamplesTest extends Assert
 	
 	public void run(File webDir) throws Exception
 	{
-		TestContext context = new TestContext(webDir);
+		TestServer server = new TestServer(webDir);
 		try
 		{
 			// the following would read civilian.ini and initialize all apps:
-			// context.init();
+			// server.init();
 			
-			runCrmTest(context);
+			runCrmTest(server);
 		}
 		finally
 		{
-			context.close();
+			server.close();
 		}
 	}
 	
 	
-	private void runCrmTest(TestContext context) throws Exception
+	private void runCrmTest(TestServer server) throws Exception
 	{
 		// explicitly initialize the CRM app
 		
 		CrmApp crmApp = new CrmApp();
-		context.addApp(crmApp, "crm", "/");
+		server.addApp(crmApp, "crm", "/");
 		
 		assertEquals(Application.Status.RUNNING, crmApp.getStatus());
 		assertEquals("/", crmApp.getPath().print());

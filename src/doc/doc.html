@@ -10,7 +10,7 @@
 		<ul>
 			<li><a href="#core">Core classes and concepts</a></li>
 				<ul>
-					<li><a href="#core-app">About applications and contexts</a></li>
+					<li><a href="#core-app">About servers applications</a></li>
 					<li><a href="#core-ctrl">About resources and controllers</a></li>
 					<li><a href="#core-ctrl2">About controllers (continued)</a></li>
 					<li><a href="#core-assets">About assets</a></li>
@@ -21,16 +21,16 @@
 		 
 		<h2 id="core">Core classes and concepts</h2>
 		
-		<h3 id="core-app">About applications and contexts</h3>
+		<h3 id="core-app">About servers applications</h3>
 		
-		A Civilian {javadoc:Application} is a server application which receives HTTP {javadoc:Request Requests}
+		A Civilian {javadoc:Application} runs inside a {javadoc:Server}, receives {javadoc:Request Requests}
 		and generates {javadoc:Response Responses}.
 		<div class="img"><img src="doc-arch-app.png"></div>
 
-		Application instances are singletons. They are embedded into a server by the means of a {javadoc:Context} 
-		which provides access to server resources.
-		A Context can host one ore more applications. Context and applications are associated with a path within the server.  
-		<div class="img"><img src="doc-arch-context.png"></div>
+		Application instances are singletons. They are embedded into a {javadoc:Server} 
+		which represents the physical server (e.g. a web server or ServletContainer) and provides access to server resources.
+		A Server can host one ore more applications. Server and applications are associated with a path within the phyiscal server.  
+		<div class="img"><img src="doc-arch-server.png"></div>
 		The main responsibility of application instances is to provide application global resources 
 		such as database connections to your data back-end, initialize those resources at application start and clean up at shutdown.  
 		
@@ -166,7 +166,7 @@
 			<th width="50%">Servlet Environment</th> 
 		</tr>
 		<tr>
-			<td>{javadoc:Context}</td>
+			<td>{javadoc:Server}</td>
 			<td>javax.servlet.ServletContext</td>
 		</tr>
 		<tr>

@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import org.civilian.CivTest;
 import org.civilian.Controller;
 import org.civilian.annotation.Get;
-import org.civilian.context.test.TestApp;
+import org.civilian.server.test.TestApp;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class ControllerTest extends CivTest
 		@Get public void testAccessors() throws Exception
 		{
 			assertSame(app_, getApplication());
-			assertSame(app_.getContext(), getContext());
+			assertSame(app_.getServer(), getServer());
 			assertSame(getClass(), getControllerType().getControllerClass());
 			assertTrue(isProcessing());
 			assertNull(getException());
