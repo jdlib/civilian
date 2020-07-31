@@ -101,21 +101,21 @@ public abstract class Context implements ContextProvider, PathProvider
 	protected void init(ClassLoader appClassLoader, Settings settings) throws Exception
 	{
 		Check.notNull(settings, "settings");
-		long time = System.currentTimeMillis();
+		long time = 0;
+		boolean logInfo = log.isInfoEnabled();
+		if (logInfo)
+		{
+			time = System.currentTimeMillis();
+			log.info("----------------------"); 
+			log.info("start, version " + Version.VALUE);
+		}
 
 		AppLoader loader = createAppLoader(appClassLoader); 
 		
 		// read flags
 		develop_ = settings.getBoolean(ConfigKeys.DEVELOP, false);
 		
-		boolean logInfo = log.isInfoEnabled();
-		if (logInfo)
-		{
-			log.info("----------------------"); 
-			log.info("start, version " + Version.VALUE);
-		}
-		
-		// 1. create applications: this may fail throw any exception
+		// 1. create applications: this may fail and throw any exception
 		ArrayList<AppInfo> appInfos	= new ArrayList<>();
 		createAdminApp(loader, new Settings(settings, ConfigKeys.ADMINAPP_PREFIX), appInfos);
 		createCustomApps(loader, settings, appInfos);
@@ -124,9 +124,9 @@ public abstract class Context implements ContextProvider, PathProvider
 		for (AppInfo info : appInfos)
 			addApp(info.app, info.id, info.path, info.settings);
 
-		time = System.currentTimeMillis() - time;
 		if (logInfo)
 		{
+			time = System.currentTimeMillis() - time;
 			log.info("start complete, " + ((time) / 1000.0) + "s"); 
 			log.info("----------------------");
 		}
@@ -376,6 +376,7 @@ public abstract class Context implements ContextProvider, PathProvider
 	
 	/**
 	 * Returns an list of all applications of the Context.
+	 * @return the list
 	 */
 	public List<Application> getApplications()
 	{
@@ -385,6 +386,7 @@ public abstract class Context implements ContextProvider, PathProvider
 	
 	/**
 	 * Returns the first application with the given class.
+	 * @return the application or null
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends Application> T getApplication(Class<T> appClass)
@@ -400,6 +402,7 @@ public abstract class Context implements ContextProvider, PathProvider
 	
 	/**
 	 * Returns the application with the given id.
+	 * @return the application or null
 	 */
 	public Application getApplication(String id)
 	{
