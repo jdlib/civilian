@@ -151,7 +151,7 @@ public class ConvertingArg<T> extends MethodArg
 	@Override public T getValue(Request request) throws Exception
 	{
 		TypeSerializer serializer = isLocaleValue_ ? 
-			request.getLocaleSerializer() : 
+			request.getLocaleService().getSerializer() : 
 			StandardSerializer.INSTANCE;
 		return converter_.getValue(request, arg_, serializer, defaultValue_);
 	}

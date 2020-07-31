@@ -24,7 +24,7 @@ import org.civilian.Request;
 import org.civilian.form.Form;
 import org.civilian.form.TextField;
 import org.civilian.template.TestTemplateWriter;
-import org.civilian.type.fn.LocaleSerializer;
+import org.civilian.text.LocaleService;
 import org.junit.Test;
 
 
@@ -35,7 +35,7 @@ public class FormTableMixinTest extends CivTest
 		Request request = mock(Request.class);
 		TestTemplateWriter out = TestTemplateWriter.create();
 		when(out.response.getRequest()).thenReturn(request);
-		when(request.getLocaleSerializer()).thenReturn(new LocaleSerializer(Locale.ENGLISH));
+		when(request.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
 		when(request.getResponse()).thenReturn(out.response);
 		when(request.getRequest()).thenReturn(request);
 		

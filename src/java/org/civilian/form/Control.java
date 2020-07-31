@@ -525,7 +525,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 		{
 			try
 			{
-				T value = s != null ? request.getLocaleSerializer().parse(getType(), s) : null;
+				T value = s != null ? request.getLocaleService().getSerializer().parse(getType(), s) : null;
 				setValue(value);
 			}
 			catch(Exception e)
@@ -544,7 +544,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 		{
 			@SuppressWarnings("unchecked")
 			ListType<T,E> listType = (ListType<T,E>)getType();
-			E[] values = request.getLocaleSerializer().parseArray(listType.getElementType(), s); 
+			E[] values = request.getLocaleService().getSerializer().parseArray(listType.getElementType(), s); 
 			setValue(listType.create(values));
 		}
 		catch(Exception e)

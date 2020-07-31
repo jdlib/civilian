@@ -36,7 +36,6 @@ import org.civilian.resource.PathParam;
 import org.civilian.resource.Url;
 import org.civilian.text.LocaleService;
 import org.civilian.type.Type;
-import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
@@ -120,7 +119,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Implements RequestProvider and returns this.
 	 */
-	@Override default public Request getRequest()
+	@Override public default Request getRequest()
 	{
 		return this;
 	}
@@ -145,7 +144,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns the context to which this request belongs.
 	 */
-	@Override default public Context getContext()
+	@Override public default Context getContext()
 	{
 		return getApplication().getContext();
 	}
@@ -170,7 +169,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * @param method the method name
 	 * @see #getMethod()
 	 */
-	default public boolean hasMethod(String method)
+	public default boolean hasMethod(String method)
 	{
 		return ClassUtil.equals(getMethod(), method);
 	}
@@ -199,7 +198,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * @return the path or null, if there is no correspondence.
 	 * @see Context#getRealPath(String)
 	 */
-	default public String getRealPath()
+	public default String getRealPath()
 	{
 		Context context 	= getContext();
 		Path subContextPath = getPath().cutStart(context.getPath()); 
@@ -225,7 +224,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * @param addParams should parameters added as query parameter?
 	 * @return the URL 
 	 */
-	default public Url getUrl(boolean addServer, boolean addParams)
+	public default Url getUrl(boolean addServer, boolean addParams)
 	{
 		Url url;
 		
@@ -341,7 +340,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * @param type the parameter type
 	 * @return the parameter value
 	 */
-	default public <T> Value<T> getParameter(String name, Type<T> type)
+	public default <T> Value<T> getParameter(String name, Type<T> type)
 	{
 		return new Value<>(type, getParameter(name), StandardSerializer.INSTANCE);
 	}
@@ -430,7 +429,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * If the conversion of the parameter to the requested type fails, the 
 	 * Value contains the error.
 	 */
-	default public <T> Value<T> getMatrixParam(String name, Type<T> type)
+	public default <T> Value<T> getMatrixParam(String name, Type<T> type)
 	{
 		return new Value<>(type, getMatrixParam(name), StandardSerializer.INSTANCE);
 	}
@@ -514,20 +513,10 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Sets the locale data associated with the request to the locale data with
 	 * the given locale
 	 */
-	default public void setLocaleService(Locale locale)
+	public default void setLocaleService(Locale locale)
 	{
 		Check.notNull(locale, "locale");
 		setLocaleService(getApplication().getLocaleServices().getService(locale));
-	}
-
-
-	/**
-	 * Returns a the LocaleSerializer for the current locale data.
-	 * Shortcut for getLocaleService().getSerializer().
-	 */
-	default public LocaleSerializer getLocaleSerializer()
-	{
-		return getLocaleService().getSerializer();
 	}
 
 	
@@ -622,7 +611,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Reads the content and transforms it into an Object of the given type.
 	 * This method is a shortcut for readContent(type, type).
 	 */
-	default public <T> T readContent(Class<T> type) throws Exception
+	public default <T> T readContent(Class<T> type) throws Exception
 	{
 		return readContent(type, type); 
 	}
@@ -641,7 +630,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * @see Application#getContentSerializer(ContentType)
 	 * @see ContentSerializer#read(Class, java.lang.reflect.Type, Reader)
 	 */
-	default public <T> T readContent(Class<T> type, java.lang.reflect.Type genericType) 
+	public default <T> T readContent(Class<T> type, java.lang.reflect.Type genericType) 
 		throws BadRequestException, Exception
 	{
 		Check.notNull(type, "type");
@@ -769,7 +758,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Returns a Session.Optional for the current session.
 	 * @return the optional
 	 */
-	default public Session.Optional getSessionOptional()
+	public default Session.Optional getSessionOptional()
 	{
 		return new Session.Optional(getSession(false));
 	}
@@ -783,7 +772,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Prints request info to the PrintStream.
 	 */
-	default public void print(PrintStream out)
+	public default void print(PrintStream out)
 	{
 		Check.notNull(out, "out");
 		print(new PrintWriter(out, true));
@@ -793,7 +782,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Prints request info to the PrintWriter.
 	 */
-	default public void print(PrintWriter out)
+	public default void print(PrintWriter out)
 	{
 		Check.notNull(out, "out");
 		out.print(getMethod());

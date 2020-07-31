@@ -26,10 +26,10 @@ import org.civilian.CivTest;
 import org.civilian.Request;
 import org.civilian.request.Upload;
 import org.civilian.template.TestTemplateWriter;
+import org.civilian.text.LocaleService;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
 import org.civilian.type.TypeLib;
-import org.civilian.type.fn.LocaleSerializer;
 
 
 public class ControlTest extends CivTest
@@ -38,7 +38,7 @@ public class ControlTest extends CivTest
 	{
 		request = mock(Request.class);
 		when(out.response.getRequest()).thenReturn(request);
-		when(request.getLocaleSerializer()).thenReturn(new LocaleSerializer(Locale.ENGLISH));
+		when(request.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
 	}
 	
 	

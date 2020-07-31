@@ -25,8 +25,8 @@ import org.civilian.CivTest;
 import org.civilian.Request;
 import org.civilian.controller.MethodArg;
 import org.civilian.internal.controller.arg.conv.ConvertingArg;
+import org.civilian.text.LocaleService;
 import org.civilian.type.TypeLib;
-import org.civilian.type.fn.LocaleSerializer;
 
 
 public class ConvertingArgTest extends CivTest
@@ -68,6 +68,6 @@ public class ConvertingArgTest extends CivTest
 		
 		
 		Request request = mock(Request.class);
-		when(request.getLocaleSerializer()).thenReturn(new LocaleSerializer(Locale.GERMAN));
+		when(request.getLocaleService()).thenReturn(new LocaleService(Locale.GERMAN));
 	}
 }
