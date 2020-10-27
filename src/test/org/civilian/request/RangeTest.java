@@ -28,7 +28,8 @@ public class RangeTest extends CivTest
 	private void assertParseError(String rangeHeader)
 	{
 		Range range = Range.parse(rangeHeader);
-		assertNull(range);
+		assertNotNull(range);
+		assertFalse(range.isValid());
 	}
 
 
@@ -96,7 +97,7 @@ public class RangeTest extends CivTest
 			TestApp app = new TestApp();
 			TestRequest request = new TestRequest(app);
 			TestResponse response = request.getTestResponse();
-			request.getHeaders().set(Range.HEADER, new Range().add(0, 2).toString());
+			request.getHeaders().set(Range.HEADER, Range.build().add(0, 2).end().toString());
 			
 			Range.writeRange(file, request);
 			assertEquals(3, response.getHeaders().getInt("content-length"));
@@ -105,7 +106,7 @@ public class RangeTest extends CivTest
 			assertEquals("ABC", response.getContentText(true));
 
 			response.clear();
-			request.getHeaders().set(Range.HEADER, new Range().addStart(2).addEnd(2).toString());
+			request.getHeaders().set(Range.HEADER, Range.build().addStart(2).addEnd(2).end().toString());
 			Range.writeRange(file, request);
 			assertEquals(null, response.getHeaders().get("content-length"));
 			assertEquals("multipart/byteranges; boundary=MIME_BOUNDARY", response.getContentType());

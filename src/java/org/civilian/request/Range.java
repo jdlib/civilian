@@ -2,11 +2,14 @@ package org.civilian.request;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
+import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 import org.civilian.Request;
@@ -14,35 +17,70 @@ import org.civilian.Response;
 import org.civilian.Response.Status;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.util.Check;
+import org.civilian.util.IoUtil;
 
 
 /**
  * Range represents a parsed Range Header. 
- * https://tools.ietf.org/html/rfc7233#section-3.1
+ * @see https://tools.ietf.org/html/rfc7233#section-3.1
  */
-@SuppressWarnings("serial")
-public class Range extends ArrayList<Range.Part>
+public class Range extends AbstractList<Range.Part>
 {
 	public static final String HEADER = "Range";
 	private static final String MIME_BOUNDARY = "MIME_BOUNDARY";
+
 	
-	
+	/**
+	 * Parses the range of a request and if not missing writes the requested range to the response,
+	 * else write the whole file to the response
+	 * @param file a non-null file
+	 * @param request a non-null request
+	 * @return true if a range response was written, false if the whole file was written to the response
+	 */
 	public static boolean writeRange(File file, Request request) throws Exception
 	{
-		String rangeHeader = request.getHeaders().get(HEADER);
-		if (rangeHeader == null)
-			return false;
-
-		long fileLength 		= file.length();
-		Range range 			= Range.parse(rangeHeader);
-		Response response 		= request.getResponse();
-		ResponseHeaders headers = response.getHeaders();
+		Check.notNull(file, "file");
+		Check.notNull(request, "request");
+		
+		Range range = parse(request);
 		if (range == null)
+		{
+			// no range header present: write the whole file
+			Response response = request.getResponse();
+			response.setContentLength(file.length());
+			try (FileInputStream in = new FileInputStream(file))
+			{
+				IoUtil.copy(in, response.getContentStream());
+			}
+			return false;
+		}
+		else
+		{
+			writeRange(file, request.getResponse(), range);
+			return true;
+		}
+	}
+	
+	
+	/**
+	 * Writes the range of the given file to the response.
+	 * @param file a non-null file
+	 * @param response a non-null response
+	 * @param range a non-null range. If the range is not valid a {@link Status#SC416_REQUESTED_RANGE_NOT_SATISFIABLE} is sent.
+	 */
+	public static void writeRange(File file, Response response, Range range) throws Exception
+	{
+		Check.notNull(file, "file");
+		Check.notNull(response, "response");
+		Check.notNull(range, "range");
+		
+		long fileLength = file.length();
+		ResponseHeaders headers = response.getHeaders();
+		if (!range.isValid())
 		{
 			// range contains syntax errors
 			headers.set("Content-Range", "bytes */" + fileLength); // Required in 416.
 	        response.sendError(Status.SC416_REQUESTED_RANGE_NOT_SATISFIABLE);
-	        return true;
 		}
 
 		response.setStatus(Status.PARTIAL_CONTENT);
@@ -77,7 +115,6 @@ public class Range extends ArrayList<Range.Part>
 		            part.copy(ra, out, buffer);
 	            }
 			}
-			return true;
 		}
 	}
 	
@@ -88,33 +125,6 @@ public class Range extends ArrayList<Range.Part>
 	}
 	
 	
-	public Range add(long start, long end)
-	{
-		add(new Part(start, end));
-		return this;
-	}
-	
-	
-	public Range addStart(long start)
-	{
-		add(new Part(start, -1));
-		return this;
-	}
-
-	
-	public Range addEnd(long end)
-	{
-		add(new Part(-1, end));
-		return this;
-	}
-
-	
-	@Override public String toString()
-	{
-		return "bytes=" + stream().map(Object::toString).collect(Collectors.joining(","));
-	}
-	
-
 	public static class Part
 	{
 		public Part(long start, long end)
@@ -186,21 +196,124 @@ public class Range extends ArrayList<Range.Part>
 		public final long end;
 	}
 
+	
+	public static Builder build()
+	{
+		return new Builder();
+	}
+	
+	
+	public static class Builder
+	{
+		public Builder add(long start, long end)
+		{
+			return add(new Part(start, end));
+		}
+		
+		
+		public Builder addStart(long start)
+		{
+			return add(new Part(start, -1));
+		}
+	
+		
+		public Builder addEnd(long end)
+		{
+			return add(new Part(-1, end));
+		}
+		
+		
+		private Builder add(Part part)
+		{
+			parts_.add(part);
+			return this;
+		}
+		
+		
+		private Range invalid()
+		{
+			return end(false);
+		}
+
+		
+		public Range end()
+		{
+			return end(true);
+		}
+		
+		
+		private Range end(boolean valid)
+		{
+			return new Range(valid && parts_.size() > 0, parts_);
+		}
+		
+		
+		private final List<Part> parts_ = new ArrayList<>();
+	}
+	
+	
+	private Range(boolean valid, List<Part> parts)
+	{
+		valid_ = valid;
+		parts_ = parts;
+	}
+
+
+	@Override public Part get(int index)
+	{
+		return parts_.get(index);
+	}
+
+
+	@Override public int size()
+	{
+		return parts_.size(); 
+	}
+	
+	
+	public boolean isValid()
+	{
+		return valid_;
+	}
+	
+	
+	@Override public String toString()
+	{
+		return "bytes=" + parts_.stream().map(Object::toString).collect(Collectors.joining(","));
+	}
+	
 
 	/**
 	 * Parses a range header.
-	 * @param rangeHeader the header text
-	 * @return a set of ranges parsed from the input, or null if not valid
+	 * @param request the request containing the range header
+	 * @ret
+	 */
+	public static Range parse(Request request)
+	{
+		return parse(request.getHeaders().get(HEADER));
+	}
+	
+	
+	/**
+	 * Parses a range header.
+	 * @param rangeHeader a value of a range header
+	 * @return the Range parsed from the input. 
+	 * 	If the header is null, then null is returned
+	 * 	Else a non-null range is returned. Check its {@link Range#isValid()} method to see if it is a  valid Range.	
 	 */
 	public static Range parse(String rangeHeader)
 	{
-		Check.notNull(rangeHeader, "rangeHeader");
-		if (!rangeHeader.startsWith("bytes="))
+		if (rangeHeader == null)
 			return null;
 		
+		Check.notNull(rangeHeader, "rangeHeader");
+		Builder builder = build();
+		
+		if (!rangeHeader.startsWith("bytes="))
+			return builder.invalid();
+		
 		rangeHeader = rangeHeader.substring(6);
-		Range range = new Range();
-		StringTokenizer st = new StringTokenizer(rangeHeader, ",");
+		StringTokenizer st 	= new StringTokenizer(rangeHeader, ",");
 		try
 		{
 			while (st.hasMoreTokens())
@@ -209,7 +322,7 @@ public class Range extends ArrayList<Range.Part>
 	
 				int dashPos = partDef.indexOf('-');
 				if (dashPos == -1)
-					return null;
+					return builder.invalid();
 
 				long start, end;
 				if (dashPos == 0)
@@ -226,14 +339,18 @@ public class Range extends ArrayList<Range.Part>
 						end = -1L;
 				}
 	
-				range.add(new Part(start, end));
+				builder.add(new Part(start, end));
 			}
 		}
 		catch (NumberFormatException e)
 		{
-			return null;
+			return builder.invalid();
 		}
 		
-		return range.size() == 0 ? null : range;
+		return builder.end();
 	}
+	
+	
+	private final List<Part> parts_;
+	private final boolean valid_;
 }
