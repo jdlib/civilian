@@ -35,30 +35,16 @@ public class Range extends AbstractList<Range.Part>
 	 * else write the whole file to the response
 	 * @param file a non-null file
 	 * @param request a non-null request
-	 * @return true if a range response was written, false if the whole file was written to the response
+	 * @return the parsed Range or null if no range header was present
 	 */
-	public static boolean writeRange(File file, Request request) throws Exception
+	public static Range writeRange(File file, Request request) throws Exception
 	{
 		Check.notNull(file, "file");
 		Check.notNull(request, "request");
 		
 		Range range = parse(request);
-		if (range == null)
-		{
-			// no range header present: write the whole file
-			Response response = request.getResponse();
-			response.setContentLength(file.length());
-			try (FileInputStream in = new FileInputStream(file))
-			{
-				IoUtil.copy(in, response.getContentStream());
-			}
-			return false;
-		}
-		else
-		{
-			writeRange(file, request.getResponse(), range);
-			return true;
-		}
+		writeRange(file, request.getResponse(), range);
+		return range;
 	}
 	
 	
@@ -66,25 +52,37 @@ public class Range extends AbstractList<Range.Part>
 	 * Writes the range of the given file to the response.
 	 * @param file a non-null file
 	 * @param response a non-null response
-	 * @param range a non-null range. If the range is not valid a {@link Status#SC416_REQUESTED_RANGE_NOT_SATISFIABLE} is sent.
+	 * @param range a range. If the range is null, the whole file is written. 
+	 * 		If the range is not valid a {@link Status#SC416_REQUESTED_RANGE_NOT_SATISFIABLE} is sent.
 	 */
 	public static void writeRange(File file, Response response, Range range) throws Exception
 	{
 		Check.notNull(file, "file");
 		Check.notNull(response, "response");
-		Check.notNull(range, "range");
-		
 		long fileLength = file.length();
+		
+		if (range == null)
+		{
+			// no range: write the whole file
+			response.setContentLength(fileLength);
+			try (FileInputStream in = new FileInputStream(file))
+			{
+				IoUtil.copy(in, response.getContentStream());
+			}
+			return;
+		}
+
 		ResponseHeaders headers = response.getHeaders();
 		if (!range.isValid())
 		{
 			// range contains syntax errors
 			headers.set("Content-Range", "bytes */" + fileLength); // Required in 416.
 	        response.sendError(Status.SC416_REQUESTED_RANGE_NOT_SATISFIABLE);
+	        return;
 		}
 
 		response.setStatus(Status.PARTIAL_CONTENT);
-		response.getHeaders().set("Accept-Ranges", "bytes");
+		headers.set("Accept-Ranges", "bytes");
 		
 		try (RandomAccessFile ra = new RandomAccessFile(file, "r"))
 		{
