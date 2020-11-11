@@ -210,20 +210,23 @@ public class LocaleServiceList
 	 */
 	public LocaleService getService(Locale locale)
 	{
-		Check.notNull(locale, "locale");
-		return localeMap_.getService(locale);
+		LocaleService ls = null;
+		if (locale != null)
+			ls = localeMap_.getService(locale);
+		return ls != null ? ls : getDefaultService();
 	}
 
 	
 	public LocaleService getService(String locale)
 	{
-		Check.notNull(locale, "locale");
-		for (LocaleService service : supportedServices_)
+		if (locale != null)
 		{
-			if (service.toString().equals(locale))
-				return service;
+			for (LocaleService service : supportedServices_)
+			{
+				if (service.toString().equals(locale))
+					return service;
+			}
 		}
-		
 		return getDefaultService();
 	}
 
