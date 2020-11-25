@@ -99,7 +99,7 @@ public interface RequestHeaders extends Iterable<String>
 	 * Sets the header to the given values. 
 	 * @return this 
 	 */
-	public RequestHeaders set(String name, String... values);
+	public RequestHeaders set(String name, String value);
 	
 	
 	/**

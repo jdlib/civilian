@@ -199,11 +199,9 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	}
 	
 	
-	@Override public ParamList set(String name, String... values)
+	@Override public ParamList set(String name, String value)
 	{
-		if (values == null)
-			values = EMPTY_VALUES;
-		getMap().put(normName(name), values);
+		getMap().put(normName(name), new String[] { value });
 		return this;
 	}
 
@@ -222,7 +220,7 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	
 	public void setNull(String name)
 	{
-		set(name, (String[])null);
+		set(name, null);
 	}
 	
 	
@@ -232,7 +230,7 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 		{
 			name = normName(name);
 			String[] v = getAll(name);
-			set(name, ArrayUtil.addLast(v, value));
+			getMap().put(name, ArrayUtil.addLast(v, value));
 		}
 		return this;
 	}

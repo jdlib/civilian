@@ -80,15 +80,15 @@ public interface ResponseHeaders extends Iterable<String>
 
 
 	/**
-	 * Sets the values of a header. This will override any old value,
+	 * Set the value of a header. This will override any old value,
 	 * if the header was already set,
 	 * @param name the header name
 	 * @param values the header values
 	 * @return this 
 	 */
-	public ResponseHeaders set(String name, String... values); 
+	public ResponseHeaders set(String name, String value); 
 
-
+	
 	/**
 	 * Sets the value of a date header. This will override any old value,
 	 * if the header was already set,

@@ -326,14 +326,9 @@ class ServletResponseAdapter extends AbstractResponse
 		/**
 		 * Forwards to the HttpServletResponse.
 		 */
-		@Override public ResponseHeaders set(String name, String... values)
+		@Override public ResponseHeaders set(String name, String value)
 		{
-			servletResponse_.setHeader(name, null);
-			if (values != null)
-			{
-				for (String v : values)
-					servletResponse_.addHeader(name, v);
-			}
+			servletResponse_.setHeader(name, value);
 			return this;
 		}
 	

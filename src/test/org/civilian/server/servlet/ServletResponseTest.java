@@ -186,8 +186,7 @@ public class ServletResponseTest extends CivTest
 		verify(servletResp).getHeader("z");
 
 		headers.set("x", "y");
-		verify(servletResp).setHeader("x", null);
-		verify(servletResp, times(2)).addHeader("x", "y");
+		verify(servletResp).setHeader("x", "y");
 	}
 	
 	
