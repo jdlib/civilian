@@ -69,6 +69,7 @@ public abstract class Asset
 	
 	/**
 	 * Returns the character encoding of the asset, or null if not known
+	 * @return the encoding
 	 */
 	public String getCharEncoding()
 	{
@@ -78,6 +79,7 @@ public abstract class Asset
 	
 	/**
 	 * Sets the encoding of the asset.
+	 * @param encoding encoding
 	 */
 	public void setCharEncoding(String encoding)
 	{
@@ -86,7 +88,28 @@ public abstract class Asset
 
 	
 	/**
+	 * Returns the compression applied to the asset content or null.
+	 * @return the compression
+	 */
+	public String getCompression()
+	{
+		return compression_;
+	}
+	
+	
+	/**
+	 * Sets the compression applied to the asset content.
+	 * @param compression the compression
+	 */
+	public void setCompression(String compression)
+	{
+		compression_ = compression;
+	}
+
+	
+	/**
 	 * Returns the byte length of the asset data.
+	 * @return the length
 	 */
 	public long length()
 	{
@@ -96,6 +119,7 @@ public abstract class Asset
 	
 	/**
 	 * Sets the byte length of the asset data.
+	 * @param length the length
 	 */
 	public void setLength(long length)
 	{
@@ -221,6 +245,8 @@ public abstract class Asset
 			response.setContentType(contentType_);
 		if (charEncoding_ != null)
 			response.setCharEncoding(charEncoding_);
+		if (compression_ != null)
+			response.getHeaders().set("Content-Encoding", compression_);
 		if (length_ >= 0)
 			response.setContentLength(length_);
 		
@@ -282,4 +308,5 @@ public abstract class Asset
 	private long length_ = -1L;
 	private long lastModified_ = -1L;
 	private String lastModifiedHttp_;
+	private String compression_;
 }
