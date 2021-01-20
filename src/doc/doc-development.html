@@ -126,14 +126,14 @@
 		
 		<h2 id="testing">Testing</h2>
 		Civilian allows to run requests and evaluate responses in a test environment without the overhead of HTTP calls or the need to start a servlet server.<br>
-		Therefore it provides the {javadoc:context.test.TestContext} class which implements {javadoc:Context}.   
-		The {javadoc:context/test/package-summary context.test} package contains a {javadoc:Context} implementation which can be used for unit tests.
+		Therefore it provides the {javadoc:server.test.TestServer} class which implements {javadoc:Server}.   
+		The {javadoc:server/test/package-summary context.test} package contains a {javadoc:Server} implementation which can be used for unit tests.
 		The steps to run test request are:
 		<ol>
-		<li>Create a {javadoc:context.test.TestContext} instance.
-		<li>Either initialize the context using a <code>civilina.ini</code> config, or explicitly add application objects to the TestContext.
-		<li>Create a {javadoc:context.test.TestRequest} object and set its properties.
-		<li>Run the request and assert that the returned {javadoc:context.test.TestResponse} matches the expectations.   
+		<li>Create a {javadoc:server.test.TestServer} instance.
+		<li>Either initialize the server using a <code>civilina.ini</code> config, or explicitly add application objects to the TestServer.
+		<li>Create a {javadoc:server.test.TestRequest} object and set its properties.
+		<li>Run the request and assert that the returned {javadoc:server.test.TestResponse} matches the expectations.   
 		</ol>
 		The <a href="doc-samples.html#test">Test sample</a> demonstrates this technique.
 		
@@ -143,7 +143,7 @@
 		if your configurations work as expected, and which resource URLs are actually published. You can also inspect which controller
 		is mapped to a resource and what action methods are available.
 		<p>  
-		The admin app uses Civilians ability to run multiple {javadoc:Application applications} in a Civilian {javadoc:Context context}.
+		The admin app uses Civilians ability to run multiple {javadoc:Application applications} in a Civilian {javadoc:Server server}.
 		When you start your application in development mode by default the admin app is also started and available under the path <code>/civadmin</code> below
 		your context path.
 		<p>

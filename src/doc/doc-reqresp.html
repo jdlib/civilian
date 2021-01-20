@@ -45,7 +45,7 @@
 		If Civilian is running in a servlet container, the Request and Response implementations used
 		are simple wrappers around their servlet counterparts.
 		<p>
-		Civilian also provides request and response implementations for a {javadoc:context.test.package-summary test environment}.
+		Civilian also provides request and response implementations for a {javadoc:server.test.package-summary test environment}.
 		Please read the <a href="doc-development.html#testing">test chapter</a> for further information.
 		<p>
 		This chapter gives a short overview about these two classes and its most important methods. The following chapters will introduce
@@ -58,7 +58,7 @@
 		<h3 id="reqpath">Path</h3>
 		Civilian uses the {javadoc:resource.Path} class to represent path strings (which guarantees correct syntactical form).
 		The {javadoc:Request#getPath() request path} is the absolute path from the server root <code>/</code> to the requested resource.
-		{javadoc:Context#getPath() Context path} and {javadoc:Application#getPath() application path} are both prefixes of
+		{javadoc:Server#getPath() Context path} and {javadoc:Application#getPath() application path} are both prefixes of
 		the request path.<p>
 		<div class="img">
 			<img src="doc-arch-url.png">
