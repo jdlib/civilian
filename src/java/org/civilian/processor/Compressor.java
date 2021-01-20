@@ -73,7 +73,6 @@ public class Compressor extends Processor
 	}
 	
 	
-	
 	private static class Interceptor implements ResponseStreamInterceptor
 	{
 		public Interceptor(CompressionScheme scheme)
@@ -115,7 +114,7 @@ public class Compressor extends Processor
 		}
 		
 		
-		private CompressionScheme scheme_;
+		private final CompressionScheme scheme_;
 	}
 }
 
