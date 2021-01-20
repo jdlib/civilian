@@ -64,7 +64,7 @@ public class CivResourceLocation extends JavaResourceLocation
 		super(path != null ? path : DEFAULT_PATH, "civassets" /* the directory of the assets in civilian.jar*/);
 		
 		// civassets are encoded in UTF-8
-		setEncoding("UTF-8"); 
+		setCharEncoding("UTF-8"); 
 
 		if (appPath != null)
 		{
@@ -75,7 +75,7 @@ public class CivResourceLocation extends JavaResourceLocation
 			s.append("civilian.basePath = civilian.Path.createBasePath();\n");
 			if (develop)
 				s.append("civilian.develop = true;");
-			initScript_ = new MemoryAsset(getEncoding(), s.toString());
+			initScript_ = new MemoryAsset(getCharEncoding(), s.toString());
 			initScript_.setContentType(ContentType.APPLICATION_JAVASCRIPT);
 		}
 	}

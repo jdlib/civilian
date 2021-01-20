@@ -68,20 +68,20 @@ public abstract class Asset
 
 	
 	/**
-	 * Returns the encoding of the asset, or null if not known
+	 * Returns the character encoding of the asset, or null if not known
 	 */
-	public String getEncoding()
+	public String getCharEncoding()
 	{
-		return encoding_;
+		return charEncoding_;
 	}
 	
 	
 	/**
 	 * Sets the encoding of the asset.
 	 */
-	public void setEncoding(String encoding)
+	public void setCharEncoding(String encoding)
 	{
-		encoding_ = encoding;
+		charEncoding_ = encoding;
 	}
 
 	
@@ -219,8 +219,8 @@ public abstract class Asset
 		response.setStatus(Response.Status.SC200_OK);
 		if (contentType_ != null)
 			response.setContentType(contentType_);
-		if (encoding_ != null)
-			response.setContentEncoding(encoding_);
+		if (charEncoding_ != null)
+			response.setContentEncoding(charEncoding_);
 		if (length_ >= 0)
 			response.setContentLength(length_);
 		
@@ -265,8 +265,8 @@ public abstract class Asset
 	 */
 	public Reader getReader() throws IOException
 	{
-		Check.notNull(encoding_, "encoding");
-		return new BufferedReader(new InputStreamReader(getInputStream(), encoding_));
+		Check.notNull(charEncoding_, "encoding");
+		return new BufferedReader(new InputStreamReader(getInputStream(), charEncoding_));
 	}
 
 	
@@ -278,7 +278,7 @@ public abstract class Asset
 
 	private byte[] content_;
 	private ContentType contentType_;
-	private String encoding_;
+	private String charEncoding_;
 	private long length_ = -1L;
 	private long lastModified_ = -1L;
 	private String lastModifiedHttp_;

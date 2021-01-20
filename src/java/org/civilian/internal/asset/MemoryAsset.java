@@ -61,7 +61,7 @@ public class MemoryAsset extends Asset
 	 */
 	public MemoryAsset(String encoding, byte[] bytes)
 	{
-		setEncoding(encoding);
+		setCharEncoding(encoding);
 		setContent(bytes);
 		setLastModified(System.currentTimeMillis());
 	}

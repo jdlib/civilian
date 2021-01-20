@@ -78,7 +78,7 @@ public class AssetTest extends CivTest
 	@Test public void testWrite() throws Exception
 	{
 		TestAsset asset = new TestAsset("content");
-		asset.setEncoding("ISO-8859-1");
+		asset.setCharEncoding("ISO-8859-1");
 		asset.setContentType(ContentType.TEXT_CSS);
 		
 		Request request 			= mock(Request.class);

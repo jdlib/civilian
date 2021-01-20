@@ -62,7 +62,7 @@ public class AssetLocationTest extends CivTest
 		Asset asset = location.getAsset("/civilian/angular/civ-auth.js");
 		assertNotNull(asset);
 		assertTrue(asset.isValid());
-		assertEquals("UTF-8", asset.getEncoding());
+		assertEquals("UTF-8", asset.getCharEncoding());
 		assertEquals(ContentType.APPLICATION_OCTET_STREAM, asset.getContentType());
 		
 		Path initScriptPath = new Path("/civilian").add(CivResourceLocation.ANGULAR_INIT_SCRIPT); 

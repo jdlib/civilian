@@ -47,8 +47,8 @@ public abstract class AssetLocation extends AssetService
 	{
 		path_ = Check.notNull(parentPath, "parentPath").add(relativePath_);
 		contentTypeLookup_ 	= Check.notNull(lookup, "lookup");
-		if (encoding_ == null)
-			encoding_ = defaultEncoding;
+		if (charEncoding_ == null)
+			charEncoding_ = defaultEncoding;
 	}
 
 	
@@ -81,12 +81,12 @@ public abstract class AssetLocation extends AssetService
 
 	
 	/**
-	 * Sets the default encoding of the assets served by this
+	 * Sets the default character encoding of the assets served by this
 	 * AssetLocation.
 	 */
-	public void setEncoding(String encoding)
+	public void setCharEncoding(String encoding)
 	{
-		encoding_ = encoding;
+		charEncoding_ = encoding;
 	}
 
 	
@@ -94,9 +94,9 @@ public abstract class AssetLocation extends AssetService
 	 * Returns the encoding of the assets served by this
 	 * AssetLocation, or null if not known or no common encoding exists. 
 	 */
-	public String getEncoding()
+	public String getCharEncoding()
 	{
-		return encoding_;
+		return charEncoding_;
 	}
 	
 	
@@ -139,8 +139,8 @@ public abstract class AssetLocation extends AssetService
 				if (Logs.ASSET.isTraceEnabled())
 					Logs.ASSET.trace("{} -> {}", assetPath, asset);
 				
-				if (asset.getEncoding() == null)
-					asset.setEncoding(encoding_);
+				if (asset.getCharEncoding() == null)
+					asset.setCharEncoding(charEncoding_);
 				
 				if (asset.getContentType() == null)
 				{
@@ -171,8 +171,8 @@ public abstract class AssetLocation extends AssetService
 	@Override public String getInfo()
 	{
 		String info = path_ + " -> " +  getInfoParam();
-		if (encoding_ != null)
-			info += ", " + encoding_;
+		if (charEncoding_ != null)
+			info += ", " + charEncoding_;
 		return info;
 	}
 	
@@ -185,7 +185,7 @@ public abstract class AssetLocation extends AssetService
 	
 	private Path path_;
 	private Path relativePath_;
-	private String encoding_;
+	private String charEncoding_;
 	private ContentType contentType_;
 	private ContentTypeLookup contentTypeLookup_ = ContentTypeLookup.EMPTY;
 }

@@ -152,7 +152,7 @@ public abstract class AssetServices
 			location.setContentType(ContentType.getContentType(contentType));
 			
 		String encoding	= locSettings.get(ConfigKeys.ENCODING, null);
-		location.setEncoding(encoding);
+		location.setCharEncoding(encoding);
 		
 		return location;
 	}
