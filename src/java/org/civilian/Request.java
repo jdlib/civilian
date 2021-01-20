@@ -457,6 +457,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * In Servlet terms the Upload object corresponds to a javax.servlet.http.Part object 
 	 * in a multipart/form-data request whose content disposition contains
 	 * a filename parameter and whose name equals the given name.
+	 * @return the upload
 	 */
 	public Upload getUpload(String name);
 
@@ -466,6 +467,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * In Servlet terms the Upload object corresponds to a javax.servlet.http.Part object 
 	 * in a multipart/form-data request whose content disposition contains
 	 * a filename parameter and whose name equals the given name.
+	 * @return the uploads
 	 */
 	public Upload[] getUploads(String name);
 
@@ -474,7 +476,8 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Returns an exception if the request contains uploaded files and
 	 * one ore more files violated constraints defined by the {@link Application#getUploadConfig() UploadConfig}.
 	 * In this case the request parameters may not be properly initialized.
-	 * Therefore for upload requests you should check upload errors first, before you evaluate request parameters.  
+	 * Therefore for upload requests you should check upload errors first, before you evaluate request parameters.
+	 * @return the upload error  
 	 */
 	public Exception getUploadError();
 
@@ -526,7 +529,8 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * If the request does not specify an explicit list of accepted content-types
 	 * and {@link ExtensionMapping extension mappings} are configured, then
 	 * the extension of the path is used to determine the accepted content type. 
-	 * Else a list with the single content-type &#42;/&#42; is returned. 
+	 * Else a list with the single content-type &#42;/&#42; is returned.
+	 * @return the ContentTypeList 
 	 */
 	public ContentTypeList getAcceptedContentTypes();
 
@@ -538,6 +542,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * are configured, then the extension of the path is used to determine the accepted locale. 
 	 * Else the default locale of the application is returned. (Note: This differs from 
 	 * a servlet container which would return the default system locale).
+	 * @return the locale 
 	 */
 	public abstract Locale getAcceptedLocale();
 	
@@ -557,6 +562,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns the character encoding used for the request content, or
 	 * null if not specified.
+	 * @return encoding
 	 */
 	public String getCharEncoding();
 
@@ -569,12 +575,14 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 
 	/**
 	 * Returns the length of the content in bytes, or -1 if not known. 
+	 * @return the length
 	 */
 	public long getContentLength();
 	
 	
 	/**
 	 * Returns the content type of the request content or null if not known.
+	 * @return the ContentType
 	 */
 	public ContentType getContentType();
 	
@@ -587,21 +595,24 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	
 	/**
 	 * Returns how the request content was accessed.
+	 * @return the ContentAccess
 	 */
 	public ContentAccess getContentAccess();
 	
 	
 	/**
 	 * Returns an InputStream to read the request content.
-	 * @throws IllegalArgumentException if {@link #getContentReader()} has already been called. 
+	 * @return the InputStream
+	 * @throws IOException if {@link #getContentReader()} has already been called. 
 	 */
 	public abstract InputStream getContentStream() throws IOException;
 	
 	  
 	/**
 	 * Returns a Reader for the request content. If the {@link #getCharEncoding() content encoding}
-	 * is not set, it uses the default {@link Application#getDefaultCharEncoding() application encoding}. 
-	 * @throws IllegalArgumentException if {@link #getContentStream()} has already been called. 
+	 * is not set, it uses the default {@link Application#getDefaultCharEncoding() application encoding}.
+	 * @return  the Reader
+	 * @throws IOException if {@link #getContentStream()} has already been called. 
 	 */
 	public Reader getContentReader() throws IOException; 
 	
@@ -609,6 +620,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Reads the content and transforms it into an Object of the given type.
 	 * This method is a shortcut for readContent(type, type).
+	 * @return the transformed content
 	 */
 	public default <T> T readContent(Class<T> type) throws Exception
 	{
@@ -662,6 +674,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Adds a RequestStreamInterceptor which can wrap the request {@link #getContentStream() InputStream}.
 	 * {@link #getContentStream()} or {@link #getContentReader()} must not have been called yet.
+	 * @param interceptor an interceptor
 	 */
 	public abstract void addInterceptor(RequestStreamInterceptor interceptor);
 	
@@ -669,6 +682,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Adds a RequestReaderInterceptor which can wrap the request {@link #getContentReader() Reader}.
 	 * {@link #getContentStream()} or {@link #getContentReader()} must not have been called yet.
+	 * @param interceptor an interceptor
 	 */
 	public abstract void addInterceptor(RequestReaderInterceptor interceptor);
 
@@ -687,19 +701,22 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	
 	
 	/**
-	 * Returns if this request has been put into asynchronous mode by a call to {@link #startAsync()}. 
+	 * Returns if this request has been put into asynchronous mode by a call to {@link #startAsync()}.
+	 * @return the flag 
 	 */
 	public boolean isAsyncStarted();
 	
 	
 	/**
 	 * Returns if this request supports asynchronous mode. 
+	 * @return the flag 
 	 */
 	public boolean isAsyncSupported();
 	
 	
 	/**
 	 * Puts this request into asynchronous mode, and initializes its AsyncContext.
+	 * @return the AsyncContext 
 	 * @throws IllegalStateException if this request does not support asynchronous operations or if called again
 	 * 		in a state where the AsyncContext intervenes, or when the response has been closed.
 	 */
@@ -713,6 +730,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	
 	/**
 	 * Returns the request headers. 
+	 * @return the headers
 	 */
 	public RequestHeaders getHeaders();
 	
@@ -720,6 +738,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns a RequestSecurity object which provides security related
 	 * information.
+	 * @return the RequestSecurity
 	 */
 	public RequestSecurity getSecurity();
 
@@ -727,6 +746,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns a ServerInfo object which provides server related
 	 * information.
+	 * @return the ServerInfo
 	 */
 	public ServerInfo getServerInfo();
 	
@@ -734,6 +754,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns a RemoteInfo object which provides information about 
 	 * the remote site of the request.
+	 * @return the RemoteInfo
 	 */
 	public RemoteInfo getRemoteInfo();
 	
@@ -741,6 +762,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns a LocalInfo object which provides information about 
 	 * the local interface which received the request.
+	 * @return the LocalInfo
 	 */
 	public LocalInfo getLocalInfo();
 
@@ -805,6 +827,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Returns the underlying implementation of the request which has the given class
 	 * or null, if the implementation has a different class.
 	 * In a servlet environment Request wraps a HttpServletRequest.
+	 * @return the implementation
 	 */
 	public <T> T unwrap(Class<T> implClass);
 }
