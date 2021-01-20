@@ -22,7 +22,7 @@ import org.civilian.util.IoUtil;
 
 /**
  * Range represents a parsed Range Header. 
- * @see https://tools.ietf.org/html/rfc7233#section-3.1
+ * (https://tools.ietf.org/html/rfc7233#section-3.1)
  */
 public class Range extends AbstractList<Range.Part>
 {
@@ -282,9 +282,9 @@ public class Range extends AbstractList<Range.Part>
 	
 
 	/**
-	 * Parses a range header.
+	 * Parses the HTTP range header.
 	 * @param request the request containing the range header
-	 * @ret
+	 * @return the parsed Range
 	 */
 	public static Range parse(Request request)
 	{
