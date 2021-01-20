@@ -134,7 +134,7 @@ public class AssetCache extends AssetService
 	}
 	
 	
-	private int maxMemSize_;
-	private AssetService implementation_;
-	private ConcurrentHashMap<String,Asset> cache_ = new ConcurrentHashMap<>();
+	private final int maxMemSize_;
+	private final AssetService implementation_;
+	private final ConcurrentHashMap<String,Asset> cache_ = new ConcurrentHashMap<>();
 }
