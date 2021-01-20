@@ -33,7 +33,7 @@ import org.civilian.util.StringUtil;
 public class DirectoryLocation extends AssetLocation
 {
 	/**
-	 * Creates a new AssetDirectory.
+	 * Creates a new DirectoryLocation.
 	 * @param path the path of the AssetLocation.
 	 * @param rootDir the root directory of the AssetDirectory. 
 	 */
