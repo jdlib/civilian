@@ -58,7 +58,7 @@ public class AbstractRequestTest extends CivTest
 	
 	@Test public void testReader() throws Exception
 	{
-		assertEquals("UTF-8", request.getContentEncoding());
+		assertEquals("UTF-8", request.getCharEncoding());
 		assertSame(Request.ContentAccess.NONE, request.getContentAccess());
 		Reader reader = request.getContentReader();
 		assertSame(Request.ContentAccess.READER, request.getContentAccess());

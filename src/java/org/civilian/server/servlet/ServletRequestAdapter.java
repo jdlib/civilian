@@ -190,13 +190,13 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 	//-----------------------------------
 
 
-	@Override public String getContentEncoding()
+	@Override public String getCharEncoding()
 	{
 		return servletRequest_.getCharacterEncoding();
 	}
 
 	
-	@Override public void setContentEncoding(String encoding) throws UnsupportedEncodingException
+	@Override public void setCharEncoding(String encoding) throws UnsupportedEncodingException
 	{
 		servletRequest_.setCharacterEncoding(encoding);
 	}

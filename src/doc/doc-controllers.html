@@ -229,7 +229,7 @@
 		<li><code>java.io.Reader</code> or <code>java.io.BufferedReader</code> a {javadoc:Request#getContentReader() Reader} 
 			for the request content is injected
 		<li><code>byte[]</code> the raw request content is injected
-		<li><code>String</code> the {javadoc:Request#getContentEncoding() decoded} request content is injected
+		<li><code>String</code> the {javadoc:Request#getCharEncoding() decoded} request content is injected
 		<li>for any other type Civilians <a href="doc-reqresp.html#content">content serialization</a> mechanism is used
 			to produce an parameter instance from the request content. In this case you want to use a @Consumes annotation
 			to restrict to content-types which can be handled by your application.

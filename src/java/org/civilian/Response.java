@@ -547,7 +547,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * Returns the content type used for the response content as string,
 	 * appended by the content encoding.
 	 * @see #getContentType()
-	 * @see #getContentEncoding()
+	 * @see #getCharEncoding()
 	 */
 	public default String getContentTypeAndEncoding()
 	{
@@ -555,7 +555,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 		if (contentType != null)
 		{
 			String result = contentType;
-			String encoding = getContentEncoding();
+			String encoding = getCharEncoding();
 			if (encoding != null)
 				result += "; charset=" + encoding;
 			return result;
@@ -570,16 +570,16 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * If the response has been committed or {@link #getContentWriter()} has been called, it has no effect
 	 * @return this response
 	 */
-	public abstract Response setContentEncoding(String encoding);
+	public abstract Response setCharEncoding(String encoding);
 	
 	
 	/**
 	 * Returns the character encoding of the response.
-	 * The encoding can be set with a call to {@link #setContentEncoding(String)}.
+	 * The encoding can be set with a call to {@link #setCharEncoding(String)}.
 	 * If getWriter() is called and no encoding is set, then the default encoding of the application 
 	 * (see {@link Application#getDefaultCharEncoding()} is used.
 	 */
-	public abstract String getContentEncoding();
+	public abstract String getCharEncoding();
 	
 
 	/**

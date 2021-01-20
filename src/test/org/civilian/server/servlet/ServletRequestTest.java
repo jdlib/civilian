@@ -174,10 +174,10 @@ public class ServletRequestTest extends CivTest
 		when(servletReq.getContentLength()).thenReturn(20);
 		assertEquals(20L, request.getContentLength());
 
-		assertEquals(null, request.getContentEncoding());
+		assertEquals(null, request.getCharEncoding());
 		when(servletReq.getCharacterEncoding()).thenReturn("UTF-8");
-		assertEquals("UTF-8", request.getContentEncoding());
-		request.setContentEncoding("UTF-8");
+		assertEquals("UTF-8", request.getCharEncoding());
+		request.setCharEncoding("UTF-8");
 		verify(servletReq).setCharacterEncoding("UTF-8");
 
 		assertNull(request.getContentType());

@@ -129,7 +129,7 @@
 
 		<h3 id="reqcontent">Content</h3>
 		The content of the request is described by its {javadoc:Request#getContentType() content type}, 
-		{javadoc:Request#getContentEncoding() encoding} and {javadoc:Request#getContentLength() length}.
+		{javadoc:Request#getCharEncoding() encoding} and {javadoc:Request#getContentLength() length}.
 		For low-level handling it can be read as {javadoc:Request#getContentStream() byte} or {javadoc:Request#getContentReader() text}
 		stream.<br>
 		Alternatively you can call {javadoc:Request#readContent(java*lang*Class) Request.readContent(Class, Type?)} 
@@ -181,7 +181,7 @@
 
 		<h3 id="respcontent">Content</h3>		
 		The content of the response is described by its {javadoc:Response#setContentType(org*civilian*content*ContentType) content type}, 
-		{javadoc:Response#setContentEncoding(java*lang*String) encoding}, {javadoc:Response#setContentLength(int) length}.
+		{javadoc:Response#setCharEncoding(java*lang*String) encoding}, {javadoc:Response#setContentLength(int) length}.
 		For low-level handling it can be written via a {javadoc:Response#getContentStream() byte} or {javadoc:Response#getContentWriter() text}
 		stream.<br>
 		Alternatively Response provides a  

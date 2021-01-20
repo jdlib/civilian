@@ -52,7 +52,7 @@ public class TestTemplateWriter extends TemplateWriter
 		Response response = mock(Response.class);
 		when(response.getApplication()).thenReturn(app);
 		when(response.getLocaleService()).thenReturn(service);
-		when(response.getContentEncoding()).thenReturn(encoding);
+		when(response.getCharEncoding()).thenReturn(encoding);
 		when(response.getResponse()).thenReturn(response);
 		
 		StringWriter stringOut = new StringWriter();

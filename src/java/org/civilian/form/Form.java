@@ -599,7 +599,7 @@ public class Form implements RequestProvider
 		if (isMultipartEncoded())
 		{
 			HtmlUtil.attr(out, "enctype", "multipart/form-data", false);
-			String encoding = response.getContentEncoding();
+			String encoding = response.getCharEncoding();
 			if (encoding != null)
 				HtmlUtil.attr(out, "accept-charset", encoding);
 		}

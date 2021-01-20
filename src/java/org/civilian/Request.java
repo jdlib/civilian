@@ -558,13 +558,13 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Returns the character encoding used for the request content, or
 	 * null if not specified.
 	 */
-	public String getContentEncoding();
+	public String getCharEncoding();
 
 
 	/**
 	 * Explicitly sets the character encoding of the content.
 	 */
-	public void setContentEncoding(String encoding) throws UnsupportedEncodingException;
+	public void setCharEncoding(String encoding) throws UnsupportedEncodingException;
 
 
 	/**
@@ -599,7 +599,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	
 	  
 	/**
-	 * Returns a Reader for the request content. If the {@link #getContentEncoding() content encoding}
+	 * Returns a Reader for the request content. If the {@link #getCharEncoding() content encoding}
 	 * is not set, it uses the default {@link Application#getDefaultCharEncoding() application encoding}. 
 	 * @throws IllegalArgumentException if {@link #getContentStream()} has already been called. 
 	 */

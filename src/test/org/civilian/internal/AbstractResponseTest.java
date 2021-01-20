@@ -77,9 +77,9 @@ public class AbstractResponseTest extends CivTest
 		response.setLocaleService(lsDe);
 		assertSame(lsDe, response.getLocaleService());
 		
-		assertNull(response.getContentEncoding());
-		response.setContentEncoding("UTF-8");
-		assertEquals("UTF-8", response.getContentEncoding());
+		assertNull(response.getCharEncoding());
+		response.setCharEncoding("UTF-8");
+		assertEquals("UTF-8", response.getCharEncoding());
 
 		assertNull(response.getContentType());
 		response.setContentType(ContentType.TEXT_PLAIN);
@@ -148,14 +148,14 @@ public class AbstractResponseTest extends CivTest
 	
 	@Test public void testWriter() throws Exception
 	{
-		assertNull(response.getContentEncoding());
+		assertNull(response.getCharEncoding());
 		assertSame(Response.ContentAccess.NONE, response.getContentAccess());
 
 		TemplateWriter out = response.getContentWriter();
 		
-		assertSame(app.getDefaultCharEncoding(), response.getContentEncoding());
-		response.setContentEncoding("x");
-		assertSame(app.getDefaultCharEncoding(), response.getContentEncoding());
+		assertSame(app.getDefaultCharEncoding(), response.getCharEncoding());
+		response.setCharEncoding("x");
+		assertSame(app.getDefaultCharEncoding(), response.getCharEncoding());
 		assertSame(Response.ContentAccess.WRITER, response.getContentAccess());
 		assertSame(out, response.getContentWriter());
 		assertSame(response, out.getAttribute(Response.class));

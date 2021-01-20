@@ -106,7 +106,7 @@ public class TestRequest extends AbstractRequest
 		parameters_ 		= request.parameters_;
 		uploads_			= request.uploads_;
 		uploadError_		= request.uploadError_;
-		contentEncoding_	= request.contentEncoding_;
+		charEncoding_	= request.charEncoding_;
 		contentBytes_ 		= request.contentBytes_;
 		contentString_ 		= request.contentString_;
 		security_ 			= request.security_;
@@ -526,18 +526,18 @@ public class TestRequest extends AbstractRequest
 	/**
 	 * Returns the content encoding.
 	 */
-	@Override public String getContentEncoding()
+	@Override public String getCharEncoding()
 	{
-		return contentEncoding_;
+		return charEncoding_;
 	}
 
 
 	/**
 	 * Sets the encoding.
 	 */
-	@Override public void setContentEncoding(String encoding)
+	@Override public void setCharEncoding(String encoding)
 	{
-		contentEncoding_ = encoding;
+		charEncoding_ = encoding;
 	}
 
 	
@@ -576,7 +576,7 @@ public class TestRequest extends AbstractRequest
 				contentBytes_ = EMPTY_BYTES;
 			else
 			{
-				String encoding = contentEncoding_ != null ? contentEncoding_ : getApplication().getDefaultCharEncoding();
+				String encoding = charEncoding_ != null ? charEncoding_ : getApplication().getDefaultCharEncoding();
 				ByteArrayOutputStream out = new ByteArrayOutputStream(); 
 				try
 				{
@@ -606,7 +606,7 @@ public class TestRequest extends AbstractRequest
 			return new StringReader(contentString_);
 		else
 		{
-			String encoding = contentEncoding_ != null ? contentEncoding_ : getApplication().getDefaultCharEncoding();
+			String encoding = charEncoding_ != null ? charEncoding_ : getApplication().getDefaultCharEncoding();
 			return new InputStreamReader(new ByteArrayInputStream(getContentBytes()), encoding);
 		}
 	}
@@ -884,7 +884,7 @@ public class TestRequest extends AbstractRequest
 	private ParamList parameters_ = new ParamList();
 	private HashMap<String, Upload> uploads_;
 	private Exception uploadError_;
-	private String contentEncoding_ = "UTF-8";
+	private String charEncoding_ = "UTF-8";
 	private byte[] contentBytes_;
 	private String contentString_;
 	private TestSecurity security_;

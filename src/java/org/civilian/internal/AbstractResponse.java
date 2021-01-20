@@ -264,8 +264,8 @@ public abstract class AbstractResponse implements Response
 			null;
 			
 		// make sure that encoding is initialized, fallback to application encoding
-		if (contentEncoding_ == null)
-			setContentEncoding(getApplication().getDefaultCharEncoding());
+		if (charEncoding_ == null)
+			setCharEncoding(getApplication().getDefaultCharEncoding());
 
 		try
 		{
@@ -318,9 +318,9 @@ public abstract class AbstractResponse implements Response
 		contentOutput_ = originalStream;
 		
 		if ((streamInterceptor != null) || (writerInterceptor != null))
-			contentOutput_ = new InterceptedTemplateWriter(originalStream, streamInterceptor, writerInterceptor, contentEncoding_);
+			contentOutput_ = new InterceptedTemplateWriter(originalStream, streamInterceptor, writerInterceptor, charEncoding_);
 		else
-			contentOutput_ = new TemplateWriter(new OutputStreamWriter(originalStream, contentEncoding_));
+			contentOutput_ = new TemplateWriter(new OutputStreamWriter(originalStream, charEncoding_));
 	}
 		
 
@@ -330,7 +330,7 @@ public abstract class AbstractResponse implements Response
 	private void initContentWriterForError() throws IOException
 	{
 		if (contentOutput_ instanceof OutputStream)
-			contentOutput_ = new OutputStreamWriter((OutputStream)contentOutput_, getContentEncoding());
+			contentOutput_ = new OutputStreamWriter((OutputStream)contentOutput_, getCharEncoding());
 		contentOutput_ = new TemplateWriter((Writer)contentOutput_);
 	}
 	
@@ -373,26 +373,26 @@ public abstract class AbstractResponse implements Response
 	}
 	
 	
-	@Override public Response setContentEncoding(String encoding)
+	@Override public Response setCharEncoding(String encoding)
 	{
 		if ((contentOutput_ == null) && !isCommitted()) 
 		{
-			contentEncoding_ = encoding;
-			setContentEncodingImpl(encoding);
+			charEncoding_ = encoding;
+			setCharEncodingImpl(encoding);
 		}
 		return this;
 	}
 	
 	
 	/**
-	 * Implements setContentEncoding().
+	 * Implements setCharEncoding().
 	 */
-	protected abstract void setContentEncodingImpl(String encoding);
+	protected abstract void setCharEncodingImpl(String encoding);
 
 	
-	@Override public String getContentEncoding()
+	@Override public String getCharEncoding()
 	{
-		return contentEncoding_;
+		return charEncoding_;
 	}
 
 	
@@ -476,7 +476,7 @@ public abstract class AbstractResponse implements Response
 		type_ 				= Type.NORMAL;
 		localeService_ 		= null;
 		contentLanguage_	= null;
-		contentEncoding_	= null;
+		charEncoding_		= null;
 		contentOutput_		= null;
 		streamInterceptor_	= null;
 		writerInterceptor_	= null;
@@ -489,7 +489,7 @@ public abstract class AbstractResponse implements Response
 	private Flushable contentOutput_;
 	// we duplicate the encoding since we want to know if an encoding was explicitly set
 	// (the servlet response returns ISO-8859-1 if no encoding was set).
-	private String contentEncoding_;
+	private String charEncoding_;
 	private Locale contentLanguage_;
 	private Type type_ = Type.NORMAL;
 	private ResponseStreamInterceptor streamInterceptor_;

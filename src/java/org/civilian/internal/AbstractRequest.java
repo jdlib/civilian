@@ -400,20 +400,20 @@ public abstract class AbstractRequest implements Request
 	 */
 	protected void initEncoding()
 	{
-		if ((getContentEncoding() == null) && 
+		if ((getCharEncoding() == null) && 
 			ContentType.APPLICATION_X_WWW_FORM_URLENCODED.equals(getContentType()))
 		{
-			setDefaultContentEncoding();
+			setDefaultCharEncoding();
 		}
 	}
 	
 	
-	private void setDefaultContentEncoding()
+	private void setDefaultCharEncoding()
 	{
 		String encoding = getApplication().getDefaultCharEncoding();
 		try
 		{
-			setContentEncoding(encoding);
+			setCharEncoding(encoding);
 		}
 		catch (UnsupportedEncodingException e)
 		{
@@ -492,8 +492,8 @@ public abstract class AbstractRequest implements Request
 	{
 		checkNoContentStream();
 		
-		if (getContentEncoding() == null)
-			setDefaultContentEncoding();
+		if (getCharEncoding() == null)
+			setDefaultCharEncoding();
 		
 		Reader reader;
 		
@@ -519,7 +519,7 @@ public abstract class AbstractRequest implements Request
 	
 	protected Reader getContentReaderImpl(InputStream out) throws IOException
 	{
-		return new InputStreamReader(out, getContentEncoding()); 
+		return new InputStreamReader(out, getCharEncoding()); 
 	}
 
 	

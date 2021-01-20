@@ -272,9 +272,9 @@ public class RequestWrapper implements Request
 	}
 
 	
-	@Override public String getContentEncoding()
+	@Override public String getCharEncoding()
 	{
-		return request_.getContentEncoding();
+		return request_.getCharEncoding();
 	}
 
 
@@ -308,9 +308,9 @@ public class RequestWrapper implements Request
 	}
 
 
-	@Override public void setContentEncoding(String encoding) throws UnsupportedEncodingException
+	@Override public void setCharEncoding(String encoding) throws UnsupportedEncodingException
 	{
-		request_.setContentEncoding(encoding);
+		request_.setCharEncoding(encoding);
 	}
 
 

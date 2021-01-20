@@ -163,7 +163,7 @@ class ServletResponseAdapter extends AbstractResponse
 	/**
 	 * Forwards to the HttpServletResponse.
 	 */
-	@Override protected void setContentEncodingImpl(String encoding)
+	@Override protected void setCharEncodingImpl(String encoding)
 	{
 		servletResponse_.setCharacterEncoding(encoding);
 	}

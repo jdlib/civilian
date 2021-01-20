@@ -220,7 +220,7 @@ public abstract class Asset
 		if (contentType_ != null)
 			response.setContentType(contentType_);
 		if (charEncoding_ != null)
-			response.setContentEncoding(charEncoding_);
+			response.setCharEncoding(charEncoding_);
 		if (length_ >= 0)
 			response.setContentLength(length_);
 		

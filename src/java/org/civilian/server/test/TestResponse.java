@@ -147,7 +147,7 @@ public class TestResponse extends AbstractResponse
 	}
 
 	
-	@Override protected void setContentEncodingImpl(String encoding)
+	@Override protected void setCharEncodingImpl(String encoding)
 	{
 		// encoding already stored in AbstractResponse
 	}
@@ -210,10 +210,10 @@ public class TestResponse extends AbstractResponse
 			flushBuffer();
 		if (outputStream_ != null)
 		{
-			String encoding = getContentEncoding();
+			String encoding = getCharEncoding();
 			if (encoding == null)
 				encoding = getApplication().getDefaultCharEncoding();
-			// does not help to call setContentEncoding() since
+			// does not help to call setCharEncoding() since
 			// it is ignored since we already obtaine an outputstream or writer
 			return outputStream_.toString(encoding);
 		}

@@ -162,16 +162,16 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public Response setContentEncoding(String encoding)
+	@Override public Response setCharEncoding(String encoding)
 	{
-		response_.setContentEncoding(encoding);
+		response_.setCharEncoding(encoding);
 		return this;
 	}
 
 
-	@Override public String getContentEncoding()
+	@Override public String getCharEncoding()
 	{
-		return response_.getContentEncoding();
+		return response_.getCharEncoding();
 	}
 
 
