@@ -153,9 +153,9 @@ public class AbstractResponseTest extends CivTest
 
 		TemplateWriter out = response.getContentWriter();
 		
-		assertSame(app.getEncoding(), response.getContentEncoding());
+		assertSame(app.getDefaultCharEncoding(), response.getContentEncoding());
 		response.setContentEncoding("x");
-		assertSame(app.getEncoding(), response.getContentEncoding());
+		assertSame(app.getDefaultCharEncoding(), response.getContentEncoding());
 		assertSame(Response.ContentAccess.WRITER, response.getContentAccess());
 		assertSame(out, response.getContentWriter());
 		assertSame(response, out.getAttribute(Response.class));

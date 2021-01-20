@@ -499,9 +499,9 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Returns a writer to write textual output. 
 	 * If no content character encoding has been set,
-	 * the encoding of the application is used.
+	 * the default character encoding of the application is used.
 	 * The method may not be called if {@link #getContentStream()} was called before.
-	 * @see Application#getEncoding()
+	 * @see Application#getDefaultCharEncoding()
 	 */
 	public abstract TemplateWriter getContentWriter() throws IOException;
 
@@ -577,7 +577,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 * Returns the character encoding of the response.
 	 * The encoding can be set with a call to {@link #setContentEncoding(String)}.
 	 * If getWriter() is called and no encoding is set, then the default encoding of the application 
-	 * (see {@link Application#getEncoding()} is used.
+	 * (see {@link Application#getDefaultCharEncoding()} is used.
 	 */
 	public abstract String getContentEncoding();
 	

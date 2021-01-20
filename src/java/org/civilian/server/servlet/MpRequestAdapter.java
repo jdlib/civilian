@@ -46,7 +46,7 @@ class MpRequestAdapter extends ServletRequestAdapter
 			// now parse the parts of the request
 			String encoding = servletRequest.getCharacterEncoding();
 			if (encoding == null)
-				encoding = app.getEncoding();
+				encoding = app.getDefaultCharEncoding();
 			for (Part part : servletRequest_.getParts())
 				readPart(part, encoding);
 		}

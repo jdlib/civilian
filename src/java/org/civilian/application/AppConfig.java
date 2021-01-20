@@ -92,8 +92,8 @@ public class AppConfig
 		settings_ 				= settings == null ? new Settings() : settings;
 		async_					= settings_.getBoolean(ConfigKeys.ASYNC, false); 
 		connect_				= settings_.getBoolean(ConfigKeys.CONNECT, true); 
-		encoding_				= settings_.get(ConfigKeys.ENCODING, ConfigKeys.ENCODING_DEFAULT);
-		typeLib_ 			= new TypeLib();
+		defaultCharEncoding_	= settings_.get(ConfigKeys.ENCODING, ConfigKeys.ENCODING_DEFAULT);
+		typeLib_ 				= new TypeLib();
 		extensionMapping_		= app.getResourceConfig().getExtensionMapping();
 		defaultResExtension_	= IoUtil.normExtension(settings_.get(ConfigKeys.EXTENSION, null));
 
@@ -207,12 +207,12 @@ public class AppConfig
 	
 	
 	/**
-	 * Returns the default application encoding.
-	 * @see Application#getEncoding()
+	 * Returns the default application character encoding.
+	 * @see Application#getDefaultCharEncoding()
 	 */
-	public String getEncoding()
+	public String getDefaultCharEncoding()
 	{
-		return encoding_;
+		return defaultCharEncoding_;
 	}
 
 
@@ -221,7 +221,7 @@ public class AppConfig
 	 */
 	public void setEncoding(String encoding)
 	{
-		encoding_ = Check.notNull(encoding, "encoding");
+		defaultCharEncoding_ = Check.notNull(encoding, "encoding");
 	}
 
 	
@@ -563,7 +563,7 @@ public class AppConfig
 
 	
 	private Application app_;
-	private String encoding_;
+	private String defaultCharEncoding_;
 	private String version_;
 	private Settings settings_;
 	private Locale[] supportedLocales_;

@@ -135,7 +135,7 @@
 		
 		<h2 id="encoding">Asset encoding and content-types</h2>
 		An asset response contains a <code>Content-Type</code> header which includes an encoding parameter.
-		By default encoding of textual assets equals the application {javadoc:Application#getEncoding() encoding} (which by default is UTF-8).
+		By default encoding of textual assets equals the application {javadoc:Application#getDefaultCharEncoding() encoding} (which by default is UTF-8).
 		It is a good idea to serve all HTML pages and textual assets in the same encoding.
 		<p>
 		Additionally you can specify different encodings for every asset location.

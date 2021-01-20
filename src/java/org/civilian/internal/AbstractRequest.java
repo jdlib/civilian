@@ -410,7 +410,7 @@ public abstract class AbstractRequest implements Request
 	
 	private void setDefaultContentEncoding()
 	{
-		String encoding = getApplication().getEncoding();
+		String encoding = getApplication().getDefaultCharEncoding();
 		try
 		{
 			setContentEncoding(encoding);

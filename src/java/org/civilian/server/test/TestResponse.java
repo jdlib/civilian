@@ -212,7 +212,7 @@ public class TestResponse extends AbstractResponse
 		{
 			String encoding = getContentEncoding();
 			if (encoding == null)
-				encoding = getApplication().getEncoding();
+				encoding = getApplication().getDefaultCharEncoding();
 			// does not help to call setContentEncoding() since
 			// it is ignored since we already obtaine an outputstream or writer
 			return outputStream_.toString(encoding);

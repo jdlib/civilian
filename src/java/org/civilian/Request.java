@@ -600,8 +600,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	  
 	/**
 	 * Returns a Reader for the request content. If the {@link #getContentEncoding() content encoding}
-	 * is not set, it uses the default {@link Application#getEncoding() application encoding}. 
-	 * @see Application#getEncoding()
+	 * is not set, it uses the default {@link Application#getDefaultCharEncoding() application encoding}. 
 	 * @throws IllegalArgumentException if {@link #getContentStream()} has already been called. 
 	 */
 	public Reader getContentReader() throws IOException; 

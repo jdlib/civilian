@@ -245,14 +245,14 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 			// even if init throws an error we complete
 			// setup of safe application properties
 			// since the error page may rely on them
-			initResult.connect	= appConfig.getConnect();
-			initResult.async	= appConfig.getAsync();
-			encoding_			= appConfig.getEncoding();
-			version_			= appConfig.getVersion();
-			assetService_		= initAssets(appConfig.getAssetConfig());
-			uploadConfig_		= appConfig.getUploadConfig();
-			contentSerializers_ = appConfig.getContentSerializers();
-			localeServices_		= new LocaleServiceList( 
+			initResult.connect		= appConfig.getConnect();
+			initResult.async		= appConfig.getAsync();
+			defaultCharEncoding_	= appConfig.getDefaultCharEncoding();
+			version_				= appConfig.getVersion();
+			assetService_			= initAssets(appConfig.getAssetConfig());
+			uploadConfig_			= appConfig.getUploadConfig();
+			contentSerializers_ 	= appConfig.getContentSerializers();
+			localeServices_			= new LocaleServiceList( 
 				appConfig.getTypeLib(),
 				appConfig.getMsgBundleFactory(), 
 				appConfig.allowUnsupportedLocales(),
@@ -336,7 +336,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 		AssetService service = AssetServices.combine(Path.ROOT, config.getLocations());
 		if (config.getLocationCount() > 0)
 			service = AssetServices.makeCaching(service, config.getMaxCachedSize()); 
-		service.init(getPath(), getEncoding(), config.getContentTypeLookup());
+		service.init(getPath(), getDefaultCharEncoding(), config.getContentTypeLookup());
 		return service;
 	}
 	
@@ -479,9 +479,9 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 	/**
 	 * Returns the default encoding for textual content of responses.
 	 */
-	public String getEncoding()
+	public String getDefaultCharEncoding()
 	{
-		return encoding_;
+		return defaultCharEncoding_;
 	}
 
 	
@@ -786,7 +786,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 	
 	// properties all have reasonable defaults, initialized again when added to the server
 	private String id_ = "?";
-	private String encoding_ = ConfigKeys.ENCODING_DEFAULT;
+	private String defaultCharEncoding_ = ConfigKeys.ENCODING_DEFAULT;
 	private Path relativePath_ = Path.ROOT;
 	private Path path_ = Path.ROOT;
 	private Server server_ = TempServer.INSTANCE;

@@ -72,9 +72,9 @@ public class SettingsTemplate extends Template
 		out.increaseTab();
 		out.println("<td>Encoding</td>");                               // line 32: <td>Encoding</td>
 		out.print("<td>");                                              // line 33: <td>
-		out.print(app.getEncoding());                                   // line 33: <%app.getEncoding()%>
+		out.print(app.getDefaultCharEncoding());                        // line 33: <%app.getDefaultCharEncoding()%>
 		out.println("</td>");                                           // line 33: </td>
-		out.println("<td>org.civilian.Application.getEncoding()</td>"); // line 34: <td>org.civilian.Application.getEncoding()</td>
+		out.println("<td>org.civilian.Application.getDefaultCharEncoding()</td>"); // line 34: <td>org.civilian.Application.getDefaultCharEncoding()</td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 35: </tr>
 		out.println("<tr>");                                            // line 36: <tr>

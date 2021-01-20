@@ -30,8 +30,8 @@ template(Application app) mixin html
 	</tr>
 	<tr>
 		<td>Encoding</td>
-		<td><%app.getEncoding()%></td>
-		<td>org.civilian.Application.getEncoding()</td>
+		<td><%app.getDefaultCharEncoding()%></td>
+		<td>org.civilian.Application.getDefaultCharEncoding()</td>
 	</tr>
 	<tr>
 		<td>Locale</td>

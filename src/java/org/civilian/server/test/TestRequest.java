@@ -576,7 +576,7 @@ public class TestRequest extends AbstractRequest
 				contentBytes_ = EMPTY_BYTES;
 			else
 			{
-				String encoding = contentEncoding_ != null ? contentEncoding_ : getApplication().getEncoding();
+				String encoding = contentEncoding_ != null ? contentEncoding_ : getApplication().getDefaultCharEncoding();
 				ByteArrayOutputStream out = new ByteArrayOutputStream(); 
 				try
 				{
@@ -606,7 +606,7 @@ public class TestRequest extends AbstractRequest
 			return new StringReader(contentString_);
 		else
 		{
-			String encoding = contentEncoding_ != null ? contentEncoding_ : getApplication().getEncoding();
+			String encoding = contentEncoding_ != null ? contentEncoding_ : getApplication().getDefaultCharEncoding();
 			return new InputStreamReader(new ByteArrayInputStream(getContentBytes()), encoding);
 		}
 	}
