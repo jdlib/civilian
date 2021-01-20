@@ -17,6 +17,7 @@ package org.civilian.processor;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.civilian.Application;
 import org.civilian.Processor;
@@ -86,7 +87,7 @@ public class ProcessorConfig
 	/**
 	 * Returns the processor list for direct manipulation.
 	 */
-	public ArrayList<Processor> getList()
+	public List<Processor> getList()
 	{
 		return list_;
 	}
@@ -108,5 +109,5 @@ public class ProcessorConfig
 	}
 	
 	
-	private ArrayList<Processor> list_ = new ArrayList<>();
+	private final List<Processor> list_ = new ArrayList<>();
 }
