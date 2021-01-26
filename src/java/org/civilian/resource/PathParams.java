@@ -16,10 +16,12 @@
 package org.civilian.resource;
 
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 import org.civilian.type.DateType;
 import org.civilian.type.Type;
 import org.civilian.internal.pathparam.MultiSegmentPathParam;
+import org.civilian.internal.pathparam.OptionalPathParam;
 import org.civilian.internal.pathparam.RegexPathParam;
 import org.civilian.internal.pathparam.SegmentPathParam;
 import org.civilian.internal.pathparam.SegmentWcPathParam;
@@ -122,12 +124,25 @@ public abstract class PathParams
 	 * path parameter value are the matched segments as string array.
 	 * Since this path parameter has variable size, it only makes sense to
 	 * use it at the end of a path. 
-	 * @param name the name of the path parameter
+	 * @param name the name of the PathParam
 	 * @param minSize the minimum number of segments which must be present on
 	 * 		the path.
 	 */
 	public static PathParam<String[]> forMultiSegments(String name, int minSize)
 	{
 		return new MultiSegmentPathParam(name, minSize);
+	}
+	
+	
+	/**
+	 * Creates a PathParam which returns an Optional based on the value of another PathParam.
+	 * If that PathParam matches then an Optional with the matched value is parsed.
+	 * If that PathParam does not match then an empty Optional is parsed.
+	 * @param name the name of the path parameter or null if the name of the inner param should be used
+	 * @param inner the inner PathParam
+	 */
+	public static <T> PathParam<Optional<T>> optional(String name, PathParam<T> inner)
+	{
+		return new OptionalPathParam<>(name, inner);
 	}
 }
