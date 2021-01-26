@@ -30,7 +30,7 @@ public class OptionalPathParam<T> extends PathParam<Optional<T>>
 	
 	@Override public Optional<T> parse(PathScanner scanner)
 	{
-		return Optional.of(inner_.parse(scanner)); 
+		return Optional.ofNullable(inner_.parse(scanner)); 
 	}
 	
 	

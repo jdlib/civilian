@@ -17,6 +17,7 @@ package org.civilian.resource;
 
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import org.junit.Test;
 import org.civilian.CivTest;
@@ -128,5 +129,18 @@ public class PathParamTest extends CivTest
 			.scan("/p", null, null)				// prefix segment recognized and consumed, but no value returned
 			.scan("/p/def/ghi", "def", "ghi")	// prefix segment recognized and consumed, value segment consumed and returned
 		;
+	}
+	
+	
+	@Test public void testOptional()
+	{
+		PathParamAssert.of(PathParams.optional(null, PathParams.forSegment("optional")))
+			.toString("/{optional}")
+			.toDetailedString("/{optional : Optional=/<segment>}")
+			.build(Optional.of("a"), "/a")
+			.build(Optional.empty(), "")
+			.scan("/", Optional.empty(), null)
+			.scan("/a", Optional.of("a"), null)
+			.scan("/a/b", Optional.of("a"), "b");
 	}
 }
