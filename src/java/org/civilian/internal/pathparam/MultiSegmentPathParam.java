@@ -16,7 +16,8 @@
 package org.civilian.internal.pathparam;
 
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathScanner;
 import org.civilian.response.UriEncoder;
@@ -41,21 +42,13 @@ public class MultiSegmentPathParam extends PathParam<String[]>
 
 	@Override public String[] parse(PathScanner scanner)
 	{
-		LinkedList<String> list = new LinkedList<>();
-		int pos = scanner.getPosition();
+		List<String> list = new ArrayList<>();
 		while(scanner.hasMore())
 		{
 			list.add(scanner.getSegment());
 			scanner.next();
 		}
-		if (list.size() >= minSize_)
-			return list.toArray(new String[list.size()]);
-		else
-		{
-			// revert scanner
-			scanner.setPosition(pos);
-			return null;
-		}
+		return list.size() >= minSize_ ? list.toArray(new String[list.size()]) : null;
 	}
 	
 
