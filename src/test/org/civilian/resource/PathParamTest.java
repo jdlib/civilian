@@ -100,7 +100,7 @@ public class PathParamTest extends CivTest
 			.toString("/{multi}")
 			.toDetailedString("/{multi : String[]=minSize=2}")
 			.build(s, "/a/b/c")
-			.scan("/a", null, "a") // not consumed
+			.scan("/a", null, null) // "a" consumed
 			.scan("/a/b/c", s);
 	}
 	
