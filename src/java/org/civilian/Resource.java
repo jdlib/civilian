@@ -314,17 +314,21 @@ public class Resource implements Iterable<Resource>
 	public Match match(String path)
 	{
 		Resource resource 		= this;
-		boolean completeMatch	= true;
 		PathScanner scanner 	= new PathScanner(path);
 		Mark mark				= scanner.mark();
 		Map<PathParam<?>,Object> pathParams = new LinkedHashMap<>();
+		boolean completeMatch;
 		
-		while (scanner.hasMore())
+		while (true)
 		{
+			// we continue as long as we can match a child
+			// matching is possible even if scanner.hasMore() returns false
+			// because of PathParams which return a non-null value even if reading no segment
+			// (e.g. OptionalPathParam, MultiSegmentPathParam)
 			Resource child = resource.matchChild(scanner, mark, pathParams);
 			if (child == null)
 			{
-				completeMatch = false;
+				completeMatch = !scanner.hasMore();
 				break;
 			}
 			resource = child;

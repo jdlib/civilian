@@ -20,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.civilian.CivTest;
@@ -252,10 +253,13 @@ public class ResourceTest extends CivTest
 	
 	@Test public void testMatch()
 	{
-		Resource root 	= new Resource();
-		Resource seg  	= new Resource(root, "seg");
-		Resource ppInt  = new Resource(root, PP_INT);
-		ppInt.setControllerSignature(new ControllerSignature("test.Controller"));
+		Resource root 		= new Resource();
+		Resource seg  		= new Resource(root, "seg");
+		Resource ppInt  	= new Resource(root, PP_INT);
+		Resource optparent  = new Resource(root, "optparent");
+		Resource ppOpt  	= new Resource(optparent, PP_OPT);
+		ppInt.setControllerSignature(new ControllerSignature("test.IntController"));
+		ppOpt.setControllerSignature(new ControllerSignature("test.OptController"));
 		
 		MatchAssert a = new MatchAssert(root);
 		
@@ -280,6 +284,19 @@ public class ResourceTest extends CivTest
 			.complete(true)
 			.resource(seg)
 			.params(0);
+		
+		a.init("/optparent/a")
+			.complete(true)
+			.resource(ppOpt)
+			.params(1)
+			.param(PP_OPT, Optional.of("a"));
+		
+		a.init("/optparent")
+			.complete(true)
+			.resource(ppOpt)
+			.params(1)
+			.param(PP_OPT, Optional.empty());
+		
 		
 		// PathParams are allowed to consume segments from the PathScanner
 		// even if they don't recognize a value. The match algorithm must take this
@@ -376,4 +393,5 @@ public class ResourceTest extends CivTest
 	
 	private static PathParam<String>  PP_SEG = PathParams.forSegment("ppseg"); 
 	private static PathParam<Integer> PP_INT = PathParams.forSegment("ppint").converting(TypeLib.INTEGER); 
+	private static PathParam<Optional<String>> PP_OPT = PathParams.optional("ppopt", PP_SEG); 
 }
