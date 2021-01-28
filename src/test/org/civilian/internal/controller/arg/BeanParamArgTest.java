@@ -28,6 +28,7 @@ import org.civilian.internal.controller.arg.misc.BeanParamArg;
 import org.civilian.request.RequestHeaders;
 import org.civilian.resource.PathParamMap;
 import org.civilian.type.TypeLib;
+import org.civilian.util.HttpHeaders;
 
 
 public class BeanParamArgTest extends CivTest
@@ -41,7 +42,7 @@ public class BeanParamArgTest extends CivTest
 		RequestHeaders headers	= mock(RequestHeaders.class);
 		when(request.getHeaders()).thenReturn(headers);
 		when(request.getParameter("name")).thenReturn("theName");
-		when(headers.get("Accept")).thenReturn("text/html");
+		when(headers.get(HttpHeaders.ACCEPT)).thenReturn("text/html");
 		when(request.getParameters("values")).thenReturn(new String[] { "a", "b" });
 		when(request.getParameter("x")).thenReturn("2");
 		

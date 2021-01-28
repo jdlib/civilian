@@ -9,6 +9,7 @@ import org.civilian.request.Range.Part;
 import org.civilian.server.test.TestApp;
 import org.civilian.server.test.TestRequest;
 import org.civilian.server.test.TestResponse;
+import org.civilian.util.HttpHeaders;
 import org.junit.Test;
 
 
@@ -97,20 +98,20 @@ public class RangeTest extends CivTest
 			TestApp app = new TestApp();
 			TestRequest request = new TestRequest(app);
 			TestResponse response = request.getTestResponse();
-			request.getHeaders().set(Range.HEADER, Range.build().add(0, 2).end().toString());
+			request.getHeaders().set(HttpHeaders.RANGE, Range.build().add(0, 2).end().toString());
 			
 			Range.writeRange(file, request);
 			assertEquals(3, response.getHeaders().getInt("content-length"));
-			assertEquals("bytes", response.getHeaders().get("accept-ranges"));
-			assertEquals("bytes 0-2/6", response.getHeaders().get("content-range"));
+			assertEquals("bytes", response.getHeaders().get(HttpHeaders.ACCEPT_RANGES));
+			assertEquals("bytes 0-2/6", response.getHeaders().get(HttpHeaders.CONTENT_RANGE));
 			assertEquals("ABC", response.getContentText(true));
 
 			response.clear();
-			request.getHeaders().set(Range.HEADER, Range.build().addStart(2).addEnd(2).end().toString());
+			request.getHeaders().set(HttpHeaders.RANGE, Range.build().addStart(2).addEnd(2).end().toString());
 			Range.writeRange(file, request);
-			assertEquals(null, response.getHeaders().get("content-length"));
+			assertEquals(null, response.getHeaders().get(HttpHeaders.CONTENT_LENGTH));
 			assertEquals("multipart/byteranges; boundary=MIME_BOUNDARY", response.getContentType());
-			assertEquals("bytes", response.getHeaders().get("accept-ranges"));
+			assertEquals("bytes", response.getHeaders().get(HttpHeaders.ACCEPT_RANGES));
 			assertEquals("\r\n" + 
 				"--MIME_BOUNDARY\r\n" + 
 				"Content-Range: bytes 2-5/6\r\n" + 

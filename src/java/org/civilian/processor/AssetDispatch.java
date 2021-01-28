@@ -24,6 +24,7 @@ import org.civilian.asset.AssetService;
 import org.civilian.asset.Asset;
 import org.civilian.resource.Path;
 import org.civilian.util.Check;
+import org.civilian.util.HttpHeaders;
 
 
 /**
@@ -85,7 +86,7 @@ public class AssetDispatch extends Processor
 		if (!VALID_METHODS.contains(method))
 			response.sendError(Response.Status.SC405_METHOD_NOT_ALLOWED);
 		else if ("OPTIONS".equals(method))
-			response.getHeaders().set("Allow", VALID_METHODS);
+			response.getHeaders().set(HttpHeaders.ALLOW, VALID_METHODS);
 		else
 			asset.write(response, !"HEAD".equals(method) /*write content*/);
 		return true; // we handled this request

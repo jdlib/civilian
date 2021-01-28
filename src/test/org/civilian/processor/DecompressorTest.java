@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.zip.DeflaterOutputStream;
 import org.civilian.CivTest;
 import org.civilian.server.test.TestRequest;
+import org.civilian.util.HttpHeaders;
 import org.junit.Test;
 
 
@@ -32,7 +33,7 @@ public class DecompressorTest extends CivTest
 	
 	private void assertProcess(String contentEncoding, String readContent) throws Exception
 	{
-		request_.getHeaders().set("Content-Encoding", contentEncoding);
+		request_.getHeaders().set(HttpHeaders.CONTENT_ENCODING, contentEncoding);
 		
 		// process always returns false
 		assertFalse(decompressor_.process(request_, ProcessorChain.EMPTY));

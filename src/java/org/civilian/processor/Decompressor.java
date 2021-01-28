@@ -23,6 +23,7 @@ import org.civilian.Request;
 import org.civilian.content.CompressionScheme;
 import org.civilian.internal.Logs;
 import org.civilian.request.RequestStreamInterceptor;
+import org.civilian.util.HttpHeaders;
 
 
 /**
@@ -35,7 +36,7 @@ public class Decompressor extends Processor
 {
 	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
 	{
-		String scheme = request.getHeaders().get("Content-encoding");
+		String scheme = request.getHeaders().get(HttpHeaders.CONTENT_ENCODING);
 		if (scheme != null)
 			addInterceptor(request, scheme);
 		return chain.next(request);

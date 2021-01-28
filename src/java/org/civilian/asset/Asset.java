@@ -30,6 +30,7 @@ import java.util.TimeZone;
 import org.civilian.Response;
 import org.civilian.content.ContentType;
 import org.civilian.util.Check;
+import org.civilian.util.HttpHeaders;
 import org.civilian.util.IoUtil;
 
 
@@ -259,11 +260,11 @@ public abstract class Asset
 		if (charEncoding_ != null)
 			response.setCharEncoding(charEncoding_);
 		if (compression_ != null)
-			response.getHeaders().set("Content-Encoding", compression_);
+			response.getHeaders().set(HttpHeaders.CONTENT_ENCODING, compression_);
 		if (length_ >= 0)
 			response.setContentLength(length_);
 		if (lastModifiedHttp_ != null)
-			response.getHeaders().set("Last-Modified", lastModifiedHttp_);
+			response.getHeaders().set(HttpHeaders.LAST_MODIFIED, lastModifiedHttp_);
 		if (cacheControl_ != null)
 			cacheControl_.writeHeaders(response, this);
 	}

@@ -24,6 +24,7 @@ import org.civilian.samples.crm.web.CrmResources;
 import org.civilian.server.test.TestRequest;
 import org.civilian.server.test.TestResponse;
 import org.civilian.server.test.TestServer;
+import org.civilian.util.HttpHeaders;
 
 
 public class SamplesTest extends Assert
@@ -76,7 +77,7 @@ public class SamplesTest extends Assert
 		assertEquals("/customers", request.getPath().print());
 		request.run();
 		assertEquals(302, response.getStatus());
-		assertEquals("/login?path=%2Fcustomers", response.getHeaders().get("Location"));
+		assertEquals("/login?path=%2Fcustomers", response.getHeaders().get(HttpHeaders.LOCATION));
 		
 		// access /login and post a login as ajax: assert that we have a session
 		request.setMethod("POST");

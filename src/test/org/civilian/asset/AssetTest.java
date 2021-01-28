@@ -29,6 +29,7 @@ import org.civilian.internal.ParamList;
 import org.civilian.internal.asset.MemoryAsset;
 import org.civilian.internal.asset.UrlAsset;
 import org.civilian.server.test.TestResponse;
+import org.civilian.util.HttpHeaders;
 
 
 public class AssetTest extends CivTest
@@ -87,19 +88,19 @@ public class AssetTest extends CivTest
 		when(request.getHeaders()).thenReturn(reqHeaders);
 		
 		asset.setLastModified(10000);
-		reqHeaders.setDate("If-Modified-Since", 9500);
+		reqHeaders.setDate(HttpHeaders.IF_MODIFIED_SINCE, 9500);
 		
 		asset.write(response, true);
-		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get("Last-Modified"));
-		assertEquals("max-age=2592000", response.getHeaders().get("Cache-Control"));
+		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get(HttpHeaders.LAST_MODIFIED));
+		assertEquals("max-age=2592000", response.getHeaders().get(HttpHeaders.CACHE_CONTROL));
 		assertEquals(Response.Status.SC304_NOT_MODIFIED, response.getStatus());
 		
 		response.reset();
-		reqHeaders.setDate("If-Modified-Since", 8000);
+		reqHeaders.setDate(HttpHeaders.IF_MODIFIED_SINCE, 8000);
 		asset.write(response, true);
 
-		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get("Last-Modified"));
-		assertEquals("max-age=2592000", response.getHeaders().get("Cache-Control"));
+		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get(HttpHeaders.LAST_MODIFIED));
+		assertEquals("max-age=2592000", response.getHeaders().get(HttpHeaders.CACHE_CONTROL));
 		assertEquals(ContentType.TEXT_CSS.getValue(), response.getContentType());
 		assertEquals("ISO-8859-1", response.getCharEncoding());
 		assertEquals(Response.Status.SC200_OK, response.getStatus());
