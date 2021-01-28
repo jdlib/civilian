@@ -138,9 +138,9 @@ public class AssetConfig
 	{
 		contentTypeLookup_ = Check.notNull(lookup, "lookup");
 	}
-
+	
 	
 	private ContentTypeLookup contentTypeLookup_ = ContentTypeLookup.DEFAULT;
 	private int maxCachedSize_ = DEFAULT_MAX_CACHE_SIZE;
-	private HashMap<String,AssetLocation> locations_ = new HashMap<>();
+	private final HashMap<String,AssetLocation> locations_ = new HashMap<>();
 }
