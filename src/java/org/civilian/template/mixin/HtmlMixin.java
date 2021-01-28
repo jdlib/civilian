@@ -60,20 +60,38 @@ public class HtmlMixin
 	/**
 	 * Prints a link element like {@link #linkCss(String)} and additionally prints
 	 * a list of attribute names and values given by the attrs parameter.
-	 * @param cssPath a path to the css file. The path is automatically
+	 * @param href a relative path to the css file. The path is automatically
 	 * 		prefixed by the {@link #path()} stored in the mixin..
 	 */
-	public void linkCss(String cssPath, String... attrs)
+	public void linkCss(String href, String... attrs)
 	{
 		out.print("<link");
 		attr("rel", "stylesheet");
 		attr("type", "text/css");
-		printPathAttr("href", cssPath);
+		printPathAttr("href", href);
 		if (attrs != null)
 			HtmlUtil.attrs(out, attrs);
 		out.println(">");
 	}
 	
+	
+	/**
+	 * Prints a favicon link element.
+	 * a list of attribute names and values given by the attrs parameter.
+	 * @param href a relative path to the favicon file. The path is automatically
+	 * 		prefixed by the {@link #path()} stored in the mixin..
+	 * @param type an optional content type of the favicon.
+	 */
+	public void linkFavicon(String href, String type)
+	{
+	    out.print("<link");
+	    attr("rel", "icon");
+	    printPathAttr("href", href);
+	    if (type != null)
+	        attr("type", type);
+	    out.println(">");
+	}
+
 	
 	/**
 	 * Prints a script element with a src-attribute
