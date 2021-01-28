@@ -119,6 +119,26 @@ public abstract class AssetLocation extends AssetService
 	{
 		return contentType_;
 	}
+	
+	
+	/**
+	 * Instructs the AssertService to use the given AssetCacheControlfor its assets.
+	 * @param cacheControl the cacheControl
+	 */
+	@Override public void setCacheControl(AssetCacheControl cacheControl)
+	{
+		cacheControl_ = cacheControl;
+	}
+
+	
+	/**
+	 * Return the AssetCacheControl used by this location.
+	 * @return
+	 */
+	public AssetCacheControl getCacheControl()
+	{
+		return cacheControl_;
+	}
 
 	
 	/**
@@ -139,8 +159,10 @@ public abstract class AssetLocation extends AssetService
 				if (Logs.ASSET.isTraceEnabled())
 					Logs.ASSET.trace("{} -> {}", assetPath, asset);
 				
-				if (asset.getCharEncoding() == null)
+				if ((charEncoding_ != null) && (asset.getCharEncoding() == null))
 					asset.setCharEncoding(charEncoding_);
+				if ((cacheControl_ != null) && (asset.getCacheControl() == null))
+					asset.setCacheControl(cacheControl_);
 				
 				if (asset.getContentType() == null)
 				{
@@ -187,5 +209,6 @@ public abstract class AssetLocation extends AssetService
 	private Path relativePath_;
 	private String charEncoding_;
 	private ContentType contentType_;
+	private AssetCacheControl cacheControl_ = AssetCacheControl.DEFAULT;
 	private ContentTypeLookup contentTypeLookup_ = ContentTypeLookup.EMPTY;
 }

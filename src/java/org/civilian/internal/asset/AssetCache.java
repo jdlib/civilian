@@ -18,6 +18,7 @@ package org.civilian.internal.asset;
 
 import java.util.concurrent.ConcurrentHashMap;
 import org.civilian.asset.Asset;
+import org.civilian.asset.AssetCacheControl;
 import org.civilian.asset.AssetService;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.internal.Logs;
@@ -124,6 +125,12 @@ public class AssetCache extends AssetService
 		return asset;
 	}
 	
+	
+	@Override public void setCacheControl(AssetCacheControl cacheControl)
+	{
+		implementation_.setCacheControl(cacheControl);
+	}
+
 	
 	/**
 	 * Returns an info string.

@@ -16,6 +16,12 @@ public interface AssetCacheControl
 	};
 	
 	
+    public static final AssetCacheControl NO_CACHE = (response, asset) -> 
+    {
+    	response.getHeaders().set(HttpHeaders.CACHE_CONTROL, "no-cache");
+	};
+
+	
 	public void writeHeaders(Response response, Asset asset);
 }
 

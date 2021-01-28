@@ -335,5 +335,5 @@ public abstract class Asset
 	private long lastModified_ = -1L;
 	private String lastModifiedHttp_;
 	private String compression_;
-	private AssetCacheControl cacheControl_ = AssetCacheControl.DEFAULT; 
+	private AssetCacheControl cacheControl_; 
 }

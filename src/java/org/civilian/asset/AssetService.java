@@ -75,6 +75,13 @@ public abstract class AssetService implements PathProvider
 	 * which just can't serve any assets.
 	 */
 	public abstract boolean hasAssets();
+	
+	
+	/**
+	 * Instructs the AssertService to use the given AssetCacheControlfor its assets.
+	 * @param cacheControl the cacheControl
+	 */
+	public abstract void setCacheControl(AssetCacheControl cacheControl);
 
 	
 	/**

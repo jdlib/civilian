@@ -17,6 +17,7 @@ package org.civilian.internal.asset;
 
 
 import org.civilian.asset.Asset;
+import org.civilian.asset.AssetCacheControl;
 import org.civilian.asset.AssetService;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
@@ -92,6 +93,13 @@ public class CombinedAssetService extends AssetService
 				return asset;
 		}
 		return null;
+	}
+	
+	
+	@Override public void setCacheControl(AssetCacheControl cacheControl)
+	{
+		for (AssetService child : children_)
+			child.setCacheControl(cacheControl);
 	}
 
 	

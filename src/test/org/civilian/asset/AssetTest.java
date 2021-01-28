@@ -81,6 +81,7 @@ public class AssetTest extends CivTest
 		TestAsset asset = new TestAsset("content");
 		asset.setCharEncoding("ISO-8859-1");
 		asset.setContentType(ContentType.TEXT_CSS);
+		asset.setCacheControl(AssetCacheControl.DEFAULT);
 		
 		Request request 			= mock(Request.class);
 		ParamList reqHeaders 		= new ParamList(true);
