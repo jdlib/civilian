@@ -58,13 +58,16 @@ public abstract class AssetService implements PathProvider
 	
 	
 	/**
-	 * Returns an asset or null if not found.
+	 * Returns an asset for a given path.
+	 * @param path the asset path
+	 * @return the asset or null if not found
 	 */
-	public abstract Asset getAsset(Path assetPath) throws Exception;
+	public abstract Asset getAsset(Path path) throws Exception;
 
 
 	/**
 	 * Returns an info string describing the AssetService.
+	 * @return the info string
 	 */
 	public abstract String getInfo();
 
@@ -82,6 +85,13 @@ public abstract class AssetService implements PathProvider
 	 * @param cacheControl the cacheControl
 	 */
 	public abstract void setCacheControl(AssetCacheControl cacheControl);
+	
+	
+	/**
+	 * Instructs the AssertService to use the given AssetInitializer to initialize its assets.
+	 * @param initializer the initializer
+	 */
+	public abstract void setInitializer(AssetInitializer initializer);
 
 	
 	/**

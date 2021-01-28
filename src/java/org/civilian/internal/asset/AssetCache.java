@@ -19,6 +19,7 @@ package org.civilian.internal.asset;
 import java.util.concurrent.ConcurrentHashMap;
 import org.civilian.asset.Asset;
 import org.civilian.asset.AssetCacheControl;
+import org.civilian.asset.AssetInitializer;
 import org.civilian.asset.AssetService;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.internal.Logs;
@@ -84,18 +85,18 @@ public class AssetCache extends AssetService
 	 * Returns the Asset. It looks up the cache and if not found
 	 * or invalid, asks the implementation to provide the asset. 
 	 */
-	@Override public Asset getAsset(Path assetPath) throws Exception
+	@Override public Asset getAsset(Path path) throws Exception
 	{
-		Asset asset = getCachedAsset(assetPath);
+		Asset asset = getCachedAsset(path);
 		if (asset == null)
-			asset = findAsset(assetPath);
+			asset = findAsset(path);
 		return asset;
 	}
 	
 	
-	private Asset getCachedAsset(Path assetPath)
+	private Asset getCachedAsset(Path path)
 	{
-		String key  = assetPath.toString();
+		String key  = path.toString();
 		Asset asset = cache_.get(key);
 		if (asset != null)
 		{
@@ -105,20 +106,20 @@ public class AssetCache extends AssetService
 				asset = null; 
 			}
 			else if (Logs.ASSET.isTraceEnabled())
-				Logs.ASSET.trace("{} cached", assetPath);
+				Logs.ASSET.trace("{} cached", path);
 		}
 		return asset;
 	}
 
 	
-	private Asset findAsset(Path assetPath) throws Exception
+	private Asset findAsset(Path path) throws Exception
 	{
-		Asset asset = implementation_.getAsset(assetPath);
+		Asset asset = implementation_.getAsset(path);
 		if (asset != null)
 		{
 			if (asset.length() <= maxMemSize_)
 				asset.readContent();
-			Asset oldAsset = cache_.putIfAbsent(assetPath.toString(), asset);
+			Asset oldAsset = cache_.putIfAbsent(path.toString(), asset);
 			if (oldAsset != null)
 				asset = oldAsset;
 		}
@@ -129,6 +130,12 @@ public class AssetCache extends AssetService
 	@Override public void setCacheControl(AssetCacheControl cacheControl)
 	{
 		implementation_.setCacheControl(cacheControl);
+	}
+
+	
+	@Override public void setInitializer(AssetInitializer initializer)
+	{
+		implementation_.setInitializer(initializer);
 	}
 
 	

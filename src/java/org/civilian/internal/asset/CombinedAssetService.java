@@ -18,6 +18,7 @@ package org.civilian.internal.asset;
 
 import org.civilian.asset.Asset;
 import org.civilian.asset.AssetCacheControl;
+import org.civilian.asset.AssetInitializer;
 import org.civilian.asset.AssetService;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
@@ -82,13 +83,13 @@ public class CombinedAssetService extends AssetService
 	/**
 	 * Asks all child services to get the asset and returns
 	 * the first hit. 
-	 * @param assetPath the path of the asset relative to asset root.
+	 * @param path the path of the asset relative to asset root.
 	 */
-	@Override public Asset getAsset(Path assetPath) throws Exception
+	@Override public Asset getAsset(Path path) throws Exception
 	{
 		for (AssetService child : children_)
 		{
-			Asset asset = child.getAsset(assetPath);
+			Asset asset = child.getAsset(path);
 			if (asset != null)
 				return asset;
 		}
@@ -100,6 +101,13 @@ public class CombinedAssetService extends AssetService
 	{
 		for (AssetService child : children_)
 			child.setCacheControl(cacheControl);
+	}
+
+	
+	@Override public void setInitializer(AssetInitializer initializer)
+	{
+		for (AssetService child : children_)
+			child.setInitializer(initializer);
 	}
 
 	

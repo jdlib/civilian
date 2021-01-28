@@ -141,39 +141,64 @@ public abstract class AssetLocation extends AssetService
 	}
 
 	
+	@Override public void setInitializer(AssetInitializer initializer)
+	{
+		initializer_ = initializer;
+	}
+
+	
+	public AssetInitializer getInitializer()
+	{
+		return initializer_;
+	}
+
+	
 	/**
 	 * Returns a asset.
-	 * @param assetPath the path of the asset relative to this location
+	 * @param path the path of the asset relative to this location
 	 * @return the asset or null if not found
 	 */
-	@Override public Asset getAsset(Path assetPath) throws Exception
+	@Override public Asset getAsset(Path path) throws Exception
 	{
 		Asset asset = null;
 		
-		Path childPath = assetPath.cutStart(getRelativePath());
+		Path childPath = path.cutStart(getRelativePath());
 		if (childPath != null)
 		{
 			asset = find(childPath);
 			if (asset != null)
-			{
-				if (Logs.ASSET.isTraceEnabled())
-					Logs.ASSET.trace("{} -> {}", assetPath, asset);
-				
-				if ((charEncoding_ != null) && (asset.getCharEncoding() == null))
-					asset.setCharEncoding(charEncoding_);
-				if ((cacheControl_ != null) && (asset.getCacheControl() == null))
-					asset.setCacheControl(cacheControl_);
-				
-				if (asset.getContentType() == null)
-				{
-					ContentType contentType = contentType_ != null ?
-						contentType_ :
-						contentTypeLookup_.forFile(assetPath.toString(), ContentType.APPLICATION_OCTET_STREAM);
-	
-					asset.setContentType(contentType);
-				}
-			}
+				asset = initAsset(path, asset);
 		}
+		return asset;
+	}
+	
+	
+	/**
+	 * Initializes the asset: Applies all setups if not already set
+	 * on the asset.
+	 * @return the asset. May return null, if an AssetInitializer is set which drops the asset
+	 */
+	private Asset initAsset(Path assetPath, Asset asset)
+	{
+		if (Logs.ASSET.isTraceEnabled())
+			Logs.ASSET.trace("{} -> {}", assetPath, asset);
+		
+		if ((charEncoding_ != null) && (asset.getCharEncoding() == null))
+			asset.setCharEncoding(charEncoding_);
+		if ((cacheControl_ != null) && (asset.getCacheControl() == null))
+			asset.setCacheControl(cacheControl_);
+		
+		if (asset.getContentType() == null)
+		{
+			ContentType contentType = contentType_ != null ?
+				contentType_ :
+				contentTypeLookup_.forFile(assetPath.toString(), ContentType.APPLICATION_OCTET_STREAM);
+
+			asset.setContentType(contentType);
+		}
+		
+		if (initializer_ != null)
+			asset = initializer_.initAsset(asset);
 		
 		return asset;
 	}
@@ -211,4 +236,5 @@ public abstract class AssetLocation extends AssetService
 	private ContentType contentType_;
 	private AssetCacheControl cacheControl_ = AssetCacheControl.DEFAULT;
 	private ContentTypeLookup contentTypeLookup_ = ContentTypeLookup.EMPTY;
+	private AssetInitializer initializer_;
 }
