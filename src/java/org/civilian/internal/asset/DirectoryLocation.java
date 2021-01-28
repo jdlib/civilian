@@ -25,8 +25,8 @@ import org.civilian.util.StringUtil;
 
 
 /**
- * AssetDirectory is an AssetLocation whose Assets
- * are files in the local file-system. An AssetDirectory
+ * DirectoryLocation is an AssetLocation whose Assets
+ * are files in the local file-system. A DirectoryLocation
  * is defined by a root directory. Asset paths are then translated into 
  * file paths relative to that root directory.
  */
@@ -35,12 +35,12 @@ public class DirectoryLocation extends AssetLocation
 	/**
 	 * Creates a new DirectoryLocation.
 	 * @param path the path of the AssetLocation.
-	 * @param rootDir the root directory of the AssetDirectory. 
+	 * @param rootDir the root directory of the DirectoryLocation. 
 	 */
 	public DirectoryLocation(String path, File rootDir)
 	{
 		super(path);
-		rootDir_ = FileType.DIR.check(rootDir, "AssetDirectory");
+		rootDir_ = FileType.DIR.check(rootDir, "rootDir");
 	}
 
 

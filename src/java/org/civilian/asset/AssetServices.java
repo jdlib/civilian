@@ -173,7 +173,7 @@ public abstract class AssetServices
 
 	
 	/**
-	 * Returns a new AssetDirectory for asset files in the local file-system.
+	 * Returns a new AssetLocation for asset files in the local file-system.
 	 * @param path the path of the AssetLocation below the asset-root. 
 	 * @param server the server 
 	 * @param directory a directory. If null, then the server root directory is used. If relative

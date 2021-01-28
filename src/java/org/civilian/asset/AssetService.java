@@ -24,7 +24,8 @@ import org.slf4j.Logger;
 
 
 /**
- * AssetService is able to return an asset for a path. 
+ * AssetService is able to return an asset for a request path.
+ * AssertService implementations can be created via the factory {@link AssetServices}. 
  */
 public abstract class AssetService implements PathProvider
 {

@@ -27,7 +27,7 @@ import org.civilian.util.Check;
 
 
 /**
- * AssetDispatch serves static resources ({@link Asset Assets}).
+ * AssetDispatch serves static resources, i.e. ({@link Asset Assets}).
  * It uses the {@link Application#getAssetService()} of the application to locate assets.
  * The AssetDispatch accepts the following request methods:
  * <ul>
