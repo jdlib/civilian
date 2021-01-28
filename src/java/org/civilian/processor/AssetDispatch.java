@@ -72,9 +72,14 @@ public class AssetDispatch extends Processor
 		// if this request does not match an asset, run the next processor in the chain 
 		Asset asset = assetService_.getAsset(relativePath);
 		if (asset == null)
-			return chain.next(request); // not an asset
-
-		// handle the asset request
+			return chain.next(request); // not an asset request
+		else
+			return processAsset(request, asset);
+	}
+	
+	
+	protected boolean processAsset(Request request, Asset asset) throws Exception
+	{
 		Response response = request.getResponse();
 		String method = request.getMethod();
 		if (!VALID_METHODS.contains(method))
