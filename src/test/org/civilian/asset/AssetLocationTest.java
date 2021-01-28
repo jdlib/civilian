@@ -104,7 +104,7 @@ public class AssetLocationTest extends CivTest
 			assertEquals(file.getAbsolutePath(), asset.toString());
 			assertEquals(ContentType.APPLICATION_OCTET_STREAM, asset.getContentType()); // content-type set in asset root
 			assertEquals(4, asset.length());
-			assertEquals(file.lastModified(), asset.lastModified());
+			assertEquals(file.lastModified(), asset.getLastModified());
 			assertTrue(asset.isValid());
 			assertNull(asset.getContent());
 			

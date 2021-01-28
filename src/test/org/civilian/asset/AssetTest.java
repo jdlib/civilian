@@ -68,10 +68,10 @@ public class AssetTest extends CivTest
 	{
 		TestAsset asset = new TestAsset("content");
 		asset.setLastModified(10000L);
-		assertEquals(10000L, asset.lastModified());
+		assertEquals(10000L, asset.getLastModified());
 
 		asset.setLastModified(-50L);
-		assertEquals(-1L, asset.lastModified());
+		assertEquals(-1L, asset.getLastModified());
 	}
 	
 	
@@ -91,7 +91,7 @@ public class AssetTest extends CivTest
 		
 		asset.write(response, true);
 		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get("Last-Modified"));
-		assertEquals(2592000, response.getHeaders().getInt("max-age"));
+		assertEquals("max-age=2592000", response.getHeaders().get("Cache-Control"));
 		assertEquals(Response.Status.SC304_NOT_MODIFIED, response.getStatus());
 		
 		response.reset();
@@ -99,7 +99,7 @@ public class AssetTest extends CivTest
 		asset.write(response, true);
 
 		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get("Last-Modified"));
-		assertEquals(2592000, response.getHeaders().getInt("max-age"));
+		assertEquals("max-age=2592000", response.getHeaders().get("Cache-Control"));
 		assertEquals(ContentType.TEXT_CSS.getValue(), response.getContentType());
 		assertEquals("ISO-8859-1", response.getCharEncoding());
 		assertEquals(Response.Status.SC200_OK, response.getStatus());

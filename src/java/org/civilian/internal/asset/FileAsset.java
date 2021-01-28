@@ -62,7 +62,7 @@ public class FileAsset extends Asset
 	 */
 	@Override public boolean isValid()
 	{
-		return (length() == file_.length()) && (lastModified() == file_.lastModified());
+		return (length() == file_.length()) && (getLastModified() == file_.lastModified());
 	}
 
 	

@@ -39,7 +39,6 @@ import org.civilian.util.IoUtil;
  */
 public abstract class Asset
 {
-    private static final String MAX_AGE = String.valueOf(30 * 24 * 60 * 60); // 30 days 
     private static final SimpleDateFormat HTTP_DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US);
     static 
     {
@@ -128,6 +127,25 @@ public abstract class Asset
 	
 	
 	/**
+	 * Returns the cache control of the Asset.
+	 */
+	public AssetCacheControl getCacheControl()
+	{
+		return cacheControl_;
+	}
+	
+	
+	/**
+	 * Sets the content type of the asset.
+	 * @param value the value
+	 */
+	public void setCacheControl(AssetCacheControl value)
+	{
+		cacheControl_ = value;
+	}
+
+	
+	/**
 	 * Sets the last modified date of the asset.
 	 * @param ms the date in milliseconds since epoch.
 	 * 		Pass a value &lt; 0 for unknown dates.
@@ -155,9 +173,19 @@ public abstract class Asset
 	 * Returns the last modified date of the asset.
 	 * @return the date as milliseconds since epoch, or -1 if not known.
 	 */
-	public long lastModified()
+	public long getLastModified()
 	{
 		return lastModified_;
+	}
+
+	
+	/**
+	 * Returns the last modified date of the asset, formatted as HTTP string.
+	 * @return the date or null if not known.
+	 */
+	public String getLastModifiedHttp()
+	{
+		return lastModifiedHttp_;
 	}
 
 	
@@ -206,17 +234,17 @@ public abstract class Asset
 	
 	
 	/**
-	 * Writes the asset content to the response.
+	 * Writes the asset to the response.
+	 * @param response the response
+	 * @param writeContent should the content writen (false if we
+	 * 		are answering a HEAD request)
 	 */
 	public void write(Response response, boolean writeContent) throws IOException
 	{
+		response.setStatus(Response.Status.SC200_OK);
 		writeHeaders(response);
-		if (writeContent && 
-			(length_ != 0) &&
-			checkIfModified(response))
-		{
+		if (writeContent && (length_ > 0) && checkIfModified(response))
 			writeContent(response);
-		}
 	}
 	
 
@@ -226,11 +254,18 @@ public abstract class Asset
 	 */
 	protected void writeHeaders(Response response)
 	{
+		if (contentType_ != null)
+			response.setContentType(contentType_);
+		if (charEncoding_ != null)
+			response.setCharEncoding(charEncoding_);
+		if (compression_ != null)
+			response.getHeaders().set("Content-Encoding", compression_);
+		if (length_ >= 0)
+			response.setContentLength(length_);
 		if (lastModifiedHttp_ != null)
-		{
 			response.getHeaders().set("Last-Modified", lastModifiedHttp_);
-			response.getHeaders().set("max-age", MAX_AGE);
-		}
+		if (cacheControl_ != null)
+			cacheControl_.writeHeaders(response, this);
 	}
  	
 	
@@ -240,16 +275,6 @@ public abstract class Asset
 	 */
 	protected void writeContent(Response response) throws IOException
 	{
-		response.setStatus(Response.Status.SC200_OK);
-		if (contentType_ != null)
-			response.setContentType(contentType_);
-		if (charEncoding_ != null)
-			response.setCharEncoding(charEncoding_);
-		if (compression_ != null)
-			response.getHeaders().set("Content-Encoding", compression_);
-		if (length_ >= 0)
-			response.setContentLength(length_);
-		
 		OutputStream out = response.getContentStream();
 		if (content_ != null)
 			out.write(content_);
@@ -291,7 +316,7 @@ public abstract class Asset
 	 */
 	public Reader getReader() throws IOException
 	{
-		Check.notNull(charEncoding_, "encoding");
+		Check.notNull(charEncoding_, "charEncoding");
 		return new BufferedReader(new InputStreamReader(getInputStream(), charEncoding_));
 	}
 
@@ -309,4 +334,5 @@ public abstract class Asset
 	private long lastModified_ = -1L;
 	private String lastModifiedHttp_;
 	private String compression_;
+	private AssetCacheControl cacheControl_ = AssetCacheControl.DEFAULT; 
 }
