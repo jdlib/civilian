@@ -36,8 +36,8 @@ public abstract class Processor
 	/**
 	 * Processes the request.
 	 * @param request the request
-	 * @param chain the processor chain. If the processor did not completely processed
-	 * 		the request, then {@link ProcessorChain#next(Request)} should be called.
+	 * @param chain the processor chain. If the processor did not completely process
+	 * 		the request then {@link ProcessorChain#next(Request)} should be called.
 	 * @return true if the request was processed and no further processing should
 	 * 		be applied.
 	 */
