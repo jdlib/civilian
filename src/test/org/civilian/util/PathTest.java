@@ -112,6 +112,14 @@ public class PathTest extends CivTest
 	}
 	
 	
+	@Test public void testLastSegment()
+	{
+		assertEquals("", Path.ROOT.getLastSegment());
+		assertEquals("a", new Path("a").getLastSegment());
+		assertEquals("b", new Path("a/b").getLastSegment());
+	}
+
+	
 	@Test public void testAccessors()
 	{
 		Path path = new Path("test");

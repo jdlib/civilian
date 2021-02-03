@@ -288,6 +288,13 @@ public class Path implements CharSequence, Serializable, Comparable<Path>
 	}
 	
 	
+	public String getLastSegment()
+	{
+		int pSlash	= value_.lastIndexOf('/');
+		return pSlash < 0 ? "" : value_.substring(pSlash + 1);
+	}
+
+	
 	/**
 	 * Compares the path values.
 	 */
