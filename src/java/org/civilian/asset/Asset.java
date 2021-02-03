@@ -291,7 +291,7 @@ public abstract class Asset
 
 	private boolean checkIfModified(Response response)
 	{
-		long modifiedSince = response.getRequest().getHeaders().getDate("If-Modified-Since");
+		long modifiedSince = response.getRequest().getHeaders().getDate(HttpHeaders.IF_MODIFIED_SINCE);
 		if (modifiedSince != -1)
 		{
 			if (lastModified_ < modifiedSince + 1000)
