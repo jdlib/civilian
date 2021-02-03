@@ -176,12 +176,12 @@ public abstract class AssetLocation extends AssetService
 	/**
 	 * Initializes the asset: Applies all setups if not already set
 	 * on the asset.
-	 * @return the asset. May return null, if an AssetInitializer is set which drops the asset
+	 * @return the asset. May return null, if the AssetInitializer dropped the asset
 	 */
-	private Asset initAsset(Path assetPath, Asset asset)
+	private Asset initAsset(Path path, Asset asset)
 	{
 		if (Logs.ASSET.isTraceEnabled())
-			Logs.ASSET.trace("{} -> {}", assetPath, asset);
+			Logs.ASSET.trace("{} -> {}", path, asset);
 		
 		if ((charEncoding_ != null) && (asset.getCharEncoding() == null))
 			asset.setCharEncoding(charEncoding_);
@@ -192,13 +192,13 @@ public abstract class AssetLocation extends AssetService
 		{
 			ContentType contentType = contentType_ != null ?
 				contentType_ :
-				contentTypeLookup_.forFile(assetPath.toString(), ContentType.APPLICATION_OCTET_STREAM);
+				contentTypeLookup_.forFile(path.toString(), ContentType.APPLICATION_OCTET_STREAM);
 
 			asset.setContentType(contentType);
 		}
 		
 		if (initializer_ != null)
-			asset = initializer_.initAsset(asset);
+			asset = initializer_.initAsset(path, asset);
 		
 		return asset;
 	}
@@ -206,10 +206,10 @@ public abstract class AssetLocation extends AssetService
 	
 	/**
 	 * Implements the retrieval of an asset for a request.
-	 * @param assetPath the path of the asset relative to this location
+	 * @param path the path of the asset relative to this location
 	 * @return the asset or null if not found
 	 */
-	protected abstract Asset find(Path assetPath) throws Exception;
+	protected abstract Asset find(Path path) throws Exception;
 
 	
 	/**
