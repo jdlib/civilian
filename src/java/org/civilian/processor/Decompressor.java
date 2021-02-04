@@ -51,7 +51,7 @@ public class Decompressor extends Processor
 		{
 			request.addInterceptor(new Interceptor(scheme));
 		}
-		else if (!CompressionScheme.IDENTITY.equals(schemeName) && Logs.PROCESSOR.isWarnEnabled())
+		else if (!CompressionScheme.Names.IDENTITY.equals(schemeName) && Logs.PROCESSOR.isWarnEnabled())
 		{
 			// identity should not be used in content-encoding but 
 			// we don't log a warning if somebody sends it

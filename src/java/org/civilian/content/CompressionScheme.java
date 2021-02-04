@@ -32,39 +32,45 @@ import org.civilian.util.Check;
 public abstract class CompressionScheme
 {
 	/**
-	 * The name of the "identity" compression scheme.
+	 * Defines constants for known compression schemes.
 	 */
-	public static final String IDENTITY = "identity";
-
+	public interface Names
+	{
+		/**
+		 * The name of the "identity" compression scheme.
+		 */
+		public static final String IDENTITY = "identity";
 	
-	/**
-	 * The name of the "gzip" compression scheme.
-	 */
-	public static final String GZIP = "gzip";
-
+		
+		/**
+		 * The name of the "gzip" compression scheme.
+		 */
+		public static final String GZIP = "gzip";
 	
-	/**
-	 * An alternate name of the "gzip" compression scheme.
-	 */
-	public static final String X_GZIP = "x-gzip";
-
+		
+		/**
+		 * An alternate name of the "gzip" compression scheme.
+		 */
+		public static final String X_GZIP = "x-gzip";
 	
-	/**
-	 * The name of the "deflate" compression scheme.
-	 */
-	public static final String DEFLATE = "deflate";
-
+		
+		/**
+		 * The name of the "deflate" compression scheme.
+		 */
+		public static final String DEFLATE = "deflate";
 	
-	/**
-	 * The name of the "compress" compression scheme.
-	 */
-	public static final String COMPRESS = "compress";
-
+		
+		/**
+		 * The name of the "compress" compression scheme.
+		 */
+		public static final String COMPRESS = "compress";
 	
-	/**
-	 * An alternate name of the "compress" compression scheme.
-	 */
-	public static final String X_COMPRESS = "x-compress";
+		
+		/**
+		 * An alternate name of the "compress" compression scheme.
+		 */
+		public static final String X_COMPRESS = "x-compress";
+	}
 
 	
 	/**
@@ -96,12 +102,12 @@ public abstract class CompressionScheme
 	private static CompressionScheme identity_ 	= DEFAULT_IDENTITY_SCHEME;
 	static
 	{
-		set(GZIP, 		DEFAULT_GZIP_SCHEME);
-		set(X_GZIP, 	DEFAULT_GZIP_SCHEME);
-		set(COMPRESS, 	DEFAULT_COMPRESS_SCHEME);
-		set(X_COMPRESS,	DEFAULT_COMPRESS_SCHEME);
-		set(DEFLATE, 	DEFAULT_DEFLATE_SCHEME);
-		set(IDENTITY, 	DEFAULT_IDENTITY_SCHEME);
+		set(Names.GZIP, 		DEFAULT_GZIP_SCHEME);
+		set(Names.X_GZIP, 		DEFAULT_GZIP_SCHEME);
+		set(Names.COMPRESS, 	DEFAULT_COMPRESS_SCHEME);
+		set(Names.X_COMPRESS,	DEFAULT_COMPRESS_SCHEME);
+		set(Names.DEFLATE, 		DEFAULT_DEFLATE_SCHEME);
+		set(Names.IDENTITY, 	DEFAULT_IDENTITY_SCHEME);
 	}
 	
 	
@@ -298,7 +304,7 @@ public abstract class CompressionScheme
 	 */
 	public boolean isIdentity()
 	{
-		return IDENTITY.equals(name_);
+		return Names.IDENTITY.equals(name_);
 	}
 
 	
@@ -321,7 +327,7 @@ public abstract class CompressionScheme
 	{
 		public GZip()
 		{
-			super(GZIP);
+			super(Names.GZIP);
 		}
 		
 		
@@ -368,7 +374,7 @@ public abstract class CompressionScheme
 	{
 		public Zip()
 		{
-			super(COMPRESS);
+			super(Names.COMPRESS);
 		}
 		
 		
@@ -415,7 +421,7 @@ public abstract class CompressionScheme
 	{
 		public Deflate()
 		{
-			super(DEFLATE);
+			super(Names.DEFLATE);
 		}
 		
 		
@@ -462,7 +468,7 @@ public abstract class CompressionScheme
 	{
 		public Identity()
 		{
-			super(IDENTITY);
+			super(Names.IDENTITY);
 		}
 		
 		
