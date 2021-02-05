@@ -45,18 +45,6 @@ public abstract class ProxyAsset extends Asset
 	}
 
 
-	@Override public String getCompression()
-	{
-		return asset_.getCompression();
-	}
-
-
-	@Override public void setCompression(String value)
-	{
-		asset_.setCompression(value);
-	}
-
-
 	@Override public long length()
 	{
 		return asset_.length();

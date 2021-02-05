@@ -38,12 +38,6 @@ public class FileAsset extends AbstractAsset
 		file_ = file;
 		setLength(file_.length());
 		setLastModified(file.lastModified());
-		
-		String name = file.getName();
-		if (name.endsWith(".gz"))
-			setCompression("gzip");
-		else if (name.contains(".br."))
-			setCompression("br");
 	}
 	
 	

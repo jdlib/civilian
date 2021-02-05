@@ -72,20 +72,6 @@ public abstract class Asset
 
 	
 	/**
-	 * Returns the compression applied to the asset content or null.
-	 * @return the compression
-	 */
-	public abstract String getCompression();
-	
-	
-	/**
-	 * Sets the compression applied to the asset content.
-	 * @param compression the compression
-	 */
-	public abstract void setCompression(String compression);
-
-	
-	/**
 	 * Returns the byte length of the asset data.
 	 * @return the length
 	 */

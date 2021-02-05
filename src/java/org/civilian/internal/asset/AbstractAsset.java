@@ -39,18 +39,6 @@ public abstract class AbstractAsset extends Asset
 	}
 
 	
-	@Override public String getCompression()
-	{
-		return compression_;
-	}
-
-	
-	@Override public void setCompression(String compression)
-	{
-		compression_ = compression;
-	}
-
-	
 	/**
 	 * Returns the byte length of the asset data.
 	 * @return the length
@@ -137,8 +125,6 @@ public abstract class AbstractAsset extends Asset
 			response.setContentType(contentType_);
 		if (charEncoding_ != null)
 			response.setCharEncoding(charEncoding_);
-		if (compression_ != null)
-			response.getHeaders().set(HttpHeaders.CONTENT_ENCODING, compression_);
 		if (length_ >= 0)
 			response.setContentLength(length_);
 		if (lastModifiedHttp_ != null)
@@ -168,6 +154,5 @@ public abstract class AbstractAsset extends Asset
 	private long length_ = -1L;
 	private long lastModified_ = -1L;
 	private String lastModifiedHttp_;
-	private String compression_;
 	private AssetCacheControl cacheControl_; 
 }
