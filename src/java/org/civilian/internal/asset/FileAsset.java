@@ -36,7 +36,7 @@ public class FileAsset extends AbstractAsset
 	public FileAsset(File file)
 	{
 		file_ = file;
-		setLength((int)file_.length());
+		setLength(file_.length());
 		setLastModified(file.lastModified());
 		
 		String name = file.getName();
