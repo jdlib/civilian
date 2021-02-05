@@ -53,5 +53,5 @@ public class UrlAsset extends Asset
 	}
 
 	
-	private URL url_;
+	private final URL url_;
 }
