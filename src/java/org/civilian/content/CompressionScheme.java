@@ -69,6 +69,12 @@ public abstract class CompressionScheme
 		 * An alternate name of the "compress" compression scheme.
 		 */
 		public static final String X_COMPRESS = "x-compress";
+	
+		
+		/**
+		 * The name of the "br" (brotli) compression scheme.
+		 */
+		public static final String BROTLI = "br";
 	}
 
 	
