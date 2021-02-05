@@ -19,7 +19,6 @@ package org.civilian.internal.asset;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import org.civilian.asset.Asset;
 import org.civilian.util.Check;
 
 
@@ -27,7 +26,7 @@ import org.civilian.util.Check;
  * UrlAsset is an Asset implementation,
  * which uses a URL to references its content. 
  */
-public class UrlAsset extends Asset
+public class UrlAsset extends AbstractAsset
 {
 	public UrlAsset(URL url)
 	{

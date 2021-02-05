@@ -17,30 +17,26 @@ package org.civilian.asset;
 
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 import org.civilian.Response;
 import org.civilian.content.ContentType;
 import org.civilian.util.Check;
 import org.civilian.util.HttpHeaders;
-import org.civilian.util.IoUtil;
 
 
 /**
  * Asset represents a static application resource.
- * A static resource is an image, css file or javascript file, etc.<br>
+ * A static resource is an image, css file or javascript file, etc.
  */
 public abstract class Asset
 {
-    private static final SimpleDateFormat HTTP_DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US);
+    protected static final SimpleDateFormat HTTP_DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US);
     static 
     {
         TimeZone gmtZone = TimeZone.getTimeZone("GMT");
@@ -52,98 +48,68 @@ public abstract class Asset
 	 * Returns the content type of the asset or null
 	 * if not known or determined.
 	 */
-	public ContentType getContentType()
-	{
-		return contentType_;
-	}
+	public abstract ContentType getContentType();
 	
 	
 	/**
 	 * Sets the content type of the asset.
 	 */
-	public void setContentType(ContentType contentType)
-	{
-		contentType_ = contentType;
-	}
+	public abstract void setContentType(ContentType contentType);
 
 	
 	/**
 	 * Returns the character encoding of the asset, or null if not known
 	 * @return the encoding
 	 */
-	public String getCharEncoding()
-	{
-		return charEncoding_;
-	}
+	public abstract String getCharEncoding();
 	
 	
 	/**
 	 * Sets the encoding of the asset.
 	 * @param encoding encoding
 	 */
-	public void setCharEncoding(String encoding)
-	{
-		charEncoding_ = encoding;
-	}
+	public abstract void setCharEncoding(String encoding);
 
 	
 	/**
 	 * Returns the compression applied to the asset content or null.
 	 * @return the compression
 	 */
-	public String getCompression()
-	{
-		return compression_;
-	}
+	public abstract String getCompression();
 	
 	
 	/**
 	 * Sets the compression applied to the asset content.
 	 * @param compression the compression
 	 */
-	public void setCompression(String compression)
-	{
-		compression_ = compression;
-	}
+	public abstract void setCompression(String compression);
 
 	
 	/**
 	 * Returns the byte length of the asset data.
 	 * @return the length
 	 */
-	public long length()
-	{
-		return length_;
-	}
+	public abstract long length();
 	
 	
 	/**
 	 * Sets the byte length of the asset data.
 	 * @param length the length
 	 */
-	public void setLength(long length)
-	{
-		length_ = length;
-	}
+	public abstract void setLength(long length);
 	
 	
 	/**
 	 * Returns the cache control of the Asset.
 	 */
-	public AssetCacheControl getCacheControl()
-	{
-		return cacheControl_;
-	}
+	public abstract AssetCacheControl getCacheControl();
 	
 	
 	/**
 	 * Sets the content type of the asset.
 	 * @param value the value
 	 */
-	public void setCacheControl(AssetCacheControl value)
-	{
-		cacheControl_ = value;
-	}
+	public abstract void setCacheControl(AssetCacheControl value);
 
 	
 	/**
@@ -151,87 +117,34 @@ public abstract class Asset
 	 * @param ms the date in milliseconds since epoch.
 	 * 		Pass a value &lt; 0 for unknown dates.
 	 */
-	public void setLastModified(long ms)
-	{
-		if (ms < 0)
-		{
-			lastModified_ = -1L;
-			lastModifiedHttp_ = null;
-		}
-		else
-		{
-			lastModified_ = ms;
-			Date date = new Date(ms);
-			synchronized(HTTP_DATE_FORMAT)
-			{
-				lastModifiedHttp_ = HTTP_DATE_FORMAT.format(date);
-			}
-		}
-	}
+	public abstract void setLastModified(long ms);
 	
 	
 	/**
 	 * Returns the last modified date of the asset.
 	 * @return the date as milliseconds since epoch, or -1 if not known.
 	 */
-	public long getLastModified()
-	{
-		return lastModified_;
-	}
+	public abstract long getLastModified();
 
 	
 	/**
 	 * Returns the last modified date of the asset, formatted as HTTP string.
 	 * @return the date or null if not known.
 	 */
-	public String getLastModifiedHttp()
-	{
-		return lastModifiedHttp_;
-	}
+	public abstract String getLastModifiedHttp();
 
+	
+	public abstract void readContent() throws IOException;
+
+
+	public abstract byte[] getContent();
+	
 	
 	/**
 	 * Returns if an cached asset file is still valid, i.e.
 	 * its source has not changed since the Asset was created.
 	 */
 	public abstract boolean isValid();
-	
-	
-	/**
-	 * Reads the asset content into memory.
-	 */
-	public void readContent() throws IOException
-	{
-		if (content_ == null)
-		{
-			try(InputStream in = getInputStream())
-			{
-				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				IoUtil.copy(in, out);
-				setContent(out.toByteArray()); 
-			}
-		}
-	}
-
-	
-	/**
-	 * Sets the asset content.
-	 */
-	public void setContent(byte[] content)
-	{
-		content_ = Check.notNull(content, "content");
-		setLength(content.length);
-	}
-	
-	
-	/**
-	 * Returns the asset content, or null if not
-	 * yet read into memory. 
-	 */
-	protected byte[] getContent()
-	{
-		return content_;
-	}
 	
 	
 	/**
@@ -244,7 +157,7 @@ public abstract class Asset
 	{
 		response.setStatus(Response.Status.SC200_OK);
 		writeHeaders(response);
-		if (writeContent && (length_ > 0) && checkIfModified(response))
+		if (writeContent && (length() > 0) && checkIfModified(response))
 			writeContent(response);
 	}
 	
@@ -253,48 +166,40 @@ public abstract class Asset
 	 * Writes a last-modified and max-age header to the response,
 	 * if the last modified date is known.
 	 */
-	protected void writeHeaders(Response response)
-	{
-		if (contentType_ != null)
-			response.setContentType(contentType_);
-		if (charEncoding_ != null)
-			response.setCharEncoding(charEncoding_);
-		if (compression_ != null)
-			response.getHeaders().set(HttpHeaders.CONTENT_ENCODING, compression_);
-		if (length_ >= 0)
-			response.setContentLength(length_);
-		if (lastModifiedHttp_ != null)
-			response.getHeaders().set(HttpHeaders.LAST_MODIFIED, lastModifiedHttp_);
-		if (cacheControl_ != null)
-			cacheControl_.writeHeaders(response, this);
-	}
+	protected abstract void writeHeaders(Response response);
  	
 	
+	/**
+	 * Allows to access the protected method {@link #writeHeaders(Response)}
+	 */
+	protected void writeHeaders(Asset asset, Response response)
+	{
+		asset.writeHeaders(response);
+	}
+
+
 	/**
 	 * Sets content-related headers and writes the asset content
 	 * to the response.
 	 */
-	protected void writeContent(Response response) throws IOException
-	{
-		OutputStream out = response.getContentStream();
-		if (content_ != null)
-			out.write(content_);
-		else
-		{
-			try(InputStream in = getInputStream())
-			{
-				IoUtil.copy(in, out);
-			}
-		}
-	}
+	protected abstract void writeContent(Response response) throws IOException;
 	
 
-	private boolean checkIfModified(Response response)
+	/**
+	 * Allows to access the protected method {@link #writeContent(Asset,Response)}
+	 */
+	protected void writeContent(Asset asset, Response response) throws IOException
+	{
+		asset.writeContent(response);
+	}
+
+
+	protected boolean checkIfModified(Response response)
 	{
 		long modifiedSince = response.getRequest().getHeaders().getDate(HttpHeaders.IF_MODIFIED_SINCE);
 		if (modifiedSince != -1)
 		{
-			if (lastModified_ < modifiedSince + 1000)
+			if (getLastModified() < modifiedSince + 1000)
 			{
 				response.setStatus(Response.Status.NOT_MODIFIED);
 				return false;
@@ -317,8 +222,8 @@ public abstract class Asset
 	 */
 	public Reader getReader() throws IOException
 	{
-		Check.notNull(charEncoding_, "charEncoding");
-		return new BufferedReader(new InputStreamReader(getInputStream(), charEncoding_));
+		String encoding = Check.notNull(getCharEncoding(), "charEncoding");
+		return new BufferedReader(new InputStreamReader(getInputStream(), encoding));
 	}
 
 	
@@ -326,14 +231,4 @@ public abstract class Asset
 	 * Returns a debug string for the asset.
 	 */
 	@Override public abstract String toString();
-	
-
-	private byte[] content_;
-	private ContentType contentType_;
-	private String charEncoding_;
-	private long length_ = -1L;
-	private long lastModified_ = -1L;
-	private String lastModifiedHttp_;
-	private String compression_;
-	private AssetCacheControl cacheControl_; 
 }

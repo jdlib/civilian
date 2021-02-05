@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import org.civilian.asset.Asset;
 
 
 /**
@@ -28,7 +27,7 @@ import org.civilian.asset.Asset;
  * in the locale file system. A FileAsset is valid
  * if size and last-modified of the file did not change.
  */
-public class FileAsset extends Asset
+public class FileAsset extends AbstractAsset
 {
 	/**
 	 * Creates a new FileAsset

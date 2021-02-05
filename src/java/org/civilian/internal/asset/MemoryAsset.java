@@ -20,7 +20,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import org.civilian.asset.Asset;
 
 
 /**
@@ -28,7 +27,7 @@ import org.civilian.asset.Asset;
  * keeping the asset content in a byte array in memory.
  * The MemoryAsset is assumed to be valid as long as it exists.
  */
-public class MemoryAsset extends Asset
+public class MemoryAsset extends AbstractAsset
 {
 	private static byte[] convert(String encoding, String content)
 	{
