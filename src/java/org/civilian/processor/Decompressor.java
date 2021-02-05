@@ -74,6 +74,6 @@ public class Decompressor extends Processor
 		}
 		
 		
-		private CompressionScheme scheme_;
+		private final CompressionScheme scheme_;
 	}
 }
