@@ -4,13 +4,11 @@ package org.civilian.internal.asset;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Date;
 import org.civilian.Response;
 import org.civilian.asset.Asset;
 import org.civilian.asset.AssetCacheControl;
 import org.civilian.content.ContentType;
-import org.civilian.util.Check;
 import org.civilian.util.HttpHeaders;
 import org.civilian.util.IoUtil;
 
@@ -113,40 +111,14 @@ public abstract class AbstractAsset extends Asset
 	}
 
 	
-	/**
-	 * Reads the asset content into memory.
-	 */
-	@Override public void readContent() throws IOException
+	@Override public byte[] getContent() throws IOException
 	{
-		if (content_ == null)
+		try(InputStream in = getInputStream())
 		{
-			try(InputStream in = getInputStream())
-			{
-				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				IoUtil.copy(in, out);
-				setContent(out.toByteArray()); 
-			}
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			IoUtil.copy(in, out);
+			return out.toByteArray(); 
 		}
-	}
-
-	
-	/**
-	 * Sets the asset content.
-	 */
-	public void setContent(byte[] content)
-	{
-		content_ = Check.notNull(content, "content");
-		setLength(content.length);
-	}
-	
-	
-	/**
-	 * Returns the asset content, or null if not
-	 * yet read into memory. 
-	 */
-	@Override public byte[] getContent()
-	{
-		return content_;
 	}
 	
 	
@@ -178,20 +150,19 @@ public abstract class AbstractAsset extends Asset
 	
 	@Override protected void writeContent(Response response) throws IOException
 	{
-		OutputStream out = response.getContentStream();
-		if (content_ != null)
-			out.write(content_);
-		else
+		try(InputStream in = getInputStream())
 		{
-			try(InputStream in = getInputStream())
-			{
-				IoUtil.copy(in, out);
-			}
+			IoUtil.copy(in, response.getContentStream());
 		}
 	}
 
 	
-	private byte[] content_;
+	@Override public Asset cache() throws IOException
+	{
+		return new CachedAsset(this);
+	}
+
+	
 	private ContentType contentType_;
 	private String charEncoding_;
 	private long length_ = -1L;

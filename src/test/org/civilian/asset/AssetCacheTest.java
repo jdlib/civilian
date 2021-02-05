@@ -18,6 +18,7 @@ package org.civilian.asset;
 
 import org.civilian.CivTest;
 import org.civilian.internal.asset.AssetCache;
+import org.civilian.internal.asset.CachedAsset;
 import org.junit.Test;
 
 
@@ -32,18 +33,16 @@ public class AssetCacheTest extends CivTest
 		assertEquals("/test", cache.getPath().toString());
 		
 		// start: asset not loaded and retrieved
-		assertNull(asset.getContent());
 		assertEquals(0, location.findCalled());
 		
 		// first access: asset is put into cache and its content is loaded (since <= cachesize)
-		assertSame(asset, cache.getAsset("/test/some.css"));
+		Asset cached = cache.getAsset("/test/some.css");
+		assertTrue(cached instanceof CachedAsset);
 		assertEquals(1, location.findCalled());
-		assertNotNull(asset.getContent());
 
 		// second access: asset is take from the cache
-		assertSame(asset, cache.getAsset("/test/some.css"));
+		assertSame(cached, cache.getAsset("/test/some.css"));
 		assertEquals(1, location.findCalled());
-		assertNotNull(asset.getContent());
 		
 		// invalidate asset and prepare a new asset
 		asset.isValid = false;
@@ -54,7 +53,6 @@ public class AssetCacheTest extends CivTest
 		// since it is bigger than the chachesize
 		assertSame(newAsset, cache.getAsset("/test/some.css"));
 		assertEquals(2, location.findCalled());
-		assertNull(newAsset.getContent());
 
 		// test unknown asset access
 		assertNull(cache.getAsset("/test/xxxsome.css"));

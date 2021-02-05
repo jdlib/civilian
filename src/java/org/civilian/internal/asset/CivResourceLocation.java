@@ -75,7 +75,7 @@ public class CivResourceLocation extends JavaResourceLocation
 			s.append("civilian.basePath = civilian.Path.createBasePath();\n");
 			if (develop)
 				s.append("civilian.develop = true;");
-			initScript_ = new MemoryAsset(getCharEncoding(), s.toString());
+			initScript_ = new BytesAsset(getCharEncoding(), s.toString());
 			initScript_.setContentType(ContentType.APPLICATION_JAVASCRIPT);
 		}
 	}

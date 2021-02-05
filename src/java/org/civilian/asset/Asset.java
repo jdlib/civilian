@@ -133,11 +133,11 @@ public abstract class Asset
 	 */
 	public abstract String getLastModifiedHttp();
 
-	
-	public abstract void readContent() throws IOException;
 
-
-	public abstract byte[] getContent();
+	/**
+	 * Returns the asset content as byte array.
+	 */
+	public abstract byte[] getContent() throws IOException;
 	
 	
 	/**
@@ -225,6 +225,12 @@ public abstract class Asset
 		String encoding = Check.notNull(getCharEncoding(), "charEncoding");
 		return new BufferedReader(new InputStreamReader(getInputStream(), encoding));
 	}
+	
+	
+	/**
+	 * Returns an Asset which keeps its content in memory if applicable.
+	 */
+	public abstract Asset cache() throws IOException;
 
 	
 	/**

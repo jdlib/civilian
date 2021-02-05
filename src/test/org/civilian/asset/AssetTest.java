@@ -16,6 +16,7 @@
 package org.civilian.asset;
 
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -26,7 +27,9 @@ import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.content.ContentType;
 import org.civilian.internal.ParamList;
-import org.civilian.internal.asset.MemoryAsset;
+import org.civilian.internal.asset.BytesAsset;
+import org.civilian.internal.asset.CachedAsset;
+import org.civilian.internal.asset.FileAsset;
 import org.civilian.internal.asset.UrlAsset;
 import org.civilian.server.test.TestResponse;
 import org.civilian.util.HttpHeaders;
@@ -34,16 +37,16 @@ import org.civilian.util.HttpHeaders;
 
 public class AssetTest extends CivTest
 {
-	@Test public void testMemoryAsset() throws Exception
+	@Test public void testBytesAsset() throws Exception
 	{
-		MemoryAsset asset = new MemoryAsset("UTF-8", "bytes");
+		BytesAsset asset = new BytesAsset("UTF-8", "bytes");
 		assertTrue(asset.isValid());
-		assertNotNull(asset.getContent());
-		assertTrue(asset.toString().startsWith("MemAsset@"));
+		assertTrue(asset.toString().startsWith("BytesAsset@"));
+		assertSame(asset, asset.cache());
 		
 		try
 		{
-			new MemoryAsset("XYZ", "bytes");
+			new BytesAsset("XYZ", "bytes");
 		}
 		catch(IllegalStateException e)
 		{
@@ -64,6 +67,33 @@ public class AssetTest extends CivTest
 		}
 	}
 	
+	
+	@Test public void testCachedAsset() throws Exception
+	{
+		File file = File.createTempFile("test", ".css");
+		write(file, "UTF-8", "body");
+		try
+		{
+			FileAsset fileAsset = new FileAsset(file);
+			Asset asset = fileAsset.cache();
+			assertTrue(asset instanceof CachedAsset);
+			CachedAsset cached = (CachedAsset)asset;
+			
+			assertArrayEquals("body".getBytes(), cached.getContent());
+			assertSame(cached, cached.cache());
+			assertEquals(4, asset.length());
+			assertEquals(file.lastModified(), asset.getLastModified());
+			assertTrue(asset.isValid());
+			
+			write(file, "UTF-8", "body{}");
+			assertFalse(asset.isValid());
+		}
+		finally
+		{
+			assertTrue(file.getAbsolutePath(), file.delete());
+		}
+	}
+
 	
 	@Test public void testLastModified() throws Exception
 	{

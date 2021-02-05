@@ -13,7 +13,7 @@ import org.civilian.util.Check;
 /**
  * An asset implementation which by default forwards all method calls to another asset.
  */
-public class ProxyAsset extends Asset
+public abstract class ProxyAsset extends Asset
 {
 	public ProxyAsset(Asset asset)
 	{
@@ -99,13 +99,7 @@ public class ProxyAsset extends Asset
 	}
 
 
-	@Override public void readContent() throws IOException
-	{
-		asset_.readContent();
-	}
-
-
-	@Override public byte[] getContent()
+	@Override public byte[] getContent() throws IOException
 	{
 		return asset_.getContent();
 	}

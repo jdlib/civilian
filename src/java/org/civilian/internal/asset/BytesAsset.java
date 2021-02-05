@@ -20,14 +20,16 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import org.civilian.asset.Asset;
+import org.civilian.util.Check;
 
 
 /**
- * A MemoryAsset is a virtual Asset implementation,
+ * A BytesAsset is a virtual Asset implementation,
  * keeping the asset content in a byte array in memory.
- * The MemoryAsset is assumed to be valid as long as it exists.
+ * The BytesAsset is assumed to be valid as long as it exists.
  */
-public class MemoryAsset extends AbstractAsset
+public class BytesAsset extends AbstractAsset
 {
 	private static byte[] convert(String encoding, String content)
 	{
@@ -43,25 +45,25 @@ public class MemoryAsset extends AbstractAsset
 	
 	
 	/**
-	 * Creates a new MemoryAsset.
+	 * Creates a new BytesAsset.
 	 * @param encoding the encoding
 	 * @param content the content as string
 	 */
-	public MemoryAsset(String encoding, String content)
+	public BytesAsset(String encoding, String content)
 	{
 		this(encoding, convert(encoding, content));
 	}
 	
 	
 	/**
-	 * Creates a new MemoryAsset.
+	 * Creates a new BytesAsset.
 	 * @param encoding the encoding
 	 * @param bytes the byte content
 	 */
-	public MemoryAsset(String encoding, byte[] bytes)
+	public BytesAsset(String encoding, byte[] bytes)
 	{
+		bytes_ = Check.notNull(bytes, "bytes");
 		setCharEncoding(encoding);
-		setContent(bytes);
 		setLastModified(System.currentTimeMillis());
 	}
 	
@@ -75,6 +77,12 @@ public class MemoryAsset extends AbstractAsset
 	}
 
 	
+	@Override public byte[] getContent() throws IOException
+	{
+		return bytes_;
+	}
+
+	
 	/**
 	 * Returns true.
 	 */
@@ -82,10 +90,22 @@ public class MemoryAsset extends AbstractAsset
 	{
 		return true;
 	}
+
+
+	/**
+	 * Returns this.
+	 */
+	@Override public Asset cache() throws IOException
+	{
+		return this;
+	}
 	
 	
 	@Override public String toString()
 	{
-		return "MemAsset@" + System.identityHashCode(this);
+		return "BytesAsset@" + System.identityHashCode(this);
 	}
+	
+	
+	private final byte[] bytes_;
 }

@@ -106,13 +106,10 @@ public class AssetLocationTest extends CivTest
 			assertEquals(4, asset.length());
 			assertEquals(file.lastModified(), asset.getLastModified());
 			assertTrue(asset.isValid());
-			assertNull(asset.getContent());
 			
-			asset.readContent();
 			assertArrayEquals("body".getBytes(), asset.getContent());
 			
 			byte[] oldContent = asset.getContent();
-			asset.readContent();
 			assertArrayEquals(oldContent, asset.getContent());
 			
 			write(file, "UTF-8", "body{}");

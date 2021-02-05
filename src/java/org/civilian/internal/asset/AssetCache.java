@@ -118,7 +118,7 @@ public class AssetCache extends AssetService
 		if (asset != null)
 		{
 			if (asset.length() <= maxMemSize_)
-				asset.readContent();
+				asset = asset.cache();
 			Asset oldAsset = cache_.putIfAbsent(path.toString(), asset);
 			if (oldAsset != null)
 				asset = oldAsset;
