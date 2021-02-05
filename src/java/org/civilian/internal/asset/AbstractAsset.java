@@ -61,7 +61,7 @@ public abstract class AbstractAsset extends Asset
 	}
 
 	
-	@Override public void setLength(long length)
+	protected void setLength(long length)
 	{
 		length_ = length;
 	}

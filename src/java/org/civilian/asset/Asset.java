@@ -93,13 +93,6 @@ public abstract class Asset
 	
 	
 	/**
-	 * Sets the byte length of the asset data.
-	 * @param length the length
-	 */
-	public abstract void setLength(long length);
-	
-	
-	/**
 	 * Returns the cache control of the Asset.
 	 */
 	public abstract AssetCacheControl getCacheControl();

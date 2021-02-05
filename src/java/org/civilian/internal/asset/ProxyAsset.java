@@ -63,12 +63,6 @@ public abstract class ProxyAsset extends Asset
 	}
 
 
-	@Override public void setLength(long value)
-	{
-		asset_.setLength(value);
-	}
-
-
 	@Override public AssetCacheControl getCacheControl()
 	{
 		return asset_.getCacheControl();
