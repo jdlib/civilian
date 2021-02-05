@@ -332,5 +332,5 @@ public class Path implements CharSequence, Serializable, Comparable<Path>
 	}
 	
 	
-	private String value_;
+	private final String value_;
 }
