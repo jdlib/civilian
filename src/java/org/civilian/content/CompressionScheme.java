@@ -26,8 +26,7 @@ import org.civilian.util.Check;
 
 
 /**
- * CompressionScheme represents a scheme to compress or decompress
- * binary content.
+ * CompressionScheme represents a scheme to compress or decompress binary content.
  */
 public abstract class CompressionScheme
 {
@@ -74,40 +73,60 @@ public abstract class CompressionScheme
 
 	
 	/**
-	 * The default implementation of the "gzip" compression scheme.
-	 */
-	public static final CompressionScheme DEFAULT_GZIP_SCHEME = new GZip();
-
-
-	/**
 	 * The default implementation of the "compress" compression scheme.
 	 */
-	public static final CompressionScheme DEFAULT_COMPRESS_SCHEME = new Zip();
+	public static final CompressionScheme COMPRESS = new Compress();
 
 
 	/**
 	 * The default implementation of the "deflate" compression scheme.
 	 */
-	public static final CompressionScheme DEFAULT_DEFLATE_SCHEME = new Deflate();
+	public static final CompressionScheme DEFLATE = new Deflate();
+
+	
+	/**
+	 * The default implementation of the "gzip" compression scheme.
+	 */
+	public static final CompressionScheme GZIP = new GZip();
 
 
 	/**
 	 * The default implementation of the "identity" compression scheme.
 	 */
-	public static final CompressionScheme DEFAULT_IDENTITY_SCHEME = new Identity();
-	
-	
+	public static final CompressionScheme IDENTITY = new Identity();
+
+		
+	private static CompressionScheme preferred_ = GZIP;
+	private static CompressionScheme identity_ 	= IDENTITY;
 	private static final HashMap<String,CompressionScheme> REGISTRY = new HashMap<>();
-	private static CompressionScheme preferred_ = DEFAULT_GZIP_SCHEME;
-	private static CompressionScheme identity_ 	= DEFAULT_IDENTITY_SCHEME;
 	static
 	{
-		set(Names.GZIP, 		DEFAULT_GZIP_SCHEME);
-		set(Names.X_GZIP, 		DEFAULT_GZIP_SCHEME);
-		set(Names.COMPRESS, 	DEFAULT_COMPRESS_SCHEME);
-		set(Names.X_COMPRESS,	DEFAULT_COMPRESS_SCHEME);
-		set(Names.DEFLATE, 		DEFAULT_DEFLATE_SCHEME);
-		set(Names.IDENTITY, 	DEFAULT_IDENTITY_SCHEME);
+		set(Names.IDENTITY, 	IDENTITY);
+		set(Names.GZIP, 		GZIP);
+		set(Names.X_GZIP, 		GZIP);
+		set(Names.COMPRESS, 	COMPRESS);
+		set(Names.X_COMPRESS,	COMPRESS);
+		set(Names.DEFLATE, 		DEFLATE);
+	}
+
+
+	/**
+	 * Sets or removes a compression scheme
+	 * @param name the name
+	 * @param scheme the scheme or null if the scheme under the name should
+	 * 		be unregistered
+	 */
+	public static void set(String name, CompressionScheme scheme)
+	{
+		Check.notNull(name, "name");
+		if (scheme != null)
+		{
+			REGISTRY.put(name, scheme);
+			if (scheme.isIdentity())
+				identity_ = scheme;
+		}
+		else
+			REGISTRY.remove(name);
 	}
 	
 	
@@ -131,26 +150,6 @@ public abstract class CompressionScheme
 		return scheme != null ? scheme : defaultScheme;
 	}
 
-	
-	/**
-	 * Sets or removes a compression scheme
-	 * @param name the name
-	 * @param scheme the scheme or null if the scheme under the name should
-	 * 		be unregistered
-	 */
-	public static void set(String name, CompressionScheme scheme)
-	{
-		Check.notNull(name, "name");
-		if (scheme != null)
-		{
-			REGISTRY.put(name, scheme);
-			if (scheme.isIdentity())
-				identity_ = scheme;
-		}
-		else
-			REGISTRY.remove(name);
-	}
-	
 	
 	/**
 	 * Returns the preferred CompressionScheme. By default this is the "gzip" scheme.
@@ -186,8 +185,6 @@ public abstract class CompressionScheme
 	{
 		identity_ = Check.notNull(identity, "identity");
 	}
-
-	
 	/**
 	 * Returns the best matching Compression-Scheme for the Accept-Encoding header of a request. 
 	 * @param accept a String defining the accepted compression schemes, as given by
@@ -204,7 +201,7 @@ public abstract class CompressionScheme
 			return identity_; 
 		
 		if ("*".equals(accept))
-			return getPreferred();
+			return preferred_;
 		
 		// next contains weights
 		if (accept.contains(";"))
@@ -278,7 +275,7 @@ public abstract class CompressionScheme
 		else
 			return identityAllowed ? identity_ : null;
 	}
-	
+
 	
 	/**
 	 * Creates a new CompressionScheme
@@ -368,11 +365,11 @@ public abstract class CompressionScheme
 	
 
 	/**
-	 * The Zip CompressionScheme.
+	 * The "Compress" (e.g. Zip) CompressionScheme.
 	 */
-	public static class Zip extends CompressionScheme
+	public static class Compress extends CompressionScheme
 	{
-		public Zip()
+		public Compress()
 		{
 			super(Names.COMPRESS);
 		}
@@ -485,5 +482,5 @@ public abstract class CompressionScheme
 	}
 
 	
-	private String name_;
+	private final String name_;
 }
