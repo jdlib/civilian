@@ -72,5 +72,5 @@ public class FileAsset extends Asset
 	}
 	
 	
-	private File file_;
+	private final File file_;
 }
