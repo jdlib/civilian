@@ -132,7 +132,7 @@ public abstract class Asset
 	 * @param writeContent should the content writen (false if we
 	 * 		are answering a HEAD request)
 	 */
-	public void write(Response response, boolean writeContent) throws IOException
+	public final void write(Response response, boolean writeContent) throws IOException
 	{
 		response.setStatus(Response.Status.SC200_OK);
 		writeHeaders(response);
@@ -140,7 +140,7 @@ public abstract class Asset
 			writeContent(response);
 	}
 	
-
+	
 	/**
 	 * Writes a last-modified and max-age header to the response,
 	 * if the last modified date is known.

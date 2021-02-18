@@ -110,15 +110,6 @@ public abstract class AbstractAsset extends Asset
 	}
 	
 	
-	@Override public void write(Response response, boolean writeContent) throws IOException
-	{
-		response.setStatus(Response.Status.SC200_OK);
-		writeHeaders(response);
-		if (writeContent && (length_ > 0) && checkIfModified(response))
-			writeContent(response);
-	}
-
-	
 	@Override protected void writeHeaders(Response response)
 	{
 		if (contentType_ != null)
