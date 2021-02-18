@@ -101,14 +101,8 @@ public abstract class Server implements ServerProvider, PathProvider
 	protected void init(ClassLoader appClassLoader, Settings settings) throws Exception
 	{
 		Check.notNull(settings, "settings");
-		long time = 0;
 		boolean logInfo = log.isInfoEnabled();
-		if (logInfo)
-		{
-			time = System.currentTimeMillis();
-			log.info("----------------------"); 
-			log.info("start, version " + Version.VALUE);
-		}
+		long time = logInfo ? System.currentTimeMillis() : 0L;
 
 		AppLoader loader = createAppLoader(appClassLoader); 
 		
@@ -117,18 +111,18 @@ public abstract class Server implements ServerProvider, PathProvider
 		
 		// 1. create applications: this may fail and throw any exception
 		List<AppInfo> appInfos	= new ArrayList<>();
-		createAdminApp(loader, new Settings(settings, ConfigKeys.ADMINAPP_PREFIX), appInfos);
 		createCustomApps(loader, settings, appInfos);
+		createAdminApp(loader, new Settings(settings, ConfigKeys.ADMINAPP_PREFIX), appInfos);
 		
-		// 2. add to server
+		// 2. add apps to server
 		for (AppInfo info : appInfos)
 			addApp(info.app, info.id, info.path, info.settings);
 
 		if (logInfo)
 		{
+			// only log after apps have been initialized: an app may change the log configuration
 			time = System.currentTimeMillis() - time;
-			log.info("start complete, " + ((time) / 1000.0) + "s"); 
-			log.info("----------------------");
+			log.info("version " + Version.VALUE + ", start completed in " + ((time) / 1000.0) + "s"); 
 		}
 	}
 
