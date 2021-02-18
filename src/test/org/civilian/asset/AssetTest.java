@@ -29,6 +29,7 @@ import org.civilian.content.ContentType;
 import org.civilian.internal.ParamList;
 import org.civilian.internal.asset.BytesAsset;
 import org.civilian.internal.asset.CachedAsset;
+import org.civilian.internal.asset.ContentEncodedAsset;
 import org.civilian.internal.asset.FileAsset;
 import org.civilian.internal.asset.UrlAsset;
 import org.civilian.server.test.TestResponse;
@@ -95,6 +96,17 @@ public class AssetTest extends CivTest
 	}
 
 	
+	@Test public void testContentEncodedAsset() throws Exception
+	{
+		ContentEncodedAsset asset = new ContentEncodedAsset(new TestAsset("content"), "br");
+		
+		TestResponse response = createTestResponse(null);
+		asset.write(response, false);
+		
+		assertEquals("br", response.getHeaders().get(HttpHeaders.CONTENT_ENCODING));
+	}
+	
+	
 	@Test public void testLastModified() throws Exception
 	{
 		TestAsset asset = new TestAsset("content");
@@ -113,13 +125,11 @@ public class AssetTest extends CivTest
 		asset.setContentType(ContentType.TEXT_CSS);
 		asset.setCacheControl(AssetCacheControl.DEFAULT);
 		
-		Request request 			= mock(Request.class);
-		ParamList reqHeaders 		= new ParamList(true);
-		TestResponse response 		= new TestResponse(request);
-		when(request.getHeaders()).thenReturn(reqHeaders);
+		ParamList headers 		= new ParamList(true);
+		TestResponse response 	= createTestResponse(headers);
 		
 		asset.setLastModified(10000);
-		reqHeaders.setDate(HttpHeaders.IF_MODIFIED_SINCE, 9500);
+		headers.setDate(HttpHeaders.IF_MODIFIED_SINCE, 9500);
 		
 		asset.write(response, true);
 		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get(HttpHeaders.LAST_MODIFIED));
@@ -127,7 +137,7 @@ public class AssetTest extends CivTest
 		assertEquals(Response.Status.SC304_NOT_MODIFIED, response.getStatus());
 		
 		response.reset();
-		reqHeaders.setDate(HttpHeaders.IF_MODIFIED_SINCE, 8000);
+		headers.setDate(HttpHeaders.IF_MODIFIED_SINCE, 8000);
 		asset.write(response, true);
 
 		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get(HttpHeaders.LAST_MODIFIED));
@@ -136,5 +146,14 @@ public class AssetTest extends CivTest
 		assertEquals("ISO-8859-1", response.getCharEncoding());
 		assertEquals(Response.Status.SC200_OK, response.getStatus());
 		assertEquals("content", response.getContentText(true));
+	}
+	
+	
+	private TestResponse createTestResponse(ParamList reqHeaders)
+	{
+		Request request 			= mock(Request.class);
+		TestResponse response 		= new TestResponse(request);
+		when(request.getHeaders()).thenReturn(reqHeaders != null ? reqHeaders : new ParamList(true));
+		return response;
 	}
 }
