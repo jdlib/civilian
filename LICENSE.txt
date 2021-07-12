@@ -8,4 +8,4 @@ You can obtain a copy of the Gnu Public License v3 at https://www.gnu.org/licens
 (B)
 If you are not a military organization and not an intelligence agency you can license 
 Civilian Framework under the terms of the Apache 2.0 license.
-You can obtain a copy of the Apachae 2.0 license at https://www.apache.org/licenses/LICENSE-2.0
+You can obtain a copy of the Apache 2.0 license at https://www.apache.org/licenses/LICENSE-2.0
