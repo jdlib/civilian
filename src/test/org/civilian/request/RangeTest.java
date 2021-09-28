@@ -41,6 +41,8 @@ public class RangeTest extends CivTest
 		assertParseOk("bytes=200-500", 200, 500);
 		assertParseOk("bytes=200-100", 200, 100);
 		assertParseOk("bytes=0-0,-1", 0, 0, -1, 1);
+		assertParseOk("bytes=9437184-10485759", 9437184, 10485759); 
+		assertParseOk("bytes=12582912-13631487", 12582912, 13631487); 
 	}
 	
 	
@@ -49,6 +51,7 @@ public class RangeTest extends CivTest
 		Range range = Range.parse(rangeHeader);
 		assertNotNull(range);
 		assertEquals(range.size() * 2, startEnds.length);
+		assertTrue(range.isValid());
 		
 		int n = 0;
 		for (Part part : range)
@@ -80,6 +83,19 @@ public class RangeTest extends CivTest
 		Range range = Range.parse(rangeHeader);
 		assertNotNull(range);
 		assertEquals(expected, range.toString());
+	}
+	
+	
+	@Test public void testAdjust()
+	{
+		Range range = Range.parse("bytes=12582912-13631487");
+		assertEquals(1, range.size());
+		Range.Part part = range.get(0);
+		assertEquals(12582912, part.start);
+		assertEquals(13631487, part.end);
+		assertEquals(1048576,  part.length());
+		Part adjusted = part.adjust(40702100);
+		assertEquals(part, adjusted);
 	}
 	
 	
