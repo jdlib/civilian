@@ -184,6 +184,24 @@ public class Range extends AbstractList<Range.Part>
 		}
 		
 		
+		@Override public int hashCode()
+		{
+			return Long.hashCode(start) ^ Long.hashCode(end); 
+		}
+		
+		
+		@Override public boolean equals(Object other)
+		{
+			if (other instanceof Part) 
+			{
+				Part p = (Part)other;
+				return (start == p.start) && (end == p.end); 
+			}
+			else
+				return false; 
+		}
+
+		
 		@Override public String toString()
 		{
 			return (start < 0 ? "" : String.valueOf(start)) + '-' + (end < 0 ? "" : String.valueOf(end)); 
