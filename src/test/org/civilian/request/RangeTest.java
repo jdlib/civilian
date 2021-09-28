@@ -43,6 +43,7 @@ public class RangeTest extends CivTest
 		assertParseOk("bytes=0-0,-1", 0, 0, -1, 1);
 		assertParseOk("bytes=9437184-10485759", 9437184, 10485759); 
 		assertParseOk("bytes=12582912-13631487", 12582912, 13631487); 
+		assertParseOk("bytes=28311552-29360127", 28311552, 29360127); 
 	}
 	
 	
