@@ -282,7 +282,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	public void setDoubleValue(double value)
 	{
 		checkType(TypeLib.DOUBLE);
-		setValueUc(new Double(value));
+		setValueUc(Double.valueOf(value));
 	}
 
 	

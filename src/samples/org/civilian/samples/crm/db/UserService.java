@@ -28,9 +28,9 @@ public class UserService
 	public static final String FILTER_EMAIL	 	= "email";
 	public static final String FILTER_PHONE	 	= "phone";
 	
-	private static final User USER  = new User(new Integer(123));
-	private static final User POWERUSER = new User(new Integer(456));
-	private static final User ADMIN = new User(new Integer(789));
+	private static final User USER  = new User(Integer.valueOf(123));
+	private static final User POWERUSER = new User(Integer.valueOf(456));
+	private static final User ADMIN = new User(Integer.valueOf(789));
 	private static final User[] USERS = new User[] { USER, POWERUSER, ADMIN };
 	static
 	{

@@ -38,7 +38,7 @@ import org.civilian.resource.Url;
  */
 public class NavItem
 {
-	private static final Integer DEFAULT_ID = new Integer(0);
+	private static final Integer DEFAULT_ID = Integer.valueOf(0);
 	
 	
 	public NavItem(ResponseProvider rp)
@@ -74,7 +74,7 @@ public class NavItem
 	
 	public NavItem setLevel(int level)
 	{
-		this.level = new Integer(level);
+		this.level = Integer.valueOf(level);
 		return this;
 	}
 	

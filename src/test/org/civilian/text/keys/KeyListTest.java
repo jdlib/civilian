@@ -82,8 +82,8 @@ public class KeyListTest extends CivTest
 	
 	@Test public void testTypedSerializer() throws Exception
 	{
-		Integer one = new Integer(1); 
-		Integer two = new Integer(2); 
+		Integer one = Integer.valueOf(1); 
+		Integer two = Integer.valueOf(2); 
 		KeyList<Integer> keys = new KeyListBuilder<Integer>().
 			add(one, "one").
 			add(two, "two").

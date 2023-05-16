@@ -86,7 +86,7 @@ public class WebUrlTest extends CivTest
 		url.addQueryParam("qpi2", Integer.valueOf(456));
 		url.addQueryParam("qpb1", true);
 		url.addQueryParam("qpb2", Boolean.FALSE);
-		url.addQueryParam("qpd", TypeLib.DOUBLE, new Double(12.34));
+		url.addQueryParam("qpd", TypeLib.DOUBLE, Double.valueOf(12.34));
 	}
 
 

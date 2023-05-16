@@ -204,7 +204,7 @@ public class UrlTest extends CivTest
 		
 		// value format
 		Url.QueryParam p = url.getQueryParam("d", true);
-		p.setValue(TypeLib.DOUBLE, new Double(2.0));
+		p.setValue(TypeLib.DOUBLE, Double.valueOf(2.0));
 		assertEquals("index.html?d=2.00", url.toString());
 		p.setValue(2);
 		assertEquals("index.html?d=2", url.toString());
@@ -213,7 +213,7 @@ public class UrlTest extends CivTest
 
 		// value integers
 		url.addQueryParam("i", 1234);
-		url.addQueryParam("i", new Integer(78));
+		url.addQueryParam("i", Integer.valueOf(78));
 		assertEquals("index.html?i=1%2C234&i=78", url.toString());
 		url.clearQueryParams();
 		

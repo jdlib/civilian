@@ -40,11 +40,11 @@ public class OpportunityService
 		int size = new Random().nextInt(20) + 1;
 		for (int i=0; i<size; i++)
 		{
-			Integer id		= new Integer(100 + i);
+			Integer id		= Integer.valueOf(100 + i);
 			String name 	= "Name" + (100 + i);
 			int n			= i +1;
-			Integer volume	= new Integer(n * 10000 + n * 100);
-			Integer prob	= new Integer((n * 17) % 100);
+			Integer volume	= Integer.valueOf(n * 10000 + n * 100);
+			Integer prob	= Integer.valueOf((n * 17) % 100);
 			result.addRow(id, name, volume, prob);
 		}
 		return result;

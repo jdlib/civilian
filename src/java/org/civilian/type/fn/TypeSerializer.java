@@ -268,7 +268,7 @@ public abstract class TypeSerializer
 	{
 		if (s.length() != 1)
 			throw new ParseException("not a character: " + s, 0);
-		return new Character(s.charAt(0));
+		return Character.valueOf(s.charAt(0));
 	};
 		
 

@@ -272,13 +272,13 @@ public class ResourceTest extends CivTest
 			.complete(true)
 			.resource(ppInt)
 			.params(1)
-			.param(PP_INT, new Integer(123));
+			.param(PP_INT, Integer.valueOf(123));
 		
 		a.init("/123/abc")
 			.complete(false)
 			.resource(ppInt)
 			.params(1)
-			.param(PP_INT, new Integer(123));
+			.param(PP_INT, Integer.valueOf(123));
 		
 		a.init("/seg")
 			.complete(true)
@@ -314,7 +314,7 @@ public class ResourceTest extends CivTest
 			.complete(true)
 			.resource(ra)
 			.params(1)
-			.param(ppa, new Integer(123));
+			.param(ppa, Integer.valueOf(123));
 
 		a.init("/p")
 			.complete(true)

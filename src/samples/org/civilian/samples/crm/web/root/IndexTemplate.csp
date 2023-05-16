@@ -76,10 +76,10 @@ private void printWelcome()
 				@Url url = html.url(CrmResources.root.customers);
 				<li>Open the <a href="<%url%>" target="_blank">Customer</a> module in a new window.</li>
 				@url = html.url(CrmResources.root.customers.$customerId);
-				@url.setPathParam(new Integer(100)); // :customerId
+				@url.setPathParam(Integer.valueOf(100)); // :customerId
 				<li>Open the detail page of <a href="<%url%>" target="_blank">Customer 100</a>.</li>
 				@url = html.url(CrmResources.root.customers.$customerId.masterdata);
-				@url.setPathParam(new Integer(100)); // :customerId
+				@url.setPathParam(Integer.valueOf(100)); // :customerId
 				<li>Open the masterdata page of <a href="<%url%>" target="_blank">Customer 100</a>.</li>
 			</ul>
 			This technique allows effective reuse of the server-side API: E.g. search dialogs for lookup of CRM entities 

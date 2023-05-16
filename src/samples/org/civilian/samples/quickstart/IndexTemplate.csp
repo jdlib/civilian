@@ -13,7 +13,7 @@ template mixin html
 		<body>
 		<h1>Hello World</h1>
 		<a href="<%html.url(QsResources.root.users)%>">Users</a><br>
-		<a href="<%html.url(QsResources.root.users.$userId).setPathParam(new Integer(123))%>">User 123</a><br> 
+		<a href="<%html.url(QsResources.root.users.$userId).setPathParam(Integer.valueOf(123))%>">User 123</a><br> 
 		</body>
 	</html>
 }}

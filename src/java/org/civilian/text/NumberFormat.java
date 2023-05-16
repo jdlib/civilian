@@ -334,7 +334,7 @@ public class NumberFormat implements Serializable
 		if (n == null)
 			return null;
 		else
-			return (n instanceof Double) ? (Double)n : new Double(n.doubleValue());
+			return (n instanceof Double) ? (Double)n : Double.valueOf(n.doubleValue());
 	}
 
 	

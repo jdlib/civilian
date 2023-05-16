@@ -133,12 +133,12 @@ public class IndexTemplate extends Template
 		out.print(url);                                                 // line 77: <%url%>
 		out.println("\" target=\"_blank\">Customer</a> module in a new window.</li>"); // line 77: " target="_blank">Customer</a> module in a new window.</li>
 		url = html.url(CrmResources.root.customers.$customerId);        // line 78: @url = html.url(CrmResources.root.customers.$customerId);
-		url.setPathParam(new Integer(100)); // :customerId              // line 79: @url.setPathParam(new Integer(100)); // :customerId
+		url.setPathParam(Integer.valueOf(100)); // :customerId              // line 79: @url.setPathParam(Integer.valueOf(100)); // :customerId
 		out.print("<li>Open the detail page of <a href=\"");            // line 80: <li>Open the detail page of <a href="
 		out.print(url);                                                 // line 80: <%url%>
 		out.println("\" target=\"_blank\">Customer 100</a>.</li>");     // line 80: " target="_blank">Customer 100</a>.</li>
 		url = html.url(CrmResources.root.customers.$customerId.masterdata); // line 81: @url = html.url(CrmResources.root.customers.$customerId.masterdata);
-		url.setPathParam(new Integer(100)); // :customerId              // line 82: @url.setPathParam(new Integer(100)); // :customerId
+		url.setPathParam(Integer.valueOf(100)); // :customerId              // line 82: @url.setPathParam(Integer.valueOf(100)); // :customerId
 		out.print("<li>Open the masterdata page of <a href=\"");        // line 83: <li>Open the masterdata page of <a href="
 		out.print(url);                                                 // line 83: <%url%>
 		out.println("\" target=\"_blank\">Customer 100</a>.</li>");     // line 83: " target="_blank">Customer 100</a>.</li>

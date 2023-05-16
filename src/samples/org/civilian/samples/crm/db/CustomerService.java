@@ -41,7 +41,7 @@ public class CustomerService
 		int size = new Random().nextInt(20) + 1;
 		for (int i=0; i<size; i++)
 		{
-			Integer id		= new Integer(100 + i);
+			Integer id		= Integer.valueOf(100 + i);
 			String name 	= "Name" + (100 + i);
 			String number 	= "Number" + i;
 			String city 	= "City" + i;

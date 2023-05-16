@@ -58,7 +58,7 @@ public class DoubleField extends InputField<Double>
 	 */
 	public DoubleField setMin(double min)
 	{
-		min_ = new Double(min);
+		min_ = Double.valueOf(min);
 		return this;
 	}
 
@@ -69,7 +69,7 @@ public class DoubleField extends InputField<Double>
 	 */
 	public DoubleField setMax(double max)
 	{
-		max_ = new Double(max);
+		max_ = Double.valueOf(max);
 		return this;
 	}
 
@@ -93,7 +93,7 @@ public class DoubleField extends InputField<Double>
 	 */
 	public DoubleField setStep(double step)
 	{
-		step_ = new Double(step);
+		step_ = Double.valueOf(step);
 		return this;
 	}
 	

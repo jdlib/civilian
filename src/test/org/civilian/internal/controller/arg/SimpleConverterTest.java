@@ -35,10 +35,10 @@ public class SimpleConverterTest extends CivTest
 	@Test public void testCreate() throws Exception
 	{
 		assertConvert(create(String.class),  		"abc", 			"abc",							null);
-		assertConvert(create(Integer.class), 		"1.000", 		new Integer(1000),				null);
-		assertConvert(create(int.class), 			"13.000", 		new Integer(13000),				Integer.valueOf(0));
-		assertConvert(create(Double.class),  		"1.234,5", 		new Double(1234.5),				null);
-		assertConvert(create(double.class),  		"1.234,5", 		new Double(1234.5),				Double.valueOf(0.0));
+		assertConvert(create(Integer.class), 		"1.000", 		Integer.valueOf(1000),			null);
+		assertConvert(create(int.class), 			"13.000", 		Integer.valueOf(13000),			Integer.valueOf(0));
+		assertConvert(create(Double.class),  		"1.234,5", 		Double.valueOf(1234.5),			null);
+		assertConvert(create(double.class),  		"1.234,5", 		Double.valueOf(1234.5),			Double.valueOf(0.0));
 		assertConvert(create(Boolean.class), 		"true", 		Boolean.TRUE,					null);
 		assertConvert(create(boolean.class), 		"false", 		Boolean.FALSE,					Boolean.FALSE);
 		assertConvert(create(LocalDate.class), 		"31.12.2012", 	LocalDate.of(2012, 12, 31),		null);
