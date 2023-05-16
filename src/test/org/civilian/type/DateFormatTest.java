@@ -45,10 +45,10 @@ public class DateFormatTest extends CivTest
 		// names
 		dateFormat_ = new DateFormat(Locale.GERMAN);
 		assertEquals("Januar", dateFormat_.getMonthName(1));
-		assertEquals("Feb", dateFormat_.getShortMonthName(2));
+		assertEquals("Feb.", dateFormat_.getShortMonthName(2));
 		
 		assertEquals("Sonntag", dateFormat_.getWeekdayName(DayOfWeek.SUNDAY));
-		assertEquals("So", dateFormat_.getShortWeekdayName(DayOfWeek.SUNDAY));
+		assertEquals("So.", dateFormat_.getShortWeekdayName(DayOfWeek.SUNDAY));
 	}
 	
 	

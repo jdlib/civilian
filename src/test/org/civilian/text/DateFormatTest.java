@@ -42,9 +42,9 @@ public class DateFormatTest extends CivTest
 		assertEquals(1, 		german.getMonthPosition());
 		assertEquals(2, 		german.getYearPosition());
 		assertEquals("Januar", 	german.getMonthName(1));
-		assertEquals("Dez", 	german.getShortMonthName(12));
+		assertEquals("Dez.", 	german.getShortMonthName(12));
 		assertEquals("Freitag", german.getWeekdayName(DayOfWeek.FRIDAY));
-		assertEquals("Sa", 		german.getShortWeekdayName(DayOfWeek.SATURDAY));
+		assertEquals("Sa.",		german.getShortWeekdayName(DayOfWeek.SATURDAY));
 		
 		try
 		{
