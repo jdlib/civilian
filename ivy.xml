@@ -26,6 +26,7 @@
 		<dependency conf="build->master" org="org.freemarker" name="freemarker" rev="2.3.19"/>
 		<dependency conf="build->master" org="org.jboss" name="jboss-vfs" rev="3.2.2.Final"/>
 		<dependency conf="build->master" org="org.slf4j" name="slf4j-api" rev="1.7.5"/>
+		<dependency conf="build->master" org="javax.xml.bind" name="jaxb-api" rev="2.3.1"/>
 		
 		<dependency conf="test->master" org="junit" name="junit" rev="4.11"/>
 		<dependency conf="test->master" org="org.slf4j" name="slf4j-nop" rev="1.7.5"/>
