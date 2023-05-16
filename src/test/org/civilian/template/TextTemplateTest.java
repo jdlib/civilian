@@ -16,7 +16,6 @@
 package org.civilian.template;
 
 
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.Response;
@@ -31,7 +30,7 @@ public class TextTemplateTest extends CivTest
 		TemplateWriter out 	= mock(TemplateWriter.class);
 		Response response	= mock(AbstractResponse.class);
 		when(response.getContentWriter()).thenReturn(out);
-		doCallRealMethod().when(response).writeContent(anyObject(), anyString());
+		doCallRealMethod().when(response).writeContent(any(), anyString());
 		
 		TextTemplate template = new TextTemplate("hallo");
 		response.writeContent(template, "");
