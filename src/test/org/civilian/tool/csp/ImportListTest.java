@@ -22,7 +22,6 @@ import java.util.List;
 import javax.servlet.Servlet;
 import org.civilian.CivTest;
 import org.civilian.Server;
-import org.civilian.tool.csp.ImportList;
 import org.junit.Test;
 
 

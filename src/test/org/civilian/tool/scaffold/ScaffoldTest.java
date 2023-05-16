@@ -22,7 +22,6 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.tool.scaffold.Scaffold;
 import org.civilian.util.FileType;
 import org.civilian.util.IoUtil;
 

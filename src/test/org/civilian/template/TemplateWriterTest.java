@@ -21,7 +21,6 @@ import java.io.StringWriter;
 import org.junit.Before;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.template.TemplateWriter;
 
 
 public class TemplateWriterTest extends CivTest

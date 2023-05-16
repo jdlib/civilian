@@ -18,7 +18,6 @@ package org.civilian.tool.csp;
 
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.tool.csp.TemplateLine;
 
 
 public class TemplateLineTest extends CivTest

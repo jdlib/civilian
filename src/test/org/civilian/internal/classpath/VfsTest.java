@@ -19,7 +19,6 @@ package org.civilian.internal.classpath;
 import java.net.URL;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.internal.classpath.Vfs;
 
 
 public class VfsTest extends CivTest

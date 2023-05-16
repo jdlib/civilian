@@ -18,7 +18,6 @@ package org.civilian.content;
 
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.content.CombinedContentType;
 
 
 public class CombinedContentTypeTest extends CivTest

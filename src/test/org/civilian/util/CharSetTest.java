@@ -18,7 +18,6 @@ package org.civilian.util;
 
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.util.Charset;
 
 
 public class CharSetTest extends CivTest

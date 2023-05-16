@@ -18,10 +18,6 @@ package org.civilian.content;
 
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.content.CombinedContentType;
-import org.civilian.content.ContentNegotiation;
-import org.civilian.content.ContentType;
-import org.civilian.content.ContentTypeList;
 
 
 public class ContentNegotiationTest extends CivTest

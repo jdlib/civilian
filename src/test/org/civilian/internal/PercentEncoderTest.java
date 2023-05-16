@@ -17,7 +17,6 @@ package org.civilian.internal;
 
 
 import org.civilian.CivTest;
-import org.civilian.internal.PercentEncoder;
 import org.junit.Test;
 
 

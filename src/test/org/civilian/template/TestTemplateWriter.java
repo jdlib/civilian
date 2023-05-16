@@ -24,7 +24,6 @@ import java.io.Writer;
 import java.util.Locale;
 import org.civilian.Application;
 import org.civilian.Response;
-import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
 import org.civilian.text.msg.MsgBundle;
 import org.junit.Assert;

@@ -17,7 +17,6 @@ package org.civilian.tool.csp;
 
 
 import org.civilian.CivTest;
-import org.civilian.tool.csp.Argument;
 import org.civilian.util.Scanner;
 import org.junit.Test;
 

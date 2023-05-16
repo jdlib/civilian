@@ -20,8 +20,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.content.ContentType;
-import org.civilian.content.ContentTypeList;
 
 
 public class ContentTypeListTest extends CivTest

@@ -17,7 +17,6 @@ package org.civilian.internal.controller.arg;
 
 
 import org.civilian.Request;
-import org.civilian.internal.controller.arg.StringMethodArg;
 
 
 public class TestStringArg extends StringMethodArg

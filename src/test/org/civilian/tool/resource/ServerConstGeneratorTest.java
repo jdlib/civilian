@@ -22,7 +22,6 @@ import java.io.PrintStream;
 import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.testcase1.Test1App;
-import org.civilian.tool.resource.ServerConstGenerator;
 import org.civilian.util.IoUtil;
 
 

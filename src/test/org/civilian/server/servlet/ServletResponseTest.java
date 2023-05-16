@@ -24,8 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
 import org.civilian.response.ResponseHeaders;
-import org.civilian.server.servlet.ServletResponseAdapter;
-import org.civilian.server.servlet.SpRequestAdapter;
 import org.civilian.server.test.TestApp;
 import org.junit.Before;
 import org.junit.BeforeClass;

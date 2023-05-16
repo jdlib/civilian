@@ -21,7 +21,6 @@ import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.Response;
 import org.civilian.internal.AbstractResponse;
-import org.civilian.template.TextTemplate;
 import org.junit.Test;
 
 

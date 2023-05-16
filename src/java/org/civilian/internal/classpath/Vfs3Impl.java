@@ -17,8 +17,6 @@ package org.civilian.internal.classpath;
 
 
 import java.net.URL;
-import org.civilian.internal.classpath.ScanContext;
-import org.civilian.internal.classpath.Vfs;
 import org.jboss.vfs.VFS;
 import org.jboss.vfs.VirtualFile;
 import org.jboss.vfs.VirtualFileVisitor;

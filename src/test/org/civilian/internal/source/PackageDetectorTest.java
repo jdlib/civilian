@@ -19,7 +19,6 @@ package org.civilian.internal.source;
 import java.io.File;
 import java.net.URL;
 import org.civilian.CivTest;
-import org.civilian.internal.source.PackageDetector;
 import org.civilian.util.ClassUtil;
 import org.junit.Test;
 

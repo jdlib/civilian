@@ -17,8 +17,6 @@ package org.civilian.response.protocol;
 
 
 import org.civilian.CivTest;
-import org.civilian.response.protocol.Message;
-import org.civilian.response.protocol.NgReply;
 import org.junit.Test;
 
 

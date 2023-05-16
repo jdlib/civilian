@@ -23,8 +23,6 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.civilian.CivTest;
-import org.civilian.server.servlet.ContextListener;
-import org.civilian.server.servlet.ServletServer;
 
 
 public class ContextListenerTest extends CivTest

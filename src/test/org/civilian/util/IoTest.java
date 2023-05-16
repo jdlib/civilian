@@ -18,7 +18,6 @@ package org.civilian.util;
 
 import java.io.IOException;
 import org.civilian.CivTest;
-import org.civilian.util.ClosedWriter;
 import org.junit.Test;
 
 

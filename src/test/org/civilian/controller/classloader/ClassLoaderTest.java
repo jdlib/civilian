@@ -18,8 +18,6 @@ package org.civilian.controller.classloader;
 
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.controller.classloader.NonDelegatingClassLoader;
-import org.civilian.controller.classloader.ReloadConfig;
 
 
 public class ClassLoaderTest extends CivTest

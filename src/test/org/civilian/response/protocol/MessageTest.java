@@ -18,7 +18,6 @@ package org.civilian.response.protocol;
 
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.response.protocol.Message;
 
 
 public class MessageTest extends CivTest

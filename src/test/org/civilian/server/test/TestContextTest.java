@@ -19,7 +19,6 @@ package org.civilian.server.test;
 import java.io.File;
 import java.net.URL;
 import org.civilian.CivTest;
-import org.civilian.server.test.TestServer;
 import org.junit.Test;
 
 

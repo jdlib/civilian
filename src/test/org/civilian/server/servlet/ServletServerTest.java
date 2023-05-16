@@ -27,8 +27,6 @@ import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.internal.DefaultApp;
 import org.civilian.internal.admin.AdminApp;
-import org.civilian.server.servlet.AppServlet;
-import org.civilian.server.servlet.ServletServer;
 import org.civilian.testcase1.Test1App;
 
 

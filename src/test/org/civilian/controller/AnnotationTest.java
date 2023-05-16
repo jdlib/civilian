@@ -39,7 +39,6 @@ import org.civilian.annotation.RequestContent;
 import org.civilian.annotation.RequestMethod;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
-import org.civilian.controller.ControllerMethod;
 import org.civilian.resource.PathParamMap;
 import org.civilian.resource.PathParams;
 import org.civilian.response.protocol.NgReply;

@@ -29,11 +29,6 @@ import org.civilian.Application;
 import org.civilian.CivTest;
 import org.civilian.internal.DefaultApp;
 import org.civilian.resource.Path;
-import org.civilian.server.servlet.AppServlet;
-import org.civilian.server.servlet.MpRequestAdapter;
-import org.civilian.server.servlet.ServletServer;
-import org.civilian.server.servlet.ServletRequestAdapter;
-import org.civilian.server.servlet.SpRequestAdapter;
 
 
 public class AppServletTest extends CivTest

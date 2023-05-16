@@ -17,7 +17,6 @@ package org.civilian.server.servlet;
 
 
 import org.civilian.CivTest;
-import org.civilian.server.servlet.ServletUtil;
 import org.junit.Test;
 
 

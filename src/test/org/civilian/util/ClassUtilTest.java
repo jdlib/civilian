@@ -19,7 +19,6 @@ package org.civilian.util;
 import java.lang.annotation.Annotation;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.util.ClassUtil;
 
 
 public class ClassUtilTest extends CivTest
