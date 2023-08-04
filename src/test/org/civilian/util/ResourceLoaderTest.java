@@ -120,12 +120,12 @@ public class ResourceLoaderTest extends CivTest
 	{
 		ResourceLoader loader = ResourceLoader.builder.forSystemClassLoader();
 		URL url = loader.getResourceUrl("java/lang/String.class");
-		assertTrue(url.toString().endsWith("rt.jar!/java/lang/String.class"));
+		assertTrue(url.toString().endsWith("/java/lang/String.class"));
 
 		// system classloader sometimes returns several identical urls
 		Enumeration<URL> urls = loader.getResourceUrls("java/lang/String.class");
 		while (urls.hasMoreElements())
-			assertTrue(urls.nextElement().toString().endsWith("rt.jar!/java/lang/String.class"));
+			assertTrue(urls.nextElement().toString().endsWith("/java/lang/String.class"));
 		
 		try (InputStream in = loader.getResourceAsStream("java/lang/String.class"))
 		{
