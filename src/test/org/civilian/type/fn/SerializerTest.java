@@ -36,13 +36,18 @@ import org.civilian.type.TypeLib;
 
 public class SerializerTest extends CivTest
 {
+	static
+	{
+	}
+	
+	
 	@SuppressWarnings("deprecation")
 	@Test public void testFormat() throws Exception
 	{
-		// mysteriously the french locale uses \u202f = 160 as grouping separator
+		// mysteriously the french locale uses " + FR_DEC_SEP + " = 160 as grouping separator
 		assertFormat(TypeLib.BIGDECIMAL, 	new BigDecimal(10.5), 					"10.5", "10.50", "10,50", "10,50");
-		assertFormat(TypeLib.BIGINTEGER, 	new BigInteger("1234"), 				"1234", "1,234", "1.234", "1\u202f234");
-		assertFormat(TypeLib.BIGINTEGER, 	new BigInteger("12345678901234567890"), "12345678901234567890", "12,345,678,901,234,567,890", "12.345.678.901.234.567.890", "12\u202f345\u202f678\u202f901\u202f234\u202f567\u202f890");
+		assertFormat(TypeLib.BIGINTEGER, 	new BigInteger("1234"), 				"1234", "1,234", "1.234", frNoString("1", "234"));
+		assertFormat(TypeLib.BIGINTEGER, 	new BigInteger("12345678901234567890"), "12345678901234567890", "12,345,678,901,234,567,890", "12.345.678.901.234.567.890", frNoString("12", "345", "678", "901", "234", "567", "890"));
 		assertFormat(TypeLib.BOOLEAN, 		Boolean.TRUE, 							"true");
 		assertFormat(TypeLib.BYTE, 	 		Byte.valueOf(Byte.MIN_VALUE),			"-128");
 		assertFormat(TypeLib.CHARACTER, 	Character.valueOf('a'),					"a");
@@ -51,13 +56,13 @@ public class SerializerTest extends CivTest
 		assertFormat(TypeLib.DATE_JAVA_SQL, new java.sql.Date(112, 0, 31), 			"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertFormat(TypeLib.DATE_JAVA_UTIL,new java.util.Date(112, 0, 31), 		"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertFormat(TypeLib.DATETIME_LOCAL,LocalDateTime.of(2012,1,31,12,13,14), 	"20120131121314", "01/31/2012 12:13", "31.01.2012 12:13", "31/01/2012 12:13");
-		assertFormat(TypeLib.DOUBLE, 		Double.valueOf(2345.6),					"2345.6", "2,345.60","2.345,60","2\u202f345,60");
-		assertFormat(TypeLib.DOUBLE, 		Double.valueOf(2345),					"2345.0", "2,345.00","2.345,00","2\u202f345,00");
-		assertFormat(TypeLib.FLOAT, 		Float.valueOf(2345.6f),					"2345.6", "2,345.60","2.345,60","2\u202f345,60");
-		assertFormat(TypeLib.INTEGER, 		Integer.valueOf(2345),					"2345",   "2,345",   "2.345",   "2\u202f345");
-		assertFormat(TypeLib.LONG, 			Long.valueOf(2345),						"2345",   "2,345",   "2.345",   "2\u202f345");
-		assertFormat(TypeLib.LONG, 			Long.valueOf(-5432),					"-5432",  "-5,432",  "-5.432", "-5\u202f432");
-		assertFormat(TypeLib.SHORT, 		Short.valueOf((short)2345),				"2345",   "2,345",   "2.345",   "2\u202f345");
+		assertFormat(TypeLib.DOUBLE, 		Double.valueOf(2345.6),					"2345.6", "2,345.60","2.345,60", frNoString("2", "345,60"));
+		assertFormat(TypeLib.DOUBLE, 		Double.valueOf(2345),					"2345.0", "2,345.00","2.345,00", frNoString("2", "345,00"));
+		assertFormat(TypeLib.FLOAT, 		Float.valueOf(2345.6f),					"2345.6", "2,345.60","2.345,60", frNoString("2", "345,60"));
+		assertFormat(TypeLib.INTEGER, 		Integer.valueOf(2345),					"2345",   "2,345",   "2.345",    frNoString("2", "345"));
+		assertFormat(TypeLib.LONG, 			Long.valueOf(2345),						"2345",   "2,345",   "2.345",    frNoString("2", "345"));
+		assertFormat(TypeLib.LONG, 			Long.valueOf(-5432),					"-5432",  "-5,432",  "-5.432",   frNoString("-5", "432"));
+		assertFormat(TypeLib.SHORT, 		Short.valueOf((short)2345),				"2345",   "2,345",   "2.345",    frNoString("2", "345"));
 		assertFormat(TypeLib.TIME_LOCAL,	LocalTime.of(12, 13, 14),				"121314", "12:13",   "12:13",   "12:13");
 		assertFormat(TypeLib.STRING,		"abc",									"abc");
 	}
@@ -83,10 +88,10 @@ public class SerializerTest extends CivTest
 	@SuppressWarnings("deprecation")
 	@Test public void testParse() throws Exception
 	{
-		// mysteriously the french locale uses \u202f = 160 as grouping separator
+		// mysteriously the french locale uses " + FR_DEC_SEP + " = 160 as grouping separator
 		assertParse(TypeLib.BIGDECIMAL, 	new BigDecimal(10.5), 					"10.5", "10.5", "10,5", "10,5");
-		assertParse(TypeLib.BIGINTEGER, 	new BigInteger("1234"), 				"1234", "1,234", "1.234", "1\u202f234");
-		assertParse(TypeLib.BIGINTEGER, 	new BigInteger("12345678901234567890"), "12345678901234567890", "12,345,678,901,234,567,890", "12.345.678.901.234.567.890", "12\u202f345\u202f678\u202f901\u202f234\u202f567\u202f890");
+		assertParse(TypeLib.BIGINTEGER, 	new BigInteger("1234"), 				"1234", "1,234", "1.234", frNoString("1", "234"));
+		assertParse(TypeLib.BIGINTEGER, 	new BigInteger("12345678901234567890"), "12345678901234567890", "12,345,678,901,234,567,890", "12.345.678.901.234.567.890", frNoString("12", "345", "678", "901", "234", "567", "890"));
 		assertParse(TypeLib.BOOLEAN, 		Boolean.TRUE, 							"true");
 		assertParse(TypeLib.BYTE, 	 		Byte.valueOf(Byte.MIN_VALUE),			"-128");
 		assertParse(TypeLib.CHARACTER, 		Character.valueOf('a'),					"a");
@@ -94,14 +99,14 @@ public class SerializerTest extends CivTest
 		assertParse(TypeLib.DATE_LOCAL, 	LocalDate.of(2012, 1, 31),				"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertParse(TypeLib.DATE_JAVA_SQL, 	new java.sql.Date(112, 0, 31), 			"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
 		assertParse(TypeLib.DATE_JAVA_UTIL, new java.util.Date(112, 0, 31), 		"20120131", "01/31/2012", "31.01.2012", "31/01/2012");
-		assertParse(TypeLib.DOUBLE, 		Double.valueOf(2345.6),					"2345.6", "2,345.6", "2.345,6", "2\u202f345,6");
-		assertParse(TypeLib.DOUBLE, 		Double.valueOf(2345),					"2345.0", "2,345",   "2.345",   "2\u202f345");
-		assertParse(TypeLib.FLOAT, 			Float.valueOf(2345.6f),					"2345.6", "2,345.6", "2.345,6", "2\u202f345,6");
-		assertParse(TypeLib.FLOAT, 			Float.valueOf(2345f),					"2345.0", "2,345",   "2.345",   "2\u202f345");
-		assertParse(TypeLib.INTEGER, 		Integer.valueOf(2345),					"2345",   "2,345",   "2.345",   "2\u202f345");
-		assertParse(TypeLib.LONG, 			Long.valueOf(2345),						"2345",   "2,345",   "2.345",   "2\u202f345");
-		assertParse(TypeLib.LONG, 			Long.valueOf(-5432),					"-5432",  "-5,432",   "-5.432", "-5\u202f432");
-		assertParse(TypeLib.SHORT, 			Short.valueOf((short)2345),				"2345",   "2,345",   "2.345",   "2\u202f345");
+		assertParse(TypeLib.DOUBLE, 		Double.valueOf(2345.6),					"2345.6", "2,345.6", "2.345,6", frNoString("2", "345,6"));
+		assertParse(TypeLib.DOUBLE, 		Double.valueOf(2345),					"2345.0", "2,345",   "2.345",   frNoString("2", "345"));
+		assertParse(TypeLib.FLOAT, 			Float.valueOf(2345.6f),					"2345.6", "2,345.6", "2.345,6", frNoString("2", "345,6"));
+		assertParse(TypeLib.FLOAT, 			Float.valueOf(2345f),					"2345.0", "2,345",   "2.345",   frNoString("2", "345"));
+		assertParse(TypeLib.INTEGER, 		Integer.valueOf(2345),					"2345",   "2,345",   "2.345",   frNoString("2", "345"));
+		assertParse(TypeLib.LONG, 			Long.valueOf(2345),						"2345",   "2,345",   "2.345",   frNoString("2", "345"));
+		assertParse(TypeLib.LONG, 			Long.valueOf(-5432),					"-5432",  "-5,432",   "-5.432", frNoString("-5", "432"));
+		assertParse(TypeLib.SHORT, 			Short.valueOf((short)2345),				"2345",   "2,345",   "2.345",   frNoString("2", "345"));
 		assertParse(TypeLib.STRING,			"abc",									"abc");
 	}
 
@@ -167,7 +172,7 @@ public class SerializerTest extends CivTest
 		assertEquals(new BigInteger(big), LOCALE_US.parse(TypeLib.BIGINTEGER, big));
 		
 		assertEquals(123L, LOCALE_US.parse(TypeLib.LONG, "+123").longValue());
-		assertEquals(123456L, LOCALE_FR.parse(TypeLib.LONG, "+123\u202f456").longValue());
+		assertEquals(123456L, LOCALE_FR.parse(TypeLib.LONG, frNoString("+123", "456")).longValue());
 	}
 	
 	
@@ -200,8 +205,8 @@ public class SerializerTest extends CivTest
 		assertFormat(type, one, "1", "1", "1", "1");
 		assertParse(type, one, "1", "1", "1", "1");
 		
-		assertFormat(type, thousand, "1000", "1,000", "1.000", "1\u202f000");
-		assertParse(type, thousand, "1000", "1,000", "1.000", "1\u202f000");
+		assertFormat(type, thousand, "1000", "1,000", "1.000", frNoString("1", "000"));
+		assertParse(type, thousand, "1000", "1,000", "1.000", frNoString("1", "000"));
 		
 		try
 		{
@@ -238,10 +243,30 @@ public class SerializerTest extends CivTest
 		{
 		}
 	}
-
+	
 	
 	private static final StandardSerializer STANDARD = StandardSerializer.INSTANCE;
 	private static final LocaleSerializer LOCALE_US = new LocaleSerializer(Locale.US);
 	private static final LocaleSerializer LOCALE_DE = new LocaleSerializer(Locale.GERMAN);
 	private static final LocaleSerializer LOCALE_FR = new LocaleSerializer(Locale.FRENCH);
+
+	// the french thousands separator char is differs in certain jdk versions, so we parameterize
+	// the test to test for the correct one
+	private static final char FR_DEC_SEP; 
+	static
+	{
+		String s = LOCALE_FR.format(TypeLib.INTEGER, 1222);
+		FR_DEC_SEP = s.charAt(s.indexOf('1') + 1);
+	}
+
+	
+	private String frNoString(String... parts) {
+		StringBuilder s = new StringBuilder();
+		for (int i=0; i<parts.length; i++) {
+			if (i > 0)
+				s.append(FR_DEC_SEP);
+			s.append(parts[i]);
+		}
+		return s.toString();
+	}
 }
