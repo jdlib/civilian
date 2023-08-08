@@ -202,8 +202,8 @@ public class SerializerTest extends CivTest
 		
 		DiscreteType<Integer> type = new DiscreteType<>(TypeLib.INTEGER, one, thousand);
 		
-		assertFormat(type, one, "1", "1", "1", "1");
-		assertParse(type, one, "1", "1", "1", "1");
+		assertFormat(type, one, "1");
+		assertParse(type, one, "1");
 		
 		assertFormat(type, thousand, "1000", "1,000", "1.000", frNoString("1", "000"));
 		assertParse(type, thousand, "1000", "1,000", "1.000", frNoString("1", "000"));
@@ -231,8 +231,8 @@ public class SerializerTest extends CivTest
 	{
 		EnumType<TestEnum> type = new EnumType<>(TestEnum.class);
 		
-		assertFormat(type, TestEnum.alpha, "alpha", "alpha", "alpha", "alpha");
-		assertParse (type, TestEnum.alpha, "alpha", "alpha", "alpha", "alpha");
+		assertFormat(type, TestEnum.alpha, "alpha");
+		assertParse (type, TestEnum.alpha, "alpha");
 
 		try
 		{
