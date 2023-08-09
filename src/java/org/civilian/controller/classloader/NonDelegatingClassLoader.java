@@ -58,6 +58,16 @@ public class NonDelegatingClassLoader extends ClassLoader
 	{
 		Class<?> c;
 		
+		// check whether the class is present in the bootstrap classpath
+        try 
+        {
+            return BOOTSTRAP_CLASSLOADER.loadClass(name);
+        } 
+        catch (ClassNotFoundException e) 
+        {
+        	// ignored
+        }		
+		
 		// check if loaded by a parent or by ourself
 		c = findParentLoadedClass(name);
 	    if (c != null)
@@ -164,4 +174,17 @@ public class NonDelegatingClassLoader extends ClassLoader
 	
 	private ClassList excludes_ = new ClassList();
 	private ClassList includes_ = new ClassList();
+	private static final ClassLoader BOOTSTRAP_CLASSLOADER = findBootstrapClassLoader();
+	private static ClassLoader findBootstrapClassLoader()
+	{
+		ClassLoader cl = NonDelegatingClassLoader.class.getClassLoader();
+		while (cl != null) 
+		{
+			ClassLoader parent = cl.getParent();  
+			if (parent == null)
+				return cl;
+			cl = parent;
+		}
+		throw new IllegalStateException("bootstrap classloader not found");
+	}
 }
