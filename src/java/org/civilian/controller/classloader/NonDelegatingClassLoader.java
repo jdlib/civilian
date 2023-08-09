@@ -58,6 +58,12 @@ public class NonDelegatingClassLoader extends ClassLoader
 	{
 		Class<?> c;
 		
+        // check if the class has already been loaded
+        c = findLoadedClass(name);
+        if (c != null) {
+            return c;
+        }		
+		
 		// check whether the class is present in the bootstrap classpath
         try 
         {
