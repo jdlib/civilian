@@ -28,7 +28,7 @@ import org.civilian.samples.game.Game.Result;
  * See https://github.com/wildfly/quickstart/blob/master/guide/NumberguessQuickstart.asciidoc
  */
 @Segment("/")
-public class GameController extends Controller
+public class IndexController extends Controller
 {
 	@Get @Post @Produces("text/html") 
 	public void render() throws Exception
