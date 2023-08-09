@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
 import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import org.civilian.CivTest;
@@ -200,7 +199,7 @@ public class ServletRequestTest extends CivTest
 		assertFalse(request.isAsyncStarted());
 
 		AsyncContext context = request.startAsync();
-		verify(servletReq).startAsync(any(ServletRequest.class), any(ServletResponse.class));
+		verify(servletReq).startAsync(any(ServletRequest.class), any());
 		
 		assertSame(context, request.getAsyncContext());
 		assertTrue(request.isAsyncStarted());
