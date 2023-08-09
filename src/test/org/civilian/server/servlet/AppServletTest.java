@@ -101,6 +101,6 @@ public class AppServletTest extends CivTest
 		
 		when(request.getContentType()).thenReturn("multipart/form-data");
 		servlet.service(request, response);
-		verify(app, times(2)).process(any(MpRequestAdapter.class));
+		verify(app, times(1)).process(any(MpRequestAdapter.class));
 	}
 }
