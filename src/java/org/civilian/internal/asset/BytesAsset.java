@@ -65,6 +65,7 @@ public class BytesAsset extends AbstractAsset
 		bytes_ = Check.notNull(bytes, "bytes");
 		setCharEncoding(encoding);
 		setLastModified(System.currentTimeMillis());
+		setLength(bytes_.length);
 	}
 	
 

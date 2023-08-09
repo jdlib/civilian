@@ -43,6 +43,7 @@ public class AssetTest extends CivTest
 		BytesAsset asset = new BytesAsset("UTF-8", "bytes");
 		assertTrue(asset.isValid());
 		assertTrue(asset.toString().startsWith("BytesAsset@"));
+		assertEquals(5, asset.length());
 		assertSame(asset, asset.cache());
 		
 		try
