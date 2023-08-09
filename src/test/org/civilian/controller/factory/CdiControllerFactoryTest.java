@@ -3,10 +3,11 @@ package org.civilian.controller.factory;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.any;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 import java.util.HashSet;
-import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import org.civilian.CivTest;
@@ -24,8 +25,8 @@ public class CdiControllerFactoryTest extends CivTest
 		Bean<String> bean = mock(Bean.class);
 		HashSet<Bean<?>> beans = new HashSet<>();
 		beans.add(bean);
-		when(beanManager.getBeans(any(), (Annotation[])any())).thenReturn(beans);
-		when(beanManager.getReference(any(), any(), any(CreationalContext.class))).thenReturn("s");
+		when(beanManager.getBeans(any(Type.class), any(Annotation[].class))).thenReturn(beans);
+		when(beanManager.getReference(eq(bean), eq(String.class), any())).thenReturn("s");
 
 		CdiController controller = (CdiController)factory.createController(CdiController.class);
 		assertSame("s", controller.service);
