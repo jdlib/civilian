@@ -12,7 +12,7 @@ template(LoginForm form, String errorMessage) mixin html, lang, formTable
 		@html.linkCss("css/lib/bootstrap.css");
 		@html.linkCss("css/lib/toastr.css");
 		@html.linkCss("css/samples.css");
-		@html.script("js/lib/jquery-2.1.1.min.js"); 
+		@html.script("js/lib/jquery-3.6.0.min.js"); 
 	</head>
 	<body>
 	<div id="noJs">

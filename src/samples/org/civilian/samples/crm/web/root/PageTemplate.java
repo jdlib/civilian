@@ -109,7 +109,7 @@ public class PageTemplate extends Template
 		out.printlnIfNotEmpty();
 		out.decreaseTab();
 		out.println("</div>");                                          // line 46: </div>
-		html.script("js/lib/jquery-2.1.1.min.js");                      // line 47: @html.script("js/lib/jquery-2.1.1.min.js");
+		html.script("js/lib/jquery-3.6.0.min.js");                      // line 47: @html.script("js/lib/jquery-3.6.0.min.js");
 		html.script("js/lib/jquery-ui-1.10.3.custom.min.js");           // line 48: @html.script("js/lib/jquery-ui-1.10.3.custom.min.js");
 		html.script("js/lib/toastr.min.js");                            // line 49: @html.script("js/lib/toastr.min.js");
 		html.script("js/lib/script.js");                                // line 50: @html.script("js/lib/script.js");

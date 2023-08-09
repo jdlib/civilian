@@ -44,7 +44,7 @@ public class LoginTemplate extends Template
 		html.linkCss("css/lib/bootstrap.css");                          // line 12: @html.linkCss("css/lib/bootstrap.css");
 		html.linkCss("css/lib/toastr.css");                             // line 13: @html.linkCss("css/lib/toastr.css");
 		html.linkCss("css/samples.css");                                // line 14: @html.linkCss("css/samples.css");
-		html.script("js/lib/jquery-2.1.1.min.js");                      // line 15: @html.script("js/lib/jquery-2.1.1.min.js");
+		html.script("js/lib/jquery-3.6.0.min.js");                      // line 15: @html.script("js/lib/jquery-3.6.0.min.js");
 		out.decreaseTab();
 		out.println("</head>");                                         // line 16: </head>
 		out.println("<body>");                                          // line 17: <body>
@@ -119,9 +119,9 @@ public class LoginTemplate extends Template
 	}
 
 
-	private LoginForm form;
-	private String errorMessage;
-	private HtmlMixin html;
-	private LangMixin lang;
-	private FormTableMixin formTable;
+	protected LoginForm form;
+	protected String errorMessage;
+	protected HtmlMixin html;
+	protected LangMixin lang;
+	protected FormTableMixin formTable;
 }

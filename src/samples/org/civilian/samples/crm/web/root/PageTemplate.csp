@@ -44,7 +44,7 @@ template(Response response, Template content, Script script, SessionUser session
 	<div class="container-fluid">
 		<%content%>
 	</div>
-	@html.script("js/lib/jquery-2.1.1.min.js"); 
+	@html.script("js/lib/jquery-3.6.0.min.js"); 
 	@html.script("js/lib/jquery-ui-1.10.3.custom.min.js"); 
 	@html.script("js/lib/toastr.min.js"); 
 	@html.script("js/lib/script.js"); 
