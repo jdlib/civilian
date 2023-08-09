@@ -222,12 +222,12 @@ public class PageTemplate extends Template
 	}
 
 
-	private Response response;
-	private Template content;
-	private Script script;
-	private SessionUser sessionUser;
-	private boolean showNavigation;
-	private Path reloadPath;
-	private HtmlMixin html;
-	private LangMixin lang;
+	protected Response response;
+	protected Template content;
+	protected Script script;
+	protected SessionUser sessionUser;
+	protected boolean showNavigation;
+	protected Path reloadPath;
+	protected HtmlMixin html;
+	protected LangMixin lang;
 }

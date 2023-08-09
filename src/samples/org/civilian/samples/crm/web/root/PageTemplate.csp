@@ -1,6 +1,6 @@
 import org.civilian.Response
 import org.civilian.Resource
-import org.civilian.Template
+import org.civilian.template.Template
 import org.civilian.text.msg.MsgId
 import org.civilian.resource.Path
 import ../../text.Message
