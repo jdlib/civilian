@@ -67,8 +67,10 @@ public class NonDelegatingClassLoader extends ClassLoader
 	    if (c != null)
 	    	return c;
 
+	    boolean logTraceEnabled = Logs.CLASSLOADER.isTraceEnabled();
+	    
 	    // we see a new class
-		if (Logs.CLASSLOADER.isTraceEnabled())
+		if (logTraceEnabled)
 			Logs.CLASSLOADER.trace("requested: " + name);
 	    
 		if (canLoad(name))
@@ -76,7 +78,7 @@ public class NonDelegatingClassLoader extends ClassLoader
 			c = defineFileClass(name);
 			if (c != null)
 			{
-				if (Logs.CLASSLOADER.isTraceEnabled())
+				if (logTraceEnabled)
 					Logs.CLASSLOADER.trace("loaded:    " + name);
 				if (resolve)
 					resolveClass(c);
@@ -84,7 +86,7 @@ public class NonDelegatingClassLoader extends ClassLoader
 			}
 		}
 		
-		if (Logs.CLASSLOADER.isTraceEnabled())
+		if (logTraceEnabled)
 			Logs.CLASSLOADER.trace("delegated: " + name);
 	    return super.loadClass(name, resolve);
 	}
