@@ -162,7 +162,7 @@ public class AppConfig
 	private void initAssetLocations() throws Exception
 	{
 		Settings settings = new Settings(settings_, ConfigKeys.ASSET_PREFIX);
-		for (AssetLocation loc : AssetServices.getLocations(app_, settings))
+		for (AssetLocation loc : AssetServices.getLocations(settings, app_.getServer(), app_.getPath()))
 			assetConfig_.addLocation(loc);
 	}
 

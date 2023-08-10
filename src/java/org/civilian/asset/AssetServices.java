@@ -19,7 +19,6 @@ package org.civilian.asset;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import org.civilian.Application;
 import org.civilian.Server;
 import org.civilian.application.ConfigKeys;
 import org.civilian.content.ContentType;
@@ -66,13 +65,14 @@ public abstract class AssetServices
 	
 	/**
 	 * Returns the AssetLocations of an application.
-	 * @param app the application
 	 * @param appSettings the application settings 
+	 * @param server the server
+	 * @param appPath the path to the application
 	 */
-	public static List<AssetLocation> getLocations(Application app, Settings appSettings)
+	public static List<AssetLocation> getLocations(Settings appSettings, Server server, Path appPath)
 		throws Exception
 	{
-		ArrayList<AssetLocation> list = new ArrayList<>();
+		List<AssetLocation> list = new ArrayList<>();
 
 		int counter = -1;
 		int missed = 0;
@@ -87,7 +87,7 @@ public abstract class AssetServices
 			else
 			{
 				Settings locSettings	= new Settings(appSettings, key + '.');
-				AssetLocation location	= getLocation(app, def, locSettings);
+				AssetLocation location	= getLocation(def, locSettings, server, appPath);
 				list.add(location);
 			}
 		}
@@ -99,10 +99,12 @@ public abstract class AssetServices
 	/**
 	 * Returns the AssetLocation of an application, defined by an entry in civilian.ini.
 	 * The definition has the form type (':' param)? ('-&gt;' path)?
-	 * @param app the application
 	 * @param definition an entry app.&lt;appid&gt;.asset.location[.&lt;n&gt;]
+	 * @param locSetting the location settings
+	 * @param server the server
+	 * @param appPath the application path
 	 */
-	public static AssetLocation getLocation(Application app, String definition, Settings locSettings)
+	public static AssetLocation getLocation(String definition, Settings locSettings, Server server, Path appPath)
 		throws Exception
 	{
 		String relPath;
@@ -131,7 +133,7 @@ public abstract class AssetServices
 		AssetLocation location;
 		if (DIR_LOCATION_KEY.equals(type))
 		{
-			location = getDirectoryLocation(relPath, app.getServer(), param != null ? param : "");
+			location = getDirectoryLocation(relPath, server.getRootDir(), param != null ? param : "");
 		}
 		else if (JAVARES_LOCATION_KEY.equals(type))
 		{
@@ -142,7 +144,7 @@ public abstract class AssetServices
 		}
 		else if (CIVRES_LOCATION_KEY.equals(type))
 		{
-			location = getCivResourceLocation(relPath, app.getPath().toString(), app.develop());
+			location = getCivResourceLocation(relPath, appPath.toString(), server.develop());
 		}
 		else
 			throw new IllegalArgumentException("invalid asset location type '" + type + "'");
@@ -175,21 +177,21 @@ public abstract class AssetServices
 	/**
 	 * Returns a new AssetLocation for asset files in the local file-system.
 	 * @param path the path of the AssetLocation below the asset-root. 
-	 * @param server the server 
+	 * @param serverRootDir the server root directory 
 	 * @param directory a directory. If null, then the server root directory is used. If relative
 	 * 		then the (server directory)/directory is used. Else if absolute the directory itself is used.
 	 */
-	public static AssetLocation getDirectoryLocation(String path, Server server, String directory)
+	public static AssetLocation getDirectoryLocation(String path, File serverRootDir, String directory)
 	{
 		File result;
 		
 		if (directory == null)
-			result = server.getRootDir();
+			result = serverRootDir;
 		else
 		{
 			result = new File(directory);
 			if (!result.exists())
-				result = new File(server.getRootDir(), directory);
+				result = new File(serverRootDir, directory);
 		}		
 		
 		return getDirectoryLocation(path, result);

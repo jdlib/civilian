@@ -44,7 +44,7 @@ public class AssetServicesTest extends CivTest
 		settings.set("location.3.encoding", 	"UTF-8");
 		settings.set("location.3.contentType",	"text/css");
 		
-		List<AssetLocation> locations = AssetServices.getLocations(app, settings);
+		List<AssetLocation> locations = AssetServices.getLocations(settings, server, app.getPath());
 		assertEquals(3, locations.size());
 		
 		AssetLocation loc = locations.get(0);

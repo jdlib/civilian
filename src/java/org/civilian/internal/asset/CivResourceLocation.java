@@ -69,9 +69,7 @@ public class CivResourceLocation extends JavaResourceLocation
 		if (appPath != null)
 		{
 			StringBuilder s = new StringBuilder();
-			s.append("civilian.appPath = new civilian.Path('");
-			s.append(appPath);
-			s.append("');\n");
+			s.append("civilian.appPath = new civilian.Path('").append(appPath).append("');\n");
 			s.append("civilian.basePath = civilian.Path.createBasePath();\n");
 			if (develop)
 				s.append("civilian.develop = true;");
