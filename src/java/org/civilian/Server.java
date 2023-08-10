@@ -18,6 +18,7 @@ package org.civilian;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -588,8 +589,9 @@ public abstract class Server implements ServerProvider, PathProvider
 		if (cl == null)
 			cl = getClass().getClassLoader();
 		Class<? extends AppLoader> c = ClassUtil.getClass(AppLoader.class.getName() + "Impl", AppLoader.class, cl);
-		c.getConstructor().setAccessible(true);
-		return c.newInstance();
+		Constructor<? extends AppLoader> ctor = c.getConstructor();
+		ctor.setAccessible(true);
+		return ctor.newInstance();
 	}
 	
 	
