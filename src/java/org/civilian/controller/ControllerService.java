@@ -172,10 +172,10 @@ public class ControllerService
 		
 		
 		private LeveledMethod[] methods_;
-		private Class<? extends Controller> controllerClass_;
-		private int hierarchLevel_;
-		private ControllerSignature signature_;
-		private ControllerFactory factory_;
+		private final Class<? extends Controller> controllerClass_;
+		private final int hierarchLevel_;
+		private final ControllerSignature signature_;
+		private final ControllerFactory factory_;
 	}
 	
 	
@@ -255,10 +255,10 @@ public class ControllerService
 		}
 		
 
-		private PathParamMap pathParams_;
-		private TypeLib typeLib_;
-		private ControllerFactory factory_;
-		private ReloadConfig reloadConfig_;
+		private final PathParamMap pathParams_;
+		private final TypeLib typeLib_;
+		private final ControllerFactory factory_;
+		private final ReloadConfig reloadConfig_;
 	}
 
 	
@@ -353,10 +353,10 @@ public class ControllerService
 		}
 		
 		
-		private PathParamMap pathParams_;
-		private TypeLib typeLib_;
-		private ClassLoader classLoader_;
-		private HashMap<ControllerSignature, CMethods> signature2methods_ = new HashMap<>();
+		private final PathParamMap pathParams_;
+		private final TypeLib typeLib_;
+		private final ClassLoader classLoader_;
+		private final HashMap<ControllerSignature, CMethods> signature2methods_ = new HashMap<>();
 	}
 
 	
@@ -366,5 +366,5 @@ public class ControllerService
 	}
 
 	
-	private Loader loader_;
+	private final Loader loader_;
 }
