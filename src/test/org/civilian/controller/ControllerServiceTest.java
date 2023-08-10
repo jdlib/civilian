@@ -20,7 +20,6 @@ import org.civilian.CivTest;
 import org.civilian.Controller;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Segment;
-import org.civilian.controller.classloader.ReloadConfig;
 import org.civilian.resource.PathParamMap;
 import org.civilian.testcase1.Test1PathParams;
 import org.junit.Test;
@@ -64,9 +63,6 @@ public class ControllerServiceTest extends CivTest
 
 	@Test public void testGetType()
 	{
-		ReloadConfig reloadConfig = new ReloadConfig();
-		reloadConfig.includes().addPackage(getClass());
-		
 		ControllerService service = new ControllerService(Test1PathParams.MAP, TYPELIB, null, true, () -> getClass().getClassLoader());
 		assertTrue(service.isReloading());
 		
