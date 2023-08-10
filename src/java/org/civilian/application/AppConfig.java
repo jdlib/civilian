@@ -142,9 +142,10 @@ public class AppConfig
 		{
 			Settings settings = new Settings(settings_, ConfigKeys.DEV_CLASSRELOAD + '.');
 			reloadConfig_ = new ReloadConfig();
-			reloadConfig_.includes().add(app_.getControllerConfig().getRootPackage());
 			reloadConfig_.excludes().add(settings.getList(ConfigKeys.EXCLUDE));
-			reloadConfig_.includes().add(settings.getList(ConfigKeys.INCLUDE));
+			reloadConfig_.includes()
+				.add(app_.getControllerConfig().getRootPackage())
+				.add(settings.getList(ConfigKeys.INCLUDE));
 		}	
 	}
 	
