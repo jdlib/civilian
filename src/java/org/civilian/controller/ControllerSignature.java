@@ -30,8 +30,8 @@ import org.civilian.util.StringUtil;
  * ControllerSignature represents the name of Controller class and filter for its action methods:
  * <ul>
  * <li>match all action methods with no {@link Segment} and no {@link PathParam} annotation
- * <li>match all action methods which have {@link Segment} annotation with a certain value 
- * <li>match all action methods which have {@link PathParam} annotation with a certain value
+ * <li>match all action methods which have a {@link Segment} annotation with a certain value 
+ * <li>match all action methods which have a {@link PathParam} annotation with a certain value
  * </ul> 
  * ControllerSignature are used by {@link Resource#getControllerSignature() resources}
  * to specify which controller and which of its action methods are used to handle requests for the resource.
