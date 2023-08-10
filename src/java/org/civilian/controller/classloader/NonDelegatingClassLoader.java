@@ -20,7 +20,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.function.Predicate;
 import org.civilian.internal.Logs;
+import org.civilian.util.Check;
 import org.civilian.util.IoUtil;
 
 
@@ -46,11 +48,10 @@ public class NonDelegatingClassLoader extends ClassLoader
 	}
 	
 	
-	public NonDelegatingClassLoader(ClassLoader parent, ClassList includes, ClassList excludes)
+	public NonDelegatingClassLoader(ClassLoader parent, Predicate<String> filter)
 	{
 		super(parent);
-		includes_ = includes;
-		excludes_ = excludes;
+		filter_ = Check.notNull(filter, "filter");
 	}
 
 
@@ -165,17 +166,11 @@ public class NonDelegatingClassLoader extends ClassLoader
 	
 	public boolean isIncluded(String name)
 	{
-		if (excludes_.contains(name))
-			return false;
-		else if (includes_.contains(name)) 
-			return true;
-		else
-			return false;
+		return filter_.test(name);
 	}
 	
 	
-	private ClassList excludes_ = new ClassList();
-	private ClassList includes_ = new ClassList();
+	private final Predicate<String> filter_;
 	private static final ClassLoader BOOTSTRAP_CLASSLOADER = findBootstrapClassLoader();
 	private static ClassLoader findBootstrapClassLoader()
 	{

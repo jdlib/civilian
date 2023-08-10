@@ -16,15 +16,18 @@
 package org.civilian.controller.classloader;
 
 
+import java.util.function.Predicate;
+
+
 /**
  * ReloadConfig controls which classes are included or excluded
  * from class reloading.
  */
-public class ReloadConfig
+public class ReloadConfig implements Predicate<String>
 {
 	public ClassLoader createClassLoader()
 	{
-		return new NonDelegatingClassLoader(getClass().getClassLoader(), includes(), excludes());
+		return new NonDelegatingClassLoader(getClass().getClassLoader(), this);
 	}
 	
 	
@@ -40,6 +43,17 @@ public class ReloadConfig
 	}
 
 	
-	private ClassList excludes_ = new ClassList();
-	private ClassList includes_ = new ClassList();
+	@Override public boolean test(String name) 
+	{
+		if (excludes_.contains(name))
+			return false;
+		else if (includes_.contains(name)) 
+			return true;
+		else
+			return false;
+	}
+
+		
+	private final ClassList excludes_ = new ClassList();
+	private final ClassList includes_ = new ClassList();
 }
