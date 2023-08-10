@@ -17,6 +17,7 @@ package org.civilian.controller.classloader;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.StringUtil;
@@ -105,7 +106,7 @@ public class ClassList
 	 */
 	public ClassList addPackage(Class<?> c)
 	{
-		return add(new StartsWith(ClassUtil.getPackageName(c) + "."));
+		return add(new StartsWith(ClassUtil.getPackageName(c) + '.'));
 	}
 
 	
@@ -176,7 +177,7 @@ public class ClassList
 		}
 		
 		
-		private String name_;
+		private final String name_;
 	}
 	
 
@@ -212,9 +213,9 @@ public class ClassList
 		}
 		
 		
-		private String name_;
+		private final String name_;
 	}
 
 	
-	private ArrayList<Item> list_ = new ArrayList<>(); 
+	private final List<Item> list_ = new ArrayList<>(); 
 }
