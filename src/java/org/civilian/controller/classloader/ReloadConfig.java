@@ -25,12 +25,6 @@ import java.util.function.Predicate;
  */
 public class ReloadConfig implements Predicate<String>
 {
-	public ClassLoader createClassLoader()
-	{
-		return new NonDelegatingClassLoader(getClass().getClassLoader(), this);
-	}
-	
-	
 	public ClassList includes()
 	{
 		return includes_;
@@ -40,6 +34,12 @@ public class ReloadConfig implements Predicate<String>
 	public ClassList excludes()
 	{
 		return excludes_;
+	}
+	
+	
+	public boolean isValid() 
+	{
+		return includes_.size() > 0;
 	}
 
 	

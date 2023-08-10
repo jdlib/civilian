@@ -56,7 +56,7 @@ public class ControllerServiceTest extends CivTest
 	{
 		ControllerService service;
 		
-        service = new ControllerService(PathParamMap.EMPTY, TYPELIB, null, new ReloadConfig());
+        service = new ControllerService(PathParamMap.EMPTY, TYPELIB, null, true, () -> getClass().getClassLoader());
 		assertTrue(service.isReloading());
 		assertEquals("ControllerService", service.toString());
 	}
@@ -67,7 +67,7 @@ public class ControllerServiceTest extends CivTest
 		ReloadConfig reloadConfig = new ReloadConfig();
 		reloadConfig.includes().addPackage(getClass());
 		
-		ControllerService service = new ControllerService(Test1PathParams.MAP, TYPELIB, null, reloadConfig);
+		ControllerService service = new ControllerService(Test1PathParams.MAP, TYPELIB, null, true, () -> getClass().getClassLoader());
 		assertTrue(service.isReloading());
 		
 		assertNull(service.getControllerType(Base.class));

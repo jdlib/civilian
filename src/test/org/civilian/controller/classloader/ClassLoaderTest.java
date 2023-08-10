@@ -44,14 +44,12 @@ public class ClassLoaderTest extends CivTest
 		config.includes().addPackage(getClass());
 		config.excludes().add(getInnerClassName("Excluded"));
 		
-		ClassLoader reloadCl = config.createClassLoader(); 
+		NonDelegatingClassLoader cl = new NonDelegatingClassLoader(getClass().getClassLoader(), config);
 		
-		assertTrue(reloadCl instanceof NonDelegatingClassLoader);
-		
-		Class<?> includedClass = reloadCl.loadClass(getInnerClassName("Included"));
-		assertSame(reloadCl, includedClass.getClassLoader()); 
+		Class<?> includedClass = cl.loadClass(getInnerClassName("Included"));
+		assertSame(cl, includedClass.getClassLoader()); 
 
-		Class<?> excludedClass = reloadCl.loadClass(getInnerClassName("Excluded"));
+		Class<?> excludedClass = cl.loadClass(getInnerClassName("Excluded"));
 		assertSame(getClass().getClassLoader(), excludedClass.getClassLoader()); 
 	}
 }

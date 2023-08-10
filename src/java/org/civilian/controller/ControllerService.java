@@ -20,11 +20,12 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.function.Supplier;
+
 import org.civilian.Controller;
 import org.civilian.annotation.PathParam;
 import org.civilian.annotation.Segment;
 import org.civilian.application.ConfigKeys;
-import org.civilian.controller.classloader.ReloadConfig;
 import org.civilian.resource.PathParamMap;
 import org.civilian.type.TypeLib;
 import org.civilian.util.ArrayUtil;
@@ -45,15 +46,16 @@ public class ControllerService
 	 */
 	public ControllerService(PathParamMap pathParams, TypeLib typeLib, 
 		ControllerFactory factory,
-		ReloadConfig reloadConfig)
+		boolean reloading,
+		Supplier<ClassLoader> clFactory)
 	{
 		if (pathParams == null)
 			pathParams = PathParamMap.EMPTY;
 		if (typeLib == null)
 			typeLib = new TypeLib();
 		
-		loader_ = reloadConfig != null ?
-			new DevLoader(pathParams, typeLib, factory, reloadConfig) :
+		loader_ = reloading ?
+			new DevLoader(pathParams, typeLib, factory, clFactory) :
 			new RealLoader(pathParams, typeLib, factory, getClass().getClassLoader());
 	}
 
@@ -233,12 +235,12 @@ public class ControllerService
 	 */
 	private static class DevLoader extends Loader
 	{
-		public DevLoader(PathParamMap pathParams, TypeLib typeLib, ControllerFactory factory, ReloadConfig reloadConfig)
+		public DevLoader(PathParamMap pathParams, TypeLib typeLib, ControllerFactory factory, Supplier<ClassLoader> clFactory)
 		{
-			pathParams_	 	= pathParams;
-			typeLib_	 	= typeLib;
-			factory_		= factory;
-			reloadConfig_	= reloadConfig;
+			pathParams_	= pathParams;
+			typeLib_	= typeLib;
+			factory_	= factory;
+			clFactory_	= clFactory;
 		}
 		
 		
@@ -250,7 +252,7 @@ public class ControllerService
 		
 		@Override public ControllerType getControllerType(ControllerSignature signature)
 		{
-			RealLoader loader = new RealLoader(pathParams_, typeLib_, factory_, reloadConfig_.createClassLoader());
+			RealLoader loader = new RealLoader(pathParams_, typeLib_, factory_, clFactory_.get());
 			return loader.getControllerType(signature);
 		}
 		
@@ -258,7 +260,7 @@ public class ControllerService
 		private final PathParamMap pathParams_;
 		private final TypeLib typeLib_;
 		private final ControllerFactory factory_;
-		private final ReloadConfig reloadConfig_;
+		private final Supplier<ClassLoader> clFactory_;
 	}
 
 	

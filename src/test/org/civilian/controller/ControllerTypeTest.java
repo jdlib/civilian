@@ -104,5 +104,5 @@ public class ControllerTypeTest extends CivTest
 	
 	
 	private static TypeLib typeLib_ = new TypeLib();
-	private static ControllerService service_ = new ControllerService(PathParamMap.EMPTY, typeLib_, null, null);
+	private static ControllerService service_ = new ControllerService(PathParamMap.EMPTY, typeLib_, null, false, () -> ControllerTypeTest.class.getClassLoader());
 }

@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.function.Supplier;
+
 import org.civilian.application.AppConfig;
 import org.civilian.application.ConfigKeys;
 import org.civilian.application.UploadConfig;
@@ -33,6 +35,8 @@ import org.civilian.content.TextSerializer;
 import org.civilian.controller.ControllerConfig;
 import org.civilian.controller.ControllerNaming;
 import org.civilian.controller.ControllerService;
+import org.civilian.controller.classloader.NonDelegatingClassLoader;
+import org.civilian.controller.classloader.ReloadConfig;
 import org.civilian.internal.Logs;
 import org.civilian.internal.TempServer;
 import org.civilian.processor.AssetDispatch;
@@ -261,23 +265,31 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 		}
 		
 		initDefaultContentSerializers();
+		
+		// determine the ClassLoader factory used to load controllers
+		ReloadConfig reloadConfig = appConfig.getReloadConfig();
+		boolean reloading = reloadConfig != null && reloadConfig.isValid();
+		ClassLoader baseCl = getClass().getClassLoader();
+		Supplier<ClassLoader> clFactory = reloading ?
+			() -> new NonDelegatingClassLoader(baseCl, reloadConfig) :
+			() -> baseCl;
+				
 
 		// init the controller service
 		controllerService_ = new ControllerService(
 			resourceConfig_.getPathParams(), 
 			localeServices_.getTypeLib(), 
 			appConfig.getControllerFactory(),
-			appConfig.getReloadConfig());
+			reloading,
+			clFactory);
 			
 		// init the resource tree
 		rootResource_ = appConfig.getRootResource();
 		if (rootResource_ == null)
 		{
 			// resource tree not specified: generate on the fly
-			ClassLoader loader = appConfig.getReloadConfig() != null ?
-				appConfig.getReloadConfig().createClassLoader() :
-				getClass().getClassLoader();
-			rootResource_ = ResourceScan.of(this, loader).getRootResource();		}
+			rootResource_ = ResourceScan.of(this, clFactory.get()).getRootResource();		
+		}
 		
 		Resource.Tree tree = rootResource_.getTree();
 		tree.setAppPath(getPath());
