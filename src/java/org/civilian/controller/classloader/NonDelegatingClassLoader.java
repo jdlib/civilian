@@ -79,10 +79,6 @@ public class NonDelegatingClassLoader extends ClassLoader
 	    if (c != null)
 	    	return c;
 	    
-	    c = findLoadedClass(name);
-	    if (c != null)
-	    	return c;
-
 	    boolean logTraceEnabled = Logs.CLASSLOADER.isTraceEnabled();
 	    
 	    // we see a new class
