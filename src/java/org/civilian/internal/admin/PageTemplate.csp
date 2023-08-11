@@ -34,7 +34,7 @@ template(Template content, AdminApp adminApp, Application viewedApp, Resource ap
 						@printNavItem("Context", html.url(adminApp), viewedApp == null);
 						<li class="nav-header">Applications</li>
 						@Url appUrl = html.url(appResource);
-						@for (Application app : adminApp.getContext().getApplications())
+						@for (Application app : adminApp.getServer().getApplications())
 							@appUrl.setPathParam(app.getId());
 							@printNavItem(app.getId(), appUrl, viewedApp == app);
 					</ul>
