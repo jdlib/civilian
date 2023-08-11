@@ -17,39 +17,73 @@ package org.civilian.controller.classloader;
 
 
 import org.junit.Test;
+
 import org.civilian.CivTest;
 
 
 public class ClassLoaderTest extends CivTest
 {
-	public static class Included
+	public static class Alpha
 	{
 	}
 	
 	
-	public static class Excluded
+	public static class Beta
 	{
 	}
 	
 	
-	private String getInnerClassName(String inner)
+	public static class Gamma
 	{
-		return getClass().getName() + "$" + inner;
+	}
+
+
+	public static class Delta
+	{
+	}
+	
+	private static final String ALPHA_NAME = getInnerClassName("Alpha");
+	private static final String BETA_NAME = getInnerClassName("Beta");
+	private static final String GAMMA_NAME = getInnerClassName("Gamma");
+	private static final String DELTA_NAME = getInnerClassName("Delta");
+	
+	
+	private static String getInnerClassName(String inner)
+	{
+		return ClassLoaderTest.class.getName() + "$" + inner;
 	}
 	
 	
-	@Test public void test() throws Exception
+	@Test public void testFilter() throws Exception
 	{
 		ReloadConfig config = new ReloadConfig();
 		config.includes().addPackage(getClass());
-		config.excludes().add(getInnerClassName("Excluded"));
+		config.excludes().add(BETA_NAME);
 		
 		NonDelegatingClassLoader cl = new NonDelegatingClassLoader(getClass().getClassLoader(), config);
 		
-		Class<?> includedClass = cl.loadClass(getInnerClassName("Included"));
-		assertSame(cl, includedClass.getClassLoader()); 
+		// Alpha is included
+		Class<?> alphaClass = cl.loadClass(ALPHA_NAME);
+		assertSame(cl, alphaClass.getClassLoader()); 
 
-		Class<?> excludedClass = cl.loadClass(getInnerClassName("Excluded"));
-		assertSame(getClass().getClassLoader(), excludedClass.getClassLoader()); 
+		// Beta is excluded
+		Class<?> betaClass = cl.loadClass(BETA_NAME);
+		assertSame(getClass().getClassLoader(), betaClass.getClassLoader()); 
+	}
+
+	
+	@Test public void testDelegation() throws Exception
+	{
+		ClassLoader parent = getClass().getClassLoader();
+		NonDelegatingClassLoader cl = new NonDelegatingClassLoader(parent, s -> true);
+		
+		// load alpha class by parent classloader
+		// cl will detect this and not load by itself
+		Class<?> gammaClass = parent.loadClass(GAMMA_NAME);
+		assertSame(parent, gammaClass.getClassLoader()); 
+		assertSame(gammaClass, cl.loadClass(GAMMA_NAME));
+
+		Class<?> betaClass = cl.loadClass(DELTA_NAME);
+		assertSame(cl, betaClass.getClassLoader()); 
 	}
 }
