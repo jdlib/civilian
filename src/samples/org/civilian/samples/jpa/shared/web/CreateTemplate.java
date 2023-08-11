@@ -31,6 +31,6 @@ public class CreateTemplate extends Template
 	}
 
 
-	private CreateForm form;
-	private FormTableMixin formTable;
+	protected CreateForm form;
+	protected FormTableMixin formTable;
 }

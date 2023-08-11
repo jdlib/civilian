@@ -65,5 +65,5 @@ public class ModuleTemplate extends Template
 	}
 
 
-	private Template detailTemplate;
+	protected Template detailTemplate;
 }

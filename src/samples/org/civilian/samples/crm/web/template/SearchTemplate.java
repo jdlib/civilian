@@ -96,6 +96,6 @@ public class SearchTemplate extends Template
 	}
 
 
-	private boolean withToolbar;
-	private LangMixin lang;
+	protected boolean withToolbar;
+	protected LangMixin lang;
 }

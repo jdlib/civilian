@@ -57,6 +57,6 @@ public class MultiPanelTemplate extends Template
 	
 
 
-	private MsgId type;
-	private LangMixin lang;
+	protected MsgId type;
+	protected LangMixin lang;
 }

@@ -65,6 +65,6 @@ public class IndexTemplate extends Template
 	}
 
 
-	private TableMixin table;
-	private LangMixin lang;
+	protected TableMixin table;
+	protected LangMixin lang;
 }

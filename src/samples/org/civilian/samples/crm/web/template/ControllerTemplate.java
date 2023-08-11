@@ -30,6 +30,6 @@ public class ControllerTemplate extends Template
 	}
 
 
-	private Template content;
-	private String controller;
+	protected Template content;
+	protected String controller;
 }

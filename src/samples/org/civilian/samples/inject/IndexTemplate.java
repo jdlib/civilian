@@ -166,8 +166,8 @@ public class IndexTemplate extends Template
 	}
 
 
-	private String remoteIp;
-	private String acceptHeader;
-	private Registration registration;
-	private HtmlMixin html;
+	protected String remoteIp;
+	protected String acceptHeader;
+	protected Registration registration;
+	protected HtmlMixin html;
 }

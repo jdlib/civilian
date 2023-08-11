@@ -65,9 +65,9 @@ public class GameTemplate extends Template
 	}
 
 
-	private Game game;
-	private GameForm form;
-	private String feedback;
-	private HtmlMixin html;
-	private FormTableMixin formTable;
+	protected Game game;
+	protected GameForm form;
+	protected String feedback;
+	protected HtmlMixin html;
+	protected FormTableMixin formTable;
 }

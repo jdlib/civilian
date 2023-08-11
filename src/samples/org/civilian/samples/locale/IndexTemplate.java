@@ -112,8 +112,8 @@ public class IndexTemplate extends Template
 	}
 
 
-	private LocaleServiceList services;
-	private Locale[] locales;
-	private HtmlMixin html;
-	private LangMixin lang;
+	protected LocaleServiceList services;
+	protected Locale[] locales;
+	protected HtmlMixin html;
+	protected LangMixin lang;
 }

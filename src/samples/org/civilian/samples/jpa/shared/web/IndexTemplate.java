@@ -46,9 +46,9 @@ public class IndexTemplate extends Template
 	}
 
 
-	private IndexForm form;
-	private String message;
-	private Class<? extends Controller> createCtrlClass;
-	private HtmlMixin html;
-	private FormTableMixin formTable;
+	protected IndexForm form;
+	protected String message;
+	protected Class<? extends Controller> createCtrlClass;
+	protected HtmlMixin html;
+	protected FormTableMixin formTable;
 }

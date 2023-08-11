@@ -1,4 +1,4 @@
-import org.civilian.Template
+import org.civilian.template.Template
 
 
 template(Template detailTemplate)

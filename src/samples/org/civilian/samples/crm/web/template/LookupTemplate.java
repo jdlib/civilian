@@ -37,5 +37,5 @@ public class LookupTemplate extends Template
 	}
 
 
-	private LangMixin lang;
+	protected LangMixin lang;
 }

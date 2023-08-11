@@ -77,5 +77,5 @@ public class IndexTemplate extends Template
 	}
 
 
-	private HtmlMixin html;
+	protected HtmlMixin html;
 }

@@ -109,7 +109,7 @@ public class IndexTemplate extends Template
 	}
 
 
-	private IndexForm form;
-	private HtmlMixin html;
-	private FormTableMixin formTable;
+	protected IndexForm form;
+	protected HtmlMixin html;
+	protected FormTableMixin formTable;
 }

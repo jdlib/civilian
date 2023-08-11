@@ -54,6 +54,6 @@ public class PageTemplate extends Template
 	}
 
 
-	private Template content;
-	private HtmlMixin html;
+	protected Template content;
+	protected HtmlMixin html;
 }
