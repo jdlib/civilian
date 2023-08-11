@@ -20,7 +20,7 @@ import org.junit.Test;
 import org.civilian.CivTest;
 
 
-public class ClassLoaderTest extends CivTest
+public class DevRequestClassLoaderTest extends CivTest
 {
 	public static class Alpha
 	{
@@ -49,7 +49,7 @@ public class ClassLoaderTest extends CivTest
 	
 	private static String getInnerClassName(String inner)
 	{
-		return ClassLoaderTest.class.getName() + "$" + inner;
+		return DevRequestClassLoaderTest.class.getName() + "$" + inner;
 	}
 	
 	
@@ -59,7 +59,7 @@ public class ClassLoaderTest extends CivTest
 		config.includes().addPackage(getClass());
 		config.excludes().add(BETA_NAME);
 		
-		NonDelegatingClassLoader cl = new NonDelegatingClassLoader(getClass().getClassLoader(), config);
+		DevRequestClassLoader cl = new DevRequestClassLoader(getClass().getClassLoader(), config);
 		
 		// Alpha is included
 		Class<?> alphaClass = cl.loadClass(ALPHA_NAME);
@@ -74,7 +74,7 @@ public class ClassLoaderTest extends CivTest
 	@Test public void testDelegation() throws Exception
 	{
 		ClassLoader parent = getClass().getClassLoader();
-		NonDelegatingClassLoader cl = new NonDelegatingClassLoader(parent, s -> true);
+		DevRequestClassLoader cl = new DevRequestClassLoader(parent, s -> true);
 		
 		// load alpha class by parent classloader
 		// cl will detect this and not load by itself

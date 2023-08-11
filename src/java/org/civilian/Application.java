@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 import org.civilian.application.AppConfig;
 import org.civilian.application.ConfigKeys;
 import org.civilian.application.UploadConfig;
-import org.civilian.application.classloader.NonDelegatingClassLoader;
+import org.civilian.application.classloader.DevRequestClassLoader;
 import org.civilian.application.classloader.ReloadConfig;
 import org.civilian.asset.AssetConfig;
 import org.civilian.asset.AssetService;
@@ -271,7 +271,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 		boolean reloading = reloadConfig != null && reloadConfig.isValid();
 		ClassLoader baseCl = getClass().getClassLoader();
 		Supplier<ClassLoader> clFactory = reloading ?
-			() -> new NonDelegatingClassLoader(baseCl, reloadConfig) :
+			() -> new DevRequestClassLoader(baseCl, reloadConfig) :
 			() -> baseCl;
 				
 

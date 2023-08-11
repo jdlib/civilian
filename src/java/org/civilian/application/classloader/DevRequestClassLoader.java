@@ -27,11 +27,14 @@ import org.civilian.util.IoUtil;
 
 
 /**
- * A ClassLoader with a non-delegating class-loading strategy.
- * When requested to find a class or resource, this ClassLoader will try
- * to first load the class itself before delegating to the parent class loader.   
+ * A ClassLoader which is used if during development if the class reload is activated.
+ * In this scenario for each request a DevRequestClassLoader is created.
+ * DevRequestClassLoader uses an eager, non-delegating class loader strategy.
+ * Controller and dependent classes like templates will therefore be reloaded for every request -
+ * perfect for rapid development where you change a class and hit refresh in the browser
+ * to immediately see your changes without the need to restart the webserver.  
  */
-public class NonDelegatingClassLoader extends ClassLoader
+public class DevRequestClassLoader extends ClassLoader
 {
 	private static final Method FINDELOADEDCLASS_METHOD;
 	static
@@ -48,7 +51,7 @@ public class NonDelegatingClassLoader extends ClassLoader
 	}
 	
 	
-	public NonDelegatingClassLoader(ClassLoader parent, Predicate<String> filter)
+	public DevRequestClassLoader(ClassLoader parent, Predicate<String> filter)
 	{
 		super(parent);
 		filter_ = Check.notNull(filter, "filter");
@@ -174,7 +177,7 @@ public class NonDelegatingClassLoader extends ClassLoader
 	private static final ClassLoader BOOTSTRAP_CLASSLOADER = findBootstrapClassLoader();
 	private static ClassLoader findBootstrapClassLoader()
 	{
-		ClassLoader cl = NonDelegatingClassLoader.class.getClassLoader();
+		ClassLoader cl = DevRequestClassLoader.class.getClassLoader();
 		while (cl != null) 
 		{
 			ClassLoader parent = cl.getParent();  
