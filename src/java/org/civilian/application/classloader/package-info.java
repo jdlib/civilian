@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Contains support for reloading of controller classes
+ * Contains support for reloading of application classes
  * during development.
  */
-package org.civilian.controller.classloader;
+package org.civilian.application.classloader;

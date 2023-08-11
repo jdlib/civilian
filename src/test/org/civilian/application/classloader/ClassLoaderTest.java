@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.controller.classloader;
+package org.civilian.application.classloader;
 
 
 import org.junit.Test;
-
 import org.civilian.CivTest;
 
 
