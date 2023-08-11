@@ -18,7 +18,6 @@ package org.civilian.application.classloader;
 
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.application.classloader.ClassList;
 
 
 public class ClassListTest extends CivTest
