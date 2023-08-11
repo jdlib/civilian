@@ -162,7 +162,6 @@ public class ServletRequestTest extends CivTest
 	}
 	
 
-	@SuppressWarnings("boxing")
 	@Test public void testContent() throws Exception
 	{
 		init();
@@ -206,7 +205,6 @@ public class ServletRequestTest extends CivTest
 	}
 	
 	
-	@SuppressWarnings("boxing")
 	@Test public void testHeaders() throws Exception
 	{
 		String[] array = new String[] { "1", "2" }; 
@@ -280,7 +278,6 @@ public class ServletRequestTest extends CivTest
 	}
 	
 	
-	@SuppressWarnings("boxing")
 	@Test public void testSecurity() throws Exception
 	{
 		init();
@@ -330,7 +327,6 @@ public class ServletRequestTest extends CivTest
 	}
 	
 	
-	@SuppressWarnings("boxing")
 	@Test public void testMultiPart() throws Exception
 	{
 		when(servletReq.getPathInfo()).thenReturn("/multi");
@@ -371,7 +367,6 @@ public class ServletRequestTest extends CivTest
 	}
 	
 
-	@SuppressWarnings("boxing")
 	@Test public void testRequestInfos()
 	{
 		when(servletReq.getProtocol()).thenReturn("HTTP 1.0");

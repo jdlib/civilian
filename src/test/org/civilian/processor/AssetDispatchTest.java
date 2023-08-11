@@ -46,7 +46,6 @@ public class AssetDispatchTest extends CivTest
 	}
 	
 	
-	@SuppressWarnings("boxing")
 	@Test public void testRequests() throws Exception
 	{
 		// setup mocks

@@ -27,7 +27,6 @@ import org.civilian.CivTest;
 
 public class ContextListenerTest extends CivTest
 {
-	@SuppressWarnings("boxing")
 	@Test public void test()
 	{
 		ServletContextEvent event 	= mock(ServletContextEvent.class);

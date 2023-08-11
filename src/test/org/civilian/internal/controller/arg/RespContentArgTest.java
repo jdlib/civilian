@@ -50,7 +50,6 @@ public class RespContentArgTest extends CivTest
 	}
 
 	
-	@SuppressWarnings("boxing")
 	@Test public void test() throws Exception
 	{
 		Request request = mock(Request.class);

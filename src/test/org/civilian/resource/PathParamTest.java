@@ -26,7 +26,6 @@ import org.civilian.type.TypeLib;
 
 public class PathParamTest extends CivTest
 {
-	@SuppressWarnings("boxing")
 	@Test public void testSegment()
 	{
 		// PathParams.forSegment()

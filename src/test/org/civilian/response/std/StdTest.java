@@ -46,7 +46,6 @@ public class StdTest extends CivTest
 	}
 	
 	
-	@SuppressWarnings("boxing")
 	private static void develop(boolean on)
 	{
 		when(out.app.develop()).thenReturn(on);

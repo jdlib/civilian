@@ -132,7 +132,6 @@ public class TestResponse extends AbstractResponse
 	}
 
 
-	@SuppressWarnings("resource")
 	@Override protected OutputStream getContentStreamImpl() throws IOException
 	{
 		OutputStream out = outputStream_ = new ResponseStream();

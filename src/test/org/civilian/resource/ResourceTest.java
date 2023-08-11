@@ -207,7 +207,6 @@ public class ResourceTest extends CivTest
 	}
 	
 	
-	@SuppressWarnings("boxing")
 	@Test public void testTypeProvider()
 	{
 		Resource root = new Resource();
