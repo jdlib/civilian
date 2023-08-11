@@ -20,12 +20,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.function.Supplier;
-
 import org.civilian.application.AppConfig;
 import org.civilian.application.ConfigKeys;
 import org.civilian.application.UploadConfig;
-import org.civilian.application.classloader.DevRequestClassLoader;
+import org.civilian.application.classloader.ClassLoaderFactory;
 import org.civilian.application.classloader.ReloadConfig;
 import org.civilian.asset.AssetConfig;
 import org.civilian.asset.AssetService;
@@ -267,20 +265,13 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 		initDefaultContentSerializers();
 		
 		// determine the ClassLoader factory used to load controllers
-		ReloadConfig reloadConfig = appConfig.getReloadConfig();
-		boolean reloading = reloadConfig != null && reloadConfig.isValid();
-		ClassLoader baseCl = getClass().getClassLoader();
-		Supplier<ClassLoader> clFactory = reloading ?
-			() -> new DevRequestClassLoader(baseCl, reloadConfig) :
-			() -> baseCl;
-				
+		ClassLoaderFactory clFactory = createClassLoaderFactory(appConfig.getReloadConfig());
 
 		// init the controller service
 		controllerService_ = new ControllerService(
 			resourceConfig_.getPathParams(), 
 			localeServices_.getTypeLib(), 
 			appConfig.getControllerFactory(),
-			reloading,
 			clFactory);
 			
 		// init the resource tree
@@ -288,7 +279,9 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 		if (rootResource_ == null)
 		{
 			// resource tree not specified: generate on the fly
-			rootResource_ = ResourceScan.of(this, clFactory.get()).getRootResource();		
+			// use the request classloader so in case we are doing class reload
+			// these touched classes will not stick
+			rootResource_ = ResourceScan.of(this, clFactory.getRequestClassLoader()).getRootResource();		
 		}
 		
 		Resource.Tree tree = rootResource_.getTree();
@@ -663,6 +656,16 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 		return attributes_.keySet().iterator();
 	}
 
+
+	private ClassLoaderFactory createClassLoaderFactory(ReloadConfig reloadConfig) 
+	{
+		ClassLoader appClassLoader = getClass().getClassLoader();
+		boolean reloading = reloadConfig != null && reloadConfig.isValid();
+		return reloading ?
+			new ClassLoaderFactory.Dev(appClassLoader, reloadConfig) :
+			new ClassLoaderFactory.Production(appClassLoader);
+	}
+			
 
 	//-----------------------------------
 	// process

@@ -24,6 +24,7 @@ import org.civilian.Controller;
 import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.annotation.Get;
+import org.civilian.application.classloader.ClassLoaderFactory;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.resource.PathParamMap;
@@ -104,5 +105,5 @@ public class ControllerTypeTest extends CivTest
 	
 	
 	private static TypeLib typeLib_ = new TypeLib();
-	private static ControllerService service_ = new ControllerService(PathParamMap.EMPTY, typeLib_, null, false, () -> ControllerTypeTest.class.getClassLoader());
+	private static ControllerService service_ = new ControllerService(PathParamMap.EMPTY, typeLib_, null, new ClassLoaderFactory.Production());
 }

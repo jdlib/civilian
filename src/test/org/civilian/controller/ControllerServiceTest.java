@@ -20,6 +20,7 @@ import org.civilian.CivTest;
 import org.civilian.Controller;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Segment;
+import org.civilian.application.classloader.ClassLoaderFactory;
 import org.civilian.resource.PathParamMap;
 import org.civilian.testcase1.Test1PathParams;
 import org.junit.Test;
@@ -55,16 +56,16 @@ public class ControllerServiceTest extends CivTest
 	{
 		ControllerService service;
 		
-        service = new ControllerService(PathParamMap.EMPTY, TYPELIB, null, true, () -> getClass().getClassLoader());
-		assertTrue(service.isReloading());
+        service = new ControllerService(PathParamMap.EMPTY, TYPELIB, null, new ClassLoaderFactory.Production());
+		assertFalse(service.isReloading());
 		assertEquals("ControllerService", service.toString());
 	}
 
 
 	@Test public void testGetType()
 	{
-		ControllerService service = new ControllerService(Test1PathParams.MAP, TYPELIB, null, true, () -> getClass().getClassLoader());
-		assertTrue(service.isReloading());
+		ControllerService service = new ControllerService(Test1PathParams.MAP, TYPELIB, null, new ClassLoaderFactory.Production());
+		assertFalse(service.isReloading());
 		
 		assertNull(service.getControllerType(Base.class));
 		assertNull(service.getControllerType((ControllerSignature)null));
