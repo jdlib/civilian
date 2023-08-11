@@ -56,6 +56,7 @@ public class BeanParamArg extends MethodArg
 	
 	@Override public Object getValue(Request request) throws Exception
 	{
+		@SuppressWarnings("deprecation")
 		Object bean = beanClass_.newInstance();
 		
 		for (Setter setter : setters_)

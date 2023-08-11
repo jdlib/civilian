@@ -82,6 +82,7 @@ public interface Session
 	 * @param c the attribute class
 	 * @param name the attribute name
 	 */
+	@SuppressWarnings("deprecation")
 	public default <T> T getCreateAttr(Class<T> c, String name) throws InstantiationException, IllegalAccessException
 	{
 		T value = c.cast(getAttribute(name));

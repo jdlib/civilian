@@ -47,6 +47,7 @@ public class ResponseContentArg extends MethodArg
 	/**
 	 * Returns a new parameter instance.
 	 */
+	@SuppressWarnings("deprecation")
 	@Override public Object getValue(Request request)
 	{
 		try

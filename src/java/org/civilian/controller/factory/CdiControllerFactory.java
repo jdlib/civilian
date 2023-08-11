@@ -86,6 +86,7 @@ public class CdiControllerFactory implements ControllerFactory
 	@Override public Controller createController(Class<? extends Controller> controllerClass) throws Exception
 	{
 		Injector injector 		= getInjector(controllerClass, Controller.class);
+		@SuppressWarnings("deprecation")
 		Controller controller 	= controllerClass.newInstance();
 		injector.inject(beanManager_, controller);
 		return controller;

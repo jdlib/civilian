@@ -100,6 +100,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 	{
 		try
 		{
+			@SuppressWarnings("deprecation")
 			Controller controller = factory_ != null ? 
 				factory_.createController(controllerClass_) :
 				controllerClass_.newInstance();

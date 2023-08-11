@@ -96,6 +96,7 @@ public abstract class ClassUtil
 	 * @throws InstantiationException if the instance could not be created 
 	 * @throws IllegalAccessException if the instance could not be created 
 	 */
+	@SuppressWarnings("deprecation")
 	public static <T> T createObject(String className, Class<T> superClass, ClassLoader loader) 
 		throws ClassNotFoundException, InstantiationException, IllegalAccessException
 	{

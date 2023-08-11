@@ -194,6 +194,7 @@ public class ClientConstGenerator
 		public OutputLocation jsOutputLoc;
 		
 		
+		@SuppressWarnings("deprecation")
 		public void setApplication(String className) throws Exception
 		{
 			Check.notNull(className, "application class name");
