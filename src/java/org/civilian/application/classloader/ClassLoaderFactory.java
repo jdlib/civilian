@@ -75,7 +75,7 @@ public interface ClassLoaderFactory
 	 
 		@Override public ClassLoader getRequestClassLoader() 
 		{
-			throw new UnsupportedOperationException();
+			return appClassLoader_; // same as app class loader
 		}
 
 	
