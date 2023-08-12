@@ -18,7 +18,6 @@ package org.civilian.internal.resource.scan;
 
 import java.util.Set;
 import org.civilian.CivTest;
-import org.civilian.internal.classpath.ClassFilter;
 import org.civilian.internal.classpath.ClassPathScan;
 import org.junit.Test;
 
@@ -44,13 +43,7 @@ public class ScanTest extends CivTest
 	@Test public void testJarScan() throws Exception
 	{
 		ClassPathScan scan = new ClassPathScan("javax.servlet");
-		Set<String> adapters = scan.collect(new ClassFilter()
-		{
-			@Override public boolean accept(String className)
-			{
-				return className.endsWith(".HttpSession");
-			}
-		});
+		Set<String> adapters = scan.collect(className -> className.endsWith(".HttpSession"));
 		
 		assertEquals(1, adapters.size());
 		assertTrue(adapters.contains("javax.servlet.http.HttpSession"));
