@@ -41,7 +41,7 @@ public class MethodAnnotations
 	 * if the method is an action method, i.e. if
 	 * <ul>
 	 * <li>the method is public and not static and has return type void
-	 * <li>at least one {@link RequestMethod} annotation is present on the method itself or one of its overriden ancestors
+	 * <li>at least one {@link RequestMethod} annotation is present on the method itself or one of its overridden ancestors
 	 * </ul>
 	 * @return a MethodAnnotations object or null
 	 */
