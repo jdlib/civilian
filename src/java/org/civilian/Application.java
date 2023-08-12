@@ -241,7 +241,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 		try
 		{
 			appConfig.init(); // inits unsafe-config settings
-			init(appConfig);
+			init(appConfig);  // customize by implementation
 		}
 		finally
 		{
