@@ -98,55 +98,60 @@ public class AppConfig
 		defaultResExtension_	= IoUtil.normExtension(settings_.get(ConfigKeys.EXTENSION, null));
 
 		// these init calls are safe
-		initLocales();
-		initUploadConfig();
-		initReloadConfig();
-		initAssetConfig();
+		supportedLocales_		= initLocales(settings_);
+		uploadConfig_ 			= initUploadConfig(settings_); 
+		reloadConfig_			= initReloadConfig(app, settings_);
+		assetConfig_			= initAssetConfig(app);
 	}
 	
 	
-	private void initLocales()
+	private static Locale[] initLocales(Settings settings)
 	{
-		String[] localeTags = settings_.getList(ConfigKeys.LOCALES);
+		String[] localeTags = settings.getList(ConfigKeys.LOCALES);
 		if (localeTags.length > 0)
 		{
-			supportedLocales_ = new Locale[localeTags.length];
+			Locale[] supportedLocales = new Locale[localeTags.length];
 			for (int i=0; i<localeTags.length; i++)
 			{
 				// Locale.forLanguageTag does only accept tags in the form 'de-CH' not 'de_CH'
 				String tag = localeTags[i].replace('_', '-');
-				supportedLocales_[i] = Locale.forLanguageTag(tag);
+				supportedLocales[i] = Locale.forLanguageTag(tag);
 			}
+			return supportedLocales;
 		}
 		else
-			supportedLocales_ = new Locale[] { Locale.getDefault() };
+			return new Locale[] { Locale.getDefault() };
 	}
 
 
-	private void initAssetConfig()
+	private static AssetConfig initAssetConfig(Application app)
 	{
-		assetConfig_ = new AssetConfig();
-		assetConfig_.setContentTypeLookup(app_.getServer().getContentTypeLookup());
+		AssetConfig assetConfig = new AssetConfig();
+		assetConfig.setContentTypeLookup(app.getServer().getContentTypeLookup());
+		return assetConfig;
 		
 	}
 	
-	private void initUploadConfig()
+	private static UploadConfig initUploadConfig(Settings settings)
 	{
-		uploadConfig_ = new UploadConfig(new Settings(settings_, ConfigKeys.UPLOAD_PREFIX));
+		return new UploadConfig(new Settings(settings, ConfigKeys.UPLOAD_PREFIX));
 	}
 	
 	
-	private void initReloadConfig()
+	private static ReloadConfig initReloadConfig(Application app, Settings appSettings)
 	{
-		if (app_.develop() && settings_.getBoolean(ConfigKeys.DEV_CLASSRELOAD, false))
+		if (app.develop() && appSettings.getBoolean(ConfigKeys.DEV_CLASSRELOAD, false))
 		{
-			Settings settings = new Settings(settings_, ConfigKeys.DEV_CLASSRELOAD + '.');
-			reloadConfig_ = new ReloadConfig();
-			reloadConfig_.excludes().add(settings.getList(ConfigKeys.EXCLUDE));
-			reloadConfig_.includes()
-				.add(app_.getControllerConfig().getRootPackage())
+			Settings settings = new Settings(appSettings, ConfigKeys.DEV_CLASSRELOAD + '.');
+			ReloadConfig reloadConfig = new ReloadConfig();
+			reloadConfig.excludes().add(settings.getList(ConfigKeys.EXCLUDE));
+			reloadConfig.includes()
+				.add(app.getControllerConfig().getRootPackage())
 				.add(settings.getList(ConfigKeys.INCLUDE));
+			return reloadConfig;
 		}	
+		else
+			return null;
 	}
 	
 	
