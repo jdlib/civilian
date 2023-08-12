@@ -43,5 +43,5 @@ public class CookieParamObjectArg extends MethodArg
 	}
 	
 	
-	private String name_;
+	private final String name_;
 }

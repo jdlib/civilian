@@ -35,5 +35,5 @@ public abstract class ReqParamValueArg extends StringMethodArg
 	}
 	
 	
-	protected String name_;
+	protected final String name_;
 }

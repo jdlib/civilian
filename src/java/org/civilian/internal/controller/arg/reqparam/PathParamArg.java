@@ -55,6 +55,6 @@ public class PathParamArg<T> extends MethodArg
 	}
 	
 	
-	private PathParam<T> pathParam_;
-	private T defaultValue_;
+	private final PathParam<T> pathParam_;
+	private final T defaultValue_;
 }
