@@ -140,8 +140,6 @@ public abstract class IoUtil
 	public static void readLines(Reader in, boolean trim, List<String> list) throws IOException
 	{
 		BufferedReader reader = new BufferedReader(in);
-		if (list == null)
-			list = new ArrayList<>();
 		String line = null;
 		while((line = reader.readLine()) != null)
 		{
