@@ -67,14 +67,14 @@ public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 	/**
 	 * Creates a new LocaleService object.
 	 * @param locale a locale 
-	 * @param messages a MsgBundle. Will be converted into an empty bundle if null
+	 * @param msgBundle a MsgBundle. Will be converted into an empty bundle if null
 	 * @param serializer a LocaleSerializer suitable for the locale. If null a new serializer will be created
 	 */
-	public LocaleService(Locale locale, TypeLib typeLib, MsgBundle messages, LocaleSerializer serializer)
+	public LocaleService(Locale locale, TypeLib typeLib, MsgBundle msgBundle, LocaleSerializer serializer)
 	{
 		locale_ 		= Check.notNull(locale, "locale");
 		typeLib_		= typeLib != null ? typeLib : TypeLib.getDefaultTypeLib();
-		msgBundle_		= messages != null ? messages : MsgBundle.empty(locale);
+		msgBundle_		= msgBundle != null ? msgBundle : MsgBundle.empty(locale);
 		serializer_		= serializer != null ? serializer : new LocaleSerializer(locale);
 		localeString_	= locale.toString();
 	}
