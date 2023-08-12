@@ -32,7 +32,7 @@ class VfsProtocol extends Protocol
 
 	@Override public void scan(ScanContext context, URL rootUrl) throws Exception
 	{
-		Vfs vfs = Vfs.createSafe();
+		Vfs vfs = Vfs.create();
 		if (vfs != null)
 			vfs.scan(context, rootUrl);
 	}

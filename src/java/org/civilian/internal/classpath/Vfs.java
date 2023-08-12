@@ -22,18 +22,13 @@ import org.civilian.util.ClassUtil;
 
 public abstract class Vfs
 {
-	public static Vfs create() throws Exception
-	{
-		String className = Vfs.class.getName() + "3Impl";
-		return ClassUtil.createObject(className, Vfs.class, null);
-	}
-
-
-	public static Vfs createSafe()
+	public static Vfs create()
 	{
 		try
 		{
-			return create();
+			// this will fail if jboss libraries are not in the classpath
+			String className = Vfs.class.getName() + "3Impl";
+			return ClassUtil.createObject(className, Vfs.class, null);
 		}
 		catch (Exception e)
 		{
