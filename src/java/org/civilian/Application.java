@@ -240,7 +240,8 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 		AppConfig appConfig	= new AppConfig(this, settings);
 		try
 		{
-			appConfig.init(); // inits unsafe-config settings
+			if (appConfig.getInitException() != null)
+				throw appConfig.getInitException();
 			init(appConfig);  // customize by implementation
 		}
 		finally

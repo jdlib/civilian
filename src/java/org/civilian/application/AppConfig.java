@@ -83,25 +83,34 @@ public class AppConfig
 
 	
 	/**
-	 * Creates a new AppConfig object. This is done by the application during initialization
-	 * when it calls Application#init(AppConfig). 
+	 * Creates a new AppConfig object. 
 	 */
 	public AppConfig(Application app, Settings settings)
 	{
-		app_					= app;
-		settings_ 				= settings == null ? new Settings() : settings;
-		async_					= settings_.getBoolean(ConfigKeys.ASYNC, false); 
-		connect_				= settings_.getBoolean(ConfigKeys.CONNECT, true); 
-		defaultCharEncoding_	= settings_.get(ConfigKeys.ENCODING, ConfigKeys.ENCODING_DEFAULT);
-		typeLib_ 				= new TypeLib();
-		extensionMapping_		= app.getResourceConfig().getExtensionMapping();
-		defaultResExtension_	= IoUtil.normExtension(settings_.get(ConfigKeys.EXTENSION, null));
-
-		// these init calls are safe
-		supportedLocales_		= initLocales(settings_);
-		uploadConfig_ 			= initUploadConfig(settings_); 
-		reloadConfig_			= initReloadConfig(app, settings_);
-		assetConfig_			= initAssetConfig(app);
+		try 
+		{
+			// safe initialisations
+			if (settings == null)
+				settings = new Settings();
+			settings_ 				= settings;
+			async_					= settings.getBoolean(ConfigKeys.ASYNC, false); 
+			connect_				= settings.getBoolean(ConfigKeys.CONNECT, true); 
+			defaultCharEncoding_	= settings.get(ConfigKeys.ENCODING, ConfigKeys.ENCODING_DEFAULT);
+			typeLib_ 				= new TypeLib();
+			extensionMapping_		= app.getResourceConfig().getExtensionMapping();
+			defaultResExtension_	= IoUtil.normExtension(settings.get(ConfigKeys.EXTENSION, null));
+			supportedLocales_		= initLocales(settings);
+			uploadConfig_ 			= initUploadConfig(settings); 
+			reloadConfig_			= initReloadConfig(app, settings);
+			
+			// these calls might throw exceptions
+			assetConfig_			= initAssetConfig(app, settings);
+			msgBundleFactory_		= initText(settings);
+		}
+		catch (Exception e) 
+		{
+			initException_ = e;
+		}
 	}
 	
 	
@@ -124,14 +133,6 @@ public class AppConfig
 	}
 
 
-	private static AssetConfig initAssetConfig(Application app)
-	{
-		AssetConfig assetConfig = new AssetConfig();
-		assetConfig.setContentTypeLookup(app.getServer().getContentTypeLookup());
-		return assetConfig;
-		
-	}
-	
 	private static UploadConfig initUploadConfig(Settings settings)
 	{
 		return new UploadConfig(new Settings(settings, ConfigKeys.UPLOAD_PREFIX));
@@ -155,29 +156,33 @@ public class AppConfig
 	}
 	
 	
+	private static AssetConfig initAssetConfig(Application app, Settings appSettings) throws Exception
+	{
+		AssetConfig assetConfig = new AssetConfig();
+		assetConfig.setContentTypeLookup(app.getServer().getContentTypeLookup());
+		Settings settings = new Settings(appSettings, ConfigKeys.ASSET_PREFIX);
+		for (AssetLocation loc : AssetServices.getLocations(settings, app.getServer(), app.getPath()))
+			assetConfig.addLocation(loc);
+		return assetConfig;
+	}
+	
+	
+	private static MsgBundleFactory initText(Settings settings) throws Exception
+	{
+		String msgBundleDef = settings.get(ConfigKeys.MESSAGES, null);
+		return msgBundleDef != null ? MsgBundleFactories.createFactory(msgBundleDef) : null;
+	}
+	
+	
 	/**
-	 * Initializes all settings of the AppConfig which may throw an Exception.
+	 * Returns an exception thrown within the constructor.
+	 * Initialisation might fail for some operations but we want to access the results
+	 * of even a half-finished initialisation.
+	 * @return the exception or null
 	 */
-	public void init() throws Exception
+	public Exception getInitException() 
 	{
-		initAssetLocations();
-		initText();
-	}
-	
-
-	private void initAssetLocations() throws Exception
-	{
-		Settings settings = new Settings(settings_, ConfigKeys.ASSET_PREFIX);
-		for (AssetLocation loc : AssetServices.getLocations(settings, app_.getServer(), app_.getPath()))
-			assetConfig_.addLocation(loc);
-	}
-
-	
-	private void initText() throws Exception
-	{
-		String msgBundleDef = settings_.get(ConfigKeys.MESSAGES, null);
-		if (msgBundleDef != null)
-			msgBundleFactory_ = MsgBundleFactories.createFactory(msgBundleDef);
+		return initException_;
 	}
 	
 	
@@ -568,7 +573,6 @@ public class AppConfig
 	}
 
 	
-	private Application app_;
 	private String defaultCharEncoding_;
 	private String version_;
 	private Settings settings_;
@@ -586,4 +590,5 @@ public class AppConfig
 	private boolean async_;
 	private ControllerFactory controllerFactory_;
 	private Map<String,ContentSerializer> contentSerializers_ = new HashMap<>();
+	private Exception initException_;
 }
