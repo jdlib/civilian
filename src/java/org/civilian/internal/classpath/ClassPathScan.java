@@ -56,7 +56,7 @@ public class ClassPathScan
 	}
 	
 	
-	public <R extends ScanListener> R run(R result) throws Exception
+	public <R extends ScanResult> R run(R result) throws Exception
 	{
 		for (String rootPackage : rootPackages_)
 		{

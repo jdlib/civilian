@@ -22,7 +22,7 @@ import org.civilian.util.StringUtil;
 
 class ScanContext
 {
-	public ScanContext(ScanListener result, String rootPackage)
+	public ScanContext(ScanResult result, String rootPackage)
 	{
 		this.rootPackage = rootPackage;
 		this.rootPath = StringUtil.haveRight(rootPackage.replace('.', '/'), "/");
@@ -30,7 +30,7 @@ class ScanContext
 	}
 	
 	
-	public ScanListener result;
+	public final ScanResult result;
 	public final String rootPackage;
 	public final String rootPath;
 }

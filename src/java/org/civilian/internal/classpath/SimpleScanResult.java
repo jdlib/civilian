@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class SimpleScanResult implements ScanListener
+public class SimpleScanResult implements ScanResult
 {
 	public SimpleScanResult(ClassFilter filter)
 	{
@@ -41,6 +41,6 @@ public class SimpleScanResult implements ScanListener
 	}
 	
 	
-	private HashSet<String> classes_ = new HashSet<>();
-	private ClassFilter filter_;
+	private final Set<String> classes_ = new HashSet<>();
+	private final ClassFilter filter_;
 }

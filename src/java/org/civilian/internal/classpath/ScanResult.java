@@ -16,7 +16,7 @@
 package org.civilian.internal.classpath;
 
 
-public interface ScanListener
+public interface ScanResult
 {
 	public void scanned(String className);
 }
