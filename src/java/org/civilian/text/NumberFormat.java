@@ -31,10 +31,16 @@ public class NumberFormat implements Serializable
 
 		if (impl_ instanceof DecimalFormat)
 		{
-			DecimalFormatSymbols symbols = ((DecimalFormat)impl_).getDecimalFormatSymbols(); 
-			groupingSeparator_ 			= symbols.getGroupingSeparator();
-			groupingSeparatorString_ 	= groupingSeparator_ > 0 ? String.valueOf(groupingSeparator_) : null;
-			decimalSeparator_ 			= symbols.getDecimalSeparator();
+			DecimalFormatSymbols symbols 	= ((DecimalFormat)impl_).getDecimalFormatSymbols(); 
+			decimalSeparator_ 				= symbols.getDecimalSeparator();
+			groupingSeparator_ 				= symbols.getGroupingSeparator();
+			groupingSeparatorString_ 		= groupingSeparator_ > 0 ? String.valueOf(groupingSeparator_) : null;
+		}
+		else
+		{
+			decimalSeparator_ 				= 0;
+			groupingSeparator_ 				= 0;
+			groupingSeparatorString_ 		= null;
 		}
 	}
 	
@@ -457,7 +463,7 @@ public class NumberFormat implements Serializable
 	
 	private final Locale locale_;
 	private final java.text.NumberFormat impl_;
-	private char decimalSeparator_ = 0;
-	private char groupingSeparator_ = 0;
-	private String groupingSeparatorString_;
+	private final char decimalSeparator_;
+	private final char groupingSeparator_;
+	private final String groupingSeparatorString_;
 }
