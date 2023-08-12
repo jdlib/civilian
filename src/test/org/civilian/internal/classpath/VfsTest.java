@@ -25,7 +25,7 @@ public class VfsTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
-		assertNotNull(Vfs.createSafe());
+		assertNotNull(Vfs.create());
 		
 		assertFalse(VfsProtocol.INSTANCE.accept(new URL("http://test.com")));
 		VfsProtocol.INSTANCE.scan(null, null);
