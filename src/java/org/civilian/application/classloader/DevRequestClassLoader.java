@@ -132,13 +132,10 @@ public class DevRequestClassLoader extends ClassLoader
 		URL url = getParent().getResource(resource);
 		if ((url != null) && "file".equals(url.getProtocol()))
 		{
-			try
+			try(InputStream in = url.openStream())
 			{
-				try(InputStream in = url.openStream())
-				{
-					byte[] data = IoUtil.readBytes(in);
-	                return defineClass(name, data, 0, data.length);
-				}
+				byte[] data = IoUtil.readBytes(in);
+                return defineClass(name, data, 0, data.length);
 			}
 			catch(IOException e)
 			{
