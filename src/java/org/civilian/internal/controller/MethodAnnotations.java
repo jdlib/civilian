@@ -149,39 +149,39 @@ public class MethodAnnotations
 	    }
 	    
 		
-		private List<String> addRequestMethods(List<String> list)
+		private List<String> addRequestMethods(List<String> result)
 		{
 			for (Annotation annotation : javaMethod_.getAnnotations())
-				list = addRequestMethods(annotation, list);
-			if ((list == null) && (next_ != null))
-				list = next_.addRequestMethods(null);
-			return list;
+				result = addRequestMethods(result, annotation);
+			if ((result == null) && (next_ != null))
+				result = next_.addRequestMethods(null);
+			return result;
 		}
 		
 		
-		private List<String> addRequestMethods(Annotation annotation, List<String> list)
+		private List<String> addRequestMethods(List<String> result, Annotation annotation)
 		{
 			if (annotation != null)
 			{
 				if (ClassUtil.isA(annotation, RequestMethod.class))
-					list = addRequestMethods(list, ((RequestMethod)annotation).value());
+					result = addRequestMethods(result, ((RequestMethod)annotation).value());
 				else
-					list = addRequestMethods(annotation.annotationType().getAnnotation(RequestMethod.class), list);
+					result = addRequestMethods(result, annotation.annotationType().getAnnotation(RequestMethod.class));
 			}
-			return list;
+			return result;
 		}
 			
 
-		private List<String> addRequestMethods(List<String> list, String... methods)
+		private List<String> addRequestMethods(List<String> result, String... methods)
 		{
-			if (list == null)
-				list = new ArrayList<>();
+			if (result == null)
+				result = new ArrayList<>();
 			for (String method : methods)
 			{
-				if (!list.contains(method))
-					list.add(method);
+				if (!result.contains(method))
+					result.add(method);
 			}
-			return list;
+			return result;
 		}
 		
 		
