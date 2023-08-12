@@ -166,11 +166,11 @@ public abstract class Server implements ServerProvider, PathProvider
 	}
 	
 	
-	private String[] findCustomAppIds(Settings settings)
+	private List<String> findCustomAppIds(Settings settings)
 	{
 		// test if the app ids are explicitly listed
 		if (settings.contains(ConfigKeys.APPLICATIONS, false))
-			return settings.getArray(ConfigKeys.APPLICATIONS);
+			return settings.getList(ConfigKeys.APPLICATIONS);
 		
 		// else collect them
 		List<String> ids = new ArrayList<>(); 
@@ -191,7 +191,7 @@ public abstract class Server implements ServerProvider, PathProvider
 			}
 		}
 		Collections.sort(ids);
-		return ids.toArray(new String[ids.size()]);
+		return ids;
 	}
 	
 
