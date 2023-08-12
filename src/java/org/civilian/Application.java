@@ -281,7 +281,8 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 			// resource tree not specified: generate on the fly
 			// use the request classloader so in case we are doing class reload
 			// these touched classes will not stick
-			rootResource_ = ResourceScan.of(this, clFactory.getRequestClassLoader()).getRootResource();		
+			rootResource_ = new ResourceScan(getControllerConfig(), getResourceConfig().getPathParams(), clFactory.getRequestClassLoader(), false)
+				.getRootResource();		
 		}
 		
 		Resource.Tree tree = rootResource_.getTree();

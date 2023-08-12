@@ -125,8 +125,7 @@ public class ServerConstGenerator
 	private void run() throws IOException, ScanException
 	{
 		ResourceScan scan = new ResourceScan(
-			options_.app.getControllerConfig().getRootPackage(),
-			options_.app.getControllerConfig().getNaming(),
+			options_.app.getControllerConfig(),
 			options_.app.getResourceConfig().getPathParams(),
 			null,
 			options_.verbose);

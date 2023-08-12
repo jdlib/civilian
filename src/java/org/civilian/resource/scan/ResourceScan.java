@@ -18,10 +18,9 @@ package org.civilian.resource.scan;
 
 import java.lang.reflect.Modifier;
 import java.util.Set;
-import org.civilian.Application;
 import org.civilian.Controller;
 import org.civilian.Resource;
-import org.civilian.controller.ControllerNaming;
+import org.civilian.controller.ControllerConfig;
 import org.civilian.internal.classpath.ClassPathScan;
 import org.civilian.resource.PathParamMap;
 
@@ -33,32 +32,17 @@ import org.civilian.resource.PathParamMap;
 public class ResourceScan
 {
 	/**
-	 * Creates a ResourceScan using the application settings.
-	 */
-	public static ResourceScan of(Application app, ClassLoader loader)
-	{
-		return new ResourceScan(
-			app.getControllerConfig().getRootPackage(),
-			app.getControllerConfig().getNaming(),
-			app.getResourceConfig().getPathParams(), 
-			loader,
-			false);
-	}
-	
-	
-	/**
 	 * Creates a ResourceScan.
 	 */
 	public ResourceScan(
-		String rootPackageName, 
-		ControllerNaming naming,
+		ControllerConfig ctrlConfig,
 		PathParamMap pathParams,
 		ClassLoader classLoader,
 		boolean verbose) 
 		throws ScanException
 	{
 		classLoader_	= classLoader != null ? classLoader : getClass().getClassLoader();
-		resFactory_ 	= new ResourceFactory(rootPackageName, naming, pathParams); 
+		resFactory_ 	= new ResourceFactory(ctrlConfig.getRootPackage(), ctrlConfig.getNaming(), pathParams); 
 		verbose_		= verbose;
 		
 		scanClassPath();

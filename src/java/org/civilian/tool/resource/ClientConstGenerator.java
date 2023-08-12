@@ -131,7 +131,8 @@ public class ClientConstGenerator
 	private void run() throws Exception
 	{
 		log("scanning resources");
-		Resource root = ResourceScan.of(options_.app, null).getRootResource();
+		Resource root = new ResourceScan(options_.app.getControllerConfig(), options_.app.getResourceConfig().getPathParams(), null, false)
+			.getRootResource();
 		
 		TemplateWriter out = new TemplateWriter(new StringWriter());
 		switch(options_.language)

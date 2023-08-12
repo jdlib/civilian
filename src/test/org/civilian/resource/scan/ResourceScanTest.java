@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.civilian.CivTest;
 import org.civilian.Resource;
-import org.civilian.controller.ControllerNaming;
+import org.civilian.controller.ControllerConfig;
 import org.civilian.testcase1.Test1PathParams;
 import org.junit.Test;
 
@@ -29,7 +29,8 @@ public class ResourceScanTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
-		ResourceScan scan = new ResourceScan("org.civilian.testcase1", new ControllerNaming(), Test1PathParams.MAP, null, false);
+		ControllerConfig ctrlConfig = new ControllerConfig("org.civilian.testcase1", null);  
+		ResourceScan scan = new ResourceScan(ctrlConfig, Test1PathParams.MAP, null, false);
 		Resource resource = scan.getRootResource();
 		// resource.print(System.out);
 		
