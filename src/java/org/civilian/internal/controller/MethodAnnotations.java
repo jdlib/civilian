@@ -190,6 +190,6 @@ public class MethodAnnotations
 	}
 	
 	
-	private AnnotationLookup lookup_;
-	private String[] reqMethods_;
+	private final AnnotationLookup lookup_;
+	private final String[] reqMethods_;
 }
