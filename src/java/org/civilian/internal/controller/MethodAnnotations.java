@@ -32,7 +32,7 @@ import org.civilian.util.ClassUtil;
 
 /**
  * Helper class to extract annotated information from a controller action method
- * (or any of its overriden ancestor methods).
+ * (or any of its overridden ancestor methods).
  */
 public class MethodAnnotations
 {
