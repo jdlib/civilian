@@ -116,7 +116,7 @@ public class AppConfig
 	
 	private static Locale[] initLocales(Settings settings)
 	{
-		String[] localeTags = settings.getList(ConfigKeys.LOCALES);
+		String[] localeTags = settings.getArray(ConfigKeys.LOCALES);
 		if (localeTags.length > 0)
 		{
 			Locale[] supportedLocales = new Locale[localeTags.length];
@@ -145,10 +145,10 @@ public class AppConfig
 		{
 			Settings reloadSettings = new Settings(appSettings, ConfigKeys.DEV_CLASSRELOAD + '.');
 			ReloadConfig reloadConfig = new ReloadConfig();
-			reloadConfig.excludes().add(reloadSettings.getList(ConfigKeys.EXCLUDE));
+			reloadConfig.excludes().add(reloadSettings.getArray(ConfigKeys.EXCLUDE));
 			reloadConfig.includes()
 				.add(app.getControllerConfig().getRootPackage())
-				.add(reloadSettings.getList(ConfigKeys.INCLUDE));
+				.add(reloadSettings.getArray(ConfigKeys.INCLUDE));
 			return reloadConfig;
 		}	
 		else

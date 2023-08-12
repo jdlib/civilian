@@ -343,7 +343,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 		ProcessorConfig pconfig = new ProcessorConfig();
 		
 		// an optional IpFilter as first processor
-		String[] ipList = settings.getList(ConfigKeys.IP);
+		String[] ipList = settings.getArray(ConfigKeys.IP);
 		if (ipList.length > 0)
 			pconfig.addLast(new IpFilter(ipList));
 		

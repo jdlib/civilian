@@ -170,7 +170,7 @@ public abstract class Server implements ServerProvider, PathProvider
 	{
 		// test if the app ids are explicitly listed
 		if (settings.contains(ConfigKeys.APPLICATIONS, false))
-			return settings.getList(ConfigKeys.APPLICATIONS);
+			return settings.getArray(ConfigKeys.APPLICATIONS);
 		
 		// else collect them
 		List<String> ids = new ArrayList<>(); 

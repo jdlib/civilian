@@ -352,9 +352,9 @@ public class Settings
 	 * splitted into a string array.
 	 * @param key the key
 	 */	
-	public String[] getList(String key)
+	public String[] getArray(String key)
 	{
-		return getList(key, ",");
+		return getArray(key, ",");
 	}
 	
 	
@@ -363,14 +363,36 @@ public class Settings
 	 * @param key the key
 	 * @param delimiter the delimiter for separating the substrings
 	 */	
-	public String[] getList(String key, String delimiter)
+	public String[] getArray(String key, String delimiter)
 	{
-		ArrayList<String> list = new ArrayList<>();
-		getList(key, delimiter, list);
+		List<String> list = getList(key, delimiter);
 		return list.toArray(new String[list.size()]);
 	}
 	
 	
+	/**
+ 	 * Returns the value of a key, separated by commas, 
+	 * splitted into a string list.
+	 * @param key the key
+	 */	
+	public List<String> getList(String key)
+	{
+		return getList(key, ",");
+	}
+	
+	
+	/**
+	 * Returns the value of a key splitted into a string list.
+	 * @param key the key
+	 * @param delimiter the delimiter for separating the substrings
+	 */	
+	public List<String> getList(String key, String delimiter)
+	{
+		List<String> list = new ArrayList<>();
+		getList(key, delimiter, list);
+		return list;
+	}
+
 	/**
 	 * Fills the value of a key splitted into a strings
 	 * into the list.
