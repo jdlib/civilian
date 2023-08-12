@@ -170,9 +170,9 @@ public class AppConfig
 	
 	private void initText() throws Exception
 	{
-		String tlKey = settings_.get(ConfigKeys.MESSAGES, null);
-		if (tlKey != null)
-			msgBundleFactory_ = MsgBundleFactories.createFactory(tlKey);
+		String msgBundleDef = settings_.get(ConfigKeys.MESSAGES, null);
+		if (msgBundleDef != null)
+			msgBundleFactory_ = MsgBundleFactories.createFactory(msgBundleDef);
 	}
 	
 	
