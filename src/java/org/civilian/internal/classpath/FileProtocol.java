@@ -114,7 +114,7 @@ class FileProtocol extends Protocol
 		}
 		
 		
-		private char fileSeparator_;
-		private int prefixLength_;
+		private final char fileSeparator_;
+		private final int prefixLength_;
 	}
 }
