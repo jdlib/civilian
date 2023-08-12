@@ -18,6 +18,7 @@ package org.civilian.internal;
 
 import org.civilian.Application;
 import org.civilian.application.AppConfig;
+import org.civilian.util.Check;
 
 
 /**
@@ -34,7 +35,7 @@ public class DefaultApp extends Application
 	 */
 	public DefaultApp(String resourceRootPackage)
 	{
-		super(null, resourceRootPackage);
+		super(null, Check.notNull(resourceRootPackage, "resourceRootPackage"));
 	}
 	
 
