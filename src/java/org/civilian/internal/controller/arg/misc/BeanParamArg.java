@@ -94,7 +94,7 @@ public class BeanParamArg extends MethodArg
 		@Override public abstract String toString();
 		
 
-		private MethodArg arg_;
+		private final MethodArg arg_;
 	}
 	
 
@@ -119,7 +119,7 @@ public class BeanParamArg extends MethodArg
 		}
 		
 		
-		private Method method_;
+		private final Method method_;
 	}
 	
 	
@@ -146,7 +146,7 @@ public class BeanParamArg extends MethodArg
 		}
 		
 		
-		private Field field_;
+		private final Field field_;
 	}
 
 	
@@ -196,12 +196,12 @@ public class BeanParamArg extends MethodArg
 		}
 		
 		
-		private MethodArgFactory factory_;
-		private ArrayList<Setter> setters_ = new ArrayList<>();
-		private HashSet<String> done_ = new HashSet<>();
+		private final MethodArgFactory factory_;
+		private final ArrayList<Setter> setters_ = new ArrayList<>();
+		private final HashSet<String> done_ = new HashSet<>();
 	}
 	
 	
-	private Class<?> beanClass_;
-	private Setter[] setters_;
+	private final Class<?> beanClass_;
+	private final Setter[] setters_;
 }
