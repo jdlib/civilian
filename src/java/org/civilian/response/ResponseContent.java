@@ -20,14 +20,14 @@ import org.civilian.Response;
 
 
 /**
- * ResponseContent is an object which can generate
+ * ResponseContent is an object which can generate the
  * content of a response.
  * If a parameter of a controller action method is derived
  * of ResponseContent, it will be handled as follows:
  * <ul>
  * <li>A new instance of the parameter type is instantiated and
  * 		injected into the parameter variable, when the method is called
- * <li>Once the method has finished, and the response was not commited,
+ * <li>Once the method has finished, and the response was not committed,
  * 		the instantiated object is written to the response. 
  * </ul>	
  * The {@link org.civilian.annotation.ResponseContent} annotation offers
