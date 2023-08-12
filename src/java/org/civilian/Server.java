@@ -141,9 +141,9 @@ public abstract class Server implements ServerProvider, PathProvider
 		public AppInfo(String id, Settings settings, String path, Application app)
 		{
 			this.id			= id;
-			this.app		= app; 
-			this.path		= Path.norm(path);
+			this.path		= path;
 			this.settings 	= settings;
+			this.app		= app; 
 		}
 		
 		
