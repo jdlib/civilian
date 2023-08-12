@@ -28,13 +28,7 @@ public class ScanTest extends CivTest
 	@Test public void testFileScan() throws Exception
 	{
 		ClassPathScan scan = new ClassPathScan("org.civilian.server.servlet");
-		Set<String> adapters = scan.collect(new ClassFilter()
-		{
-			@Override public boolean accept(String className)
-			{
-				return className.endsWith("Adapter");
-			}
-		});
+		Set<String> adapters = scan.collect(className -> className.endsWith("Adapter"));
 		
 		assertEquals(7, adapters.size());
 		assertTrue(adapters.contains("org.civilian.server.servlet.ServletResponseAdapter"));
