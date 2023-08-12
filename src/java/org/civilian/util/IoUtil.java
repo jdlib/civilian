@@ -65,27 +65,6 @@ public abstract class IoUtil
 		return System.getProperty("line.separator");
 	}
 
-
-	/**
-	 * Returns the system dependent file separator.
-	 */
-	public static String getFileSeparator()
-	{
-		return System.getProperty("file.separator");
-	}
-
-	
-	/**
-	 * Returns the system dependent file separator char.
-	 */
-	public static char getFileSeparatorChar()
-	{
-		String sep = getFileSeparator();
-		if (sep.length() != 1)
-			throw new IllegalArgumentException("separator is not a char: " + sep);
-		return sep.charAt(0);
-	}
-
 	
 	/**
 	 * Copies all data from an InputStream to an OutputStream.

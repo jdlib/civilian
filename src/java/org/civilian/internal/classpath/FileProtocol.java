@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import org.civilian.util.IoUtil;
 import org.civilian.util.StringUtil;
 
 
@@ -83,8 +82,7 @@ class FileProtocol extends Protocol
 	{
 		public Norm(ScanContext context, File baseDir) throws IOException
 		{
-			String path		= baseDir.getAbsolutePath();
-			fileSeparator_ 	= IoUtil.getFileSeparatorChar();
+			String path	= baseDir.getAbsolutePath();
 			
 			String normedPath = normPath(path); 
 			String normedSuffix = normPath(context.rootPath); 
@@ -97,7 +95,7 @@ class FileProtocol extends Protocol
 		
 		private String normPath(String path)
 		{
-			return StringUtil.cutRight(path.replace(fileSeparator_, '/'), "/");
+			return StringUtil.cutRight(path.replace(File.separatorChar, '/'), "/");
 		}
 
 		
@@ -107,14 +105,13 @@ class FileProtocol extends Protocol
 			if (path.endsWith(".class"))
 			{
 				path = path.substring(prefixLength_, path.length() - 6);
-				return path.replace(fileSeparator_, '.');
+				return path.replace(File.separatorChar, '.');
 			}
 			else
 				return null;
 		}
 		
 		
-		private final char fileSeparator_;
 		private final int prefixLength_;
 	}
 }
