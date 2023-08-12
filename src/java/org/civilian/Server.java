@@ -240,17 +240,17 @@ public abstract class Server implements ServerProvider, PathProvider
 	 * Adds an application to the Server. 
 	 * @param app the application. 
 	 * @param id the id of the application
-	 * @param relativePath the path of the application relative to the server path
+	 * @param relPathString the path of the application relative to the server path
 	 * @param settings the settings of the application, can be null.
 	 * @return was the application successfully initialized?
 	 * @throws IllegalArgumentException if the app is contained in another server
 	 * 		or its path is already used by another application 
 	 */
-	protected boolean addApp(Application app, String id, String relativePath, Settings settings)
+	protected synchronized boolean addApp(Application app, String id, String relPathString, Settings settings)
 	{
 		Check.notNull(app, 	"app");
 		Check.notNull(id, 	"id");
-		Path relPath = new Path(relativePath);
+		Path relPath = new Path(relPathString);
 		
 		// sanity check 1: app must not be part of a server yet 
 		if (app.getServer() != TempServer.INSTANCE)
@@ -262,7 +262,7 @@ public abstract class Server implements ServerProvider, PathProvider
 			if (prevApp.getId().equals(id))
 				throw new IllegalArgumentException("the app id '" + id + "' is already used by another app");  
 			if (prevApp.getRelativePath().equals(relPath))
-				throw new IllegalArgumentException("the path '" + relativePath + "' is used by app '" + prevApp.getId() + "' and '" + id + "'");  
+				throw new IllegalArgumentException("the path '" + relPath + "' is used by app '" + prevApp.getId() + "' and '" + id + "'");  
 		}
 		
 		// add the app to the application list
