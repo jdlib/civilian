@@ -43,7 +43,7 @@ import org.civilian.util.Settings;
 
 
 /**
- * AppConfig is used during initialization of an Application.
+ * AppConfig is used during initialisation of an Application.
  * It is passed to the {@link Application#init(AppConfig)} method.
  * Derived application classes can use the AppConfig object to configure
  * the application if not already done with settings in the Civilian config file.
@@ -143,12 +143,12 @@ public class AppConfig
 	{
 		if (app.develop() && appSettings.getBoolean(ConfigKeys.DEV_CLASSRELOAD, false))
 		{
-			Settings settings = new Settings(appSettings, ConfigKeys.DEV_CLASSRELOAD + '.');
+			Settings reloadSettings = new Settings(appSettings, ConfigKeys.DEV_CLASSRELOAD + '.');
 			ReloadConfig reloadConfig = new ReloadConfig();
-			reloadConfig.excludes().add(settings.getList(ConfigKeys.EXCLUDE));
+			reloadConfig.excludes().add(reloadSettings.getList(ConfigKeys.EXCLUDE));
 			reloadConfig.includes()
 				.add(app.getControllerConfig().getRootPackage())
-				.add(settings.getList(ConfigKeys.INCLUDE));
+				.add(reloadSettings.getList(ConfigKeys.INCLUDE));
 			return reloadConfig;
 		}	
 		else
@@ -436,7 +436,7 @@ public class AppConfig
 	 * tree after initialization by scanning the classpath for
 	 * controller classes. If you have generated a class defining
 	 * constants for all resource you may use its root resource to
-	 * and avoid runtime scanning for controllers.
+	 * avoid runtime scanning for controllers.
 	 */
 	public void setResourceRoot(Resource root)
 	{

@@ -47,7 +47,7 @@ import org.civilian.util.IoUtil;
 /**
  * Resource represents a resource of a web application, addressable by an URL.
  * A Resource can be associated with a {@link Controller}.<br>
- * When the application receives a request for a resource, 
+ * When the application receives a request for such a resource, 
  * an instance of the associated Controller is created and invoked to generate 
  * the response.<br>
  * If no resource directly matches the request,

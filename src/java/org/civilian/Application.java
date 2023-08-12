@@ -208,7 +208,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 			initProcessors(settings);
 			
 			status_ = Application.Status.RUNNING;
-			// only log after app has been initialized: an app may change the log configuration
+			// only log after app has been initialised: an app may change the log configuration
 			log.info("initialized app {} at path {}", getId(), getPath());
 			
 			result.success = true;
