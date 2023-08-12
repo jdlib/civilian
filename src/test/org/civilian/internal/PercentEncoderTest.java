@@ -54,5 +54,5 @@ public class PercentEncoderTest extends CivTest
 	}
 
 	
-	private PercentEncoder encoder_ = new PercentEncoder();
+	private final PercentEncoder encoder_ = new PercentEncoder();
 }

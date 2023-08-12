@@ -62,7 +62,7 @@ public abstract class CollectionConverter<T> extends Converter<Collection<T>>
 	public abstract Collection<T> emptyCollection();
 
 
-	private SimpleConverter<T> sc_;
+	private final SimpleConverter<T> sc_;
 }
 
 
