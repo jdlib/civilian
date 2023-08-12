@@ -46,6 +46,5 @@ public class TempServerTest extends CivTest
 				}
 			}	
 		}
-		
 	}
 }
