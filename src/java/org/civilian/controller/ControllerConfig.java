@@ -58,6 +58,6 @@ public class ControllerConfig
 	}
 
 	
-	private String rootPackage_;
-	private ControllerNaming naming_;
+	private final String rootPackage_;
+	private final ControllerNaming naming_;
 }
