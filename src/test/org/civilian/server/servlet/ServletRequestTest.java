@@ -50,7 +50,7 @@ public class ServletRequestTest extends CivTest
 	@BeforeClass public static void beforeClass()
 	{
 		app = new TestApp();
-		app.getConfig().setSupportedLocales(Locale.ENGLISH);
+		app.setInitializer(config -> config.setSupportedLocales(Locale.ENGLISH));
 		app.init("/app");
 	}
 	

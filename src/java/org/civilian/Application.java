@@ -237,7 +237,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 
 	private void initApp(Settings settings, InitResult initResult) throws Exception
 	{
-		AppConfig appConfig	= createConfig(settings);
+		AppConfig appConfig	= new AppConfig(this, settings);
 		try
 		{
 			appConfig.init(); // inits unsafe-config settings
@@ -307,17 +307,6 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 	protected abstract void init(AppConfig config) throws Exception;
 	
 	
-	/**
-	 * Creates the AppConfig during initialization. 
-	 * Derived implementations may overwrite this method
-	 * if they intend to initialize the AppConfig in a different way.
-	 */
-	protected AppConfig createConfig(Settings settings)
-	{
-		return new AppConfig(this, settings);
-	}
-
-
 	/**
 	 * Adds ContentSerializers for text/plain and application/json
 	 * if not done in init(Appconfig). 

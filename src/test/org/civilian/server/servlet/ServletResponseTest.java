@@ -35,7 +35,7 @@ public class ServletResponseTest extends CivTest
 	@BeforeClass public static void beforeClass()
 	{
 		app = new TestApp();
-		app.getConfig().setSupportedLocales(Locale.GERMAN);
+		app.setInitializer(config -> config.setSupportedLocales(Locale.GERMAN));
 		app.init("/app");
 	}
 	

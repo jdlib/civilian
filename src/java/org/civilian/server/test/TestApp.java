@@ -16,11 +16,11 @@
 package org.civilian.server.test;
 
 
+import java.util.function.Consumer;
 import org.civilian.Application;
 import org.civilian.application.AppConfig;
 import org.civilian.controller.ControllerNaming;
 import org.civilian.resource.PathParamMap;
-import org.civilian.util.Settings;
 
 
 /**
@@ -59,6 +59,12 @@ public class TestApp extends Application
 	}
 
 	
+	public void setInitializer(Consumer<AppConfig> initializer) 
+	{
+		initializer_ = initializer;
+	}
+	
+	
 	public void init()
 	{
 		init("");
@@ -74,36 +80,16 @@ public class TestApp extends Application
 	
 	@Override protected void init(AppConfig config) throws Exception
 	{
-	}
-	
-	
-	public AppConfig getConfig()
-	{
-		if (appConfig_ == null)
-		{
-			try
-			{
-				appConfig_ = new AppConfig(this, null);
-			}
-			catch (Exception e)
-			{
-				throw new IllegalStateException("could not create app config", e);
-			}
-		}
-		return appConfig_;
-	}
-	
-	
-	@Override protected AppConfig createConfig(Settings settings)
-	{
-		return appConfig_ != null ? appConfig_ : super.createConfig(settings);
+		if (initializer_ != null)
+			initializer_.accept(config);
 	}
 	
 	
 	@Override protected void close() throws Exception
 	{
+		// nothing todo
 	}
 	
 	
-	private AppConfig appConfig_;
+	private Consumer<AppConfig> initializer_;
 }
