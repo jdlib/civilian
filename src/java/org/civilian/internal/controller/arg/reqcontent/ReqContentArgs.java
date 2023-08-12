@@ -34,7 +34,7 @@ public class ReqContentArgs
 			return new ReqContentReaderArg();
 		else if (InputStream.class == type)
 			return new ReqContentInputStreamArg();
-		else if (type.isArray() && "[B".equals(type.getName()))
+		else if (type.isArray() && (type.getComponentType() == Byte.TYPE))
 			return new ReqContenBytesArg();
 		else
 			return new ReqContentGenericArg(type, genericType);

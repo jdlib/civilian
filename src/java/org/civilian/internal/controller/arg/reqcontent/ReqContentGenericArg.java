@@ -42,6 +42,6 @@ public class ReqContentGenericArg extends RequestContentArg
 	}
 
 	
-	private Class<?> type_;
-	private Type genericType_;
+	private final Class<?> type_;
+	private final Type genericType_;
 }
