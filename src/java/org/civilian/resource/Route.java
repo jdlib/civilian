@@ -399,11 +399,11 @@ class RouteList extends Route
 	}
 
 	
-	@Override public int indexOf(PathParam<?> pattern)
+	@Override public int indexOf(PathParam<?> pathParam)
 	{
 		for (int i=0; i<list_.length; i++)
 		{
-			int index = list_[i].indexOf(pattern);
+			int index = list_[i].indexOf(pathParam);
 			if (index >= 0)
 				return index;
 		}
