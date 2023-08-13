@@ -318,12 +318,6 @@
 		<div class="highlight">
 			<pre><code>/users<br>/users.html</code></pre>
 		</div>
-		But when dealing with clients which cannot properly set an HTTP Accept-Header to express their preferred response content-type,
-		the URL extension can be used as a replacement for the Accept header.
-		<div class="highlight">
-			<pre><code>GET /users.html ~ GET /users, Accept: text/html</code></pre>
-		</div>
-		Please study the {javadoc:resource.ExtensionMapping} class how to configure such behavior.     
 		   
 		<h3 id="finepoints">Fine points of resource mappings</h3>
 		No resource may be mapped to more than one controller. 

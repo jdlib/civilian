@@ -31,7 +31,6 @@ import org.civilian.content.ContentType;
 import org.civilian.content.JaxbXmlSerializer;
 import org.civilian.controller.ControllerFactory;
 import org.civilian.provider.ResponseProvider;
-import org.civilian.resource.ExtensionMapping;
 import org.civilian.resource.Url;
 import org.civilian.text.LocaleServiceList;
 import org.civilian.text.msg.MsgBundleFactories;
@@ -97,7 +96,6 @@ public class AppConfig
 			connect_				= settings.getBoolean(ConfigKeys.CONNECT, true); 
 			defaultCharEncoding_	= settings.get(ConfigKeys.ENCODING, ConfigKeys.ENCODING_DEFAULT);
 			typeLib_ 				= new TypeLib();
-			extensionMapping_		= app.getResourceConfig().getExtensionMapping();
 			defaultResExtension_	= IoUtil.normExtension(settings.get(ConfigKeys.EXTENSION, null));
 			supportedLocales_		= initLocales(settings);
 			uploadConfig_ 			= initUploadConfig(settings); 
@@ -468,17 +466,6 @@ public class AppConfig
 	}
 	
 	
-	/**
-	 * Returns the ExtensionMapping object to configure extension mappings.
-	 * If a client is a not able to send Accept headers, extension mappings
-	 * can be used to derive accept preferences from the URL extension.
-	 */
-	public ExtensionMapping getExtensionMapping()
-	{
-		return extensionMapping_;
-	}
-	
-
 	//----------------------------
 	// connect
 	//----------------------------
@@ -584,7 +571,6 @@ public class AppConfig
 	private UploadConfig uploadConfig_;
 	private Resource rootResource_;
 	private String defaultResExtension_;
-	private ExtensionMapping extensionMapping_;
 	private ReloadConfig reloadConfig_;
 	private boolean connect_;
 	private boolean async_;

@@ -30,7 +30,6 @@ import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.provider.*;
 import org.civilian.request.*;
-import org.civilian.resource.ExtensionMapping;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.Url;

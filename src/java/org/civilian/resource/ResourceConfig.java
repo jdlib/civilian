@@ -17,7 +17,6 @@ package org.civilian.resource;
 
 
 import org.civilian.Application;
-import org.civilian.application.AppConfig;
 
 
 /**
@@ -42,16 +41,5 @@ public class ResourceConfig
 	}
 
 	
-	/**
-	 * Returns the extension mapping defined by the resource setup.
-	 * @see AppConfig#getExtensionMapping()
-	 */
-	public ExtensionMapping getExtensionMapping()
-	{
-		return extensionMapping_;
-	}
-
-	
 	private PathParamMap pathParams_;
-	private ExtensionMapping extensionMapping_ = new ExtensionMapping();
 }

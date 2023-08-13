@@ -245,35 +245,18 @@ public class ServletRequestTest extends CivTest
 	}
 
 	
-	@Test public void testExtensionMapping() throws Exception
-	{
-		app.getResourceConfig().getExtensionMapping().addContentType("xyz", ContentType.APPLICATION_PDF);
-		when(servletReq.getHeaders("Accept")).thenReturn(getEnum());
-		when(servletReq.getPathInfo()).thenReturn("/alpha.xyz");
-		init();
-		
-		ContentTypeList types = request.getAcceptedContentTypes();
-		assertEquals(1, types.size());
-		assertSame(ContentType.APPLICATION_PDF, types.get(0));
-	}
-
-	
 	@Test public void testLocale() throws Exception
 	{
-		when(servletReq.getPathInfo()).thenReturn("/alpha.fr");
+		when(servletReq.getPathInfo()).thenReturn("/alpha");
 		init();
 
 		assertSame(Locale.ENGLISH, request.getAcceptedLocale());
 		verify(servletReq).getHeader("Accept-Language");
 		
-		app.getResourceConfig().getExtensionMapping().addLocale("fr", Locale.FRENCH);
-		assertSame(Locale.FRENCH, request.getAcceptedLocale());
-		verify(servletReq, times(2)).getHeader("Accept-Language");
-		
 		when(servletReq.getHeader("Accept-Language")).thenReturn("de");
 		when(servletReq.getLocale()).thenReturn(Locale.GERMAN);
 		assertEquals(Locale.GERMAN, request.getAcceptedLocale());
-		verify(servletReq, times(3)).getHeader("Accept-Language");
+		verify(servletReq, times(2)).getHeader("Accept-Language");
 		verify(servletReq, times(1)).getLocale();
 	}
 	

@@ -58,8 +58,6 @@ public class AppConfigTest extends CivTest
 		config.setTypeLib(config.getTypeLib());
 		config.setUploadConfig(config.getUploadConfig());
 		
-		assertNotNull(config.getExtensionMapping());
-		
 		config.setDefaultResExtension(".html");
 		assertEquals("html", config.getDefaultResExtension());
 	}

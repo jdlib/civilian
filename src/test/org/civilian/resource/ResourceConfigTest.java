@@ -26,6 +26,5 @@ public class ResourceConfigTest extends CivTest
 	{
 		ResourceConfig config = new ResourceConfig(null);
 		assertSame(PathParamMap.EMPTY, config.getPathParams());
-		assertNotNull(config.getExtensionMapping());
 	}
 }

@@ -36,7 +36,6 @@ import org.civilian.internal.intercept.ReqStreamInterceptorChain;
 import org.civilian.request.AsyncContext;
 import org.civilian.request.RequestReaderInterceptor;
 import org.civilian.request.RequestStreamInterceptor;
-import org.civilian.resource.ExtensionMapping;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
 import org.civilian.text.LocaleService;
@@ -269,21 +268,10 @@ public abstract class AbstractRequest implements Request
 	{
 		acceptedContentTypes_ = ContentTypeList.parse(ContentType.Compare.BY_QUALITY, getHeaders().getAll("Accept"));
 		if (acceptedContentTypes_.size() == 0)
-		{
-			ContentType contentType = getExtensionMapping().extractContentType(getRelativePath().getExtension());
-			acceptedContentTypes_ 	= contentType != null ?
-				new ContentTypeList(contentType) :
-				ContentTypeList.ANY;
-		}
+			acceptedContentTypes_ = ContentTypeList.ANY;
 	}
 
 
-	protected ExtensionMapping getExtensionMapping()
-	{
-		return getApplication().getResourceConfig().getExtensionMapping();
-	}
-
-	
 	//------------------------------
 	// locale
 	//------------------------------
