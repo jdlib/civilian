@@ -34,7 +34,7 @@ public class ContentTypeList implements Iterable<ContentType>
 	/**
 	 * An empty ContentTypeList.
 	 */
-	public static final ContentTypeList EMPTY = new ContentTypeList(new ContentType[0]);
+	public static final ContentTypeList EMPTY = new ContentTypeList();
 
 	
 	/**
