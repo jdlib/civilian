@@ -63,8 +63,7 @@ public class GsonJsonSerializer extends ContentSerializer
 	 */
 	public GsonJsonSerializer(Gson gson)
 	{
-		Check.notNull(gson, "gson");
-		gson_ = gson;
+		gson_ = Check.notNull(gson, "gson");
 	}
 	
 	
@@ -122,5 +121,5 @@ public class GsonJsonSerializer extends ContentSerializer
 	}
 
 	
-	private Gson gson_;
+	private final Gson gson_;
 }
