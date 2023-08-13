@@ -74,24 +74,18 @@ public class MethodAnnotations
 	
 	public ContentTypeList getProduces()
 	{
-		ContentTypeList produces = null;
 		Produces annotation = lookup_.getAnnotation(Produces.class);
-		if (annotation != null)
-		{
+		return annotation != null ? 
 			// we sort by specificity to speed up content negotiation
-			produces = extractContentTypes(ContentType.Compare.BY_SPECIFICITY, annotation.value());
-		}
-		return produces;
+			extractContentTypes(ContentType.Compare.BY_SPECIFICITY, annotation.value()) :
+			null;
 	}
 
 	
 	public ContentTypeList getConsumes()
 	{
-		ContentTypeList consumes = null;
 		Consumes annotation = lookup_.getAnnotation(Consumes.class);
-		if (annotation != null)
-			consumes = extractContentTypes(null, annotation.value());
-		return consumes;
+		return annotation != null ? extractContentTypes(null, annotation.value()) : null;
 	}
 
 
@@ -104,7 +98,7 @@ public class MethodAnnotations
 	
 	/**
 	 * AnnotationLookup can return annotations declared on a Java method
-	 * or on any of its overriden method ancestors. 
+	 * or on any of its overridden method ancestors. 
 	 */
 	private static class AnnotationLookup
 	{
