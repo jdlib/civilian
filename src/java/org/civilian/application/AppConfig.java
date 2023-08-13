@@ -421,7 +421,7 @@ public class AppConfig
 	 * Returns the root resource. By default the root resource
 	 * is null. If you don't explicitly set the root resource
 	 * the application will build the resource 
-	 * tree after initialization by scanning the classpath for
+	 * tree after initialisation by scanning the classpath for
 	 * controller classes.  
 	 */
 	public Resource getRootResource()
@@ -433,7 +433,7 @@ public class AppConfig
 	/**
 	 * Sets the root resource of the application. If the resource
 	 * tree is not explicitly set, the application will  build the resource 
-	 * tree after initialization by scanning the classpath for
+	 * tree after initialisation by scanning the classpath for
 	 * controller classes. If you have generated a class defining
 	 * constants for all resource you may use its root resource to
 	 * avoid runtime scanning for controllers.
@@ -469,7 +469,7 @@ public class AppConfig
 	
 	
 	/**
-	 * Returns the ExtensionMapping object to configure extenson mappings.
+	 * Returns the ExtensionMapping object to configure extension mappings.
 	 * If a client is a not able to send Accept headers, extension mappings
 	 * can be used to derive accept preferences from the URL extension.
 	 */
