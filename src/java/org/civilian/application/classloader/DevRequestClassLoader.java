@@ -139,7 +139,7 @@ public class DevRequestClassLoader extends ClassLoader
 			}
 			catch(IOException e)
 			{
-				Logs.CLASSLOADER.error("error when loading class from '" + url + "'", e);
+				Logs.CLASSLOADER.error("error when loading class from '" + url + '\'', e);
 			}
 		}
 		return null;

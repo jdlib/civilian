@@ -312,7 +312,7 @@ public class Button extends Control<String>
 	 */
 	public void start(TemplateWriter out, String... attrs)
 	{
-		out.print("<");
+		out.print('<');
 		out.print(variant_.tag());
 		if (variant_.type != null)
 			HtmlUtil.attr(out, "type", variant_.type);
@@ -328,7 +328,7 @@ public class Button extends Control<String>
 		if (!variant_.buttonTag || variant_.isSubmitVariant())
 			HtmlUtil.attr(out, "value", getValue());
 		printAttrs(out, attrs);
-		out.print(">");
+		out.print('>');
 	}
 	
 
@@ -341,7 +341,7 @@ public class Button extends Control<String>
 		{
 			out.print("</");
 			out.print(variant_.tag());
-			out.print(">");
+			out.print('>');
 		}
 	}
 

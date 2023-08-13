@@ -110,7 +110,7 @@ class Argument
 		out.append(name_);
 		out.append(" = ");
 		out.append(name_);
-		out.append(";");
+		out.append(';');
 	}
 	
 	
@@ -122,7 +122,7 @@ class Argument
 			out.append("[]");
 		out.append(' ');
 		out.append(name_);
-		out.append(";");
+		out.append(';');
 	}
 
 	

@@ -190,7 +190,7 @@ public class WebResource
 		String s = toString(); 
 		out.print(s);
 		for (int i=s.length(); i<30; i++)
-			out.print(" ");
+			out.print(' ');
 		out.println();
 		
 		for (int i=0; i<getChildCount(); i++)

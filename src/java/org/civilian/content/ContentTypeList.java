@@ -253,7 +253,7 @@ public class ContentTypeList implements Iterable<ContentType>
 		for (int i=0; i<types_.length; i++)
 		{
 			if (i > 0)
-				s.append(",");
+				s.append(',');
 			s.append(types_[i].toString());
 		}
 			

@@ -27,7 +27,7 @@ public class VarConverter
 {
 	private static final String GITHUB_REPO = "https://github.com/jdlib/civilian/";
 	private static final String GITHUB_REPO_RELEASES = GITHUB_REPO + "releases"; 
-	private static final String GITHUB_REPO_RELEASES_DOWNLOAD_LATEST = GITHUB_REPO_RELEASES + "/download/" + Version.VALUE + "/"; 
+	private static final String GITHUB_REPO_RELEASES_DOWNLOAD_LATEST = GITHUB_REPO_RELEASES + "/download/" + Version.VALUE + '/'; 
 	private static final String GITHUB_REPO_RELEASES_LATEST = GITHUB_REPO_RELEASES + "/tag/" + Version.VALUE; 
 		
 		
@@ -73,7 +73,7 @@ public class VarConverter
 				else if ("repo".equals(key))
 					convertRepo();
 				else
-					error("unknown variable '" + key + "'");
+					error("unknown variable '" + key + '\'');
 				
 				start = matcher.end();
 			}
@@ -180,7 +180,7 @@ public class VarConverter
 		buffer_.append("><a href=\"");
 		buffer_.append(paramPart1_);
 		buffer_.append('"');
-		buffer_.append(">");
+		buffer_.append('>');
 		buffer_.append(paramPart2_);
 		buffer_.append("</a></li>");
 	}
@@ -189,7 +189,7 @@ public class VarConverter
 	private void convertSource(String className)
 	{
 		boolean isSample = className.contains("samples"); 
-		String href = GITHUB_REPO + "blob/master/src/" + (isSample ? "samples" : "java") + "/" + className.replace('.', '/') + ".java";
+		String href = GITHUB_REPO + "blob/master/src/" + (isSample ? "samples" : "java") + '/' + className.replace('.', '/') + ".java";
 		appendLink(href, className, true);
 	}
 	
@@ -214,7 +214,7 @@ public class VarConverter
 			appendAttr("target", "_blank");
 		if (classAttr != null)
 			appendAttr("class", classAttr);
-		buffer_.append(">");
+		buffer_.append('>');
 		buffer_.append(text);
 		buffer_.append("</a>");
 	}
@@ -222,11 +222,11 @@ public class VarConverter
 
 	private void appendAttr(String name, String value)
 	{
-		buffer_.append(" ");
+		buffer_.append(' ');
 		buffer_.append(name);
 		buffer_.append("=\"");
 		buffer_.append(value);
-		buffer_.append("\"");
+		buffer_.append('"');
 	}
 
 
@@ -252,13 +252,13 @@ public class VarConverter
 	
 	private void error(String message)
 	{
-		throw new IllegalArgumentException(message + " (" + inputFile_.getName() + ", line " + (lineIndex_ + 1) + ")");
+		throw new IllegalArgumentException(message + " (" + inputFile_.getName() + ", line " + (lineIndex_ + 1) + ')');
 	}
 	
 	
 	private void warning(String message)
 	{
-		System.err.println(message + " (" + inputFile_.getName() + ", line " + (lineIndex_ + 1) + ")");
+		System.err.println(message + " (" + inputFile_.getName() + ", line " + (lineIndex_ + 1) + ')');
 	}
 
 	

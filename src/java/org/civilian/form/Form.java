@@ -566,7 +566,7 @@ public class Form implements RequestProvider
 		{
 			out.print("<input type=\"hidden\" value=\"\"");
 			HtmlUtil.attr(out, "name", name_);
-			out.println(">");
+			out.println('>');
 		}
 		
 		// print hidden fields

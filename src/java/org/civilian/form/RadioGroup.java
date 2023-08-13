@@ -170,7 +170,7 @@ public class RadioGroup<T> extends Control<T>
 			if (checked)
 				out.print(" checked");
 			printAttrs(out, nextAttrs_);
-			out.print(">");
+			out.print('>');
 			if (text != null)
 			{
 				HtmlUtil.text(out, text);

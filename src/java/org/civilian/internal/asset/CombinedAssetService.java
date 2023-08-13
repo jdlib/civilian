@@ -120,7 +120,7 @@ public class CombinedAssetService extends AssetService
 		for (int i=0; i<children_.length; i++)
 		{
 			if (i > 0)
-				info.append("\n");
+				info.append('\n');
 			info.append(children_[i].getInfo());
 		}
 		return info.toString();

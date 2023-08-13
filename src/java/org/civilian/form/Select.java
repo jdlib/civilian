@@ -197,7 +197,7 @@ public class Select<T> extends Control<T>
 		if (isRequired())
 			out.print(" required");
 		printAttrs(out, attrs);
-		out.println(">");
+		out.println('>');
 	}
 	
 
@@ -268,7 +268,7 @@ public class Select<T> extends Control<T>
 		HtmlUtil.attr(out, "value", value);
 		if (selected)
 			out.print(" selected");
-		out.print(">");
+		out.print('>');
 		out.print(text);
 		out.println("</option>");
 	}
@@ -285,7 +285,7 @@ public class Select<T> extends Control<T>
 	{
 		out.print("<optgroup");
 		HtmlUtil.attr(out, "label", label);
-		out.println(">");
+		out.println('>');
 		out.decreaseTab();
 	}
 

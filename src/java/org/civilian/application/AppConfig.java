@@ -71,7 +71,7 @@ public class AppConfig
 		else if ("production".equals(configEntry))
 			return !develop;
 		else
-			throw new IllegalArgumentException("invalid enabled-value: '" + configEntry + "'");
+			throw new IllegalArgumentException("invalid enabled-value: '" + configEntry + '\'');
 	}
 	
 	
