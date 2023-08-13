@@ -20,7 +20,6 @@ import java.util.Locale;
 import org.civilian.Application;
 import org.civilian.Request;
 import org.civilian.Response;
-import org.civilian.provider.LocaleServiceProvider;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleProvider;
 import org.civilian.type.TypeLib;

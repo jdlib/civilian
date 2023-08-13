@@ -27,7 +27,6 @@ import org.civilian.application.AppConfig;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.JaxbXmlSerializer;
-import org.civilian.provider.LocaleServiceProvider;
 import org.civilian.resource.Url;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.response.ResponseStreamInterceptor;
@@ -36,6 +35,7 @@ import org.civilian.response.std.ErrorResponse;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
+import org.civilian.text.LocaleServiceProvider;
 import org.civilian.util.Check;
 import org.civilian.util.UriEncoder;
 

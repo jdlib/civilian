@@ -36,6 +36,7 @@ import org.civilian.resource.PathParamProvider;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Url;
 import org.civilian.text.LocaleService;
+import org.civilian.text.LocaleServiceProvider;
 import org.civilian.type.Type;
 import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Check;

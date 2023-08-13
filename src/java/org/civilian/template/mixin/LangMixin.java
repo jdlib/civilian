@@ -16,9 +16,9 @@
 package org.civilian.template.mixin;
 
 
-import org.civilian.provider.LocaleServiceProvider;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
+import org.civilian.text.LocaleServiceProvider;
 import org.civilian.text.NumberStyle;
 import org.civilian.text.Style;
 import org.civilian.text.msg.MsgBundle;
