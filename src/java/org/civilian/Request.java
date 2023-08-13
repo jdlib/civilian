@@ -189,7 +189,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Returns the path of this request relative to the application path.
 	 * @see Application#getPath()
 	 */
-	@Override public Path getRelativePath();
+	public Path getRelativePath();
 
 	
 	/**

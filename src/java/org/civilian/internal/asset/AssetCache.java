@@ -62,15 +62,6 @@ public class AssetCache extends AssetService
 		return implementation_.getPath();
 	}
 
-	
-	/**
-	 * Returns the path of the AssetService implementation. 
-	 */
-	@Override public Path getRelativePath()
-	{
-		return implementation_.getRelativePath();
-	}
-
 
 	/**
 	 * Forwards to the implementation.

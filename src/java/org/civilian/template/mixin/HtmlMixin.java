@@ -352,17 +352,6 @@ public class HtmlMixin
 	}
 	
 	
-	/**
-	 * Returns a Url with the given path.  
-	 * @throws IllegalStateException thrown if the TemplateWriter does not 
-	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
-	 */
-	public Url url(Path path)
-	{
-		return new Url(response(), path);
-	}
-	
-	
 	//-----------------------------
 	// stacktrace
 	//-----------------------------

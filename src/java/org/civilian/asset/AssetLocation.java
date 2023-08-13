@@ -65,7 +65,7 @@ public abstract class AssetLocation extends AssetService
 	/**
 	 * Returns the path of the asset location relative to the asset root.
 	 */
-	@Override public Path getRelativePath()
+	public Path getRelativePath()
 	{
 		return relativePath_;
 	}

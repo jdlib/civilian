@@ -35,7 +35,6 @@ public class CombinedAssetServiceTest extends CivTest
 
 		CombinedAssetService service = new CombinedAssetService(new Path("myassets"), loc1, loc2);
 		assertEquals("/myassets", service.getPath().toString()); 
-		assertEquals("/myassets", service.getRelativePath().toString());
 		assertEquals("/myassets", service.toString());
 		assertNull(service.getAsset(new Path("/x")));
 		assertNull(service.getAsset(new Path("/myassets")));

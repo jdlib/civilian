@@ -20,20 +20,12 @@ import org.civilian.resource.Path;
 
 
 /**
- * A PathProvider is an object which is associated
- * with a path from the server root.
+ * PathProvider is able to return a Path. 
  */
 public interface PathProvider 
 {
 	/**
-	 * Returns the path from the server root to the resource. 
+	 * Returns the path. 
 	 */
 	public Path getPath();
-
-	
-	/**
-	 * Returns a path from an ancestor resource to this resource.
-	 * The ancestor resource depends on the implementation. 
-	 */
-	public Path getRelativePath();
 }

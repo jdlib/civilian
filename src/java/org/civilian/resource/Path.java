@@ -18,6 +18,8 @@ package org.civilian.resource;
 
 import java.io.PrintWriter;
 import java.io.Serializable;
+
+import org.civilian.provider.PathProvider;
 import org.civilian.util.Check;
 import org.civilian.util.StringUtil;
 
@@ -35,7 +37,7 @@ import org.civilian.util.StringUtil;
  * If you print a path object, you must ensure that the root path
  * is printed as "/". You can use {@link #print()} for that purpose.
  */
-public class Path implements CharSequence, Serializable, Comparable<Path>
+public class Path implements CharSequence, Serializable, Comparable<Path>, PathProvider
 {
 	private static final long serialVersionUID = 5312565042029867855L;
 	
@@ -100,6 +102,15 @@ public class Path implements CharSequence, Serializable, Comparable<Path>
 	private Path(Void dummy, String value)
 	{
 		value_ = value;
+	}
+	
+	
+	/**
+	 * Implements PathProvider and returns this.
+	 */
+	@Override public Path getPath()
+	{
+		return this;
 	}
 	
 	

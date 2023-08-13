@@ -76,28 +76,14 @@ public class Url implements PathParamProvider, ResponseProvider
 	 * Creates a Url consisting of the path provided
 	 * by the PathProvider.
 	 * @param rp a Response or a ResponseProvider whose Response is used by the Url
-	 * @param pathProvider provides a path. Classes like Context, Application
+	 * @param pathProvider provides a path. Classes like Path, Context, Application
 	 * 		Request, etc. are examples of PathProviders.   
 	 */
 	public Url(ResponseProvider rp, PathProvider pathProvider)
 	{
-		this(rp, Check.notNull(pathProvider, "pathProvider").getPath());
-	}
-
-	
-	/**
-	 * Creates a Url consisting of the path.
-	 * @param rp a Response or a ResponseProvider whose Response is used by the Url
-	 * @param path a path.   
-	 */
-	public Url(ResponseProvider rp, Path path)
-	{
-		Check.notNull(rp, "response provider");
-		Check.notNull(path, "path");
-		
-		response_ 		= rp.getResponse();
+		response_ 		= Check.notNull(rp, "responseProvider").getResponse();
+		additionalPath_ = Check.notNull(pathProvider, "pathProvider").getPath();
 		pathParams_		= EMPTY_PATH_PARAMS;
-		additionalPath_ = path;
 	}
 	
 	

@@ -31,8 +31,8 @@ import org.civilian.internal.DefaultApp;
 import org.civilian.internal.Logs;
 import org.civilian.internal.TempServer;
 import org.civilian.internal.admin.AdminApp;
-import org.civilian.provider.ServerProvider;
 import org.civilian.provider.PathProvider;
+import org.civilian.provider.ServerProvider;
 import org.civilian.resource.Path;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
@@ -518,15 +518,6 @@ public abstract class Server implements ServerProvider, PathProvider
 	 * of the associated ServletContext. 
 	 */
 	@Override public abstract Path getPath();
-
-	
-	/**
-	 * Returns {@link #getPath()}.
-	 */
-	@Override public Path getRelativePath()
-	{
-		return getPath();
-	}
 
 	
 	/**

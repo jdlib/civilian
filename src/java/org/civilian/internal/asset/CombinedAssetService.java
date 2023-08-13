@@ -61,15 +61,6 @@ public class CombinedAssetService extends AssetService
 		return path_;
 	}
 	
-
-	/**
-	 * Returns the relative path of the asset root below the application path. 
-	 */
-	@Override public Path getRelativePath()
-	{
-		return relativePath_;
-	}	
-	
 	
 	/**
 	 * Returns true, if the number of children is &gt; 0.
