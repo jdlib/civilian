@@ -92,5 +92,5 @@ public class JaxbXmlSerializer extends ContentSerializer
 	}
 	
 	
-	private JAXBContext context_;
+	private final JAXBContext context_;
 }
