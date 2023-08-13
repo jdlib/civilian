@@ -17,12 +17,12 @@ package org.civilian.template.mixin;
 
 
 import org.civilian.provider.LocaleServiceProvider;
-import org.civilian.provider.MsgBundleProvider;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
 import org.civilian.text.NumberStyle;
 import org.civilian.text.Style;
 import org.civilian.text.msg.MsgBundle;
+import org.civilian.text.msg.MsgBundleProvider;
 import org.civilian.type.Type;
 import org.civilian.type.fn.TypeSerializer;
 import org.civilian.type.fn.LocaleSerializer;

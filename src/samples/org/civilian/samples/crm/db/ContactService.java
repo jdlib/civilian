@@ -17,7 +17,7 @@
 
 
 import java.util.Random;
-import org.civilian.provider.MsgBundleProvider;
+import org.civilian.text.msg.MsgBundleProvider;
 import org.civilian.samples.crm.db.entity.Contact;
 import org.civilian.samples.crm.text.Message;
 
@@ -30,7 +30,7 @@ public class ContactService
 	public static final String FILTER_PHONE	 	= "phone";
 	
 		
-	public SearchResult search(MsgBundleProvider mp, SearchParam[] params)
+	public SearchResult search(MsgBundleProvider mp, SearchParam... params)
 	{
 		SearchResult result = new SearchResult
 		(

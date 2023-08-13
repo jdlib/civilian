@@ -13,11 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.provider;
-
-
-import org.civilian.text.msg.MsgBundle;
-
+package org.civilian.text.msg;
 
 /** 
  * An interface for a service which can provide

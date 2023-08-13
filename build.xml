@@ -424,7 +424,7 @@
                 <include name="org/civilian/internal/source/*.class"/>
                 <include name="org/civilian/tool/csp/*.class"/>
                 <include name="org/civilian/util/*.class"/>
-            	<include name="org/civilian/provider/MessageProvider.class"/>
+            	<include name="org/civilian/text/msg/MsgBundleProvider.class"/>
             </fileset>
             </jar>
             <echo>generated ${jarfile}</echo>

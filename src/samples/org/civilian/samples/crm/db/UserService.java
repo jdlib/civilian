@@ -16,9 +16,9 @@
  package org.civilian.samples.crm.db;
 
 
-import org.civilian.provider.MsgBundleProvider;
 import org.civilian.samples.crm.db.entity.User;
 import org.civilian.samples.crm.text.Message;
+import org.civilian.text.msg.MsgBundleProvider;
 
 
 public class UserService
@@ -72,7 +72,7 @@ public class UserService
 	}
 	
 	
-	public SearchResult search(MsgBundleProvider mp, SearchParam[] params)
+	public SearchResult search(MsgBundleProvider mp, SearchParam... params)
 	{
 		SearchResult result = new SearchResult
 		(

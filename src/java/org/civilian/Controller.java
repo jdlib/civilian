@@ -27,11 +27,11 @@ import org.civilian.controller.NegotiatedMethod;
 import org.civilian.internal.Logs;
 import org.civilian.provider.ApplicationProvider;
 import org.civilian.provider.ServerProvider;
-import org.civilian.provider.MsgBundleProvider;
 import org.civilian.provider.RequestProvider;
 import org.civilian.provider.ResponseProvider;
 import org.civilian.text.LocaleService;
 import org.civilian.text.msg.MsgBundle;
+import org.civilian.text.msg.MsgBundleProvider;
 import org.civilian.util.Check;
 import org.civilian.util.HttpHeaders;
 
