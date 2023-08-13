@@ -18,9 +18,10 @@ package org.civilian.client;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-import org.civilian.provider.PathParamProvider;
+
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
+import org.civilian.resource.PathParamProvider;
 import org.civilian.resource.Route;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;

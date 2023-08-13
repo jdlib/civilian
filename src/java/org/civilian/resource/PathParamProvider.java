@@ -13,10 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.provider;
-
-
-import org.civilian.resource.PathParam;
+package org.civilian.resource;
 
 
 /**
