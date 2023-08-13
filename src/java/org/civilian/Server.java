@@ -315,7 +315,7 @@ public abstract class Server implements ServerProvider, PathProvider
 	 * Closes all applications of the Server.
 	 * @see Application#close()
 	 */
-	protected void close()
+	protected synchronized void close()
 	{
 		// close in reverse initialization order
 		for (int i=apps_.size() - 1; i>=0; i--)
@@ -326,7 +326,7 @@ public abstract class Server implements ServerProvider, PathProvider
 	/**
 	 * Closes an application and removes it from the Server.
 	 */
-	protected void close(Application app)
+	protected synchronized void close(Application app)
 	{
 		if (app == null)
 			return;
@@ -372,9 +372,9 @@ public abstract class Server implements ServerProvider, PathProvider
 	 * Returns an list of all applications of the Server.
 	 * @return the list
 	 */
-	public List<Application> getApplications()
+	public synchronized List<Application> getApplications()
 	{
-		return Collections.unmodifiableList(apps_);
+		return new ArrayList<>(apps_);
 	}
 	
 	
@@ -383,7 +383,7 @@ public abstract class Server implements ServerProvider, PathProvider
 	 * @return the application or null
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends Application> T getApplication(Class<T> appClass)
+	public synchronized <T extends Application> T getApplication(Class<T> appClass)
 	{
 		for (Application app : apps_)
 		{
@@ -398,7 +398,7 @@ public abstract class Server implements ServerProvider, PathProvider
 	 * Returns the application with the given id.
 	 * @return the application or null
 	 */
-	public Application getApplication(String id)
+	public synchronized Application getApplication(String id)
 	{
 		for (Application app : apps_)
 		{
