@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.provider;
-
-
-import org.civilian.Application;
+package org.civilian;
 
 
 /**
- * ApplicationProvider is able to return an application reference. 
+ * ApplicationProvider is able to return an Application. 
  */
 public interface ApplicationProvider
 {

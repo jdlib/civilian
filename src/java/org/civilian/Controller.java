@@ -25,7 +25,6 @@ import org.civilian.controller.ControllerMethod;
 import org.civilian.controller.ControllerType;
 import org.civilian.controller.NegotiatedMethod;
 import org.civilian.internal.Logs;
-import org.civilian.provider.ApplicationProvider;
 import org.civilian.text.LocaleService;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleProvider;

@@ -18,7 +18,7 @@ package org.civilian.asset;
 
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.util.Check;
-import org.civilian.provider.ApplicationProvider;
+import org.civilian.ApplicationProvider;
 import org.civilian.template.TemplateWriter;
 
 

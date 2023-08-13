@@ -27,7 +27,6 @@ import org.civilian.application.AppConfig;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.JaxbXmlSerializer;
-import org.civilian.provider.ApplicationProvider;
 import org.civilian.provider.LocaleServiceProvider;
 import org.civilian.resource.Url;
 import org.civilian.response.ResponseHeaders;
