@@ -28,7 +28,6 @@ import java.util.Map;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
-import org.civilian.provider.*;
 import org.civilian.request.*;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
