@@ -16,10 +16,10 @@
  package org.civilian.samples.game;
 
 
+import org.civilian.RequestProvider;
 import org.civilian.form.Button;
 import org.civilian.form.Form;
 import org.civilian.form.IntField;
-import org.civilian.provider.RequestProvider;
 
 
 public class GameForm extends Form
