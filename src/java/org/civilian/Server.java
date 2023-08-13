@@ -60,12 +60,10 @@ public abstract class Server implements ServerProvider, PathProvider
 	private static final Logger log = Logs.SERVER;
 	
 	
-	/**
-	 * Creates a new Server.
-	 * The server sets the default line separator to "\n",
-	 */
-	public Server()
+	static
 	{
+		// in a server environment we want generated responses (html especially) to use a simple "\n"
+		// for linebreaks 
 		TemplateWriter.setDefaultLineSeparator("\n");
 	}
 	
@@ -78,9 +76,10 @@ public abstract class Server implements ServerProvider, PathProvider
 	/**
 	 * Reads a config or properties file into a settings object.
 	 * @param configName the name of the config file.
-	 * @return a settings object for the config file or null, if the file could not be read
+	 * @return the settings object 
+	 * @throws IOException if the file does not exist or cannot be read.
 	 */
-	public Settings readSettings(String configName) throws IllegalArgumentException, IOException
+	public Settings readSettings(String configName) throws IOException
 	{
 		Check.notNull(configName, "configName");
 		File configFile = getConfigFile(configName, FileType.EXISTENT_FILE);
@@ -107,15 +106,15 @@ public abstract class Server implements ServerProvider, PathProvider
 
 		AppLoader loader = createAppLoader(appClassLoader); 
 		
-		// read flags
+		// 1. read flags
 		develop_ = settings.getBoolean(ConfigKeys.DEVELOP, false);
 		
-		// 1. create applications: this may fail and throw any exception
+		// 2. create applications: this may fail and throw any exception
 		List<AppInfo> appInfos	= new ArrayList<>();
 		createCustomApps(loader, settings, appInfos);
 		createAdminApp(loader, new Settings(settings, ConfigKeys.ADMINAPP_PREFIX), appInfos);
 		
-		// 2. add apps to server
+		// 3. add apps to server
 		for (AppInfo info : appInfos)
 			addApp(info.app, info.id, info.path, info.settings);
 
@@ -154,13 +153,13 @@ public abstract class Server implements ServerProvider, PathProvider
 	}
 
 	
-	private void createAdminApp(AppLoader loader, Settings settings, List<AppInfo> appInfos) throws Exception
+	private void createAdminApp(AppLoader loader, Settings appSettings, List<AppInfo> appInfos) throws Exception
 	{
-		if (AppConfig.isEnabled(settings, develop_, develop_))
+		if (AppConfig.isEnabled(appSettings, develop_, develop_))
 		{
-			String path 	= settings.get(ConfigKeys.PATH, ConfigKeys.ADMIN_PATH_DEFAULT);
+			String path 	= appSettings.get(ConfigKeys.PATH, ConfigKeys.ADMIN_PATH_DEFAULT);
 			Application app = loader.createAdminApp();
-			AppInfo appInfo = new AppInfo("civadmin", settings, path, app);
+			AppInfo appInfo = new AppInfo("civadmin", appSettings, path, app);
 			appInfos.add(appInfo);
 		}
 	}
