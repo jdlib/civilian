@@ -156,7 +156,7 @@ public class AssetList implements TemplateWriter.Printable
 	}
 	
 
-	private Type type_;
+	private final Type type_;
+	private final String[] paths_;
 	private String[] productionPaths_;
-	private String[] paths_;
 }
