@@ -131,7 +131,7 @@ public class ClientConstGenerator
 	private void run() throws Exception
 	{
 		log("scanning resources");
-		Resource root = new ResourceScan(options_.app.getControllerConfig(), options_.app.getResourceConfig().getPathParams(), null, false)
+		Resource root = new ResourceScan(options_.app.getControllerConfig(), null, false)
 			.getRootResource();
 		
 		TemplateWriter out = new TemplateWriter(new StringWriter());

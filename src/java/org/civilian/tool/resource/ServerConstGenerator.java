@@ -126,7 +126,6 @@ public class ServerConstGenerator
 	{
 		ResourceScan scan = new ResourceScan(
 			options_.app.getControllerConfig(),
-			options_.app.getResourceConfig().getPathParams(),
 			null,
 			options_.verbose);
 		ResourceInfo root = scan.getRootInfo();

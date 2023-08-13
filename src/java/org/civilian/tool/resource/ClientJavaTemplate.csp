@@ -101,7 +101,7 @@ private void printCtorArgs(Resource resource, String parent)
 		@if (resource.getSegment() != null)
 			"<%resource.getSegment()%>"<%/%>
 		@else
-			<%app.getResourceConfig().getPathParams().getConstant(resource.getPathParam())%><%/%>
+			<%app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())%><%/%>
 	@else
 		url<%/%>
 }}

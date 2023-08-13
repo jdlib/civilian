@@ -49,7 +49,6 @@ import org.civilian.provider.PathProvider;
 import org.civilian.request.BadRequestException;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParamMap;
-import org.civilian.resource.ResourceConfig;
 import org.civilian.resource.scan.ResourceScan;
 import org.civilian.response.std.ErrorResponse;
 import org.civilian.response.std.NotFoundResponse;
@@ -117,8 +116,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 		else if (controllerRootPackage.startsWith("."))
 			controllerRootPackage = ClassUtil.getPackageName(getClass()) + controllerRootPackage;
 		
-		resourceConfig_ 	= new ResourceConfig(pathParams);
-		controllerConfig_ 	= new ControllerConfig(controllerRootPackage, controllerNaming);
+		controllerConfig_ = new ControllerConfig(controllerRootPackage, pathParams, controllerNaming);
 	}
 
 	
@@ -270,7 +268,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 
 		// init the controller service
 		controllerService_ = new ControllerService(
-			resourceConfig_.getPathParams(), 
+			controllerConfig_.getPathParams(), 
 			localeServices_.getTypeLib(), 
 			appConfig.getControllerFactory(),
 			clFactory);
@@ -282,7 +280,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 			// resource tree not specified: generate on the fly
 			// use the request classloader so in case we are doing class reload
 			// these touched classes will not stick
-			rootResource_ = new ResourceScan(getControllerConfig(), getResourceConfig().getPathParams(), clFactory.getRequestClassLoader(), false)
+			rootResource_ = new ResourceScan(getControllerConfig(), clFactory.getRequestClassLoader(), false)
 				.getRootResource();		
 		}
 		
@@ -534,15 +532,6 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 	public Resource getRootResource()
 	{
 		return rootResource_;
-	}
-	
-
-	/**
-	 * Returns the resource config which stores resource related settings.
-	 */
-	public ResourceConfig getResourceConfig()
-	{
-		return resourceConfig_;
 	}
 	
 
@@ -800,10 +789,9 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 	
 	// properties set after init(AppConfig)
 	private ControllerService controllerService_;
-	private ControllerConfig controllerConfig_;
+	private final ControllerConfig controllerConfig_;
 	private LocaleServiceList localeServices_;
 	private Resource rootResource_;
-	private ResourceConfig resourceConfig_;
 	private AssetService assetService_;
 	private UploadConfig uploadConfig_;
 	private String version_;

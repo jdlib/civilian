@@ -29,8 +29,8 @@ public class ResourceScanTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
-		ControllerConfig ctrlConfig = new ControllerConfig("org.civilian.testcase1", null);  
-		ResourceScan scan = new ResourceScan(ctrlConfig, Test1PathParams.MAP, null, false);
+		ControllerConfig ctrlConfig = new ControllerConfig("org.civilian.testcase1", Test1PathParams.MAP);  
+		ResourceScan scan = new ResourceScan(ctrlConfig, null, false);
 		Resource resource = scan.getRootResource();
 		// resource.print(System.out);
 		

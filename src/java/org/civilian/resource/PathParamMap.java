@@ -27,8 +27,8 @@ import org.civilian.Application;
 
 /**
  * PathParamMap holds the {@link PathParam PathParams} of an {@link Application}.
- * @see Application#getResourceConfig()
- * @see ResourceConfig#getPathParams()
+ * @see ControllerConfig#getPathParams()
+ * @see Application#getControllerConfig()
  */
 public class PathParamMap implements Iterable<PathParam<?>>
 {

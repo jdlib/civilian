@@ -17,6 +17,7 @@ package org.civilian.controller;
 
 
 import org.civilian.Application;
+import org.civilian.resource.PathParamMap;
 import org.civilian.util.Check;
 
 
@@ -29,12 +30,40 @@ public class ControllerConfig
 	/**
 	 * Creates a new ControllerConfig.
 	 */
-	public ControllerConfig(String rootPackage, ControllerNaming naming)
+	public ControllerConfig(String rootPackage)
 	{
+		this(rootPackage, null);
+	}
+	
+	
+	/**
+	 * Creates a new ControllerConfig.
+	 */
+	public ControllerConfig(String rootPackage, PathParamMap pathParams)
+	{
+		this(rootPackage, pathParams, null);
+	}
+
+	
+	/**
+	 * Creates a new ControllerConfig.
+	 */
+	public ControllerConfig(String rootPackage, PathParamMap pathParams, ControllerNaming naming)
+	{
+		pathParams_ = pathParams != null ? pathParams : PathParamMap.EMPTY;
 		rootPackage_ = Check.notNull(rootPackage, "rootPackage");
 		naming_ 	 = naming != null ? naming : new ControllerNaming();
 	}
 	
+	
+	/**
+	 * Returns the list of path parameters used by an application.
+	 */
+	public PathParamMap getPathParams()
+	{
+		return pathParams_;
+	}
+
 	
 	/**
 	 * Returns the root package of the application controller classes.
@@ -58,6 +87,7 @@ public class ControllerConfig
 	}
 
 	
+	private PathParamMap pathParams_;
 	private final String rootPackage_;
 	private final ControllerNaming naming_;
 }

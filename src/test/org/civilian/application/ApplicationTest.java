@@ -80,11 +80,11 @@ public class ApplicationTest extends CivTest
 		
 		Application app = new NoArgsApp();
 		assertEquals(pname, app.getControllerConfig().getRootPackage());
-		assertSame(PathParamMap.EMPTY, app.getResourceConfig().getPathParams());
+		assertSame(PathParamMap.EMPTY, app.getControllerConfig().getPathParams());
 
 		app = new RelPackageApp();
 		assertEquals(pname + ".root", app.getControllerConfig().getRootPackage());
-		assertSame(PathParamMap.EMPTY, app.getResourceConfig().getPathParams());
+		assertSame(PathParamMap.EMPTY, app.getControllerConfig().getPathParams());
 	}
 
 

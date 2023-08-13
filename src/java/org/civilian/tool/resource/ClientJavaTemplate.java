@@ -217,7 +217,7 @@ class ClientJavaTemplate
 			}
 			else                                                        // line 103: @else
 			{
-				out.print(app.getResourceConfig().getPathParams().getConstant(resource.getPathParam())); // line 104: <%app.getResourceConfig().getPathParams().getConstant(resource.getPathParam())%>
+				out.print(app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())); // line 104: <%app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())%>
 			}
 		}
 		else                                                            // line 105: @else

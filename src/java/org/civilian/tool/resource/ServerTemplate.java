@@ -288,7 +288,7 @@ class ServerTemplate
 	
 	private String pathParamConst(PathParam<?> param)
 	{
-		return app.getResourceConfig().getPathParams().getConstant(param);
+		return app.getControllerConfig().getPathParams().getConstant(param);
 	}
 	
 	

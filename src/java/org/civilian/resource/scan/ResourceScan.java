@@ -22,7 +22,6 @@ import org.civilian.Controller;
 import org.civilian.Resource;
 import org.civilian.controller.ControllerConfig;
 import org.civilian.internal.classpath.ClassPathScan;
-import org.civilian.resource.PathParamMap;
 
 
 /**
@@ -36,13 +35,12 @@ public class ResourceScan
 	 */
 	public ResourceScan(
 		ControllerConfig ctrlConfig,
-		PathParamMap pathParams,
 		ClassLoader classLoader,
 		boolean verbose) 
 		throws ScanException
 	{
 		classLoader_	= classLoader != null ? classLoader : getClass().getClassLoader();
-		resFactory_ 	= new ResourceFactory(ctrlConfig.getRootPackage(), ctrlConfig.getNaming(), pathParams); 
+		resFactory_ 	= new ResourceFactory(ctrlConfig.getRootPackage(), ctrlConfig.getNaming(), ctrlConfig.getPathParams()); 
 		verbose_		= verbose;
 		
 		scanClassPath();
