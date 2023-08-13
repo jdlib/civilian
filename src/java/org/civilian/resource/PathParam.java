@@ -18,10 +18,10 @@ package org.civilian.resource;
 
 import org.civilian.internal.pathparam.ConvertingPathParam;
 import org.civilian.internal.pathparam.PrecededPathParam;
-import org.civilian.response.UriEncoder;
 import org.civilian.type.Type;
 import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Check;
+import org.civilian.util.UriEncoder;
 
 
 /**

@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal;
+package org.civilian.util;
 
 
-import org.civilian.CivTest;
 import org.junit.Test;
+import org.civilian.CivTest;
 
 
 public class PercentEncoderTest extends CivTest

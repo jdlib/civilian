@@ -26,12 +26,12 @@ import org.civilian.controller.ControllerSignature;
 import org.civilian.provider.PathParamProvider;
 import org.civilian.provider.PathProvider;
 import org.civilian.provider.ResponseProvider;
-import org.civilian.response.UriEncoder;
 import org.civilian.text.LocaleService;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.type.fn.TypeSerializer;
 import org.civilian.util.Check;
+import org.civilian.util.UriEncoder;
 
 
 /**

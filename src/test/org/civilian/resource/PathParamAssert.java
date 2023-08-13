@@ -1,7 +1,7 @@
 package org.civilian.resource;
 
 
-import org.civilian.response.UriEncoder;
+import org.civilian.util.UriEncoder;
 import org.junit.Assert;
 
 

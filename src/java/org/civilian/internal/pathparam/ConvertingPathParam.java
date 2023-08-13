@@ -3,8 +3,8 @@ package org.civilian.internal.pathparam;
 
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathScanner;
-import org.civilian.response.UriEncoder;
 import org.civilian.type.Type;
+import org.civilian.util.UriEncoder;
 
 
 public class ConvertingPathParam<T> extends TypeBasedPathParam<T>

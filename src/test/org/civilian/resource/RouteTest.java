@@ -18,7 +18,7 @@ package org.civilian.resource;
 
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.response.UriEncoder;
+import org.civilian.util.UriEncoder;
 
 
 public class RouteTest extends CivTest

@@ -4,7 +4,7 @@ package org.civilian.internal.pathparam;
 import java.util.Optional;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathScanner;
-import org.civilian.response.UriEncoder;
+import org.civilian.util.UriEncoder;
 
 
 /**

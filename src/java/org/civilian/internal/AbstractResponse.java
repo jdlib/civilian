@@ -34,11 +34,11 @@ import org.civilian.internal.intercept.RespStreamInterceptorChain;
 import org.civilian.internal.intercept.RespWriterInterceptorChain;
 import org.civilian.response.ResponseStreamInterceptor;
 import org.civilian.response.ResponseWriterInterceptor;
-import org.civilian.response.UriEncoder;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
 import org.civilian.util.Check;
+import org.civilian.util.UriEncoder;
 
 
 /**

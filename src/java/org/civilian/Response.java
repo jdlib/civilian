@@ -36,12 +36,12 @@ import org.civilian.resource.Url;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.response.ResponseStreamInterceptor;
 import org.civilian.response.ResponseWriterInterceptor;
-import org.civilian.response.UriEncoder;
 import org.civilian.response.std.ErrorResponse;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.LocaleService;
 import org.civilian.util.Check;
+import org.civilian.util.UriEncoder;
 
 
 /**

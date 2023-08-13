@@ -17,10 +17,10 @@ package org.civilian.resource;
 
 
 import org.civilian.provider.PathParamProvider;
-import org.civilian.response.UriEncoder;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
+import org.civilian.util.UriEncoder;
 
 
 /**
