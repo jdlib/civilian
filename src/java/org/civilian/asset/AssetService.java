@@ -18,8 +18,8 @@ package org.civilian.asset;
 
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.internal.Logs;
-import org.civilian.provider.PathProvider;
 import org.civilian.resource.Path;
+import org.civilian.resource.PathProvider;
 import org.slf4j.Logger;
 
 

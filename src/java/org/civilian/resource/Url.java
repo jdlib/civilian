@@ -24,7 +24,6 @@ import org.civilian.Resource.Tree;
 import org.civilian.Response;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.provider.PathParamProvider;
-import org.civilian.provider.PathProvider;
 import org.civilian.provider.ResponseProvider;
 import org.civilian.text.LocaleService;
 import org.civilian.type.Type;

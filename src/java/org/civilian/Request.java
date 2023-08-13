@@ -32,6 +32,7 @@ import org.civilian.provider.*;
 import org.civilian.request.*;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
+import org.civilian.resource.PathProvider;
 import org.civilian.resource.Url;
 import org.civilian.text.LocaleService;
 import org.civilian.type.Type;
