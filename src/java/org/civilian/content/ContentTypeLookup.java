@@ -128,7 +128,7 @@ class ConstantContentTypeLookup extends ContentTypeLookup
 	}
 	
 	
-	private ContentType contentType_;
+	private final ContentType contentType_;
 }
 
 
@@ -151,12 +151,11 @@ class MapContentTypeLookup extends ContentTypeLookup
 
 	@Override public ContentType forExtension(String extension)
 	{
-		
 		return ext2type_.get(IoUtil.normExtension(extension));
 	}
 	
 	
-	private Map<String,ContentType> ext2type_;
+	private final Map<String,ContentType> ext2type_;
 }
 
 
@@ -190,7 +189,7 @@ class ServletContentTypeLookup extends ContentTypeLookup
 	}
 
 
-	private ServletContext servletContext_;
+	private final ServletContext servletContext_;
 }
 
 
