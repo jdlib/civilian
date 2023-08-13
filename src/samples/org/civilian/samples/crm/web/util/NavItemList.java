@@ -17,7 +17,8 @@
 
 
 import java.util.ArrayList;
-import org.civilian.provider.ResponseProvider;
+
+import org.civilian.ResponseProvider;
 
 
 @SuppressWarnings("serial")

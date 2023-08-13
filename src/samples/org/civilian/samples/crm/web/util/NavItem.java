@@ -18,7 +18,7 @@
 
 import org.civilian.Resource;
 import org.civilian.Response;
-import org.civilian.provider.ResponseProvider;
+import org.civilian.ResponseProvider;
 import org.civilian.resource.Url;
 
 

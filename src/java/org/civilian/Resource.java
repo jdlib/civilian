@@ -32,7 +32,6 @@ import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
 import org.civilian.internal.resource.ControllerTypeProvider;
-import org.civilian.provider.ResponseProvider;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathScanner;
