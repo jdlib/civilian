@@ -402,7 +402,8 @@ public class AppConfig
 	
 	
 	/**
-	 * Sets the UploadConfig. 
+	 * Sets the UploadConfig.
+	 * @param uploadConfig the config 
 	 */
 	public void setUploadConfig(UploadConfig uploadConfig)
 	{
@@ -420,7 +421,8 @@ public class AppConfig
 	 * is null. If you don't explicitly set the root resource
 	 * the application will build the resource 
 	 * tree after initialisation by scanning the classpath for
-	 * controller classes.  
+	 * controller classes.
+	 * @return the root resource  
 	 */
 	public Resource getRootResource()
 	{
@@ -435,6 +437,7 @@ public class AppConfig
 	 * controller classes. If you have generated a class defining
 	 * constants for all resource you may use its root resource to
 	 * avoid runtime scanning for controllers.
+	 * @param root the root
 	 */
 	public void setResourceRoot(Resource root)
 	{
@@ -459,6 +462,7 @@ public class AppConfig
 	
 	/**
 	 * Sets the default resource extension.
+	 * @param extension the extension
 	 */
 	public void setDefaultResExtension(String extension)
 	{

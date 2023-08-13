@@ -528,9 +528,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 * Returns a list of qualified response content types accepted by the client. 
 	 * This list is defined by the Accept header.
 	 * If the request does not specify an explicit list of accepted content-types
-	 * and {@link ExtensionMapping extension mappings} are configured, then
-	 * the extension of the path is used to determine the accepted content type. 
-	 * Else a list with the single content-type &#42;/&#42; is returned.
+	 * a list with the single content-type &#42;/&#42; is returned.
 	 * @return the ContentTypeList 
 	 */
 	public ContentTypeList getAcceptedContentTypes();
@@ -539,10 +537,8 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns the preferred Locale for response content.<br>
 	 * This Locale is defined by the Accept-Language header.<br> 
-	 * If the request does not contain a preferred locale and {@link ExtensionMapping extension locales} 
-	 * are configured, then the extension of the path is used to determine the accepted locale. 
-	 * Else the default locale of the application is returned. (Note: This differs from 
-	 * a servlet container which would return the default system locale).
+	 * If the request does not contain a preferred the default locale of the application is returned. 
+	 * (Note: This differs from a servlet container which would return the default system locale).
 	 * @return the locale 
 	 */
 	public abstract Locale getAcceptedLocale();

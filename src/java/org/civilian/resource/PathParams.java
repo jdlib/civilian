@@ -32,7 +32,7 @@ import org.civilian.internal.pathparam.YMDPathParam;
  * PathParams contains factory methods for PathParam objects.
  * The following table shows which paths the different patterns match and what 
  * path parameter values are extracted from the path:
- * <table summary="">
+ * <table>
  * <tr>
  * 		<th>Pattern</th>
  * 		<th>Accepted path or segment</th>

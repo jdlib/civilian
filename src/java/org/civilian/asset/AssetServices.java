@@ -100,7 +100,7 @@ public abstract class AssetServices
 	 * Returns the AssetLocation of an application, defined by an entry in civilian.ini.
 	 * The definition has the form type (':' param)? ('-&gt;' path)?
 	 * @param definition an entry app.&lt;appid&gt;.asset.location[.&lt;n&gt;]
-	 * @param locSetting the location settings
+	 * @param locSettings the location settings
 	 * @param server the server
 	 * @param appPath the application path
 	 */
