@@ -18,7 +18,7 @@ package org.civilian.util;
 
 /**
  * Charset is a small helper class  to determine if a character
- * is printable in a certain charset. (E.g. IS=-8859-1 can only
+ * is printable in a certain charset. (E.g. ISO-8859-1 can only
  * print characters &lt;= 0xff). We use this class
  * in HTML output to determine if we need to print a character reference
  * instead of the character itself.
@@ -80,14 +80,13 @@ class SimpleCharset extends Charset
 	}
 	
 	
-	@Override
-	public boolean isPrintable(char c)
+	@Override public boolean isPrintable(char c)
 	{
 		return c <= lastPrintable_;
 	}
 	
 	
-	private int lastPrintable_;
+	private final int lastPrintable_;
 }
 
 
