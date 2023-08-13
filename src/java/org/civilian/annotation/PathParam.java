@@ -23,9 +23,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.civilian.controller.ControllerConfig;
-import org.civilian.resource.PathParamMap;
-
 
 /**
  * PathParam is an annotation to either define a path-parameter
@@ -37,7 +34,6 @@ import org.civilian.resource.PathParamMap;
  * <li>parameters of controller action methods
  * </ol>
  * Its value is the name of a PathParam defined by the application.
- * (see {@link PathParamMap} and {@link ControllerConfig#getPathParams()}).
  * <h1>Used on packages</h1>
  * To qualify a package, create a package-info.java file and place
  * the annotation on its package statement. This means that

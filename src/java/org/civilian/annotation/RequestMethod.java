@@ -20,12 +20,11 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import org.civilian.Request;
 
 
 /**
  * Place the RequestMethod annotation on a controller action method to specify 
- * the allowed {@link Request#getMethod() request methods} of the action. 
+ * the allowed request methods of the action. 
  * Or use one of its shortcuts: {@link Get}, {@link Post}, {@link Put}, {@link Delete}, {@link Head}, {@link Options} 
  */
 @Documented

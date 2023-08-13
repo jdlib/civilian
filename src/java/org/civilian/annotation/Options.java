@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 
 /**
- * Specifies that the annotated controller method responds to OPTION requests.
+ * Specifies that the annotated controller method responds to OPTIONS requests.
  */
 @Target({java.lang.annotation.ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

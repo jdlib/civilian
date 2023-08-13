@@ -22,12 +22,10 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import org.civilian.Request;
 
 
 /**
- * An annotation to inject the value of a 
- * {@link Request#getCookies() cookie} of a request
+ * An annotation to inject the value of a request cookie
  * into the parameter of a controller action method.
  * {@link DefaultValue} can be used to specify a default value if the request contains
  * no such cookie.
