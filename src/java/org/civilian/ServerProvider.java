@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.provider;
-
-
-import org.civilian.Server;
+package org.civilian;
 
 
 /**
- * ServerProvider is able to return a {@link Server} reference. 
+ * ServerProvider is able to return a {@link Server}. 
  */
 public interface ServerProvider
 {

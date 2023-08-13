@@ -44,7 +44,6 @@ import org.civilian.processor.ProcessorConfig;
 import org.civilian.processor.ProcessorList;
 import org.civilian.processor.ResourceDispatch;
 import org.civilian.provider.ApplicationProvider;
-import org.civilian.provider.ServerProvider;
 import org.civilian.request.BadRequestException;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParamMap;

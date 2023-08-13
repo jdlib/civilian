@@ -31,7 +31,6 @@ import org.civilian.internal.DefaultApp;
 import org.civilian.internal.Logs;
 import org.civilian.internal.TempServer;
 import org.civilian.internal.admin.AdminApp;
-import org.civilian.provider.ServerProvider;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;
 import org.civilian.template.TemplateWriter;
