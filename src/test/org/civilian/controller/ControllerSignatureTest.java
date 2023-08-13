@@ -28,8 +28,8 @@ public class ControllerSignatureTest extends CivTest
 	@Test public void testParse()
 	{
 		ControllerSignature sig;
-		PathParamMap map = new PathParamMap();
-		PathParam<String> pp = map.add(PathParams.forSegment("p"));
+		PathParam<String> pp = PathParams.forSegment("p");
+		PathParamMap map = new PathParamMap(pp);
 		
 		sig = ControllerSignature.parse(null, map);
 		assertNull(sig);

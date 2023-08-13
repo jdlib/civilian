@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Collections;
 import org.civilian.Application;
+import org.civilian.util.Check;
 
 
 /**
@@ -32,69 +33,41 @@ import org.civilian.Application;
  */
 public class PathParamMap implements Iterable<PathParam<?>>
 {
-	public static final PathParamMap EMPTY = new PathParamMap().seal();
+	public static final PathParamMap EMPTY = new PathParamMap();
 	
 	
 	public PathParamMap()
 	{
+		map_ = Map.of();
+		constantsClass_ = null;
+	}
+
+	
+	public PathParamMap(PathParam<?>... params)
+	{
+		this(null, params);
 	}
 	
 	
-	public PathParamMap(Class<?> constantsClass)
+	public PathParamMap(Class<?> constantsClass, PathParam<?>... params)
 	{
 		constantsClass_ = constantsClass;
+		Map<String,PathParam<?>> map = new HashMap<>();
+		for (PathParam<?> param : params)
+			map.put(Check.notNull(param, "param").getName(), param);
+		map_ = Collections.unmodifiableMap(map);
 	}
 	
 	
 	@Override public Iterator<PathParam<?>> iterator()
 	{
-		return pathParams_.values().iterator();
+		return map_.values().iterator();
 	}
 
 
 	public PathParam<?> get(String name)
 	{
-		return pathParams_.get(name);
-	}
-	
-	
-	public <T,P extends PathParam<T>> P add(P param)
-	{
-		if (sealed_)
-			throw new IllegalStateException("map sealed");
-		pathParams_.put(param.getName(), param);
-		return param;
-	}
-	
-	
-	public <T,P extends PathParam<T>> P addAndSeal(P param)
-	{
-		add(param);
-		seal();
-		return param;
-	}
-
-	
-	/**
-	 * Seals the map: You can't add further parameters to it.
-	 */
-	public PathParamMap seal()
-	{
-		if (!sealed_)
-		{
-			sealed_ = true;
-			pathParams_ = Collections.unmodifiableMap(pathParams_);
-		}
-		return this;
-	}
-	
-	
-	/**
-	 * Returns if the map is sealed. 
-	 */
-	public boolean isSealed()
-	{
-		return sealed_;
+		return map_.get(name);
 	}
 	
 	
@@ -153,11 +126,10 @@ public class PathParamMap implements Iterable<PathParam<?>>
 	 */
 	public Map<String,PathParam<?>> toMap()
 	{
-		return new HashMap<>(pathParams_); 
+		return map_; 
 	}
 		
 	
-	private boolean sealed_;
-	private Class<?> constantsClass_;
-	private Map<String,PathParam<?>> pathParams_ = new HashMap<>(); 
+	private final Map<String,PathParam<?>> map_; 
+	private final Class<?> constantsClass_;
 }

@@ -24,9 +24,9 @@ import org.civilian.type.TypeLib;
 
 public interface CrmPathParams
 {
-	public static final PathParamMap MAP 					= new PathParamMap(CrmPathParams.class);
-	public static final PathParam<Integer> CUSTOMERID 		= MAP.add(PathParams.forSegment("customerId").converting(TypeLib.INTEGER));
-	public static final PathParam<Integer> OPPORTUNITYID 	= MAP.add(PathParams.forSegment("opportunityId").converting(TypeLib.INTEGER));
-	public static final PathParam<Integer> CONTACTID 		= MAP.add(PathParams.forSegment("contactId").converting(TypeLib.INTEGER));
-	public static final PathParam<Integer> USERID		 	= MAP.addAndSeal(PathParams.forSegment("userId").converting(TypeLib.INTEGER));
+	public static final PathParam<Integer> CUSTOMERID 		= PathParams.forSegment("customerId").converting(TypeLib.INTEGER);
+	public static final PathParam<Integer> OPPORTUNITYID 	= PathParams.forSegment("opportunityId").converting(TypeLib.INTEGER);
+	public static final PathParam<Integer> CONTACTID 		= PathParams.forSegment("contactId").converting(TypeLib.INTEGER);
+	public static final PathParam<Integer> USERID		 	= PathParams.forSegment("userId").converting(TypeLib.INTEGER);
+	public static final PathParamMap MAP 					= new PathParamMap(CrmPathParams.class, CUSTOMERID, OPPORTUNITYID, CONTACTID, USERID);
 }

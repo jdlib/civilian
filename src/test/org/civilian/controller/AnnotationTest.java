@@ -51,8 +51,7 @@ public class AnnotationTest extends CivTest
 	@BeforeClass public static void beforeClass()
 	{
 		typeLib_ 	= new TypeLib();
-		pathParams_ = new PathParamMap(null);
-		pathParams_.addAndSeal(PathParams.forSegment("customerId").converting(TypeLib.INTEGER));
+		pathParams_ = new PathParamMap(PathParams.forSegment("customerId").converting(TypeLib.INTEGER));
 	}
 	
 	

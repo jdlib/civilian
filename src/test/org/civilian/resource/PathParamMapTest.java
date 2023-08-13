@@ -26,8 +26,8 @@ public class PathParamMapTest extends CivTest
 	@SuppressWarnings("unused")
 	public static class Params
 	{
-		public static final PathParamMap MAP = new PathParamMap(Params.class);
-		public static final PathParam<String> ID = MAP.addAndSeal(PathParams.forSegment("id"));
+		public static final PathParam<String> ID = PathParams.forSegment("id");
+		public static final PathParamMap MAP = new PathParamMap(Params.class, ID);
 		
 		public final Object X = new Object();
 		private static final Object Y = new Object();
@@ -54,22 +54,6 @@ public class PathParamMapTest extends CivTest
 		assertSame(Params.ID, Params.MAP.get("id"));
 		
 		assertEquals(1, Params.MAP.toMap().size());
-	}
-
-
-	@Test public void testSealed()
-	{
-		assertTrue(Params.MAP.isSealed());
-		try
-		{
-			Params.MAP.add(PathParams.forSegment("id2"));
-		}
-		catch(IllegalStateException e)
-		{
-		}
-		
-		// does not have an effect
-		Params.MAP.seal();
 	}
 
 

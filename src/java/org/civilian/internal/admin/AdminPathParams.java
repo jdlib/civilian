@@ -23,6 +23,6 @@ import org.civilian.resource.PathParams;
 
 public interface AdminPathParams
 {
-	public static final PathParamMap MAP 		= new PathParamMap(AdminPathParams.class);
-	public static final PathParam<String> APPID = MAP.addAndSeal(PathParams.forSegment("appId"));
+	public static final PathParam<String> APPID = PathParams.forSegment("appId");
+	public static final PathParamMap MAP 		= new PathParamMap(AdminPathParams.class, APPID);
 }
