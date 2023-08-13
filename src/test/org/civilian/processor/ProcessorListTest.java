@@ -80,6 +80,12 @@ public class ProcessorListTest extends CivTest
 	
 	private static class TestProcessor extends Processor
 	{
+		@Override public String getInfo() 
+		{
+			return getClass().getSimpleName();
+		}
+
+		
 		@Override public boolean process(Request request, ProcessorChain chain) throws Exception
 		{
 			called++;
@@ -89,8 +95,7 @@ public class ProcessorListTest extends CivTest
 		}
 		
 		
-		@Override
-		public void close()
+		@Override public void close()
 		{
 			closed = true;
 		}

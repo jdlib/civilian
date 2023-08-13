@@ -45,6 +45,12 @@ public class Compressor extends Processor
 	public static final String NO_COMPRESSION = "compressor-none";
 	
 	
+	@Override public String getInfo() 
+	{
+		return getClass().getSimpleName();
+	}
+
+	
 	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
 	{
 		String accepted = request.getHeaders().get(HttpHeaders.ACCEPT_ENCODING);

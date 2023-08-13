@@ -51,10 +51,14 @@ public class ProcessorList extends Processor implements Iterable<Processor>
 		processors_ = processors;
 		for (int i=0; i<processors.length; i++)
 			Check.notNull(processors[i], "processor");
-		
-		info_ = "size " + processors.length;
 	}
 	
+	
+	@Override public String getInfo() 
+	{
+		return "size " + processors_.length;
+	}
+
 	
 	public int size()
 	{

@@ -40,6 +40,12 @@ public class ResourceDispatch extends Processor
 			throw new IllegalStateException("no controller service set on resource tree");
 		info_ = "service: " + service.toString() + ": reloading " + service.isReloading();
 	}
+	
+
+	@Override public String getInfo() 
+	{
+		return info_;
+	}
 
 	
 	/**
@@ -70,5 +76,6 @@ public class ResourceDispatch extends Processor
 	}
 
 
-	private Resource rootResource_;
+	private final Resource rootResource_;
+	private final String info_;
 }

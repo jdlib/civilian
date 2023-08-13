@@ -45,15 +45,18 @@ public class AssetDispatch extends Processor
 	 */
 	public AssetDispatch(AssetService assetService)
 	{
-		Check.notNull(assetService, "assetService");
+		assetService_ = Check.notNull(assetService, "assetService");
 		if (!assetService.hasAssets())
 			throw new IllegalArgumentException("AssetService is empty");
-
-		assetService_	= assetService;
-		info_ 			= assetService.getInfo();
 	}
 	
 
+	@Override public String getInfo() 
+	{
+		return assetService_.getInfo();
+	}
+
+	
 	/**
 	 * Tries to find the asset corresponding to the request path.
 	 * If not found, it invokes the next processor in the processor chain.
@@ -93,6 +96,6 @@ public class AssetDispatch extends Processor
 	}
 
 	
-	private AssetService assetService_;
+	private final AssetService assetService_;
 	private static final String VALID_METHODS = "GET, HEAD, POST, OPTIONS";
 }

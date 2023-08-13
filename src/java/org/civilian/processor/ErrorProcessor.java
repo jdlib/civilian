@@ -33,11 +33,18 @@ public class ErrorProcessor extends Processor
 		statusCode_	= statusCode;
 		message_	= message;
 		error_ 		= error;
-		info_ 		= String.valueOf(statusCode);
-		if (error != null)
-			info_ += " " + error.getMessage();
-		else if (message != null)
-			info_ += " " + message;
+	}
+	
+	
+	@Override public String getInfo() 
+	{
+		StringBuilder s = new StringBuilder();
+		s.append(statusCode_);
+		if (error_ != null)
+			s.append(' ').append(error_.getMessage());
+		else if (message_ != null)
+			s.append(' ').append(message_);
+		return s.toString();
 	}
 	
 
@@ -49,7 +56,7 @@ public class ErrorProcessor extends Processor
 	}
 
 
-	private String message_;
-	private Throwable error_;
-	private int statusCode_;
+	private final String message_;
+	private final Throwable error_;
+	private final int statusCode_;
 }

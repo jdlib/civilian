@@ -34,6 +34,12 @@ import org.civilian.util.HttpHeaders;
  */
 public class Decompressor extends Processor 
 {
+	@Override public String getInfo() 
+	{
+		return getClass().getSimpleName();
+	}
+
+	
 	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
 	{
 		String scheme = request.getHeaders().get(HttpHeaders.CONTENT_ENCODING);

@@ -59,6 +59,8 @@ public class IpFilter extends Processor
 
 		if (tests.size() > 0)
 			tests.toArray(ipTests_ = new IpTest[tests.size()]);
+		else
+			ipTests_ = null;
 		
 		// build info
 		StringBuilder sb = new StringBuilder("Allowed IPs: ");
@@ -75,6 +77,12 @@ public class IpFilter extends Processor
 			sb.append("all");
 		
 		info_ = sb.toString();
+	}
+	
+	
+	@Override public String getInfo() 
+	{
+		return info_;
 	}
 	
 	
@@ -180,5 +188,6 @@ public class IpFilter extends Processor
 	}
 	
 	
-	private IpTest[] ipTests_;
+	private final IpTest[] ipTests_;
+	private final String info_;
 }

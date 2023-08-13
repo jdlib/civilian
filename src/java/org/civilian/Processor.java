@@ -46,11 +46,9 @@ public abstract class Processor
 	
 	/**
 	 * Returns information about the processor.
+	 * Used by the admin app to list processors.
 	 */
-	public String getInfo()
-	{
-		return info_;
-	}
+	public abstract String getInfo();
 	
 	
 	/**
@@ -60,11 +58,4 @@ public abstract class Processor
 	public void close()
 	{
 	}
-	
-	
-	/**
-	 * The info string returned by the default implementation of {@link #getInfo()}.
-	 * Processor implementation should initialize the info string in their constructor.
-	 */
-	protected String info_ = ""; 
 }
