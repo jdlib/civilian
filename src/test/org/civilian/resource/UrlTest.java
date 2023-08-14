@@ -25,7 +25,6 @@ import static org.mockito.Mockito.*;
 import java.util.Locale;
 import org.civilian.CivTest;
 import org.civilian.Request;
-import org.civilian.Resource;
 import org.civilian.Response;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.type.StandardSerializer;

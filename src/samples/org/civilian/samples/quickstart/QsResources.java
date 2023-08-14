@@ -22,7 +22,7 @@ public interface QsResources
 	/**
 	 * "/" -> org.civilian.samples.quickstart.IndexController
 	 */
-	public static class Root extends org.civilian.Resource
+	public static class Root extends org.civilian.resource.Resource
 	{
 		public Root()
 		{
@@ -41,21 +41,21 @@ public interface QsResources
 		/**
 		 * "/users" -> org.civilian.samples.quickstart.users.IndexController
 		 */
-		public static class Users extends org.civilian.Resource
+		public static class Users extends org.civilian.resource.Resource
 		{
-			public Users(org.civilian.Resource parent)
+			public Users(org.civilian.resource.Resource parent)
 			{
 				super(parent, "users");
 				setControllerSignature(sig(".users", "IndexController"));
 
-				this.$userId = new org.civilian.Resource(this, org.civilian.samples.quickstart.QsPathParams.USERID);
+				this.$userId = new org.civilian.resource.Resource(this, org.civilian.samples.quickstart.QsPathParams.USERID);
 				this.$userId.setControllerSignature(sig(".users.id", "IndexController"));
 			}
 
 			/**
 			 * "/users/{userId}" -> org.civilian.samples.quickstart.users.id.IndexController
 			 */
-			public final org.civilian.Resource $userId;
+			public final org.civilian.resource.Resource $userId;
 		}
 
 

@@ -19,8 +19,8 @@ package org.civilian.resource.scan;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.civilian.CivTest;
-import org.civilian.Resource;
 import org.civilian.controller.ControllerConfig;
+import org.civilian.resource.Resource;
 import org.civilian.testcase1.Test1PathParams;
 import org.junit.Test;
 

@@ -47,6 +47,7 @@ import org.civilian.request.BadRequestException;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParamMap;
 import org.civilian.resource.PathProvider;
+import org.civilian.resource.Resource;
 import org.civilian.resource.scan.ResourceScan;
 import org.civilian.response.std.ErrorResponse;
 import org.civilian.response.std.NotFoundResponse;

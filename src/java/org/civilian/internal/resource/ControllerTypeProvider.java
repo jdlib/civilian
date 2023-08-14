@@ -16,9 +16,9 @@
 package org.civilian.internal.resource;
 
 
-import org.civilian.Resource;
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerType;
+import org.civilian.resource.Resource;
 
 
 /**

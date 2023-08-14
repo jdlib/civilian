@@ -18,9 +18,9 @@ package org.civilian.tool.resource;
 
 import java.io.StringWriter;
 import org.civilian.Application;
-import org.civilian.Resource;
 import org.civilian.internal.source.OutputFile;
 import org.civilian.internal.source.OutputLocation;
+import org.civilian.resource.Resource;
 import org.civilian.resource.scan.ResourceScan;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.Arguments;

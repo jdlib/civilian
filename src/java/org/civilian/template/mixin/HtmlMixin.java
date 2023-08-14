@@ -18,11 +18,11 @@ package org.civilian.template.mixin;
 
 import org.civilian.ApplicationProvider;
 import org.civilian.Controller;
-import org.civilian.Resource;
 import org.civilian.Response;
 import org.civilian.ResponseProvider;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;
+import org.civilian.resource.Resource;
 import org.civilian.resource.Url;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;

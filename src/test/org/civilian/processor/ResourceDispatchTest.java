@@ -8,11 +8,11 @@ import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.Controller;
 import org.civilian.Request;
-import org.civilian.Resource;
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerType;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
+import org.civilian.resource.Resource;
 
 
 public class ResourceDispatchTest extends CivTest

@@ -27,7 +27,6 @@ import java.util.Iterator;
 import java.util.Map;
 import org.civilian.Application;
 import org.civilian.Request;
-import org.civilian.Resource;
 import org.civilian.Response;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
@@ -38,6 +37,7 @@ import org.civilian.request.RequestReaderInterceptor;
 import org.civilian.request.RequestStreamInterceptor;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
+import org.civilian.resource.Resource;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
 

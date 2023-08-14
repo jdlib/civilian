@@ -22,7 +22,7 @@ public interface AdminResources
 	/**
 	 * "/" -> org.civilian.internal.admin.IndexController
 	 */
-	public static class Root extends org.civilian.Resource
+	public static class Root extends org.civilian.resource.Resource
 	{
 		public Root()
 		{
@@ -43,27 +43,27 @@ public interface AdminResources
 		 */
 		public static class $AppId
 		{
-			public $AppId(org.civilian.Resource parent)
+			public $AppId(org.civilian.resource.Resource parent)
 			{
-				this.resource_ = new org.civilian.Resource(parent, org.civilian.internal.admin.AdminPathParams.APPID);
-				this.resources = new org.civilian.Resource(this.resource_, "resources");
+				this.resource_ = new org.civilian.resource.Resource(parent, org.civilian.internal.admin.AdminPathParams.APPID);
+				this.resources = new org.civilian.resource.Resource(this.resource_, "resources");
 				this.resources.setControllerSignature(sig(".app", "ResourcesController"));
-				this.settings = new org.civilian.Resource(this.resource_, "settings");
+				this.settings = new org.civilian.resource.Resource(this.resource_, "settings");
 				this.settings.setControllerSignature(sig(".app", "SettingsController"));
 			}
 
 			/**
 			 * "/{appId}/resources" -> org.civilian.internal.admin.app.ResourcesController
 			 */
-			public final org.civilian.Resource resources;
+			public final org.civilian.resource.Resource resources;
 
 			/**
 			 * "/{appId}/settings" -> org.civilian.internal.admin.app.SettingsController
 			 */
-			public final org.civilian.Resource settings;
+			public final org.civilian.resource.Resource settings;
 
 			// hidden since not mapped to a controller
-			private final org.civilian.Resource resource_;
+			private final org.civilian.resource.Resource resource_;
 		}
 
 

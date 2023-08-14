@@ -17,9 +17,9 @@ package org.civilian.processor;
 
 
 import org.civilian.Request;
-import org.civilian.Resource;
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerType;
+import org.civilian.resource.Resource;
 import org.civilian.util.Check;
 
 

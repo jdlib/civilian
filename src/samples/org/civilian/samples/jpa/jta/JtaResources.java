@@ -22,21 +22,21 @@ public interface JtaResources
 	/**
 	 * "/" -> org.civilian.samples.jpa.jta.IndexController
 	 */
-	public static class Root extends org.civilian.Resource
+	public static class Root extends org.civilian.resource.Resource
 	{
 		public Root()
 		{
 			super();
 			setControllerSignature(sig("", "IndexController"));
 
-			this.create = new org.civilian.Resource(this, "create");
+			this.create = new org.civilian.resource.Resource(this, "create");
 			this.create.setControllerSignature(sig("", "CreateController"));
 		}
 
 		/**
 		 * "/create" -> org.civilian.samples.jpa.jta.CreateController
 		 */
-		public final org.civilian.Resource create;
+		public final org.civilian.resource.Resource create;
 
 
 		private static ControllerSignature sig(String subPackage, String className)

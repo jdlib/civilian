@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian;
+package org.civilian.resource;
 
 
 import java.io.PrintStream;
@@ -27,17 +27,14 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.civilian.Controller;
 import org.civilian.application.AppConfig;
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
 import org.civilian.internal.resource.ControllerTypeProvider;
-import org.civilian.resource.Path;
-import org.civilian.resource.PathParam;
-import org.civilian.resource.PathScanner;
 import org.civilian.resource.PathScanner.Mark;
-import org.civilian.resource.Route;
-import org.civilian.resource.Url;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
 import org.civilian.util.IoUtil;

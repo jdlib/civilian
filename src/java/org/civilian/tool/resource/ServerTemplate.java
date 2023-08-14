@@ -7,9 +7,9 @@ package org.civilian.tool.resource;
 
 import java.time.LocalDateTime;
 import org.civilian.Application;
-import org.civilian.Resource;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.resource.PathParam;
+import org.civilian.resource.Resource;
 import org.civilian.resource.scan.ResourceInfo;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.ClassUtil;

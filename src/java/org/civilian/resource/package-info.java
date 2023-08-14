@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * Contains {@link org.civilian.Resource} related classes.
+ * Contains {@link org.civilian.resource.Resource} related classes.
  */
 package org.civilian.resource;

@@ -24,11 +24,10 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.Resource;
-import org.civilian.Resource.Match;
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
+import org.civilian.resource.Resource.Match;
 import org.civilian.testcase1.AlphaController;
 import org.civilian.type.TypeLib;
 

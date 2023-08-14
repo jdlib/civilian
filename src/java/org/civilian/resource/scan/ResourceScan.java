@@ -19,9 +19,9 @@ package org.civilian.resource.scan;
 import java.lang.reflect.Modifier;
 import java.util.Set;
 import org.civilian.Controller;
-import org.civilian.Resource;
 import org.civilian.controller.ControllerConfig;
 import org.civilian.internal.classpath.ClassPathScan;
+import org.civilian.resource.Resource;
 
 
 /**

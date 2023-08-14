@@ -44,7 +44,7 @@
 		</ul> 
 		The Path class supports common operations like adding two paths.<br>
 		Many core objects like {javadoc:Server}, {javadoc:Application}, {javadoc:Request}, 
-		{javadoc:Resource} etc. are associated with an absolute path from the server root and 
+		{javadoc:resource.Resource} etc. are associated with an absolute path from the server root and 
 		a relative path with regard to some parent context. They implement the interface
 		{javadoc:resource.PathProvider} to give access to these paths.		
 		
@@ -61,7 +61,7 @@
 		<li>a {javadoc:resource.PathProvider} like the {javadoc:Application} or the {javadoc:Request} 
 			to build an Url for the {javadoc:resource.PathProvider#getPath() path} of that provider.   
 		<li>a {javadoc:Controller} class to build a URL to the resource which is processed by that Controller.   
-		<li>a {javadoc:Resource} to build a URL to that resource.   
+		<li>a {javadoc:resource.Resource} to build a URL to that resource.   
 		</ul>
 		<div class="highlight">
 			<pre><code>RequestProvider rp = ...<br
@@ -109,7 +109,7 @@
 		the classpath for the applications controller classes.
 		<p>
 		But Civilian also allows you to generate a special Java class from the resource tree, which defines
-		a Java constant of type {javadoc:Resource} for every dynamic resource in the application.
+		a Java constant of type {javadoc:resource.Resource} for every dynamic resource in the application.
 		An Url to a resource can now also be built by using that constant, as alternative to passing
 		the corresponding controller class.
 		<p>
@@ -178,7 +178,7 @@
 		The techniques described so far are available on the server.
 		But suppose we write a client program to access server resources. Again we don't want to build URLs out of
 		error prone strings.<br>
-		Since the {javadoc:Resource} and {javadoc:resource.Url} classes are bound to a server-side execution context we cannot
+		Since the {javadoc:resource.Resource} and {javadoc:resource.Url} classes are bound to a server-side execution context we cannot
 		use them directly. 
 		Instead Civilian provides the {javadoc:client.WebResource} and {javadoc:client.WebUrl} classes for use in a client
 		program.
