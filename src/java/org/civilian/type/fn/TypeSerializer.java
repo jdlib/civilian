@@ -23,6 +23,7 @@ import org.civilian.text.keys.KeyType;
 import org.civilian.type.DiscreteType;
 import org.civilian.type.EnumType;
 import org.civilian.type.Type;
+import org.civilian.util.Value;
 
 
 /**
@@ -228,6 +229,28 @@ public abstract class TypeSerializer
 		throw new UnsupportedTypeException(this, "parse", type);
 	}
 	
+	
+	/**
+	 * Parses the value from a string.
+	 * @param type a Type object
+	 * @param string the string representation 
+	 * @param serializer a TypeSerializer which understands the string format.
+	 * @return true if the value was successfully parsed, false if not.
+	 */
+	public <T> Value<T> parseValue(Type<T> type, String s)
+	{
+		Value<T> result = new Value<>();
+		try
+		{
+			result.setValue(parse(type, s));
+		}
+		catch(Exception e)
+		{
+			result.setError(e, s);
+		}
+		return result;
+	}
+
 	
 	public <T> T[] parseArray(Type<T> type, String s[]) throws ParseException
 	{

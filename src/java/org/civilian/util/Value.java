@@ -16,10 +16,6 @@
 package org.civilian.util;
 
 
-import org.civilian.type.Type;
-import org.civilian.type.fn.TypeSerializer;
-
-
 /**
  * Value represents a value.
  * It either
@@ -45,19 +41,6 @@ public class Value<T>
 	public Value(T value)
 	{
 		setValue(value);
-	}
-
-	
-	/**
-	 * Creates a new Value for the given Type.
-	 * and parses the value from a string.
-	 * @param type a Type object
-	 * @param string the string representation 
-	 * @param serializer a TypeSerializer which understands the string format.
-	 */
-	public Value(Type<T> type, String string, TypeSerializer serializer)
-	{
-		setValue(type, string, serializer);
 	}
 
 	
@@ -89,29 +72,6 @@ public class Value<T>
 		errorValue_ = null;
 	}
 	
-	
-	/**
-	 * Parses the value from a string.
-	 * @param type a Type object
-	 * @param string the string representation 
-	 * @param serializer a TypeSerializer which understands the string format.
-	 * @return true if the value was successfully parsed, false if not.
-	 */
-	public boolean setValue(Type<T> type, String string, TypeSerializer serializer)
-	{
-		try
-		{
-			T value = serializer.parse(type, string);
-			setValue(value);
-			return true;
-		}
-		catch(Exception e)
-		{
-			setError(e, string);
-			return false;
-		}
-	}
-
 	
 	/**
 	 * Returns the error.

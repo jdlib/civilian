@@ -169,7 +169,7 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	
 	@Override public <T> Value<T> get(String name, Type<T> type)
 	{
-		return new Value<>(type, get(name), StandardSerializer.INSTANCE);
+		return StandardSerializer.INSTANCE.parseValue(type, get(name));
 	}
 
 	

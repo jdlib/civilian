@@ -343,7 +343,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 */
 	public default <T> Value<T> getParameter(String name, Type<T> type)
 	{
-		return new Value<>(type, getParameter(name), StandardSerializer.INSTANCE);
+		return StandardSerializer.INSTANCE.parseValue(type, getParameter(name));
 	}
 
 	
@@ -432,7 +432,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	 */
 	public default <T> Value<T> getMatrixParam(String name, Type<T> type)
 	{
-		return new Value<>(type, getMatrixParam(name), StandardSerializer.INSTANCE);
+		return StandardSerializer.INSTANCE.parseValue(type, getMatrixParam(name));
 	}
 
 	
