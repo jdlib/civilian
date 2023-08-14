@@ -27,8 +27,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
-import org.civilian.type.Type;
-import org.civilian.type.fn.StandardSerializer;
 
 
 /**
@@ -325,29 +323,6 @@ public class Settings
 
 		
 	/**
-	 * Returns the value of a key converted to a type.
-	 * @exception IllegalArgumentException thrown if the key is not mapped to 
-	 *		any value.
-	 */
-	public <T> T getValue(String key, Type<T> type) throws Exception
-	{
-		String s = get(key);
-		return StandardSerializer.INSTANCE.parse(type, s); 
-	}
-
-	
-	/**
-	 * Returns the value of a key converted to an integer.
-	 * If the key is not mapped to any value, the default value is returned.
-	 */
-	public <T> T getValue(String key, Type<T> type, T defaultValue) throws Exception
-	{
-		String s = get(key, null);
-		return (s != null) ? StandardSerializer.INSTANCE.parse(type, s) : defaultValue; 
-	}
-
-	
-	/**
  	 * Returns the value of a key, separated by commas, 
 	 * splitted into a string array.
 	 * @param key the key
@@ -456,13 +431,6 @@ public class Settings
 			props_.remove(key);
 		else
 			props_.setProperty(key, value.toString());
-	}
-
-	
-	public <T> void set(String key, Type<T> type, T value)
-	{
-		String s = value != null ? StandardSerializer.INSTANCE.format(type, value) : null;
-		set(key, s);
 	}
 
 	
