@@ -234,9 +234,8 @@ public abstract class TypeSerializer
 	/**
 	 * Parses the value from a string.
 	 * @param type a Type object
-	 * @param string the string representation 
-	 * @param serializer a TypeSerializer which understands the string format.
-	 * @return true if the value was successfully parsed, false if not.
+	 * @param s the string representation 
+	 * @return the Value object
 	 */
 	public <T> Value<T> parseValue(Type<T> type, String s)
 	{
