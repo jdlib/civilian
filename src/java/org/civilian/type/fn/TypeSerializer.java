@@ -23,6 +23,7 @@ import org.civilian.text.keys.KeyType;
 import org.civilian.type.DiscreteType;
 import org.civilian.type.EnumType;
 import org.civilian.type.Type;
+import org.civilian.type.TypeMap;
 import org.civilian.util.Value;
 
 

@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.fn;
+package org.civilian.type;
 
 
-import org.civilian.type.Type;
 import org.civilian.util.Check;
 
 

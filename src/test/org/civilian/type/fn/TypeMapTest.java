@@ -19,6 +19,7 @@ package org.civilian.type.fn;
 import org.civilian.CivTest;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
+import org.civilian.type.TypeMap;
 import org.junit.Test;
 
 
