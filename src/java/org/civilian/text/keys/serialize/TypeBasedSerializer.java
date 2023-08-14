@@ -17,8 +17,8 @@ package org.civilian.text.keys.serialize;
 
 
 import org.civilian.text.keys.KeyList;
+import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.Type;
-import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Check;
 
 

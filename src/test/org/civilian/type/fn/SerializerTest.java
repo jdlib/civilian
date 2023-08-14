@@ -28,6 +28,8 @@ import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.text.NumberStyle;
 import org.civilian.text.TimeStyle;
+import org.civilian.text.type.LocaleSerializer;
+import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.DiscreteType;
 import org.civilian.type.EnumType;
 import org.civilian.type.Type;

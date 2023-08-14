@@ -20,7 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import org.civilian.CivTest;
-import org.civilian.type.fn.StandardSerializer;
+import org.civilian.text.type.StandardSerializer;
 import org.junit.Test;
 
 

@@ -20,11 +20,11 @@ import org.civilian.Request;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.Style;
+import org.civilian.text.type.StandardSerializer;
+import org.civilian.text.type.TypeSerializer;
 import org.civilian.type.ListType;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
-import org.civilian.type.fn.TypeSerializer;
-import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Check;
 
 

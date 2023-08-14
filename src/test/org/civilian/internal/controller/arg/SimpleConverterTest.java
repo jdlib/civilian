@@ -25,9 +25,9 @@ import org.civilian.CivTest;
 import org.civilian.internal.controller.arg.conv.SimpleConverter;
 import org.civilian.internal.controller.arg.conv.SimpleConverters;
 import org.civilian.request.BadRequestException;
+import org.civilian.text.type.LocaleSerializer;
+import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.TypeLib;
-import org.civilian.type.fn.LocaleSerializer;
-import org.civilian.type.fn.StandardSerializer;
 
 
 public class SimpleConverterTest extends CivTest

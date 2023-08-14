@@ -22,8 +22,8 @@ import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleProvider;
+import org.civilian.text.type.LocaleSerializer;
 import org.civilian.type.TypeLib;
-import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.util.Check;
 
 

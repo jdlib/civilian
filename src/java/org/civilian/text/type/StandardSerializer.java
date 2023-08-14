@@ -1,4 +1,4 @@
-package org.civilian.type.fn;
+package org.civilian.text.type;
 
 
 import java.math.BigDecimal;

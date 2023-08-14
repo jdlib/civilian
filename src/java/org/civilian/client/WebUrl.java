@@ -23,10 +23,10 @@ import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathParamProvider;
 import org.civilian.resource.Route;
+import org.civilian.text.type.StandardSerializer;
+import org.civilian.text.type.TypeSerializer;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
-import org.civilian.type.fn.TypeSerializer;
-import org.civilian.type.fn.StandardSerializer;
 import org.civilian.util.Check;
 import org.civilian.util.UriEncoder;
 

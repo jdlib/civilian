@@ -22,9 +22,9 @@ import org.civilian.Request;
 import org.civilian.controller.MethodArg;
 import org.civilian.internal.controller.arg.StringMethodArg;
 import org.civilian.request.BadRequestException;
+import org.civilian.text.type.TypeSerializer;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
-import org.civilian.type.fn.TypeSerializer;
 
 
 public abstract class SimpleConverter<T> extends Converter<T>

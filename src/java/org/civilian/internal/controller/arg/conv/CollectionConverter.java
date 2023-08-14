@@ -23,7 +23,7 @@ import java.util.TreeSet;
 import org.civilian.Request;
 import org.civilian.controller.MethodArg;
 import org.civilian.internal.controller.arg.StringMethodArg;
-import org.civilian.type.fn.TypeSerializer;
+import org.civilian.text.type.TypeSerializer;
 
 
 public abstract class CollectionConverter<T> extends Converter<Collection<T>>

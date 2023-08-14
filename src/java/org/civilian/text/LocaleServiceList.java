@@ -24,8 +24,8 @@ import org.civilian.text.keys.serialize.KeySerializers;
 import org.civilian.text.msg.EmptyMsgBundleFactory;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleFactory;
+import org.civilian.text.type.LocaleSerializer;
 import org.civilian.type.TypeLib;
-import org.civilian.type.fn.LocaleSerializer;
 import org.civilian.util.Check;
 
 
