@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.type.fn;
+package org.civilian.text.type;
 
 
 import java.math.BigDecimal;
@@ -28,8 +28,6 @@ import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.text.NumberStyle;
 import org.civilian.text.TimeStyle;
-import org.civilian.text.type.LocaleSerializer;
-import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.DiscreteType;
 import org.civilian.type.EnumType;
 import org.civilian.type.Type;
