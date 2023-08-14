@@ -17,9 +17,8 @@ package org.civilian.text.service;
 
 
 import java.util.Locale;
-import org.civilian.CivTest;
-import org.civilian.text.service.LocaleServiceList;
 import org.junit.Test;
+import org.civilian.CivTest;
 
 
 public class LocaleServiceTest extends CivTest
