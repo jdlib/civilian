@@ -17,7 +17,7 @@
 
 
 import org.civilian.samples.crm.db.entity.User;
-import org.civilian.text.LocaleService;
+import org.civilian.text.service.LocaleService;
 
 
 public class SessionUser

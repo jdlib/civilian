@@ -25,7 +25,7 @@ import org.civilian.CivTest;
 import org.civilian.Request;
 import org.civilian.controller.MethodArg;
 import org.civilian.internal.controller.arg.conv.ConvertingArg;
-import org.civilian.text.LocaleService;
+import org.civilian.text.service.LocaleService;
 import org.civilian.type.TypeLib;
 
 

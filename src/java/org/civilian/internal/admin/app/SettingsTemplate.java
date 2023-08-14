@@ -11,7 +11,7 @@ import org.civilian.Processor;
 import org.civilian.processor.ProcessorList;
 import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
-import org.civilian.text.LocaleServiceList;
+import org.civilian.text.service.LocaleServiceList;
 
 
 public class SettingsTemplate extends Template

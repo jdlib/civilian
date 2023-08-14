@@ -26,9 +26,9 @@ import org.civilian.CivTest;
 import org.civilian.Request;
 import org.civilian.request.Upload;
 import org.civilian.template.TestTemplateWriter;
-import org.civilian.text.LocaleService;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
+import org.civilian.text.service.LocaleService;
 import org.civilian.type.TypeLib;
 
 

@@ -50,7 +50,7 @@ import org.civilian.resource.PathProvider;
 import org.civilian.resource.scan.ResourceScan;
 import org.civilian.response.std.ErrorResponse;
 import org.civilian.response.std.NotFoundResponse;
-import org.civilian.text.LocaleServiceList;
+import org.civilian.text.service.LocaleServiceList;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.Iterators;

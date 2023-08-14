@@ -25,8 +25,8 @@ import org.civilian.form.Select;
 import org.civilian.form.TextField;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.CrmConstants;
-import org.civilian.text.LocaleService;
 import org.civilian.text.keys.KeyList;
+import org.civilian.text.service.LocaleService;
 
 
 public class LoginForm extends Form

@@ -34,8 +34,8 @@ import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.response.std.ErrorResponse;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
-import org.civilian.text.LocaleService;
-import org.civilian.text.LocaleServiceProvider;
+import org.civilian.text.service.LocaleService;
+import org.civilian.text.service.LocaleServiceProvider;
 import org.civilian.util.Check;
 import org.civilian.util.UriEncoder;
 

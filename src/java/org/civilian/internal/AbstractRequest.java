@@ -38,7 +38,7 @@ import org.civilian.request.RequestReaderInterceptor;
 import org.civilian.request.RequestStreamInterceptor;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
-import org.civilian.text.LocaleService;
+import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
 
 

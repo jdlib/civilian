@@ -23,7 +23,7 @@ import javax.servlet.http.Cookie;
 import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.template.TemplateWriter;
-import org.civilian.text.LocaleService;
+import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.UriEncoder;

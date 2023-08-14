@@ -27,7 +27,7 @@ import org.civilian.samples.crm.db.entity.User;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.CrmConstants;
 import org.civilian.samples.crm.web.SessionUser;
-import org.civilian.text.LocaleService;
+import org.civilian.text.service.LocaleService;
 
 
 public class LoginController extends CrmController

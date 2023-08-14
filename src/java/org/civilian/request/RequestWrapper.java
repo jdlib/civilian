@@ -32,7 +32,7 @@ import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
-import org.civilian.text.LocaleService;
+import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 

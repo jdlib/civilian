@@ -27,7 +27,7 @@ import org.civilian.CivTest;
 import org.civilian.Request;
 import org.civilian.Resource;
 import org.civilian.Response;
-import org.civilian.text.LocaleService;
+import org.civilian.text.service.LocaleService;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.TypeLib;
 import org.civilian.util.UriEncoder;
