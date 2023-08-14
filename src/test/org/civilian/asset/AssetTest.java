@@ -23,7 +23,6 @@ import java.net.URL;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
-import org.civilian.Response;
 import org.civilian.content.ContentType;
 import org.civilian.internal.ParamList;
 import org.civilian.internal.asset.BytesAsset;
@@ -32,6 +31,7 @@ import org.civilian.internal.asset.ContentEncodedAsset;
 import org.civilian.internal.asset.FileAsset;
 import org.civilian.internal.asset.UrlAsset;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.server.test.TestResponse;
 import org.civilian.util.HttpHeaders;
 

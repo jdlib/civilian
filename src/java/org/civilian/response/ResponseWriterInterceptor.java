@@ -18,7 +18,6 @@ package org.civilian.response;
 
 import java.io.IOException;
 import java.io.Writer;
-import org.civilian.Response;
 
 
 /**

@@ -19,10 +19,10 @@ package org.civilian.processor;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.civilian.Response;
 import org.civilian.content.CompressionScheme;
 import org.civilian.internal.Logs;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.response.ResponseStreamInterceptor;
 import org.civilian.util.HttpHeaders;

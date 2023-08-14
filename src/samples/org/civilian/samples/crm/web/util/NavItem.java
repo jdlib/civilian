@@ -16,10 +16,10 @@
  package org.civilian.samples.crm.web.util;
 
 
-import org.civilian.Response;
-import org.civilian.ResponseProvider;
 import org.civilian.resource.Resource;
 import org.civilian.resource.Url;
+import org.civilian.response.Response;
+import org.civilian.response.ResponseProvider;
 
 
 /**

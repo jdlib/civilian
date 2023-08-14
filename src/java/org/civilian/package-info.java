@@ -23,7 +23,7 @@
  * 		a Civilian application is to implement controller classes.
  * <li>{@link org.civilian.request.Request} represents a request for a resource.  
  * <li>{@link org.civilian.resource.Resource} models a resource of the application, addressable by a URL.
- * <li>{@link org.civilian.Response} represents the response to a request.
+ * <li>{@link org.civilian.response.Response} represents the response to a request.
  * </ul>
  */
 package org.civilian;

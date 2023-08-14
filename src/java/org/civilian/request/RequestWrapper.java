@@ -25,12 +25,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.civilian.Application;
-import org.civilian.Response;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.Resource;
+import org.civilian.response.Response;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;

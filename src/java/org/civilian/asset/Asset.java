@@ -24,8 +24,9 @@ import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
-import org.civilian.Response;
+
 import org.civilian.content.ContentType;
+import org.civilian.response.Response;
 import org.civilian.util.Check;
 import org.civilian.util.HttpHeaders;
 

@@ -50,6 +50,7 @@ import org.civilian.resource.PathParamMap;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
 import org.civilian.resource.scan.ResourceScan;
+import org.civilian.response.Response;
 import org.civilian.response.std.ErrorResponse;
 import org.civilian.response.std.NotFoundResponse;
 import org.civilian.text.service.LocaleServiceList;

@@ -44,8 +44,8 @@
 			This might be a JSON or XML representation of the model, or a HTML page which displays model data, etc.
 			Civilians <a href="doc-reqresp.html#content">content serialization</a> and 
 			<a href="doc-templates.html">template system</a> can help to implement this.
-		<li>Alternative responses would be to send an {javadoc:Response#sendError(int) error status}, 
-			or a {javadoc:Response#sendRedirect(java*lang*String) redirect} to another resource.
+		<li>Alternative responses would be to send an {javadoc:response.Response#sendError(int) error status}, 
+			or a {javadoc:response.Response#sendRedirect(java*lang*String) redirect} to another resource.
 		</ol>
 		Controllers are not meant to contain a lot of code. Ideally they are just the glue between the frontend request and back-end services,
 		translating request parameters, invoke back-end services and convert data models into response views. 
@@ -136,7 +136,7 @@
 		to express server-side preferences of certain content types.<br>
 		The client accept-header will also contain a list of (wildcarded, parameterized) content-types. 
 		The {javadoc:content.ContentNegotiation content negotiation} algorithm is used to match client preferences with 
-		server capabilities to determine the {javadoc:Response#getContentType() actual content-type} of the response.<br>
+		server capabilities to determine the {javadoc:response.Response#getContentType() actual content-type} of the response.<br>
 		An action method without a @Produces annotation makes the bold statement that it can handle all preferred content-types of the client.     
 		
 		<h3 id="anno-consumes">@Consumes annotation</h3>
@@ -153,14 +153,14 @@
 		and its superclasses. Methods declared in derived classes are given higher priority.
 		<ol>
 		<li><b>Test:</b> Only candidate methods pass whose HTTP method annotation(s) includes the request HTTP method.<br>
-			If there are no more candidates, selection stops with a {javadoc:Response*Status#SC405_METHOD_NOT_ALLOWED 405 method not allowed} error.   
+			If there are no more candidates, selection stops with a {javadoc:response.Response*Status#SC405_METHOD_NOT_ALLOWED 405 method not allowed} error.   
 		<li><b>Test:</b> Only candidate methods pass which can consume the content-type of the request.<br>The method 
 			either does not have a {javadoc:annotation.Consumes @Consumes} annotation or the annotation value contains the request content-type.<br>
-			If there are no more candidates, selection stops with a {javadoc:Response*Status#SC415_UNSUPPORTED_MEDIA_TYPE 415 unsupported media type} error.   
+			If there are no more candidates, selection stops with a {javadoc:response.Response*Status#SC415_UNSUPPORTED_MEDIA_TYPE 415 unsupported media type} error.   
 		<li><b>Test:</b> Only candidate methods pass which can produce one of the acceptable response content types.<br>
 			An algorithm implemented by the {javadoc:content.ContentNegotiation} class gives a score to each potential content type.
 			The best scoring content type and the providing action method is selected as best match.<br>
-			If there is no match, selection stops with a {javadoc:Response*Status#SC406_NOT_ACCEPTABLE 406 not acceptable} error.
+			If there is no match, selection stops with a {javadoc:response.Response*Status#SC406_NOT_ACCEPTABLE 406 not acceptable} error.
 		</ol> 
 				
 		<h3 id="parameters">Action method parameters</h3>
@@ -315,7 +315,7 @@
 		<b>Injection errors</b><br>
 		Converting request parameters or content to the method parameter type may fail due syntactically invalid data.
 		In this case the action method is not invoked, but instead a {javadoc:request.BadRequestException} is thrown which will
-		by default result in a {javadoc:Response*Status#SC400_BAD_REQUEST 400 bad request} error sent to the client.<p>
+		by default result in a {javadoc:response.Response*Status#SC400_BAD_REQUEST 400 bad request} error sent to the client.<p>
 		You can avoid injection error by using a {javadoc:util.Value} parameter. If an conversion error occurs the Value object
 		will store the exception, else will contain the parsed value:
 		<div class="highlight">
@@ -346,14 +346,14 @@
 				<code>try</code>
 				<ul class="codelist">
 					<li>{javadoc:Controller#checkAccess() checkAccess()}. Should test if access to the resource is allowed.
-					<li><code>if (!{javadoc:Response#isCommitted()})</code>
+					<li><code>if (!{javadoc:response.Response#isCommitted()})</code>
 						<ul class="codelist">
 							<li>Perform content negotiation to determine the action method.
 							<li><code>if (action method found)</code>
 								<ul class="codelist">
 									<li>{javadoc:Controller#init() init()}: Put common initialization code in this method.
 									<li>{javadoc:Controller#setCaching() setCaching()}: Initialize caching behavior.
-									<li><code>if (!{javadoc:Response#isCommitted()})</code>
+									<li><code>if (!{javadoc:response.Response#isCommitted()})</code>
 										<ul class="codelist">
 											<li>Invoke the action method.
 										</ul>

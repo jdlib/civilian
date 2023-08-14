@@ -26,9 +26,10 @@ import java.util.Locale;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import org.civilian.Response;
+
 import org.civilian.internal.AbstractResponse;
 import org.civilian.internal.Logs;
+import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.util.ClassUtil;
 

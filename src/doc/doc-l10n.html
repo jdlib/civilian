@@ -70,7 +70,7 @@
 		<li>{javadoc:text.type.TypeSerializer} allows for locale-dependent formatting and parsing of values.
 		<li>{javadoc:text.service.LocaleService} bundles a MsgBundle and a TypeSerializer for a certain Locale.
 		<li>{javadoc:request.Request#setLocaleService(java*util*Locale) Request} and 
-			{javadoc:Response#setLocaleService(java*util*Locale) Response} can be associated with a LocaleService instance.
+			{javadoc:response.Response#setLocaleService(java*util*Locale) Response} can be associated with a LocaleService instance.
 		<li>The applications {javadoc:Application#getLocaleServices() LocaleServiceList} provides 
 			LocaleService instances for all supported locales.
 		<li>The {javadoc:template.mixin.LangMixin} allows easy formatting and translation in (CSP) templates.
@@ -90,10 +90,10 @@
 
 		<h2 id="reqresp">Associating a LocaleService with request and response</h2>
 		Both {javadoc:request.Request#getLocaleService() Request} and 
-		{javadoc:Response#getLocaleService() Response} provide a LocaleService instance.
+		{javadoc:response.Response#getLocaleService() Response} provide a LocaleService instance.
 		If you don't set the LocaleService explicitly, it will be initialized as follows:
 		<ul>
-		<li>The request uses the {javadoc:Response#getAcceptedLocale() preferred client locale} as specified with the <code>Accept-Language</code>
+		<li>The request uses the {javadoc:response.Response#getAcceptedLocale() preferred client locale} as specified with the <code>Accept-Language</code>
 			header and asks the LocaleServiceList for the corresponding LocaleService instance. If the locale is not supported, it will fall back
 			to the default locale of the LocaleService.
 		<li>The response initializes its LocaleService instance from the request.

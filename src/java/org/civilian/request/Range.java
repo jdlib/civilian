@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
-import org.civilian.Response;
-import org.civilian.Response.Status;
+import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
+import org.civilian.response.Response.Status;
 import org.civilian.util.Check;
 import org.civilian.util.HttpHeaders;
 import org.civilian.util.IoUtil;

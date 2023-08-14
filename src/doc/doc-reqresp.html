@@ -4,7 +4,7 @@
 		<h1>Request & Response</h1>
 
 		<div class="takeaway">
-			The {javadoc:request.Request} and {javadoc:Response} interfaces represent
+			The {javadoc:request.Request} and {javadoc:response.Response} interfaces represent
 			a HTTP request and response. Writing a web application means
 			to evaluate requests and building responses. ContentSerialization
 			allows to easily convert Java models into/from request or response content. 
@@ -38,7 +38,7 @@
 		</ul>
 
 		<h2 id="intro">Introduction</h2>
-		The interfaces {javadoc:request.Request} and {javadoc:Response} model a HTTP request and response.<br>
+		The interfaces {javadoc:request.Request} and {javadoc:response.Response} model a HTTP request and response.<br>
 		A web application is essentially something which receives HTTP requests and returns HTTP responses.
 		<p>
 		Request and Response are functionally equivalent to a HttpServletRequest and HttpServletResponse.
@@ -169,52 +169,52 @@
 		{javadoc:request.Request#getLocalInfo() local} IP interfaces is made available via sub-objects of the request.  
 
 		<h2 id="response">Response</h2>
-		The {javadoc:Response} object contains a status, headers and content.
+		The {javadoc:response.Response} object contains a status, headers and content.
 		
 		<h3 id="respstatus">Status</h3>		
-		{javadoc:Response#setStatus(int)} allows to set the HTTP response status. {javadoc:Response*Status} defines constants 
+		{javadoc:response.Response#setStatus(int)} allows to set the HTTP response status. {javadoc:response.Response*Status} defines constants 
 		for most common HTTP status codes.
 		
 		<h3 id="respheaders">Headers</h3>		
-		{javadoc:Response#getHeaders() Access} to the HTTP headers of the response is available via the sub-object {javadoc:response.ResponseHeaders}.
-		A cookie header can be added through {javadoc:Response#addCookie(javax*servlet*http*Cookie) addCookie(Cookie)}. 
+		{javadoc:response.Response#getHeaders() Access} to the HTTP headers of the response is available via the sub-object {javadoc:response.ResponseHeaders}.
+		A cookie header can be added through {javadoc:response.Response#addCookie(javax*servlet*http*Cookie) addCookie(Cookie)}. 
 
 		<h3 id="respcontent">Content</h3>		
-		The content of the response is described by its {javadoc:Response#setContentType(org*civilian*content*ContentType) content type}, 
-		{javadoc:Response#setCharEncoding(java*lang*String) encoding}, {javadoc:Response#setContentLength(int) length}.
-		For low-level handling it can be written via a {javadoc:Response#getContentStream() byte} or {javadoc:Response#getContentWriter() text}
+		The content of the response is described by its {javadoc:response.Response#setContentType(org*civilian*content*ContentType) content type}, 
+		{javadoc:response.Response#setCharEncoding(java*lang*String) encoding}, {javadoc:response.Response#setContentLength(int) length}.
+		For low-level handling it can be written via a {javadoc:response.Response#getContentStream() byte} or {javadoc:response.Response#getContentWriter() text}
 		stream.<br>
 		Alternatively Response provides a  
-		{javadoc:Response#writeContent(java*lang*Object,$org*civilian*content*ContentType) Response.writeContent(Class, ContentType?)} method
-		to easily write complex objects. Abbreviations for popular data formats like {javadoc:Response#writeJson(java*lang*Object) JSON}
-		or  {javadoc:Response#writeXml(java*lang*Object) XML} exist. 
+		{javadoc:response.Response#writeContent(java*lang*Object,$org*civilian*content*ContentType) Response.writeContent(Class, ContentType?)} method
+		to easily write complex objects. Abbreviations for popular data formats like {javadoc:response.Response#writeJson(java*lang*Object) JSON}
+		or  {javadoc:response.Response#writeXml(java*lang*Object) XML} exist. 
 		These methods are based on Civilians <a href="#content">content serialization</a> framework 
 		which allows easy conversion from application objects to data-formats like JSON or XML. 
 		
 		<h3 id="respwriter">TemplateWriter</h3>
-		The writer returned by {javadoc:Response#getContentWriter() Response.getContentWriter()} is 
+		The writer returned by {javadoc:response.Response#getContentWriter() Response.getContentWriter()} is 
 		an instance of class {javadoc:template.TemplateWriter}.<br>
 		Besides being a <code>java.io.PrintWriter</code>, TemplateWriter allows to produces pretty indentend (HTML) output.
 		Being a PrintWriter the TemplateWriter can be passed to any <a href="doc-templates.html">template system</a> like Velocity or Freemaker.
 		But its additional functionality is especially used by Civilians own template system <a href="doc-templates-csp.html">CSP</a>.
 
 		<h3 id="resperror">sendError</h3>
-		Response provides the {javadoc:Response#sendError(int) sendError(int)} and
-		{javadoc:Response#sendError(int,$java*lang*String,$java*lang*Throwable) sendError(int,String,Throwable)}
+		Response provides the {javadoc:response.Response#sendError(int) sendError(int)} and
+		{javadoc:response.Response#sendError(int,$java*lang*String,$java*lang*Throwable) sendError(int,String,Throwable)}
 		to send an error to the client. This will commit the response.<br>
 		Also any uncaught exception during request processing will automatically result in sending an error 
 		to the client.<br>
 		The exact error response sent to the client can be tweaked by overriding {javadoc:Application#createErrorResponse()}.
 
 		<h3 id="respredirect">sendRedirect</h3>
-		Response provides several {javadoc:Response#sendRedirect(java*lang*String) sendRedirect(*)} methods
+		Response provides several {javadoc:response.Response#sendRedirect(java*lang*String) sendRedirect(*)} methods
 		to send the client a redirect to another URL.
 
 		<h3 id="respbuffer">Response buffer</h3>
 		The response maintains a buffer for the response content. When this buffer is full, writing of the response
-		to the client is started, and the response is set to {javadoc:Response#isCommitted() committed}. 
-		Upto this point the you can reset the {javadoc:Response#reset() response} or its {javadoc:Response#resetBuffer() buffer}.
-		{javadoc:Response#flushBuffer()} actively commits the request.
+		to the client is started, and the response is set to {javadoc:response.Response#isCommitted() committed}. 
+		Upto this point the you can reset the {javadoc:response.Response#reset() response} or its {javadoc:response.Response#resetBuffer() buffer}.
+		{javadoc:response.Response#flushBuffer()} actively commits the request.
 		
 		<h2 id="content">Content Serialization</h2>
 		Both request and response can have content payloads, described by HTTP {javadoc:content.ContentType content-type}, encoding and length headers.
@@ -226,8 +226,8 @@
 		<ul>
 			<li>{javadoc:request.Request#readContent(java*lang*Class) Request.readContent(Class)}
 			<li>{javadoc:request.Request#readContent(java*lang*Class,$java*lang*reflect*Type) Request.readContent(Class, Type)}
-			<li>{javadoc:Response#writeContent(java*lang*Object) Response.writeContent(Object)}
-			<li>{javadoc:Response#writeContent(java*lang*Object,$org*civilian*content*ContentType) Response.writeContent(Object, ContentType)}
+			<li>{javadoc:response.Response#writeContent(java*lang*Object) Response.writeContent(Object)}
+			<li>{javadoc:response.Response#writeContent(java*lang*Object,$org*civilian*content*ContentType) Response.writeContent(Object, ContentType)}
 		</ul>
 		Behind the scenes these calls are implemented by using Civilians content serialization framework.<br>
 		Each application {javadoc:Application#getContentSerializer(org*civilian*content*ContentType) possesses} a list of 

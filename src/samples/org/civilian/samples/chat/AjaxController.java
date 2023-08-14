@@ -18,10 +18,10 @@
 
 import java.io.PrintWriter;
 import org.civilian.Controller;
-import org.civilian.Response;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Post;
 import org.civilian.annotation.Produces;
+import org.civilian.response.Response;
 import org.civilian.annotation.Parameter;
 
 

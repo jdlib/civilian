@@ -28,6 +28,8 @@ import org.civilian.internal.Logs;
 import org.civilian.request.Request;
 import org.civilian.request.RequestProvider;
 import org.civilian.resource.Resource;
+import org.civilian.response.Response;
+import org.civilian.response.ResponseProvider;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleProvider;
 import org.civilian.text.service.LocaleService;

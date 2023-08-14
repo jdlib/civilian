@@ -16,7 +16,7 @@
 package org.civilian.request;
 
 
-import org.civilian.Response;
+import org.civilian.response.Response;
 
 
 /**

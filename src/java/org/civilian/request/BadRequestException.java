@@ -16,8 +16,8 @@
 package org.civilian.request;
 
 
-import org.civilian.Response;
-import org.civilian.Response.Status;
+import org.civilian.response.Response;
+import org.civilian.response.Response.Status;
 
 
 /**

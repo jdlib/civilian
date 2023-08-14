@@ -17,7 +17,6 @@ package org.civilian.response;
 
 
 import java.util.Iterator;
-import org.civilian.Response;
 
 
 /**

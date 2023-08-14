@@ -83,7 +83,7 @@
 		<h2 id="compressor">Compressor</h2>
 		{javadoc:processor.Compressor} examines the <code>Accept-Encoding</code> header of the request to detect
 		if the response content can be be compressed. 
-		If yes it {javadoc:Response#addInterceptor(org*civilian*response*ResponseStreamInterceptor) intercepts} access to the response content 
+		If yes it {javadoc:response.Response#addInterceptor(org*civilian*response*ResponseStreamInterceptor) intercepts} access to the response content 
 		in order to transparently encode the content.
 
 		<h2 id="writing">Writing an own processor</h2>
@@ -104,9 +104,9 @@
 			reading of any request content. 
 		<li>Add a {javadoc:request.Request#addInterceptor(org*civilian*request*RequestReaderInterceptor) RequestReaderInterceptor} to intercept
 			reading of text request content. 
-		<li>Add a {javadoc:Response#addInterceptor(org*civilian*response*ResponseStreamInterceptor) ResponseStreamInterceptor} to intercept
+		<li>Add a {javadoc:response.Response#addInterceptor(org*civilian*response*ResponseStreamInterceptor) ResponseStreamInterceptor} to intercept
 			writing of any response content. 
-		<li>Add a {javadoc:Response#addInterceptor(org*civilian*response*ResponseWriterInterceptor) ResponseWriterInterceptor} to intercept
+		<li>Add a {javadoc:response.Response#addInterceptor(org*civilian*response*ResponseWriterInterceptor) ResponseWriterInterceptor} to intercept
 			writing of text response content.
 		</ul>
 		

@@ -20,12 +20,12 @@ import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.Server;
-import org.civilian.Response;
 import org.civilian.asset.Asset;
 import org.civilian.asset.AssetService;
 import org.civilian.asset.AssetServices;
 import org.civilian.request.Request;
 import org.civilian.resource.Path;
+import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.util.HttpHeaders;
 

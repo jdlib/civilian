@@ -5,10 +5,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
-import org.civilian.Response;
+
 import org.civilian.asset.Asset;
 import org.civilian.asset.AssetCacheControl;
 import org.civilian.content.ContentType;
+import org.civilian.response.Response;
 import org.civilian.util.HttpHeaders;
 import org.civilian.util.IoUtil;
 

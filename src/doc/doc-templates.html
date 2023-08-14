@@ -22,10 +22,10 @@
 		<p>
 		Let's suppose we are in a {javadoc:Controller} method, evaluated the request and gathered all data needed 
 		for the response. In case of a pure data response like a JSON message we can just rely on 
-		methods like {javadoc:Response#writeJson(java*lang*Object) Response.writeJson} to produce the response content.
+		methods like {javadoc:response.Response#writeJson(java*lang*Object) Response.writeJson} to produce the response content.
 		Easy.<br>But in case of HTML output more needs to be done.       
 		<p>
-		The {javadoc:Response#getContentWriter() Response} class itself offers a {javadoc:template.TemplateWriter} to which we can directly
+		The {javadoc:response.Response#getContentWriter() Response} class itself offers a {javadoc:template.TemplateWriter} to which we can directly
 		write the content, in a series of <code>print</code> calls. But this approach only works for really simple content. 
 		Templates to the rescue!
 		<p>

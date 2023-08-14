@@ -5,9 +5,9 @@
 package org.civilian.samples.crm.web.root;
 
 
-import org.civilian.Response;
 import org.civilian.resource.Path;
 import org.civilian.resource.Resource;
+import org.civilian.response.Response;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.CrmConstants;
 import org.civilian.samples.crm.web.CrmResources;

@@ -17,11 +17,11 @@ package org.civilian.processor;
 
 
 import org.civilian.Application;
-import org.civilian.Response;
 import org.civilian.asset.AssetService;
 import org.civilian.request.Request;
 import org.civilian.asset.Asset;
 import org.civilian.resource.Path;
+import org.civilian.response.Response;
 import org.civilian.util.Check;
 import org.civilian.util.HttpHeaders;
 

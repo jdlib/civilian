@@ -44,7 +44,7 @@
 		<li>When you want to produce response content (e.g. in a Controller method) you instantiate this Java class.
 			Dynamic data needed by the template is passed to its constructor. Then you simply call its 
 			{javadoc:template.Template#print(java*io*Writer) print(Writer)} method
-			or pass the template object to {javadoc:Response#writeTemplate(org*civilian*template*Template) Response.writeTemplate(Template)}.<br>
+			or pass the template object to {javadoc:response.Response#writeTemplate(org*civilian*template*Template) Response.writeTemplate(Template)}.<br>
 			At runtime the generated Java template class is used, the CSP file is only needed during development time.
 		<li>Whenever you change the CSP file, you repeat the compilation process.
 		</ol>
@@ -118,7 +118,7 @@ public class GreetingTemplate extends Template
  		Even if the generated code is nicely formatted, we really never look at it, we just use it, e.g. in a {javadoc:Controller}. 
  		to produce a response. (And we never ever edit this generated class, only the CSP file).<br>  
  		Note that GreetingTemplate is derived from {javadoc:template.Template} (<code>out</code> is defined in Template),
- 		and therefore we can generate {javadoc:Response} content in the following way: 
+ 		and therefore we can generate {javadoc:response.Response} content in the following way: 
  		
 		<div class="highlight">
 			<pre><code>Response response = ...;<br>GreetingTemplate t = new GreetingTemplate("Wilma");<br>response.writeTemplate(t);</code></pre>

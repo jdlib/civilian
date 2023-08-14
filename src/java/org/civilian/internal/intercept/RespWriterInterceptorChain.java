@@ -18,7 +18,8 @@ package org.civilian.internal.intercept;
 
 import java.io.IOException;
 import java.io.Writer;
-import org.civilian.Response;
+
+import org.civilian.response.Response;
 import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.util.Check;
 

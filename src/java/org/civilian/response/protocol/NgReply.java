@@ -18,7 +18,8 @@ package org.civilian.response.protocol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.civilian.Response;
+
+import org.civilian.response.Response;
 import org.civilian.response.ResponseContent;
 import org.civilian.util.Check;
 

@@ -22,7 +22,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import javax.servlet.http.Cookie;
 
-import org.civilian.Response;
 import org.civilian.annotation.BeanParam;
 import org.civilian.annotation.CookieParam;
 import org.civilian.annotation.DefaultValue;
@@ -48,6 +47,7 @@ import org.civilian.internal.controller.arg.reqparam.ParameterValueArg;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathParamMap;
 import org.civilian.resource.PathScanner;
+import org.civilian.response.Response;
 import org.civilian.type.TypeLib;
 import org.civilian.util.ClassUtil;
 

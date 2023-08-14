@@ -28,8 +28,6 @@ import java.util.Map;
 
 import org.civilian.Application;
 import org.civilian.ApplicationProvider;
-import org.civilian.Response;
-import org.civilian.ResponseProvider;
 import org.civilian.Server;
 import org.civilian.ServerProvider;
 import org.civilian.content.ContentSerializer;
@@ -41,6 +39,8 @@ import org.civilian.resource.PathParamProvider;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
 import org.civilian.resource.Url;
+import org.civilian.response.Response;
+import org.civilian.response.ResponseProvider;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.service.LocaleServiceProvider;
 import org.civilian.text.type.StandardSerializer;

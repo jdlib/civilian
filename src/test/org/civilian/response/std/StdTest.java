@@ -21,13 +21,13 @@ import java.util.ArrayList;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.Response;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
 import org.civilian.resource.Path;
 import org.civilian.resource.Url;
+import org.civilian.response.Response;
 import org.civilian.template.TestTemplateWriter;
 
 

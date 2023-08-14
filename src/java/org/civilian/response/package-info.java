@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 /**
- * Contains {@link org.civilian.Response} related classes.
- * The {@link org.civilian.Response} class does not publish all its operations
+ * Contains {@link org.civilian.response.Response} related classes.
+ * The {@link org.civilian.response.Response} class does not publish all its operations
  * directly via methods defined in the class,
  * but also uses subobjects to group of information and operations.
  * These subclasses are defined in the response package.

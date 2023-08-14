@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian;
+package org.civilian.response;
 
 
 import java.io.IOException;
@@ -23,6 +23,12 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+
+import org.civilian.Application;
+import org.civilian.ApplicationProvider;
+import org.civilian.Controller;
+import org.civilian.Server;
+import org.civilian.ServerProvider;
 import org.civilian.application.AppConfig;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
@@ -31,9 +37,6 @@ import org.civilian.request.Request;
 import org.civilian.request.RequestProvider;
 import org.civilian.resource.Resource;
 import org.civilian.resource.Url;
-import org.civilian.response.ResponseHeaders;
-import org.civilian.response.ResponseStreamInterceptor;
-import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.response.std.ErrorResponse;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;

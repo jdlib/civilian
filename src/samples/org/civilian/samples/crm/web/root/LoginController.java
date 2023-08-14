@@ -16,13 +16,13 @@
  package org.civilian.samples.crm.web.root;
 
 
-import org.civilian.Response;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Parameter;
 import org.civilian.annotation.Post;
 import org.civilian.annotation.Produces;
 import org.civilian.content.ContentType;
 import org.civilian.request.Session;
+import org.civilian.response.Response;
 import org.civilian.samples.crm.db.entity.User;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.CrmConstants;

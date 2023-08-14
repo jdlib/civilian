@@ -16,7 +16,7 @@
  package org.civilian.samples.crm.web.root.users;
 
 
-import org.civilian.Response;
+import org.civilian.response.Response;
 import org.civilian.samples.crm.web.root.SecuredController;
 import org.civilian.samples.crm.web.util.Script;
 

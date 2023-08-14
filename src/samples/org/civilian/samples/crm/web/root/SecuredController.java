@@ -16,7 +16,6 @@
  package org.civilian.samples.crm.web.root;
 
 
-import org.civilian.Response;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Produces;
 import org.civilian.content.ContentType;
@@ -24,6 +23,7 @@ import org.civilian.request.Request;
 import org.civilian.request.Session;
 import org.civilian.resource.Path;
 import org.civilian.resource.Url;
+import org.civilian.response.Response;
 import org.civilian.samples.crm.web.CrmConstants;
 import org.civilian.samples.crm.web.SessionUser;
 import org.civilian.samples.crm.web.template.ControllerTemplate;

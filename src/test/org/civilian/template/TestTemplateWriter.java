@@ -23,7 +23,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Locale;
 import org.civilian.Application;
-import org.civilian.Response;
+import org.civilian.response.Response;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.service.LocaleService;
 import org.junit.Assert;

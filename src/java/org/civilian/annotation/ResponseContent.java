@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * If the controller method is invoked, a new instance
  * of the parameters type is created and injected into the parameter variable.
  * When the method finishes the parameter object is written to the response content,
- * using {@link org.civilian.Response#writeContent(Object)}.
+ * using {@link org.civilian.response.Response#writeContent(Object)}.
  * The {@link org.civilian.response.ResponseContent} class offers
  * similar functionality.
  */
