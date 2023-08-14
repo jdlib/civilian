@@ -22,26 +22,26 @@ public interface Test1Resources
 	/**
 	 * "/" -> org.civilian.testcase1.IndexController
 	 */
-	public static class Root extends org.civilian.Resource
+	public static class Root extends org.civilian.resource.Resource
 	{
 		public Root()
 		{
 			super();
 			setControllerSignature(sig("", "IndexController"));
 
-			this.alpha = new org.civilian.Resource(this, "alpha");
+			this.alpha = new org.civilian.resource.Resource(this, "alpha");
 			this.alpha.setControllerSignature(sig("", "AlphaController"));
 			this.beta = new Beta(this);
 			this.delta = new Delta(this);
 			this.mixed = new Mixed(this);
-			this.$gammaId = new org.civilian.Resource(this, org.civilian.testcase1.Test1PathParams.GAMMA);
+			this.$gammaId = new org.civilian.resource.Resource(this, org.civilian.testcase1.Test1PathParams.GAMMA);
 			this.$gammaId.setControllerSignature(sig("", "GammaController"));
 		}
 
 		/**
 		 * "/alpha" -> org.civilian.testcase1.AlphaController
 		 */
-		public final org.civilian.Resource alpha;
+		public final org.civilian.resource.Resource alpha;
 
 		/**
 		 * "/beta" -> org.civilian.testcase1.beta.IndexController
@@ -61,30 +61,30 @@ public interface Test1Resources
 		/**
 		 * "/{gammaId}" -> org.civilian.testcase1.GammaController
 		 */
-		public final org.civilian.Resource $gammaId;
+		public final org.civilian.resource.Resource $gammaId;
 
 
 		/**
 		 * "/beta" -> org.civilian.testcase1.beta.IndexController
 		 */
-		public static class Beta extends org.civilian.Resource
+		public static class Beta extends org.civilian.resource.Resource
 		{
-			public Beta(org.civilian.Resource parent)
+			public Beta(org.civilian.resource.Resource parent)
 			{
 				super(parent, "beta");
 				setControllerSignature(sig(".beta", "IndexController"));
 
-				this.have_space = new org.civilian.Resource(this, "have space");
+				this.have_space = new org.civilian.resource.Resource(this, "have space");
 				this.have_space.setControllerSignature(sig(".beta", "PathController"));
 				this.some = new Some(this);
-				this.$beta = new org.civilian.Resource(this, org.civilian.testcase1.Test1PathParams.BETA);
+				this.$beta = new org.civilian.resource.Resource(this, org.civilian.testcase1.Test1PathParams.BETA);
 				this.$beta.setControllerSignature(sig(".beta.object", "IndexController"));
 			}
 
 			/**
 			 * "/beta/have space" -> org.civilian.testcase1.beta.PathController
 			 */
-			public final org.civilian.Resource have_space;
+			public final org.civilian.resource.Resource have_space;
 
 			/**
 			 * "/beta/some" -> org.civilian.testcase1.beta.SomeController
@@ -94,34 +94,34 @@ public interface Test1Resources
 			/**
 			 * "/beta/{beta}" -> org.civilian.testcase1.beta.object.IndexController
 			 */
-			public final org.civilian.Resource $beta;
+			public final org.civilian.resource.Resource $beta;
 
 
 			/**
 			 * "/beta/some" -> org.civilian.testcase1.beta.SomeController
 			 */
-			public static class Some extends org.civilian.Resource
+			public static class Some extends org.civilian.resource.Resource
 			{
-				public Some(org.civilian.Resource parent)
+				public Some(org.civilian.resource.Resource parent)
 				{
 					super(parent, "some");
 					setControllerSignature(sig(".beta", "SomeController"));
 
-					this.thing = new org.civilian.Resource(this, "thing");
+					this.thing = new org.civilian.resource.Resource(this, "thing");
 					this.thing.setControllerSignature(sig(".beta", "SomeController").withMethodSegment("thing"));
-					this.$one = new org.civilian.Resource(this, org.civilian.testcase1.Test1PathParams.ONE);
+					this.$one = new org.civilian.resource.Resource(this, org.civilian.testcase1.Test1PathParams.ONE);
 					this.$one.setControllerSignature(sig(".beta", "SomeController").withMethodPathParam(org.civilian.testcase1.Test1PathParams.ONE));
 				}
 
 				/**
 				 * "/beta/some/thing" -> org.civilian.testcase1.beta.SomeController:thing
 				 */
-				public final org.civilian.Resource thing;
+				public final org.civilian.resource.Resource thing;
 
 				/**
 				 * "/beta/some/{one}" -> org.civilian.testcase1.beta.SomeController:$one
 				 */
-				public final org.civilian.Resource $one;
+				public final org.civilian.resource.Resource $one;
 			}
 		}
 
@@ -131,41 +131,41 @@ public interface Test1Resources
 		 */
 		public static class Delta
 		{
-			public Delta(org.civilian.Resource parent)
+			public Delta(org.civilian.resource.Resource parent)
 			{
-				this.resource_ = new org.civilian.Resource(parent, "delta");
-				this.run = new org.civilian.Resource(this.resource_, "run");
+				this.resource_ = new org.civilian.resource.Resource(parent, "delta");
+				this.run = new org.civilian.resource.Resource(this.resource_, "run");
 				this.run.setControllerSignature(sig(".delta", "RunController"));
 			}
 
 			/**
 			 * "/delta/run" -> org.civilian.testcase1.delta.RunController
 			 */
-			public final org.civilian.Resource run;
+			public final org.civilian.resource.Resource run;
 
 			// hidden since not mapped to a controller
-			private final org.civilian.Resource resource_;
+			private final org.civilian.resource.Resource resource_;
 		}
 
 
 		/**
 		 * "/mixed" -> org.civilian.testcase1.miXed.IndexController
 		 */
-		public static class Mixed extends org.civilian.Resource
+		public static class Mixed extends org.civilian.resource.Resource
 		{
-			public Mixed(org.civilian.Resource parent)
+			public Mixed(org.civilian.resource.Resource parent)
 			{
 				super(parent, "mixed");
 				setControllerSignature(sig(".miXed", "IndexController"));
 
-				this.something = new org.civilian.Resource(this, "something");
+				this.something = new org.civilian.resource.Resource(this, "something");
 				this.something.setControllerSignature(sig(".miXed", "someThingController"));
 			}
 
 			/**
 			 * "/mixed/something" -> org.civilian.testcase1.miXed.someThingController
 			 */
-			public final org.civilian.Resource something;
+			public final org.civilian.resource.Resource something;
 		}
 
 
