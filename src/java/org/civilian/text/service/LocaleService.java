@@ -18,8 +18,8 @@ package org.civilian.text.service;
 
 import java.util.Locale;
 import org.civilian.Application;
-import org.civilian.Request;
 import org.civilian.Response;
+import org.civilian.request.Request;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleProvider;
 import org.civilian.text.type.LocaleSerializer;

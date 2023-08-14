@@ -23,7 +23,6 @@ import java.io.StringReader;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
-import org.civilian.Request;
 import org.civilian.controller.MethodArg;
 import org.civilian.internal.controller.arg.reqcontent.ReqContenBytesArg;
 import org.civilian.internal.controller.arg.reqcontent.ReqContentArgs;
@@ -31,6 +30,7 @@ import org.civilian.internal.controller.arg.reqcontent.ReqContentGenericArg;
 import org.civilian.internal.controller.arg.reqcontent.ReqContentInputStreamArg;
 import org.civilian.internal.controller.arg.reqcontent.ReqContentReaderArg;
 import org.civilian.internal.controller.arg.reqcontent.ReqContentStringArg;
+import org.civilian.request.Request;
 
 
 public class ReqContentArgTest extends CivTest

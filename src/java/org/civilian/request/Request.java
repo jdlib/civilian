@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian;
+package org.civilian.request;
 
 
 import java.io.IOException;
@@ -25,10 +25,16 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+
+import org.civilian.Application;
+import org.civilian.ApplicationProvider;
+import org.civilian.Response;
+import org.civilian.ResponseProvider;
+import org.civilian.Server;
+import org.civilian.ServerProvider;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
-import org.civilian.request.*;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathParamProvider;

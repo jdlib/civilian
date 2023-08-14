@@ -18,7 +18,6 @@ package org.civilian.request;
 
 import java.io.IOException;
 import java.io.Reader;
-import org.civilian.Request;
 
 
 /**

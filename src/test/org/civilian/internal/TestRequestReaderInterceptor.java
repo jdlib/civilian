@@ -4,7 +4,8 @@ package org.civilian.internal;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.Reader;
-import org.civilian.Request;
+
+import org.civilian.request.Request;
 import org.civilian.request.RequestReaderInterceptor;
 
 

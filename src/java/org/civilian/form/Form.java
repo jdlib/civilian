@@ -17,11 +17,12 @@ package org.civilian.form;
 
 
 import java.util.ArrayList;
-import org.civilian.Request;
-import org.civilian.RequestProvider;
+
 import org.civilian.Response;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Post;
+import org.civilian.request.Request;
+import org.civilian.request.RequestProvider;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;

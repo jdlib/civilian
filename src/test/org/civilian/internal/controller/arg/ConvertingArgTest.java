@@ -22,9 +22,9 @@ import java.util.Locale;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
-import org.civilian.Request;
 import org.civilian.controller.MethodArg;
 import org.civilian.internal.controller.arg.conv.ConvertingArg;
+import org.civilian.request.Request;
 import org.civilian.text.service.LocaleService;
 import org.civilian.type.TypeLib;
 

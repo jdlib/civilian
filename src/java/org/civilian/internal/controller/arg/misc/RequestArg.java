@@ -16,8 +16,8 @@
 package org.civilian.internal.controller.arg.misc;
 
 
-import org.civilian.Request;
 import org.civilian.controller.MethodArg;
+import org.civilian.request.Request;
 
 
 /**

@@ -24,8 +24,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashSet;
-import org.civilian.Request;
+
 import org.civilian.controller.MethodArgFactory;
+import org.civilian.request.Request;
 import org.civilian.controller.MethodArg;
 
 

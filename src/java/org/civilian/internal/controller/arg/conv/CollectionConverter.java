@@ -20,9 +20,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.TreeSet;
-import org.civilian.Request;
+
 import org.civilian.controller.MethodArg;
 import org.civilian.internal.controller.arg.StringMethodArg;
+import org.civilian.request.Request;
 import org.civilian.text.type.TypeSerializer;
 
 

@@ -21,7 +21,7 @@ import java.util.Iterator;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
-import org.civilian.Request;
+import org.civilian.request.Request;
 
 
 public class ProcessorListTest extends CivTest

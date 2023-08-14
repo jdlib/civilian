@@ -68,9 +68,9 @@
 		
 		For RESTful request processing, the controller should take request properties such as
 		<ul>
-		<li>{javadoc:Request#getMethod() HTTP method}
-		<li>content types {javadoc:Request#getAcceptedContentTypes() accepted} by the client and 
-		<li>{javadoc:Request#getContentType() content type} of the request body
+		<li>{javadoc:request.Request#getMethod() HTTP method}
+		<li>content types {javadoc:request.Request#getAcceptedContentTypes() accepted} by the client and 
+		<li>{javadoc:request.Request#getContentType() content type} of the request body
 		<li>etc.
 		</ul> 
 		into account and create a specific response for the request. 
@@ -121,7 +121,7 @@
 		Action methods can use the {javadoc:annotation.Produces @Produces} annotation to specify that they only can process 
 		requests with certain {link:http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html Accept-Headers}.<br>
 		The client uses this header to specify
-		the {javadoc:Request#getAcceptedContentTypes() acceptable} content types for the response body. Since different response types usually require
+		the {javadoc:request.Request#getAcceptedContentTypes() acceptable} content types for the response body. Since different response types usually require
 		different processing, the @Produces annotation allows to
 		<ol>
 		<li>overall specify which content types can be produced by the controller
@@ -141,7 +141,7 @@
 		
 		<h3 id="anno-consumes">@Consumes annotation</h3>
 		Action methods can use the {javadoc:annotation.Consumes @Consumes} annotation to specify that they only can process 
-		requests with payloads of a certain {javadoc:Request#getContentType() content-type}. 
+		requests with payloads of a certain {javadoc:request.Request#getContentType() content-type}. 
 		<div class="highlight">
 			<pre><code>@Put @Consume("application/json") public void processJson() {<br>    ... // handle requests with a JSON body<br>}<br><br
 			>@Put @Consume("image/png", "image/gif") public void processImages() {<br>    ... // handle requests with a image body<br>}<br></code></pre>
@@ -172,11 +172,11 @@
 		<b>Inject request parameters</b><br>
 		All kinds of request parameters can be injected. The method parameter must be annotated with 
 		<ul>
-		<li>{javadoc:annotation.Parameter @Parameter} for {javadoc:Request#getParameter(java*lang*String) parameters}
-		<li>{javadoc:annotation.PathParam @PathParam} for {javadoc:Request#getPathParam(org*civilian*resource*PathParam) path parameters}
-		<li>{javadoc:annotation.MatrixParam @MatrixParam} for {javadoc:Request#getMatrixParam(java*lang*String) matrix parameters}
-		<li>{javadoc:annotation.HeaderParam @HeaderParam} for {javadoc:Request#getHeaders() headers}
-		<li>{javadoc:annotation.CookieParam @CookieParam} for {javadoc:Request#getCookies() cookies}
+		<li>{javadoc:annotation.Parameter @Parameter} for {javadoc:request.Request#getParameter(java*lang*String) parameters}
+		<li>{javadoc:annotation.PathParam @PathParam} for {javadoc:request.Request#getPathParam(org*civilian*resource*PathParam) path parameters}
+		<li>{javadoc:annotation.MatrixParam @MatrixParam} for {javadoc:request.Request#getMatrixParam(java*lang*String) matrix parameters}
+		<li>{javadoc:annotation.HeaderParam @HeaderParam} for {javadoc:request.Request#getHeaders() headers}
+		<li>{javadoc:annotation.CookieParam @CookieParam} for {javadoc:request.Request#getCookies() cookies}
 		</ul> 
 		Example? Example!
 		<div class="highlight">
@@ -225,11 +225,11 @@
 		</div>
 		Conversion of the request content depends on the type of the method parameter: If the type of the method parameter is
 		<ul>
-		<li><code>java.io.InputStream</code> an {javadoc:Request#getContentStream() InputStream} for the request content is injected
-		<li><code>java.io.Reader</code> or <code>java.io.BufferedReader</code> a {javadoc:Request#getContentReader() Reader} 
+		<li><code>java.io.InputStream</code> an {javadoc:request.Request#getContentStream() InputStream} for the request content is injected
+		<li><code>java.io.Reader</code> or <code>java.io.BufferedReader</code> a {javadoc:request.Request#getContentReader() Reader} 
 			for the request content is injected
 		<li><code>byte[]</code> the raw request content is injected
-		<li><code>String</code> the {javadoc:Request#getCharEncoding() decoded} request content is injected
+		<li><code>String</code> the {javadoc:request.Request#getCharEncoding() decoded} request content is injected
 		<li>for any other type Civilians <a href="doc-reqresp.html#content">content serialization</a> mechanism is used
 			to produce an parameter instance from the request content. In this case you want to use a @Consumes annotation
 			to restrict to content-types which can be handled by your application.

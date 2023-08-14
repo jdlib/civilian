@@ -21,12 +21,12 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.Controller;
-import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.annotation.Get;
 import org.civilian.application.classloader.ClassLoaderFactory;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
+import org.civilian.request.Request;
 import org.civilian.resource.PathParamMap;
 import org.civilian.type.TypeLib;
 

@@ -16,8 +16,8 @@
 package org.civilian.controller;
 
 
-import org.civilian.Request;
 import org.civilian.request.BadRequestException;
+import org.civilian.request.Request;
 import org.civilian.util.StringUtil;
 
 

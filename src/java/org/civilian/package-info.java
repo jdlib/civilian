@@ -21,7 +21,7 @@
  * <li>{@link org.civilian.processor.Processor} is the entry point for request processing.
  * <li>{@link org.civilian.Controller} handles requests to application resources. The main task in writing 
  * 		a Civilian application is to implement controller classes.
- * <li>{@link org.civilian.Request} represents a request for a resource.  
+ * <li>{@link org.civilian.request.Request} represents a request for a resource.  
  * <li>{@link org.civilian.resource.Resource} models a resource of the application, addressable by a URL.
  * <li>{@link org.civilian.Response} represents the response to a request.
  * </ul>

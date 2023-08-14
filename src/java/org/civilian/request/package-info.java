@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 /**
- * Contains {@link org.civilian.Request} related classes.
- * The {@link org.civilian.Request} class does not publish all its operations
+ * Contains {@link org.civilian.request.Request} related classes.
+ * The {@link org.civilian.request.Request} class does not publish all its operations
  * directly via methods defined in the class,
  * but also uses subobjects to group information and operations.
  * These subclasses are defined in the request package.

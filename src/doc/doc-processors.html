@@ -77,7 +77,7 @@
 		<h2 id="decompressor">Decompressor</h2>
 		{javadoc:processor.Decompressor} examines the request if its content is compressed:
 		It evaluates the <code>Content-Encoding</code> header and recognizes these encoding schemes: gzip, x-gzip, deflate, compress, x-compress, identity.<br>
-		If it sees one of these schemes, it {javadoc:Request#addInterceptor(org*civilian*request*RequestStreamInterceptor) intercepts} access to the request content 
+		If it sees one of these schemes, it {javadoc:request.Request#addInterceptor(org*civilian*request*RequestStreamInterceptor) intercepts} access to the request content 
 		and transparently decompresses the content. 
 		
 		<h2 id="compressor">Compressor</h2>
@@ -100,9 +100,9 @@
 		
 		Both request and response allow you to intercept access to their content.
 		<ul>
-		<li>Add a {javadoc:Request#addInterceptor(org*civilian*request*RequestStreamInterceptor) RequestStreamInterceptor} to intercept
+		<li>Add a {javadoc:request.Request#addInterceptor(org*civilian*request*RequestStreamInterceptor) RequestStreamInterceptor} to intercept
 			reading of any request content. 
-		<li>Add a {javadoc:Request#addInterceptor(org*civilian*request*RequestReaderInterceptor) RequestReaderInterceptor} to intercept
+		<li>Add a {javadoc:request.Request#addInterceptor(org*civilian*request*RequestReaderInterceptor) RequestReaderInterceptor} to intercept
 			reading of text request content. 
 		<li>Add a {javadoc:Response#addInterceptor(org*civilian*response*ResponseStreamInterceptor) ResponseStreamInterceptor} to intercept
 			writing of any response content. 

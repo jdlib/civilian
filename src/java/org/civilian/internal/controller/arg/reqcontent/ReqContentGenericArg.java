@@ -17,7 +17,8 @@ package org.civilian.internal.controller.arg.reqcontent;
 
 
 import java.lang.reflect.Type;
-import org.civilian.Request;
+
+import org.civilian.request.Request;
 
 
 /**

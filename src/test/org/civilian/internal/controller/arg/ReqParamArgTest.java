@@ -20,7 +20,6 @@ import javax.servlet.http.Cookie;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
-import org.civilian.Request;
 import org.civilian.internal.controller.arg.reqparam.CookieParamObjectArg;
 import org.civilian.internal.controller.arg.reqparam.CookieParamValueArg;
 import org.civilian.internal.controller.arg.reqparam.HeaderParamValueArg;
@@ -29,6 +28,7 @@ import org.civilian.internal.controller.arg.reqparam.PathParamArg;
 import org.civilian.internal.controller.arg.reqparam.ParameterValueArg;
 import org.civilian.internal.controller.arg.reqparam.ReqParamValueArg;
 import org.civilian.request.CookieList;
+import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
 import org.civilian.testcase1.Test1PathParams;
 

@@ -43,7 +43,7 @@
 		<li>Any other path always starts with a <code>'/'</code> but never ends with a <code>'/'</code> character.
 		</ul> 
 		The Path class supports common operations like adding two paths.<br>
-		Many core objects like {javadoc:Server}, {javadoc:Application}, {javadoc:Request}, 
+		Many core objects like {javadoc:Server}, {javadoc:Application}, {javadoc:request.Request}, 
 		{javadoc:resource.Resource} etc. are associated with an absolute path from the server root and 
 		a relative path with regard to some parent context. They implement the interface
 		{javadoc:resource.PathProvider} to give access to these paths.		
@@ -52,13 +52,13 @@
 		The {javadoc:resource.Url} class is a builder class to construct URL strings and  
 		guarantees a syntactical correct form of the URL.
 		<p>
-		To create a Url object you need to call a Url constructor, passing the request object (or a {javadoc:RequestProvider} like
+		To create a Url object you need to call a Url constructor, passing the request object (or a {javadoc:request.RequestProvider} like
 		a {javadoc:Controller}) and an additional argument which describe the URL path:
 		<ul>
 		<li>or a simple URL or path string, in case you want to address resources outside of the application (or address interal resources
 			in an unchecked way). 
 		<li>a {javadoc:resource.Path} to build an Url for that path
-		<li>a {javadoc:resource.PathProvider} like the {javadoc:Application} or the {javadoc:Request} 
+		<li>a {javadoc:resource.PathProvider} like the {javadoc:Application} or the {javadoc:request.Request} 
 			to build an Url for the {javadoc:resource.PathProvider#getPath() path} of that provider.   
 		<li>a {javadoc:Controller} class to build a URL to the resource which is processed by that Controller.   
 		<li>a {javadoc:resource.Resource} to build a URL to that resource.   

@@ -16,7 +16,7 @@
 package org.civilian.processor;
 
 
-import org.civilian.Request;
+import org.civilian.request.Request;
 import org.civilian.response.std.ErrorResponse;
 
 

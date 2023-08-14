@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
-import org.civilian.Request;
+
 import org.civilian.Response;
 import org.civilian.Response.Status;
 import org.civilian.response.ResponseHeaders;

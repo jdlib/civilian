@@ -19,9 +19,9 @@ package org.civilian.processor;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.internal.Logs;
+import org.civilian.request.Request;
 import org.civilian.util.Check;
 
 

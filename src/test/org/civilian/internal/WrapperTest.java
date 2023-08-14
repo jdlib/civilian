@@ -17,8 +17,8 @@ package org.civilian.internal;
 
 
 import org.civilian.CivTest;
-import org.civilian.Request;
 import org.civilian.Response;
+import org.civilian.request.Request;
 import org.civilian.request.RequestWrapper;
 import org.civilian.response.ResponseWrapper;
 import org.junit.Test;

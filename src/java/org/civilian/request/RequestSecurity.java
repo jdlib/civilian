@@ -17,7 +17,6 @@ package org.civilian.request;
 
 
 import java.security.Principal;
-import org.civilian.Request;
 
 
 /**

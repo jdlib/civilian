@@ -23,7 +23,7 @@ import java.util.Locale;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.Request;
+import org.civilian.request.Request;
 import org.civilian.request.Upload;
 import org.civilian.template.TestTemplateWriter;
 import org.civilian.text.keys.KeyList;

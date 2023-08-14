@@ -16,7 +16,7 @@
 package org.civilian.internal.controller.arg.reqparam;
 
 
-import org.civilian.Request;
+import org.civilian.request.Request;
 
 
 /**

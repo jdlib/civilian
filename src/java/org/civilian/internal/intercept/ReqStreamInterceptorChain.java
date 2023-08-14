@@ -18,7 +18,8 @@ package org.civilian.internal.intercept;
 
 import java.io.IOException;
 import java.io.InputStream;
-import org.civilian.Request;
+
+import org.civilian.request.Request;
 import org.civilian.request.RequestStreamInterceptor;
 
 

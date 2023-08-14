@@ -25,7 +25,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.civilian.Application;
-import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;

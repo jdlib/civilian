@@ -16,7 +16,7 @@
 package org.civilian.controller;
 
 
-import org.civilian.Request;
+import org.civilian.request.Request;
 
 
 public class CustomArg extends MethodArg

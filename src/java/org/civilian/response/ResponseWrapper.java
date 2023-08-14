@@ -20,8 +20,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
-import org.civilian.Request;
+
 import org.civilian.Response;
+import org.civilian.request.Request;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;

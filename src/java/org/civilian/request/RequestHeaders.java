@@ -17,7 +17,7 @@ package org.civilian.request;
 
 
 import java.util.Iterator;
-import org.civilian.Request;
+
 import org.civilian.type.Type;
 import org.civilian.util.Value;
 

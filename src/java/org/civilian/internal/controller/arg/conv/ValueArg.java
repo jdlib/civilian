@@ -16,9 +16,9 @@
 package org.civilian.internal.controller.arg.conv;
 
 
-import org.civilian.Request;
 import org.civilian.controller.MethodArg;
 import org.civilian.request.BadRequestException;
+import org.civilian.request.Request;
 import org.civilian.util.Value;
 
 

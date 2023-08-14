@@ -16,7 +16,6 @@
 package org.civilian.request;
 
 
-import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.Response.Status;
 

@@ -21,7 +21,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import javax.servlet.http.Cookie;
-import org.civilian.Request;
+
 import org.civilian.Response;
 import org.civilian.annotation.BeanParam;
 import org.civilian.annotation.CookieParam;
@@ -43,6 +43,7 @@ import org.civilian.internal.controller.arg.reqparam.CookieParamValueArg;
 import org.civilian.internal.controller.arg.reqparam.HeaderParamValueArg;
 import org.civilian.internal.controller.arg.reqparam.MatrixParamValueArg;
 import org.civilian.internal.controller.arg.reqparam.PathParamArg;
+import org.civilian.request.Request;
 import org.civilian.internal.controller.arg.reqparam.ParameterValueArg;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathParamMap;

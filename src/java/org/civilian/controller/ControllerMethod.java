@@ -20,7 +20,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 import org.civilian.Controller;
-import org.civilian.Request;
 import org.civilian.annotation.Consumes;
 import org.civilian.annotation.Delete;
 import org.civilian.annotation.Get;
@@ -34,6 +33,7 @@ import org.civilian.content.ContentNegotiation;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.internal.controller.MethodAnnotations;
+import org.civilian.request.Request;
 import org.civilian.util.Iterators;
 import org.civilian.util.StringUtil;
 

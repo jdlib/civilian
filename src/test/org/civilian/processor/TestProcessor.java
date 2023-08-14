@@ -1,7 +1,7 @@
 package org.civilian.processor;
 
 
-import org.civilian.Request;
+import org.civilian.request.Request;
 
 
 public class TestProcessor extends Processor

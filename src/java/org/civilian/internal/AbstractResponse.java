@@ -23,7 +23,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Locale;
-import org.civilian.Request;
+
 import org.civilian.Response;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
@@ -32,6 +32,7 @@ import org.civilian.internal.intercept.InterceptedOutputStream;
 import org.civilian.internal.intercept.InterceptedTemplateWriter;
 import org.civilian.internal.intercept.RespStreamInterceptorChain;
 import org.civilian.internal.intercept.RespWriterInterceptorChain;
+import org.civilian.request.Request;
 import org.civilian.response.ResponseStreamInterceptor;
 import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.template.Template;

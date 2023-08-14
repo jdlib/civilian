@@ -16,10 +16,10 @@
  package org.civilian.samples.jpa.shared.web;
 
 
-import org.civilian.RequestProvider;
 import org.civilian.form.Button;
 import org.civilian.form.Form;
 import org.civilian.form.TextField;
+import org.civilian.request.RequestProvider;
 
 
 public class IndexForm extends Form

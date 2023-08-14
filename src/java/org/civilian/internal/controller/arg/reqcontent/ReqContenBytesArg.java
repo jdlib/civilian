@@ -16,7 +16,7 @@
 package org.civilian.internal.controller.arg.reqcontent;
 
 
-import org.civilian.Request;
+import org.civilian.request.Request;
 import org.civilian.util.IoUtil;
 
 

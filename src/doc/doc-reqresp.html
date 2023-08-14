@@ -4,7 +4,7 @@
 		<h1>Request & Response</h1>
 
 		<div class="takeaway">
-			The {javadoc:Request} and {javadoc:Response} interfaces represent
+			The {javadoc:request.Request} and {javadoc:Response} interfaces represent
 			a HTTP request and response. Writing a web application means
 			to evaluate requests and building responses. ContentSerialization
 			allows to easily convert Java models into/from request or response content. 
@@ -38,7 +38,7 @@
 		</ul>
 
 		<h2 id="intro">Introduction</h2>
-		The interfaces {javadoc:Request} and {javadoc:Response} model a HTTP request and response.<br>
+		The interfaces {javadoc:request.Request} and {javadoc:Response} model a HTTP request and response.<br>
 		A web application is essentially something which receives HTTP requests and returns HTTP responses.
 		<p>
 		Request and Response are functionally equivalent to a HttpServletRequest and HttpServletResponse.
@@ -53,21 +53,21 @@
 		build responses to resource requests using <a href="doc-controllers.html">controllers</a>.<br>
 		 
 		<h2 id="request">Request</h2>
-		{javadoc:Request} gives you access to the path, method, headers, parameters and content of a HTTP request.
+		{javadoc:request.Request} gives you access to the path, method, headers, parameters and content of a HTTP request.
 
 		<h3 id="reqpath">Path</h3>
 		Civilian uses the {javadoc:resource.Path} class to represent path strings (which guarantees correct syntactical form).
-		The {javadoc:Request#getPath() request path} is the absolute path from the server root <code>/</code> to the requested resource.
+		The {javadoc:request.Request#getPath() request path} is the absolute path from the server root <code>/</code> to the requested resource.
 		{javadoc:Server#getPath() Context path} and {javadoc:Application#getPath() application path} are both prefixes of
 		the request path.<p>
 		<div class="img">
 			<img src="doc-arch-url.png">
 		</div>
 		Context path and applications may both be the root path <code>/</code>.<br>
-		{javadoc:Request#getRelativePath()} gives you the path of the request relative to the application path. 
+		{javadoc:request.Request#getRelativePath()} gives you the path of the request relative to the application path. 
 		  
 		<h3 id="reqmethod">Method</h3>
-		{javadoc:Request#getMethod()} returns the name of the HTTP method.
+		{javadoc:request.Request#getMethod()} returns the name of the HTTP method.
 		
 		<h3 id="reqparams">Parameters</h3>
 		Civilian gives you access to normal paramters, matrix-, and path parameters in a request.
@@ -80,25 +80,25 @@
 		<table class="table">
 		<tr>
 			<td rowspan="2">Parameter</td>
-			<td>{javadoc:Request#getParameter(java*lang*String) request.getParameter("sel")}</td>
+			<td>{javadoc:request.Request#getParameter(java*lang*String) request.getParameter("sel")}</td>
 			<td><code>"1"</code></td>
 		</tr>
 		<tr>
-			<td>{javadoc:Request#getParameters(java*lang*String) request.getParameters("sel")}</td>
+			<td>{javadoc:request.Request#getParameters(java*lang*String) request.getParameters("sel")}</td>
 			<td><code>{ "1", "2", "3" }</code></td>
 		</tr>
 		<tr>
 			<td rowspan="2">Matrix parameter</td>
-			<td>{javadoc:Request#getMatrixParam(java*lang*String) request.getMatrixParam("mode")}</td>
+			<td>{javadoc:request.Request#getMatrixParam(java*lang*String) request.getMatrixParam("mode")}</td>
 			<td><code>"list"</code></td>
 		</tr>
 		<tr>
-			<td>{javadoc:Request#getMatrixParams(java*lang*String) request.getMatrixParams("mode")}</td>
+			<td>{javadoc:request.Request#getMatrixParams(java*lang*String) request.getMatrixParams("mode")}</td>
 			<td><code>{ "list" }</code></td>
 		</tr>
 		<tr>
 			<td>Path parameter</td>
-			<td>{javadoc:Request#getPathParams(org*civilian*resource*PathParam) request.getPathParam(MyPathParams.CUSTOMERID)}</td>
+			<td>{javadoc:request.Request#getPathParams(org*civilian*resource*PathParam) request.getPathParam(MyPathParams.CUSTOMERID)}</td>
 			<td><code>Integer(1345)</code></td>
 		</tr>
 		</table>
@@ -112,7 +112,7 @@
 		<p>
 		Values of query and matrix parameters are strings. Manual conversion to other types is tedious and error prone. Civilian includes
 		a {javadoc:type.package-summary Type framework} to help with parsing and formatting. Based on that simple and type-safe access
-		to parameters is {javadoc:Request#getQueryParam(java*lang*String,$org*civilian*type*Type) possible}.<br>
+		to parameters is {javadoc:request.Request#getQueryParam(java*lang*String,$org*civilian*type*Type) possible}.<br>
 		Within Controllers the runtime can inject request parameter values into Controller 
 		<a href="doc-controllers.html#parameters">method parameters</a> in a type-safe way, to relieve you from manual type conversion.
 		<p>
@@ -122,34 +122,34 @@
 		again helps you with parsing and formatting, including handling of locale dependent values.   
 
 		<h3 id="reqheaders">Headers</h3>
-		{javadoc:Request#getHeaders() Access} to the HTTP headers of the request is available via the sub-object {javadoc:request.RequestHeaders}.<br>
-		The request class also provides specialized methods to access the {javadoc:Request#getCookies() Cookie} header, the
-		{javadoc:Request#getAcceptedContentTypes() Accept} header or the
-		{javadoc:Request#getAcceptedLocale() Accept-Language} header.   
+		{javadoc:request.Request#getHeaders() Access} to the HTTP headers of the request is available via the sub-object {javadoc:request.RequestHeaders}.<br>
+		The request class also provides specialized methods to access the {javadoc:request.Request#getCookies() Cookie} header, the
+		{javadoc:request.Request#getAcceptedContentTypes() Accept} header or the
+		{javadoc:request.Request#getAcceptedLocale() Accept-Language} header.   
 
 		<h3 id="reqcontent">Content</h3>
-		The content of the request is described by its {javadoc:Request#getContentType() content type}, 
-		{javadoc:Request#getCharEncoding() encoding} and {javadoc:Request#getContentLength() length}.
-		For low-level handling it can be read as {javadoc:Request#getContentStream() byte} or {javadoc:Request#getContentReader() text}
+		The content of the request is described by its {javadoc:request.Request#getContentType() content type}, 
+		{javadoc:request.Request#getCharEncoding() encoding} and {javadoc:request.Request#getContentLength() length}.
+		For low-level handling it can be read as {javadoc:request.Request#getContentStream() byte} or {javadoc:request.Request#getContentReader() text}
 		stream.<br>
-		Alternatively you can call {javadoc:Request#readContent(java*lang*Class) Request.readContent(Class, Type?)} 
+		Alternatively you can call {javadoc:request.Request#readContent(java*lang*Class) Request.readContent(Class, Type?)} 
 		to easily parse complex objects. This method is based on Civilians <a href="#content">content serialization</a> framework 
 		which allows easy conversion from data-formats such as JSON or XML to application objects. 
 
 		<h3 id="reqsecurity">Security information</h3>
-		{javadoc:Request#getSecurity() Access} to security related information of the request is available via the sub-object 
+		{javadoc:request.Request#getSecurity() Access} to security related information of the request is available via the sub-object 
 		{javadoc:request.RequestSecurity}. It is aligned along the security capabilities of a servlet container, namely session management,
 		container based authentication and user management.<br>
-		The request object also provides {javadoc:Request#getSession(boolean) access} to a servlet container inspired {javadoc:request.Session} object.
+		The request object also provides {javadoc:request.Request#getSession(boolean) access} to a servlet container inspired {javadoc:request.Session} object.
 	 
 		<h3 id="reqmp">Multipart requests</h3>
 		Prior to the servlet 3.0 spec multipart requests (i.e. requests with content-type <code>multipart/form-data</code>) required own processing.
 		The introduction of <code>javax.servlet.http.Part</code> helped a little, but required different handling of
 		simple parameters in normal and multipart requests.
 		<p>
-		Civilian simplifies multipart processing. All parameters in the multipart request are available as {javadoc:Request#getQueryParam() query parameters}.
+		Civilian simplifies multipart processing. All parameters in the multipart request are available as {javadoc:request.Request#getQueryParam() query parameters}.
 		Additionally for each parameter which represents an uploaded file a {javadoc:request.Upload} object is provided by the 
-		{javadoc:Request#getUpload(java*lang*String) request}. The <a href="doc-samples.html#upload">Upload sample</a> demonstrates this feature.
+		{javadoc:request.Request#getUpload(java*lang*String) request}. The <a href="doc-samples.html#upload">Upload sample</a> demonstrates this feature.
 		<p>
 		Multipart requests need to be explicitly enabled in the Civilian <a href="doc-config.html">configuration</a> (for instance look at the
 		upload sample) or during {javadoc:Application#init(org*civilian*application*AppConfig) application}
@@ -157,7 +157,7 @@
 		
 		<h3 id="reqasync">Async operations</h3>
 		Asynchronous processing of requests was introduced in the servlet 3.0 spec. Civilian covers this functionality 
-		with the {javadoc:request.AsyncContext} available via {javadoc:Request#getAsyncContext()}.   		
+		with the {javadoc:request.AsyncContext} available via {javadoc:request.Request#getAsyncContext()}.   		
 		The <a href="doc-samples.html#chat">Chat sample</a> demonstrates this feature.
 		<p>
 		Async capabilities need to be explicitly enabled in the Civilian <a href="doc-config.html">configuration</a> (for instance look at the
@@ -165,8 +165,8 @@
 		{javadoc:application.AppConfig#setAsync(boolean) startup}.
 		
 		<h3 id="reqinterface">IP Interface information</h3>
-		Information about the {javadoc:Request#getRemoteInfo() remote}, {javadoc:Request#getServerInfo() server} and
-		{javadoc:Request#getLocalInfo() local} IP interfaces is made available via sub-objects of the request.  
+		Information about the {javadoc:request.Request#getRemoteInfo() remote}, {javadoc:request.Request#getServerInfo() server} and
+		{javadoc:request.Request#getLocalInfo() local} IP interfaces is made available via sub-objects of the request.  
 
 		<h2 id="response">Response</h2>
 		The {javadoc:Response} object contains a status, headers and content.
@@ -224,8 +224,8 @@
 		turn such Java models into response content or parse them from request content.
 		The following methods allow such easy conversions:
 		<ul>
-			<li>{javadoc:Request#readContent(java*lang*Class) Request.readContent(Class)}
-			<li>{javadoc:Request#readContent(java*lang*Class,$java*lang*reflect*Type) Request.readContent(Class, Type)}
+			<li>{javadoc:request.Request#readContent(java*lang*Class) Request.readContent(Class)}
+			<li>{javadoc:request.Request#readContent(java*lang*Class,$java*lang*reflect*Type) Request.readContent(Class, Type)}
 			<li>{javadoc:Response#writeContent(java*lang*Object) Response.writeContent(Object)}
 			<li>{javadoc:Response#writeContent(java*lang*Object,$org*civilian*content*ContentType) Response.writeContent(Object, ContentType)}
 		</ul>

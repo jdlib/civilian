@@ -15,10 +15,6 @@
  */
 package org.civilian.request;
 
-
-import org.civilian.Request;
-
-
 /**
  * Provides information about the IP interface on which a request was received. 
  * @see Request#getLocalInfo()

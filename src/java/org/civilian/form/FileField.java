@@ -16,7 +16,7 @@
 package org.civilian.form;
 
 
-import org.civilian.Request;
+import org.civilian.request.Request;
 import org.civilian.request.Upload;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;

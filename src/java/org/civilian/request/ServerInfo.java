@@ -15,10 +15,6 @@
  */
 package org.civilian.request;
 
-
-import org.civilian.Request;
-
-
 /**
  * ServerInfo provides information about the server to which the request was sent
  * @see Request#getServerInfo()
