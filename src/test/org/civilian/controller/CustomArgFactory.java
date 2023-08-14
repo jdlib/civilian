@@ -22,7 +22,7 @@ import java.lang.reflect.Type;
 
 public class CustomArgFactory implements MethodArgProvider
 {
-	@Override public MethodArg create(MethodArgFactory factory,
+	@Override public MethodArg create(
 		Annotation annotation, Class<?> paramType, Type genericParamType,
 		Annotation[] paramAnnotations) throws Exception
 	{

@@ -18,7 +18,6 @@
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import org.civilian.controller.MethodArgFactory;
 import org.civilian.controller.MethodArg;
 import org.civilian.controller.MethodArgProvider;
 
@@ -29,8 +28,9 @@ import org.civilian.controller.MethodArgProvider;
  */
 public class RemoteIpArgProvider implements MethodArgProvider
 {
-	@Override public MethodArg create(MethodArgFactory factory,
-		Annotation annotation, Class<?> type, Type genericType,
+	@Override public MethodArg create(Annotation annotation, 
+		Class<?> type, 
+		Type genericType,
 		Annotation[] annotations)
 		throws Exception
 	{

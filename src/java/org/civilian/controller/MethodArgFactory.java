@@ -212,7 +212,7 @@ public class MethodArgFactory
 			if (caf != null)
 			{
 				MethodArgProvider f = ClassUtil.createObject(caf.value(), MethodArgProvider.class, null);
-				return f.create(this, a, info.type, info.genericType, info.annotations);
+				return f.create(a, info.type, info.genericType, info.annotations);
 			}
 		}
 		return null;

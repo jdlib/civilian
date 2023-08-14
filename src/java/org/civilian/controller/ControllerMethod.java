@@ -64,14 +64,14 @@ public class ControllerMethod
 	public static ControllerMethod create(MethodArgFactory argFactory, Method javaMethod)
 	{
 		MethodAnnotations ma = MethodAnnotations.of(javaMethod);
-		return ma != null ? new ControllerMethod(argFactory, javaMethod, ma) : null;
+		return ma != null ? new ControllerMethod(javaMethod, argFactory.createParamArgs(javaMethod), ma) : null;
 	}
 	
 	
-	private ControllerMethod(MethodArgFactory argFactory, Method javaMethod, MethodAnnotations annotations)
+	private ControllerMethod(Method javaMethod, MethodArg[] args, MethodAnnotations annotations)
 	{
 		javaMethod_ 	= javaMethod;
-		args_			= argFactory.createParamArgs(javaMethod);
+		args_			= args;
 		requestMethods_	= annotations.getRequestMethods();
 		produces_		= annotations.getProduces();
 		consumes_		= annotations.getConsumes();

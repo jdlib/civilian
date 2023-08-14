@@ -38,8 +38,7 @@ public interface MethodArgProvider
 	 * 		from a request
 	 * @throws Exception thrown if MethodArg creation runs in an error
 	 */
-	public MethodArg create(MethodArgFactory factory, 
-		Annotation annotation,
+	public MethodArg create(Annotation annotation,
 		Class<?> type, 
 		Type genericType,
 		Annotation[] annotations) throws Exception; 
