@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * Contains {@link org.civilian.processor.Processor} implementations.
+ * Contains the {@link org.civilian.processor.Processor} class which is the main entry point for request processing. 
  */
 package org.civilian.processor;

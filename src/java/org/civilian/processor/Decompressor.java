@@ -18,7 +18,7 @@ package org.civilian.processor;
 
 import java.io.IOException;
 import java.io.InputStream;
-import org.civilian.Processor;
+
 import org.civilian.Request;
 import org.civilian.content.CompressionScheme;
 import org.civilian.internal.Logs;

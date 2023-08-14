@@ -17,7 +17,6 @@ package org.civilian.processor;
 
 
 import org.civilian.Application;
-import org.civilian.Processor;
 import org.civilian.Request;
 import org.civilian.Response;
 import org.civilian.asset.AssetService;

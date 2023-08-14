@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.civilian.Application;
-import org.civilian.Processor;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 

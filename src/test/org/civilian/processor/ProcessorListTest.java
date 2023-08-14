@@ -21,7 +21,6 @@ import java.util.Iterator;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
-import org.civilian.Processor;
 import org.civilian.Request;
 
 

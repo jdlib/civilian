@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 /**
- * Contains the main classes of the framework.
+ * The following links list the main classes of the framework:
  * <ul>
  * <li>{@link org.civilian.Server} represents the server in which Civilian applications are running.
  * <li>{@link org.civilian.Application} is the base class for Civilian applications.
- * <li>{@link org.civilian.Processor} is the entry point for request processing.
+ * <li>{@link org.civilian.processor.Processor} is the entry point for request processing.
  * <li>{@link org.civilian.Controller} handles requests to application resources. The main task in writing 
  * 		a Civilian application is to implement controller classes.
  * <li>{@link org.civilian.Request} represents a request for a resource.  

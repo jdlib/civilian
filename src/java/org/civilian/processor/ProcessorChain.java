@@ -16,7 +16,6 @@
 package org.civilian.processor;
 
 
-import org.civilian.Processor;
 import org.civilian.Request;
 import org.civilian.util.Check;
 

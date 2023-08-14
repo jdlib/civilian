@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian;
+package org.civilian.processor;
 
 
-import org.civilian.processor.AssetDispatch;
-import org.civilian.processor.ProcessorChain;
-import org.civilian.processor.ResourceDispatch;
+import org.civilian.Application;
+import org.civilian.Request;
 
 
 /**
