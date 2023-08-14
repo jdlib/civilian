@@ -35,21 +35,18 @@ public class ValueArg extends MethodArg
 	
 	@Override public Object getValue(Request request) throws Exception
 	{
-		Value<Object> value = new Value<>();
 		try
 		{
-			value.setValue(arg_.getValue(request));
+			return new Value<>(arg_.getValue(request));
 		}
 		catch(BadRequestException e)
 		{
-			value.setError(e.getCause(), e.getErrorValue());
+			return new Value<>(e.getCause(), e.getErrorValue());
 		}
 		catch(Exception e)
 		{
-			value.setError(e);
+			return new Value<>(e, null);
 		}
-		
-		return value;
 	}
 
 

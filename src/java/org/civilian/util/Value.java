@@ -32,6 +32,7 @@ public class Value<T>
 	 */
 	public Value()
 	{
+		this(null);
 	}
 	
 	
@@ -40,7 +41,23 @@ public class Value<T>
 	 */
 	public Value(T value)
 	{
-		setValue(value);
+		value_ 		= value;
+		error_ 		= null;
+		errorValue_ = null;
+	}
+	
+	
+	/**
+	 * Creates a error Value.
+	 * @param error the error
+	 * @param errorValue the original string value
+     * 		which represented the value but could not be parsed.
+	 */
+	public Value(Throwable error, String errorValue)
+	{
+		value_ 		= null;
+		error_ 		= Check.notNull(error, "error");
+		errorValue_ = errorValue;
 	}
 
 	
@@ -59,17 +76,6 @@ public class Value<T>
 	public boolean hasValue()
 	{
 		return value_ != null;
-	}
-
-	
-	/**
-	 * Sets the value and clears any error.
-	 */
-	public void setValue(T value)
-	{
-		value_      = value;
-		error_ 		= null;
-		errorValue_ = null;
 	}
 	
 	
@@ -100,28 +106,6 @@ public class Value<T>
 	{
 		return error_ != null;
 	}
-	
-	
-	/**
-	 * Sets the error and clears the value.
-	 */
-	public void setError(Throwable error)
-	{
-		setError(error, null);
-	}
-	
-	
-	/**
-	 * Sets the error and clears the value.
-	 * @param errorValue the original string value
-     * 		which represented the value but could not be parsed.
-	 */
-	public void setError(Throwable error, String errorValue)
-	{
-		value_ = null;
-		error_ = error;
-		errorValue_ = errorValue;
-	}
 
 	
 	/**
@@ -133,7 +117,7 @@ public class Value<T>
 	}
 
 	
-	private T value_;
-	private Throwable error_;
-	private String errorValue_;
+	private final T value_;
+	private final Throwable error_;
+	private final String errorValue_;
 }

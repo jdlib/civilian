@@ -239,16 +239,14 @@ public abstract class TypeSerializer
 	 */
 	public <T> Value<T> parseValue(Type<T> type, String s)
 	{
-		Value<T> result = new Value<>();
 		try
 		{
-			result.setValue(parse(type, s));
+			return new Value<>(parse(type, s));
 		}
 		catch(Exception e)
 		{
-			result.setError(e, s);
+			return new Value<>(e, s);
 		}
-		return result;
 	}
 
 	
