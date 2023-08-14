@@ -18,7 +18,6 @@ package org.civilian.asset;
 
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.util.Check;
-import org.civilian.ApplicationProvider;
 import org.civilian.template.TemplateWriter;
 
 
@@ -86,38 +85,12 @@ public class AssetList implements TemplateWriter.Printable
 	
 	
 	/**
-	 * Sets the paths of the production items. If the paths are
-	 * not null and not empty and if the application is running in production mode,
-	 * the production paths will be printed instead of the whole list of assets path.
-	 */
-	public AssetList setProductionPaths(String... paths)
-	{
-		if ((paths != null) && (paths.length == 0))
-			paths = null;
-		productionPaths_ = paths;
-		return this;
-	}
-
-	
-	/**
-	 * Returns the paths of the production items.
-	 */
-	public String[] getProductionPaths()
-	{
-		return productionPaths_;
-	}
-
-	
-	/**
 	 * Prints the asset list to the TemplateWriter.
 	 */
 	@Override public void print(TemplateWriter out) throws Exception
 	{
 		HtmlMixin html = new HtmlMixin(out);
-		String[] paths = (productionPaths_ != null) && !out.getSafeAttribute(ApplicationProvider.class).getApplication().develop() ?
-			productionPaths_ :
-			paths_;
-		for (String path : paths)
+		for (String path : paths_)
 			type_.printRef(path, html);
 	}
 	
@@ -158,5 +131,4 @@ public class AssetList implements TemplateWriter.Printable
 
 	private final Type type_;
 	private final String[] paths_;
-	private String[] productionPaths_;
 }

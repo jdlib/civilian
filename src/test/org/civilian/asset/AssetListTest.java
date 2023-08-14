@@ -33,13 +33,10 @@ public class AssetListTest extends CivTest
 		assertEquals("js/test1.js", list.getPath(0));
 		assertSame(AssetList.JS_TYPE, list.getType());
 		
-		list.setProductionPaths("js/prod.js");
-		assertArrayEquals2(list.getProductionPaths(), "js/prod.js");
-		
 		TestTemplateWriter out = TestTemplateWriter.create();
 		when(out.app.getPath()).thenReturn(new Path("/assets"));
 		list.print(out);
-		out.assertOutNormed("<script src='/assets/js/prod.js'></script>\n");
+		out.assertOutNormed("<script src='/assets/js/test1.js'></script>\n<script src=\"/assets/js/test2.js\"></script>\n");
 	}
 
 
