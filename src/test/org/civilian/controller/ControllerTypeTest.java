@@ -20,7 +20,6 @@ import java.lang.reflect.Method;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
-import org.civilian.Controller;
 import org.civilian.annotation.Get;
 import org.civilian.application.classloader.ClassLoaderFactory;
 import org.civilian.content.ContentType;

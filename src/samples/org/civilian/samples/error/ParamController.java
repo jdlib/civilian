@@ -16,9 +16,9 @@
  package org.civilian.samples.error;
 
 
-import org.civilian.Controller;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Parameter;
+import org.civilian.controller.Controller;
 
 
 public class ParamController extends Controller

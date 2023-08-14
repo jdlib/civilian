@@ -20,7 +20,7 @@
 		Templates can be used to produce the content of a textual response, most important
 		the content of a HTML response. 
 		<p>
-		Let's suppose we are in a {javadoc:Controller} method, evaluated the request and gathered all data needed 
+		Let's suppose we are in a {javadoc:controller.Controller} method, evaluated the request and gathered all data needed 
 		for the response. In case of a pure data response like a JSON message we can just rely on 
 		methods like {javadoc:response.Response#writeJson(java*lang*Object) Response.writeJson} to produce the response content.
 		Easy.<br>But in case of HTML output more needs to be done.       
@@ -52,7 +52,7 @@
 			>template.print(response.getWriter()); // 2)</code></pre>
 		</div>	
 		In order to print its content, a template object must hold all dynamic data needed to produce the content.
-		The typical work done in a {javadoc:Controller} method when processing a request, therefore consists of these steps:
+		The typical work done in a {javadoc:controller.Controller} method when processing a request, therefore consists of these steps:
 		<ol>
 			<li>Evaluate request parameters
 			<li>Gather all required data to produce the response

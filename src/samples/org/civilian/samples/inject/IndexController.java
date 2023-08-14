@@ -16,12 +16,12 @@
  package org.civilian.samples.inject;
 
 
-import org.civilian.Controller;
 import org.civilian.annotation.BeanParam;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.HeaderParam;
 import org.civilian.annotation.Post;
 import org.civilian.annotation.Produces;
+import org.civilian.controller.Controller;
 import org.civilian.response.Response;
 import org.civilian.annotation.Parameter;
 

@@ -26,13 +26,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.civilian.Application;
 import org.civilian.ApplicationProvider;
-import org.civilian.Controller;
 import org.civilian.Server;
 import org.civilian.ServerProvider;
 import org.civilian.application.AppConfig;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.JaxbXmlSerializer;
+import org.civilian.controller.Controller;
 import org.civilian.request.Request;
 import org.civilian.request.RequestProvider;
 import org.civilian.resource.Resource;

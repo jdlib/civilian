@@ -107,7 +107,7 @@
 		</div>
 		<p>
 		As will be described <a href="doc-controllers.html">later</a>, you need to implement
-		a {javadoc:Controller} class for each dynamic resource of your application. 
+		a {javadoc:controller.Controller} class for each dynamic resource of your application. 
 		Their class names and package structure are used to derive their resource URLs,
 		so designing your resource URLS will automatically structure your controller classes 
 		and packages.<br> 
@@ -147,7 +147,7 @@
 			<li>initialize and provide application global resources like data back-end services.
 			</ul>
 		</li>
-		<li>Create {javadoc:Controller} implementations for every dynamic resource exposed by the application.
+		<li>Create {javadoc:controller.Controller} implementations for every dynamic resource exposed by the application.
 			Controllers most probably will rely on a data back-end services to retrieve model, completely in control by your application.
 		<li>Implement {javadoc:template.Template Templates} to be used by controllers to turn models into views.
 		<li>Implement {javadoc:form.Form Forms} to be used by controller to read and write HTML forms. 

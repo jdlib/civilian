@@ -19,7 +19,7 @@ package org.civilian.controller;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Iterator;
-import org.civilian.Controller;
+
 import org.civilian.annotation.Consumes;
 import org.civilian.annotation.Delete;
 import org.civilian.annotation.Get;

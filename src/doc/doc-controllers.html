@@ -29,7 +29,7 @@
 		</ul>
 
 		<h2 id="intro">Introduction</h2>
-		{javadoc:Controller Controllers} process requests for dynamic resources.
+		{javadoc:controller.Controller Controllers} process requests for dynamic resources.
 		The <a href="doc-resources.html">Resources</a> chapter showed how Controller classes are mapped to dynamic resources.
 		<p>
 		<b>Controllers</b> are named after the C part in the MVC (Model-View-Controller) pattern. 
@@ -55,7 +55,7 @@
 		<h2 id="what">What makes a controller a controller</h2>
 		A class in your application is recognized and treated as controller class if
 		<ol>
-		<li>it directly or indirectly extends the {javadoc:Controller} base class,
+		<li>it directly or indirectly extends the {javadoc:controller.Controller} base class,
 		<li>its class name ends with <code>Controller</code>, e.g. <code>SearchController</code> or <code>PrintController</code>,
 		<li>it is placed in a package below the applications {javadoc:controller.ControllerConfig#getRootPackage() root controller package}.
 		</ol> 
@@ -263,9 +263,9 @@
 		
 		<p>
 		<b>Inject request or response objects</b><br>
-		When a controller action method is invoked the request and response are available via {javadoc:Controller#getRequest() getRequest()}
-		and {javadoc:Controller#getRequest() getResponse()}. Similar you can access the {javadoc:Controller#getApplication() application},
-		the {javadoc:Controller#getContext() context} and other context variables.<br>
+		When a controller action method is invoked the request and response are available via {javadoc:controller.Controller#getRequest() getRequest()}
+		and {javadoc:controller.Controller#getRequest() getResponse()}. Similar you can access the {javadoc:controller.Controller#getApplication() application},
+		the {javadoc:controller.Controller#getContext() context} and other context variables.<br>
 		But if you prefer you can also inject request and response objects via method parameters (no annotations needed):
 		<div class="highlight">
 			<pre><code>@Get public void process(Request request, Response response)<br
@@ -333,26 +333,26 @@
 		<ul>
 		<li>A controller class itself must not be thread-safe.
 		<li>A controller class can define own properties to store temporary data. The controller base class actually defines several
-			properties, e.g. the {javadoc:Controller#getRequest() request} property.
+			properties, e.g. the {javadoc:controller.Controller#getRequest() request} property.
 		</ul>
 		 
 		<h2 id="invocation">Controller invocation</h2>
 		The entry point for request processing are action methods. But the call to the negotiated action method is embedded in calls to 
 		special init- and exit-methods. 
-		The exact sequence of method calls when a controller {javadoc:Controller#process(org*civilian*Request) processes} a request is as follows:
+		The exact sequence of method calls when a controller {javadoc:controller.Controller#process(org*civilian*Request) processes} a request is as follows:
 		<p>
 		<ul class="codelist">
 			<li>
 				<code>try</code>
 				<ul class="codelist">
-					<li>{javadoc:Controller#checkAccess() checkAccess()}. Should test if access to the resource is allowed.
+					<li>{javadoc:controller.Controller#checkAccess() checkAccess()}. Should test if access to the resource is allowed.
 					<li><code>if (!{javadoc:response.Response#isCommitted()})</code>
 						<ul class="codelist">
 							<li>Perform content negotiation to determine the action method.
 							<li><code>if (action method found)</code>
 								<ul class="codelist">
-									<li>{javadoc:Controller#init() init()}: Put common initialization code in this method.
-									<li>{javadoc:Controller#setCaching() setCaching()}: Initialize caching behavior.
+									<li>{javadoc:controller.Controller#init() init()}: Put common initialization code in this method.
+									<li>{javadoc:controller.Controller#setCaching() setCaching()}: Initialize caching behavior.
 									<li><code>if (!{javadoc:response.Response#isCommitted()})</code>
 										<ul class="codelist">
 											<li>Invoke the action method.
@@ -360,7 +360,7 @@
 								</ul>
 							<li><code>else</code>
 								<ul class="codelist">
-									<li>{javadoc:Controller#reject(int) reject()}. Sends a 405, 406 or 415 error. 
+									<li>{javadoc:controller.Controller#reject(int) reject()}. Sends a 405, 406 or 415 error. 
 								</ul>
 						</ul>
 				</ul>
@@ -368,28 +368,28 @@
 			<li>
 				<code>catch</code>
 				<ul class="codelist">
-					<li>{javadoc:Controller#onError(java*lang*Exception) onError(e)}: Place common exception handling here.
+					<li>{javadoc:controller.Controller#onError(java*lang*Exception) onError(e)}: Place common exception handling here.
 				</ul>
 			<li>
 				<code>finally</code>
 				<ul class="codelist">
-					<li>{javadoc:Controller#exit() exit()}: Place cleanup code in this method.
+					<li>{javadoc:controller.Controller#exit() exit()}: Place cleanup code in this method.
 				</ul>
 		</ul>
 		<p>
 		<h2 id="arch">Controller architecture</h2>
-		Controller classes all derive from the {javadoc:Controller} base class. Its also a good idea to introduce own
+		Controller classes all derive from the {javadoc:controller.Controller} base class. Its also a good idea to introduce own
 		controller base classes in your application, to let derived classes inherit common functionality.<br>
-		Controller base classes can especially provide meaningful implementations of {javadoc:Controller#checkAccess() checkAccess()},
-		{javadoc:Controller#init() init()}, {javadoc:Controller#setCaching() setCaching()}, 
-		{javadoc:Controller#onError(java*lang*Exception) onError(e)} and {javadoc:Controller#exit() exit()}.
+		Controller base classes can especially provide meaningful implementations of {javadoc:controller.Controller#checkAccess() checkAccess()},
+		{javadoc:controller.Controller#init() init()}, {javadoc:controller.Controller#setCaching() setCaching()}, 
+		{javadoc:controller.Controller#onError(java*lang*Exception) onError(e)} and {javadoc:controller.Controller#exit() exit()}.
 		<p>
-		For example a base controller class might implement {javadoc:Controller#checkAccess() checkAccess()} to test if the user is 
+		For example a base controller class might implement {javadoc:controller.Controller#checkAccess() checkAccess()} to test if the user is 
 		logged in and if not redirect to a login page or send a 403 forbidden response. All derived controller would automatically inherit
 		that access control. The <a href="doc-security.html">Security</a> chapter discusses this topic in detail.
 		<p>
 		Another example is demonstrated by the <a href="doc-samples.html#jpareslocal">JPA / Resource Local</a> sample. A base controller
-		class uses {javadoc:Controller#exit() exit()} to commit or rollback a JPA transaction.
+		class uses {javadoc:controller.Controller#exit() exit()} to commit or rollback a JPA transaction.
 		
 		<h2 id="di">Dependency injection</h2>
 		If you intend to use <a href="https://en.wikipedia.org/wiki/Dependency_injection">Dependency Injection</a> (DI) in your web application,

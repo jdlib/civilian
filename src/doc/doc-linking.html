@@ -53,14 +53,14 @@
 		guarantees a syntactical correct form of the URL.
 		<p>
 		To create a Url object you need to call a Url constructor, passing the request object (or a {javadoc:request.RequestProvider} like
-		a {javadoc:Controller}) and an additional argument which describe the URL path:
+		a {javadoc:controller.Controller}) and an additional argument which describe the URL path:
 		<ul>
 		<li>or a simple URL or path string, in case you want to address resources outside of the application (or address interal resources
 			in an unchecked way). 
 		<li>a {javadoc:resource.Path} to build an Url for that path
 		<li>a {javadoc:resource.PathProvider} like the {javadoc:Application} or the {javadoc:request.Request} 
 			to build an Url for the {javadoc:resource.PathProvider#getPath() path} of that provider.   
-		<li>a {javadoc:Controller} class to build a URL to the resource which is processed by that Controller.   
+		<li>a {javadoc:controller.Controller} class to build a URL to the resource which is processed by that Controller.   
 		<li>a {javadoc:resource.Resource} to build a URL to that resource.   
 		</ul>
 		<div class="highlight">
@@ -102,7 +102,7 @@
 		
 		At runtime Civilian {javadoc:Application#getRootResource() knows} all the dynamic resources exposed by an application,
 		the <a href="doc-resources.html#pathparams">path parameters</a> which are 
-		part of the path schemes of the resources, and which {javadoc:Controller controller} processes requests for a resource.<br>
+		part of the path schemes of the resources, and which {javadoc:controller.Controller controller} processes requests for a resource.<br>
 		This knowledge allows Civilian to associate a resource with a request and dispatch the request to its controller.<br>
 		<p>
 		Normally this resource tree is built at application startup, by <a href="doc-resources.html#basemapping">scanning</a>
@@ -159,7 +159,7 @@
 		to be written into the generated file.
 		
 		<h3 id="scan">Avoid the classpath scan at application start</h3>
-		When Civilian starts an application, it scans the classpath to find the applications {javadoc:Controller} classes
+		When Civilian starts an application, it scans the classpath to find the applications {javadoc:controller.Controller} classes
 		and then constructs the resource tree. The resource constants interface does contain the exact same information
 		and can be used to avoid the scan. Just register during {javadoc:Application#init(org*civilian*application*AppConfig) app initialization}:
 		<div class="highlight">

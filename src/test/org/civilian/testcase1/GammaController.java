@@ -16,8 +16,8 @@
 package org.civilian.testcase1;
 
 
-import org.civilian.Controller;
 import org.civilian.annotation.PathParam;
+import org.civilian.controller.Controller;
 
 
 @PathParam("gammaId")

@@ -16,7 +16,7 @@
  package org.civilian.samples.quickstart;
 
 
-import org.civilian.Controller;
+import org.civilian.controller.Controller;
 
 
 /**

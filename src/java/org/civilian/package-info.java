@@ -19,7 +19,7 @@
  * <li>{@link org.civilian.Server} represents the server in which Civilian applications are running.
  * <li>{@link org.civilian.Application} is the base class for Civilian applications.
  * <li>{@link org.civilian.processor.Processor} is the entry point for request processing.
- * <li>{@link org.civilian.Controller} handles requests to application resources. The main task in writing 
+ * <li>{@link org.civilian.controller.Controller} handles requests to application resources. The main task in writing 
  * 		a Civilian application is to implement controller classes.
  * <li>{@link org.civilian.request.Request} represents a request for a resource.  
  * <li>{@link org.civilian.resource.Resource} models a resource of the application, addressable by a URL.

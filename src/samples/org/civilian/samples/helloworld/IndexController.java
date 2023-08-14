@@ -16,9 +16,9 @@
  package org.civilian.samples.helloworld;
 
 
-import org.civilian.Controller;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Produces;
+import org.civilian.controller.Controller;
 
 
 public class IndexController extends Controller

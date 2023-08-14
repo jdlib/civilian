@@ -16,7 +16,7 @@
 package org.civilian.testcase3;
 
 
-import org.civilian.Controller;
+import org.civilian.controller.Controller;
 
 
 public class IndexController extends Controller

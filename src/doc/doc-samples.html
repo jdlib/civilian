@@ -215,7 +215,7 @@
 		to data services. It possesses a EntityManagerFactory, created by the application at startup.<br>
 		<code>JpaContext</code> associates the EntityManager with the current thread, therefore the same EntityManager is used when processing a 
 		request.
-		To cleanup correctly we use {javadoc:Controller#exit() Controller.exit()} to free the threadlocal EntityManager. Since it is defined
+		To cleanup correctly we use {javadoc:controller.Controller#exit() Controller.exit()} to free the threadlocal EntityManager. Since it is defined
 		in a common controller base class, it will work for all exposed resources.    
 
 		

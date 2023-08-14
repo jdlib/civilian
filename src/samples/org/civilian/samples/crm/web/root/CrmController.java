@@ -16,7 +16,7 @@
  package org.civilian.samples.crm.web.root;
 
 
-import org.civilian.Controller;
+import org.civilian.controller.Controller;
 import org.civilian.samples.crm.web.CrmApp;
 import org.civilian.samples.crm.web.CrmResources;
 

@@ -15,10 +15,6 @@
  */
 package org.civilian.controller;
 
-
-import org.civilian.Controller;
-
-
 /**
  * ControllerFactory is used to create controller objects
  * from a Controller class.

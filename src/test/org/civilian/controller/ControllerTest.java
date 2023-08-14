@@ -18,7 +18,6 @@ package org.civilian.controller;
 
 import java.sql.SQLException;
 import org.civilian.CivTest;
-import org.civilian.Controller;
 import org.civilian.annotation.Get;
 import org.civilian.server.test.TestApp;
 import org.junit.BeforeClass;

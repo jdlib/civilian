@@ -16,7 +16,7 @@
 package org.civilian.testcase2;
 
 
-import org.civilian.Controller;
+import org.civilian.controller.Controller;
 
 
 public class SomeController extends Controller

@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * Contains {@link org.civilian.Controller} related classes.
+ * Contains {@link org.civilian.controller.Controller} related classes.
  */
 package org.civilian.controller;

@@ -17,7 +17,6 @@ package org.civilian.controller;
 
 
 import org.civilian.CivTest;
-import org.civilian.Controller;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Segment;
 import org.civilian.application.classloader.ClassLoaderFactory;

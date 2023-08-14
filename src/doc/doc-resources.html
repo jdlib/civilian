@@ -47,7 +47,7 @@
 		<p>
 		Civilian uses the {javadoc:resource.Resource} class to model a resource. At runtime every application 
 		{javadoc:Application#getRootResource() possesses} a list of all its resources, organized as resource tree.
-		The code which processes resource requests is implemented in {javadoc:Controller} classes. In Civilian every resource is 
+		The code which processes resource requests is implemented in {javadoc:controller.Controller} classes. In Civilian every resource is 
 		associated with (at most) one controller class.
 		<table class="table">
 		<tr>
@@ -220,7 +220,7 @@
 		To be recognized as controller, a class
 		<ol>
 		<li>must have a simple name which ends with <code>Controller</code>
-		<li>must (directly or indirectly) be derived from {javadoc:Controller}
+		<li>must (directly or indirectly) be derived from {javadoc:controller.Controller}
 		<li>must be in or below the {javadoc:controller.ControllerConfig#getRootPackage() controller root package} which by default equals
 			the package of the application class.
 		</ol>

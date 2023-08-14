@@ -17,7 +17,7 @@
 		All aspects of {link:https://en.wikipedia.org/wiki/Web_application_security web application security}
 		of course also pertain to Civilian applications, as do established security techniques and solutions.  
 		<p>
-		In addition we present techniques how to implement application managed security based on features of the {javadoc:Controller} class.
+		In addition we present techniques how to implement application managed security based on features of the {javadoc:controller.Controller} class.
 		
 		
 		<h2 id="managed">Container and application managed security</h2>  
@@ -64,7 +64,7 @@
 		<p>
 		The <a href="doc-samples.html#crm">CRM sample</a> is used to exemplify the discussion. 
 		<h3>Controller inheritance</h3>
-		Controller classes are derived from {javadoc:Controller Controller}, but you can also 
+		Controller classes are derived from {javadoc:controller.Controller Controller}, but you can also 
 		introduce base controller classes derived from Controller specific to your application.<br>
 		Why would you want to do this? Of course to inherit functionality from base classes.
 		<p>
@@ -115,10 +115,10 @@
 		A controller instance is created to process a single request. Controllers define action
 		methods (for different RESTful scenarios) which are the entry points for processing.
 		Before and after a controller action method is invoked, initialization and cleanup methods 
-		defined by the {javadoc:Controller} base class are called.
+		defined by the {javadoc:controller.Controller} base class are called.
 		<p>
 		Our strategy to implement authentication and access control is based on the initialization method 
-		{javadoc:Controller#checkAccess()} which is called before the negotiated Controller action method.<br>
+		{javadoc:controller.Controller#checkAccess()} which is called before the negotiated Controller action method.<br>
 		If <code>checkAccess()</code> commits the response, e.g. by sending a redirect or an error, the controller
 		action method is not invoked.
 		

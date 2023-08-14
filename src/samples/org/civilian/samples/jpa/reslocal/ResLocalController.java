@@ -16,7 +16,7 @@
  package org.civilian.samples.jpa.reslocal;
 
 
-import org.civilian.Controller;
+import org.civilian.controller.Controller;
 import org.civilian.samples.jpa.reslocal.model.JpaContext;
 import org.civilian.samples.jpa.shared.web.PageTemplate;
 import org.civilian.template.Template;

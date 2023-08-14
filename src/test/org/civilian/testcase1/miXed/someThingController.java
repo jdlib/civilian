@@ -16,7 +16,7 @@
 package org.civilian.testcase1.miXed;
 
 
-import org.civilian.Controller;
+import org.civilian.controller.Controller;
 
 
 public class someThingController extends Controller

@@ -16,7 +16,7 @@
 package org.civilian.testcase1.beta;
 
 
-import org.civilian.Controller;
+import org.civilian.controller.Controller;
 
 
 public abstract class AbstractBetaController extends Controller

@@ -16,9 +16,9 @@
 package org.civilian.testcase1;
 
 
-import org.civilian.Controller;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Produces;
+import org.civilian.controller.Controller;
 
 
 public abstract class Test1Controller extends Controller

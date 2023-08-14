@@ -16,7 +16,6 @@
 package org.civilian.controller;
 
 
-import org.civilian.Controller;
 import org.civilian.content.ContentType;
 import org.civilian.util.Check;
 

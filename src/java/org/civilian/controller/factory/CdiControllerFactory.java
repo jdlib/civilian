@@ -28,8 +28,9 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import org.civilian.Controller;
+
 import org.civilian.application.AppConfig;
+import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerFactory;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;

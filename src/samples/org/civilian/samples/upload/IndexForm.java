@@ -16,7 +16,7 @@
  package org.civilian.samples.upload;
 
 
-import org.civilian.Controller;
+import org.civilian.controller.Controller;
 import org.civilian.form.Button;
 import org.civilian.form.FileField;
 import org.civilian.form.Form;

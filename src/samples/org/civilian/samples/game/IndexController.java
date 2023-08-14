@@ -16,9 +16,9 @@
  package org.civilian.samples.game;
 
 
-import org.civilian.Controller;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Segment;
+import org.civilian.controller.Controller;
 import org.civilian.annotation.Post;
 import org.civilian.annotation.Produces;
 import org.civilian.samples.game.Game.Result;

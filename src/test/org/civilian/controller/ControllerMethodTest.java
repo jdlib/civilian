@@ -18,7 +18,6 @@ package org.civilian.controller;
 
 import java.lang.reflect.Method;
 import org.civilian.CivTest;
-import org.civilian.Controller;
 import org.civilian.annotation.Consumes;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Produces;

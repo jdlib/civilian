@@ -6,7 +6,7 @@ import java.util.Map;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
-import org.civilian.Controller;
+import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerType;
 import org.civilian.request.Request;

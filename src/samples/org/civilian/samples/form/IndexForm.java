@@ -16,7 +16,7 @@
  package org.civilian.samples.form;
 
 
-import org.civilian.Controller;
+import org.civilian.controller.Controller;
 import org.civilian.form.*;
 
 

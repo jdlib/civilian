@@ -28,8 +28,8 @@ import java.util.NoSuchElementException;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.civilian.Controller;
 import org.civilian.application.AppConfig;
+import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;

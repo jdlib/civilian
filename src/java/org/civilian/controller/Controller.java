@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian;
+package org.civilian.controller;
 
 
+import org.civilian.Application;
+import org.civilian.ApplicationProvider;
+import org.civilian.Server;
+import org.civilian.ServerProvider;
 import org.civilian.annotation.Consumes;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Post;
 import org.civilian.annotation.Produces;
 import org.civilian.annotation.RequestMethod;
-import org.civilian.controller.ControllerMethod;
-import org.civilian.controller.ControllerType;
-import org.civilian.controller.NegotiatedMethod;
 import org.civilian.internal.Logs;
 import org.civilian.request.Request;
 import org.civilian.request.RequestProvider;

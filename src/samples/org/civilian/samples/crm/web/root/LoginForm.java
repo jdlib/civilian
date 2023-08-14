@@ -16,7 +16,7 @@
  package org.civilian.samples.crm.web.root;
 
 
-import org.civilian.Controller;
+import org.civilian.controller.Controller;
 import org.civilian.form.Button;
 import org.civilian.form.Form;
 import org.civilian.form.HiddenField;

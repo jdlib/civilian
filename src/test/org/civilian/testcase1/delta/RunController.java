@@ -1,7 +1,7 @@
 package org.civilian.testcase1.delta;
 
 
-import org.civilian.Controller;
+import org.civilian.controller.Controller;
 
 
 /**

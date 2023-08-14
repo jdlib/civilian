@@ -16,9 +16,9 @@
  package org.civilian.samples.guice;
 
 
-import org.civilian.Controller;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Produces;
+import org.civilian.controller.Controller;
 import org.civilian.samples.guice.service.Service;
 import com.google.inject.Inject;
 

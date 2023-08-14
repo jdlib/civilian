@@ -16,8 +16,8 @@
 package org.civilian.controller.factory;
 
 
-import org.civilian.Controller;
 import org.civilian.application.AppConfig;
+import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerFactory;
 import org.civilian.util.Check;
 import com.google.inject.Injector;
