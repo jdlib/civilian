@@ -48,5 +48,5 @@ public class UnsupportedTypeException extends RuntimeException
 	}
 	
 	
-	private Type<?> type_;
+	private final Type<?> type_;
 }
