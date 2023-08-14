@@ -67,8 +67,8 @@
 		of these integrated classes and functionality:
 		<ul>
 		<li>{javadoc:text.msg.MsgBundle} allows to translate text id into language texts.
-		<li>{javadoc:type.fn.TypeSerializer} allows for locale-dependent formatting and parsing of values.
-		<li>{javadoc:text.LocaleService} bundles a MsgBundle and a TypeSerializer for a certain Locale.
+		<li>{javadoc:text.type.TypeSerializer} allows for locale-dependent formatting and parsing of values.
+		<li>{javadoc:text.service.LocaleService} bundles a MsgBundle and a TypeSerializer for a certain Locale.
 		<li>{javadoc:Request#setLocaleService(java*util*Locale) Request} and 
 			{javadoc:Response#setLocaleService(java*util*Locale) Response} can be associated with a LocaleService instance.
 		<li>The applications {javadoc:Application#getLocaleServices() LocaleServiceList} provides 
@@ -81,11 +81,11 @@
 		<h2 id="localeservice">LocaleService, supported locales</h2>
 		Every Civilian application has a list of supported locales. (If you don't <a href="#config">configure</a>
 		explicitly this list will default to the default system locale).<br>
-		For each supported locale, a {javadoc:text.LocaleService} object is available via the applications 
+		For each supported locale, a {javadoc:text.service.LocaleService} object is available via the applications 
 		{javadoc:Application#getLocaleServices() LocaleServiceList}. The LocaleService itself offers
 		<ul>
 		<li>a {javadoc:text.msg.MsgBundle} which can be used to translate text keys into texts of a certain language
-		<li>a {javadoc:type.fn.TypeSerializer} which can be used to format or parse objects of simple types to and from strings. 
+		<li>a {javadoc:text.type.TypeSerializer} which can be used to format or parse objects of simple types to and from strings. 
 		</ul>  
 
 		<h2 id="reqresp">Associating a LocaleService with request and response</h2>
@@ -103,13 +103,13 @@
 		locale-dependent parameters from the request.  
 			
 		<h2 id="msgbundle">The MsgBundle class</h2>
-		Each LocaleService {javadoc:text.LocaleService#getMessages() has} a {javadoc:text.msg.MsgBundle} object to translate text ids into texts of the language of the LocaleService.<br>
+		Each LocaleService {javadoc:text.service.LocaleService#getMessages() has} a {javadoc:text.msg.MsgBundle} object to translate text ids into texts of the language of the LocaleService.<br>
 		<div class="highlight">
 			<pre><code>LocaleService ls = app.getLocaleServices().getLocaleService(Locale.FRENCH);<br
 			>assertEquals("libert&eacute;", ld.getMessages().get("FREEDOM"));</code></pre>
 		</div>
 		MsgBundle itself is abstract, in order to support different implementations for this translation service.  
-		Internally, the {javadoc:text.LocaleServiceList} uses a {javadoc:text.msg.MsgBundleFactory} to create MsgBundle instances for a locale.<br>
+		Internally, the {javadoc:text.service.LocaleServiceList} uses a {javadoc:text.msg.MsgBundleFactory} to create MsgBundle instances for a locale.<br>
 		In not explicitly configured the MsgBundle(s) of an application are empty: They will just return the text id + "?" as translated text. 
 		<p> 
 		Civilian provides classes {javadoc:text.msg.resbundle.ResMsgBundle} and {javadoc:text.msg.resbundle.ResMsgBundleFactory}
@@ -150,7 +150,7 @@
 			          >parse:  (String s, TypeSerializer ts) &rarr; T</code></pre>
 		</div>
 		The type framework implements such functions using a double-dispatch-pattern: Types like strings, numbers, boolean, dates are 
-		represented by a {javadoc:type.Type} object, the serialization scheme is represented by a {javadoc:type.fn.TypeSerializer} object.
+		represented by a {javadoc:type.Type} object, the serialization scheme is represented by a {javadoc:text.type.TypeSerializer} object.
 		Given a Type object, a value of that type and a TypeSerializer we can produce a string for the value.
 		In reverse given the Type, TypeSerializer and that string we can reconstruct the value:
 		   
@@ -162,8 +162,8 @@
 					  >T parsed          = type.parse(ts, s);<br
 					  >assertEquals(value, parsed);</code></pre>
 		</div>
-		Civilian implements two serialization schemes, a locale-dependent {javadoc:type.fn.LocaleSerializer} and 
-		a {javadoc:type.fn.StandardSerializer} which is based on <code>String.valueOf</code> to serialize values:
+		Civilian implements two serialization schemes, a locale-dependent {javadoc:text.type.LocaleSerializer} and 
+		a {javadoc:text.type.StandardSerializer} which is based on <code>String.valueOf</code> to serialize values:
 		<p>
 		
 		<table class="table table-border">
@@ -233,10 +233,10 @@
 		the query parameters <code>term</code> and <code>from</code> are injected into the respective parameters when this method is invoked.<br>
 		The String parameter is passed unchanged, but the Date parameter will be converted from a string into a date value.
 		If this conversion is <a href="doc-controllers.html#parameters">done</a> by a {javadoc:type.Type} object, then by default the 
-		{javadoc:type.fn.StandardSerializer} is used, and of course will raise a runtime error if the supplied query parameter
+		{javadoc:text.type.StandardSerializer} is used, and of course will raise a runtime error if the supplied query parameter
 		does not conform to its format.<br> 
 		But what if the Date value was entered in a HTML form in a locale-dependent manner? Add the <code>@LocaleValue</code>
-		annotation to instruct the Type to use the locale-dependent {javadoc:type.fn.LocaleSerializer} of the request to parse the value: 
+		annotation to instruct the Type to use the locale-dependent {javadoc:text.type.LocaleSerializer} of the request to parse the value: 
 		<div class="highlight">
 			<pre><code>    @Post public void search(..., @QueryParam("from") <b>@LocaleValue</b> Date from)</code></pre>
 		</div>
@@ -282,7 +282,7 @@
 		{javadoc:application.AppConfig#setMsgBundleFactory(org*civilian*text*msg*MsgBundleFactory) AppConfig.setMsgBundleFactory()}.<br>
 		You may also {javadoc:application.AppConfig#getTypeLib() add} own {javadoc:type.Type} implementations for 
 		custom types to the {javadoc:type.TypeLib type library} of the 
-		{javadoc:text.LocaleServiceList#getTypeLib() application}.
+		{javadoc:text.service.LocaleServiceList#getTypeLib() application}.
 		 
 	</div>
 </div>

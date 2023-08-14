@@ -118,7 +118,7 @@
 		<li>Support for reading and writing HTML forms using the {javadoc:form.Form} class.
 		<li>Customizable and extensible {javadoc:content.ContentSerializer content serialization} to easily convert models from and to JSON, XML, etc.    
 		<li>A powerful {javadoc:template.Template} system to turn models into complex textual output like HTML    
-		<li>{javadoc:text.LocaleService Integrated support} for multi-language/locale-dependent applications.  	
+		<li>{javadoc:text.service.LocaleService Integrated support} for multi-language/locale-dependent applications.  	
 		</ul>
 		
 		<h3 id="core-assets">About assets</h3>
@@ -147,7 +147,7 @@
 		are two kinds of request processing supported by the framework. But Civilian can't know all possible ways your application wants
 		to handle requests.
 		<p>
-		Therefore applications allow to customize request processing by the concept of request {javadoc:Processor Processors} which
+		Therefore applications allow to customize request processing by the concept of request {javadoc:processor.Processor Processors} which
 		are arranged in a pipeline. Each processor in the pipeline can decide to handle the request, pass it on to the next processor in the pipeline,
 		modify request or response to implement filter functionality, etc.<br>
 		<div class="img"><img src="doc-arch-proc.png"></div>
@@ -178,7 +178,7 @@
 			<td>javax.servlet.Servlet</td>
 		</tr>
 		<tr>
-			<td>{javadoc:Processor}, implementing a filter strategy</td>
+			<td>{javadoc:processor.Processor}, implementing a filter strategy</td>
 			<td>javax.servlet.Filter</td>
 		</tr>
 		<tr>
