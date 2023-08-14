@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * Contains {@link org.civilian.Processor} implementations.
+ * Contains {@link org.civilian.processor.Processor} implementations.
  */
 package org.civilian.processor;
