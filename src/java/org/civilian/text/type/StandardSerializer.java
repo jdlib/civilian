@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.text.ParseException;
 import org.civilian.type.DateType;
 import org.civilian.type.Type;
+import org.civilian.text.Style;
 import org.civilian.type.DateTimeType;
 import org.civilian.type.TimeType;
 import org.civilian.util.StringUtil;
@@ -47,7 +48,7 @@ public class StandardSerializer extends TypeSerializer
 	}
 	
 	
-	private <T> String formatDate(Type<? extends T> type, T date, Object hint)
+	private <T> String formatDate(Type<? extends T> type, T date, Style style)
 	{
 		@SuppressWarnings("unchecked")
 		DateType<T> dt = (DateType<T>)type;
@@ -70,7 +71,7 @@ public class StandardSerializer extends TypeSerializer
 	}
 
 
-	private <T> String formatTime(Type<? extends T> type, T time, Object hint)
+	private <T> String formatTime(Type<? extends T> type, T time, Style style)
 	{
 		@SuppressWarnings("unchecked")
 		TimeType<T> tt = (TimeType<T>)type;
@@ -87,7 +88,7 @@ public class StandardSerializer extends TypeSerializer
 	}
 
 
-	private <T> String formatDateTime(Type<? extends T> type, T dt, Object hint)
+	private <T> String formatDateTime(Type<? extends T> type, T dt, Style style)
 	{
 		@SuppressWarnings("unchecked")
 		DateTimeType<T> t = (DateTimeType<T>)type;
