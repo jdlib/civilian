@@ -17,7 +17,6 @@ package org.civilian.application;
 
 
 import java.io.IOException;
-import javax.servlet.Servlet;
 import org.junit.Test;
 import org.civilian.Application;
 import org.civilian.CivTest;
@@ -91,8 +90,6 @@ public class ApplicationTest extends CivTest
 	@Test public void testAccessors()
 	{
 		Application app = new NoArgsApp();
-		assertNull(app.getConnector());
-		assertNull(app.getConnector(Servlet.class));
 		assertSame(app, app.getApplication());
 		assertNull(app.getVersion());
 		assertFalse(app.ignoreError(null));

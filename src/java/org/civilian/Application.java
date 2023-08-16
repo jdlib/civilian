@@ -151,36 +151,6 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 	}
 
 	
-	/** 
-	 * Called by the Server.
-	 */
-	void setConnector(Object connector)
-	{
-		connector_ = connector;  
-	}
-	
-
-	/**
-	 * Returns the connector of the application. A connector is a service which allows
-	 * the application to receive requests. In case of an servlet container, the connector
-	 * is a servlet.
-	 */
-	public Object getConnector()
-	{
-		return connector_;
-	}
-
-	
-	/**
-	 * Returns the connector of the application which has the given class
-	 * or null, if the connector has a different class.
-	 */
-	public <T> T getConnector(Class<T> connectorClass)
-	{
-		return ClassUtil.unwrap(connector_, connectorClass);
-	}
-
-	
 	/**
 	 * Called by the server when the application is added to the server.
 	 * @param server the server
@@ -188,33 +158,28 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 	 * @param relativePath the relative path of the application within the server
 	 * @param settings the application settings
 	 */
-	final InitResult init(Server server, String id, Path relativePath, Settings settings)
+	public final void init(Server.AppInitData data)
 	{
-		server_ 			= server;
-		id_ 				= id;
-		relativePath_		= relativePath;
-		path_				= server.getPath().add(relativePath);
-		InitResult result	= new InitResult();
-
 		if (getStatus() != Status.CREATED)
 			throw new IllegalStateException("already initialized");
-		if (settings == null)
-			settings = new Settings();
 		
+		server_ 			= data.server;
+		id_ 				= data.id;
+		path_				= data.path;
+		relativePath_		= data.relativePath;
+
 		try
 		{
-			initApp(settings, result);
-			initProcessors(settings);
+			initApp(data);
+			initProcessors(data.settings);
 			
-			status_ = Application.Status.RUNNING;
+			status_ = Status.RUNNING;
 			// only log after app has been initialised: an app may change the log configuration
 			log.info("initialized app {} at path {}", getId(), getPath());
-			
-			result.success = true;
 		}
 		catch(Exception e)
 		{
-			status_ = Application.Status.ERROR;
+			status_ = Status.ERROR;
 			log.error("could not initialize " + this, e);
 			try
 			{
@@ -229,14 +194,12 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 				Response.Status.SC503_SERVICE_UNAVAILABLE,
 				this + " encountered an error during initialization", e));
 		}
-		
-		return result;
 	}
 
 
-	private void initApp(Settings settings, InitResult initResult) throws Exception
+	private void initApp(Server.AppInitData data) throws Exception
 	{
-		AppConfig appConfig	= new AppConfig(this, settings);
+		AppConfig appConfig	= new AppConfig(this, data.settings);
 		try
 		{
 			if (appConfig.getInitException() != null)
@@ -248,8 +211,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 			// even if init throws an error we complete
 			// setup of safe application properties
 			// since the error page may rely on them
-			initResult.connect		= appConfig.getConnect();
-			initResult.async		= appConfig.getAsync();
+			data.async				= appConfig.getAsync();
 			defaultCharEncoding_	= appConfig.getDefaultCharEncoding();
 			version_				= appConfig.getVersion();
 			assetService_			= initAssets(appConfig.getAssetConfig());
@@ -289,14 +251,6 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 		tree.setAppPath(getPath());
 		tree.setDefaultExtension(appConfig.getDefaultResExtension());
 		tree.setControllerService(controllerService_);
-	}
-	
-	
-	static class InitResult
-	{
-		boolean success;
-		boolean connect;
-		boolean async;
 	}
 	
 	
@@ -796,7 +750,6 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 	private AssetService assetService_;
 	private UploadConfig uploadConfig_;
 	private String version_;
-	private Object connector_;
 	private ProcessorList processors_ = ProcessorList.EMPTY;
 	private final HashMap<String, Object> attributes_ = new HashMap<>();
 	private Map<String,ContentSerializer> contentSerializers_ = Collections.<String,ContentSerializer>emptyMap();

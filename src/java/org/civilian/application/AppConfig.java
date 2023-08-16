@@ -93,7 +93,6 @@ public class AppConfig
 				settings = new Settings();
 			settings_ 				= settings;
 			async_					= settings.getBoolean(ConfigKeys.ASYNC, false); 
-			connect_				= settings.getBoolean(ConfigKeys.CONNECT, true); 
 			defaultCharEncoding_	= settings.get(ConfigKeys.ENCODING, ConfigKeys.ENCODING_DEFAULT);
 			typeLib_ 				= new TypeLib();
 			defaultResExtension_	= IoUtil.normExtension(settings.get(ConfigKeys.EXTENSION, null));
@@ -471,29 +470,8 @@ public class AppConfig
 	
 	
 	//----------------------------
-	// connect
+	// async
 	//----------------------------
-
-	
-	/**
-	 * Returns the connect-value.
-	 * @see #setConnect(boolean)
-	 */
-	public boolean getConnect()
-	{
-		return connect_;
-	}
-	
-
-	/**
-	 * Sets if the application should be connected to receive requests? In case of 
-	 * of a servlet environment this means that civilian dynamically registers  
-	 * a servlet to route application requests to the application. Default is true.
-	 */
-	public void setConnect(boolean connect)
-	{
-		connect_ = connect;
-	}
 
 	
 	/**
@@ -576,7 +554,6 @@ public class AppConfig
 	private Resource rootResource_;
 	private String defaultResExtension_;
 	private ReloadConfig reloadConfig_;
-	private boolean connect_;
 	private boolean async_;
 	private ControllerFactory controllerFactory_;
 	private Map<String,ContentSerializer> contentSerializers_ = new HashMap<>();

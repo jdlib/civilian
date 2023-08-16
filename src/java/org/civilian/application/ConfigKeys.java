@@ -60,12 +60,6 @@ public interface ConfigKeys
 	/**
 	 * A key of the Civilian config.
 	 */
-	public static final String CONNECT = "connect";
-
-
-	/**
-	 * A key of the Civilian config.
-	 */
 	public static final String ASYNC = "async";
 
 

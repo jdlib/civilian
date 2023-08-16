@@ -52,6 +52,8 @@ public abstract class Server implements ServerProvider, PathProvider
 	 */
 	public static final String DEFAULT_CONFIG_FILE 	= "civilian.ini";
 	
+	private static final String CONNECTOR_NAME = "server.connector";
+	
 	
 	/**
 	 * The server log. 
@@ -109,13 +111,13 @@ public abstract class Server implements ServerProvider, PathProvider
 		develop_ = settings.getBoolean(ConfigKeys.DEVELOP, false);
 		
 		// 2. create applications: this may fail and throw any exception
-		List<AppInfo> appInfos	= new ArrayList<>();
-		createCustomApps(loader, settings, appInfos);
-		createAdminApp(loader, new Settings(settings, ConfigKeys.ADMINAPP_PREFIX), appInfos);
+		List<AppCreateData> addList = new ArrayList<>();
+		createCustomApps(loader, settings, addList);
+		createAdminApp(loader, new Settings(settings, ConfigKeys.ADMINAPP_PREFIX), addList);
 		
 		// 3. add apps to server
-		for (AppInfo info : appInfos)
-			addApp(info.app, info.id, info.path, info.settings);
+		for (AppCreateData add : addList)
+			addApp(add.app, add.id, add.relativePath, add.settings);
 
 		if (logInfo)
 		{
@@ -132,34 +134,34 @@ public abstract class Server implements ServerProvider, PathProvider
 
 	
 	/**
-	 * Holds the data of an application defined in the Civilian config.
+	 * Holds the data of an application defined in the Civilian config, 
+	 * needed to create and add the application.
 	 */
-	private static class AppInfo
+	private static class AppCreateData
 	{
-		public AppInfo(String id, Settings settings, String path, Application app)
+		public AppCreateData(Application app, String id, Settings settings, String path)
 		{
-			this.id			= id;
-			this.path		= path;
+			this.app		= Check.notNull(app, "app"); 
+			this.id			= Check.notNull(id, "id");
+			this.relativePath		= path;
 			this.settings 	= settings;
-			this.app		= app; 
 		}
 		
 		
 		public final String id;
 		public final Application app;
-		public final String path;
+		public final String relativePath;
 		public final Settings settings;
 	}
 
 	
-	private void createAdminApp(AppLoader loader, Settings appSettings, List<AppInfo> appInfos) throws Exception
+	private void createAdminApp(AppLoader loader, Settings appSettings, List<AppCreateData> addList) throws Exception
 	{
 		if (AppConfig.isEnabled(appSettings, develop_, develop_))
 		{
 			String path 	= appSettings.get(ConfigKeys.PATH, ConfigKeys.ADMIN_PATH_DEFAULT);
-			Application app = loader.createAdminApp();
-			AppInfo appInfo = new AppInfo("civadmin", appSettings, path, app);
-			appInfos.add(appInfo);
+			Application app	= loader.createAdminApp();
+			addList.add(new AppCreateData(app, "civadmin", appSettings, path));
 		}
 	}
 	
@@ -194,14 +196,14 @@ public abstract class Server implements ServerProvider, PathProvider
 	
 
 	// creates and initializes applications
-	private void createCustomApps(AppLoader loader, Settings settings, List<AppInfo> appInfos) throws Exception
+	private void createCustomApps(AppLoader loader, Settings settings, List<AppCreateData> addList) throws Exception
 	{
 		for (String id : findCustomAppIds(settings))
 		{
 			String appPrefix = ConfigKeys.APP_PREFIX + id + '.';
 			Settings appSettings = new Settings(settings, appPrefix);
 			if (AppConfig.isEnabled(appSettings, true, develop_))
-				createCustomApp(loader, appSettings, id, appPrefix, appInfos);
+				createCustomApp(loader, appSettings, id, appPrefix, addList);
 		}
 	}
 	
@@ -212,7 +214,7 @@ public abstract class Server implements ServerProvider, PathProvider
 	 * we push a DefaultApp object, which - when invoked - will present
 	 * an error message.
 	 */
-	protected void createCustomApp(AppLoader loader, Settings settings, String id, String appPrefix, List<AppInfo> appInfos)
+	protected void createCustomApp(AppLoader loader, Settings settings, String id, String appPrefix, List<AppCreateData> addList)
 		throws Exception
 	{
 		String path = settings.get(ConfigKeys.PATH, "");
@@ -229,8 +231,7 @@ public abstract class Server implements ServerProvider, PathProvider
 			throw new IllegalStateException(msg);
 		}
 		
-		AppInfo appInfo = new AppInfo(id, settings, path, app);
-		appInfos.add(appInfo);
+		addList.add(new AppCreateData(app, id, settings, path));
 	}
 	
 	
@@ -263,24 +264,39 @@ public abstract class Server implements ServerProvider, PathProvider
 				throw new IllegalArgumentException("the path '" + relPath + "' is used by app '" + prevApp.getId() + "' and '" + id + "'");  
 		}
 		
-		// add the app to the application list
+		// add the app to the application list, even if init results in an error
 		apps_.add(app);
 		
-		// init the app
-		Application.InitResult initResult = app.init(this, id, relPath, settings);
-		
-		// connect the app: even if the application has status error 
-		// it can decide to display some error information to an user
-		if ((settings == null) || initResult.connect)
-		{
-			Object connector = connect(app, initResult.async);
-			app.setConnector(connector);
-		}
-		
-		return initResult.success;
+		AppInitData initData = new AppInitData(id, relPath, settings);
+		app.init(initData);
+		Object connector = connect(app, initData.async);
+		if (connector != null)
+			app.setAttribute(CONNECTOR_NAME, connector);
+		return app.getStatus() == Application.Status.RUNNING;
 	}
 	
+
+	public class AppInitData
+	{
+		private AppInitData(String id, Path relativePath, Settings settings)
+		{
+			this.server = Server.this;
+			this.id = id;
+			this.relativePath = relativePath;
+			this.path = server.getPath().add(relativePath);
+			this.settings = settings != null ? settings : new Settings();
+		}
+
+		
+		public final Server server;
+		public final String id;
+		public final Path relativePath;
+		public final Path path;
+		public final Settings settings;
+		public boolean async;
+	}
 	
+
 	//--------------------------
 	// connect
 	//--------------------------
@@ -302,7 +318,7 @@ public abstract class Server implements ServerProvider, PathProvider
 	 * Disconnect the application from the server.
 	 * Called when the application is closed.
 	 */
-	protected abstract void disconnect(Application app);
+	protected abstract void disconnect(Application app, Object connector);
 
 	
 	//--------------------------
@@ -344,6 +360,10 @@ public abstract class Server implements ServerProvider, PathProvider
 				{
 					Logs.SERVER.error("error when closing application " + app, e);
 				}
+				
+				Object connector = app.getAttribute(CONNECTOR_NAME);
+				if (connector != null)
+					disconnect(app, connector);
 			}
 		}
 		finally

@@ -47,7 +47,7 @@ public class TempServer extends Server
 	}
 	
 	
-	@Override protected void disconnect(Application app)
+	@Override protected void disconnect(Application app, Object connector)
 	{
 		throw error();
 	}
