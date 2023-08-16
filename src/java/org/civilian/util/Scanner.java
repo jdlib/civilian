@@ -697,13 +697,8 @@ public class Scanner
 		StringBuilder s = new StringBuilder(message);
 		s.append(" (");
 		if (getLineCount() > 1)
-		{
-			s.append(getLineIndex() + 1);
-			s.append(':');
-		}
-		s.append(pos_ + 1);
-		s.append("): '");
-		s.append(currentLine_);
+			s.append(getLineIndex() + 1).append(':');
+		s.append(pos_ + 1).append("): '").append(currentLine_);
 		return new IllegalArgumentException(s.toString()); 
 	}
 	

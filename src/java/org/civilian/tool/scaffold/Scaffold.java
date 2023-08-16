@@ -215,7 +215,7 @@ public class Scaffold
 			String selfPath = selfUrl.getPath();
 			if (selfPath.startsWith("file:"))
 			{
-				File jarFile = new File(selfPath.substring(5, selfPath.lastIndexOf("!")));
+				File jarFile = new File(selfPath.substring(5, selfPath.lastIndexOf('!')));
 				if (jarFile.exists())
 					copyLib(jarFile);
 			}

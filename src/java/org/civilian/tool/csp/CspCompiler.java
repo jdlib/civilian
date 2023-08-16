@@ -1180,7 +1180,7 @@ public class CspCompiler
 	private void log(int level, String text)
 	{
 		if (options_.verbose >= level)
-			System.out.println(text.toString());
+			System.out.println(text);
 	}
 
 
