@@ -167,7 +167,7 @@ public class ClientConstGenerator
 	}
 	
 	
-	private void writeJavascript(Resource root, TemplateWriter out)
+	private void writeJavascript()
 	{
 		throw new UnsupportedOperationException("not yet implemented");
 	}
