@@ -19,7 +19,6 @@ package org.civilian.processor;
 import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.Server;
 import org.civilian.asset.Asset;
 import org.civilian.asset.AssetService;
 import org.civilian.asset.AssetServices;
@@ -37,7 +36,7 @@ public class AssetDispatchTest extends CivTest
 		AssetService service = AssetServices.combine(Path.ROOT);
 		try
 		{
-			new AssetDispatch(service);
+			new AssetDispatch(s -> false, service);
 		}
 		catch(IllegalArgumentException e)
 		{
@@ -52,15 +51,13 @@ public class AssetDispatchTest extends CivTest
 		Request request 		= mock(Request.class);
 		Response response 		= mock(Response.class);
 		ResponseHeaders headers = mock(ResponseHeaders.class);
-		Server server     		= mock(Server.class);
 		Asset asset 			= mock(Asset.class);
 		AssetService service	= mock(AssetService.class);
 		when(request.getResponse()).thenReturn(response);
-		when(request.getServer()).thenReturn(server);
 		when(response.getHeaders()).thenReturn(headers);
 		when(service.hasAssets()).thenReturn(Boolean.TRUE);
 		
-		AssetDispatch dispatch 	= new AssetDispatch(service);
+		AssetDispatch dispatch 	= new AssetDispatch(s -> false /*not prohibited*/, service);
 		
 		// test dispatch.getInfo()
 		assertEquals(service.getInfo(), dispatch.getInfo());
@@ -71,14 +68,6 @@ public class AssetDispatchTest extends CivTest
 		
 		// switch to a request which is processed by the AssetDispatch
 		when(request.getRelativePath()).thenReturn(new Path("/test"));
-		
-		// test prohibited-asset requests
-		when(server.isProhibitedPath(anyString())).thenReturn(Boolean.TRUE);
-		assertTrue(dispatch.process(request, ProcessorChain.EMPTY));
-		verify(response).sendError(Response.Status.SC404_NOT_FOUND);
-		
-		// switch to allowed requests
-		when(server.isProhibitedPath(anyString())).thenReturn(Boolean.FALSE);
 		
 		// no asset found: dispatch to next
 		assertFalse(dispatch.process(request, ProcessorChain.EMPTY));
@@ -103,5 +92,20 @@ public class AssetDispatchTest extends CivTest
 		when(request.getRelativePath()).thenReturn(new Path("/test/some.css"));
 		assertTrue(dispatch.process(request, ProcessorChain.EMPTY));
 		verify(asset).write(response, true);
+	}
+	
+	
+	@Test public void testProhibited() throws Exception
+	{
+		AssetService service	= mock(AssetService.class);
+		Request request 		= mock(Request.class);
+		Response response 		= mock(Response.class);
+		when(service.hasAssets()).thenReturn(Boolean.TRUE);
+		when(request.getRelativePath()).thenReturn(new Path("/customers"));
+		when(request.getResponse()).thenReturn(response);
+		AssetDispatch dispatch 	= new AssetDispatch(s -> true /*prohibited*/, service);
+
+		assertTrue(dispatch.process(request, ProcessorChain.EMPTY));
+		verify(response).sendError(Response.Status.SC404_NOT_FOUND);
 	}
 }

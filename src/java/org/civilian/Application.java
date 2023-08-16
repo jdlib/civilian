@@ -305,7 +305,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 		
 		// followed by an optional AssetDispatch
 		if (getAssetService().hasAssets())
-			pconfig.addLast(new AssetDispatch(getAssetService()));
+			pconfig.addLast(new AssetDispatch(getServer()::isProhibitedPath, getAssetService()));
 		
 		// allow derived implementations to tweak the processor list
 		initProcessors(pconfig);

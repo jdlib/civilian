@@ -16,6 +16,7 @@
 package org.civilian.processor;
 
 
+import java.util.function.Predicate;
 import org.civilian.Application;
 import org.civilian.asset.AssetService;
 import org.civilian.request.Request;
@@ -42,9 +43,10 @@ public class AssetDispatch extends Processor
 	 * Creates a new AssetDispatch.
 	 * @param assetService the asset service used by the AssetDispatch.
 	 */
-	public AssetDispatch(AssetService assetService)
+	public AssetDispatch(Predicate<String> prohibitedTest, AssetService assetService)
 	{
-		assetService_ = Check.notNull(assetService, "assetService");
+		assetService_	= Check.notNull(assetService, "assetService");
+		prohibitedTest_	= Check.notNull(prohibitedTest, "prohibitedTest");
 		if (!assetService.hasAssets())
 			throw new IllegalArgumentException("AssetService is empty");
 	}
@@ -66,7 +68,7 @@ public class AssetDispatch extends Processor
 		Path relativePath = request.getRelativePath();
 		
 		// catch if someone tries to sneak into private folders (e.g. WEB-INF)
-		if (request.getServer().isProhibitedPath(relativePath.toString()))
+		if (prohibitedTest_.test(relativePath.toString()))
 		{
 			request.getResponse().sendError(Response.Status.SC404_NOT_FOUND);
 			return true;
@@ -96,5 +98,6 @@ public class AssetDispatch extends Processor
 
 	
 	private final AssetService assetService_;
+	private final Predicate<String> prohibitedTest_;
 	private static final String VALID_METHODS = "GET, HEAD, POST, OPTIONS";
 }
