@@ -177,15 +177,13 @@ public abstract class Asset
 	protected boolean checkIfModified(Response response)
 	{
 		long modifiedSince = response.getRequest().getHeaders().getDate(HttpHeaders.IF_MODIFIED_SINCE);
-		if (modifiedSince != -1)
+		if ((modifiedSince != -1) && (getLastModified() < modifiedSince + 1000))
 		{
-			if (getLastModified() < modifiedSince + 1000)
-			{
-				response.setStatus(Response.Status.NOT_MODIFIED);
-				return false;
-            }
-		}
-        return true;
+			response.setStatus(Response.Status.NOT_MODIFIED);
+			return false;
+        }
+		else
+			return true;
 	}
 
 
