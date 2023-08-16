@@ -141,7 +141,7 @@ public class ClientConstGenerator
 				writeJava(root, out);
 				break;
 			case JAVASCRIPT:
-				writeJavascript(root, out);
+				writeJavascript();
 				break;
 		}
 	}
