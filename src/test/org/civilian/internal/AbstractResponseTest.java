@@ -67,7 +67,6 @@ public class AbstractResponseTest extends CivTest
 		assertSame(request, 			response.getRequest());
 		assertSame(app, 				response.getApplication());
 		assertSame(response, 			response.getResponse());
-		assertSame(app.getServer(), 	response.getServer());
 		
 		assertNotNull(response.getUriEncoder());
 

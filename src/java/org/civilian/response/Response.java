@@ -26,8 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.civilian.Application;
 import org.civilian.ApplicationProvider;
-import org.civilian.Server;
-import org.civilian.ServerProvider;
 import org.civilian.application.AppConfig;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
@@ -53,7 +51,7 @@ import org.civilian.util.UriEncoder;
  * In a Servlet environment Response is functionally equivalent to a HttpServletResponse.
  */
 public interface Response extends RequestProvider, ResponseProvider, ApplicationProvider, 
-	ServerProvider, LocaleServiceProvider
+	LocaleServiceProvider
 {
 	/**
 	 * Defines constants for the response status. Their numeric value equals the correspondent HTTP status code.
@@ -206,15 +204,6 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	@Override public default Response getResponse()
 	{
 		return this;
-	}
-
-	
-	/**
-	 * Returns the server.
-	 */
-	@Override public default Server getServer()
-	{
-		return getApplication().getServer();
 	}
 
 	
