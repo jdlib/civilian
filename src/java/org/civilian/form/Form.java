@@ -17,7 +17,6 @@ package org.civilian.form;
 
 
 import java.util.ArrayList;
-
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Post;
 import org.civilian.request.Request;
