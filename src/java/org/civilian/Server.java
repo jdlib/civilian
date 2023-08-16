@@ -45,7 +45,7 @@ import org.civilian.util.ResourceLoader;
  * Server represents the environment which hosts and runs Civilian applications.
  * In servlet terms the server corresponds to a ServletContext.
  */
-public abstract class Server implements ServerProvider, PathProvider
+public abstract class Server implements PathProvider
 {
 	/**
 	 * The default name of the Civilian config file.
@@ -376,15 +376,6 @@ public abstract class Server implements ServerProvider, PathProvider
 	//--------------------------
 	// accessors
 	//--------------------------
-	
-	
-	/**
-	 * Implements ServerProvider and returns this.
-	 */
-	@Override public Server getServer()
-	{
-		return this;
-	}
 	
 	
 	/**

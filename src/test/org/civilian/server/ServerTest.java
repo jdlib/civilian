@@ -28,7 +28,6 @@ public class ServerTest extends CivTest
 	{
 		File dir = new File(".").getAbsoluteFile();
 		TestServer server = new TestServer(dir);
-		assertSame(server, server.getServer());
 		assertEquals(0, server.getApplications().size());
 		assertNull(server.getApplication("x"));
 		assertEquals(dir, server.getRootDir());

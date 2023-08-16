@@ -64,7 +64,7 @@ import org.slf4j.Logger;
 /**
  * Application represents a Civilian application.
  */
-public abstract class Application implements ApplicationProvider, ServerProvider, PathProvider
+public abstract class Application implements ApplicationProvider, PathProvider
 {
 	private static final Logger log = Logs.APPLICATION; 
 	
@@ -420,7 +420,7 @@ public abstract class Application implements ApplicationProvider, ServerProvider
 	/**
 	 * Returns the server in which the application is running.
 	 */
-	@Override public Server getServer()
+	public Server getServer()
 	{
 		return server_;
 	}
