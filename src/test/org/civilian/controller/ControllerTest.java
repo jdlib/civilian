@@ -31,7 +31,6 @@ public class ControllerTest extends CivTest
 		@Get public void testAccessors() throws Exception
 		{
 			assertSame(app_, getApplication());
-			assertSame(app_.getServer(), getServer());
 			assertSame(getClass(), getControllerType().getControllerClass());
 			assertTrue(isProcessing());
 			assertNull(getException());

@@ -27,7 +27,7 @@ public class IndexController extends AdminController
 {
 	@Override protected Template getContentTemplate()
 	{
-		return new IndexTemplate(getServer());
+		return new IndexTemplate(getApplication().getServer());
 	}
 
 

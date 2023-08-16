@@ -18,8 +18,6 @@ package org.civilian.controller;
 
 import org.civilian.Application;
 import org.civilian.ApplicationProvider;
-import org.civilian.Server;
-import org.civilian.ServerProvider;
 import org.civilian.annotation.Consumes;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Post;
@@ -98,7 +96,7 @@ import org.civilian.util.HttpHeaders;
  * for application-wide error handling.
  */
 public class Controller implements 
-	MsgBundleProvider, RequestProvider, ResponseProvider, ApplicationProvider, ServerProvider
+	MsgBundleProvider, RequestProvider, ResponseProvider, ApplicationProvider
 {
 	//------------------------------------
 	// accessors
@@ -115,16 +113,6 @@ public class Controller implements
 	}
 
 
-	/**
-	 * Returns the server to which the application belongs.
-	 * @see Application#getServer()
-	 */
-	@Override public Server getServer()
-	{
-		return getApplication().getServer();
-	}
-	
-	
 	/**
 	 * Returns the application to which the controller belongs.
 	 */
