@@ -138,4 +138,38 @@ public class Check
 		if (!superClass.isAssignableFrom(derivedClass))
 			throw new IllegalArgumentException("class '" + derivedClass.getName() + "' is not derived from '" + superClass.getName() + "'");
 	}
+
+
+	public static <T> T isA(Object object, Class<T> type)
+	{
+		return isA(object, type, null);
+	}
+
+
+	/**
+	 * Checks that an object is an instance of a class.
+	 * @param object the object
+	 * @param what describes the object.
+	 * @return the object
+	 * @exception IllegalArgumentException if the object is null.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T isA(Object object, Class<T> type, String what)
+	{
+		Check.notNull(object, what);
+		if (!type.isAssignableFrom(object.getClass()))
+			isAFailed(object, type, what);
+		return (T)object;
+	}
+
+
+	private static void isAFailed(Object object, Class<?> type, String what)
+	{
+		String cname = object.getClass().getName();
+		String descr = what == null ? cname : what + " (" + cname + ')';
+		if (!cname.equals(type.getName()))
+			throw new IllegalArgumentException(descr + " is not a " + type.getName());
+		else
+			throw new IllegalStateException(descr + " was loaded by " + object.getClass().getClassLoader() + " and not by " + type.getClassLoader());
+	}
 }
