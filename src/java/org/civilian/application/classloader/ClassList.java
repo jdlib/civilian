@@ -141,6 +141,9 @@ public class ClassList
 		@Override public abstract String toString();
 		
 		
+		@Override public abstract int hashCode();
+
+		
 		@Override public abstract boolean equals(Object other);
 	}
 	
