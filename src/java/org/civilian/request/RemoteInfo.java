@@ -15,6 +15,7 @@
  */
 package org.civilian.request;
 
+
 /**
  * RemoteInfo provides info about the client or last proxy that sent the request.
  * @see Request#getRemoteInfo()

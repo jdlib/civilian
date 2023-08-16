@@ -25,7 +25,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-
 import org.civilian.Application;
 import org.civilian.ApplicationProvider;
 import org.civilian.content.ContentSerializer;
