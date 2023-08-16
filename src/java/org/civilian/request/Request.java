@@ -28,8 +28,6 @@ import java.util.Map;
 
 import org.civilian.Application;
 import org.civilian.ApplicationProvider;
-import org.civilian.Server;
-import org.civilian.ServerProvider;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
@@ -76,7 +74,7 @@ import org.civilian.util.Value;
  * </ul>
  */
 public interface Request extends RequestProvider, ResponseProvider, ApplicationProvider, 
-	ServerProvider, PathParamProvider, PathProvider, LocaleServiceProvider
+	PathParamProvider, PathProvider, LocaleServiceProvider
 {
 	/**
 	 * Defines constants for common request methods as defined by the HTTP protocol. 
@@ -150,15 +148,6 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 
 	
 	/**
-	 * Returns the server to which this request belongs.
-	 */
-	@Override public default Server getServer()
-	{
-		return getApplication().getServer();
-	}
-
-	
-	/**
 	 * Returns the application to which this request belongs.
 	 */
 	@Override public Application getApplication();
@@ -201,19 +190,6 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	public Path getRelativePath();
 
 	
-	/**
-	 * Returns the real path on the server which corresponds to the request path
-	 * @return the path or null, if there is no correspondence.
-	 * @see Server#getRealPath(String)
-	 */
-	public default String getRealPath()
-	{
-		Server server = getServer();
-		Path subContextPath = getPath().cutStart(server.getPath()); 
-		return subContextPath != null ? server.getRealPath(subContextPath) : null;
-	}
-
-
 	/**
 	 * Returns the request path in its original form, as specified by the client. 
 	 * For a HTTP request this equals the part of the request URL from the protocol 

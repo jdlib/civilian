@@ -50,7 +50,6 @@ public class AbstractRequestTest extends CivTest
 	{
 		assertSame(request, request.getRequest());
 		assertSame(app, request.getApplication());
-		assertSame(app.getServer(), request.getServer());
 		
 		request.setResponse(response); // ok
 	}
