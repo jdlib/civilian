@@ -18,25 +18,20 @@ package org.civilian.server;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import org.slf4j.Logger;
 import org.civilian.ConfigKeys;
 import org.civilian.Logs;
 import org.civilian.Version;
-import org.civilian.application.AppConfig;
 import org.civilian.application.Application;
-import org.civilian.application.DefaultApp;
+import org.civilian.application.factory.AppFactory;
 import org.civilian.content.ContentTypeLookup;
-import org.civilian.internal.admin.AdminApp;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
-import org.civilian.util.ClassUtil;
 import org.civilian.util.FileType;
 import org.civilian.util.Settings;
 import org.civilian.util.ResourceLoader;
@@ -106,19 +101,15 @@ public abstract class Server implements PathProvider
 		boolean logInfo = log.isInfoEnabled();
 		long time = logInfo ? System.currentTimeMillis() : 0L;
 
-		AppLoader loader = createAppLoader(appClassLoader); 
-		
 		// 1. read flags
 		develop_ = settings.getBoolean(ConfigKeys.DEVELOP, false);
 		
 		// 2. create applications: this may fail and throw any exception
-		List<AppCreateData> addList = new ArrayList<>();
-		createCustomApps(loader, settings, addList);
-		createAdminApp(loader, new Settings(settings, ConfigKeys.ADMINAPP_PREFIX), addList);
+		List<AppFactory.Data> dataList = AppFactory.load(appClassLoader, settings, develop_);
 		
 		// 3. add apps to server
-		for (AppCreateData add : addList)
-			addApp(add.app, add.id, add.relativePath, add.settings);
+		for (AppFactory.Data data : dataList)
+			addApp(data.app, data.id, data.relativePath, data.settings);
 
 		if (logInfo)
 		{
@@ -133,108 +124,6 @@ public abstract class Server implements PathProvider
 	// adding apps
 	//--------------------------
 
-	
-	/**
-	 * Holds the data of an application defined in the Civilian config, 
-	 * needed to create and add the application.
-	 */
-	private static class AppCreateData
-	{
-		public AppCreateData(Application app, String id, Settings settings, String path)
-		{
-			this.app			= Check.notNull(app, "app"); 
-			this.id				= Check.notNull(id, "id");
-			this.relativePath	= path;
-			this.settings 		= settings;
-		}
-		
-		
-		public final String id;
-		public final Application app;
-		public final String relativePath;
-		public final Settings settings;
-	}
-
-	
-	private void createAdminApp(AppLoader loader, Settings appSettings, List<AppCreateData> addList) throws Exception
-	{
-		if (AppConfig.isEnabled(appSettings, develop_, develop_))
-		{
-			String path 	= appSettings.get(ConfigKeys.PATH, ConfigKeys.ADMIN_PATH_DEFAULT);
-			Application app	= loader.createAdminApp();
-			addList.add(new AppCreateData(app, "civadmin", appSettings, path));
-		}
-	}
-	
-	
-	private List<String> findCustomAppIds(Settings settings)
-	{
-		// test if the app ids are explicitly listed
-		if (settings.contains(ConfigKeys.APPLICATIONS, false))
-			return settings.getList(ConfigKeys.APPLICATIONS);
-		
-		// else collect them
-		List<String> ids = new ArrayList<>(); 
-		for (Iterator<String> keys = settings.keys(); keys.hasNext(); )
-		{
-			String key = keys.next();
-			// test the mandatory keys
-			if (key.startsWith(ConfigKeys.APP_PREFIX) && 
-				(key.endsWith(ConfigKeys.CLASS) || key.endsWith(ConfigKeys.PACKAGE)))
-			{
-				int p = key.indexOf('.', ConfigKeys.APP_PREFIX.length());
-				if (p != -1)
-				{
-					String id = key.substring(ConfigKeys.APP_PREFIX.length(), p);
-					if (!ids.contains(id))
-						ids.add(id);
-				}
-			}
-		}
-		Collections.sort(ids);
-		return ids;
-	}
-	
-
-	// creates and initializes applications
-	private void createCustomApps(AppLoader loader, Settings settings, List<AppCreateData> addList) throws Exception
-	{
-		for (String id : findCustomAppIds(settings))
-		{
-			String appPrefix = ConfigKeys.APP_PREFIX + id + '.';
-			Settings appSettings = new Settings(settings, appPrefix);
-			if (AppConfig.isEnabled(appSettings, true, develop_))
-				createCustomApp(loader, appSettings, id, appPrefix, addList);
-		}
-	}
-	
-	
-	/**
-	 * Creates the application for a certain id.
-	 * Even if creation fails and we cannot instantiate the application object
-	 * we push a DefaultApp object, which - when invoked - will present
-	 * an error message.
-	 */
-	protected void createCustomApp(AppLoader loader, Settings settings, String id, String appPrefix, List<AppCreateData> addList)
-		throws Exception
-	{
-		String path = settings.get(ConfigKeys.PATH, "");
-		
-		Application app;
-		if (settings.contains(ConfigKeys.CLASS))
-			app = loader.createApplication(settings.get(ConfigKeys.CLASS));
-		else if (settings.contains(ConfigKeys.PACKAGE))
-			app = loader.createDefaultApp(settings.get(ConfigKeys.PACKAGE));
-		else
-		{
-			String msg = "application '" + id + "' must either define an application class (key '" + appPrefix + ConfigKeys.CLASS + 
-				"') or set the base package for controller classes (key '" + appPrefix + ConfigKeys.PACKAGE + "')";
-			throw new IllegalStateException(msg);
-		}
-		
-		addList.add(new AppCreateData(app, id, settings, path));
-	}
-	
 	
 	/**
 	 * Adds an application to the Server. 
@@ -583,57 +472,6 @@ public abstract class Server implements PathProvider
 	 * In a servlet environment you can access the ServletContext in this way. 
 	 */
 	public abstract <T> T unwrap(Class<T> implClass);
-
-	
-	private AppLoader createAppLoader(ClassLoader cl) throws Exception
-	{
-		if (cl == null)
-			cl = getClass().getClassLoader();
-		Class<? extends AppLoader> c = ClassUtil.getClass(AppLoader.class.getName() + "Impl", AppLoader.class, cl);
-		Constructor<? extends AppLoader> ctor = c.getConstructor();
-		ctor.setAccessible(true);
-		return ctor.newInstance();
-	}
-	
-	
-	private static interface AppLoader 
-	{
-		public Application createAdminApp();
-
-
-		public Application createDefaultApp(String packageName);
-
-	
-		public Application createApplication(String className) throws Exception;
-	}
-	
-	
-	// instantiated with Class.forName
-	@SuppressWarnings("unused")
-	private static class AppLoaderImpl implements AppLoader
-	{
-		public AppLoaderImpl()
-		{
-		}
-		
-		
-		@Override public Application createAdminApp()
-		{
-			return new AdminApp();
-		}
-
-
-		@Override public Application createDefaultApp(String packageName)
-		{
-			return new DefaultApp(packageName);
-		}
-
-	
-		@Override public Application createApplication(String className) throws Exception
-		{
-			return ClassUtil.createObject(className, Application.class, getClass().getClassLoader());
-		}
-	}
 
 	
 	/**
