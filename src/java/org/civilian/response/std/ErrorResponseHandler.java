@@ -20,19 +20,23 @@ import org.civilian.Logs;
 import org.civilian.application.Application;
 import org.civilian.content.ContentType;
 import org.civilian.response.Response;
+import org.civilian.response.ResponseHandler;
 import org.civilian.util.Check;
 
 
 /**
- * ErrorResponse is used to write an error response.
+ * ErrorResponseHandler is used to write an error response.
  * It is called by {@link Response#sendError(int)} or {@link Response#sendError(int, String, Throwable)}.
  * The actual ErrorResponse object used is created by {@link Application#createErrorResponse()}.
  */
-public class ErrorResponse
+public class ErrorResponseHandler implements ResponseHandler
 {
-	public ErrorResponse(boolean develop)
+	public ErrorResponseHandler(boolean develop, int statusCode, String message, Throwable error)
 	{
-		develop_ = develop;
+		develop_ 	= develop;
+		statusCode_ = statusCode;
+		message_	= message;
+		error_		= error;
 	}
 	
 
@@ -45,7 +49,8 @@ public class ErrorResponse
 	 * @param message an optional error message
 	 * @param error an optional error
 	 */
-	public synchronized Exception send(Response response, int statusCode, String message, Throwable error)
+	@Override
+	public synchronized Exception send(Response response)
 	{
 		Check.notNull(response, "response");
 		try
@@ -53,8 +58,8 @@ public class ErrorResponse
 			if (!response.isCommitted())
 			{
 				response.resetBuffer();
-				response.setStatus(statusCode);
-				sendImpl(response, statusCode, message, error);
+				response.setStatus(statusCode_);
+				sendContent(response);
 			}
 			return null;
 		}
@@ -82,19 +87,20 @@ public class ErrorResponse
 	 * @param message an optional error message
 	 * @param error an optional error
 	 */
-	protected void sendImpl(Response response, int statusCode, String message, Throwable error) throws Exception
+	protected void sendContent(Response response) throws Exception
 	{
 		if (develop_ && 
 			response.getRequest().getAcceptedContentTypes().contains(ContentType.TEXT_HTML))
 		{
 			response.setContentType(ContentType.TEXT_HTML);
-			ErrorTemplate t = new ErrorTemplate(response.getRequest(), statusCode, message, error);
+			ErrorTemplate t = new ErrorTemplate(response.getRequest(), statusCode_, message_, error_);
 			response.writeTemplate(t);
 		}
 		else
 		{
-			if ((message == null) && develop_ && (error != null))
-				message = error.getMessage();
+			String message = message_;
+			if ((message == null) && develop_ && (error_ != null))
+				message = error_.getMessage();
 			if (message != null)
 			{
 				response.setContentType(ContentType.TEXT_PLAIN);
@@ -102,7 +108,22 @@ public class ErrorResponse
 			}
 		}
 	}
+	
+	
+	@Override public String toString() 
+	{
+		StringBuilder s = new StringBuilder();
+		s.append(statusCode_);
+		if (error_ != null)
+			s.append(' ').append(error_.getMessage());
+		else if (message_ != null)
+			s.append(' ').append(message_);
+		return s.toString();
+	}
 
-
+	
 	private final boolean develop_;
+	private final int statusCode_;
+	private final String message_;
+	private final Throwable error_;
 }

@@ -50,7 +50,7 @@ import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.resource.scan.ResourceScan;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseOwner;
-import org.civilian.response.std.ErrorResponse;
+import org.civilian.response.std.ErrorResponseHandler;
 import org.civilian.response.std.NotFoundResponse;
 import org.civilian.server.Server;
 import org.civilian.server.TempServer;
@@ -188,10 +188,10 @@ public abstract class Application implements ApplicationProvider, PathProvider, 
 				log.error(toString() + ": error during forced close()", e2);
 			}
 			
-			processors_ = new ProcessorList(new ErrorProcessor(
+			processors_ = new ProcessorList(new ErrorProcessor(new ErrorResponseHandler(
+				data.server.develop(),
 				Response.Status.SC503_SERVICE_UNAVAILABLE,
-				this + " encountered an error during initialization", e,
-				data.server.develop()));
+				this + " encountered an error during initialization", e)));
 		}
 	}
 
@@ -512,6 +512,7 @@ public abstract class Application implements ApplicationProvider, PathProvider, 
 	/**
 	 * Returns the LocaleServiceList.
 	 */
+	@Override
 	public LocaleServiceList getLocaleServices()
 	{
 		return localeServices_;
@@ -538,6 +539,7 @@ public abstract class Application implements ApplicationProvider, PathProvider, 
 	 * application/json (based on GSON).
 	 * @see AppConfig#registerContentSerializer(String, ContentSerializer)
 	 */
+	@Override
 	public ContentSerializer getContentSerializer(String contentType)
 	{
 		return contentSerializers_.get(contentType);
@@ -709,9 +711,9 @@ public abstract class Application implements ApplicationProvider, PathProvider, 
 	 * @see Response#sendError(int)  
 	 * @see Response#sendError(int, String, Throwable)  
 	 */
-	public ErrorResponse createErrorResponse()
+	public ErrorResponseHandler createErrorResponse(int statusCode, String message, Throwable error)
 	{
-		return new ErrorResponse(develop());
+		return new ErrorResponseHandler(develop(), statusCode, message, error);
 	}
 	
 	

@@ -18,6 +18,7 @@ package org.civilian.processor;
 
 import org.junit.Test;
 import org.civilian.CivTest;
+import org.civilian.response.std.ErrorResponseHandler;
 
 
 public class ErrorProcessorTest extends CivTest
@@ -26,13 +27,13 @@ public class ErrorProcessorTest extends CivTest
 	{
 		ErrorProcessor p;
 		
-		p = new ErrorProcessor(503, "msg", new Error("x"), false);
+		p = new ErrorProcessor(new ErrorResponseHandler(false, 503, "msg", new Error("x")));
 		assertEquals("503 x", p.getInfo());
 
-		p = new ErrorProcessor(504, "msg", null, false);
+		p = new ErrorProcessor(new ErrorResponseHandler(false, 504, "msg", null));
 		assertEquals("504 msg", p.getInfo());
 		
-		p = new ErrorProcessor(505, null, null, false);
+		p = new ErrorProcessor(new ErrorResponseHandler(false, 505, null, null));
 		assertEquals("505", p.getInfo());
 	}
 }

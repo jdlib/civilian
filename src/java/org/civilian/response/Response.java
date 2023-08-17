@@ -34,7 +34,7 @@ import org.civilian.request.Request;
 import org.civilian.request.RequestProvider;
 import org.civilian.resource.Resource;
 import org.civilian.resource.Url;
-import org.civilian.response.std.ErrorResponse;
+import org.civilian.response.std.ErrorResponseHandler;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.service.LocaleService;
@@ -342,7 +342,7 @@ public interface Response extends RequestProvider, ResponseProvider, //, Applica
 	/**
 	 * Sends an error response to the client.
 	 * After using this method, the response is committed and should not be written to.
-	 * Internally the {@link ErrorResponse} implementation provided by {@link Application#createErrorResponse()}
+	 * Internally the {@link ErrorResponseHandler} implementation provided by {@link Application#createErrorResponse()}
 	 * is used to write the response.
 	 * @param statusCode see {@link Status} for a list of status codes.
 	 * @param message if not null, the message will be included in the error response.

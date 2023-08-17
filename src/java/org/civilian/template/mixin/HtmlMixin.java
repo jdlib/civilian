@@ -273,7 +273,7 @@ public class HtmlMixin
 	 */
 	public HtmlMixin setPath(Path path)
 	{
-		path_ = Check.notNull(path, "path";
+		path_ = Check.notNull(path, "path");
 		return this;
 	}
 

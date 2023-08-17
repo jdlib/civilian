@@ -17,7 +17,8 @@ package org.civilian.processor;
 
 
 import org.civilian.request.Request;
-import org.civilian.response.std.ErrorResponse;
+import org.civilian.response.ResponseHandler;
+import org.civilian.util.Check;
 
 
 /**
@@ -27,37 +28,24 @@ import org.civilian.response.std.ErrorResponse;
  */
 public class ErrorProcessor extends Processor
 {
-	public ErrorProcessor(int statusCode, String message, Throwable error, boolean develop)
+	public ErrorProcessor(ResponseHandler handler)
 	{
-		statusCode_	= statusCode;
-		message_	= message;
-		error_ 		= error;
-		develop_	= develop;
+		handler_ = Check.notNull(handler, "handler");
 	}
 	
 	
 	@Override public String getInfo() 
 	{
-		StringBuilder s = new StringBuilder();
-		s.append(statusCode_);
-		if (error_ != null)
-			s.append(' ').append(error_.getMessage());
-		else if (message_ != null)
-			s.append(' ').append(message_);
-		return s.toString();
+		return handler_.toString();
 	}
 	
 
 	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
 	{
-		ErrorResponse er = new ErrorResponse(develop_);
-		er.send(request.getResponse(), statusCode_, message_, error_);
+		handler_.send(request.getResponse());
 		return true;
 	}
 
 
-	private final String message_;
-	private final Throwable error_;
-	private final int statusCode_;
-	private final boolean develop_;
+	private final ResponseHandler handler_;
 }
