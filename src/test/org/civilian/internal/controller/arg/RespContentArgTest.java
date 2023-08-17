@@ -20,7 +20,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.civilian.CivTest;
-import org.civilian.internal.controller.arg.misc.ResponseContentArg;
+import org.civilian.controller.method.arg.misc.ResponseContentArg;
 import org.civilian.request.Request;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseContent;

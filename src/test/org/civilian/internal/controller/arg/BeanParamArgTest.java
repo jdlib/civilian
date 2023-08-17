@@ -23,7 +23,7 @@ import org.civilian.CivTest;
 import org.civilian.annotation.BeanParam;
 import org.civilian.annotation.HeaderParam;
 import org.civilian.controller.method.arg.factory.MethodArgFactory;
-import org.civilian.internal.controller.arg.misc.BeanParamArg;
+import org.civilian.controller.method.arg.misc.BeanParamArg;
 import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
 import org.civilian.resource.PathParamMap;

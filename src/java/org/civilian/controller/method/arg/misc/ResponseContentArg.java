@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.controller.arg.misc;
+package org.civilian.controller.method.arg.misc;
 
 
 import java.lang.reflect.Modifier;
