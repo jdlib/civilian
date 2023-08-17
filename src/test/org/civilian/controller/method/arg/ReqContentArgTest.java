@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.controller.arg;
+package org.civilian.controller.method.arg;
 
 
 import java.io.ByteArrayInputStream;
@@ -23,7 +23,6 @@ import java.io.StringReader;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
-import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.controller.method.arg.reqcontent.ReqContenBytesArg;
 import org.civilian.controller.method.arg.reqcontent.ReqContentArgs;
 import org.civilian.controller.method.arg.reqcontent.ReqContentGenericArg;
