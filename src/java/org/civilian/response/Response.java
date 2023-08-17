@@ -49,8 +49,7 @@ import org.civilian.util.UriEncoder;
  * either by a {@link #getContentWriter() Writer} or a {@link #getContentStream() OutputStream}.<br> 
  * In a Servlet environment Response is functionally equivalent to a HttpServletResponse.
  */
-public interface Response extends RequestProvider, ResponseProvider, //, ApplicationProvider, 
-	LocaleServiceProvider
+public interface Response extends RequestProvider, ResponseProvider, LocaleServiceProvider
 {
 	/**
 	 * Defines constants for the response status. Their numeric value equals the correspondent HTTP status code.
@@ -207,21 +206,11 @@ public interface Response extends RequestProvider, ResponseProvider, //, Applica
 
 	
 	/**
-	 * Returns the application.
-	 */
-	//@Override 
-	public default Application getApplication()
-	{
-		return getRequest().getApplication();
-	}
-	
-	
-	/**
 	 * Returns the response owner.
 	 */
 	public default ResponseOwner getOwner()
 	{
-		return getApplication();
+		return getRequest().getApplication();
 	}
 	
 

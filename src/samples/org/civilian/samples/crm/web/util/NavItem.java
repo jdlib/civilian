@@ -67,7 +67,7 @@ public class NavItem
 	public NavItem setScript(Script script)
 	{
 		if (script != null)
-			this.scriptUrls	= response_.getApplication().getAssetService() + script.path;
+			this.scriptUrls	= response_.getRequest().getApplication().getAssetService() + script.path;
 		return this;
 	}
 	

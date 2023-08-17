@@ -29,4 +29,14 @@ public interface ResponseOwner extends PathProvider
 	 * Returns a LocaleServiceList.
 	 */
 	public LocaleServiceList getLocaleServices();
+	
+	
+	/**
+	 * Returns an ResponseHandler which is used by the response
+	 * to send an error to the client. Applications can 
+	 * return a different implementation to tweak the error response. 
+	 * @see Response#sendError(int)  
+	 * @see Response#sendError(int, String, Throwable)  
+	 */
+	public ResponseHandler createErrorHandler(int statusCode, String message, Throwable error);
 }
