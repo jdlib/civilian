@@ -16,8 +16,8 @@
 package org.civilian.resource;
 
 
-import org.civilian.internal.pathparam.ConvertingPathParam;
-import org.civilian.internal.pathparam.PrecededPathParam;
+import org.civilian.resource.pathparam.ConvertingPathParam;
+import org.civilian.resource.pathparam.PrecededPathParam;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.Type;
 import org.civilian.util.Check;

@@ -1,4 +1,4 @@
-package org.civilian.internal.pathparam;
+package org.civilian.resource.pathparam;
 
 
 import java.util.Optional;

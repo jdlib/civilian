@@ -18,14 +18,15 @@ package org.civilian.resource;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
+
+import org.civilian.resource.pathparam.MultiSegmentPathParam;
+import org.civilian.resource.pathparam.OptionalPathParam;
+import org.civilian.resource.pathparam.RegexPathParam;
+import org.civilian.resource.pathparam.SegmentPathParam;
+import org.civilian.resource.pathparam.SegmentWcPathParam;
+import org.civilian.resource.pathparam.YMDPathParam;
 import org.civilian.type.DateType;
 import org.civilian.type.Type;
-import org.civilian.internal.pathparam.MultiSegmentPathParam;
-import org.civilian.internal.pathparam.OptionalPathParam;
-import org.civilian.internal.pathparam.RegexPathParam;
-import org.civilian.internal.pathparam.SegmentPathParam;
-import org.civilian.internal.pathparam.SegmentWcPathParam;
-import org.civilian.internal.pathparam.YMDPathParam;
 
 
 /**
