@@ -106,7 +106,7 @@ private void printResourceComment(ResourceInfo resInfo)
 {{
 	@ControllerSignature ctrlSig = resInfo.getControllerSignature();
 	<%%>/**
-	<%%> * "<%resInfo%>"<%?ctrlSig != null%> -&lt; <%ctrlSig%><%?%>
+	<%%> * "<%resInfo%>"<%?ctrlSig != null%> = <%ctrlSig%><%?%>
 	<%%> */ 
 }}
 

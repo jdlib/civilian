@@ -14,13 +14,13 @@ import org.civilian.controller.ControllerSignature;
 public interface Test1Resources
 {
 	/**
-	 * "/" -> org.civilian.testcase1.IndexController
+	 * "/" = org.civilian.testcase1.IndexController
 	 */
 	public static final Root root = new Root();
 
 
 	/**
-	 * "/" -> org.civilian.testcase1.IndexController
+	 * "/" = org.civilian.testcase1.IndexController
 	 */
 	public static class Root extends org.civilian.resource.Resource
 	{
@@ -39,12 +39,12 @@ public interface Test1Resources
 		}
 
 		/**
-		 * "/alpha" -> org.civilian.testcase1.AlphaController
+		 * "/alpha" = org.civilian.testcase1.AlphaController
 		 */
 		public final org.civilian.resource.Resource alpha;
 
 		/**
-		 * "/beta" -> org.civilian.testcase1.beta.IndexController
+		 * "/beta" = org.civilian.testcase1.beta.IndexController
 		 */
 		public final Beta beta;
 
@@ -54,18 +54,18 @@ public interface Test1Resources
 		public final Delta delta;
 
 		/**
-		 * "/mixed" -> org.civilian.testcase1.miXed.IndexController
+		 * "/mixed" = org.civilian.testcase1.miXed.IndexController
 		 */
 		public final Mixed mixed;
 
 		/**
-		 * "/{gammaId}" -> org.civilian.testcase1.GammaController
+		 * "/{gammaId}" = org.civilian.testcase1.GammaController
 		 */
 		public final org.civilian.resource.Resource $gammaId;
 
 
 		/**
-		 * "/beta" -> org.civilian.testcase1.beta.IndexController
+		 * "/beta" = org.civilian.testcase1.beta.IndexController
 		 */
 		public static class Beta extends org.civilian.resource.Resource
 		{
@@ -82,23 +82,23 @@ public interface Test1Resources
 			}
 
 			/**
-			 * "/beta/have space" -> org.civilian.testcase1.beta.PathController
+			 * "/beta/have space" = org.civilian.testcase1.beta.PathController
 			 */
 			public final org.civilian.resource.Resource have_space;
 
 			/**
-			 * "/beta/some" -> org.civilian.testcase1.beta.SomeController
+			 * "/beta/some" = org.civilian.testcase1.beta.SomeController
 			 */
 			public final Some some;
 
 			/**
-			 * "/beta/{beta}" -> org.civilian.testcase1.beta.object.IndexController
+			 * "/beta/{beta}" = org.civilian.testcase1.beta.object.IndexController
 			 */
 			public final org.civilian.resource.Resource $beta;
 
 
 			/**
-			 * "/beta/some" -> org.civilian.testcase1.beta.SomeController
+			 * "/beta/some" = org.civilian.testcase1.beta.SomeController
 			 */
 			public static class Some extends org.civilian.resource.Resource
 			{
@@ -114,12 +114,12 @@ public interface Test1Resources
 				}
 
 				/**
-				 * "/beta/some/thing" -> org.civilian.testcase1.beta.SomeController:thing
+				 * "/beta/some/thing" = org.civilian.testcase1.beta.SomeController:thing
 				 */
 				public final org.civilian.resource.Resource thing;
 
 				/**
-				 * "/beta/some/{one}" -> org.civilian.testcase1.beta.SomeController:$one
+				 * "/beta/some/{one}" = org.civilian.testcase1.beta.SomeController:$one
 				 */
 				public final org.civilian.resource.Resource $one;
 			}
@@ -139,7 +139,7 @@ public interface Test1Resources
 			}
 
 			/**
-			 * "/delta/run" -> org.civilian.testcase1.delta.RunController
+			 * "/delta/run" = org.civilian.testcase1.delta.RunController
 			 */
 			public final org.civilian.resource.Resource run;
 
@@ -149,7 +149,7 @@ public interface Test1Resources
 
 
 		/**
-		 * "/mixed" -> org.civilian.testcase1.miXed.IndexController
+		 * "/mixed" = org.civilian.testcase1.miXed.IndexController
 		 */
 		public static class Mixed extends org.civilian.resource.Resource
 		{
@@ -163,7 +163,7 @@ public interface Test1Resources
 			}
 
 			/**
-			 * "/mixed/something" -> org.civilian.testcase1.miXed.someThingController
+			 * "/mixed/something" = org.civilian.testcase1.miXed.someThingController
 			 */
 			public final org.civilian.resource.Resource something;
 		}

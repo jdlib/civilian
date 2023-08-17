@@ -231,7 +231,7 @@ class ServerTemplate
 		out.print("\"");                                                // line 109: "
 		if (ctrlSig != null)                                            // line 109: <%?ctrlSig != null%>
 		{
-			out.print(" -&lt; ");                                       // line 109: -&lt;
+			out.print(" = ");                                           // line 109: =
 			out.print(ctrlSig);                                         // line 109: <%ctrlSig%>
 		}
 		out.printlnIfNotEmpty();
