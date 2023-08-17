@@ -9,18 +9,18 @@ import org.civilian.controller.ControllerSignature;
 
 
 /**
- * Defines the resources of application org.civilian.internal.admin.AdminApp.
+ * Defines the resources of application org.civilian.application.admin.AdminApp.
  */
 public interface AdminResources
 {
 	/**
-	 * "/" -> org.civilian.internal.admin.IndexController
+	 * "/" -> org.civilian.application.admin.IndexController
 	 */
 	public static final Root root = new Root();
 
 
 	/**
-	 * "/" -> org.civilian.internal.admin.IndexController
+	 * "/" -> org.civilian.application.admin.IndexController
 	 */
 	public static class Root extends org.civilian.resource.Resource
 	{
@@ -53,12 +53,12 @@ public interface AdminResources
 			}
 
 			/**
-			 * "/{appId}/resources" -> org.civilian.internal.admin.app.ResourcesController
+			 * "/{appId}/resources" -> org.civilian.application.admin.app.ResourcesController
 			 */
 			public final org.civilian.resource.Resource resources;
 
 			/**
-			 * "/{appId}/settings" -> org.civilian.internal.admin.app.SettingsController
+			 * "/{appId}/settings" -> org.civilian.application.admin.app.SettingsController
 			 */
 			public final org.civilian.resource.Resource settings;
 
@@ -69,7 +69,7 @@ public interface AdminResources
 
 		private static ControllerSignature sig(String subPackage, String className)
 		{
-			return new ControllerSignature("org.civilian.internal.admin" + subPackage + '.' + className);
+			return new ControllerSignature("org.civilian.application.admin" + subPackage + '.' + className);
 		}
 	}
 }

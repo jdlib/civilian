@@ -9,6 +9,6 @@
     </listAttribute>
     <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LAUNCH_CONFIGURATION_BUILD_SCOPE" value="${project}"/>
     <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${env_var:JAVA_HOME}/bin/java.exe"/>
-    <stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-cp bin;lib/samples/*&#13;&#10;org.civilian.tool.resource.ServerConstGenerator&#13;&#10;-out:package src/java&#13;&#10;-v&#13;&#10;org.civilian.internal.admin.AdminApp"/>
+    <stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-cp bin;lib/samples/*&#13;&#10;org.civilian.tool.resource.ServerConstGenerator&#13;&#10;-out:package src/java&#13;&#10;-v&#13;&#10;org.civilian.application.admin.AdminApp"/>
     <stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${project_loc}"/>
 </launchConfiguration>

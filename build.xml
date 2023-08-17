@@ -476,7 +476,7 @@
 	<target name="serverconst" description="generates the AdminResources class of the admin app">
 		<antcall target="_serverconst.run">
 			<param name="serverconst.src" value="${src.java}"/>
-			<param name="serverconst.app" value="org.civilian.internal.admin.AdminApp"/>
+			<param name="serverconst.app" value="org.civilian.application.admin.AdminApp"/>
 		</antcall>
 		<antcall target="_serverconst.run">
 			<param name="serverconst.src" value="${src.samples}"/>
