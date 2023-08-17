@@ -1,8 +1,8 @@
 import java.time.LocalDateTime
-import org.civilian.Application
-import org.civilian.Resource
+import org.civilian.application.Application
+import org.civilian.resource.Resource
 import org.civilian.controller.ControllerSignature
-import org.civilian.resource.PathParam
+import org.civilian.resource.pathparam.PathParam
 import org.civilian.resource.scan.ResourceInfo
 import org.civilian.util.ClassUtil
 import org.civilian.util.JavaName
@@ -106,7 +106,7 @@ private void printResourceComment(ResourceInfo resInfo)
 {{
 	@ControllerSignature ctrlSig = resInfo.getControllerSignature();
 	<%%>/**
-	<%%> * "<%resInfo%>"<%?ctrlSig != null%> -> <%ctrlSig%><%?%>
+	<%%> * "<%resInfo%>"<%?ctrlSig != null%> -&lt; <%ctrlSig%><%?%>
 	<%%> */ 
 }}
 

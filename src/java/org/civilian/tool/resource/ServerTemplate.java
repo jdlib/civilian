@@ -6,7 +6,6 @@ package org.civilian.tool.resource;
 
 
 import java.time.LocalDateTime;
-
 import org.civilian.application.Application;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.resource.Resource;
@@ -232,7 +231,7 @@ class ServerTemplate
 		out.print("\"");                                                // line 109: "
 		if (ctrlSig != null)                                            // line 109: <%?ctrlSig != null%>
 		{
-			out.print(" -> ");                                          // line 109: ->
+			out.print(" -&lt; ");                                       // line 109: -&lt;
 			out.print(ctrlSig);                                         // line 109: <%ctrlSig%>
 		}
 		out.printlnIfNotEmpty();
