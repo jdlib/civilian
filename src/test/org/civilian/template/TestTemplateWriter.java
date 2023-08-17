@@ -51,6 +51,7 @@ public class TestTemplateWriter extends TemplateWriter
 		LocaleService service = new LocaleService(Locale.US, null, MsgBundle.empty(Locale.ENGLISH), null); 
 		Response response = mock(Response.class);
 		when(response.getApplication()).thenReturn(app);
+		when(response.getOwner()).thenReturn(app);
 		when(response.getLocaleService()).thenReturn(service);
 		when(response.getCharEncoding()).thenReturn(encoding);
 		when(response.getResponse()).thenReturn(response);

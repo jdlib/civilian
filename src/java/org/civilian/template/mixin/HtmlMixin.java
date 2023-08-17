@@ -16,7 +16,6 @@
 package org.civilian.template.mixin;
 
 
-import org.civilian.application.ApplicationProvider;
 import org.civilian.controller.Controller;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;
@@ -263,8 +262,8 @@ public class HtmlMixin
 	 */
 	private void initPath()
 	{
-		ApplicationProvider ap = out.getAttribute(ApplicationProvider.class);
-		path_ = ap != null ? ap.getApplication().getPath() : Path.ROOT;
+		Response response = out.getAttribute(Response.class);
+		path_ = response != null ? response.getOwner().getPath() : Path.ROOT;
 	}
 	
 	
@@ -274,8 +273,7 @@ public class HtmlMixin
 	 */
 	public HtmlMixin setPath(Path path)
 	{
-		Check.notNull(path, "path");
-		path_ = path;
+		path_ = Check.notNull(path, "path";
 		return this;
 	}
 

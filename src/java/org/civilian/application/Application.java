@@ -49,6 +49,7 @@ import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.resource.scan.ResourceScan;
 import org.civilian.response.Response;
+import org.civilian.response.ResponseOwner;
 import org.civilian.response.std.ErrorResponse;
 import org.civilian.response.std.NotFoundResponse;
 import org.civilian.server.Server;
@@ -64,7 +65,7 @@ import org.slf4j.Logger;
 /**
  * Application represents a Civilian application.
  */
-public abstract class Application implements ApplicationProvider, PathProvider
+public abstract class Application implements ApplicationProvider, PathProvider, ResponseOwner
 {
 	private static final Logger log = Logs.APPLICATION; 
 	
@@ -428,7 +429,7 @@ public abstract class Application implements ApplicationProvider, PathProvider
 	/**
 	 * Returns the default encoding for textual content of responses.
 	 */
-	public String getDefaultCharEncoding()
+	@Override public String getDefaultCharEncoding()
 	{
 		return defaultCharEncoding_;
 	}

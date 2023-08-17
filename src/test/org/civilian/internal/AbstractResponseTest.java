@@ -64,9 +64,9 @@ public class AbstractResponseTest extends CivTest
 			
 	@Test public void testAccessors() throws Exception
 	{
-		assertSame(request, 			response.getRequest());
-		assertSame(app, 				response.getApplication());
-		assertSame(response, 			response.getResponse());
+		assertSame(request, 	response.getRequest());
+		assertSame(app, 		response.getOwner());
+		assertSame(response, 	response.getResponse());
 		
 		assertNotNull(response.getUriEncoder());
 

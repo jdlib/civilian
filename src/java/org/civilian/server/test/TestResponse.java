@@ -213,7 +213,7 @@ public class TestResponse extends AbstractResponse
 		{
 			String encoding = getCharEncoding();
 			if (encoding == null)
-				encoding = getApplication().getDefaultCharEncoding();
+				encoding = getOwner().getDefaultCharEncoding();
 			// does not help to call setCharEncoding() since
 			// it is ignored since we already obtaine an outputstream or writer
 			return outputStream_.toString(encoding);

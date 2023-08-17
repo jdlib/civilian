@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.civilian.application.AppConfig;
 import org.civilian.application.Application;
-import org.civilian.application.ApplicationProvider;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.JaxbXmlSerializer;
@@ -50,7 +49,7 @@ import org.civilian.util.UriEncoder;
  * either by a {@link #getContentWriter() Writer} or a {@link #getContentStream() OutputStream}.<br> 
  * In a Servlet environment Response is functionally equivalent to a HttpServletResponse.
  */
-public interface Response extends RequestProvider, ResponseProvider, ApplicationProvider, 
+public interface Response extends RequestProvider, ResponseProvider, //, ApplicationProvider, 
 	LocaleServiceProvider
 {
 	/**
@@ -210,9 +209,19 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Returns the application.
 	 */
-	@Override public default Application getApplication()
+	//@Override 
+	public default Application getApplication()
 	{
 		return getRequest().getApplication();
+	}
+	
+	
+	/**
+	 * Returns the response owner.
+	 */
+	public default ResponseOwner getOwner()
+	{
+		return getApplication();
 	}
 	
 
@@ -292,7 +301,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	 */
 	public default Response setLocaleService(Locale locale)
 	{
-		return setLocaleService(getApplication().getLocaleServices().getService(locale));
+		return setLocaleService(getOwner().getLocaleServices().getService(locale));
 	}
 
 	

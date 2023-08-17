@@ -176,7 +176,7 @@ public abstract class AbstractResponse implements Response
 		else
 			setContentType(contentType);
 		
-		ContentSerializer serializer = getApplication().getContentSerializer(contentType);
+		ContentSerializer serializer = getOwner().getContentSerializer(contentType);
 		if (serializer != null)
 			serializer.write(object, getContentWriter());
 		else if (object instanceof String)
@@ -267,7 +267,7 @@ public abstract class AbstractResponse implements Response
 			
 		// make sure that encoding is initialized, fallback to application encoding
 		if (charEncoding_ == null)
-			setCharEncoding(getApplication().getDefaultCharEncoding());
+			setCharEncoding(getOwner().getDefaultCharEncoding());
 
 		try
 		{
