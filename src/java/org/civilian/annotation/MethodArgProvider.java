@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 /**
  * MethodArgProvider is an annotation
  * which contains the class name of an
- * {@link org.civilian.controller.MethodArgProvider} implementation.  
+ * {@link org.civilian.controller.method.arg.MethodArgProvider} implementation.  
  * It should be used on custom annotation classes 
  * which are intended to be used on parameters of
  * controller action methods.
@@ -36,7 +36,7 @@ import java.lang.annotation.Target;
 public @interface MethodArgProvider
 {
 	/**
-	 * Returns the name of a class which implements {@link org.civilian.controller.MethodArgProvider}.
+	 * Returns the name of a class which implements {@link org.civilian.controller.method.arg.MethodArgProvider}.
 	 */
 	public abstract String value();
 }

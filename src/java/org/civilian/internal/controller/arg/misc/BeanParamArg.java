@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.civilian.controller.MethodArgFactory;
+import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.request.Request;
-import org.civilian.controller.MethodArg;
 
 
 public class BeanParamArg extends MethodArg

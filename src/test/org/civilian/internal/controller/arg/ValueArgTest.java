@@ -21,7 +21,7 @@ import java.util.List;
 import org.civilian.CivTest;
 import org.civilian.annotation.Parameter;
 import org.civilian.controller.MethodArgFactory;
-import org.civilian.controller.MethodArg;
+import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.internal.controller.arg.conv.ValueArg;
 import org.civilian.request.BadRequestException;
 import org.civilian.resource.PathParamMap;

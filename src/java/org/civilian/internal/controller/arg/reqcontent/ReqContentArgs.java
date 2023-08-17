@@ -18,7 +18,8 @@ package org.civilian.internal.controller.arg.reqcontent;
 
 import java.io.InputStream;
 import java.io.Reader;
-import org.civilian.controller.MethodArg;
+
+import org.civilian.controller.method.arg.MethodArg;
 
 
 /**

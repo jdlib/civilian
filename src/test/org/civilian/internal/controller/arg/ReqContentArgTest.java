@@ -23,7 +23,7 @@ import java.io.StringReader;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
-import org.civilian.controller.MethodArg;
+import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.internal.controller.arg.reqcontent.ReqContenBytesArg;
 import org.civilian.internal.controller.arg.reqcontent.ReqContentArgs;
 import org.civilian.internal.controller.arg.reqcontent.ReqContentGenericArg;

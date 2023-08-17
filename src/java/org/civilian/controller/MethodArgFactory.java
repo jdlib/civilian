@@ -30,6 +30,8 @@ import org.civilian.annotation.LocaleValue;
 import org.civilian.annotation.MatrixParam;
 import org.civilian.annotation.Parameter;
 import org.civilian.annotation.RequestContent;
+import org.civilian.controller.method.arg.MethodArg;
+import org.civilian.controller.method.arg.MethodArgProvider;
 import org.civilian.internal.controller.arg.StringMethodArg;
 import org.civilian.internal.controller.arg.conv.ConvertingArg;
 import org.civilian.internal.controller.arg.misc.BeanParamArg;

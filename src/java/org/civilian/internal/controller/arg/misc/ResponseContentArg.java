@@ -18,7 +18,7 @@ package org.civilian.internal.controller.arg.misc;
 
 import java.lang.reflect.Modifier;
 
-import org.civilian.controller.MethodArg;
+import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.request.Request;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseContent;

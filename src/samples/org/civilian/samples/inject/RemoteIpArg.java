@@ -16,7 +16,7 @@
  package org.civilian.samples.inject;
 
 
-import org.civilian.controller.MethodArg;
+import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.request.Request;
 
 

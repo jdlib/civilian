@@ -19,7 +19,7 @@ package org.civilian.internal.controller.arg.conv;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-import org.civilian.controller.MethodArg;
+import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.internal.controller.arg.StringMethodArg;
 import org.civilian.request.BadRequestException;
 import org.civilian.request.Request;

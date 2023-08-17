@@ -18,8 +18,9 @@
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import org.civilian.controller.MethodArg;
-import org.civilian.controller.MethodArgProvider;
+
+import org.civilian.controller.method.arg.MethodArg;
+import org.civilian.controller.method.arg.MethodArgProvider;
 
 
 /**

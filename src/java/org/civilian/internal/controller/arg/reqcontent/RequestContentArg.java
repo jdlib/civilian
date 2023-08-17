@@ -16,7 +16,7 @@
 package org.civilian.internal.controller.arg.reqcontent;
 
 
-import org.civilian.controller.MethodArg;
+import org.civilian.controller.method.arg.MethodArg;
 
 
 public abstract class RequestContentArg extends MethodArg
