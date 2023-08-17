@@ -30,7 +30,6 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import javax.servlet.http.Cookie;
-
 import org.civilian.application.Application;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
@@ -102,22 +101,22 @@ public class TestRequest extends AbstractRequest
 		super(request);
 		setResponse(testResponse_ = new TestResponse(this, request.getTestResponse()));
 		
-		method_ 			= request.method_;
-		cookies_			= request.cookies_;
-		attributes_			= request.attributes_;
-		parameters_ 		= request.parameters_;
-		uploads_			= request.uploads_;
-		uploadError_		= request.uploadError_;
+		method_ 		= request.method_;
+		cookies_		= request.cookies_;
+		attributes_		= request.attributes_;
+		parameters_ 	= request.parameters_;
+		uploads_		= request.uploads_;
+		uploadError_	= request.uploadError_;
 		charEncoding_	= request.charEncoding_;
-		contentBytes_ 		= request.contentBytes_;
-		contentString_ 		= request.contentString_;
-		security_ 			= request.security_;
-		serverInfo_ 		= request.serverInfo_;
-		remoteInfo_ 		= request.remoteInfo_;
-		localInfo_ 			= request.localInfo_;
-		headers_ 			= request.headers_;
-		session_ 			= request.session_;
-		acceptedLocale_ 	= request.acceptedLocale_; 
+		contentBytes_ 	= request.contentBytes_;
+		contentString_ 	= request.contentString_;
+		security_ 		= request.security_;
+		serverInfo_ 	= request.serverInfo_;
+		remoteInfo_ 	= request.remoteInfo_;
+		localInfo_ 		= request.localInfo_;
+		headers_ 		= request.headers_;
+		session_ 		= request.session_;
+		acceptedLocale_ = request.acceptedLocale_; 
 	}
 
 	

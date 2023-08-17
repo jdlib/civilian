@@ -18,7 +18,6 @@ package org.civilian.resource;
 
 import java.io.PrintWriter;
 import java.io.Serializable;
-
 import org.civilian.util.Check;
 import org.civilian.util.StringUtil;
 
