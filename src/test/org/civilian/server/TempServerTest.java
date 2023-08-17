@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal;
+package org.civilian.server;
 
 
 import java.lang.reflect.InvocationTargetException;
@@ -21,7 +21,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.server.TempServer;
 
 
 public class TempServerTest extends CivTest
