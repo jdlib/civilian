@@ -5,8 +5,9 @@ import org.civilian.content.ContentSerializer;
 import org.civilian.resource.PathProvider;
 import org.civilian.text.service.LocaleServiceList;
 
+
 /**
- * The owner of the Response, provides defaults.
+ * The owner of a Response, provides defaults.
  */
 public interface ResponseOwner extends PathProvider
 {
