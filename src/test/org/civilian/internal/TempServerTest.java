@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import org.junit.Test;
 import org.civilian.CivTest;
+import org.civilian.server.TempServer;
 
 
 public class TempServerTest extends CivTest

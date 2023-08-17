@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal;
+package org.civilian.server;
 
 
 import java.util.Iterator;
-
 import org.civilian.resource.Path;
-import org.civilian.server.Server;
 import org.civilian.util.Iterators;
 import org.civilian.util.ResourceLoader;
 import org.civilian.application.Application;

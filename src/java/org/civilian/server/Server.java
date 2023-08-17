@@ -31,7 +31,6 @@ import org.civilian.application.AppConfig;
 import org.civilian.application.Application;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.internal.DefaultApp;
-import org.civilian.internal.TempServer;
 import org.civilian.internal.admin.AdminApp;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;
