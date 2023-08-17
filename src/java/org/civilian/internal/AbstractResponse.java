@@ -117,7 +117,7 @@ public abstract class AbstractResponse implements Response
 		
 		try
 		{
-			getApplication().createErrorResponse(statusCode, message, error).send(this);
+			getApplication().createErrorHandler(statusCode, message, error).send(this);
 		}
 		catch(Exception e)
 		{

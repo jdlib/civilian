@@ -706,13 +706,13 @@ public abstract class Application implements ApplicationProvider, PathProvider, 
 
 	
 	/**
-	 * Returns an ErrorResponseobject which is used by the response
+	 * Returns an ResponseHandler which is used by the response
 	 * to send an error to the client. Applications can 
 	 * return a different implementation to tweak the error response. 
 	 * @see Response#sendError(int)  
 	 * @see Response#sendError(int, String, Throwable)  
 	 */
-	public ErrorResponseHandler createErrorResponse(int statusCode, String message, Throwable error)
+	public ResponseHandler createErrorHandler(int statusCode, String message, Throwable error)
 	{
 		return new ErrorResponseHandler(develop(), statusCode, message, error);
 	}
