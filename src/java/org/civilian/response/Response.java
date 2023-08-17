@@ -244,11 +244,10 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 
 
 	/**
-	 * Adds the session id to the URL and returns the new URL.
-	 * The {@link Url} class calls this method automatically if you use it to build a URL string.
+	 * Adds the session id to the URL string and returns the new URL string.
 	 * In Servlet terms this method corresponds to HttpServletRequest#encodeURL.  
 	 * @return the URL with session id included or the original URL if the session id does not 
-	 * need to be included in the url.
+	 * need to be included in the URL.
 	 */
 	public abstract String addSessionId(String url);
 	
