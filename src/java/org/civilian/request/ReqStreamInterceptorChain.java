@@ -13,17 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.intercept;
+package org.civilian.request;
 
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.civilian.request.Request;
-import org.civilian.request.RequestStreamInterceptor;
 
-
-public class ReqStreamInterceptorChain implements RequestStreamInterceptor
+class ReqStreamInterceptorChain implements RequestStreamInterceptor
 {
 	public static InputStream intercept(Request request, InputStream in, RequestStreamInterceptor interceptor) throws IOException
 	{

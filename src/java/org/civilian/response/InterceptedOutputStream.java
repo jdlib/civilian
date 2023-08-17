@@ -1,4 +1,4 @@
-package org.civilian.internal.intercept;
+package org.civilian.response;
 
 
 import java.io.FilterOutputStream;
@@ -6,7 +6,6 @@ import java.io.Flushable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
-import org.civilian.response.ResponseStreamInterceptor;
 
 
 /**
@@ -42,7 +41,7 @@ import org.civilian.response.ResponseStreamInterceptor;
  * 		multiple times.
  * </ol>
  */
-public class InterceptedOutputStream extends FilterOutputStream implements InterceptedOutput
+class InterceptedOutputStream extends FilterOutputStream implements InterceptedOutput
 {
 	public InterceptedOutputStream(OutputStream originalStream, 
 		ResponseStreamInterceptor interceptor)

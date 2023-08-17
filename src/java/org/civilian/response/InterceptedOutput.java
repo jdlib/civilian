@@ -1,7 +1,7 @@
-package org.civilian.internal.intercept;
+package org.civilian.response;
 
 
-public interface InterceptedOutput
+interface InterceptedOutput
 {
 	public void reset();
 }

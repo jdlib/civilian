@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.intercept;
+package org.civilian.response;
 
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.civilian.response.Response;
-import org.civilian.response.ResponseStreamInterceptor;
 import org.civilian.util.Check;
 
 
-public class RespStreamInterceptorChain implements ResponseStreamInterceptor
+class RespStreamInterceptorChain implements ResponseStreamInterceptor
 {
 	public static OutputStream intercept(OutputStream out, ResponseStreamInterceptor interceptor) 
 		throws IOException

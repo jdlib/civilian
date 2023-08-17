@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.intercept;
+package org.civilian.response;
 
 
 import java.io.IOException;
 import java.io.Writer;
 
-import org.civilian.response.Response;
-import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.util.Check;
 
 
-public class RespWriterInterceptorChain implements ResponseWriterInterceptor
+class RespWriterInterceptorChain implements ResponseWriterInterceptor
 {
 	public static Writer intercept(Writer writer, ResponseWriterInterceptor interceptor) 
 		throws IOException

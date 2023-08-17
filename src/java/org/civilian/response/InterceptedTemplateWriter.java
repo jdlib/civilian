@@ -1,16 +1,15 @@
-package org.civilian.internal.intercept;
+package org.civilian.response;
 
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import org.civilian.response.ResponseStreamInterceptor;
-import org.civilian.response.ResponseWriterInterceptor;
+
 import org.civilian.template.TemplateWriter;
 
 
-public class InterceptedTemplateWriter extends TemplateWriter implements InterceptedOutput
+class InterceptedTemplateWriter extends TemplateWriter implements InterceptedOutput
 {
 	private static Writer createWriter(OutputStream originalStream, 
 		ResponseStreamInterceptor streamInterceptor,
