@@ -21,8 +21,8 @@ import java.util.Set;
 
 import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerConfig;
-import org.civilian.internal.classpath.ClassPathScan;
 import org.civilian.resource.Resource;
+import org.civilian.util.classpath.ClassPathScan;
 
 
 /**

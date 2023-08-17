@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.classpath;
+package org.civilian.util.classpath;
 
 
 import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.util.ClassUtil;
+import org.civilian.util.classpath.ClassPathScan;
 
 
 public class ClassPathScanTest extends CivTest

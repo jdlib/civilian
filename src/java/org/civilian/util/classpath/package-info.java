@@ -17,4 +17,4 @@
  * Contains support for classpath scanning used
  * by the DefaultResourceService.     
  */
-package org.civilian.internal.classpath;
+package org.civilian.util.classpath;

@@ -18,7 +18,7 @@ package org.civilian.internal.resource.scan;
 
 import java.util.Set;
 import org.civilian.CivTest;
-import org.civilian.internal.classpath.ClassPathScan;
+import org.civilian.util.classpath.ClassPathScan;
 import org.junit.Test;
 
 
