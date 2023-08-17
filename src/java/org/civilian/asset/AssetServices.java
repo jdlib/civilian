@@ -20,7 +20,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.civilian.application.ConfigKeys;
+import org.civilian.ConfigKeys;
 import org.civilian.content.ContentType;
 import org.civilian.internal.asset.AssetCache;
 import org.civilian.internal.asset.CombinedAssetService;

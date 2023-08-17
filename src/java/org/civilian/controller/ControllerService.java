@@ -21,9 +21,9 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import org.civilian.ConfigKeys;
 import org.civilian.annotation.PathParam;
 import org.civilian.annotation.Segment;
-import org.civilian.application.ConfigKeys;
 import org.civilian.application.classloader.ClassLoaderFactory;
 import org.civilian.resource.PathParamMap;
 import org.civilian.type.TypeLib;
