@@ -17,7 +17,8 @@ package org.civilian.server.servlet;
 
 
 import javax.servlet.http.Part;
-import org.civilian.internal.HeaderParser;
+
+import org.civilian.util.HeaderParser;
 
 
 /**

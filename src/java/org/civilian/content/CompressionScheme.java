@@ -21,8 +21,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.StringTokenizer;
-import org.civilian.internal.HeaderParser;
+
 import org.civilian.util.Check;
+import org.civilian.util.HeaderParser;
 
 
 /**

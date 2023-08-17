@@ -21,8 +21,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import org.civilian.internal.HeaderParser;
+
 import org.civilian.util.Check;
+import org.civilian.util.HeaderParser;
 import org.civilian.util.Iterators;
 
 
