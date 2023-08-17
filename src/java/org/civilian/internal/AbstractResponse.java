@@ -24,6 +24,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Locale;
 
+import org.civilian.Logs;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.internal.intercept.InterceptedOutput;

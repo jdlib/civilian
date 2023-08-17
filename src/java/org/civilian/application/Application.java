@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.civilian.ConfigKeys;
+import org.civilian.Logs;
 import org.civilian.application.classloader.ClassLoaderFactory;
 import org.civilian.application.classloader.ReloadConfig;
 import org.civilian.asset.AssetConfig;
@@ -34,7 +35,6 @@ import org.civilian.content.TextSerializer;
 import org.civilian.controller.ControllerConfig;
 import org.civilian.controller.ControllerNaming;
 import org.civilian.controller.ControllerService;
-import org.civilian.internal.Logs;
 import org.civilian.internal.TempServer;
 import org.civilian.processor.AssetDispatch;
 import org.civilian.processor.ErrorProcessor;

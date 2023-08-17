@@ -25,10 +25,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.civilian.ConfigKeys;
+import org.civilian.Logs;
 import org.civilian.application.Application;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeLookup;
-import org.civilian.internal.Logs;
 import org.civilian.resource.Path;
 import org.civilian.server.Server;
 import org.civilian.server.servlet.ServletUtil;

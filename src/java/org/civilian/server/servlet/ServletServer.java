@@ -23,10 +23,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRegistration;
 
+import org.civilian.Logs;
 import org.civilian.application.Application;
 import org.civilian.application.UploadConfig;
 import org.civilian.content.ContentTypeLookup;
-import org.civilian.internal.Logs;
 import org.civilian.resource.Path;
 import org.civilian.server.Server;
 import org.civilian.util.Check;

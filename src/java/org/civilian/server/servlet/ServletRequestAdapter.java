@@ -29,10 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.civilian.Logs;
 import org.civilian.application.Application;
 import org.civilian.content.ContentType;
 import org.civilian.internal.AbstractRequest;
-import org.civilian.internal.Logs;
 import org.civilian.internal.ParamList;
 import org.civilian.request.AsyncContext;
 import org.civilian.request.CookieList;

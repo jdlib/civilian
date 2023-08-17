@@ -16,9 +16,9 @@
 package org.civilian.response.std;
 
 
+import org.civilian.Logs;
 import org.civilian.application.Application;
 import org.civilian.content.ContentType;
-import org.civilian.internal.Logs;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
 

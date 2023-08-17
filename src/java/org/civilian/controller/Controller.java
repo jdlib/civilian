@@ -16,6 +16,7 @@
 package org.civilian.controller;
 
 
+import org.civilian.Logs;
 import org.civilian.annotation.Consumes;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Post;
@@ -24,7 +25,6 @@ import org.civilian.annotation.RequestMethod;
 import org.civilian.application.Application;
 import org.civilian.application.ApplicationProvider;
 import org.civilian.controller.method.ControllerMethod;
-import org.civilian.internal.Logs;
 import org.civilian.request.Request;
 import org.civilian.request.RequestProvider;
 import org.civilian.resource.Resource;

@@ -17,12 +17,13 @@ package org.civilian.internal.asset;
 
 
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.civilian.Logs;
 import org.civilian.asset.Asset;
 import org.civilian.asset.AssetCacheControl;
 import org.civilian.asset.AssetInitializer;
 import org.civilian.asset.AssetService;
 import org.civilian.content.ContentTypeLookup;
-import org.civilian.internal.Logs;
 import org.civilian.resource.Path;
 import org.civilian.util.Check;
 

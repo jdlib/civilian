@@ -21,7 +21,8 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.function.Predicate;
-import org.civilian.internal.Logs;
+
+import org.civilian.Logs;
 import org.civilian.util.Check;
 import org.civilian.util.IoUtil;
 
