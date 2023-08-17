@@ -3,7 +3,7 @@ package org.civilian.resource.pathparam;
 
 import java.util.Optional;
 import org.civilian.resource.PathParam;
-import org.civilian.resource.PathScanner;
+import org.civilian.util.PathScanner;
 import org.civilian.util.UriEncoder;
 
 

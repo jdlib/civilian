@@ -2,8 +2,8 @@ package org.civilian.resource.pathparam;
 
 
 import org.civilian.resource.PathParam;
-import org.civilian.resource.PathScanner;
 import org.civilian.util.Check;
+import org.civilian.util.PathScanner;
 import org.civilian.util.UriEncoder;
 
 

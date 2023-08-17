@@ -1,6 +1,7 @@
 package org.civilian.resource;
 
 
+import org.civilian.util.PathScanner;
 import org.civilian.util.UriEncoder;
 import org.junit.Assert;
 

@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.resource;
+package org.civilian.util;
 
 
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import org.junit.Test;
 import org.civilian.CivTest;
+import org.civilian.util.PathScanner;
 
 
 public class PathScannerTest extends CivTest

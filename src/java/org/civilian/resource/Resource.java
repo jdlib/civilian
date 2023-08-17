@@ -35,10 +35,11 @@ import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
 import org.civilian.internal.resource.ControllerTypeProvider;
-import org.civilian.resource.PathScanner.Mark;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
 import org.civilian.util.IoUtil;
+import org.civilian.util.PathScanner;
+import org.civilian.util.PathScanner.Mark;
 
 
 /**

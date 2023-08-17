@@ -47,10 +47,10 @@ import org.civilian.controller.method.arg.reqparam.PathParamArg;
 import org.civilian.request.Request;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathParamMap;
-import org.civilian.resource.PathScanner;
 import org.civilian.response.Response;
 import org.civilian.type.TypeLib;
 import org.civilian.util.ClassUtil;
+import org.civilian.util.PathScanner;
 
 
 /**

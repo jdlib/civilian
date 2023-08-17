@@ -19,8 +19,8 @@ package org.civilian.resource.pathparam;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import org.civilian.resource.PathParam;
-import org.civilian.resource.PathScanner;
 import org.civilian.util.Check;
+import org.civilian.util.PathScanner;
 import org.civilian.util.UriEncoder;
 
 

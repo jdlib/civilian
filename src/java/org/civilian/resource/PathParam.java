@@ -21,6 +21,7 @@ import org.civilian.resource.pathparam.PrecededPathParam;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.Type;
 import org.civilian.util.Check;
+import org.civilian.util.PathScanner;
 import org.civilian.util.UriEncoder;
 
 
