@@ -76,7 +76,7 @@ public class ClassPathScan
 		if (rootUrl.getProtocol().startsWith("bundle"))
 			rootUrl = resolveBundleUrl(rootUrl);
 		
-		for (Protocol protocol : protocols_)
+		for (Protocol protocol : PROTOCOLS)
 		{
 			if (protocol.accept(rootUrl))
 			{
@@ -142,5 +142,5 @@ public class ClassPathScan
 	private String[] rootPackages_;
 	private boolean detectEquinox_ = true;
 	private static Method equinoxResolveMethod_;
-	private static Protocol[] protocols_ = { ArchiveProtocol.INSTANCE, FileProtocol.INSTANCE, VfsProtocol.INSTANCE };  
+	private static Protocol[] PROTOCOLS = { ArchiveProtocol.INSTANCE, FileProtocol.INSTANCE, VfsProtocol.INSTANCE };  
 }
