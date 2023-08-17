@@ -168,13 +168,12 @@ public class Controller implements
 	 * @param controller the Controller
 	 * @param type the ControllerType
 	 */
-	public static void setControllerType(Controller controller, ControllerType type)
+	void setControllerType(ControllerType type)
 	{
-		Check.notNull(controller, "controller");
 		Check.notNull(type, "type");
-		if (type.getControllerClass() != controller.getClass())
+		if (type.getControllerClass() != getClass())
 			throw new IllegalArgumentException();
-		controller.type_ = type;
+		type_ = type;
 	}
 	
 	

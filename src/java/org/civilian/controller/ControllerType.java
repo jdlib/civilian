@@ -95,7 +95,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 	
 	/**
 	 * Creates a Controller and initializes it's type.
-	 * @see Controller#setControllerType(Controller, ControllerType)
+	 * @see Controller#setControllerType(ControllerType)
 	 */
 	public Controller createController()
 	{
@@ -105,7 +105,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 			Controller controller = factory_ != null ? 
 				factory_.createController(controllerClass_) :
 				controllerClass_.newInstance();
-			Controller.setControllerType(controller, this);
+			controller.setControllerType(this);
 			return controller;
 		}
 		catch (Exception e)
