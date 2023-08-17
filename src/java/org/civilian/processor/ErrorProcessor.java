@@ -27,11 +27,12 @@ import org.civilian.response.std.ErrorResponse;
  */
 public class ErrorProcessor extends Processor
 {
-	public ErrorProcessor(int statusCode, String message, Throwable error)
+	public ErrorProcessor(int statusCode, String message, Throwable error, boolean develop)
 	{
 		statusCode_	= statusCode;
 		message_	= message;
 		error_ 		= error;
+		develop_	= develop;
 	}
 	
 	
@@ -49,7 +50,7 @@ public class ErrorProcessor extends Processor
 
 	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
 	{
-		ErrorResponse er = new ErrorResponse(request.getApplication().develop());
+		ErrorResponse er = new ErrorResponse(develop_);
 		er.send(request.getResponse(), statusCode_, message_, error_);
 		return true;
 	}
@@ -58,4 +59,5 @@ public class ErrorProcessor extends Processor
 	private final String message_;
 	private final Throwable error_;
 	private final int statusCode_;
+	private final boolean develop_;
 }

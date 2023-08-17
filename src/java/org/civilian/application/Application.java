@@ -189,7 +189,8 @@ public abstract class Application implements ApplicationProvider, PathProvider
 			
 			processors_ = new ProcessorList(new ErrorProcessor(
 				Response.Status.SC503_SERVICE_UNAVAILABLE,
-				this + " encountered an error during initialization", e));
+				this + " encountered an error during initialization", e,
+				data.server.develop()));
 		}
 	}
 

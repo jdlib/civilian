@@ -26,13 +26,13 @@ public class ErrorProcessorTest extends CivTest
 	{
 		ErrorProcessor p;
 		
-		p = new ErrorProcessor(503, "msg", new Error("x"));
+		p = new ErrorProcessor(503, "msg", new Error("x"), false);
 		assertEquals("503 x", p.getInfo());
 
-		p = new ErrorProcessor(504, "msg", null);
+		p = new ErrorProcessor(504, "msg", null, false);
 		assertEquals("504 msg", p.getInfo());
 		
-		p = new ErrorProcessor(505, null, null);
+		p = new ErrorProcessor(505, null, null, false);
 		assertEquals("505", p.getInfo());
 	}
 }
