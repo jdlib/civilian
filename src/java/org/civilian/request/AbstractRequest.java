@@ -530,7 +530,7 @@ public abstract class AbstractRequest implements Request
 	{
 		checkAddInterceptor(interceptor);
 		Extension ext 			= writeExt();
-		ext.streamInterceptor 	= new ReqStreamInterceptorChain(ext.streamInterceptor, interceptor); 
+		ext.streamInterceptor 	= ReqStreamInterceptorChain.of(ext.streamInterceptor, interceptor); 
 	}
 	
 

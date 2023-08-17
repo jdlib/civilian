@@ -22,6 +22,17 @@ import java.io.InputStream;
 
 class ReqStreamInterceptorChain implements RequestStreamInterceptor
 {
+	public static RequestStreamInterceptor of(RequestStreamInterceptor i1, RequestStreamInterceptor i2)
+	{
+		if (i1 == null)
+			return i2;
+		else if (i2 == null)
+			return i1;
+		else
+			return new ReqStreamInterceptorChain(i1, i2);
+	}
+
+	
 	public static InputStream intercept(Request request, InputStream in, RequestStreamInterceptor interceptor) throws IOException
 	{
 		if (interceptor != null)
@@ -34,7 +45,7 @@ class ReqStreamInterceptorChain implements RequestStreamInterceptor
 	}
 	
 	
-	public ReqStreamInterceptorChain(RequestStreamInterceptor i1, RequestStreamInterceptor i2)
+	private ReqStreamInterceptorChain(RequestStreamInterceptor i1, RequestStreamInterceptor i2)
 	{
 		i1_ = i1;
 		i2_ = i2;
@@ -49,6 +60,6 @@ class ReqStreamInterceptorChain implements RequestStreamInterceptor
 	}
 	
 	
-	private RequestStreamInterceptor i1_;
-	private RequestStreamInterceptor i2_;
+	private final RequestStreamInterceptor i1_;
+	private final RequestStreamInterceptor i2_;
 }
