@@ -96,8 +96,7 @@ import org.civilian.util.HttpHeaders;
  * implementation, then the exception is passed to {@link Application#onError(Request, Throwable)}
  * for application-wide error handling.
  */
-public class Controller implements 
-	MsgBundleProvider, RequestProvider, ResponseProvider, ApplicationProvider
+public class Controller implements MsgBundleProvider, RequestProvider, ResponseProvider
 {
 	//------------------------------------
 	// accessors

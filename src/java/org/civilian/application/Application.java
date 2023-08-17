@@ -67,8 +67,7 @@ import org.slf4j.Logger;
 /**
  * Application represents a Civilian application.
  */
-public abstract class Application implements ApplicationProvider, PathProvider, 
-	RequestOwner, ResponseOwner
+public abstract class Application implements PathProvider, RequestOwner, ResponseOwner
 {
 	private static final Logger log = Logs.APPLICATION; 
 	
@@ -375,15 +374,6 @@ public abstract class Application implements ApplicationProvider, PathProvider,
 
 	
 	/**
-	 * Implements ApplicationProvider and returns this.
-	 */
-	@Override public Application getApplication()
-	{
-		return this;
-	}
-	
-	
-	/**
 	 * Returns the application id.
 	 * The id is used to identify the application within
 	 * the {@link Server}. The id was defined within
@@ -529,6 +519,7 @@ public abstract class Application implements ApplicationProvider, PathProvider,
 	 * application/json (based on GSON).
 	 * @see AppConfig#registerContentSerializer(ContentType, ContentSerializer)
 	 */
+	@Override
 	public ContentSerializer getContentSerializer(ContentType contentType)
 	{
 		return contentSerializers_.get(contentType != null ? contentType.getValue() : null);

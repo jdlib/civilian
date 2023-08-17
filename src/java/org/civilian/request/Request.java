@@ -72,7 +72,7 @@ import org.civilian.util.Value;
  * <li>etc.
  * </ul>
  */
-public interface Request extends RequestProvider, ResponseProvider, //ApplicationProvider, 
+public interface Request extends RequestProvider, ResponseProvider,  
 	PathParamProvider, PathProvider, LocaleServiceProvider
 {
 	/**
