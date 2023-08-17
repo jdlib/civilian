@@ -20,6 +20,7 @@ import org.civilian.Logs;
 import org.civilian.application.Application;
 import org.civilian.content.ContentType;
 import org.civilian.response.Response;
+import org.civilian.response.ResponseHandler;
 
 
 /**
@@ -27,12 +28,12 @@ import org.civilian.response.Response;
  * a response if no processor handled the request. 
  * If you want a different response, derive from NotFoundResponse,
  * override {@link #sendImpl(Response)} and return this implementation
- * in {@link Application#createNotFoundResponse()}.  
- * A NotFoundResponse object should be created for a single response and not be reused.
+ * in {@link Application#createNotFoundHandler()}.  
+ * A NotFoundResponseHandler object should be created for a single response and not be reused.
  */
-public class NotFoundResponse
+public class NotFoundResponseHandler implements ResponseHandler
 {
-	public NotFoundResponse(boolean develop)
+	public NotFoundResponseHandler(boolean develop)
 	{
 		develop_ = develop;
 	}
@@ -43,7 +44,7 @@ public class NotFoundResponse
 	 * Any exception is catched and logged. 
 	 * @return the exception if an exception occurred else null
 	 */
-	public synchronized Exception send(Response response)
+	@Override public synchronized Exception send(Response response)
 	{
 		try
 		{

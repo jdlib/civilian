@@ -49,9 +49,10 @@ import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.resource.scan.ResourceScan;
 import org.civilian.response.Response;
+import org.civilian.response.ResponseHandler;
 import org.civilian.response.ResponseOwner;
 import org.civilian.response.std.ErrorResponseHandler;
-import org.civilian.response.std.NotFoundResponse;
+import org.civilian.response.std.NotFoundResponseHandler;
 import org.civilian.server.Server;
 import org.civilian.server.TempServer;
 import org.civilian.text.service.LocaleServiceList;
@@ -612,7 +613,7 @@ public abstract class Application implements ApplicationProvider, PathProvider, 
 	/**
 	 * Processes a request. 
 	 * The default implementation forwards the request to the processor pipeline.
-	 * If no processor handled the request, it is forwarded to the {@link #createNotFoundResponse() NotFoundResponse}.
+	 * If no processor handled the request, it is forwarded to the {@link #createNotFoundHandler() NotFoundResponse}.
 	 * If an exception occurs during request processing {@link #onError(Request, Throwable)} is called  
 	 */
 	public void process(Request request)
@@ -630,7 +631,7 @@ public abstract class Application implements ApplicationProvider, PathProvider, 
 			{
 				boolean processed = processors_.process(request);
 				if (!processed)
-					createNotFoundResponse().send(request.getResponse());
+					createNotFoundHandler().send(request.getResponse());
 			}
 			finally
 			{
@@ -718,13 +719,13 @@ public abstract class Application implements ApplicationProvider, PathProvider, 
 	
 	
 	/**
-	 * Returns a NotFoundResponse object which is used by 
-	 * to send a response to the client, if not processor handled the request.
+	 * Returns a ResponseHandler object which is used 
+	 * to send a response to the client, if no processor handled the request.
 	 * Applications can return a different implementation to tweak the not-found-response.
 	 */
-	public NotFoundResponse createNotFoundResponse()
+	public ResponseHandler createNotFoundHandler()
 	{
-		return new NotFoundResponse(develop());
+		return new NotFoundResponseHandler(develop());
 	}
 	
 	

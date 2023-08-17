@@ -47,13 +47,13 @@ public class StdTest extends CivTest
 	
 	@Test public void testNotFound() throws Exception
 	{
-		assertNull(new NotFoundResponse(false).send(request.getResponse()));
+		assertNull(new NotFoundResponseHandler(false).send(request.getResponse()));
 		verify(out.response).setStatus(Response.Status.NOT_FOUND);
 
 		ArrayList<String> list = new ArrayList<>();
 		list.add("x");
 		when(request.getAcceptedContentTypes()).thenReturn(new ContentTypeList(ContentType.TEXT_HTML));
-		assertNull(new NotFoundResponse(true).send(request.getResponse()));
+		assertNull(new NotFoundResponseHandler(true).send(request.getResponse()));
 	}
 	
 	
