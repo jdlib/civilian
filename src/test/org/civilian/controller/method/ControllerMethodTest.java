@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.controller;
+package org.civilian.controller.method;
 
 
 import java.lang.reflect.Method;
@@ -24,6 +24,8 @@ import org.civilian.annotation.Produces;
 import org.civilian.content.ContentNegotiation;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
+import org.civilian.controller.Controller;
+import org.civilian.controller.MethodArgFactory;
 import org.civilian.request.Request;
 import org.civilian.resource.PathParamMap;
 import org.civilian.type.TypeLib;

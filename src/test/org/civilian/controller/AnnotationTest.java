@@ -37,6 +37,7 @@ import org.civilian.annotation.RequestContent;
 import org.civilian.annotation.RequestMethod;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
+import org.civilian.controller.method.ControllerMethod;
 import org.civilian.request.Request;
 import org.civilian.resource.PathParamMap;
 import org.civilian.resource.PathParams;
@@ -269,23 +270,23 @@ public class AnnotationTest extends CivTest
 	 */
 	@Test public void testInjectParams()
 	{
-		ControllerMethod action;
+		ControllerMethod method;
 		
-		action = createMethod("inject");
-		assertEquals(12, action.getArgCount());
+		method = createMethod("inject");
+		assertEquals(12, method.getArgCount());
 		int next = 0;  
-		assertEquals("Parameter \"min\"",			action.getArgument(next++).toString());
-		assertEquals("Parameter \"max\"",			action.getArgument(next++).toString());
-		assertEquals("Parameter \"val\"",			action.getArgument(next++).toString());
-		assertEquals("MatrixParam \"mode\"",		action.getArgument(next++).toString());
-		assertEquals("PathParam \"customerId\"",	action.getArgument(next++).toString());
-		assertEquals("CookieParam \"store\"", 		action.getArgument(next++).toString());
-		assertEquals("BeanParam", 					action.getArgument(next++).toString());
-		assertEquals("RequestContent", 				action.getArgument(next++).toString());
-		assertEquals("Request", 					action.getArgument(next++).toString());
-		assertEquals("Response",					action.getArgument(next++).toString());
-		assertEquals("ResponseContent", 			action.getArgument(next++).toString());
-		assertEquals("Custom", 						action.getArgument(next++).toString());
+		assertEquals("Parameter \"min\"",			method.getArgument(next++).toString());
+		assertEquals("Parameter \"max\"",			method.getArgument(next++).toString());
+		assertEquals("Parameter \"val\"",			method.getArgument(next++).toString());
+		assertEquals("MatrixParam \"mode\"",		method.getArgument(next++).toString());
+		assertEquals("PathParam \"customerId\"",	method.getArgument(next++).toString());
+		assertEquals("CookieParam \"store\"", 		method.getArgument(next++).toString());
+		assertEquals("BeanParam", 					method.getArgument(next++).toString());
+		assertEquals("RequestContent", 				method.getArgument(next++).toString());
+		assertEquals("Request", 					method.getArgument(next++).toString());
+		assertEquals("Response",					method.getArgument(next++).toString());
+		assertEquals("ResponseContent", 			method.getArgument(next++).toString());
+		assertEquals("Custom", 						method.getArgument(next++).toString());
 	}
 	
 	

@@ -23,6 +23,7 @@ import org.civilian.annotation.Produces;
 import org.civilian.annotation.RequestMethod;
 import org.civilian.application.Application;
 import org.civilian.application.ApplicationProvider;
+import org.civilian.controller.method.ControllerMethod;
 import org.civilian.internal.Logs;
 import org.civilian.request.Request;
 import org.civilian.request.RequestProvider;
@@ -266,7 +267,7 @@ public class Controller implements
 						ControllerMethod method = negMethod.getMethod();
 						if (debug)
 							Logs.CONTROLLER.debug("#{}", method);
-						method.invoke(this);
+						method.invoke(this, request);
 					}
 				}
 				else

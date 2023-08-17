@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.controller;
+package org.civilian.controller.method;
 
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Iterator;
-
 import org.civilian.annotation.Consumes;
 import org.civilian.annotation.Delete;
 import org.civilian.annotation.Get;
@@ -32,6 +31,8 @@ import org.civilian.annotation.RequestMethod;
 import org.civilian.content.ContentNegotiation;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
+import org.civilian.controller.MethodArg;
+import org.civilian.controller.MethodArgFactory;
 import org.civilian.internal.controller.MethodAnnotations;
 import org.civilian.request.Request;
 import org.civilian.util.Iterators;
@@ -100,10 +101,9 @@ public class ControllerMethod
 	/**
 	 * Returns the controller class which declared the method.
 	 */
-	@SuppressWarnings("unchecked")
-	public Class<? extends Controller> getDeclaringClass()
+	public Class<?> getDeclaringClass()
 	{
-		return (Class<? extends Controller>)javaMethod_.getDeclaringClass();
+		return javaMethod_.getDeclaringClass();
 	}
 
 	
@@ -121,7 +121,7 @@ public class ControllerMethod
 	 * Returns if the ControllerMethod can be inherited by the given derived controller class.
 	 * For this the derived controller class must not override the method. 
 	 */
-	public boolean canInherit(Class<? extends Controller> controllerClass)
+	public boolean canInherit(Class<?> controllerClass)
 	{
 		if ((controllerClass != null) &&
 			javaMethod_.getDeclaringClass().isAssignableFrom(controllerClass))
@@ -194,13 +194,13 @@ public class ControllerMethod
 	/**
 	 * Returns the number of arguments injected into the method.
 	 */
-	int getArgCount()
+	public int getArgCount()
 	{
 		return args_ == null ? 0 : args_.length;
 	}
 	
 	
-	MethodArg getArgument(int i)
+	public MethodArg getArgument(int i)
 	{
 		return args_[i];
 	}
@@ -209,9 +209,8 @@ public class ControllerMethod
 	/**
 	 * Invokes the action method on the controller.
 	 */
-	public void invoke(Controller controller) throws Exception
+	public void invoke(Object controller, Request request) throws Exception
 	{
-		Request request = controller.getRequest();
 		Object[] argValues = null;
 		if (args_ != null)
 			argValues = buildArgValues(request);
@@ -287,7 +286,7 @@ public class ControllerMethod
 	 */
 	@Override public String toString()
 	{
-		return getJavaMethod().getName();
+		return getName();
 	}
 
 	
