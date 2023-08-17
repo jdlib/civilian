@@ -153,10 +153,7 @@ public abstract class Application implements ApplicationProvider, PathProvider
 	
 	/**
 	 * Called by the server when the application is added to the server.
-	 * @param server the server
-	 * @param id the application id
-	 * @param relativePath the relative path of the application within the server
-	 * @param settings the application settings
+	 * @param data the init data of the application
 	 */
 	public final void init(Server.AppInitData data)
 	{

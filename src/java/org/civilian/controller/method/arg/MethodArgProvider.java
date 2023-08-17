@@ -29,7 +29,6 @@ public interface MethodArgProvider
 	/**
 	 * Creates a custom MethodArg, for instance for the parameter
 	 * of a controller action method. 
-	 * @param factory an MethodArgFactory which can help to create standard MethodArgs.
 	 * @param annotation the annotation on the method parameter which referenced the MethodArgProvider.
 	 * @param type the type of the injected argument
 	 * @param genericType the generic type of the injected argument

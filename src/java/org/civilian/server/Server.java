@@ -309,7 +309,7 @@ public abstract class Server implements PathProvider
 	 * to receive requests.
 	 * @param app the app 
 	 * @param supportAsync should async operations be supported?
-	 * @return an connector object which is {@link Application#getConnector() available} in the application.
+	 * @return an connector object.
 	 * 		In an servlet environment, the connector is a servlet
 	 * 		which receives requests and directs them to the application.
 	 */
