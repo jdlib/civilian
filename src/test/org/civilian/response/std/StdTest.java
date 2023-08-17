@@ -26,7 +26,6 @@ import org.civilian.content.ContentTypeList;
 import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
 import org.civilian.resource.Path;
-import org.civilian.resource.Url;
 import org.civilian.response.Response;
 import org.civilian.template.TestTemplateWriter;
 
@@ -90,7 +89,7 @@ public class StdTest extends CivTest
 		Request request  = mock(Request.class);
 		when(out.response.getRequest()).thenReturn(request);
 		when(request.getPath()).thenReturn(Path.ROOT);
-		when(request.getUrl(false, true)).thenReturn(mock(Url.class));
+		when(request.getUrl()).thenReturn("");
 		
 		ErrorTemplate errTemplate = new ErrorTemplate(request, 400, "test", new IllegalArgumentException());
 		errTemplate.print(out);

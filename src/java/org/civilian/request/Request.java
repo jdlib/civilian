@@ -25,7 +25,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-
 import org.civilian.application.Application;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
@@ -33,7 +32,6 @@ import org.civilian.content.ContentTypeList;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
-import org.civilian.resource.Url;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParamProvider;
 import org.civilian.response.Response;
@@ -212,32 +210,25 @@ public interface Request extends RequestProvider, ResponseProvider,
 	 * If the request was completely matched against a {@link Resource}, it is constructed 
 	 * from that Resource, and all path params of the request are set in the URL.
 	 * Else it is constructed from the request path.
-	 * @param addServer should protocol, host and port be included in the URL? 
 	 * @param addParams should parameters added as query parameter?
 	 * @return the URL 
 	 */
-	public default Url getUrl(boolean addServer, boolean addParams)
+	public default String getUrl()
 	{
-		Url url;
-		
-		if (getResource() != null)
-			url = new Url(this, getResource()); // also copies the path params
-		else
-			url = new Url(this, getPath());
-		
-		if (addServer)
-			url.prepend(getServerInfo().toString());
-		
-		if (addParams)
+		StringBuilder s = new StringBuilder();
+		s.append(getOriginalPath());
+
+		boolean hasParam = false;
+		for (Iterator<String> pnames = getParameterNames(); pnames.hasNext(); )
 		{
-			for (Iterator<String> pnames = getParameterNames(); pnames.hasNext(); )
+			String pname = pnames.next();
+			for (String pvalue : getParameters(pname)) 
 			{
-				String pname = pnames.next();
-				url.addQueryParams(pname, getParameters(pname));
+				s.append(hasParam ? '&' : '?').append(pname).append('=').append(pvalue);
+				hasParam = true;
 			}
 		}
-		
-		return url;
+		return s.toString();
 	}
 
 	
@@ -796,7 +787,7 @@ public interface Request extends RequestProvider, ResponseProvider,
 		Check.notNull(out, "out");
 		out.print(getMethod());
 		out.print(" ");
-		out.println(getUrl(false /*server*/, true /*params*/));
+		out.println(getUrl());
 		RequestHeaders headers = getHeaders(); 
 		for (String name : headers)
 		{

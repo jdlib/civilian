@@ -21,7 +21,7 @@ mixin html
 	<h1>Civilian Dev Error - <%status%></h1>
 	<table>
 	@printInfo("Message", message);
-	@printInfo("URL", request.getMethod() + " " + request.getUrl(false, true).toString());
+	@printInfo("URL", request.getMethod() + " " + request.getUrl());
 	@printClass("Application", request.getOwner());
 	@if (error != null)
 		<tr valign="baseline">

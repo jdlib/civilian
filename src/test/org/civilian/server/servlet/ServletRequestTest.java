@@ -100,8 +100,7 @@ public class ServletRequestTest extends CivTest
 		assertEquals("/app/alpha", 	request.getPath().toString());
 		assertEquals("/app/alpha", 	request.getOriginalPath());
 		assertEquals("/alpha", 		request.getRelativePath().toString());
-		assertEquals("/app/alpha?a=1&a=2",	request.getUrl(false, true).toString());
-		assertEquals("/app/alpha",			request.getUrl(false, false).toString());
+		assertEquals("/app/alpha?a=1&a=2",	request.getUrl());
 	}		
 		
 	
