@@ -1,12 +1,9 @@
-package org.civilian.internal;
+package org.civilian.response;
 
 
 import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
-import org.civilian.response.Response;
-import org.civilian.response.ResponseStreamInterceptor;
 
 
 public class TestResponseStreamInterceptor implements ResponseStreamInterceptor

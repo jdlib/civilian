@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal;
+package org.civilian.response;
 
 
 import java.io.ByteArrayOutputStream;
@@ -25,7 +25,6 @@ import org.civilian.CivTest;
 import org.civilian.content.ContentType;
 import org.civilian.resource.Resource;
 import org.civilian.resource.Url;
-import org.civilian.response.Response;
 import org.civilian.server.test.TestApp;
 import org.civilian.server.test.TestRequest;
 import org.civilian.server.test.TestResponse;

@@ -1,12 +1,9 @@
-package org.civilian.internal;
+package org.civilian.response;
 
 
 import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Writer;
-
-import org.civilian.response.Response;
-import org.civilian.response.ResponseWriterInterceptor;
 
 
 public class TestResponseWriterInterceptor implements ResponseWriterInterceptor

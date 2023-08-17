@@ -18,7 +18,7 @@ package org.civilian.template;
 
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
-import org.civilian.internal.AbstractResponse;
+import org.civilian.response.AbstractResponse;
 import org.civilian.response.Response;
 import org.junit.Test;
 

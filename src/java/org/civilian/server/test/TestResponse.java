@@ -24,11 +24,11 @@ import java.io.OutputStream;
 import java.io.Writer;
 import javax.servlet.http.Cookie;
 
-import org.civilian.internal.AbstractResponse;
 import org.civilian.internal.ParamList;
 import org.civilian.request.CookieList;
 import org.civilian.request.Request;
 import org.civilian.request.Session;
+import org.civilian.response.AbstractResponse;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
 import org.civilian.util.HttpHeaders;

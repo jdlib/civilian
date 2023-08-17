@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal;
+package org.civilian.response;
 
 
 import java.io.Closeable;
@@ -34,10 +34,6 @@ import org.civilian.internal.intercept.RespStreamInterceptorChain;
 import org.civilian.internal.intercept.RespWriterInterceptorChain;
 import org.civilian.request.AbstractRequest;
 import org.civilian.request.Request;
-import org.civilian.response.Response;
-import org.civilian.response.ResponseOwner;
-import org.civilian.response.ResponseStreamInterceptor;
-import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.service.LocaleService;

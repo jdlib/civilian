@@ -28,7 +28,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.civilian.Logs;
-import org.civilian.internal.AbstractResponse;
+import org.civilian.response.AbstractResponse;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.util.ClassUtil;
