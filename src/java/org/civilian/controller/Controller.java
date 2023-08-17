@@ -217,7 +217,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	/**
 	 * Processes a request. This method is called by the resource dispatch
 	 * on the controller defined for the resource which matches the request.
-	 * The ControllerType must have been {@link #setControllerType(Controller, ControllerType) initialized}
+	 * The ControllerType must have been {@link #setControllerType(ControllerType) initialized}
 	 * before this method can be called.
 	 * This method 
 	 * <ul>

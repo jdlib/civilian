@@ -14,13 +14,13 @@ import org.civilian.controller.ControllerSignature;
 public interface AdminResources
 {
 	/**
-	 * "/" -> org.civilian.application.admin.IndexController
+	 * "/" -&lt; org.civilian.application.admin.IndexController
 	 */
 	public static final Root root = new Root();
 
 
 	/**
-	 * "/" -> org.civilian.application.admin.IndexController
+	 * "/" -&lt; org.civilian.application.admin.IndexController
 	 */
 	public static class Root extends org.civilian.resource.Resource
 	{
@@ -53,12 +53,12 @@ public interface AdminResources
 			}
 
 			/**
-			 * "/{appId}/resources" -> org.civilian.application.admin.app.ResourcesController
+			 * "/{appId}/resources" -&lt; org.civilian.application.admin.app.ResourcesController
 			 */
 			public final org.civilian.resource.Resource resources;
 
 			/**
-			 * "/{appId}/settings" -> org.civilian.application.admin.app.SettingsController
+			 * "/{appId}/settings" -&lt; org.civilian.application.admin.app.SettingsController
 			 */
 			public final org.civilian.resource.Resource settings;
 

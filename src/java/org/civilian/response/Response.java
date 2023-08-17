@@ -525,6 +525,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * was dispatched to a resource using content negotiation, then
 	 * the content type will be initialized to that negotiated content type.
 	 * Else it is initialized to null.
+	 * @return the content type
 	 */
 	public abstract String getContentType();
 
@@ -532,6 +533,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Returns the content type used for the response content as string,
 	 * appended by the content encoding.
+	 * @return the content type + encoding
 	 * @see #getContentType()
 	 * @see #getCharEncoding()
 	 */
@@ -554,6 +556,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Sets the character encoding.
 	 * If the response has been committed or {@link #getContentWriter()} has been called, it has no effect
+	 * @param encoding the encoding
 	 * @return this response
 	 */
 	public abstract Response setCharEncoding(String encoding);
@@ -564,12 +567,14 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * The encoding can be set with a call to {@link #setCharEncoding(String)}.
 	 * If getWriter() is called and no encoding is set, then the default encoding of the application 
 	 * (see {@link Application#getDefaultCharEncoding()} is used.
+	 * @return the encoding
 	 */
 	public abstract String getCharEncoding();
 	
 
 	/**
 	 * Sets the content length.
+	 * @param length the length
 	 * @return this response
 	 */
 	public abstract Response setContentLength(long length);
@@ -623,26 +628,31 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	
 	/**
-	 * Resets the output buffer, discarding any buffered content. 
+	 * Resets the output buffer, discarding any buffered content.
+	 * @return this 
 	 */
 	public Response resetBuffer();
 
 
 	/**
 	 * Flushes any buffered content.
+	 * @return this
+	 * @throws IOException if an IO error occurs
 	 */
 	public Response flushBuffer() throws IOException;
 	
 	
 	/**
-	 * Sets the buffer size. 
+	 * Sets the buffer size.
+	 * @param size the size 
 	 * @return this response
 	 */
 	public Response setBufferSize(int size);
 	
 
 	/**
-	 * Returns the buffer size. 
+	 * Returns the buffer size.
+	 * @return the size 
 	 */
 	public int getBufferSize();
 
@@ -654,6 +664,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	/**
 	 * Returns the ResponseHeaders object which allows to add or set headers.
+	 * @return the headers
 	 */
 	public abstract ResponseHeaders getHeaders(); 
 

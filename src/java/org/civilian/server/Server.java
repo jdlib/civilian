@@ -197,7 +197,6 @@ public abstract class Server implements PathProvider
 	
 	/**
 	 * Closes all applications of the Server.
-	 * @see Application#close()
 	 */
 	protected synchronized void close()
 	{
