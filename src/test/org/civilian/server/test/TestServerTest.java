@@ -22,7 +22,7 @@ import org.civilian.CivTest;
 import org.junit.Test;
 
 
-public class TestContextTest extends CivTest
+public class TestServerTest extends CivTest
 {
 	@Test public void testResourceLoader() throws Exception
 	{
