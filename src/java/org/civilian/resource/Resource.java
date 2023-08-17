@@ -34,7 +34,6 @@ import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
-import org.civilian.internal.resource.ControllerTypeProvider;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;

@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.resource;
+package org.civilian.resource;
 
 
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerType;
-import org.civilian.resource.Resource;
 
 
 /**
