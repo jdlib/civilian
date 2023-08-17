@@ -23,7 +23,6 @@ import org.civilian.annotation.Post;
 import org.civilian.annotation.Produces;
 import org.civilian.annotation.RequestMethod;
 import org.civilian.application.Application;
-import org.civilian.application.ApplicationProvider;
 import org.civilian.controller.method.ControllerMethod;
 import org.civilian.request.Request;
 import org.civilian.request.RequestProvider;
@@ -116,7 +115,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	/**
 	 * Returns the application to which the controller belongs.
 	 */
-	@Override public Application getApplication()
+	public Application getApplication()
 	{
 		return getRequest().getApplication();
 	}

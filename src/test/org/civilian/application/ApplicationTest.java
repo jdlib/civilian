@@ -90,7 +90,6 @@ public class ApplicationTest extends CivTest
 	@Test public void testAccessors()
 	{
 		Application app = new NoArgsApp();
-		assertSame(app, app.getApplication());
 		assertNull(app.getVersion());
 		assertFalse(app.ignoreError(null));
 		assertEquals("app '?'", app.toString());
