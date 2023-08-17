@@ -30,8 +30,8 @@ import org.civilian.util.UriEncoder;
 public class RegexPathParam extends PathParam<String>
 {
 	/**
-	 * Creates a new RegexPPFormat.
-	 * @param type the type of the path parameter values defined by this pattern. 
+	 * Creates a new RegexPathParam.
+	 * @param name the param name
 	 * @param matchPattern a regex pattern used to implement the accept method. The pattern must
 	 * 		contain exactly one match group and the value of the match group must be
 	 * 		the string value of path parameter.

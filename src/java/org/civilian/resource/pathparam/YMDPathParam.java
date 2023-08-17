@@ -34,8 +34,9 @@ import org.civilian.util.UriEncoder;
 public class YMDPathParam<T> extends PathParam<T>
 {
 	/**
-	 * Creates a YMDPPFormat.  
-	 * @param dateType decouples the pattern from the concrete date class which is
+	 * Creates a YMDPathParam.
+	 * @param name the param name  
+	 * @param type decouples the pattern from the concrete date class which is
 	 * 		used for path parameter values of this pattern. The {@link TypeLib} provides constants
 	 * 		for common DateTypes.
 	 */

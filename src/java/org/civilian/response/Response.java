@@ -582,6 +582,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	
 	/**
 	 * Sets the content language.
+	 * @param locale the locale of the language
 	 * @return this response
 	 */
 	public abstract Response setContentLanguage(Locale locale);
@@ -608,6 +609,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Adds a ResponseInterceptor which can wrap the Response OutputStream.
 	 * {@link #getContentStream()} or {@link #getContentWriter()} must not have been called yet.
+	 * @param interceptor the interceptor
 	 */
 	public abstract void addInterceptor(ResponseStreamInterceptor interceptor);
 
@@ -615,6 +617,7 @@ public interface Response extends RequestProvider, ResponseProvider, Application
 	/**
 	 * Adds a ResponseWriterInterceptor which can wrap the Response Writer.
 	 * {@link #getContentStream()} or {@link #getContentWriter()} must not have been called yet.
+	 * @param interceptor the interceptor
 	 */
 	public abstract void addInterceptor(ResponseWriterInterceptor interceptor);
 	
