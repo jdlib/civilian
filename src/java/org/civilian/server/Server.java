@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian;
+package org.civilian.server;
 
 
 import java.io.File;
@@ -24,6 +24,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import org.slf4j.Logger;
+import org.civilian.Application;
+import org.civilian.Version;
 import org.civilian.application.AppConfig;
 import org.civilian.application.ConfigKeys;
 import org.civilian.content.ContentTypeLookup;
@@ -141,10 +143,10 @@ public abstract class Server implements PathProvider
 	{
 		public AppCreateData(Application app, String id, Settings settings, String path)
 		{
-			this.app		= Check.notNull(app, "app"); 
-			this.id			= Check.notNull(id, "id");
-			this.relativePath		= path;
-			this.settings 	= settings;
+			this.app			= Check.notNull(app, "app"); 
+			this.id				= Check.notNull(id, "id");
+			this.relativePath	= path;
+			this.settings 		= settings;
 		}
 		
 		

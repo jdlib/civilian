@@ -19,7 +19,7 @@ package org.civilian.asset;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import org.civilian.Server;
+
 import org.civilian.application.ConfigKeys;
 import org.civilian.content.ContentType;
 import org.civilian.internal.asset.AssetCache;
@@ -28,6 +28,7 @@ import org.civilian.internal.asset.CivResourceLocation;
 import org.civilian.internal.asset.JavaResourceLocation;
 import org.civilian.internal.asset.DirectoryLocation;
 import org.civilian.resource.Path;
+import org.civilian.server.Server;
 import org.civilian.util.Settings;
 
 

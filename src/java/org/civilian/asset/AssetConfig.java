@@ -18,9 +18,10 @@ package org.civilian.asset;
 
 import java.util.Collection;
 import java.util.HashMap;
-import org.civilian.Server;
+
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
+import org.civilian.server.Server;
 import org.civilian.util.Check;
 
 

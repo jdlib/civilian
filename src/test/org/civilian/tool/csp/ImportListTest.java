@@ -21,7 +21,7 @@ import java.io.StringWriter;
 import java.util.List;
 import javax.servlet.Servlet;
 import org.civilian.CivTest;
-import org.civilian.Server;
+import org.civilian.server.Server;
 import org.junit.Test;
 
 

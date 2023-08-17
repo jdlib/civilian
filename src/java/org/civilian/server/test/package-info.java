@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Contains implementations for {@link org.civilian.Server} and other
+ * Contains implementations for {@link org.civilian.server.Server} and other
  * core Civilian classes to be used in a test environment.
  */
 package org.civilian.server.test;

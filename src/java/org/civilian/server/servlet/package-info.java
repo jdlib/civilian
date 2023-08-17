@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * Contains a {@link org.civilian.Server} implementation for a Servlet environment.
+ * Contains a {@link org.civilian.server.Server} implementation for a Servlet environment.
  */
 package org.civilian.server.servlet;

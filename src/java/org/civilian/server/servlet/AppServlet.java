@@ -27,10 +27,10 @@ import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.civilian.Application;
-import org.civilian.Server;
 import org.civilian.Version;
 import org.civilian.internal.Logs;
 import org.civilian.response.Response;
+import org.civilian.server.Server;
 import org.civilian.util.Check;
 
 

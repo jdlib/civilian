@@ -53,6 +53,7 @@ import org.civilian.resource.scan.ResourceScan;
 import org.civilian.response.Response;
 import org.civilian.response.std.ErrorResponse;
 import org.civilian.response.std.NotFoundResponse;
+import org.civilian.server.Server;
 import org.civilian.text.service.LocaleServiceList;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
@@ -342,7 +343,8 @@ public abstract class Application implements ApplicationProvider, PathProvider
 	 * Closes the application. Called when the server shuts down
 	 * or the application is removed from the server.
 	 */
-	void runClose() throws Exception
+	// TODO must not be public but still accessible from server
+	public void runClose() throws Exception
 	{
 		status_ = Status.CLOSED;
 		try

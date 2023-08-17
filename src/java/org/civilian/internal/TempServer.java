@@ -18,8 +18,8 @@ package org.civilian.internal;
 
 import java.util.Iterator;
 import org.civilian.Application;
-import org.civilian.Server;
 import org.civilian.resource.Path;
+import org.civilian.server.Server;
 import org.civilian.util.Iterators;
 import org.civilian.util.ResourceLoader;
 import org.civilian.content.ContentTypeLookup;
