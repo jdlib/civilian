@@ -16,6 +16,7 @@
 package org.civilian.internal.controller.arg;
 
 
+import org.civilian.controller.method.arg.StringMethodArg;
 import org.civilian.request.Request;
 
 

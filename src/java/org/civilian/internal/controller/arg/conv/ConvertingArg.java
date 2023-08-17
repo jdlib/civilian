@@ -21,7 +21,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 
 import org.civilian.controller.method.arg.MethodArg;
-import org.civilian.internal.controller.arg.StringMethodArg;
+import org.civilian.controller.method.arg.StringMethodArg;
 import org.civilian.request.Request;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.text.type.TypeSerializer;

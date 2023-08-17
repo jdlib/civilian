@@ -31,7 +31,7 @@ import org.civilian.annotation.Parameter;
 import org.civilian.annotation.RequestContent;
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.controller.method.arg.MethodArgProvider;
-import org.civilian.internal.controller.arg.StringMethodArg;
+import org.civilian.controller.method.arg.StringMethodArg;
 import org.civilian.internal.controller.arg.conv.ConvertingArg;
 import org.civilian.internal.controller.arg.misc.BeanParamArg;
 import org.civilian.internal.controller.arg.misc.RequestArg;

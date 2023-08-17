@@ -16,7 +16,7 @@
 package org.civilian.internal.controller.arg.reqparam;
 
 
-import org.civilian.internal.controller.arg.StringMethodArg;
+import org.civilian.controller.method.arg.StringMethodArg;
 import org.civilian.util.Check;
 import org.civilian.util.StringUtil;
 
