@@ -86,10 +86,11 @@ public enum FileType
         	checkFailed(file, what, "* does not exist");
         if ((isDirectory != null) && file.exists()) 
         {
+        	boolean expectDir = isDirectory.booleanValue();
         	boolean isDir = file.isDirectory();
-        	if (isDirectory.booleanValue() && !isDir)
+        	if (expectDir && !isDir)
         		checkFailed(file, what, "expected a directory but is a file: *");
-        	if (!isDirectory.booleanValue() && isDir)
+        	if (!expectDir && isDir)
         		checkFailed(file, what, "expected a file but is a directory: *");
         }
         return file;
