@@ -38,6 +38,7 @@ import org.civilian.annotation.RequestMethod;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.controller.method.ControllerMethod;
+import org.civilian.controller.method.arg.factory.MethodArgFactory;
 import org.civilian.request.Request;
 import org.civilian.resource.PathParamMap;
 import org.civilian.resource.PathParams;

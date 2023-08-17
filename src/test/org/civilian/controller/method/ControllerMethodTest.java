@@ -25,7 +25,7 @@ import org.civilian.content.ContentNegotiation;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.controller.Controller;
-import org.civilian.controller.MethodArgFactory;
+import org.civilian.controller.method.arg.factory.MethodArgFactory;
 import org.civilian.request.Request;
 import org.civilian.resource.PathParamMap;
 import org.civilian.type.TypeLib;

@@ -26,6 +26,7 @@ import org.civilian.annotation.PathParam;
 import org.civilian.annotation.Segment;
 import org.civilian.application.classloader.ClassLoaderFactory;
 import org.civilian.controller.method.ControllerMethod;
+import org.civilian.controller.method.arg.factory.MethodArgFactory;
 import org.civilian.resource.PathParamMap;
 import org.civilian.type.TypeLib;
 import org.civilian.util.ArrayUtil;
