@@ -30,6 +30,12 @@ import org.civilian.util.Check;
  */
 public class ErrorResponse
 {
+	public ErrorResponse(boolean develop)
+	{
+		develop_ = develop;
+	}
+	
+
 	/**
 	 * Sends the error response.
 	 * If the response is not yet committed, it resets the response buffer,
@@ -78,8 +84,7 @@ public class ErrorResponse
 	 */
 	protected void sendImpl(Response response, int statusCode, String message, Throwable error) throws Exception
 	{
-		boolean develop = response.getApplication().develop(); 
-		if (develop && 
+		if (develop_ && 
 			response.getRequest().getAcceptedContentTypes().contains(ContentType.TEXT_HTML))
 		{
 			response.setContentType(ContentType.TEXT_HTML);
@@ -88,7 +93,7 @@ public class ErrorResponse
 		}
 		else
 		{
-			if ((message == null) && develop && (error != null))
+			if ((message == null) && develop_ && (error != null))
 				message = error.getMessage();
 			if (message != null)
 			{
@@ -97,4 +102,7 @@ public class ErrorResponse
 			}
 		}
 	}
+
+
+	private final boolean develop_;
 }

@@ -32,6 +32,12 @@ import org.civilian.response.Response;
  */
 public class NotFoundResponse
 {
+	public NotFoundResponse(boolean develop)
+	{
+		develop_ = develop;
+	}
+	
+
 	/**
 	 * If the response is not yet committed it calls {@link #sendImpl(Response)}
 	 * Any exception is catched and logged. 
@@ -60,7 +66,7 @@ public class NotFoundResponse
 	 */
 	protected void sendImpl(Response response) throws Exception
 	{
-		if (response.getApplication().develop() &&
+		if (develop_ &&
 			response.getRequest().getAcceptedContentTypes().contains(ContentType.TEXT_HTML))
 		{
 			response.setContentType(ContentType.TEXT_HTML);
@@ -69,4 +75,7 @@ public class NotFoundResponse
 		else
 			response.setStatus(Response.Status.NOT_FOUND);
 	}
+	
+	
+	private final boolean develop_;
 }

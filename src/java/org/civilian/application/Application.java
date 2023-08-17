@@ -709,7 +709,7 @@ public abstract class Application implements ApplicationProvider, PathProvider
 	 */
 	public ErrorResponse createErrorResponse()
 	{
-		return new ErrorResponse();
+		return new ErrorResponse(develop());
 	}
 	
 	
@@ -720,7 +720,7 @@ public abstract class Application implements ApplicationProvider, PathProvider
 	 */
 	public NotFoundResponse createNotFoundResponse()
 	{
-		return new NotFoundResponse();
+		return new NotFoundResponse(develop());
 	}
 	
 	

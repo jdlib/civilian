@@ -49,7 +49,7 @@ public class ErrorProcessor extends Processor
 
 	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
 	{
-		ErrorResponse er = new ErrorResponse();
+		ErrorResponse er = new ErrorResponse(request.getApplication().develop());
 		er.send(request.getResponse(), statusCode_, message_, error_);
 		return true;
 	}

@@ -42,27 +42,18 @@ public class StdTest extends CivTest
 		when(out.response.getResponse()).thenReturn(out.response);
 		when(request.getResponse()).thenReturn(out.response);
 		when(request.getHeaders()).thenReturn(headers);
-		when(request.getApplication()).thenReturn(out.app);
-	}
-	
-	
-	private static void develop(boolean on)
-	{
-		when(out.app.develop()).thenReturn(on);
 	}
 	
 	
 	@Test public void testNotFound() throws Exception
 	{
-		develop(false);
-		assertNull(new NotFoundResponse().send(request.getResponse()));
+		assertNull(new NotFoundResponse(false).send(request.getResponse()));
 		verify(out.response).setStatus(Response.Status.NOT_FOUND);
 
 		ArrayList<String> list = new ArrayList<>();
 		list.add("x");
 		when(request.getAcceptedContentTypes()).thenReturn(new ContentTypeList(ContentType.TEXT_HTML));
-		develop(true);
-		assertNull(new NotFoundResponse().send(request.getResponse()));
+		assertNull(new NotFoundResponse(true).send(request.getResponse()));
 	}
 	
 	
@@ -70,20 +61,18 @@ public class StdTest extends CivTest
 	@Test public void testError() throws Exception
 	{
 		when(request.getAcceptedContentTypes()).thenReturn(new ContentTypeList());
-		develop(false);
-		assertNull(sendErrorResponse());
+		assertNull(sendErrorResponse(false));
 
-		develop(true);
-		assertNull(sendErrorResponse());
+		assertNull(sendErrorResponse(true));
 
 		when(request.getAcceptedContentTypes()).thenReturn(new ContentTypeList(ContentType.TEXT_HTML));
-		assertNull(sendErrorResponse());
+		assertNull(sendErrorResponse(true));
 	}
 	
 	
-	private Exception sendErrorResponse()
+	private Exception sendErrorResponse(boolean develop)
 	{
-		ErrorResponse errResponse = new ErrorResponse();
+		ErrorResponse errResponse = new ErrorResponse(develop);
 		return errResponse.send(request.getResponse(), 
 			Response.Status.INTERNAL_SERVER_ERROR, 
 			"some error", 
