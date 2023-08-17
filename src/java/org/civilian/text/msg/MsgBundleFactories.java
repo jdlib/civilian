@@ -15,7 +15,7 @@
  */
 package org.civilian.text.msg;
 
-import org.civilian.text.msg.resbundle.ResMsgBundleFactory;
+
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 

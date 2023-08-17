@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.text.msg.resbundle;
+package org.civilian.text.msg;
 
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import org.civilian.text.msg.MsgBundle;
-import org.civilian.text.msg.MsgBundleFactories;
-import org.civilian.text.msg.MsgBundleFactory;
 import org.civilian.util.Check;
 
 

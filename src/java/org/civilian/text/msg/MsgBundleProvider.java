@@ -15,6 +15,7 @@
  */
 package org.civilian.text.msg;
 
+
 /** 
  * An interface for a service which can provide
  * a MsgBundle and translate a message id into a message text.

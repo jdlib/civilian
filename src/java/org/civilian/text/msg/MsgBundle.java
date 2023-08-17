@@ -17,7 +17,6 @@ package org.civilian.text.msg;
 
 
 import java.util.Locale;
-
 import org.civilian.text.service.LocaleService;
 
 
