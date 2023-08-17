@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.controller.arg.reqparam;
+package org.civilian.controller.method.arg.reqparam;
 
 
 import org.civilian.controller.method.arg.StringMethodArg;
