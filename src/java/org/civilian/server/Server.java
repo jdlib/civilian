@@ -23,7 +23,6 @@ import org.slf4j.Logger;
 import org.civilian.ConfigKeys;
 import org.civilian.Logs;
 import org.civilian.Version;
-import org.civilian.application.Application;
 import org.civilian.application.factory.AppFactory;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
@@ -115,7 +114,7 @@ public abstract class Server implements PathProvider
 	 * @throws IllegalArgumentException if the app is contained in another server
 	 * 		or its path is already used by another application 
 	 */
-	protected synchronized boolean addApp(Application app, String id, String relPathString, Settings settings)
+	protected synchronized boolean addApp(ServerApp app, String id, String relPathString, Settings settings)
 	{
 		Check.notNull(app, 	"app");
 		Check.notNull(id, 	"id");
@@ -126,7 +125,7 @@ public abstract class Server implements PathProvider
 			throw new IllegalStateException(app + " already added to server " + app.getServer());
 		
 		// sanity check 2: path and id may not be used by another app
-		for (Application prevApp : apps_)
+		for (ServerApp prevApp : apps_)
 		{
 			if (prevApp.getId().equals(id))
 				throw new IllegalArgumentException("the app id '" + id + "' is already used by another app");  
@@ -142,7 +141,7 @@ public abstract class Server implements PathProvider
 		Object connector = connect(app, initData.async);
 		if (connector != null)
 			app.setAttribute(CONNECTOR_NAME, connector);
-		return app.getStatus() == Application.Status.RUNNING;
+		return app.getStatus() == ServerApp.Status.RUNNING;
 	}
 	
 
@@ -181,14 +180,14 @@ public abstract class Server implements PathProvider
 	 * 		In an servlet environment, the connector is a servlet
 	 * 		which receives requests and directs them to the application.
 	 */
-	protected abstract Object connect(Application app, boolean supportAsync);
+	protected abstract Object connect(ServerApp app, boolean supportAsync);
 	
 	
 	/**
 	 * Disconnect the application from the server.
 	 * Called when the application is closed.
 	 */
-	protected abstract void disconnect(Application app, Object connector);
+	protected abstract void disconnect(ServerApp app, Object connector);
 
 	
 	//--------------------------
@@ -211,7 +210,7 @@ public abstract class Server implements PathProvider
 	/**
 	 * Closes an application and removes it from the Server.
 	 */
-	protected synchronized void close(Application app)
+	protected synchronized void close(ServerApp app)
 	{
 		if (app == null)
 			return;
@@ -220,7 +219,7 @@ public abstract class Server implements PathProvider
 		
 		try
 		{
-			if (app.getStatus() == Application.Status.RUNNING)
+			if (app.getStatus() == ServerApp.Status.RUNNING)
 			{
 				try
 				{
@@ -252,7 +251,7 @@ public abstract class Server implements PathProvider
 	 * Returns an list of all applications of the Server.
 	 * @return the list
 	 */
-	public synchronized List<Application> getApplications()
+	public synchronized List<ServerApp> getApplications()
 	{
 		return new ArrayList<>(apps_);
 	}
@@ -263,9 +262,9 @@ public abstract class Server implements PathProvider
 	 * @return the application or null
 	 */
 	@SuppressWarnings("unchecked")
-	public synchronized <T extends Application> T getApplication(Class<T> appClass)
+	public synchronized <T extends ServerApp> T getApplication(Class<T> appClass)
 	{
-		for (Application app : apps_)
+		for (ServerApp app : apps_)
 		{
 			if (appClass.isAssignableFrom(app.getClass()))
 				return (T)app;
@@ -278,9 +277,9 @@ public abstract class Server implements PathProvider
 	 * Returns the application with the given id.
 	 * @return the application or null
 	 */
-	public synchronized Application getApplication(String id)
+	public synchronized ServerApp getApplication(String id)
 	{
-		for (Application app : apps_)
+		for (ServerApp app : apps_)
 		{
 			if (app.getId().equals(id))
 				return app;
@@ -288,6 +287,13 @@ public abstract class Server implements PathProvider
 		return null;
 	}
 	
+	
+	public <T extends ServerApp> T getApplication(String id, Class<T> appClass)
+	{
+		ServerApp app = getApplication(id);
+		return app != null ? Check.isA(app, appClass) : null;
+	}
+
 	
 	/**
 	 * Returns the develop flag of the Server. 
@@ -404,5 +410,5 @@ public abstract class Server implements PathProvider
 	 * The develop flag of the Server.
 	 */
 	protected boolean develop_;
-	private final List<Application> apps_ = new ArrayList<>();
+	private final List<ServerApp> apps_ = new ArrayList<>();
 }

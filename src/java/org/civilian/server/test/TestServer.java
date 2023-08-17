@@ -31,6 +31,7 @@ import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
 import org.civilian.server.Server;
+import org.civilian.server.ServerApp;
 import org.civilian.server.ServerFiles;
 import org.civilian.server.servlet.ServletUtil;
 import org.civilian.util.Check;
@@ -175,13 +176,13 @@ public class TestServer extends Server
 	}
 
 	
-	@Override protected Object connect(Application app, boolean supportAsync)
+	@Override protected Object connect(ServerApp app, boolean supportAsync)
 	{
 		return null;
 	}
 
 	
-	@Override protected void disconnect(Application app, Object connector)
+	@Override protected void disconnect(ServerApp app, Object connector)
 	{
 	}
 
@@ -319,7 +320,7 @@ public class TestServer extends Server
      * @param relativePath the relative path of the application within the server
      * @param settings application settings
 	 */
-	@Override public boolean addApp(Application app, String id, String relativePath, Settings settings)
+	@Override public boolean addApp(ServerApp app, String id, String relativePath, Settings settings)
 	{
 		return super.addApp(app, id, relativePath, settings);
 	}
@@ -344,7 +345,7 @@ public class TestServer extends Server
 	/**
 	 * Closes an application and removes it from the server.
 	 */
-	@Override public void close(Application app)
+	@Override public void close(ServerApp app)
 	{
 		// call the protected implementation
 		super.close(app);

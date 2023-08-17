@@ -29,6 +29,7 @@ import org.civilian.application.UploadConfig;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
 import org.civilian.server.Server;
+import org.civilian.server.ServerApp;
 import org.civilian.server.ServerFiles;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
@@ -103,8 +104,9 @@ class ServletServer extends Server
 	/**
 	 * Creates and returns the AppServlet of an application.
 	 */
-	@Override protected AppServlet connect(Application app, boolean supportAsync)
+	@Override protected AppServlet connect(ServerApp serverApp, boolean supportAsync)
 	{
+		Application app = Check.isA(serverApp, Application.class);
 		AppServlet servlet = new AppServlet(app); 
 		ServletRegistration.Dynamic registration = servletContext_.addServlet("civilian.AppServlet-" + app.getId(), servlet);
 		registration.addMapping(app.getRelativePath().add("/*").toString());
@@ -128,7 +130,7 @@ class ServletServer extends Server
 	 * The servlet api does not allow to remove the servlet.
 	 * but we stop serving requests.
 	 */
-	@Override protected void disconnect(Application app, Object connector)
+	@Override protected void disconnect(ServerApp app, Object connector)
 	{
 		AppServlet servlet = Check.isA(connector, AppServlet.class, "connector");
 		servlet.close(); 

@@ -59,7 +59,7 @@ public class AppServletTest extends CivTest
 		// app missing
 		assertInitFail(servlet, config, "no application with id 'test' defined");
 
-		when(server.getApplication("test")).thenReturn(app);
+		when(server.getApplication("test", Application.class)).thenReturn(app);
 		servlet.init(config);
 		assertSame(config, servlet.getServletConfig());
 		assertNotNull(servlet.getServletInfo());

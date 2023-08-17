@@ -6,11 +6,10 @@ package org.civilian.application.admin;
 
 
 import java.util.Date;
-
 import org.civilian.Version;
-import org.civilian.application.Application;
 import org.civilian.resource.Url;
 import org.civilian.server.Server;
+import org.civilian.server.ServerApp;
 import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 
@@ -130,7 +129,7 @@ public class IndexTemplate extends Template
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 66: </tr>
 		Url appUrl = html.url(AdminResources.root.$appId.settings);     // line 67: @Url appUrl = html.url(AdminResources.root.$appId.settings);
-		for (Application app : server.getApplications())                // line 68: @for (Application app : server.getApplications())
+		for (ServerApp app : server.getApplications())                  // line 68: @for (ServerApp app : server.getApplications())
 		{
 			appUrl.setPathParam(app.getId());                           // line 69: @appUrl.setPathParam(app.getId());
 			out.println("<tr>");                                        // line 70: <tr>

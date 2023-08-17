@@ -5,16 +5,16 @@
 package org.civilian.application.admin;
 
 
-import org.civilian.application.Application;
 import org.civilian.resource.Resource;
 import org.civilian.resource.Url;
+import org.civilian.server.ServerApp;
 import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 
 
 public class PageTemplate extends Template
 {
-	public PageTemplate(Template content, AdminApp adminApp, Application viewedApp, Resource appResource)
+	public PageTemplate(Template content, AdminApp adminApp, ServerApp viewedApp, Resource appResource)
 	{
 		this.content = content;
 		this.adminApp = adminApp;
@@ -77,7 +77,7 @@ public class PageTemplate extends Template
 		printNavItem("Context", html.url(adminApp), viewedApp == null); // line 34: @printNavItem("Context", html.url(adminApp), viewedApp == null);
 		out.println("<li class=\"nav-header\">Applications</li>");      // line 35: <li class="nav-header">Applications</li>
 		Url appUrl = html.url(appResource);                             // line 36: @Url appUrl = html.url(appResource);
-		for (Application app : adminApp.getServer().getApplications())  // line 37: @for (Application app : adminApp.getServer().getApplications())
+		for (ServerApp app : adminApp.getServer().getApplications())    // line 37: @for (ServerApp app : adminApp.getServer().getApplications())
 		{
 			appUrl.setPathParam(app.getId());                           // line 38: @appUrl.setPathParam(app.getId());
 			printNavItem(app.getId(), appUrl, viewedApp == app);        // line 39: @printNavItem(app.getId(), appUrl, viewedApp == app);
@@ -120,7 +120,7 @@ public class PageTemplate extends Template
 
 	protected Template content;
 	protected AdminApp adminApp;
-	protected Application viewedApp;
+	protected ServerApp viewedApp;
 	protected Resource appResource;
 	protected HtmlMixin html;
 }

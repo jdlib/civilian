@@ -1,12 +1,13 @@
 package org.civilian.server;
 
+
 import java.io.File;
 import java.io.IOException;
-
 import org.civilian.resource.Path;
 import org.civilian.util.Check;
 import org.civilian.util.FileType;
 import org.civilian.util.Settings;
+
 
 /**
  * ServerFiles gives access to real files associated with a Server. 

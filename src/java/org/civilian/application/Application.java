@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.civilian.ConfigKeys;
 import org.civilian.Logs;
 import org.civilian.application.classloader.ClassLoaderFactory;
@@ -45,7 +44,6 @@ import org.civilian.request.BadRequestException;
 import org.civilian.request.Request;
 import org.civilian.request.RequestOwner;
 import org.civilian.resource.Path;
-import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.resource.scan.ResourceScan;
@@ -55,6 +53,7 @@ import org.civilian.response.ResponseOwner;
 import org.civilian.response.std.ErrorResponseHandler;
 import org.civilian.response.std.NotFoundResponseHandler;
 import org.civilian.server.Server;
+import org.civilian.server.ServerApp;
 import org.civilian.server.TempServer;
 import org.civilian.text.service.LocaleServiceList;
 import org.civilian.util.Check;
@@ -67,36 +66,9 @@ import org.slf4j.Logger;
 /**
  * Application represents a Civilian application.
  */
-public abstract class Application implements PathProvider, RequestOwner, ResponseOwner
+public abstract class Application extends ServerApp implements RequestOwner, ResponseOwner
 {
 	private static final Logger log = Logs.APPLICATION; 
-	
-	
-	/**
-	 * Lifecycle status of the Application. 
-	 */
-	public enum Status
-	{
-		/**
-		 * The application was created, but not yet initialized.
-		 */
-		CREATED,
-		
-		/**
-		 * The application was successfully initialized and is now running.
-		 */
-		RUNNING,
-		
-		/**
-		 * The application threw an error during initialization.
-		 */
-		ERROR,
-		
-		/**
-		 * The application was closed.
-		 */
-		CLOSED
-	}
 	
 	
 	/**
@@ -158,7 +130,7 @@ public abstract class Application implements PathProvider, RequestOwner, Respons
 	 * Called by the server when the application is added to the server.
 	 * @param data the init data of the application
 	 */
-	public final void init(Server.AppInitData data)
+	@Override protected final void init(Server.AppInitData data)
 	{
 		if (getStatus() != Status.CREATED)
 			throw new IllegalStateException("already initialized");
@@ -343,8 +315,7 @@ public abstract class Application implements PathProvider, RequestOwner, Respons
 	 * Closes the application. Called when the server shuts down
 	 * or the application is removed from the server.
 	 */
-	// TODO must not be public but still accessible from server
-	public void runClose() throws Exception
+	@Override protected final void runClose() throws Exception
 	{
 		status_ = Status.CLOSED;
 		try
@@ -380,7 +351,7 @@ public abstract class Application implements PathProvider, RequestOwner, Respons
 	 * <code>civilian.ini</code>.
 	 * @see Server#getApplication(String) 
 	 */
-	public String getId()
+	@Override public String getId()
 	{
 		return id_;
 	}
@@ -413,7 +384,7 @@ public abstract class Application implements PathProvider, RequestOwner, Respons
 	/**
 	 * Returns the server in which the application is running.
 	 */
-	public Server getServer()
+	@Override public Server getServer()
 	{
 		return server_;
 	}
@@ -440,7 +411,7 @@ public abstract class Application implements PathProvider, RequestOwner, Respons
 	/**
 	 * Returns the relative path from the server to the application.
 	 */
-	public Path getRelativePath()
+	@Override public Path getRelativePath()
 	{ 
 		return relativePath_;
 	}
@@ -449,6 +420,7 @@ public abstract class Application implements PathProvider, RequestOwner, Respons
 	/**
 	 * Returns the application status.
 	 */
+	@Override
 	public Status getStatus()
 	{
 		return status_;
@@ -561,6 +533,7 @@ public abstract class Application implements PathProvider, RequestOwner, Respons
 	/**
 	 * Stores an attribute under the given name in the application. 
 	 */
+	@Override
 	public void setAttribute(String name, Object value)
 	{
 		attributes_.put(name, value);
@@ -573,6 +546,7 @@ public abstract class Application implements PathProvider, RequestOwner, Respons
 	 * @param name the attribute name
 	 * @see #setAttribute(String, Object)
 	 */
+	@Override
 	public Object getAttribute(String name)
 	{
 		return attributes_.get(name);

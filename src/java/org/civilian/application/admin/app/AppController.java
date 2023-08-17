@@ -26,7 +26,7 @@ public abstract class AppController extends AdminController
 	@Override protected void init() throws Exception
 	{
 		String appId = getRequest().getPathParam(AdminPathParams.APPID);
-		viewedApp_ 	 = getApplication().getServer().getApplication(appId);
+		viewedApp_ 	 = getApplication().getServer().getApplication(appId, Application.class);
 		if (viewedApp_ == null)
 			getResponse().sendRedirect(root);
 	}

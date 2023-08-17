@@ -89,10 +89,10 @@ public class AppServlet implements Servlet
 		String appId = servletConfig_.getInitParameter(APP_ID_PARAMETER);
 		if (appId == null)
 			throw new UnavailableException("no init parameter '" + APP_ID_PARAMETER + "' defined");
-		ServletServer adapter = ServletServer.getInstance(servletContext_);
-		if (adapter == null)
+		ServletServer server = ServletServer.getInstance(servletContext_);
+		if (server == null)
 			throw new UnavailableException("ServletContext is not available: did you register " + ContextListener.class.getName() + " as listener in your web.xml?");
-		app_ = adapter.getApplication(appId);
+		app_ = server.getApplication(appId, Application.class);
 		if (app_ == null)
 			throw new UnavailableException("no application with id '" + appId + "' defined");
 	}

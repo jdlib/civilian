@@ -1,10 +1,10 @@
-import org.civilian.Application
-import org.civilian.Resource
-import org.civilian.template.Template
+import org.civilian.server.ServerApp
+import org.civilian.resource.Resource
 import org.civilian.resource.Url
+import org.civilian.template.Template
 
 
-template(Template content, AdminApp adminApp, Application viewedApp, Resource appResource) mixin html
+template(Template content, AdminApp adminApp, ServerApp viewedApp, Resource appResource) mixin html
 {{
 	<!DOCTYPE html>
 	<html lang="en">
@@ -34,7 +34,7 @@ template(Template content, AdminApp adminApp, Application viewedApp, Resource ap
 						@printNavItem("Context", html.url(adminApp), viewedApp == null);
 						<li class="nav-header">Applications</li>
 						@Url appUrl = html.url(appResource);
-						@for (Application app : adminApp.getServer().getApplications())
+						@for (ServerApp app : adminApp.getServer().getApplications())
 							@appUrl.setPathParam(app.getId());
 							@printNavItem(app.getId(), appUrl, viewedApp == app);
 					</ul>

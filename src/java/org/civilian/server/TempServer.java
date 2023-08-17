@@ -20,7 +20,6 @@ import java.util.Iterator;
 import org.civilian.resource.Path;
 import org.civilian.util.Iterators;
 import org.civilian.util.ResourceLoader;
-import org.civilian.application.Application;
 import org.civilian.content.ContentTypeLookup;
 
 
@@ -40,13 +39,13 @@ public class TempServer extends Server
 	}
 	
 	
-	@Override protected Object connect(Application app, boolean supportAsync)
+	@Override protected Object connect(ServerApp app, boolean supportAsync)
 	{
 		throw error();
 	}
 	
 	
-	@Override protected void disconnect(Application app, Object connector)
+	@Override protected void disconnect(ServerApp app, Object connector)
 	{
 		throw error();
 	}

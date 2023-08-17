@@ -1,7 +1,7 @@
 import java.util.Date
 import org.civilian.Version
-import org.civilian.Server
-import org.civilian.Application
+import org.civilian.server.Server
+import org.civilian.server.ServerApp
 import org.civilian.resource.Url
 
 
@@ -65,7 +65,7 @@ template(Server server) mixin html
 		<th>App Class</th>
 	</tr>
 	@Url appUrl = html.url(AdminResources.root.$appId.settings);
-	@for (Application app : server.getApplications())
+	@for (ServerApp app : server.getApplications())
 		@appUrl.setPathParam(app.getId()); 
 		<tr>
 			@// link within the admin app
