@@ -26,7 +26,7 @@ import java.util.Set;
 import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerNaming;
 import org.civilian.controller.ControllerSignature;
-import org.civilian.internal.controller.MethodAnnotations;
+import org.civilian.controller.method.MethodAnnotations;
 import org.civilian.resource.PathParam;
 import org.civilian.resource.PathParamMap;
 import org.civilian.util.Check;

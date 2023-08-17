@@ -33,7 +33,6 @@ import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.controller.method.arg.factory.MethodArgFactory;
-import org.civilian.internal.controller.MethodAnnotations;
 import org.civilian.request.Request;
 import org.civilian.util.Iterators;
 import org.civilian.util.StringUtil;
