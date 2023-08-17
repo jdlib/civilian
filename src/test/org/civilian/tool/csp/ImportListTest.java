@@ -54,6 +54,6 @@ public class ImportListTest extends CivTest
 		assertEquals("import java.util.List;\n" +
 			"import javax.servlet.Servlet;\n" +
 			"import org.junit.Test;\n" + 
-			"import org.civilian.Server;\n", output);
+			"import org.civilian.server.Server;\n", output);
 	}
 }
