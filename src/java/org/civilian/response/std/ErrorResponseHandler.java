@@ -31,6 +31,13 @@ import org.civilian.util.Check;
  */
 public class ErrorResponseHandler implements ResponseHandler
 {
+	/**
+	 * Creates a new ErrorResponseHandler.
+	 * @param develop the develop flag of the server
+	 * @param statusCode the error status code
+	 * @param message an optional error message
+	 * @param error an optional error
+	 */
 	public ErrorResponseHandler(boolean develop, int statusCode, String message, Throwable error)
 	{
 		develop_ 	= develop;
@@ -43,14 +50,11 @@ public class ErrorResponseHandler implements ResponseHandler
 	/**
 	 * Sends the error response.
 	 * If the response is not yet committed, it resets the response buffer,
-	 * sets the error status, initializes helper variables and then calls {@link #sendImpl(Response, int, String, Throwable)}.
+	 * sets the error status, initializes helper variables and then calls {@link #sendContent(Response)}.
 	 * @param response the response  
-	 * @param statusCode the error status code
-	 * @param message an optional error message
-	 * @param error an optional error
+	 * @return an Exception or null 
 	 */
-	@Override
-	public synchronized Exception send(Response response)
+	@Override public synchronized Exception send(Response response)
 	{
 		Check.notNull(response, "response");
 		try
@@ -82,10 +86,6 @@ public class ErrorResponseHandler implements ResponseHandler
 	 * 		is used as message.  
 	 * <li>Else no response content is printed.
 	 * </ol>
-	 * @param response the response  
-	 * @param statusCode the error status code. It has already been set on the response
-	 * @param message an optional error message
-	 * @param error an optional error
 	 */
 	protected void sendContent(Response response) throws Exception
 	{
@@ -122,8 +122,8 @@ public class ErrorResponseHandler implements ResponseHandler
 	}
 
 	
-	private final boolean develop_;
-	private final int statusCode_;
-	private final String message_;
-	private final Throwable error_;
+	protected final boolean develop_;
+	protected final int statusCode_;
+	protected final String message_;
+	protected final Throwable error_;
 }
