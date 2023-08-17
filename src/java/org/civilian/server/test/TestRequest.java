@@ -418,7 +418,7 @@ public class TestRequest extends AbstractRequest
 	 */
 	public void clearParameters()
 	{
-		parameters_.clear();;
+		parameters_.clear();
 	}
 	
 
