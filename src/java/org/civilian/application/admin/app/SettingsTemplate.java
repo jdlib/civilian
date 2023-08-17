@@ -2,7 +2,7 @@
  * Generated from SettingsTemplate.csp
  * Do not edit.
  */
-package org.civilian.internal.admin.app;
+package org.civilian.application.admin.app;
 
 
 import java.util.Iterator;

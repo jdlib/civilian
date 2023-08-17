@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.admin;
+package org.civilian.application.admin;
 
 
 import org.civilian.resource.pathparam.PathParam;

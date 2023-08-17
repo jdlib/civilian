@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.admin.app;
+package org.civilian.application.admin.app;
 
 
 import org.civilian.application.Application;
-import org.civilian.internal.admin.AdminController;
-import org.civilian.internal.admin.AdminPathParams;
+import org.civilian.application.admin.AdminController;
+import org.civilian.application.admin.AdminPathParams;
 
 
 public abstract class AppController extends AdminController

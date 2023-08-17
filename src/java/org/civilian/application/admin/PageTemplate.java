@@ -2,7 +2,7 @@
  * Generated from PageTemplate.csp
  * Do not edit.
  */
-package org.civilian.internal.admin;
+package org.civilian.application.admin;
 
 
 import org.civilian.application.Application;

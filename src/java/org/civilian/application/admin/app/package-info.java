@@ -17,4 +17,4 @@
  * Contains the Civilian admin application.     
  */
 @org.civilian.annotation.PathParam("appId")
-package org.civilian.internal.admin.app;
+package org.civilian.application.admin.app;

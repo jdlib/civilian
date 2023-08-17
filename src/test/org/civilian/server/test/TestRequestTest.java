@@ -18,10 +18,10 @@ package org.civilian.server.test;
 
 import javax.servlet.http.Cookie;
 import org.civilian.CivTest;
-import org.civilian.internal.admin.AdminApp;
-import org.civilian.internal.admin.AdminPathParams;
-import org.civilian.internal.admin.AdminResources;
-import org.civilian.internal.admin.app.ResourcesController;
+import org.civilian.application.admin.AdminApp;
+import org.civilian.application.admin.AdminPathParams;
+import org.civilian.application.admin.AdminResources;
+import org.civilian.application.admin.app.ResourcesController;
 import org.civilian.request.CookieList;
 import org.civilian.resource.Url;
 import org.civilian.util.Settings;

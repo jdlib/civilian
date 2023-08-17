@@ -24,9 +24,9 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.civilian.CivTest;
 import org.civilian.application.DefaultApp;
+import org.civilian.application.admin.AdminApp;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeLookup;
-import org.civilian.internal.admin.AdminApp;
 import org.civilian.testcase1.Test1App;
 
 

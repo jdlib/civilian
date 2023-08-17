@@ -2,7 +2,7 @@
  * Generated from AppTemplate.csp
  * Do not edit.
  */
-package org.civilian.internal.admin.app;
+package org.civilian.application.admin.app;
 
 
 import org.civilian.application.Application;

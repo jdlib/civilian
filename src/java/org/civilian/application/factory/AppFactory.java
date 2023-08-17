@@ -9,7 +9,7 @@ import org.civilian.ConfigKeys;
 import org.civilian.application.AppConfig;
 import org.civilian.application.Application;
 import org.civilian.application.DefaultApp;
-import org.civilian.internal.admin.AdminApp;
+import org.civilian.application.admin.AdminApp;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.Settings;

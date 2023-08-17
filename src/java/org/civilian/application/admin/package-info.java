@@ -16,4 +16,4 @@
 /**
  * Contains the Civilian admin application.     
  */
-package org.civilian.internal.admin;
+package org.civilian.application.admin;

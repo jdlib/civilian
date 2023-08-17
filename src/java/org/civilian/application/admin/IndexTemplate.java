@@ -2,7 +2,7 @@
  * Generated from IndexTemplate.csp
  * Do not edit.
  */
-package org.civilian.internal.admin;
+package org.civilian.application.admin;
 
 
 import java.util.Date;
