@@ -16,7 +16,6 @@
 package org.civilian.resource.pathparam;
 
 
-import org.civilian.resource.PathParam;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.Type;
 import org.civilian.util.Check;

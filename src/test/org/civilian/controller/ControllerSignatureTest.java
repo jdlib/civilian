@@ -18,9 +18,9 @@ package org.civilian.controller;
 
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.resource.PathParam;
-import org.civilian.resource.PathParamMap;
-import org.civilian.resource.PathParams;
+import org.civilian.resource.pathparam.PathParam;
+import org.civilian.resource.pathparam.PathParamMap;
+import org.civilian.resource.pathparam.PathParams;
 
 
 public class ControllerSignatureTest extends CivTest

@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import org.civilian.controller.ControllerSignature;
-import org.civilian.resource.PathParam;
 import org.civilian.resource.Resource;
+import org.civilian.resource.pathparam.PathParam;
 import org.civilian.util.Check;
 
 

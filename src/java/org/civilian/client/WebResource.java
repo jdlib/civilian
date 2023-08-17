@@ -18,8 +18,9 @@ package org.civilian.client;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import org.civilian.resource.PathParam;
+
 import org.civilian.resource.Route;
+import org.civilian.resource.pathparam.PathParam;
 import org.civilian.util.Check;
 
 

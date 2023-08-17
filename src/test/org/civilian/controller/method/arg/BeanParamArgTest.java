@@ -26,7 +26,7 @@ import org.civilian.controller.method.arg.factory.MethodArgFactory;
 import org.civilian.controller.method.arg.misc.BeanParamArg;
 import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
-import org.civilian.resource.PathParamMap;
+import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.type.TypeLib;
 import org.civilian.util.HttpHeaders;
 

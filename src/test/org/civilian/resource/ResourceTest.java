@@ -28,6 +28,8 @@ import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
 import org.civilian.resource.Resource.Match;
+import org.civilian.resource.pathparam.PathParam;
+import org.civilian.resource.pathparam.PathParams;
 import org.civilian.testcase1.AlphaController;
 import org.civilian.type.TypeLib;
 

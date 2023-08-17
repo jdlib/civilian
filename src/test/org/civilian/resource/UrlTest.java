@@ -25,6 +25,8 @@ import static org.mockito.Mockito.*;
 import java.util.Locale;
 import org.civilian.CivTest;
 import org.civilian.request.Request;
+import org.civilian.resource.pathparam.PathParam;
+import org.civilian.resource.pathparam.PathParams;
 import org.civilian.response.Response;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.type.StandardSerializer;

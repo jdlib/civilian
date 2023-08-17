@@ -11,8 +11,8 @@ import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerType;
 import org.civilian.request.Request;
 import org.civilian.resource.Path;
-import org.civilian.resource.PathParam;
 import org.civilian.resource.Resource;
+import org.civilian.resource.pathparam.PathParam;
 
 
 public class ResourceDispatchTest extends CivTest

@@ -23,7 +23,7 @@ import org.civilian.annotation.Parameter;
 import org.civilian.controller.method.arg.conv.ValueArg;
 import org.civilian.controller.method.arg.factory.MethodArgFactory;
 import org.civilian.request.BadRequestException;
-import org.civilian.resource.PathParamMap;
+import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.util.Value;
 import org.junit.Test;
 

@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 import org.civilian.resource.Path;
-import org.civilian.resource.PathParam;
-import org.civilian.resource.PathParamProvider;
 import org.civilian.resource.Route;
+import org.civilian.resource.pathparam.PathParam;
+import org.civilian.resource.pathparam.PathParamProvider;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.text.type.TypeSerializer;
 import org.civilian.type.Type;

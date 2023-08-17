@@ -20,9 +20,9 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 
 import org.civilian.annotation.Segment;
-import org.civilian.resource.PathParam;
-import org.civilian.resource.PathParamMap;
 import org.civilian.resource.Resource;
+import org.civilian.resource.pathparam.PathParam;
+import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.util.Check;
 import org.civilian.util.StringUtil;
 

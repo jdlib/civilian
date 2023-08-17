@@ -16,10 +16,10 @@
  package org.civilian.samples.quickstart;
 
 
-import org.civilian.resource.PathParam;
-import org.civilian.resource.PathParams;
+import org.civilian.resource.pathparam.PathParam;
+import org.civilian.resource.pathparam.PathParamMap;
+import org.civilian.resource.pathparam.PathParams;
 import org.civilian.type.TypeLib;
-import org.civilian.resource.PathParamMap;
 
 
 /**

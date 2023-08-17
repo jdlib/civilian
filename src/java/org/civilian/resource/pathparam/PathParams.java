@@ -13,18 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.resource;
+package org.civilian.resource.pathparam;
 
 
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import org.civilian.resource.pathparam.MultiSegmentPathParam;
-import org.civilian.resource.pathparam.OptionalPathParam;
-import org.civilian.resource.pathparam.RegexPathParam;
-import org.civilian.resource.pathparam.SegmentPathParam;
-import org.civilian.resource.pathparam.SegmentWcPathParam;
-import org.civilian.resource.pathparam.YMDPathParam;
 import org.civilian.type.DateType;
 import org.civilian.type.Type;
 

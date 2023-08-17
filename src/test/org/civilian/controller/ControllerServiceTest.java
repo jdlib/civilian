@@ -20,7 +20,7 @@ import org.civilian.CivTest;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Segment;
 import org.civilian.application.classloader.ClassLoaderFactory;
-import org.civilian.resource.PathParamMap;
+import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.testcase1.Test1PathParams;
 import org.junit.Test;
 

@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 
 import org.civilian.application.Application;
 import org.civilian.controller.ControllerSignature;
-import org.civilian.resource.PathParam;
 import org.civilian.resource.Resource;
+import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.scan.ResourceInfo;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.ClassUtil;

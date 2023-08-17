@@ -16,6 +16,8 @@
 package org.civilian.resource;
 
 
+import org.civilian.resource.pathparam.PathParam;
+import org.civilian.resource.pathparam.PathParamProvider;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;

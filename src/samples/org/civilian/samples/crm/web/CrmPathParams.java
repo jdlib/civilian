@@ -16,9 +16,9 @@
  package org.civilian.samples.crm.web;
 
 
-import org.civilian.resource.PathParam;
-import org.civilian.resource.PathParamMap;
-import org.civilian.resource.PathParams;
+import org.civilian.resource.pathparam.PathParam;
+import org.civilian.resource.pathparam.PathParamMap;
+import org.civilian.resource.pathparam.PathParams;
 import org.civilian.type.TypeLib;
 
 

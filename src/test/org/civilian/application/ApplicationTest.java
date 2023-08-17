@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.ConfigKeys;
 import org.civilian.content.ContentType;
-import org.civilian.resource.PathParamMap;
+import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.server.test.TestApp;
 import org.civilian.server.test.TestRequest;
 import org.civilian.server.test.TestServer;

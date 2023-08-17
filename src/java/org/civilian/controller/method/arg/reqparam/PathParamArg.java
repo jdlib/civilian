@@ -18,7 +18,7 @@ package org.civilian.controller.method.arg.reqparam;
 
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.request.Request;
-import org.civilian.resource.PathParam;
+import org.civilian.resource.pathparam.PathParam;
 
 
 /**

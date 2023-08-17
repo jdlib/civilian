@@ -16,7 +16,7 @@
 package org.civilian.resource.scan;
 
 
-import org.civilian.resource.PathParam;
+import org.civilian.resource.pathparam.PathParam;
 import org.civilian.util.Check;
 
 

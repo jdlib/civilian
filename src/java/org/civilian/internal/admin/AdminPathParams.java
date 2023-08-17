@@ -16,9 +16,9 @@
 package org.civilian.internal.admin;
 
 
-import org.civilian.resource.PathParam;
-import org.civilian.resource.PathParamMap;
-import org.civilian.resource.PathParams;
+import org.civilian.resource.pathparam.PathParam;
+import org.civilian.resource.pathparam.PathParamMap;
+import org.civilian.resource.pathparam.PathParams;
 
 
 public interface AdminPathParams

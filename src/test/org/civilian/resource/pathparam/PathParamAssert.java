@@ -1,4 +1,4 @@
-package org.civilian.resource;
+package org.civilian.resource.pathparam;
 
 
 import org.civilian.util.PathScanner;
