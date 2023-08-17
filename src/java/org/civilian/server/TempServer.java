@@ -74,7 +74,13 @@ public class TempServer extends Server
 	{
 		return ResourceLoader.builder.empty();
 	}
-
+	
+	
+	@Override public ServerFiles getServerFiles()
+	{
+		return null;
+	}
+	
 
 	@Override public ContentTypeLookup getContentTypeLookup()
 	{
@@ -118,20 +124,8 @@ public class TempServer extends Server
 	}
 
 
-	@Override public String getRealPath(String path)
-	{
-		return null;
-	}
-
-
 	@Override public boolean isProhibitedPath(String path)
 	{
 		return true;
-	}
-
-
-	@Override public String getConfigPath(String name)
-	{
-		return null;
 	}
 }

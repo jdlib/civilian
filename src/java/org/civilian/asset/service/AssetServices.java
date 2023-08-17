@@ -129,7 +129,7 @@ public abstract class AssetServices
 		AssetLocation location;
 		if (DIR_LOCATION_KEY.equals(type))
 		{
-			location = getDirectoryLocation(relPath, server.getRootDir(), param != null ? param : "");
+			location = getDirectoryLocation(relPath, server.getServerFiles().getRootDir(), param != null ? param : "");
 		}
 		else if (JAVARES_LOCATION_KEY.equals(type))
 		{

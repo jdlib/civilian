@@ -31,6 +31,7 @@ import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
 import org.civilian.server.Server;
+import org.civilian.server.ServerFiles;
 import org.civilian.server.servlet.ServletUtil;
 import org.civilian.util.Check;
 import org.civilian.util.FileType;
@@ -123,7 +124,7 @@ public class TestServer extends Server
 	 */
 	public void setSettings(String configName) throws IOException
 	{
-		setSettings(readSettings(configName));
+		setSettings(getServerFiles().readConfigSettings(configName));
 	}
 	
 	
@@ -205,29 +206,11 @@ public class TestServer extends Server
 
 	
 	/**
-	 * Returns the real path of a file within the server directory.
-	 */
-	@Override public String getRealPath(String path)
-	{
-		return new File(directory_, path).getAbsolutePath();
-	}
-
-
-	/**
 	 * Returns if the path goes into the WEB-INF or META-INF subdirectory.
 	 */
 	@Override public boolean isProhibitedPath(String path)
 	{
 		return ServletUtil.isProhibitedPath(path);
-	}
-	
-	
-	/**
-	 * Returns a path within the configF subdirectory.
-	 */
-	@Override public String getConfigPath(String path)
-	{
-		return configPath_ + path;
 	}
 
 	
@@ -368,6 +351,33 @@ public class TestServer extends Server
 	}	
 
 	
+	@Override public ServerFiles getServerFiles() 
+	{
+		return files_;
+	}
+	
+	
+	private class Files extends ServerFiles
+	{
+		/**
+		 * Returns the real path of a file within the server directory.
+		 */
+		@Override public String getRealPath(String path)
+		{
+			return new File(directory_, path).getAbsolutePath();
+		}
+
+
+		/**
+		 * Returns a path within the configF subdirectory.
+		 */
+		@Override public String getConfigPath(String path)
+		{
+			return configPath_ + path;
+		}
+	}
+
+	
 	//--------------------------
 	// misc
 	//--------------------------
@@ -395,4 +405,5 @@ public class TestServer extends Server
 	private ResourceLoader resourceLoader_;
 	private ClassLoader appClassLoader_;
 	private Settings settings_;
+	private final Files files_ = new Files();
 }

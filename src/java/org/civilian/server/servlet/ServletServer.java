@@ -29,6 +29,7 @@ import org.civilian.application.UploadConfig;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
 import org.civilian.server.Server;
+import org.civilian.server.ServerFiles;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.Iterators;
@@ -75,6 +76,7 @@ class ServletServer extends Server
 		resourceLoader_		= ResourceLoader.builder.forSerlvetContext(servletContext);
 		contentTypeLookup_	= ContentTypeLookup.forServletContext(servletContext);
 		
+		
 		try
 		{
 			// a servlet context param may override the name of the config file
@@ -94,7 +96,7 @@ class ServletServer extends Server
 		// a servlet context param may override the name of the config file
 		String paramName  = servletContext_.getInitParameter(CONFIG_PARAM);
 		String configName = paramName != null ? paramName : DEFAULT_CONFIG_FILE;
-		return readSettings(configName);
+		return getServerFiles().readConfigSettings(configName);
 	}
 	
 	
@@ -260,24 +262,33 @@ class ServletServer extends Server
 	}
 	
 	
-	/**
-	 * Calls ServletContext#getRealPath(String).
-	 */
-	@Override public String getRealPath(String path)
+	@Override public ServerFiles getServerFiles() 
 	{
-		return servletContext_.getRealPath(path);
+		return files_;
 	}
 	
 	
-	/**
-	 * Prefixes the path to start with "/WEB-INF/".
-	 */
-	@Override public String getConfigPath(String path)
+	private class ServletContextFiles extends ServerFiles
 	{
-		path = StringUtil.haveLeft(path, "/");
-		if (!path.startsWith("/WEB-INF/"))
-			path = "/WEB-INF" + path;
-		return path;
+		/**
+		 * Calls ServletContext#getRealPath(String).
+		 */
+		@Override public String getRealPath(String path) 
+		{
+			return servletContext_.getRealPath(path);
+		}
+
+	
+		/**
+		 * Prefixes the path to start with "/WEB-INF/".
+		 */
+		@Override public String getConfigPath(String path)
+		{
+			path = StringUtil.haveLeft(path, "/");
+			if (!path.startsWith("/WEB-INF/"))
+				path = "/WEB-INF" + path;
+			return path;
+		}
 	}
 	
 	
@@ -285,4 +296,5 @@ class ServletServer extends Server
 	private ServletContext servletContext_;
 	private ResourceLoader resourceLoader_;
 	private ContentTypeLookup contentTypeLookup_;
+	private ServletContextFiles files_ = new ServletContextFiles();
 }

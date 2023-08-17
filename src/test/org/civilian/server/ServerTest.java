@@ -30,6 +30,6 @@ public class ServerTest extends CivTest
 		TestServer server = new TestServer(dir);
 		assertEquals(0, server.getApplications().size());
 		assertNull(server.getApplication("x"));
-		assertEquals(dir, server.getRootDir());
+		assertEquals(dir, server.getServerFiles().getRootDir());
 	}
 }
