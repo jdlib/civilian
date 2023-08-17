@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal;
+package org.civilian.request;
 
 
 import java.io.IOException;
@@ -25,16 +25,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.civilian.application.Application;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
+import org.civilian.internal.ParamList;
 import org.civilian.internal.intercept.ReqReaderInterceptorChain;
 import org.civilian.internal.intercept.ReqStreamInterceptorChain;
-import org.civilian.request.AsyncContext;
-import org.civilian.request.Request;
-import org.civilian.request.RequestReaderInterceptor;
-import org.civilian.request.RequestStreamInterceptor;
 import org.civilian.resource.Path;
 import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;

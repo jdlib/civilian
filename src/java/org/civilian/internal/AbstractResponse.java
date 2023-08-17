@@ -32,6 +32,7 @@ import org.civilian.internal.intercept.InterceptedOutputStream;
 import org.civilian.internal.intercept.InterceptedTemplateWriter;
 import org.civilian.internal.intercept.RespStreamInterceptorChain;
 import org.civilian.internal.intercept.RespWriterInterceptorChain;
+import org.civilian.request.AbstractRequest;
 import org.civilian.request.Request;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseOwner;
