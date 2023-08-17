@@ -3,6 +3,7 @@ package org.civilian.response;
 
 import org.civilian.content.ContentSerializer;
 import org.civilian.resource.PathProvider;
+import org.civilian.resource.Resource;
 import org.civilian.text.service.LocaleServiceList;
 
 
@@ -40,4 +41,10 @@ public interface ResponseOwner extends PathProvider
 	 * @see Response#sendError(int, String, Throwable)  
 	 */
 	public ResponseHandler createErrorHandler(int statusCode, String message, Throwable error);
+	
+	
+	/**
+	 * Returns the root resource of the owner (application).
+	 */
+	public Resource getRootResource();
 }
