@@ -17,7 +17,6 @@ package org.civilian.resource;
 
 
 import java.util.ArrayList;
-
 import org.civilian.application.Application;
 import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerSignature;
