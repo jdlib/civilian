@@ -5,9 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
 
-import org.civilian.request.Request;
-import org.civilian.request.RequestStreamInterceptor;
-
 
 public class TestRequestStreamInterceptor implements RequestStreamInterceptor
 {

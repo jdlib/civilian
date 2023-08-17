@@ -13,26 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal;
+package org.civilian.response;
 
 
 import org.civilian.CivTest;
-import org.civilian.request.Request;
-import org.civilian.request.RequestWrapper;
-import org.civilian.response.Response;
-import org.civilian.response.ResponseWrapper;
 import org.junit.Test;
 
 
-public class WrapperTest extends CivTest
+public class ResponseWrapperTest extends CivTest
 {
 	@Test public void test()  throws Exception
 	{
-		WrapperProxy<Request> requestWp = new WrapperProxy<>(Request.class); 
-		RequestWrapper requestWrapper 	= new RequestWrapper(requestWp.getProxy());
-		assertSame(requestWrapper, requestWrapper.getRequest());
-		requestWp.testForwardInvocation(requestWrapper);
-
 		WrapperProxy<Response> responseWp 	= new WrapperProxy<>(Response.class); 
 		ResponseWrapper responseWrapper 	= new ResponseWrapper(responseWp.getProxy());
 		assertSame(responseWrapper, responseWrapper.getResponse());
