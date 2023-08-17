@@ -29,8 +29,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.internal.controller.arg.conv.CollectionConverter;
-import org.civilian.internal.controller.arg.conv.CollectionConverters;
+import org.civilian.controller.method.arg.conv.CollectionConverter;
+import org.civilian.controller.method.arg.conv.CollectionConverters;
 import org.civilian.text.type.LocaleSerializer;
 import org.civilian.type.TypeLib;
 

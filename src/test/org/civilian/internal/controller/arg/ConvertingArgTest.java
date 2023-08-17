@@ -23,7 +23,7 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.controller.method.arg.MethodArg;
-import org.civilian.internal.controller.arg.conv.ConvertingArg;
+import org.civilian.controller.method.arg.conv.ConvertingArg;
 import org.civilian.request.Request;
 import org.civilian.text.service.LocaleService;
 import org.civilian.type.TypeLib;
