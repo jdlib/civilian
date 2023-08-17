@@ -75,9 +75,9 @@ public class ServletRequestTest extends CivTest
 		when(servletReq.getMethod()).thenReturn("GET");
 		init();
 
-		assertSame(app,		request.getApplication());
-		assertSame(servletReq, request.getServletRequest());
-		assertSame(servletReq, request.unwrap(ServletRequest.class));
+		assertSame(app,			request.getOwner());
+		assertSame(servletReq,	request.getServletRequest());
+		assertSame(servletReq,	request.unwrap(ServletRequest.class));
 		
 		assertEquals("GET", request.getMethod());
 		assertTrue(			request.hasMethod(Request.Method.GET));

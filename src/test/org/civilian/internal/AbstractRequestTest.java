@@ -49,7 +49,6 @@ public class AbstractRequestTest extends CivTest
 	@Test public void testBasics()
 	{
 		assertSame(request, request.getRequest());
-		assertSame(app, request.getApplication());
 		assertSame(app, request.getOwner());
 		
 		request.setResponse(response); // ok

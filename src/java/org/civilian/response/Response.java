@@ -208,10 +208,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Returns the response owner.
 	 */
-	public default ResponseOwner getOwner()
-	{
-		return getRequest().getApplication();
-	}
+	public ResponseOwner getOwner();
 	
 
 	/**

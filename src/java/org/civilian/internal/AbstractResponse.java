@@ -34,6 +34,7 @@ import org.civilian.internal.intercept.RespStreamInterceptorChain;
 import org.civilian.internal.intercept.RespWriterInterceptorChain;
 import org.civilian.request.Request;
 import org.civilian.response.Response;
+import org.civilian.response.ResponseOwner;
 import org.civilian.response.ResponseStreamInterceptor;
 import org.civilian.response.ResponseWriterInterceptor;
 import org.civilian.template.Template;
@@ -73,6 +74,12 @@ public abstract class AbstractResponse implements Response
 	@Override public Request getRequest()
 	{
 		return request_;
+	}
+
+	
+	@Override public ResponseOwner getOwner()
+	{
+		return request_.getApplication();
 	}
 
 	

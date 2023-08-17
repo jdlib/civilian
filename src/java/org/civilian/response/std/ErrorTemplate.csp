@@ -1,4 +1,4 @@
-import org.civilian.Request
+import org.civilian.request.Request
 
 
 prolog /**
@@ -22,7 +22,7 @@ mixin html
 	<table>
 	@printInfo("Message", message);
 	@printInfo("URL", request.getMethod() + " " + request.getUrl(false, true).toString());
-	@printClass("Application", request.getApplication());
+	@printClass("Application", request.getOwner());
 	@if (error != null)
 		<tr valign="baseline">
 			<td>Error</td>

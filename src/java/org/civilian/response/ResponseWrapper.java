@@ -50,6 +50,12 @@ public class ResponseWrapper implements Response
 	}
 
 
+	@Override public ResponseOwner getOwner()
+	{
+		return response_.getOwner();
+	}
+
+	
 	@Override public boolean isCommitted()
 	{
 		return response_.isCommitted();

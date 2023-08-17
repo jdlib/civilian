@@ -54,7 +54,7 @@ public class ErrorTemplate extends Template
 		out.println("<table>");                                         // line 22: <table>
 		printInfo("Message", message);                                  // line 23: @printInfo("Message", message);
 		printInfo("URL", request.getMethod() + " " + request.getUrl(false, true).toString()); // line 24: @printInfo("URL", request.getMethod() + " " + request.getUrl(false, true).toString());
-		printClass("Application", request.getApplication());            // line 25: @printClass("Application", request.getApplication());
+		printClass("Application", request.getOwner());                  // line 25: @printClass("Application", request.getOwner());
 		if (error != null)                                              // line 26: @if (error != null)
 		{
 			out.println("<tr valign=\"baseline\">");                    // line 27: <tr valign="baseline">
