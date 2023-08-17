@@ -694,8 +694,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 		ResponseHeaders headers = getHeaders(); 
 		for (String name : headers)
 		{
-			String[] values = headers.getAll(name);
-			for (String value : values)
+			for (String value : headers.getAll(name))
 			{
 				out.print(name);
 				out.print(' ');
