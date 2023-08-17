@@ -22,9 +22,9 @@ import java.util.Map;
 
 import org.civilian.ConfigKeys;
 import org.civilian.application.classloader.ReloadConfig;
-import org.civilian.asset.AssetConfig;
-import org.civilian.asset.AssetLocation;
-import org.civilian.asset.AssetServices;
+import org.civilian.asset.service.AssetConfig;
+import org.civilian.asset.service.AssetLocation;
+import org.civilian.asset.service.AssetServices;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.JaxbXmlSerializer;

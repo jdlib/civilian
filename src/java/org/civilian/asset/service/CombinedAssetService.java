@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.asset;
+package org.civilian.asset.service;
 
 
 import org.civilian.asset.Asset;
 import org.civilian.asset.AssetCacheControl;
 import org.civilian.asset.AssetInitializer;
-import org.civilian.asset.AssetService;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
 

@@ -1,9 +1,7 @@
-package org.civilian.internal.asset;
+package org.civilian.asset;
 
 
 import java.io.IOException;
-
-import org.civilian.asset.Asset;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
 import org.civilian.util.HttpHeaders;

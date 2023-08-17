@@ -18,8 +18,8 @@ package org.civilian.internal.admin;
 
 import org.civilian.application.AppConfig;
 import org.civilian.application.Application;
-import org.civilian.asset.AssetConfig;
-import org.civilian.internal.asset.CivResourceLocation;
+import org.civilian.asset.service.AssetConfig;
+import org.civilian.asset.service.CivResourceLocation;
 import org.civilian.processor.IpFilter;
 import org.civilian.processor.ProcessorConfig;
 

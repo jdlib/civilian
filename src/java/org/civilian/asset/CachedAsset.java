@@ -1,12 +1,10 @@
-package org.civilian.internal.asset;
+package org.civilian.asset;
 
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.civilian.asset.Asset;
 import org.civilian.response.Response;
 import org.civilian.util.IoUtil;
 

@@ -19,7 +19,6 @@ package org.civilian.asset;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import org.civilian.internal.asset.AbstractAsset;
 
 
 public class TestAsset extends AbstractAsset

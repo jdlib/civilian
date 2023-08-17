@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.asset;
+package org.civilian.asset.service;
 
 
 import java.util.Collection;
 import java.util.HashMap;
-
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
 import org.civilian.server.Server;

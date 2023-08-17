@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.asset;
+package org.civilian.asset.service;
 
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.civilian.ConfigKeys;
+import org.civilian.asset.Asset;
 import org.civilian.content.ContentType;
-import org.civilian.internal.asset.AssetCache;
-import org.civilian.internal.asset.CombinedAssetService;
-import org.civilian.internal.asset.CivResourceLocation;
-import org.civilian.internal.asset.JavaResourceLocation;
-import org.civilian.internal.asset.DirectoryLocation;
 import org.civilian.resource.Path;
 import org.civilian.server.Server;
 import org.civilian.util.Settings;

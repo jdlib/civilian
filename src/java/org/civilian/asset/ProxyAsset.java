@@ -1,11 +1,8 @@
-package org.civilian.internal.asset;
+package org.civilian.asset;
 
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.civilian.asset.Asset;
-import org.civilian.asset.AssetCacheControl;
 import org.civilian.content.ContentType;
 import org.civilian.response.Response;
 import org.civilian.util.Check;

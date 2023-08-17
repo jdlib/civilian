@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.asset;
+package org.civilian.asset.service;
 
 
 import java.io.File;
 import org.civilian.asset.Asset;
-import org.civilian.asset.AssetLocation;
+import org.civilian.asset.FileAsset;
 import org.civilian.resource.Path;
 import org.civilian.util.FileType;
 import org.civilian.util.StringUtil;

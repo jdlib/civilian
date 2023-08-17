@@ -17,8 +17,8 @@ package org.civilian.asset;
 
 
 import org.civilian.CivTest;
-import org.civilian.internal.asset.AssetCache;
-import org.civilian.internal.asset.CachedAsset;
+import org.civilian.asset.service.AssetCache;
+import org.civilian.asset.service.TestLocation;
 import org.junit.Test;
 
 
