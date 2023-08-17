@@ -37,7 +37,7 @@ import org.civilian.controller.method.arg.misc.BeanParamArg;
 import org.civilian.controller.method.arg.misc.RequestArg;
 import org.civilian.controller.method.arg.misc.ResponseArg;
 import org.civilian.controller.method.arg.misc.ResponseContentArg;
-import org.civilian.internal.controller.arg.reqcontent.ReqContentArgs;
+import org.civilian.controller.method.arg.reqcontent.ReqContentArgs;
 import org.civilian.internal.controller.arg.reqparam.CookieParamObjectArg;
 import org.civilian.internal.controller.arg.reqparam.CookieParamValueArg;
 import org.civilian.internal.controller.arg.reqparam.HeaderParamValueArg;

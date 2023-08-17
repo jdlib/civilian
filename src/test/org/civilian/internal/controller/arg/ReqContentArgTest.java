@@ -24,12 +24,12 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.controller.method.arg.MethodArg;
-import org.civilian.internal.controller.arg.reqcontent.ReqContenBytesArg;
-import org.civilian.internal.controller.arg.reqcontent.ReqContentArgs;
-import org.civilian.internal.controller.arg.reqcontent.ReqContentGenericArg;
-import org.civilian.internal.controller.arg.reqcontent.ReqContentInputStreamArg;
-import org.civilian.internal.controller.arg.reqcontent.ReqContentReaderArg;
-import org.civilian.internal.controller.arg.reqcontent.ReqContentStringArg;
+import org.civilian.controller.method.arg.reqcontent.ReqContenBytesArg;
+import org.civilian.controller.method.arg.reqcontent.ReqContentArgs;
+import org.civilian.controller.method.arg.reqcontent.ReqContentGenericArg;
+import org.civilian.controller.method.arg.reqcontent.ReqContentInputStreamArg;
+import org.civilian.controller.method.arg.reqcontent.ReqContentReaderArg;
+import org.civilian.controller.method.arg.reqcontent.ReqContentStringArg;
 import org.civilian.request.Request;
 
 
