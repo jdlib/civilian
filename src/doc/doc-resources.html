@@ -156,10 +156,10 @@
 		<p>		
 		Civilian takes a very formalized approach in handling path parameters:
 		<ul>
-		<li>Every path parameter is described by an own {javadoc:resource.PathParam} object.
+		<li>Every path parameter is described by an own {javadoc:resource.pathparam.PathParam} object.
 		<li>A PathParam object knows how to extract its value from one or more path segments and 
 			is able to format a value into one or more path segments.
-		<li>PathParam implementations exist for most {javadoc:resource.PathParams common use cases}, but you can easily build implementations
+		<li>PathParam implementations exist for most {javadoc:resource.pathparam.PathParams common use cases}, but you can easily build implementations
 			for more specific cases. 
 		<li>Defining the URL of a resource includes to describe which path parameters are used in what URL parts.
 		<li>When a request is dispatched, and the matching resource is determined, all path parameters are automatically recognized,
@@ -169,12 +169,12 @@
 		<li>When generating URLs via the {javadoc:resource.Url} class, you simply provide a value for every contained path parameter
 			and let the Url class do the formatting.  
 		<li>All the path parameters used by an application are defined as application wide constants.
-			{javadoc:application.Application} implementations register their path parameters via a {javadoc:resource.PathParamMap} passed to the constructor
+			{javadoc:application.Application} implementations register their path parameters via a {javadoc:resource.pathparam.PathParamMap} passed to the constructor
 			of the application base class.<br>
 			For an example please take a look at the source code of the <a href="doc-samples.html#crm">CRM sample</a>:
 			<ul>
 			<li>{source:org.civilian.samples.crm.web.CrmPathParams} defines constants for all path parameters used by the CRM application
-				and collects them in a {javadoc:resource.PathParamMap}
+				and collects them in a {javadoc:resource.pathparam.PathParamMap}
 			<li>{source:org.civilian.samples.crm.web.CrmApp} registers the path parameters by passing the map to the application base class,
 			<li>{source:org.civilian.samples.crm.web.root.customers.id.CustomerController} uses a PathParam to read the value from a request. 
 			</ul>
@@ -275,7 +275,7 @@
 		Right now Controllers can only be mapped to constant paths. To map to path schemes which contain
 		path parameters, use the {javadoc:annotation.PathParam @PathParam} annotation on packages
 		or controller classes.<br>
-		The value of the annotation is the {javadoc:resource.PathParam#getName() PathParam name}.
+		The value of the annotation is the {javadoc:resource.pathparam.PathParam#getName() PathParam name}.
 		<p>
 		<table class="table">
 		<tr>

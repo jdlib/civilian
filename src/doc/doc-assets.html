@@ -121,7 +121,7 @@
 		</table>
 		
 		<h3 id="impl">Implementing own asset locations</h3>
-		Asset locations are represented as instances of the {javadoc:asset.AssetLocation} class. If you need an additional asset retrieval 
+		Asset locations are represented as instances of the {javadoc:asset.service.AssetLocation} class. If you need an additional asset retrieval 
 		besides directories or Java resources, you could implement your own AssetLocation and install an instance during
 		asset configuration (see below). 
 
@@ -131,7 +131,7 @@
 		
 		<h2 id="service">Asset service</h2>
 		All the different asset locations used by an application and the asset cache are organized as pipeline
-		and made {javadoc:application.Application#getAssetService() available} as {javadoc:asset.AssetService}.
+		and made {javadoc:application.Application#getAssetService() available} as {javadoc:asset.service.AssetService}.
 		
 		<h2 id="encoding">Asset encoding and content-types</h2>
 		An asset response contains a <code>Content-Type</code> header which includes an encoding parameter.
@@ -243,7 +243,7 @@
 		locations and cache behaviour during {javadoc:application.Application#init(org*civilian*application*AppConfig) application startup}.
 		<p>
 		For advanced use you could also override {javadoc:application.Application#initAssets(org*civilian*asset*AssetConfig) Application.initAssets(AssetConfig)}
-		to determine how the applications {javadoc:asset.AssetService} is constructed.  
+		to determine how the applications {javadoc:asset.service.AssetService} is constructed.  
 		<br>
 		  
 
