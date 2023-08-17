@@ -16,4 +16,4 @@
 /**
  * Contains helper classes for generating source code.
  */
-package org.civilian.internal.source;
+package org.civilian.tool.source;

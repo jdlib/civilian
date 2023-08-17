@@ -20,12 +20,12 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import org.civilian.application.Application;
-import org.civilian.internal.source.OutputFile;
-import org.civilian.internal.source.OutputLocation;
 import org.civilian.resource.scan.ResourceInfo;
 import org.civilian.resource.scan.ResourceScan;
 import org.civilian.resource.scan.ScanException;
 import org.civilian.template.TemplateWriter;
+import org.civilian.tool.source.OutputFile;
+import org.civilian.tool.source.OutputLocation;
 import org.civilian.util.Arguments;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;

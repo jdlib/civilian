@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.source;
+package org.civilian.tool.source;
 
 
 import java.io.File;

@@ -21,9 +21,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.regex.Pattern;
-import org.civilian.internal.source.OutputLocation;
+
 import org.civilian.tool.csp.CspCompiler;
 import org.civilian.tool.csp.CspException;
+import org.civilian.tool.source.OutputLocation;
 import org.civilian.util.Arguments;
 import org.civilian.util.Check;
 import org.civilian.util.StringUtil;
