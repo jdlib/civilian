@@ -16,7 +16,7 @@
 package org.civilian.testcase2;
 
 
-import org.civilian.internal.DefaultApp;
+import org.civilian.application.DefaultApp;
 
 
 public class Test2App extends DefaultApp

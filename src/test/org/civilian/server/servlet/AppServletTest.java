@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.application.Application;
-import org.civilian.internal.DefaultApp;
+import org.civilian.application.DefaultApp;
 import org.civilian.resource.Path;
 
 
