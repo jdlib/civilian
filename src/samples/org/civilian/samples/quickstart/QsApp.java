@@ -16,8 +16,8 @@
  package org.civilian.samples.quickstart;
 
 
-import org.civilian.Application;
 import org.civilian.application.AppConfig;
+import org.civilian.application.Application;
 
 
 /**

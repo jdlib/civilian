@@ -6,7 +6,8 @@ package org.civilian.internal.admin.app;
 
 
 import java.util.Iterator;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.processor.Processor;
 import org.civilian.processor.ProcessorList;
 import org.civilian.template.Template;

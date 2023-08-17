@@ -5,7 +5,7 @@
 package org.civilian.internal.admin;
 
 
-import org.civilian.Application;
+import org.civilian.application.Application;
 import org.civilian.resource.Resource;
 import org.civilian.resource.Url;
 import org.civilian.template.Template;

@@ -16,7 +16,7 @@
 package org.civilian.processor;
 
 
-import org.civilian.Application;
+import org.civilian.application.Application;
 import org.civilian.request.Request;
 
 

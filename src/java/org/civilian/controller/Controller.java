@@ -16,13 +16,13 @@
 package org.civilian.controller;
 
 
-import org.civilian.Application;
-import org.civilian.ApplicationProvider;
 import org.civilian.annotation.Consumes;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Post;
 import org.civilian.annotation.Produces;
 import org.civilian.annotation.RequestMethod;
+import org.civilian.application.Application;
+import org.civilian.application.ApplicationProvider;
 import org.civilian.internal.Logs;
 import org.civilian.request.Request;
 import org.civilian.request.RequestProvider;

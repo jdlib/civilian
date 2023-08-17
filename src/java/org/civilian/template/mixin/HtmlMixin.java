@@ -16,7 +16,7 @@
 package org.civilian.template.mixin;
 
 
-import org.civilian.ApplicationProvider;
+import org.civilian.application.ApplicationProvider;
 import org.civilian.controller.Controller;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;

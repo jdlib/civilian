@@ -19,7 +19,7 @@ package org.civilian.application;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import org.civilian.Application;
+
 import org.civilian.application.classloader.ReloadConfig;
 import org.civilian.asset.AssetConfig;
 import org.civilian.asset.AssetLocation;

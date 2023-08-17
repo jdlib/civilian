@@ -46,7 +46,7 @@
 		This chapter explains handling of dynamic resources. From now on we will simply call them resources.
 		<p>
 		Civilian uses the {javadoc:resource.Resource} class to model a resource. At runtime every application 
-		{javadoc:Application#getRootResource() possesses} a list of all its resources, organized as resource tree.
+		{javadoc:application.Application#getRootResource() possesses} a list of all its resources, organized as resource tree.
 		The code which processes resource requests is implemented in {javadoc:controller.Controller} classes. In Civilian every resource is 
 		associated with (at most) one controller class.
 		<table class="table">
@@ -169,7 +169,7 @@
 		<li>When generating URLs via the {javadoc:resource.Url} class, you simply provide a value for every contained path parameter
 			and let the Url class do the formatting.  
 		<li>All the path parameters used by an application are defined as application wide constants.
-			{javadoc:Application} implementations register their path parameters via a {javadoc:resource.PathParamMap} passed to the constructor
+			{javadoc:application.Application} implementations register their path parameters via a {javadoc:resource.PathParamMap} passed to the constructor
 			of the application base class.<br>
 			For an example please take a look at the source code of the <a href="doc-samples.html#crm">CRM sample</a>:
 			<ul>

@@ -16,8 +16,8 @@
  package org.civilian.samples.error;
 
 
-import org.civilian.Application;
 import org.civilian.application.AppConfig;
+import org.civilian.application.Application;
 
 
 public class ErrorApp extends Application

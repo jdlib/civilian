@@ -18,7 +18,6 @@ package org.civilian.application;
 
 import java.io.IOException;
 import org.junit.Test;
-import org.civilian.Application;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
 import org.civilian.resource.PathParamMap;

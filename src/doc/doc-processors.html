@@ -29,7 +29,7 @@
 		But Civilian can't know all possible ways your application wants to process requests.
 		<p>
 		Therefore applications can customize request processing by using {javadoc:processor.Processor Processors}. The application
-		processors are arranged in a {javadoc:Application#getProcessors() pipeline}:
+		processors are arranged in a {javadoc:application.Application#getProcessors() pipeline}:
 		 
 		<div class="img"><img src="doc-arch-proc.png"></div>
 		<p>
@@ -47,7 +47,7 @@
 
 		<h2 id="config">Configuration</h2>
 		The processor pipeline &ndash; like all other application settings &ndash; can be configured via <code>civilian.ini</code> or programmatically
-		during {javadoc:Application#initProcessors(org*civilian*processor*ProcessorConfig) application setup}: By default this pipeline is created:
+		during {javadoc:application.Application#initProcessors(org*civilian*processor*ProcessorConfig) application setup}: By default this pipeline is created:
 		<ol>
 		<li><a href="#ipfilter">IpFilter</a>, if the Civilian config specified a list of allowed ips
 		<li><a href="#resdispatch">ResourceDispatch</a>, to dispatch requests to dynamic resources
@@ -56,7 +56,7 @@
 		</ol>
 		
 		To programmatically rearrange this pipeline, add or remove own processors you need to overwrite 
-		{javadoc:Application#initProcessors(org*civilian*processor*ProcessorConfig) Application.initProcessors(ProcessorConfig)}.    
+		{javadoc:application.Application#initProcessors(org*civilian*processor*ProcessorConfig) Application.initProcessors(ProcessorConfig)}.    
 		  
 		<h2 id="resdispatch">ResourceDispatch</h2>
 		When invoked, the {javadoc:processor.ResourceDispatch} processor tries to find a resource within
@@ -88,7 +88,7 @@
 
 		<h2 id="writing">Writing an own processor</h2>
 		To write an own processor you derive a class from {javadoc:processor.Processor} and add an instance to the processor pipeline
-		during {javadoc:Application#initProcessors(org*civilian*processor*ProcessorConfig) Application.initProcessors(ProcessorConfig)}.
+		during {javadoc:application.Application#initProcessors(org*civilian*processor*ProcessorConfig) Application.initProcessors(ProcessorConfig)}.
 		<p>
 		To implement filter functionality, you can use these techniques
 		<ul>

@@ -30,7 +30,8 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import javax.servlet.http.Cookie;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;

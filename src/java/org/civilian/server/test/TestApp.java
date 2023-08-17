@@ -17,8 +17,9 @@ package org.civilian.server.test;
 
 
 import java.util.function.Consumer;
-import org.civilian.Application;
+
 import org.civilian.application.AppConfig;
+import org.civilian.application.Application;
 import org.civilian.controller.ControllerNaming;
 import org.civilian.resource.PathParamMap;
 

@@ -16,8 +16,8 @@
 package org.civilian.testcase1;
 
 
-import org.civilian.Application;
 import org.civilian.application.AppConfig;
+import org.civilian.application.Application;
 
 
 public class Test1App extends Application

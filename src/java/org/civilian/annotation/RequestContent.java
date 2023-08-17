@@ -21,7 +21,8 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.content.ContentSerializer;
 
 

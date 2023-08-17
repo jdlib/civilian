@@ -41,19 +41,19 @@
 		and their default values.
 		We give an overview of the most important entries:
 		<p>
-		The <b>develop flag</b> controls if the Civilian {javadoc:Server} and its applications run in
-		{javadoc:Server#develop() development mode}:
+		The <b>develop flag</b> controls if the Civilian {javadoc:server.Server} and its applications run in
+		{javadoc:server.Server#develop() development mode}:
 		<div class="highlight">
 			<pre><code>develop = true</code></pre>
 		</div>
 		
 		You can run one or more applications inside a Civilian server (<a href="#multiapp">This</a>
 		topic motivates why you would want to run more than one app). Every <b>application config</b>
-		uses keys <code>app.<i>id</i>.*</code> with id being a unique {javadoc:Application#getId() identifier} for each application.<br>
-		The <b>class</b> entry gives the application class, <b>path</b> the {javadoc:Application#getRelativePath() relative path} of the 
+		uses keys <code>app.<i>id</i>.*</code> with id being a unique {javadoc:application.Application#getId() identifier} for each application.<br>
+		The <b>class</b> entry gives the application class, <b>path</b> the {javadoc:application.Application#getRelativePath() relative path} of the 
 		application under the server path. 
 		<b>enabled</b> allows to include/exclude the application from deployment. <b>encoding</b> is the default application
-		{javadoc:Application#getDefaultCharEncoding() encoding} used for assets, HTML pages, etc.
+		{javadoc:application.Application#getDefaultCharEncoding() encoding} used for assets, HTML pages, etc.
 		<div class="highlight">
 			<pre><code>app.crm.class    = org.example.crm.web.CrmApp<br
 			          >app.crm.path     = /crm<br
@@ -104,22 +104,22 @@
 
 		<h2 id="prog">Programmatic configuration</h2>
 		Almost all application settings of <code>civilian.ini</code> can also be changed programmatically
-		by your implementation of the {javadoc:Application} class. Some advanced settings can
+		by your implementation of the {javadoc:application.Application} class. Some advanced settings can
 		only be changed programmatically.<br>
 		Programmatic configuration can be done in these methods:
 		<ul>
-		<li>{javadoc:Application#init(org*civilian*application*AppConfig) init(AppConfig)} is called
+		<li>{javadoc:application.Application#init(org*civilian*application*AppConfig) init(AppConfig)} is called
 			at application startup. {javadoc:application.AppConfig} allows to tweak most settings of <code>civilian.ini</code>.
 			The method should also be used to initialize any other application-global resources.<br>
-		<li>{javadoc:Application#initProcessors(org*civilian*processor*ProcessorConfig) initProcessors(ProcessorConfig)}
+		<li>{javadoc:application.Application#initProcessors(org*civilian*processor*ProcessorConfig) initProcessors(ProcessorConfig)}
 			is called next and allows to tweak, rearrange, enhance or else modify the <a href="doc-processors.html">processor pipeline</a>
 			of the application.	The default configuration should be sufficient for most cases.
-		<li>{javadoc:Application#initAssets(org*civilian*asset*AssetConfig) initAssets(AssetConfig)} also offers more
+		<li>{javadoc:application.Application#initAssets(org*civilian*asset*AssetConfig) initAssets(AssetConfig)} also offers more
 			advanced possibilities to configure the applications {javadoc:asset.AssetService}.
 		</ul>
 		In addition
 		<ul>
-			<li>{javadoc:Application#close() close()} is called at application shutdown and can be used to release or close custom resources.   
+			<li>{javadoc:application.Application#close() close()} is called at application shutdown and can be used to release or close custom resources.   
 		</ul>
 		Please consult the javadoc of the config objects passed to the init-methods to learn about the configuration possibilities in detail.
 		
@@ -146,7 +146,7 @@
 		<p>
 		1. Prevent Civilian from dynamically creating the servlet, either in <code>civilian.ini</code>
 		<div class="highlight"><pre><code>app.<b>myapp</b>.connect = <b>false</b></code></pre></div>
-		or programmatically in {javadoc:Application#init(org*civilian*application*AppConfig) init(AppConfig)}: 
+		or programmatically in {javadoc:application.Application#init(org*civilian*application*AppConfig) init(AppConfig)}: 
 		<div class="highlight"><pre><code>protected void init(AppConfig config) {<br>    config.setConnect(<b>false</b>);<br>    ...</code></pre></div>
 		2. Define the following servlet in your web.xml:
 		<div class="highlight"><pre><code>&lt;web-app>

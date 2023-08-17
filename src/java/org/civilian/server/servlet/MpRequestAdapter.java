@@ -23,7 +23,8 @@ import java.util.Iterator;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.request.Upload;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.IoUtil;

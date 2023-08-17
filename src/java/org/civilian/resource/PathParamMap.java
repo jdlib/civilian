@@ -22,7 +22,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Collections;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.util.Check;
 
 

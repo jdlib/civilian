@@ -23,11 +23,11 @@
 		
 		<h3 id="core-app">About servers applications</h3>
 		
-		A Civilian {javadoc:Application} runs inside a {javadoc:Server}, receives {javadoc:request.Request Requests}
+		A Civilian {javadoc:application.Application} runs inside a {javadoc:server.Server}, receives {javadoc:request.Request Requests}
 		and generates {javadoc:response.Response Responses}.
 		<div class="img"><img src="doc-arch-app.png"></div>
 
-		Application instances are singletons. They are embedded into a {javadoc:Server} 
+		Application instances are singletons. They are embedded into a {javadoc:server.Server} 
 		which represents the physical server (e.g. a web server or ServletContainer) and provides access to server resources.
 		A Server can host one ore more applications. Server and applications are associated with a path within the phyiscal server.  
 		<div class="img"><img src="doc-arch-server.png"></div>
@@ -166,11 +166,11 @@
 			<th width="50%">Servlet Environment</th> 
 		</tr>
 		<tr>
-			<td>{javadoc:Server}</td>
+			<td>{javadoc:server.Server}</td>
 			<td>javax.servlet.ServletContext</td>
 		</tr>
 		<tr>
-			<td>{javadoc:Application}</td>
+			<td>{javadoc:application.Application}</td>
 			<td><i>no direct counterpart</i></td>
 		</tr>
 		<tr>

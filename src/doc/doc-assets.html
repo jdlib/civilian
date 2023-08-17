@@ -41,7 +41,7 @@
 		</ul>
 		By default Civilian first tries to route a request to a Controller.
 		If not possible it tries to find an asset for the request. If both fails the application sends
-		{javadoc:Application#createNotFoundResponse() a not-found response}.
+		{javadoc:application.Application#createNotFoundResponse() a not-found response}.
 		<p>
 		Asset responses include a <code>Last-Modified</code> header for the asset file date, and a <code>max-age</code>
 		header for 30 days. The <code>If-Modified-Since</code> request header is evaluated and may
@@ -51,7 +51,7 @@
 		Civilians asset handling allows you to publish files from a local directories or (any other file trees) as
 		resources under the application path.<br>  
 		For example if directory <code>c:\myfiles</code> is published under the asset path <code>/files</code> in an application
-		with {javadoc:Application#getPath() path} <code>/myapp</code>, then the directory content will become available
+		with {javadoc:application.Application#getPath() path} <code>/myapp</code>, then the directory content will become available
 		as resources:
 		<table class="table table-bordered">
 		<tr>
@@ -131,16 +131,16 @@
 		
 		<h2 id="service">Asset service</h2>
 		All the different asset locations used by an application and the asset cache are organized as pipeline
-		and made {javadoc:Application#getAssetService() available} as {javadoc:asset.AssetService}.
+		and made {javadoc:application.Application#getAssetService() available} as {javadoc:asset.AssetService}.
 		
 		<h2 id="encoding">Asset encoding and content-types</h2>
 		An asset response contains a <code>Content-Type</code> header which includes an encoding parameter.
-		By default encoding of textual assets equals the application {javadoc:Application#getDefaultCharEncoding() encoding} (which by default is UTF-8).
+		By default encoding of textual assets equals the application {javadoc:application.Application#getDefaultCharEncoding() encoding} (which by default is UTF-8).
 		It is a good idea to serve all HTML pages and textual assets in the same encoding.
 		<p>
 		Additionally you can specify different encodings for every asset location.
 		<p>
-		The {javadoc:Server#getContentTypeLookup() ContentLookup} of the context is used to derive content-types from file extensions.
+		The {javadoc:server.Server#getContentTypeLookup() ContentLookup} of the context is used to derive content-types from file extensions.
 		In a servlet environment this is implemented with a call to <code>ServletContext.getMimeType()</code> and therefore uses
 		the content-type configuration of the servlet container.     
 		 
@@ -240,9 +240,9 @@
 
 		<h3 id="startup">Configuration during application startup</h3>
 		Alternatively and additionally you can {javadoc:application.AppConfig#getAssetConfig() configure} the asset 
-		locations and cache behaviour during {javadoc:Application#init(org*civilian*application*AppConfig) application startup}.
+		locations and cache behaviour during {javadoc:application.Application#init(org*civilian*application*AppConfig) application startup}.
 		<p>
-		For advanced use you could also override {javadoc:Application#initAssets(org*civilian*asset*AssetConfig) Application.initAssets(AssetConfig)}
+		For advanced use you could also override {javadoc:application.Application#initAssets(org*civilian*asset*AssetConfig) Application.initAssets(AssetConfig)}
 		to determine how the applications {javadoc:asset.AssetService} is constructed.  
 		<br>
 		  

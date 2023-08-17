@@ -16,7 +16,7 @@
 package org.civilian.internal.admin.app;
 
 
-import org.civilian.Application;
+import org.civilian.application.Application;
 import org.civilian.internal.admin.AdminController;
 import org.civilian.internal.admin.AdminPathParams;
 

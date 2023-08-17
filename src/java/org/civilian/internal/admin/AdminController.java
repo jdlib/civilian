@@ -16,9 +16,9 @@
 package org.civilian.internal.admin;
 
 
-import org.civilian.Application;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Produces;
+import org.civilian.application.Application;
 import org.civilian.content.ContentType;
 import org.civilian.controller.Controller;
 import org.civilian.resource.Resource;

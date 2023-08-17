@@ -20,8 +20,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.io.File;
 import java.io.Reader;
-import org.civilian.Application;
+
 import org.civilian.CivTest;
+import org.civilian.application.Application;
 import org.civilian.content.ContentType;
 import org.civilian.internal.asset.CivResourceLocation;
 import org.civilian.resource.Path;

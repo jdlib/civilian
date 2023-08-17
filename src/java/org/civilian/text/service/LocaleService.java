@@ -17,7 +17,8 @@ package org.civilian.text.service;
 
 
 import java.util.Locale;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.request.Request;
 import org.civilian.response.Response;
 import org.civilian.text.msg.MsgBundle;

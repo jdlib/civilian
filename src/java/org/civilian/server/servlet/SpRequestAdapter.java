@@ -19,7 +19,8 @@ package org.civilian.server.servlet;
 import java.util.Iterator;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.request.Upload;
 import org.civilian.util.Iterators;
 

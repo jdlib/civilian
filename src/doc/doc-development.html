@@ -126,8 +126,8 @@
 		
 		<h2 id="testing">Testing</h2>
 		Civilian allows to run requests and evaluate responses in a test environment without the overhead of HTTP calls or the need to start a servlet server.<br>
-		Therefore it provides the {javadoc:server.test.TestServer} class which implements {javadoc:Server}.   
-		The {javadoc:server/test/package-summary context.test} package contains a {javadoc:Server} implementation which can be used for unit tests.
+		Therefore it provides the {javadoc:server.test.TestServer} class which implements {javadoc:server.Server}.   
+		The {javadoc:server/test/package-summary context.test} package contains a {javadoc:server.Server} implementation which can be used for unit tests.
 		The steps to run test request are:
 		<ol>
 		<li>Create a {javadoc:server.test.TestServer} instance.
@@ -143,7 +143,7 @@
 		if your configurations work as expected, and which resource URLs are actually published. You can also inspect which controller
 		is mapped to a resource and what action methods are available.
 		<p>  
-		The admin app uses Civilians ability to run multiple {javadoc:Application applications} in a Civilian {javadoc:Server server}.
+		The admin app uses Civilians ability to run multiple {javadoc:application.Application applications} in a Civilian {javadoc:server.Server server}.
 		When you start your application in development mode by default the admin app is also started and available under the path <code>/civadmin</code> below
 		your context path.
 		<p>

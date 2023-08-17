@@ -20,8 +20,9 @@ import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import org.civilian.Application;
+
 import org.civilian.application.AppConfig;
+import org.civilian.application.Application;
 import org.civilian.request.AsyncContext;
 import org.civilian.request.AsyncEvent;
 import org.civilian.request.AsyncListener;

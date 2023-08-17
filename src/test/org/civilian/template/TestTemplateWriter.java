@@ -22,7 +22,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Locale;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.response.Response;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.service.LocaleService;

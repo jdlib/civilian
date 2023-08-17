@@ -58,7 +58,7 @@
 		<h3 id="reqpath">Path</h3>
 		Civilian uses the {javadoc:resource.Path} class to represent path strings (which guarantees correct syntactical form).
 		The {javadoc:request.Request#getPath() request path} is the absolute path from the server root <code>/</code> to the requested resource.
-		{javadoc:Server#getPath() Context path} and {javadoc:Application#getPath() application path} are both prefixes of
+		{javadoc:server.Server#getPath() Context path} and {javadoc:application.Application#getPath() application path} are both prefixes of
 		the request path.<p>
 		<div class="img">
 			<img src="doc-arch-url.png">
@@ -152,7 +152,7 @@
 		{javadoc:request.Request#getUpload(java*lang*String) request}. The <a href="doc-samples.html#upload">Upload sample</a> demonstrates this feature.
 		<p>
 		Multipart requests need to be explicitly enabled in the Civilian <a href="doc-config.html">configuration</a> (for instance look at the
-		upload sample) or during {javadoc:Application#init(org*civilian*application*AppConfig) application}
+		upload sample) or during {javadoc:application.Application#init(org*civilian*application*AppConfig) application}
 		{javadoc:application.AppConfig#setUploadConfig(org*civilian*application*UploadConfig) startup}.
 		
 		<h3 id="reqasync">Async operations</h3>
@@ -161,7 +161,7 @@
 		The <a href="doc-samples.html#chat">Chat sample</a> demonstrates this feature.
 		<p>
 		Async capabilities need to be explicitly enabled in the Civilian <a href="doc-config.html">configuration</a> (for instance look at the
-		chat sample) or during {javadoc:Application#init(org*civilian*application*AppConfig) application}
+		chat sample) or during {javadoc:application.Application#init(org*civilian*application*AppConfig) application}
 		{javadoc:application.AppConfig#setAsync(boolean) startup}.
 		
 		<h3 id="reqinterface">IP Interface information</h3>
@@ -204,7 +204,7 @@
 		to send an error to the client. This will commit the response.<br>
 		Also any uncaught exception during request processing will automatically result in sending an error 
 		to the client.<br>
-		The exact error response sent to the client can be tweaked by overriding {javadoc:Application#createErrorResponse()}.
+		The exact error response sent to the client can be tweaked by overriding {javadoc:application.Application#createErrorResponse()}.
 
 		<h3 id="respredirect">sendRedirect</h3>
 		Response provides several {javadoc:response.Response#sendRedirect(java*lang*String) sendRedirect(*)} methods
@@ -230,7 +230,7 @@
 			<li>{javadoc:response.Response#writeContent(java*lang*Object,$org*civilian*content*ContentType) Response.writeContent(Object, ContentType)}
 		</ul>
 		Behind the scenes these calls are implemented by using Civilians content serialization framework.<br>
-		Each application {javadoc:Application#getContentSerializer(org*civilian*content*ContentType) possesses} a list of 
+		Each application {javadoc:application.Application#getContentSerializer(org*civilian*content*ContentType) possesses} a list of 
 		{javadoc:content.ContentSerializer ContentSerializers}.
 		A ContentSerializer knows how to to parse and format Java objects from/to representations of a certain content type.
 		<p>

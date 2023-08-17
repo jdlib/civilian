@@ -16,7 +16,7 @@
 package org.civilian.controller;
 
 
-import org.civilian.Application;
+import org.civilian.application.Application;
 import org.civilian.resource.PathParamMap;
 import org.civilian.util.Check;
 

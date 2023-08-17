@@ -17,7 +17,8 @@
 
 
 import java.io.File;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.content.ContentType;
 import org.civilian.samples.crm.web.CrmApp;
 import org.civilian.samples.crm.web.CrmResources;

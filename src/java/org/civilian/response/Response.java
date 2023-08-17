@@ -24,9 +24,9 @@ import java.util.Locale;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import org.civilian.Application;
-import org.civilian.ApplicationProvider;
 import org.civilian.application.AppConfig;
+import org.civilian.application.Application;
+import org.civilian.application.ApplicationProvider;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.JaxbXmlSerializer;

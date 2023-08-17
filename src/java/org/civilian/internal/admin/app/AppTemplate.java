@@ -5,7 +5,7 @@
 package org.civilian.internal.admin.app;
 
 
-import org.civilian.Application;
+import org.civilian.application.Application;
 import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 

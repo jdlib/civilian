@@ -18,8 +18,9 @@
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.civilian.Application;
+
 import org.civilian.application.AppConfig;
+import org.civilian.application.Application;
 import org.civilian.samples.jpa.reslocal.model.JpaContext;
 
 

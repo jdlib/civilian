@@ -22,7 +22,8 @@ import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRegistration;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.application.UploadConfig;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.internal.Logs;

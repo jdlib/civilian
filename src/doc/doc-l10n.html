@@ -71,7 +71,7 @@
 		<li>{javadoc:text.service.LocaleService} bundles a MsgBundle and a TypeSerializer for a certain Locale.
 		<li>{javadoc:request.Request#setLocaleService(java*util*Locale) Request} and 
 			{javadoc:response.Response#setLocaleService(java*util*Locale) Response} can be associated with a LocaleService instance.
-		<li>The applications {javadoc:Application#getLocaleServices() LocaleServiceList} provides 
+		<li>The applications {javadoc:application.Application#getLocaleServices() LocaleServiceList} provides 
 			LocaleService instances for all supported locales.
 		<li>The {javadoc:template.mixin.LangMixin} allows easy formatting and translation in (CSP) templates.
 		<li>The {javadoc:annotation.LocaleValue @LocaleValue} can be set on controller method parameters
@@ -82,7 +82,7 @@
 		Every Civilian application has a list of supported locales. (If you don't <a href="#config">configure</a>
 		explicitly this list will default to the default system locale).<br>
 		For each supported locale, a {javadoc:text.service.LocaleService} object is available via the applications 
-		{javadoc:Application#getLocaleServices() LocaleServiceList}. The LocaleService itself offers
+		{javadoc:application.Application#getLocaleServices() LocaleServiceList}. The LocaleService itself offers
 		<ul>
 		<li>a {javadoc:text.msg.MsgBundle} which can be used to translate text keys into texts of a certain language
 		<li>a {javadoc:text.type.TypeSerializer} which can be used to format or parse objects of simple types to and from strings. 
@@ -277,7 +277,7 @@
 		(in that case locale <code>de-AT</code> and <code>de-CH</code> would share the same resouce bundle).  
 		<p>
 		Alternatively you can also configure the localization settings programmatically during
-		{javadoc:Application#init(org*civilian*application*AppConfig) Application.init(AppConfig)},
+		{javadoc:application.Application#init(org*civilian*application*AppConfig) Application.init(AppConfig)},
 		using {javadoc:application.AppConfig#setSupportedLocales()} and
 		{javadoc:application.AppConfig#setMsgBundleFactory(org*civilian*text*msg*MsgBundleFactory) AppConfig.setMsgBundleFactory()}.<br>
 		You may also {javadoc:application.AppConfig#getTypeLib() add} own {javadoc:type.Type} implementations for 

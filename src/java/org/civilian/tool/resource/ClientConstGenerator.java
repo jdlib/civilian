@@ -17,7 +17,8 @@ package org.civilian.tool.resource;
 
 
 import java.io.StringWriter;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.internal.source.OutputFile;
 import org.civilian.internal.source.OutputLocation;
 import org.civilian.resource.Resource;

@@ -23,7 +23,8 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.application.ConfigKeys;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeLookup;

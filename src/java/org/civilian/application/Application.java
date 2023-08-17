@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian;
+package org.civilian.application;
 
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import org.civilian.application.AppConfig;
-import org.civilian.application.ConfigKeys;
-import org.civilian.application.UploadConfig;
+
 import org.civilian.application.classloader.ClassLoaderFactory;
 import org.civilian.application.classloader.ReloadConfig;
 import org.civilian.asset.AssetConfig;

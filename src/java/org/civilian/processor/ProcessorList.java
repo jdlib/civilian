@@ -18,7 +18,8 @@ package org.civilian.processor;
 
 import java.util.Iterator;
 import java.util.List;
-import org.civilian.Application;
+
+import org.civilian.application.Application;
 import org.civilian.request.Request;
 import org.civilian.util.Check;
 import org.civilian.util.Iterators;

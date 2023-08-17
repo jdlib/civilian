@@ -18,8 +18,9 @@
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.civilian.Application;
+
 import org.civilian.application.AppConfig;
+import org.civilian.application.Application;
 import org.civilian.controller.factory.GuiceControllerFactory;
 
 

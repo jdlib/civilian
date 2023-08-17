@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * Contains classes used by the {@link org.civilian.Application} class.
+ * Contains classes used by the {@link org.civilian.application.Application} class.
  */
 package org.civilian.application;
