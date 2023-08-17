@@ -21,8 +21,6 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 import org.civilian.CivTest;
-import org.civilian.internal.TestRequestReaderInterceptor;
-import org.civilian.internal.TestRequestStreamInterceptor;
 import org.civilian.server.test.TestApp;
 import org.civilian.server.test.TestRequest;
 import org.civilian.server.test.TestResponse;

@@ -1,4 +1,4 @@
-package org.civilian.internal;
+package org.civilian.request;
 
 
 import java.io.IOException;
