@@ -577,7 +577,7 @@ public class TestRequest extends AbstractRequest
 				contentBytes_ = EMPTY_BYTES;
 			else
 			{
-				String encoding = charEncoding_ != null ? charEncoding_ : getApplication().getDefaultCharEncoding();
+				String encoding = charEncoding_ != null ? charEncoding_ : getOwner().getDefaultCharEncoding();
 				ByteArrayOutputStream out = new ByteArrayOutputStream(); 
 				try
 				{
@@ -607,7 +607,7 @@ public class TestRequest extends AbstractRequest
 			return new StringReader(contentString_);
 		else
 		{
-			String encoding = charEncoding_ != null ? charEncoding_ : getApplication().getDefaultCharEncoding();
+			String encoding = charEncoding_ != null ? charEncoding_ : getOwner().getDefaultCharEncoding();
 			return new InputStreamReader(new ByteArrayInputStream(getContentBytes()), encoding);
 		}
 	}
@@ -647,7 +647,7 @@ public class TestRequest extends AbstractRequest
 				ContentType contentType = getContentType();
 				if (contentType == null)
 					throw new IllegalStateException("no content-type set");
-				ContentSerializer serializer = getApplication().getContentSerializer(contentType);
+				ContentSerializer serializer = getOwner().getContentSerializer(contentType);
 				if (serializer == null)
 					throw new IllegalStateException("don't know how to write content with content type '" + contentType + "'");
 				contentString_ = serializer.write(content);
@@ -692,7 +692,7 @@ public class TestRequest extends AbstractRequest
 	@Override public Locale getAcceptedLocale()
 	{
 		if (acceptedLocale_ == null)
-			acceptedLocale_ = getApplication().getLocaleServices().getDefaultLocale();
+			acceptedLocale_ = getOwner().getLocaleServices().getDefaultLocale();
 		return acceptedLocale_;
 	}
 

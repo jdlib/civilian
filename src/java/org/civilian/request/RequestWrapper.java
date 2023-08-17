@@ -67,6 +67,12 @@ public class RequestWrapper implements Request
 	}
 
 
+	@Override public RequestOwner getOwner()
+	{
+		return request_.getOwner();
+	}
+
+	
 	@Override public Response getResponse()
 	{
 		return request_.getResponse();

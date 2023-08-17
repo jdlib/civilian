@@ -27,7 +27,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.civilian.application.Application;
-import org.civilian.application.ApplicationProvider;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
@@ -73,7 +72,7 @@ import org.civilian.util.Value;
  * <li>etc.
  * </ul>
  */
-public interface Request extends RequestProvider, ResponseProvider, ApplicationProvider, 
+public interface Request extends RequestProvider, ResponseProvider, //ApplicationProvider, 
 	PathParamProvider, PathProvider, LocaleServiceProvider
 {
 	/**
@@ -150,7 +149,16 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	/**
 	 * Returns the application to which this request belongs.
 	 */
-	@Override public Application getApplication();
+	public Application getApplication();
+
+	
+	/**
+	 * Returns the owner.
+	 */
+	public default RequestOwner getOwner()
+	{
+		return getApplication();
+	}
 
 	
 	/**
@@ -503,7 +511,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 	public default void setLocaleService(Locale locale)
 	{
 		Check.notNull(locale, "locale");
-		setLocaleService(getApplication().getLocaleServices().getService(locale));
+		setLocaleService(getOwner().getLocaleServices().getService(locale));
 	}
 
 	
@@ -632,7 +640,7 @@ public interface Request extends RequestProvider, ResponseProvider, ApplicationP
 		if ((contentType == null) && (type == String.class))
 			contentType = ContentType.TEXT_PLAIN;
 			
-		ContentSerializer reader = getApplication().getContentSerializer(contentType);
+		ContentSerializer reader = getOwner().getContentSerializer(contentType);
 		if (reader == null)
 			throw new IllegalStateException("don't know how to read content with content type '" + contentType + "'");
 		

@@ -137,7 +137,7 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 	{
 		return hasAcceptLanguageHeader() ?
 			servletRequest_.getLocale() :
-			getApplication().getLocaleServices().getDefaultLocale();
+			getOwner().getLocaleServices().getDefaultLocale();
 	}
 	
 	

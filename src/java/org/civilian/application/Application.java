@@ -43,6 +43,7 @@ import org.civilian.processor.ProcessorList;
 import org.civilian.processor.ResourceDispatch;
 import org.civilian.request.BadRequestException;
 import org.civilian.request.Request;
+import org.civilian.request.RequestOwner;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
@@ -66,7 +67,8 @@ import org.slf4j.Logger;
 /**
  * Application represents a Civilian application.
  */
-public abstract class Application implements ApplicationProvider, PathProvider, ResponseOwner
+public abstract class Application implements ApplicationProvider, PathProvider, 
+	RequestOwner, ResponseOwner
 {
 	private static final Logger log = Logs.APPLICATION; 
 	
@@ -619,8 +621,8 @@ public abstract class Application implements ApplicationProvider, PathProvider, 
 	public void process(Request request)
 	{
 		Check.notNull(request, "request");
-		if (request.getApplication() != this)
-			throw new IllegalArgumentException("not my request: " + request.getApplication());
+		if (request.getOwner() != this)
+			throw new IllegalArgumentException("not my request: " + request.getOwner());
 		
 		try
 		{
@@ -712,6 +714,7 @@ public abstract class Application implements ApplicationProvider, PathProvider, 
 	 * @see Response#sendError(int)  
 	 * @see Response#sendError(int, String, Throwable)  
 	 */
+	@Override
 	public ResponseHandler createErrorHandler(int statusCode, String message, Throwable error)
 	{
 		return new ErrorResponseHandler(develop(), statusCode, message, error);

@@ -291,7 +291,7 @@ public abstract class AbstractRequest implements Request
 		// if during processing the locale-item is initialized by a call
 		// to #setLocaleItem (e.g. from a user profile), then we avoid to call getPreferences().getLocale())
 		if (localeService_ == null)
-			localeService_ = getApplication().getLocaleServices().getService(getAcceptedLocale());
+			localeService_ = getOwner().getLocaleServices().getService(getAcceptedLocale());
 		return localeService_;
 	}
 	
@@ -399,7 +399,7 @@ public abstract class AbstractRequest implements Request
 	
 	private void setDefaultCharEncoding()
 	{
-		String encoding = getApplication().getDefaultCharEncoding();
+		String encoding = getOwner().getDefaultCharEncoding();
 		try
 		{
 			setCharEncoding(encoding);
