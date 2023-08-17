@@ -20,7 +20,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.resource.Path;
 
 
 public class PathTest extends CivTest
