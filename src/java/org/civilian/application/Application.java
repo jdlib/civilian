@@ -602,7 +602,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 			
 			try
 			{
-				boolean processed = processors_.process(request);
+				boolean processed = processors_.process(request, response);
 				if (!processed)
 					createNotFoundHandler().send(response);
 			}

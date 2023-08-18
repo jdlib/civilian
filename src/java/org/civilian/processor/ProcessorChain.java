@@ -17,6 +17,7 @@ package org.civilian.processor;
 
 
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.util.Check;
 
 
@@ -31,12 +32,12 @@ public class ProcessorChain
 	}
 	
 	
-	public boolean next(Request request) throws Exception
+	public boolean next(Request request, Response response) throws Exception
 	{
 		if (next_ < processors_.length)
 		{
 			Processor nextProcessor = processors_[next_++];
-			return nextProcessor.process(request, this);
+			return nextProcessor.process(request, response, this);
 		}
 		else
 			return false;
@@ -45,10 +46,10 @@ public class ProcessorChain
 	
 	@Override public String toString()
 	{
-		return "ProcessorChain[" + next_ + "/" + processors_.length + "]";
+		return "ProcessorChain[" + next_ + '/' + processors_.length + ']';
 	}
 	
 	
 	private int next_;
-	private Processor[] processors_;
+	private final Processor[] processors_;
 }

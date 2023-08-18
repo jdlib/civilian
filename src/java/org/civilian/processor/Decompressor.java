@@ -22,6 +22,7 @@ import org.civilian.Logs;
 import org.civilian.content.CompressionScheme;
 import org.civilian.request.Request;
 import org.civilian.request.RequestInterceptor;
+import org.civilian.response.Response;
 import org.civilian.util.http.HeaderNames;
 
 
@@ -39,12 +40,12 @@ public class Decompressor extends Processor
 	}
 
 	
-	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
+	@Override public boolean process(Request request, Response response, ProcessorChain chain) throws Exception
 	{
 		String scheme = request.getHeaders().get(HeaderNames.CONTENT_ENCODING);
 		if (scheme != null)
 			addInterceptor(request, scheme);
-		return chain.next(request);
+		return chain.next(request, response);
 	}
 	
 	

@@ -98,7 +98,7 @@ public class IpFilter extends Processor
 	}
 	
 	
-	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
+	@Override public boolean process(Request request, Response response, ProcessorChain chain) throws Exception
 	{
 		// if no ip tests are defined, we allow all ips
 		if (ipTests_ != null)
@@ -108,11 +108,11 @@ public class IpFilter extends Processor
 			{
 				if (Logs.PROCESSOR.isDebugEnabled())
 					Logs.PROCESSOR.debug("forbidden ip " + remoteIp);
-				request.getResponse().sendError(Response.Status.FORBIDDEN);
+				response.sendError(Response.Status.FORBIDDEN);
 				return true; // we have processed the request, no further processing
 			}
 		}
-		return chain.next(request); // ip allowed: continue processing 
+		return chain.next(request, response); // ip allowed: continue processing 
 	}
 	
 	

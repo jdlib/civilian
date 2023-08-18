@@ -22,6 +22,7 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 
 
 public class ProcessorListTest extends CivTest
@@ -47,21 +48,22 @@ public class ProcessorListTest extends CivTest
 		
 		// process
 		Request request = mock(Request.class);
+		Response response = mock(Response.class);
 		
 		// process: success false
 		p.result = false;
-		assertFalse(plist.process(request));
+		assertFalse(plist.process(request, response));
 
 		// process: success true
 		p.result = true;
-		assertTrue(plist.process(request));
+		assertTrue(plist.process(request, response));
 		assertEquals(2, p.called);
 
 		// process: success true
 		p.error = new IllegalArgumentException(); 
 		try
 		{
-			plist.process(request);
+			plist.process(request, response);
 			fail();
 		}
 		catch(Exception e)
@@ -85,7 +87,7 @@ public class ProcessorListTest extends CivTest
 		}
 
 		
-		@Override public boolean process(Request request, ProcessorChain chain) throws Exception
+		@Override public boolean process(Request request, Response response, ProcessorChain chain) throws Exception
 		{
 			called++;
 			if (error != null)

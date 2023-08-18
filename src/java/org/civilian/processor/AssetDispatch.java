@@ -64,29 +64,28 @@ public class AssetDispatch extends Processor
 	 * If not found, it invokes the next processor in the processor chain.
 	 * Else it send the asset to the client.  
 	 */
-	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
+	@Override public boolean process(Request request, Response response, ProcessorChain chain) throws Exception
 	{
 		Path relativePath = request.getRelativePath();
 		
 		// catch if someone tries to sneak into private folders (e.g. WEB-INF)
 		if (prohibitedTest_.test(relativePath.toString()))
 		{
-			request.getResponse().sendError(Response.Status.SC404_NOT_FOUND);
+			response.sendError(Response.Status.SC404_NOT_FOUND);
 			return true;
 		}
 		
 		// if this request does not match an asset, run the next processor in the chain 
 		Asset asset = assetService_.getAsset(relativePath);
 		if (asset == null)
-			return chain.next(request); // not an asset request
+			return chain.next(request, response); // not an asset request
 		else
-			return processAsset(request, asset);
+			return processAsset(request, response, asset);
 	}
 	
 	
-	protected boolean processAsset(Request request, Asset asset) throws Exception
+	protected boolean processAsset(Request request, Response response, Asset asset) throws Exception
 	{
-		Response response = request.getResponse();
 		String method = request.getMethod();
 		if (!VALID_METHODS.contains(method))
 			response.sendError(Response.Status.SC405_METHOD_NOT_ALLOWED);

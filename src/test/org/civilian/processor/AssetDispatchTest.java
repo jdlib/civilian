@@ -64,24 +64,24 @@ public class AssetDispatchTest extends CivTest
 
 		// test non-asset requests
 		when(request.getRelativePath()).thenReturn(new Path("/customers"));
-		assertFalse(dispatch.process(request, ProcessorChain.EMPTY));
+		assertFalse(dispatch.process(request, response, ProcessorChain.EMPTY));
 		
 		// switch to a request which is processed by the AssetDispatch
 		when(request.getRelativePath()).thenReturn(new Path("/test"));
 		
 		// no asset found: dispatch to next
-		assertFalse(dispatch.process(request, ProcessorChain.EMPTY));
+		assertFalse(dispatch.process(request, response, ProcessorChain.EMPTY));
 
 		when(service.getAsset(any(Path.class))).thenReturn(asset);
 		
 		// test invalid request methods
 		when(request.getMethod()).thenReturn("PUT");
-		assertTrue(dispatch.process(request, ProcessorChain.EMPTY));
+		assertTrue(dispatch.process(request, response, ProcessorChain.EMPTY));
 		verify(response).sendError(Response.Status.SC405_METHOD_NOT_ALLOWED);
 		
 		// test options request
 		when(request.getMethod()).thenReturn("OPTIONS");
-		assertTrue(dispatch.process(request, ProcessorChain.EMPTY));
+		assertTrue(dispatch.process(request, response, ProcessorChain.EMPTY));
 		verify(headers).set(HeaderNames.ALLOW, "GET, HEAD, POST, OPTIONS");
 		
 		// switch to an allowed method
@@ -90,7 +90,7 @@ public class AssetDispatchTest extends CivTest
 		// test successful request 
 		when(request.getMethod()).thenReturn("GET");
 		when(request.getRelativePath()).thenReturn(new Path("/test/some.css"));
-		assertTrue(dispatch.process(request, ProcessorChain.EMPTY));
+		assertTrue(dispatch.process(request, response, ProcessorChain.EMPTY));
 		verify(asset).write(response, true);
 	}
 	
@@ -105,7 +105,7 @@ public class AssetDispatchTest extends CivTest
 		when(request.getResponse()).thenReturn(response);
 		AssetDispatch dispatch 	= new AssetDispatch(s -> true /*prohibited*/, service);
 
-		assertTrue(dispatch.process(request, ProcessorChain.EMPTY));
+		assertTrue(dispatch.process(request, response, ProcessorChain.EMPTY));
 		verify(response).sendError(Response.Status.SC404_NOT_FOUND);
 	}
 }

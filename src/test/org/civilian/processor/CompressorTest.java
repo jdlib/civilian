@@ -4,6 +4,7 @@ package org.civilian.processor;
 import org.civilian.CivTest;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.server.test.TestRequest;
+import org.civilian.server.test.TestResponse;
 import org.civilian.util.http.HeaderNames;
 import org.junit.Test;
 
@@ -12,7 +13,8 @@ public class CompressorTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
-		request_ = new TestRequest();
+		request_ 	= new TestRequest();
+		response_	= request_.getTestResponse();
 		compressor_ = new Compressor();
 		
 		// no Accept-encoding header
@@ -51,7 +53,7 @@ public class CompressorTest extends CivTest
 		ResponseHeaders headers = request_.getResponse().getHeaders();
 		
 		// process always returns false
-		assertFalse(compressor_.process(request_, ProcessorChain.EMPTY));
+		assertFalse(compressor_.process(request_, response_, ProcessorChain.EMPTY));
 		
 		request_.getResponse().getContentWriter().print("a");
 		assertArrayEquals(content, request_.getTestResponse().getContentBytes(true));
@@ -65,5 +67,6 @@ public class CompressorTest extends CivTest
 	
 	
 	private TestRequest request_;
+	private TestResponse response_;
 	private Compressor compressor_;
 }

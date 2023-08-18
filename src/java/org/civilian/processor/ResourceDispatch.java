@@ -20,6 +20,7 @@ import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerType;
 import org.civilian.request.Request;
 import org.civilian.resource.Resource;
+import org.civilian.response.Response;
 import org.civilian.util.Check;
 
 
@@ -52,7 +53,7 @@ public class ResourceDispatch extends Processor
 	 * to handle the request. If such a resource or controller does not exist,
 	 * invoke the next processor in the chain.
 	 */
-	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
+	@Override public boolean process(Request request, Response response, ProcessorChain chain) throws Exception
 	{
 		// find the matching resource: we only handle complete matches
 		Resource.Match match = rootResource_.match(request.getRelativePath().toString());
@@ -71,7 +72,7 @@ public class ResourceDispatch extends Processor
 		}
 		
 		// else invoke the next processor 
-		return chain.next(request);
+		return chain.next(request, response);
 	}
 
 

@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.zip.DeflaterOutputStream;
 import org.civilian.CivTest;
 import org.civilian.server.test.TestRequest;
+import org.civilian.server.test.TestResponse;
 import org.civilian.util.http.HeaderNames;
 import org.junit.Test;
 
@@ -13,8 +14,9 @@ public class DecompressorTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
-		request_ = new TestRequest();
-		decompressor_ = new Decompressor();
+		request_ 		= new TestRequest();
+		response_		= request_.getTestResponse();
+		decompressor_ 	= new Decompressor();
 		
 		request_.setContent("a");
 		assertProcess(null, "a");
@@ -36,7 +38,7 @@ public class DecompressorTest extends CivTest
 		request_.getHeaders().set(HeaderNames.CONTENT_ENCODING, contentEncoding);
 		
 		// process always returns false
-		assertFalse(decompressor_.process(request_, ProcessorChain.EMPTY));
+		assertFalse(decompressor_.process(request_, response_, ProcessorChain.EMPTY));
 		
 		assertEquals(readContent, request_.readContent(String.class));
 		
@@ -45,5 +47,6 @@ public class DecompressorTest extends CivTest
 	
 	
 	private TestRequest request_;
+	private TestResponse response_;
 	private Decompressor decompressor_;
 }

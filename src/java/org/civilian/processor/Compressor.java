@@ -51,24 +51,23 @@ public class Compressor extends Processor
 	}
 
 	
-	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
+	@Override public boolean process(Request request, Response response, ProcessorChain chain) throws Exception
 	{
 		String accepted = request.getHeaders().get(HeaderNames.ACCEPT_ENCODING);
 		if (accepted != null)
-			addInterceptor(request, accepted);
+			addInterceptor(request, response, accepted);
 			
-		return chain.next(request);
+		return chain.next(request, response);
 	}
 
 	
-	protected void addInterceptor(Request request, String accepted)
+	protected void addInterceptor(Request request, Response response, String accepted)
 	{
 		CompressionScheme scheme = CompressionScheme.match(accepted);
 		if (scheme != null)
 		{
 			if (!scheme.isIdentity())
 			{
-				Response response = request.getResponse();
 				response.getHeaders().add(HeaderNames.VARY, "Accept-Encoding");
 				response.addInterceptor().forStream(new Interceptor(scheme));
 			}

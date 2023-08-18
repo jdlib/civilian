@@ -17,6 +17,7 @@ package org.civilian.processor;
 
 
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.response.ResponseHandler;
 import org.civilian.util.Check;
 
@@ -40,9 +41,9 @@ public class ErrorProcessor extends Processor
 	}
 	
 
-	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
+	@Override public boolean process(Request request, Response response, ProcessorChain chain) throws Exception
 	{
-		handler_.send(request.getResponse());
+		handler_.send(response);
 		return true;
 	}
 

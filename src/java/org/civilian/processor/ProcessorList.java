@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.civilian.application.Application;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.util.Check;
 import org.civilian.util.Iterators;
 
@@ -99,16 +100,16 @@ public class ProcessorList extends Processor implements Iterable<Processor>
 	}
 	
 	
-	public boolean process(Request request) throws Exception
+	public boolean process(Request request, Response response) throws Exception
 	{
 		ProcessorChain chain = new ProcessorChain(processors_);
-		return chain.next(request);
+		return chain.next(request, response);
 	}
 	
 	
-	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
+	@Override public boolean process(Request request, Response response, ProcessorChain chain) throws Exception
 	{
-		return process(request) ? true : chain.next(request);
+		return process(request, response) ? true : chain.next(request, response);
 	}
 	
 	

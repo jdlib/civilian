@@ -18,6 +18,7 @@ package org.civilian.processor;
 
 import org.civilian.application.Application;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 
 
 /**
@@ -33,14 +34,16 @@ import org.civilian.request.Request;
 public abstract class Processor
 {
 	/**
-	 * Processes the request.
+	 * Processes the request and generates a response.
 	 * @param request the request
+	 * @param response the response
 	 * @param chain the processor chain. If the processor did not completely process
 	 * 		the request then {@link ProcessorChain#next(Request)} should be called.
 	 * @return true if the request was processed and no further processing should
 	 * 		be applied.
+	 * @throws Exception if an exception occurs
 	 */
-	public abstract boolean process(Request request, ProcessorChain chain) throws Exception;
+	public abstract boolean process(Request request, Response response, ProcessorChain chain) throws Exception;
 
 	
 	/**

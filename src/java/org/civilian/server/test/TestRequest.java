@@ -147,7 +147,7 @@ public class TestRequest extends AbstractRequest
 		resetAsyncContext();
 		resetContentInput();
 		Check.isA(getOwner(), Application.class).process(this, testResponse_);
-		getResponse().flushBuffer();
+		testResponse_.flushBuffer();
 		return testResponse_;
 	}
 	
