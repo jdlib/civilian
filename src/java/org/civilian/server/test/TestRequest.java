@@ -202,7 +202,7 @@ public class TestRequest extends AbstractRequest
 	 */
 	public TestRequest setPath(Resource resource, Object... pathParams)
 	{
-		Url url = new Url(this, resource);
+		Url url = new Url(testResponse_, resource);
 		url.setPathParams(pathParams);
 		return setPath(url);
 	}
@@ -217,7 +217,7 @@ public class TestRequest extends AbstractRequest
 	 */
 	public TestRequest setPath(Class<? extends Controller> controllerClass, Object... pathParams)
 	{
-		Url url = new Url(this, controllerClass);
+		Url url = new Url(testResponse_, controllerClass);
 		url.setPathParams(pathParams);
 		return setPath(url);
 	}

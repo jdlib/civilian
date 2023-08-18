@@ -35,7 +35,6 @@ import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParamProvider;
 import org.civilian.response.Response;
-import org.civilian.response.ResponseProvider;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.service.LocaleServiceProvider;
 import org.civilian.text.type.StandardSerializer;
@@ -70,8 +69,7 @@ import org.civilian.util.Value;
  * <li>etc.
  * </ul>
  */
-public interface Request extends RequestProvider, ResponseProvider,  
-	PathParamProvider, PathProvider, LocaleServiceProvider
+public interface Request extends RequestProvider, PathParamProvider, PathProvider, LocaleServiceProvider
 {
 	/**
 	 * Defines constants for common request methods as defined by the HTTP protocol. 
@@ -131,7 +129,7 @@ public interface Request extends RequestProvider, ResponseProvider,
 	/**
 	 * Returns the associated response.
 	 */
-	@Override public Response getResponse();
+	public Response getResponse();
 
 	
 	/**
