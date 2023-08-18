@@ -25,7 +25,7 @@ import org.civilian.request.Request;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.response.ResponseInterceptor;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 /**

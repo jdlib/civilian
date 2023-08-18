@@ -21,7 +21,7 @@ import org.civilian.resource.pathparam.PathParamProvider;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
-import org.civilian.util.UriEncoder;
+import org.civilian.util.http.UriEncoder;
 
 
 /**

@@ -2,7 +2,7 @@ package org.civilian.asset;
 
 
 import org.civilian.response.Response;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 public interface AssetCacheControl

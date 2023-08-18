@@ -4,7 +4,7 @@ package org.civilian.processor;
 import org.civilian.CivTest;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.server.test.TestRequest;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 import org.junit.Test;
 
 

@@ -23,8 +23,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.civilian.util.Check;
-import org.civilian.util.HeaderParser;
 import org.civilian.util.Iterators;
+import org.civilian.util.http.HeaderParser;
 
 
 /**

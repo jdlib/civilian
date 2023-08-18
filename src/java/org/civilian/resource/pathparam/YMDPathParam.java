@@ -23,7 +23,7 @@ import org.civilian.type.DateType;
 import org.civilian.type.TypeLib;
 import org.civilian.util.Check;
 import org.civilian.util.PathScanner;
-import org.civilian.util.UriEncoder;
+import org.civilian.util.http.UriEncoder;
 
 
 /**

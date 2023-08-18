@@ -44,8 +44,8 @@ import org.civilian.request.ServerInfo;
 import org.civilian.request.Session;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.ClassUtil;
-import org.civilian.util.HttpHeaders;
 import org.civilian.util.Iterators;
+import org.civilian.util.http.HttpHeaders;
 
 
 /**

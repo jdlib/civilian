@@ -45,9 +45,9 @@ import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.response.Url;
 import org.civilian.util.Check;
-import org.civilian.util.HttpHeaders;
 import org.civilian.util.IoUtil;
 import org.civilian.util.Iterators;
+import org.civilian.util.http.HttpHeaders;
 
 
 /**

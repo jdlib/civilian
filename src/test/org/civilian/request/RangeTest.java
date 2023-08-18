@@ -9,7 +9,7 @@ import org.civilian.request.Range.Part;
 import org.civilian.server.test.TestApp;
 import org.civilian.server.test.TestRequest;
 import org.civilian.server.test.TestResponse;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 import org.junit.Test;
 
 

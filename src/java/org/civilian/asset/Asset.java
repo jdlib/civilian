@@ -27,7 +27,7 @@ import java.util.TimeZone;
 import org.civilian.content.ContentType;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 /**

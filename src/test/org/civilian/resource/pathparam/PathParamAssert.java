@@ -2,7 +2,7 @@ package org.civilian.resource.pathparam;
 
 
 import org.civilian.util.PathScanner;
-import org.civilian.util.UriEncoder;
+import org.civilian.util.http.UriEncoder;
 import org.junit.Assert;
 
 

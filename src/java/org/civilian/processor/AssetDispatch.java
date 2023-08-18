@@ -25,7 +25,7 @@ import org.civilian.asset.service.AssetService;
 import org.civilian.resource.Path;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 /**

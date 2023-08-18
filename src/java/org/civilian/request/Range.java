@@ -16,8 +16,8 @@ import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.response.Response.Status;
 import org.civilian.util.Check;
-import org.civilian.util.HttpHeaders;
 import org.civilian.util.IoUtil;
+import org.civilian.util.http.HttpHeaders;
 
 
 /**

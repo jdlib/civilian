@@ -7,8 +7,8 @@ import java.io.InputStream;
 import java.util.Date;
 import org.civilian.content.ContentType;
 import org.civilian.response.Response;
-import org.civilian.util.HttpHeaders;
 import org.civilian.util.IoUtil;
+import org.civilian.util.http.HttpHeaders;
 
 
 public abstract class AbstractAsset extends Asset

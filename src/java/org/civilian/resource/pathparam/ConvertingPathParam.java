@@ -3,7 +3,7 @@ package org.civilian.resource.pathparam;
 
 import org.civilian.type.Type;
 import org.civilian.util.PathScanner;
-import org.civilian.util.UriEncoder;
+import org.civilian.util.http.UriEncoder;
 
 
 public class ConvertingPathParam<T> extends TypeBasedPathParam<T>

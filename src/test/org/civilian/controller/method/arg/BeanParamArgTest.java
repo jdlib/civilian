@@ -28,7 +28,7 @@ import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
 import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.type.TypeLib;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 public class BeanParamArgTest extends CivTest

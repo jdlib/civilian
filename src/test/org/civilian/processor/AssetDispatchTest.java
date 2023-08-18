@@ -26,7 +26,7 @@ import org.civilian.request.Request;
 import org.civilian.resource.Path;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 public class AssetDispatchTest extends CivTest

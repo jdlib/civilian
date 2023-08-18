@@ -1,8 +1,8 @@
-package org.civilian.util;
+package org.civilian.util.http;
 
 
 /**
- * Defines constants for comon HTTP headers.
+ * Defines constants for common HTTP headers.
  */
 public interface HttpHeaders
 {

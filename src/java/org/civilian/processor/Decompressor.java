@@ -22,7 +22,7 @@ import org.civilian.Logs;
 import org.civilian.content.CompressionScheme;
 import org.civilian.request.Request;
 import org.civilian.request.RequestInterceptor;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 /**

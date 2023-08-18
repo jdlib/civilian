@@ -4,7 +4,7 @@ package org.civilian.asset;
 import java.io.IOException;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 /**

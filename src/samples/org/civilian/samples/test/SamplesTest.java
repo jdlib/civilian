@@ -25,7 +25,7 @@ import org.civilian.samples.crm.web.CrmResources;
 import org.civilian.server.test.TestRequest;
 import org.civilian.server.test.TestResponse;
 import org.civilian.server.test.TestServer;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 public class SamplesTest extends Assert

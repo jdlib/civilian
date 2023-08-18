@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.zip.DeflaterOutputStream;
 import org.civilian.CivTest;
 import org.civilian.server.test.TestRequest;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 import org.junit.Test;
 
 

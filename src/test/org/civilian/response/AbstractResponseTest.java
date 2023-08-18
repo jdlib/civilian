@@ -32,7 +32,7 @@ import org.civilian.template.TextTemplate;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
 import org.civilian.text.service.LocaleService;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

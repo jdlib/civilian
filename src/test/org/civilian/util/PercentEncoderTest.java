@@ -18,6 +18,7 @@ package org.civilian.util;
 
 import org.junit.Test;
 import org.civilian.CivTest;
+import org.civilian.util.http.PercentEncoder;
 
 
 public class PercentEncoderTest extends CivTest

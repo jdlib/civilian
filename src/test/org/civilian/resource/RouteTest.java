@@ -20,7 +20,7 @@ import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParams;
-import org.civilian.util.UriEncoder;
+import org.civilian.util.http.UriEncoder;
 
 
 public class RouteTest extends CivTest

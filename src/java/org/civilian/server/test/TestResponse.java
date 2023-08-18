@@ -31,7 +31,7 @@ import org.civilian.request.Session;
 import org.civilian.response.AbstractResponse;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 /**

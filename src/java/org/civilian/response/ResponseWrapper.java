@@ -26,7 +26,7 @@ import org.civilian.template.TemplateWriter;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
-import org.civilian.util.UriEncoder;
+import org.civilian.util.http.UriEncoder;
 
 
 /**

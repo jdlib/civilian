@@ -33,7 +33,7 @@ import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleProvider;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 /**

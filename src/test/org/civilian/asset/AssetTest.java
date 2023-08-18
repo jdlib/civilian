@@ -28,7 +28,7 @@ import org.civilian.internal.ParamList;
 import org.civilian.request.Request;
 import org.civilian.response.Response;
 import org.civilian.server.test.TestResponse;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 public class AssetTest extends CivTest

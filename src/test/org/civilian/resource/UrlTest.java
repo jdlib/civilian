@@ -32,7 +32,7 @@ import org.civilian.response.Url;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.TypeLib;
-import org.civilian.util.UriEncoder;
+import org.civilian.util.http.UriEncoder;
 
 
 public class UrlTest extends CivTest

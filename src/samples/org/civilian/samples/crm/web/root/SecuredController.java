@@ -29,7 +29,7 @@ import org.civilian.samples.crm.web.SessionUser;
 import org.civilian.samples.crm.web.template.ControllerTemplate;
 import org.civilian.samples.crm.web.util.Script;
 import org.civilian.template.Template;
-import org.civilian.util.HttpHeaders;
+import org.civilian.util.http.HttpHeaders;
 
 
 /**

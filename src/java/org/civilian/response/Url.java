@@ -32,7 +32,7 @@ import org.civilian.text.type.TypeSerializer;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.util.Check;
-import org.civilian.util.UriEncoder;
+import org.civilian.util.http.UriEncoder;
 
 
 /**

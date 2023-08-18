@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.util;
+package org.civilian.util.http;
 
 
 import java.nio.ByteBuffer;
@@ -24,7 +24,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * PercentEncoder is a utility class to convert a character to the string "%xy"
- * where xy is the hex value of the utf-8 encoded character.
+ * where xy is the hex value of the UTF-8 encoded character.
  */
 public class PercentEncoder
 {
@@ -81,8 +81,8 @@ public class PercentEncoder
 	}
 	
 	
-	private ByteBuffer byteBuffer_; 
-	private CharBuffer charBuffer_; 
-	private CharsetEncoder encoder_;
+	private final ByteBuffer byteBuffer_; 
+	private final CharBuffer charBuffer_; 
+	private final CharsetEncoder encoder_;
 	private static final char HEX_DIGITS[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 }
