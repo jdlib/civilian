@@ -32,7 +32,7 @@ import org.civilian.template.TextTemplate;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
 import org.civilian.text.service.LocaleService;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -110,7 +110,7 @@ public class AbstractResponseTest extends CivTest
 	{
 		response.sendRedirect(new Url(response, "x"));
 		assertSame(Response.Type.REDIRECT, response.getType());
-		assertEquals("x", response.getHeaders().get(HttpHeaders.LOCATION));
+		assertEquals("x", response.getHeaders().get(HeaderNames.LOCATION));
 		assertTrue(response.isCommitted());
 		
 		try

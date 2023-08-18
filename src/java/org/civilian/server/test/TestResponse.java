@@ -31,7 +31,7 @@ import org.civilian.request.Session;
 import org.civilian.response.AbstractResponse;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 /**
@@ -96,7 +96,7 @@ public class TestResponse extends AbstractResponse
 	@Override protected void sendRedirectImpl(String url) throws IOException
 	{
 		resetBuffer();
-		getHeaders().set(HttpHeaders.LOCATION, url);
+		getHeaders().set(HeaderNames.LOCATION, url);
 		setStatus(Status.SC302_FOUND);
 		flushBuffer();
 	}
@@ -157,7 +157,7 @@ public class TestResponse extends AbstractResponse
 	@Override public Response setContentLength(long length)
 	{
 		contentLength_ = length;
-		getHeaders().set(HttpHeaders.CONTENT_LENGTH, length < 0 ? null : String.valueOf(length));
+		getHeaders().set(HeaderNames.CONTENT_LENGTH, length < 0 ? null : String.valueOf(length));
 		return this;
 	}
 	

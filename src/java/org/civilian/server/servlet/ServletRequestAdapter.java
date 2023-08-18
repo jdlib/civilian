@@ -45,7 +45,7 @@ import org.civilian.request.Session;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.Iterators;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 /**
@@ -129,7 +129,7 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 	
 	private boolean hasAcceptLanguageHeader()
 	{
-		return getHeaders().get(HttpHeaders.ACCEPT_LANGUAGE) != null;
+		return getHeaders().get(HeaderNames.ACCEPT_LANGUAGE) != null;
 	}
 	
 

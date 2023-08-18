@@ -29,7 +29,7 @@ import org.civilian.samples.crm.web.SessionUser;
 import org.civilian.samples.crm.web.template.ControllerTemplate;
 import org.civilian.samples.crm.web.util.Script;
 import org.civilian.template.Template;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 /**
@@ -52,7 +52,7 @@ public abstract class SecuredController extends CrmController
 		
 		if (sessionUser_ == null)
 		{
-			if (request.getHeaders().is(HttpHeaders.X_REQUESTED_WITH, "XMLHttpRequest"))
+			if (request.getHeaders().is(HeaderNames.X_REQUESTED_WITH, "XMLHttpRequest"))
 				getResponse().sendError(Response.Status.UNAUTHORIZED);
 			else
 			{

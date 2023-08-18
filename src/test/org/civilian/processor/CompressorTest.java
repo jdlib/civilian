@@ -4,7 +4,7 @@ package org.civilian.processor;
 import org.civilian.CivTest;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.server.test.TestRequest;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 import org.junit.Test;
 
 
@@ -25,15 +25,15 @@ public class CompressorTest extends CivTest
 		assertProcess("deflate", "Accept-Encoding", "deflate", null, (byte)120, (byte)-100);
 
 		// Accept-encoding = deflate, also modifies etag
-		request_.getTestResponse().getHeaders().set(HttpHeaders.ETAG, "a");
+		request_.getTestResponse().getHeaders().set(HeaderNames.ETAG, "a");
 		assertProcess("deflate", "Accept-Encoding", "deflate", "a-deflate", (byte)120, (byte)-100);
 
 		// no compression if someone else applied a content-encoding
-		request_.getTestResponse().getHeaders().set(HttpHeaders.CONTENT_ENCODING, "someotherenc");
+		request_.getTestResponse().getHeaders().set(HeaderNames.CONTENT_ENCODING, "someotherenc");
 		assertProcess("deflate", "Accept-Encoding", "someotherenc", null, "a");
 
 		// no compression if someone else applied a content-encoding
-		request_.getTestResponse().getHeaders().setNull(HttpHeaders.CONTENT_ENCODING);
+		request_.getTestResponse().getHeaders().setNull(HeaderNames.CONTENT_ENCODING);
 		request_.setAttribute(Compressor.NO_COMPRESSION, Boolean.TRUE);
 		assertProcess("deflate", "Accept-Encoding", null, null, "a");
 	}
@@ -47,7 +47,7 @@ public class CompressorTest extends CivTest
 	
 	private void assertProcess(String acceptEncoding, String vary, String contentEncoding, String etag, byte... content) throws Exception
 	{
-		request_.getHeaders().set(HttpHeaders.ACCEPT_ENCODING, acceptEncoding);
+		request_.getHeaders().set(HeaderNames.ACCEPT_ENCODING, acceptEncoding);
 		ResponseHeaders headers = request_.getResponse().getHeaders();
 		
 		// process always returns false
@@ -56,9 +56,9 @@ public class CompressorTest extends CivTest
 		request_.getResponse().getContentWriter().print("a");
 		assertArrayEquals(content, request_.getTestResponse().getContentBytes(true));
 		
-		assertEquals(vary, headers.get(HttpHeaders.VARY));
-		assertEquals(contentEncoding, headers.get(HttpHeaders.CONTENT_ENCODING));
-		assertEquals(etag, headers.get(HttpHeaders.ETAG));
+		assertEquals(vary, headers.get(HeaderNames.VARY));
+		assertEquals(contentEncoding, headers.get(HeaderNames.CONTENT_ENCODING));
+		assertEquals(etag, headers.get(HeaderNames.ETAG));
 
 		request_.getTestResponse().clear();
 	}

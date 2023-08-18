@@ -4,7 +4,7 @@ package org.civilian.util.http;
 /**
  * Defines constants for common HTTP headers.
  */
-public interface HttpHeaders
+public interface HeaderNames
 {
 	public static final String ACCEPT = "Accept";
 	public static final String ACCEPT_CHARSET = "Accept-Charset";

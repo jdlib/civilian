@@ -17,7 +17,7 @@ import org.civilian.response.ResponseHeaders;
 import org.civilian.response.Response.Status;
 import org.civilian.util.Check;
 import org.civilian.util.IoUtil;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 /**
@@ -75,13 +75,13 @@ public class Range extends AbstractList<Range.Part>
 		if (!range.isValid())
 		{
 			// range contains syntax errors
-			headers.set(HttpHeaders.CONTENT_RANGE, "bytes */" + fileLength); // Required in 416.
+			headers.set(HeaderNames.CONTENT_RANGE, "bytes */" + fileLength); // Required in 416.
 	        response.sendError(Status.SC416_REQUESTED_RANGE_NOT_SATISFIABLE);
 	        return;
 		}
 
 		response.setStatus(Status.PARTIAL_CONTENT);
-		headers.set(HttpHeaders.ACCEPT_RANGES, "bytes");
+		headers.set(HeaderNames.ACCEPT_RANGES, "bytes");
 		
 		try (RandomAccessFile ra = new RandomAccessFile(file, "r"))
 		{
@@ -92,7 +92,7 @@ public class Range extends AbstractList<Range.Part>
 			{
 				Part part 		= range.get(0).adjust(fileLength);
 				long partLength = part.length();
-				headers.set(HttpHeaders.CONTENT_RANGE, part.toContentRange(fileLength));
+				headers.set(HeaderNames.CONTENT_RANGE, part.toContentRange(fileLength));
 	            response.setContentLength(partLength);
 	            part.copy(ra, out, buffer);
 			}
@@ -305,7 +305,7 @@ public class Range extends AbstractList<Range.Part>
 	 */
 	public static Range parse(Request request)
 	{
-		return parse(request.getHeaders().get(HttpHeaders.RANGE));
+		return parse(request.getHeaders().get(HeaderNames.RANGE));
 	}
 	
 	

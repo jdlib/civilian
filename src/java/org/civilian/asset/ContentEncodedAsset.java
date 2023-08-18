@@ -4,7 +4,7 @@ package org.civilian.asset;
 import java.io.IOException;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 /**
@@ -24,7 +24,7 @@ public class ContentEncodedAsset extends ProxyAsset
 	@Override protected void writeHeaders(Response response)
 	{
 		super.writeHeaders(response);
-		response.getHeaders().set(HttpHeaders.CONTENT_ENCODING, contentEncoding_);
+		response.getHeaders().set(HeaderNames.CONTENT_ENCODING, contentEncoding_);
 	}
 	
 	

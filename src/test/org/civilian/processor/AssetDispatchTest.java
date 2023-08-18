@@ -26,7 +26,7 @@ import org.civilian.request.Request;
 import org.civilian.resource.Path;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 public class AssetDispatchTest extends CivTest
@@ -82,7 +82,7 @@ public class AssetDispatchTest extends CivTest
 		// test options request
 		when(request.getMethod()).thenReturn("OPTIONS");
 		assertTrue(dispatch.process(request, ProcessorChain.EMPTY));
-		verify(headers).set(HttpHeaders.ALLOW, "GET, HEAD, POST, OPTIONS");
+		verify(headers).set(HeaderNames.ALLOW, "GET, HEAD, POST, OPTIONS");
 		
 		// switch to an allowed method
 		when(request.getMethod()).thenReturn("HEAD");

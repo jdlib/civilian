@@ -33,7 +33,7 @@ import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleProvider;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 /**
@@ -355,7 +355,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	 */
 	protected void setCaching()
 	{
-		getResponse().getHeaders().set(HttpHeaders.CACHE_CONTROL, "no-cache");
+		getResponse().getHeaders().set(HeaderNames.CACHE_CONTROL, "no-cache");
 	}
 
 	

@@ -2,7 +2,7 @@ package org.civilian.asset;
 
 
 import org.civilian.response.Response;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 public interface AssetCacheControl
@@ -12,13 +12,13 @@ public interface AssetCacheControl
 
     public static final AssetCacheControl DEFAULT = (response, asset) -> 
     {
-    	response.getHeaders().set(HttpHeaders.CACHE_CONTROL, DEFAULT_MAX_AGE);
+    	response.getHeaders().set(HeaderNames.CACHE_CONTROL, DEFAULT_MAX_AGE);
 	};
 	
 	
     public static final AssetCacheControl NO_CACHE = (response, asset) -> 
     {
-    	response.getHeaders().set(HttpHeaders.CACHE_CONTROL, "no-cache");
+    	response.getHeaders().set(HeaderNames.CACHE_CONTROL, "no-cache");
 	};
 
 	

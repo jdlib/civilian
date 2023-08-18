@@ -47,7 +47,7 @@ import org.civilian.response.Url;
 import org.civilian.util.Check;
 import org.civilian.util.IoUtil;
 import org.civilian.util.Iterators;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 /**
@@ -710,7 +710,7 @@ public class TestRequest extends AbstractRequest
 	public TestRequest setAcceptedContentTypes(ContentTypeList contentTypes)
 	{
 		acceptedContentTypes_ = Check.notNull(contentTypes, "contentTypes");
-		getHeaders().set(HttpHeaders.ACCEPT, acceptedContentTypes_.toString());
+		getHeaders().set(HeaderNames.ACCEPT, acceptedContentTypes_.toString());
 		return this;
 	}
 

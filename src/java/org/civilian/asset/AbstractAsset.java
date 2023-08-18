@@ -8,7 +8,7 @@ import java.util.Date;
 import org.civilian.content.ContentType;
 import org.civilian.response.Response;
 import org.civilian.util.IoUtil;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 public abstract class AbstractAsset extends Asset
@@ -117,7 +117,7 @@ public abstract class AbstractAsset extends Asset
 		if (length_ >= 0)
 			response.setContentLength(length_);
 		if (lastModifiedHttp_ != null)
-			response.getHeaders().set(HttpHeaders.LAST_MODIFIED, lastModifiedHttp_);
+			response.getHeaders().set(HeaderNames.LAST_MODIFIED, lastModifiedHttp_);
 		if (cacheControl_ != null)
 			cacheControl_.writeHeaders(response, this);
 	}

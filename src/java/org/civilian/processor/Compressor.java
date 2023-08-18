@@ -25,7 +25,7 @@ import org.civilian.request.Request;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.response.ResponseInterceptor;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 /**
@@ -53,7 +53,7 @@ public class Compressor extends Processor
 	
 	@Override public boolean process(Request request, ProcessorChain chain) throws Exception
 	{
-		String accepted = request.getHeaders().get(HttpHeaders.ACCEPT_ENCODING);
+		String accepted = request.getHeaders().get(HeaderNames.ACCEPT_ENCODING);
 		if (accepted != null)
 			addInterceptor(request, accepted);
 			
@@ -69,7 +69,7 @@ public class Compressor extends Processor
 			if (!scheme.isIdentity())
 			{
 				Response response = request.getResponse();
-				response.getHeaders().add(HttpHeaders.VARY, "Accept-Encoding");
+				response.getHeaders().add(HeaderNames.VARY, "Accept-Encoding");
 				response.addInterceptor().forStream(new Interceptor(scheme));
 			}
 		}
@@ -96,7 +96,7 @@ public class Compressor extends Processor
 			ResponseHeaders headers = response.getHeaders();
 
 			// do not apply compression if some other content-encoding was applied
-			String encoding = headers.get(HttpHeaders.CONTENT_ENCODING);
+			String encoding = headers.get(HeaderNames.CONTENT_ENCODING);
 			if (encoding != null)
 				return null;
 
@@ -104,12 +104,12 @@ public class Compressor extends Processor
 			response.setContentLength(-1);
 
 			// set content-encoding
-			headers.set(HttpHeaders.CONTENT_ENCODING, scheme_.getName());
+			headers.set(HeaderNames.CONTENT_ENCODING, scheme_.getName());
 			
 			// enhance etag if set
-			String etag = headers.get(HttpHeaders.ETAG);
+			String etag = headers.get(HeaderNames.ETAG);
 			if (etag != null)
-				headers.set(HttpHeaders.ETAG, etag + '-' + scheme_.getName());
+				headers.set(HeaderNames.ETAG, etag + '-' + scheme_.getName());
 			
 			return this;
 		}

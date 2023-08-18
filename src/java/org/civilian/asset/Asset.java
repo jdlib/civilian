@@ -27,7 +27,7 @@ import java.util.TimeZone;
 import org.civilian.content.ContentType;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 /**
@@ -175,7 +175,7 @@ public abstract class Asset
 
 	protected boolean checkIfModified(Response response)
 	{
-		long modifiedSince = response.getRequest().getHeaders().getDate(HttpHeaders.IF_MODIFIED_SINCE);
+		long modifiedSince = response.getRequest().getHeaders().getDate(HeaderNames.IF_MODIFIED_SINCE);
 		if ((modifiedSince != -1) && (getLastModified() < modifiedSince + 1000))
 		{
 			response.setStatus(Response.Status.NOT_MODIFIED);

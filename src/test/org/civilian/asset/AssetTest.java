@@ -28,7 +28,7 @@ import org.civilian.internal.ParamList;
 import org.civilian.request.Request;
 import org.civilian.response.Response;
 import org.civilian.server.test.TestResponse;
-import org.civilian.util.http.HttpHeaders;
+import org.civilian.util.http.HeaderNames;
 
 
 public class AssetTest extends CivTest
@@ -99,7 +99,7 @@ public class AssetTest extends CivTest
 		TestResponse response = createTestResponse(null);
 		asset.write(response, false);
 		
-		assertEquals("br", response.getHeaders().get(HttpHeaders.CONTENT_ENCODING));
+		assertEquals("br", response.getHeaders().get(HeaderNames.CONTENT_ENCODING));
 	}
 	
 	
@@ -125,19 +125,19 @@ public class AssetTest extends CivTest
 		TestResponse response 	= createTestResponse(headers);
 		
 		asset.setLastModified(10000);
-		headers.setDate(HttpHeaders.IF_MODIFIED_SINCE, 9500);
+		headers.setDate(HeaderNames.IF_MODIFIED_SINCE, 9500);
 		
 		asset.write(response, true);
-		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get(HttpHeaders.LAST_MODIFIED));
-		assertEquals("max-age=2592000", response.getHeaders().get(HttpHeaders.CACHE_CONTROL));
+		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get(HeaderNames.LAST_MODIFIED));
+		assertEquals("max-age=2592000", response.getHeaders().get(HeaderNames.CACHE_CONTROL));
 		assertEquals(Response.Status.SC304_NOT_MODIFIED, response.getStatus());
 		
 		response.reset();
-		headers.setDate(HttpHeaders.IF_MODIFIED_SINCE, 8000);
+		headers.setDate(HeaderNames.IF_MODIFIED_SINCE, 8000);
 		asset.write(response, true);
 
-		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get(HttpHeaders.LAST_MODIFIED));
-		assertEquals("max-age=2592000", response.getHeaders().get(HttpHeaders.CACHE_CONTROL));
+		assertEquals("Thu, 01 Jan 1970 00:00:10 GMT", response.getHeaders().get(HeaderNames.LAST_MODIFIED));
+		assertEquals("max-age=2592000", response.getHeaders().get(HeaderNames.CACHE_CONTROL));
 		assertEquals(ContentType.TEXT_CSS.getValue(), response.getContentType());
 		assertEquals("ISO-8859-1", response.getCharEncoding());
 		assertEquals(Response.Status.SC200_OK, response.getStatus());
