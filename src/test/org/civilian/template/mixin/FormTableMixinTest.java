@@ -36,7 +36,6 @@ public class FormTableMixinTest extends CivTest
 		TestTemplateWriter out = TestTemplateWriter.create();
 		when(out.response.getRequest()).thenReturn(request);
 		when(request.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
-		when(request.getResponse()).thenReturn(out.response);
 		when(request.getRequest()).thenReturn(request);
 		
 		Form form = new Form(request, out.response);

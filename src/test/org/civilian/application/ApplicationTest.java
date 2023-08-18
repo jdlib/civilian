@@ -130,6 +130,6 @@ public class ApplicationTest extends CivTest
 		TestApp app = new TestApp();
 		TestRequest request = new TestRequest(app);
 		
-		app.process(request, request.getResponse());
+		app.process(request, request.getTestResponse());
 	}
 }

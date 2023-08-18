@@ -39,20 +39,19 @@ public class StdTest extends CivTest
 		out = TestTemplateWriter.create();
 		when(out.response.getRequest()).thenReturn(request);
 		when(out.response.getResponse()).thenReturn(out.response);
-		when(request.getResponse()).thenReturn(out.response);
 		when(request.getHeaders()).thenReturn(headers);
 	}
 	
 	
 	@Test public void testNotFound() throws Exception
 	{
-		assertNull(new NotFoundResponseHandler(false).send(request.getResponse()));
+		assertNull(new NotFoundResponseHandler(false).send(out.response));
 		verify(out.response).setStatus(Response.Status.NOT_FOUND);
 
 		ArrayList<String> list = new ArrayList<>();
 		list.add("x");
 		when(request.getAcceptedContentTypes()).thenReturn(new ContentTypeList(ContentType.TEXT_HTML));
-		assertNull(new NotFoundResponseHandler(true).send(request.getResponse()));
+		assertNull(new NotFoundResponseHandler(true).send(out.response));
 	}
 	
 	
@@ -75,7 +74,7 @@ public class StdTest extends CivTest
 			Response.Status.INTERNAL_SERVER_ERROR, 
 			"some error", 
 			new RuntimeException("unexpected"));
-		return errResponse.send(request.getResponse());
+		return errResponse.send(out.response);
 	}
 	
 	
