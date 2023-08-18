@@ -582,7 +582,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * Processes a request and generates a response. 
 	 * The default implementation forwards the request to the processor pipeline.
 	 * If no processor handled the request, it is forwarded to the {@link #createNotFoundHandler() NotFoundResponse}.
-	 * If an exception occurs during request processing {@link #onError(Request, Throwable)} is called
+	 * If an exception occurs during request processing {@link #onError(Request, Response, Throwable)} is called
 	 * @param request the request
 	 * @param response the response  
 	 */
@@ -616,7 +616,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 		{
 			try
 			{
-				onError(request, t);
+				onError(request, response, t);
 			}
 			catch(Exception e)
 			{
@@ -637,12 +637,15 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * 		If it should not be ignored, it logs the error and - if the response is not yet committed -
 	 * 		sends the error via {@link Response#sendError(int, String, Throwable)}
 	 * </ul> 
+	 * @param request the request
+	 * @param response the response
+	 * @param error the error
 	 */
-	protected void onError(Request request, Throwable error) throws Exception
+	protected void onError(Request request, Response response, Throwable error) throws Exception
 	{
 		Check.notNull(request, "request");
+		Check.notNull(response, "response");
 		Check.notNull(error, "error");
-		Response response = request.getResponse();
 		
 		if (error instanceof BadRequestException)
 		{

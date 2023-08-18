@@ -362,7 +362,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	/**
 	 * Called when an exception is thrown during request processing.
 	 * The default implementation just rethrows the exception which will then be delivered
-	 * to {@link Application#onError(Request, Throwable)}.
+	 * to {@link Application#onError(Request, Response, Throwable)}.
 	 * Derived controller implementations which want to handle errors should override this method.
 	 */
 	protected void onError(Exception e) throws Exception
