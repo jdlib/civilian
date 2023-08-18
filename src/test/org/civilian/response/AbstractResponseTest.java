@@ -24,7 +24,6 @@ import java.util.Locale;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
 import org.civilian.resource.Resource;
-import org.civilian.resource.Url;
 import org.civilian.server.test.TestApp;
 import org.civilian.server.test.TestRequest;
 import org.civilian.server.test.TestResponse;

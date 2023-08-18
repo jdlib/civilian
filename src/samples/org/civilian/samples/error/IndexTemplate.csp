@@ -1,4 +1,4 @@
-import org.civilian.resource.Url
+import org.civilian.response.Url
 
 
 template() mixin html

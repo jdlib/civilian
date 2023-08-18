@@ -7,7 +7,7 @@ package org.civilian.application.admin;
 
 import java.util.Date;
 import org.civilian.Version;
-import org.civilian.resource.Url;
+import org.civilian.response.Url;
 import org.civilian.server.Server;
 import org.civilian.server.ServerApp;
 import org.civilian.template.Template;
