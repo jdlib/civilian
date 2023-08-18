@@ -19,10 +19,9 @@ package org.civilian.form;
 import java.util.ArrayList;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Post;
+import org.civilian.exchange.RequestResponseProvider;
 import org.civilian.request.Request;
-import org.civilian.request.RequestProvider;
 import org.civilian.response.Response;
-import org.civilian.response.ResponseProvider;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
@@ -67,7 +66,7 @@ import org.civilian.util.Check;
  *  submit the form from a Javascript event handler. On the server-side you want to read the request,
  *  add additional controls to the form (depending on the so far entered input), but no error should be triggered yet. 
  */
-public class Form implements RequestProvider, ResponseProvider
+public class Form implements RequestResponseProvider
 {
 	static final String RELOADED = "reloaded";
 	
@@ -77,7 +76,7 @@ public class Form implements RequestProvider, ResponseProvider
 	 * @param requestProvider allows the form to access the request and read
 	 * 		parameters from the request.
 	 */
-	public Form(FormOwner owner)
+	public Form(RequestResponseProvider owner)
 	{
 		owner_ = Check.notNull(owner, "owner");
 		setName("f" + getClass().getName().hashCode());
@@ -86,7 +85,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	public Form(Request request, Response response)
 	{
-		this(FormOwner.of(request, response));
+		this(RequestResponseProvider.of(request, response));
 	}
 
 	
@@ -98,7 +97,7 @@ public class Form implements RequestProvider, ResponseProvider
 	/**
 	 * Returns the owner.
 	 */
-	public FormOwner getOwner()
+	public RequestResponseProvider getOwner()
 	{
 		return owner_;
 	}
@@ -671,6 +670,6 @@ public class Form implements RequestProvider, ResponseProvider
 	private Button defaultButton_;
 	private Control<?> errorControl_;
 	private boolean multipartEncoded_;
-	private final FormOwner owner_;
+	private final RequestResponseProvider owner_;
 	private final ArrayList<Control<?>> controls_ = new ArrayList<>();
 }

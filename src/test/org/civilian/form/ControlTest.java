@@ -23,6 +23,7 @@ import java.util.Locale;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.civilian.CivTest;
+import org.civilian.exchange.RequestResponseProvider;
 import org.civilian.request.Request;
 import org.civilian.request.Upload;
 import org.civilian.template.TestTemplateWriter;
@@ -40,7 +41,7 @@ public class ControlTest extends CivTest
 		when(request.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
 		when(request.getRequest()).thenReturn(request);
 		when(out.response.getRequest()).thenReturn(request);
-		owner = FormOwner.of(request, out.response);
+		owner = RequestResponseProvider.of(request, out.response);
 	}
 	
 	
@@ -507,7 +508,7 @@ public class ControlTest extends CivTest
 	
 	
 	private static Request request;
-	private static FormOwner owner;
+	private static RequestResponseProvider owner;
 	private static TestTemplateWriter out = TestTemplateWriter.create();
 	private static KeyList<String> KEYS = KeyLists.forContent(new String[]{ "a", "b"}, new String[]{ "alpha", "beta"});
 }

@@ -16,15 +16,15 @@
 package org.civilian.samples.jpa.shared.web;
 
 
+import org.civilian.exchange.RequestResponseProvider;
 import org.civilian.form.Button;
 import org.civilian.form.Form;
-import org.civilian.form.FormOwner;
 import org.civilian.form.TextField;
 
 
 public class IndexForm extends Form
 {
-	public IndexForm(FormOwner owner)
+	public IndexForm(RequestResponseProvider owner)
 	{
 		super(owner);
 		add(code	= new TextField("code"), "Enter a person code").setRequired();

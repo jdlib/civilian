@@ -16,15 +16,15 @@
  package org.civilian.samples.game;
 
 
+import org.civilian.exchange.RequestResponseProvider;
 import org.civilian.form.Button;
 import org.civilian.form.Form;
-import org.civilian.form.FormOwner;
 import org.civilian.form.IntField;
 
 
 public class GameForm extends Form
 {
-	public GameForm(FormOwner owner)
+	public GameForm(RequestResponseProvider owner)
 	{
 		super(owner);
 		
