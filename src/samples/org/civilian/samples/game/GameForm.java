@@ -18,15 +18,15 @@
 
 import org.civilian.form.Button;
 import org.civilian.form.Form;
+import org.civilian.form.FormOwner;
 import org.civilian.form.IntField;
-import org.civilian.request.RequestProvider;
 
 
 public class GameForm extends Form
 {
-	public GameForm(RequestProvider requestProvider)
+	public GameForm(FormOwner owner)
 	{
-		super(requestProvider);
+		super(owner);
 		
 		add(guess 	= new IntField("guess"), "Your guess");
 		add(ok 		= Button.submit("OK"));

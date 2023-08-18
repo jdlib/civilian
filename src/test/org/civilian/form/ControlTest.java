@@ -37,8 +37,10 @@ public class ControlTest extends CivTest
 	@BeforeClass public static void beforeClass()
 	{
 		request = mock(Request.class);
-		when(out.response.getRequest()).thenReturn(request);
 		when(request.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
+		when(request.getRequest()).thenReturn(request);
+		when(out.response.getRequest()).thenReturn(request);
+		owner = FormOwner.of(request, out.response);
 	}
 	
 	
@@ -327,7 +329,7 @@ public class ControlTest extends CivTest
 	{
 		FileField field = new FileField("photo");
 		
-		Form form = new Form(request);
+		Form form = new Form(owner);
 		assertFalse(form.isMultipartEncoded());
 		form.add(field);
 		assertTrue(form.isMultipartEncoded());
@@ -351,7 +353,7 @@ public class ControlTest extends CivTest
 
 	@Test public void testButton()
 	{
-		Form form = new Form(request);
+		Form form = new Form(owner);
 		Button button; 
 
 		button = Button.button("OK");
@@ -412,7 +414,7 @@ public class ControlTest extends CivTest
 	
 	@Test public void testFormAdd() throws Exception
 	{
-		Form form = new Form(request);
+		Form form = new Form(owner);
 		assertEquals(0, form.size());
 		
 		Button button = Button.button("OK");
@@ -452,7 +454,7 @@ public class ControlTest extends CivTest
 	
 	@Test public void testFormRead() throws Exception
 	{
-		Form form = new Form(request);
+		Form form = new Form(owner);
 		
 		TextField field = new TextField("name");
 		form.add(field, "Name");
@@ -474,7 +476,7 @@ public class ControlTest extends CivTest
 	
 	@Test public void testFormAttrs()
 	{
-		Form form = new Form(request);
+		Form form = new Form(owner);
 		assertNull(form.getTarget());
 		form.setTarget("blank");
 		assertEquals("blank", form.getTarget());
@@ -505,6 +507,7 @@ public class ControlTest extends CivTest
 	
 	
 	private static Request request;
+	private static FormOwner owner;
 	private static TestTemplateWriter out = TestTemplateWriter.create();
 	private static KeyList<String> KEYS = KeyLists.forContent(new String[]{ "a", "b"}, new String[]{ "alpha", "beta"});
 }

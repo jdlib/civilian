@@ -22,6 +22,7 @@ import org.civilian.annotation.Post;
 import org.civilian.request.Request;
 import org.civilian.request.RequestProvider;
 import org.civilian.response.Response;
+import org.civilian.response.ResponseProvider;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
@@ -66,7 +67,7 @@ import org.civilian.util.Check;
  *  submit the form from a Javascript event handler. On the server-side you want to read the request,
  *  add additional controls to the form (depending on the so far entered input), but no error should be triggered yet. 
  */
-public class Form implements RequestProvider
+public class Form implements RequestProvider, ResponseProvider
 {
 	static final String RELOADED = "reloaded";
 	
@@ -76,10 +77,16 @@ public class Form implements RequestProvider
 	 * @param requestProvider allows the form to access the request and read
 	 * 		parameters from the request.
 	 */
-	public Form(RequestProvider requestProvider)
+	public Form(FormOwner owner)
 	{
-		requestProvider_ = Check.notNull(requestProvider, "requestProvider");
+		owner_ = Check.notNull(owner, "owner");
 		setName("f" + getClass().getName().hashCode());
+	}
+
+	
+	public Form(RequestProvider reqprov, ResponseProvider resprov)
+	{
+		this(FormOwner.of(reqprov, resprov));
 	}
 
 	
@@ -89,17 +96,32 @@ public class Form implements RequestProvider
 	
 	
 	/**
+	 * Returns the owner.
+	 */
+	public FormOwner getOwner()
+	{
+		return owner_;
+	}
+
+	
+	/**
 	 * Returns the request associated with the form.
 	 */
 	@Override public Request getRequest()
 	{
-		Request request = requestProvider_.getRequest();
-		if (request == null)
-			throw new IllegalStateException(requestProvider_.getClass() + " returned null request");
-		return request;
+		return owner_.getRequest();
 	}
 	
 
+	/**
+	 * Returns the response associated with the form.
+	 */
+	@Override public Response getResponse()
+	{
+		return owner_.getResponse();
+	}
+
+	
 	/**
 	 * Sets the form name. By default a form name is automatically 
 	 * generated. When the form is printed, its name is printed 
@@ -588,7 +610,7 @@ public class Form implements RequestProvider
 	 */
 	public void printAttrs(TemplateWriter out)
 	{
-		Response response = getRequest().getResponse();
+		Response response = getResponse();
 		HtmlUtil.attr(out, "method", method_);
 		String action = getAction();
 		if (action != null)
@@ -649,6 +671,6 @@ public class Form implements RequestProvider
 	private Button defaultButton_;
 	private Control<?> errorControl_;
 	private boolean multipartEncoded_;
-	private RequestProvider requestProvider_;
-	private ArrayList<Control<?>> controls_ = new ArrayList<>();
+	private final FormOwner owner_;
+	private final ArrayList<Control<?>> controls_ = new ArrayList<>();
 }

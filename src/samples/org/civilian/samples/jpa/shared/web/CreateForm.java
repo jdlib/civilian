@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package org.civilian.samples.jpa.shared.web;
+package org.civilian.samples.jpa.shared.web;
 
 
 import org.civilian.form.Button;
 import org.civilian.form.Form;
+import org.civilian.form.FormOwner;
 import org.civilian.form.TextField;
-import org.civilian.request.RequestProvider;
 
 
 public class CreateForm extends Form
 {
-	public CreateForm(RequestProvider requestProvider)
+	public CreateForm(FormOwner owner)
 	{
-		super(requestProvider);
+		super(owner);
 		
 		add(code 		= new TextField("code"),		"Code").setRequired();
 		add(firstName 	= new TextField("firstName"),	"First Name").setRequired();

@@ -39,7 +39,7 @@ public class FormTableMixinTest extends CivTest
 		when(request.getResponse()).thenReturn(out.response);
 		when(request.getRequest()).thenReturn(request);
 		
-		Form form = new Form(request);
+		Form form = new Form(request, out.response);
 		form.add(new TextField("name"), "Name");
 		
 		FormTableMixin formTable = new FormTableMixin(out); 
