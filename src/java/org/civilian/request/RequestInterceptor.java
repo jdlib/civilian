@@ -17,21 +17,22 @@ package org.civilian.request;
 
 
 import java.io.IOException;
-import java.io.Reader;
 
 
 /**
- * A RequestReaderInterceptor can be used to wrap the Reader a Request.
- * @see Request#addInterceptor(RequestReaderInterceptor)
+ * A RequestInterceptor can be used to wrap the Reader or InputStream of a Request.
+ * @see Request#addInterceptor()
+ * @param T either a Reader or InputStream
  */
-public interface RequestReaderInterceptor
+public interface RequestInterceptor<T>
 {
 	/**
 	 * Called when the Reader of request content is obtained
 	 * for the first time. 
 	 * @param request the request
-	 * @param reader the Reader
+	 * @param the input (either a Reader or InputStream)
 	 * @return a Reader which should be used to read request content.
+	 * @throws IOException if an error occurs
 	 */
-	public Reader intercept(Request request, Reader reader) throws IOException; 
+	public T intercept(Request request, T in) throws IOException; 
 }

@@ -642,20 +642,29 @@ public interface Request extends RequestProvider, ResponseProvider,
 
 	
 	/**
-	 * Adds a RequestStreamInterceptor which can wrap the request {@link #getContentStream() InputStream}.
-	 * {@link #getContentStream()} or {@link #getContentReader()} must not have been called yet.
-	 * @param interceptor an interceptor
+	 * Returns a InterceptorBuilder which allows to add a interceptor.
+	 * @return the builder
 	 */
-	public abstract void addInterceptor(RequestStreamInterceptor interceptor);
-	
-	
-	/**
-	 * Adds a RequestReaderInterceptor which can wrap the request {@link #getContentReader() Reader}.
-	 * {@link #getContentStream()} or {@link #getContentReader()} must not have been called yet.
-	 * @param interceptor an interceptor
-	 */
-	public abstract void addInterceptor(RequestReaderInterceptor interceptor);
+	public abstract InterceptorBuilder addInterceptor();
 
+	
+	public interface InterceptorBuilder
+	{
+		/**
+		 * Adds a RequestInterceptor which can wrap the request {@link #getContentStream() InputStream}.
+		 * {@link #getContentStream()} or {@link #getContentReader()} must not have been called yet.
+		 * @param interceptor an interceptor
+		 */
+		public void forStream(RequestInterceptor<InputStream> interceptor);
+
+	
+		/**
+		 * Adds a RequestInterceptor which can wrap the request {@link #getContentReader() Reader}.
+		 * {@link #getContentStream()} or {@link #getContentReader()} must not have been called yet.
+		 * @param interceptor an interceptor
+		 */
+		public void forReader(RequestInterceptor<Reader> interceptor);
+	}
 	
 	//--------------------------------------
 	// async operations

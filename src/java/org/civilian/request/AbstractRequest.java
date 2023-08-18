@@ -450,9 +450,9 @@ public abstract class AbstractRequest implements Request
 		// if an interceptor fails, we still want to have an assigned imputstream 
 		contentInput_ = in; 
 		
-		RequestStreamInterceptor interceptor = readExt().streamInterceptor;
+		RequestInterceptor<InputStream> interceptor = readExt().streamInterceptor;
 		if (interceptor != null) 
-			contentInput_ = ReqStreamInterceptorChain.intercept(this, in, interceptor);
+			contentInput_ = RequestInterceptorChain.intercept(this, in, interceptor);
 	}
 	
 	
@@ -493,7 +493,7 @@ public abstract class AbstractRequest implements Request
 		// if an interceptor fails, we still want to have an assigned reader 
 		contentInput_ = reader;
 		if (ext.readerInterceptor != null)
-			contentInput_ = ReqReaderInterceptorChain.intercept(this, reader, ext.readerInterceptor);
+			contentInput_ = RequestInterceptorChain.intercept(this, reader, ext.readerInterceptor);
 	}
 	
 	
@@ -526,19 +526,30 @@ public abstract class AbstractRequest implements Request
 	}
 	
 	
-	@Override public void addInterceptor(RequestStreamInterceptor interceptor)
+	@Override public InterceptorBuilder addInterceptor()
 	{
-		checkAddInterceptor(interceptor);
-		Extension ext 			= writeExt();
-		ext.streamInterceptor 	= ReqStreamInterceptorChain.of(ext.streamInterceptor, interceptor); 
+		return new InterceptorBuilderImpl();
 	}
 	
-
-	@Override public void addInterceptor(RequestReaderInterceptor interceptor)
+	
+	private class InterceptorBuilderImpl implements InterceptorBuilder
 	{
-		checkAddInterceptor(interceptor);
-		Extension ext 			= writeExt();
-		ext.readerInterceptor 	= new ReqReaderInterceptorChain(ext.readerInterceptor, interceptor); 
+		@Override
+		public void forStream(RequestInterceptor<InputStream> interceptor)
+		{
+			checkAddInterceptor(interceptor);
+			Extension ext 			= writeExt();
+			ext.streamInterceptor 	= RequestInterceptorChain.of(ext.streamInterceptor, interceptor); 
+		}
+
+	
+		@Override
+		public void forReader(RequestInterceptor<Reader> interceptor)
+		{
+			checkAddInterceptor(interceptor);
+			Extension ext 			= writeExt();
+			ext.readerInterceptor 	= RequestInterceptorChain.of(ext.readerInterceptor, interceptor); 
+		}
 	}
 	
 	
@@ -592,8 +603,8 @@ public abstract class AbstractRequest implements Request
 		public AsyncContext asyncContext;
 		public ParamList matrixParams;
 		public ContentType contentType;
-		public RequestStreamInterceptor streamInterceptor;
-		public RequestReaderInterceptor readerInterceptor;
+		public RequestInterceptor<InputStream> streamInterceptor;
+		public RequestInterceptor<Reader> readerInterceptor;
 	}
 	
 	

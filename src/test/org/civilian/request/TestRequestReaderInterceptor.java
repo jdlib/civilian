@@ -6,7 +6,7 @@ import java.io.PushbackReader;
 import java.io.Reader;
 
 
-public class TestRequestReaderInterceptor implements RequestReaderInterceptor
+public class TestRequestReaderInterceptor implements RequestInterceptor<Reader>
 {
 	public TestRequestReaderInterceptor(String header)
 	{

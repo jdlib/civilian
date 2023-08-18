@@ -18,11 +18,10 @@ package org.civilian.processor;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import org.civilian.Logs;
 import org.civilian.content.CompressionScheme;
 import org.civilian.request.Request;
-import org.civilian.request.RequestStreamInterceptor;
+import org.civilian.request.RequestInterceptor;
 import org.civilian.util.HttpHeaders;
 
 
@@ -55,7 +54,7 @@ public class Decompressor extends Processor
 		
 		if (scheme != null)
 		{
-			request.addInterceptor(new Interceptor(scheme));
+			request.addInterceptor().forStream(new Interceptor(scheme));
 		}
 		else if (!CompressionScheme.Names.IDENTITY.equals(schemeName) && Logs.PROCESSOR.isWarnEnabled())
 		{
@@ -66,7 +65,7 @@ public class Decompressor extends Processor
 	}
 	
 	
-	private static class Interceptor implements RequestStreamInterceptor
+	private static class Interceptor implements RequestInterceptor<InputStream>
 	{
 		public Interceptor(CompressionScheme scheme)
 		{

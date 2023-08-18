@@ -99,14 +99,14 @@ public class AbstractRequestTest extends CivTest
 		TestRequestStreamInterceptor i1 = new TestRequestStreamInterceptor("abc"); 
 		TestRequestStreamInterceptor i2 = new TestRequestStreamInterceptor("def");
 		
-		request.addInterceptor(i1);
-		request.addInterceptor(i2);
+		request.addInterceptor().forStream(i1);
+		request.addInterceptor().forStream(i2);
 		assertEquals("defabc123", request.readContent(String.class));
 		
 		// can't add interceptors once a input was obtained
 		try
 		{
-			request.addInterceptor(i1);
+			request.addInterceptor().forStream(i1);
 		}
 		catch(IllegalStateException e)
 		{
@@ -117,7 +117,7 @@ public class AbstractRequestTest extends CivTest
 		request.clearInterceptors();
 
 		TestRequestReaderInterceptor i3 = new TestRequestReaderInterceptor("text"); 
-		request.addInterceptor(i3);
+		request.addInterceptor().forReader(i3);
 		assertEquals("text123", request.readContent(String.class));
 	}
 	

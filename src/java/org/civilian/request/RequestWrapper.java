@@ -312,15 +312,9 @@ public class RequestWrapper implements Request
 	}
 
 
-	@Override public void addInterceptor(RequestStreamInterceptor interceptor)
+	@Override public InterceptorBuilder addInterceptor()
 	{
-		request_.addInterceptor(interceptor);
-	}
-	
-	
-	@Override public void addInterceptor(RequestReaderInterceptor interceptor)
-	{
-		request_.addInterceptor(interceptor);
+		return request_.addInterceptor();
 	}
 
 	

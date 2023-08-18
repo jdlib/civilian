@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.PushbackInputStream;
 
 
-public class TestRequestStreamInterceptor implements RequestStreamInterceptor
+public class TestRequestStreamInterceptor implements RequestInterceptor<InputStream>
 {
 	public TestRequestStreamInterceptor(String header)
 	{
@@ -22,5 +22,5 @@ public class TestRequestStreamInterceptor implements RequestStreamInterceptor
 	}
 
 
-	private byte[] header_;
+	private final byte[] header_;
 }
