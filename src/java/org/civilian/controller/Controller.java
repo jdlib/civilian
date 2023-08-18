@@ -231,16 +231,6 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	 */
 	public void process(Request request) throws Exception
 	{
-		process(request, null);
-	}
-	
-
-	/**
-	 * Processes a request.
-	 * @param negMethod if not null, then directly use this action instead of negotiating the method
-	 */
-	public void process(Request request, NegotiatedMethod negMethod) throws Exception
-	{
 		setRequest(request);
 		
 		Response response = request.getResponse();
@@ -253,7 +243,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 			checkAccess();
 			if (!response.isCommitted())
 			{
-				negMethod = negotiate(request, negMethod);
+				NegotiatedMethod negMethod = negotiate(request);
 				if (negMethod.positive())
 				{
 					response.setContentType(negMethod.getContentType());
@@ -284,15 +274,11 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	}
 
 
-	private NegotiatedMethod negotiate(Request request, NegotiatedMethod method)
+	private NegotiatedMethod negotiate(Request request)
 	{
-		if (method == null)
-		{
-			if (type_ == null)
-				throw new IllegalArgumentException("ControllerType not initialized");
-			method = type_.getMethod(request);
-		}
-		return method;
+		if (type_ == null)
+			throw new IllegalArgumentException("ControllerType not initialized");
+		return type_.getMethod(request);
 	}
 	
 
