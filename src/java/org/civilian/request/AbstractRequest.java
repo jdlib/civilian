@@ -45,7 +45,7 @@ public abstract class AbstractRequest implements Request
 {
 	/**
 	 * Creates a new AbstractRequest.
-	 * @param application the associated application 
+	 * @param owner the associated owner
 	 * @param relativePath the relative path of the request with respect to the application path.
 	 */
 	public AbstractRequest(RequestOwner owner, String relativePath)

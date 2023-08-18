@@ -494,6 +494,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Returns a OutputStream to write a binary response.
 	 * The method may not be called if {@link #getContentWriter()} was called before.
+	 * @return the OutputStream
 	 */
 	public abstract OutputStream getContentStream() throws IOException;
 
@@ -502,6 +503,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * Sets the content type of the response content. 
 	 * If the content type is null or the response has been committed, it is ignored.
 	 * Forwards to {@link #setContentType(String)}.
+	 * @param contentType the content type
 	 * @return this Response
 	 */
 	public default Response setContentType(ContentType contentType)
@@ -514,6 +516,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Sets the content type of the response content. 
 	 * If the content type is null or the response has been committed, it is ignored.
+	 * @param contentType the content type
 	 * @return this response
 	 */
 	public abstract Response setContentType(String contentType);
@@ -615,16 +618,16 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	public interface InterceptorBuilder
 	{
 		/**
-		 * Adds a ResponseInterceptor which can wrap the response {@link #getContentStream() OutputStream}.
-		 * {@link #getContentStream()} or {@link #getContentWriterr()} must not have been called yet.
+		 * Adds a ResponseInterceptor which can wrap the response {@link Response#getContentStream() OutputStream}.
+		 * {@link Response#getContentStream()} or {@link Response#getContentWriter()} must not have been called yet.
 		 * @param interceptor an interceptor
 		 */
 		public void forStream(ResponseInterceptor<OutputStream> interceptor);
 
 	
 		/**
-		 * Adds a ResponseInterceptor which can wrap the request {@link #getContentWriter() Writer}.
-		 * {@link #getContentStream()} or {@link #getContentReader()} must not have been called yet.
+		 * Adds a ResponseInterceptor which can wrap the request {@link Response#getContentWriter() Writer}.
+		 * {@link Response#getContentStream()} or {@link Response#getContentWriter()} must not have been called yet.
 		 * @param interceptor an interceptor
 		 */
 		public void forWriter(ResponseInterceptor<Writer> interceptor);
@@ -685,6 +688,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 
 	/**
 	 * Prints response info to the PrintStream.
+	 * @param out a PrintStream
 	 */
 	public default void print(PrintStream out)
 	{
@@ -695,6 +699,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	/**
 	 * Prints response info to the PrintWriter.
+	 * @param out a PrintWriter
 	 */
 	public default void print(PrintWriter out)
 	{
@@ -717,6 +722,9 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * Returns the underlying implementation of the response which has the given class
 	 * or null, if the implementation has a different class.
 	 * In an ServletEnvironment the underlying implementation is a HttpServletResponse.
+	 * @param implClass the implementation class
+	 * @param <T> the class type
+	 * @return the result object
 	 */
 	public abstract <T> T unwrap(Class<T> implClass);
 }

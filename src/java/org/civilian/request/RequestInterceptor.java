@@ -30,7 +30,7 @@ public interface RequestInterceptor<T>
 	 * Called when the Reader of request content is obtained
 	 * for the first time. 
 	 * @param request the request
-	 * @param the input (either a Reader or InputStream)
+	 * @param in the input (either a Reader or InputStream)
 	 * @return a Reader which should be used to read request content.
 	 * @throws IOException if an error occurs
 	 */

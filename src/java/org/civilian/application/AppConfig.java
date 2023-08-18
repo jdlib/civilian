@@ -57,6 +57,7 @@ public class AppConfig
 	 * @param configEntry the value of a config entry
 	 * @param defaultValue the default value if configEntry is null (= not specified) 
 	 * @param develop the develop flag.
+	 * @return is flag enabled?
 	 */
 	public static boolean isEnabled(String configEntry, boolean defaultValue, boolean develop)
 	{
@@ -83,7 +84,9 @@ public class AppConfig
 
 	
 	/**
-	 * Creates a new AppConfig object. 
+	 * Creates a new AppConfig object.
+	 * @param app the app
+	 * @param settings the settings 
 	 */
 	public AppConfig(Application app, Settings settings)
 	{
@@ -186,7 +189,8 @@ public class AppConfig
 	
 	/**
 	 * Returns the part of the application within the Civilian config file.
-	 * The key prefix "app.&lt;app-id&gt;." is removed from the keys. 
+	 * The key prefix "app.&lt;app-id&gt;." is removed from the keys.
+	 * @return the settings 
 	 */
 	public Settings getSettings()
 	{
@@ -198,6 +202,7 @@ public class AppConfig
 	 * Returns the current application version.
 	 * The version is null by default.
 	 * @see Application#getVersion()
+	 * @return the version
 	 */
 	public String getVersion()
 	{
@@ -208,6 +213,7 @@ public class AppConfig
 	/**
 	 * Sets the application version.
 	 * @see Application#getVersion()
+	 * @param version the version
 	 */
 	public void setVersion(String version)
 	{
@@ -218,6 +224,7 @@ public class AppConfig
 	/**
 	 * Returns the default application character encoding.
 	 * @see Application#getDefaultCharEncoding()
+	 * @return the encoding
 	 */
 	public String getDefaultCharEncoding()
 	{
@@ -227,6 +234,7 @@ public class AppConfig
 
 	/**
 	 * Sets the default application encoding.
+	 * @param encoding the encoding
 	 */
 	public void setEncoding(String encoding)
 	{
@@ -241,6 +249,7 @@ public class AppConfig
 	
 	/**
 	 * Sets the list of supported locales.
+	 * @param supportedLocales the locales
 	 */
 	public void setSupportedLocales(Locale... supportedLocales)
 	{
@@ -250,6 +259,7 @@ public class AppConfig
 
 	/**
 	 * Returns the list of supported locales.
+	 * @return the locales
 	 */
 	public Locale[] getSupportedLocales()
 	{
@@ -263,6 +273,7 @@ public class AppConfig
 	 * any other Locale is requested), or true if LocaleServices will be returned
 	 * for any requested locale. In the later case, unsupported LocaleServices will not be cached
      * (which adds a small performance penalty).
+     * @return unsupported locales allowed?
 	 */
 	public boolean allowUnsupportedLocales()
 	{
@@ -272,7 +283,8 @@ public class AppConfig
 	
 	/**
 	 * Sets if the {@link LocaleServiceList} will provide LocaleServices
-	 * even for locales which are not included in the list of supported locales. 
+	 * even for locales which are not included in the list of supported locales.
+	 * @param allow the flag 
 	 */
 	public void setAllowUnsupportedLocales(boolean allow)
 	{
@@ -283,6 +295,7 @@ public class AppConfig
 	/**
 	 * Returns the MsgBundleFactory used by the application to create
 	 * locale dependent MsgBundle objects.
+	 * @return factory
 	 */
 	public MsgBundleFactory getMsgBundleFactory()
 	{
@@ -292,6 +305,7 @@ public class AppConfig
 	
 	/**
 	 * Sets the MsgBundleFactory of the application.
+	 * @param factory the factory
 	 */
 	public void setMsgBundleFactory(MsgBundleFactory factory)
 	{
@@ -307,6 +321,7 @@ public class AppConfig
 	/**
 	 * Returns the type library: You can modify the type library, for instance to
 	 * add new types if needed.
+	 * @return the typelib
 	 */
 	public TypeLib getTypeLib()
 	{
@@ -316,6 +331,7 @@ public class AppConfig
 	
 	/**
 	 * Allows to replace the type library.
+	 * @param library the library
 	 */
 	public void setTypeLib(TypeLib library)
 	{
@@ -330,7 +346,8 @@ public class AppConfig
 	
 	/**
 	 * Returns the AssetConfig. Use the AssetConfig to
-	 * configure where your application assets are located. 
+	 * configure where your application assets are located.
+	 * @return the config 
 	 */
 	public AssetConfig getAssetConfig()
 	{
@@ -355,7 +372,8 @@ public class AppConfig
 	
 	
 	/**
-	 * Sets the ReloadConfig. 
+	 * Sets the ReloadConfig.
+	 * @param config the config 
 	 */
 	public void setReloadConfig(ReloadConfig config)
 	{
@@ -379,7 +397,8 @@ public class AppConfig
 	
 	
 	/**
-	 * Sets the ControllerFactory used for creating controller objects. 
+	 * Sets the ControllerFactory used for creating controller objects.
+	 * @param factory the factory 
 	 */
 	public void setControllerFactory(ControllerFactory factory)
 	{
@@ -393,7 +412,8 @@ public class AppConfig
 
 	
 	/**
-	 * Returns the current UploadConfig. 
+	 * Returns the current UploadConfig.
+	 * @return the config 
 	 */
 	public UploadConfig getUploadConfig()
 	{
@@ -478,6 +498,7 @@ public class AppConfig
 	/**
 	 * Returns the async-value.
 	 * @see #setAsync(boolean)
+	 * @return the flag
 	 */
 	public boolean getAsync()
 	{
@@ -488,6 +509,7 @@ public class AppConfig
 	/**
 	 * Sets if the application should be support asynchronous requests processing?
 	 * @see Request#startAsync()
+	 * @param async the flag
 	 */
 	public void setAsync(boolean async)
 	{
@@ -506,6 +528,7 @@ public class AppConfig
 	 * content types needed by your application.<br>
 	 * If you want to implement serialization of XML using JAXB, simply define 
 	 * a suitable JAXBContext, create a {@link JaxbXmlSerializer} and add it to the map.<br>
+	 * @return the serializer map
 	 */
 	public Map<String,ContentSerializer> getContentSerializers()
 	{
@@ -515,6 +538,8 @@ public class AppConfig
 	
 	/**
 	 * Registers a ContentSerializer for a ContentType.
+	 * @param contentType the content type
+	 * @param serializer the serializer
 	 */
 	public void registerContentSerializer(ContentType contentType, ContentSerializer serializer)
 	{
@@ -525,6 +550,8 @@ public class AppConfig
 	
 	/**
 	 * Registers a ContentSerializer for a ContentType.
+	 * @param contentType the content type
+	 * @param serializer the serializer
 	 */
 	public void registerContentSerializer(String contentType, ContentSerializer serializer)
 	{
@@ -536,6 +563,8 @@ public class AppConfig
 	
 	/**
 	 * Returns the ContentSerializer registered for a ContentType.
+	 * @param contentType the content type
+	 * @return the serializer 
 	 */
 	public ContentSerializer getContentSerializer(ContentType contentType)
 	{

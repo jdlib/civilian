@@ -73,6 +73,7 @@ public @interface Segment
 {
 	/**
 	 * Returns the path value.
+	 * @return the path
 	 */
 	public String value();
 }

@@ -201,7 +201,6 @@ public interface Request extends RequestProvider, ResponseProvider,
 	 * If the request was completely matched against a {@link Resource}, it is constructed 
 	 * from that Resource, and all path params of the request are set in the URL.
 	 * Else it is constructed from the request path.
-	 * @param addParams should parameters added as query parameter?
 	 * @return the URL 
 	 */
 	public default String getUrl()
