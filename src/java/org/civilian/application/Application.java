@@ -449,6 +449,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	/**
 	 * Returns the root resource of the application.
 	 */
+	@Override
 	public Resource getRootResource()
 	{
 		return rootResource_;
@@ -578,16 +579,21 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 
 	
 	/**
-	 * Processes a request. 
+	 * Processes a request and generates a response. 
 	 * The default implementation forwards the request to the processor pipeline.
 	 * If no processor handled the request, it is forwarded to the {@link #createNotFoundHandler() NotFoundResponse}.
-	 * If an exception occurs during request processing {@link #onError(Request, Throwable)} is called  
+	 * If an exception occurs during request processing {@link #onError(Request, Throwable)} is called
+	 * @param request the request
+	 * @param response the response  
 	 */
-	public void process(Request request)
+	public void process(Request request, Response response)
 	{
 		Check.notNull(request, "request");
+		Check.notNull(response, "response");
 		if (request.getOwner() != this)
 			throw new IllegalArgumentException("not my request: " + request.getOwner());
+		if (response.getOwner() != this)
+			throw new IllegalArgumentException("not my response: " + response.getOwner());
 		
 		try
 		{
@@ -598,12 +604,12 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 			{
 				boolean processed = processors_.process(request);
 				if (!processed)
-					createNotFoundHandler().send(request.getResponse());
+					createNotFoundHandler().send(response);
 			}
 			finally
 			{
 				if (!request.isAsyncStarted())
-					request.getResponse().closeContent();
+					response.closeContent();
 			}
 		}
 		catch (Throwable t)

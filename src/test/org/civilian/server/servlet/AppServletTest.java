@@ -91,16 +91,16 @@ public class AppServletTest extends CivTest
 		ServletRequest invRequest  		= mock(ServletRequest.class);
 		ServletResponse invResponse 	= mock(ServletResponse.class);
 		servlet.service(invRequest, invResponse);
-		verify(app, times(0)).process(any(ServletRequestAdapter.class));
+		verify(app, times(0)).process(any(ServletRequestAdapter.class), any(ServletResponseAdapter.class));
 		
 		HttpServletRequest request  	= mock(HttpServletRequest.class);
 		HttpServletResponse response 	= mock(HttpServletResponse.class);
 		
 		servlet.service(request, response);
-		verify(app, times(1)).process(any(SpRequestAdapter.class));
+		verify(app, times(1)).process(any(SpRequestAdapter.class), any(ServletResponseAdapter.class));
 		
 		when(request.getContentType()).thenReturn("multipart/form-data");
 		servlet.service(request, response);
-		verify(app, times(1)).process(any(MpRequestAdapter.class));
+		verify(app, times(1)).process(any(MpRequestAdapter.class), any(ServletResponseAdapter.class));
 	}
 }
