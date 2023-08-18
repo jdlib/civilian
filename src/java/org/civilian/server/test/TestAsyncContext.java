@@ -7,13 +7,14 @@ import org.civilian.request.AsyncContext;
 import org.civilian.request.AsyncEvent;
 import org.civilian.request.AsyncListener;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 
 
 public class TestAsyncContext extends AsyncContext
 {
-	public TestAsyncContext(Request request)
+	public TestAsyncContext(Request request, Response response)
 	{
-		super(request);
+		super(request, response);
 	}
 
 

@@ -84,9 +84,9 @@ public class Form implements RequestProvider, ResponseProvider
 	}
 
 	
-	public Form(RequestProvider reqprov, ResponseProvider resprov)
+	public Form(Request request, Response response)
 	{
-		this(FormOwner.of(reqprov, resprov));
+		this(FormOwner.of(request, response));
 	}
 
 	

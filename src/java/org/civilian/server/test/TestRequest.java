@@ -772,7 +772,7 @@ public class TestRequest extends AbstractRequest
 
 	@Override protected AsyncContext createAsyncContext()
 	{
-		return new TestAsyncContext(this);
+		return new TestAsyncContext(this, getTestResponse());
 	}
 
 	

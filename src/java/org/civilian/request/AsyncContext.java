@@ -28,9 +28,10 @@ public abstract class AsyncContext
 	 * Creates a new AsyncContext.
 	 * @param request the request
 	 */
-	public AsyncContext(Request request)
+	public AsyncContext(Request request, Response response)
 	{
-		request_ = request;
+		request_ 	= request;
+		response_	= response;
 	}
 	
 	
@@ -74,7 +75,7 @@ public abstract class AsyncContext
 	 */
 	public Response getResponse()
 	{
-		return request_.getResponse();
+		return response_;
 	}
 
 
@@ -90,5 +91,6 @@ public abstract class AsyncContext
 	public abstract void setTimeout(long milliSeconds);
 
 	
-	private Request request_;
+	private final Request request_;
+	private final Response response_;
 }

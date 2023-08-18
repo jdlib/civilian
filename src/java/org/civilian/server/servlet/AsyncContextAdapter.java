@@ -25,7 +25,7 @@ class AsyncContextAdapter extends AsyncContext
 {
 	public AsyncContextAdapter(ServletRequestAdapter request, ServletResponseAdapter response)
 	{
-		super(request);
+		super(request, response);
 		contextImpl_ = request.getServletRequest().startAsync(
 			request.getServletRequest(),
 			response.getServletResponse());

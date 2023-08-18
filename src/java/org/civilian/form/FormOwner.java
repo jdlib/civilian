@@ -10,10 +10,10 @@ import org.civilian.util.Check;
 
 public interface FormOwner extends RequestProvider, ResponseProvider 
 {
-	public static FormOwner of(RequestProvider reqprov, ResponseProvider resprov)
+	public static FormOwner of(Request request, Response response)
 	{
-		Request request = Check.notNull(reqprov, "reqprov").getRequest();
-		Response response = Check.notNull(resprov, "resprov").getResponse();
+		Check.notNull(request, "request");
+		Check.notNull(response, "response");
 		return new FormOwner() {
 			@Override public Request getRequest() 
 			{
