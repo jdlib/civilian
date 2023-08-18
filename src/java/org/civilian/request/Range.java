@@ -34,15 +34,17 @@ public class Range extends AbstractList<Range.Part>
 	 * else write the whole file to the response
 	 * @param file a non-null file
 	 * @param request a non-null request
+	 * @param response a non-null response
 	 * @return the parsed Range or null if no range header was present
 	 */
-	public static Range writeRange(File file, Request request) throws Exception
+	public static Range writeRange(File file, Request request, Response response) throws Exception
 	{
 		Check.notNull(file, "file");
 		Check.notNull(request, "request");
+		Check.notNull(response, "response");
 		
 		Range range = parse(request);
-		writeRange(file, request.getResponse(), range);
+		writeRange(file, response, range);
 		return range;
 	}
 	
