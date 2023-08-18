@@ -272,7 +272,7 @@ public class ServletRequestTest extends CivTest
 		verify(servletReq).isSecure();
 
 		security.authenticate();
-		verify(servletReq).authenticate(request.getServletResponse());
+		verify(servletReq).authenticate(request.getResponse().getServletResponse());
 
 		security.getAuthType();
 		verify(servletReq).getAuthType();

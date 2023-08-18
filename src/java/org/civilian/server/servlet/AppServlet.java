@@ -145,14 +145,11 @@ public class AppServlet implements Servlet
 		}
 		
 		ServletRequestAdapter request;
-		ServletResponseAdapter response;
 		try
 		{
 			request = isMultiPartRequest(httpRequest) ? 
 				new MpRequestAdapter(app_, httpRequest, httpResponse) :
 				new SpRequestAdapter(app_, httpRequest, httpResponse);
-			// will register with the request	
-			response = new ServletResponseAdapter(request, httpResponse);
 		}
 		catch(Exception e)
 		{
@@ -161,7 +158,7 @@ public class AppServlet implements Servlet
 			return;
 		}
 
-		app_.process(request, response);
+		app_.process(request, request.getResponse());
 	}
 	
 	
