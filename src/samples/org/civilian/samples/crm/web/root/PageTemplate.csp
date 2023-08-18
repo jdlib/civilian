@@ -1,8 +1,8 @@
-import org.civilian.Response
-import org.civilian.Resource
+import org.civilian.response.Response
+import org.civilian.resource.Resource
+import org.civilian.resource.Path
 import org.civilian.template.Template
 import org.civilian.text.msg.MsgId
-import org.civilian.resource.Path
 import ../../text.Message
 import ../CrmConstants
 import ../CrmResources
@@ -11,7 +11,7 @@ import ../util.Script
 import ../util.NavItem
 
 
-template(Response response, Template content, Script script, SessionUser sessionUser, boolean showNavigation, Path reloadPath) 
+template(Response response, Template content, Script script, SessionUser sessionUser, boolean showNavigation, Path reloadPath, Path assetPath) 
 	mixin html, lang
 {{
 	<!DOCTYPE html>
@@ -107,11 +107,17 @@ private void printMenuItems()
 
 
 private void printMenuItem(MsgId labelId, Resource resource, Script script, String image)
+{
+	NavItem navItem = new NavItem(response);
+	if (script != null)
+		navItem.setScriptUrls(assetPath + script.path);
+	navItem.setTemplateUrl(resource);
+	printMenuItem(navItem, image, lang.msg(labelId));
+}
+
+
+private void printMenuItem(NavItem navItem, String image, String label)
 {{
-	@NavItem navItem = new NavItem(response);
-	@navItem.setScript(script);
-	@navItem.setTemplateUrl(resource);
-	@String label = lang.msg(labelId);
 	<li class="border-left">
 		<a ng-click="openModule('<%label%>', '<%navItem.templateUrl%>', '<%navItem.scriptUrls%>')" href="">
 			<img ng-src="<%html.path("/img/crm/");%><%image%>"> <%label%>

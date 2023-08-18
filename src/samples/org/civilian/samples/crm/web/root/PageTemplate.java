@@ -22,7 +22,7 @@ import org.civilian.text.msg.MsgId;
 
 public class PageTemplate extends Template
 {
-	public PageTemplate(Response response, Template content, Script script, SessionUser sessionUser, boolean showNavigation, Path reloadPath)
+	public PageTemplate(Response response, Template content, Script script, SessionUser sessionUser, boolean showNavigation, Path reloadPath, Path assetPath)
 	{
 		this.response = response;
 		this.content = content;
@@ -30,6 +30,7 @@ public class PageTemplate extends Template
 		this.sessionUser = sessionUser;
 		this.showNavigation = showNavigation;
 		this.reloadPath = reloadPath;
+		this.assetPath = assetPath;
 	}
 
 
@@ -195,30 +196,36 @@ public class PageTemplate extends Template
 	
 	private void printMenuItem(MsgId labelId, Resource resource, Script script, String image)
 	{
-		NavItem navItem = new NavItem(response);                        // line 111: @NavItem navItem = new NavItem(response);
-		navItem.setScript(script);                                      // line 112: @navItem.setScript(script);
-		navItem.setTemplateUrl(resource);                               // line 113: @navItem.setTemplateUrl(resource);
-		String label = lang.msg(labelId);                               // line 114: @String label = lang.msg(labelId);
-		out.println("<li class=\"border-left\">");                      // line 115: <li class="border-left">
+		NavItem navItem = new NavItem(response);
+		if (script != null)
+			navItem.setScriptUrls(assetPath + script.path);
+		navItem.setTemplateUrl(resource);
+		printMenuItem(navItem, image, lang.msg(labelId));
+	}
+	
+	
+	private void printMenuItem(NavItem navItem, String image, String label)
+	{
+		out.println("<li class=\"border-left\">");                      // line 121: <li class="border-left">
 		out.increaseTab();
-		out.print("<a ng-click=\"openModule('");                        // line 116: <a ng-click="openModule('
-		out.print(label);                                               // line 116: <%label%>
-		out.print("', '");                                              // line 116: ', '
-		out.print(navItem.templateUrl);                                 // line 116: <%navItem.templateUrl%>
-		out.print("', '");                                              // line 116: ', '
-		out.print(navItem.scriptUrls);                                  // line 116: <%navItem.scriptUrls%>
-		out.println("')\" href=\"\">");                                 // line 116: ')" href="">
+		out.print("<a ng-click=\"openModule('");                        // line 122: <a ng-click="openModule('
+		out.print(label);                                               // line 122: <%label%>
+		out.print("', '");                                              // line 122: ', '
+		out.print(navItem.templateUrl);                                 // line 122: <%navItem.templateUrl%>
+		out.print("', '");                                              // line 122: ', '
+		out.print(navItem.scriptUrls);                                  // line 122: <%navItem.scriptUrls%>
+		out.println("')\" href=\"\">");                                 // line 122: ')" href="">
 		out.increaseTab();
-		out.print("<img ng-src=\"");                                    // line 117: <img ng-src="
-		html.path("/img/crm/");                                         // line 117: <%html.path("/img/crm/");%>
-		out.print(image);                                               // line 117: <%image%>
-		out.print("\"> ");                                              // line 117: ">
-		out.print(label);                                               // line 117: <%label%>
+		out.print("<img ng-src=\"");                                    // line 123: <img ng-src="
+		html.path("/img/crm/");                                         // line 123: <%html.path("/img/crm/");%>
+		out.print(image);                                               // line 123: <%image%>
+		out.print("\"> ");                                              // line 123: ">
+		out.print(label);                                               // line 123: <%label%>
 		out.printlnIfNotEmpty();
 		out.decreaseTab();
-		out.println("</a>");                                            // line 118: </a>
+		out.println("</a>");                                            // line 124: </a>
 		out.decreaseTab();
-		out.println("</li>");                                           // line 119: </li>
+		out.println("</li>");                                           // line 125: </li>
 	}
 
 
@@ -228,6 +235,7 @@ public class PageTemplate extends Template
 	protected SessionUser sessionUser;
 	protected boolean showNavigation;
 	protected Path reloadPath;
+	protected Path assetPath;
 	protected HtmlMixin html;
 	protected LangMixin lang;
 }

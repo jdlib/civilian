@@ -108,7 +108,7 @@ public abstract class SecuredController extends CrmController
 			{
 				// wrap the template in a complete page
 				Path reloadPath = develop() ? getApplication().getServer().getPath() : null;
-				template = new PageTemplate(getResponse(), template, getScript(), sessionUser_, showMenuBar(), reloadPath);
+				template = new PageTemplate(getResponse(), template, getScript(), sessionUser_, showMenuBar(), reloadPath, getApplication().getAssetService().getPath());
 			}
 			getResponse().writeTemplate(template);
 		}
