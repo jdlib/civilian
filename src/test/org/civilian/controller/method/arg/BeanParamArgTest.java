@@ -23,7 +23,6 @@ import org.civilian.CivTest;
 import org.civilian.annotation.BeanParam;
 import org.civilian.annotation.HeaderParam;
 import org.civilian.controller.method.arg.factory.MethodArgFactory;
-import org.civilian.controller.method.arg.misc.BeanParamArg;
 import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
 import org.civilian.resource.pathparam.PathParamMap;
@@ -35,11 +34,10 @@ public class BeanParamArgTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
-		MethodArgFactory factory = new MethodArgFactory(PathParamMap.EMPTY, new TypeLib());
-		
-		BeanParamArg arg 		= new BeanParamArg(factory, Bean.class);
-		Request request 		= mock(Request.class);
-		RequestHeaders headers	= mock(RequestHeaders.class);
+		MethodArgFactory factory 	= new MethodArgFactory(PathParamMap.EMPTY, new TypeLib());
+		MethodArg arg 				= factory.parseBeanParamArgument(Bean.class);
+		Request request 			= mock(Request.class);
+		RequestHeaders headers		= mock(RequestHeaders.class);
 		when(request.getHeaders()).thenReturn(headers);
 		when(request.getParameter("name")).thenReturn("theName");
 		when(headers.get(HeaderNames.ACCEPT)).thenReturn("text/html");

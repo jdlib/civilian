@@ -16,10 +16,15 @@
 package org.civilian.controller.method.arg.factory;
 
 
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import javax.servlet.http.Cookie;
 import org.civilian.annotation.BeanParam;
 import org.civilian.annotation.CookieParam;
@@ -37,6 +42,7 @@ import org.civilian.controller.method.arg.misc.BeanParamArg;
 import org.civilian.controller.method.arg.misc.RequestArg;
 import org.civilian.controller.method.arg.misc.ResponseArg;
 import org.civilian.controller.method.arg.misc.ResponseContentArg;
+import org.civilian.controller.method.arg.misc.BeanParamArg.Setter;
 import org.civilian.controller.method.arg.reqcontent.ReqContentArgs;
 import org.civilian.controller.method.arg.reqparam.CookieParamObjectArg;
 import org.civilian.controller.method.arg.reqparam.CookieParamValueArg;
@@ -243,10 +249,79 @@ public class MethodArgFactory
 	}
 	
 	
-	private<T> MethodArg parseBeanParamArgument(Info info) throws Exception
+	private MethodArg parseBeanParamArgument(Info info) throws Exception
 	{
-		return info.findAnnotation(BeanParam.class) != null ? new BeanParamArg(this, info.type) : null;
+		if (info.findAnnotation(BeanParam.class) == null)
+			return null;
+		else
+			return parseBeanParamArgument(info.type);
 	}
+	
+	
+	public <T> MethodArg parseBeanParamArgument(Class<?> beanClass) throws Exception
+	{
+		BeanSetters beanSetters = new BeanSetters();
+		
+		// 1. use bean setters
+		for (PropertyDescriptor pd : Introspector.getBeanInfo(beanClass).getPropertyDescriptors())
+			beanSetters.add(pd.getWriteMethod(), pd.getName());
+		
+		// 2. use public methods 
+		for (Method method : beanClass.getMethods())
+			beanSetters.add(method, null);
+		
+		// 3. use public fields 
+		for (Field field : beanClass.getFields())
+			beanSetters.add(field);
+		
+		return new BeanParamArg(beanClass, beanSetters.getSetters());
+	}
+	
+	
+	private class BeanSetters
+	{
+		public BeanParamArg.Setter[] getSetters()
+		{
+			return setters_.toArray(new Setter[setters_.size()]);
+		}
+
+		
+		public void add(Method method, String propertyName)
+		{
+			if (method != null)
+			{
+				MethodArg arg = createSetterMethodArg(method, propertyName, false);
+				if (arg != null)
+					add(new BeanParamArg.MethodSetter(arg, method), method.toString());
+			}
+		}
+		
+		
+		public void add(Field field)
+		{
+			if (field != null)
+			{
+				MethodArg arg = createFieldArg(field, false);
+				if (arg != null)
+					add(new BeanParamArg.FieldSetter(arg, field), field.toString());
+			}
+		}
+
+
+		private void add(Setter setter, String key)
+		{
+			if (!done_.contains(key))
+			{
+				done_.add(key);
+				setters_.add(setter);
+			}
+		}
+		
+		
+		private final ArrayList<Setter> setters_ = new ArrayList<>();
+		private final HashSet<String> done_ = new HashSet<>();
+	}
+
 	
 	
 	/**

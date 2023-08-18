@@ -16,42 +16,19 @@
 package org.civilian.controller.method.arg.misc;
 
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashSet;
-
 import org.civilian.controller.method.arg.MethodArg;
-import org.civilian.controller.method.arg.factory.MethodArgFactory;
 import org.civilian.request.Request;
 
 
 public class BeanParamArg extends MethodArg
 {
-	public BeanParamArg(MethodArgFactory factory, Class<?> beanClass) throws Exception
+	public BeanParamArg(Class<?> beanClass, Setter... setters) throws Exception
 	{
-		beanClass_ = beanClass;
-
-		Init init = new Init(factory);
-		
-		// 1. use bean setters
-		BeanInfo info = Introspector.getBeanInfo(beanClass);
-		for (PropertyDescriptor pd : info.getPropertyDescriptors())
-			init.addSetter(pd.getWriteMethod(), pd.getName());
-		
-		// 2. use public methods 
-		for (Method method : beanClass.getMethods())
-			init.addSetter(method, null);
-		
-		// 3. use public fields 
-		for (Field field : beanClass.getFields())
-			init.addSetter(field);
-
-		setters_ = init.getSetters();
+		beanClass_ 	= beanClass;
+		setters_ 	= setters;
 	}
 	
 	
@@ -67,7 +44,7 @@ public class BeanParamArg extends MethodArg
 	}
 	
 
-	private static abstract class Setter
+	public static abstract class Setter
 	{
 		public Setter(MethodArg arg)
 		{
@@ -99,7 +76,7 @@ public class BeanParamArg extends MethodArg
 	}
 	
 
-	private static class MethodSetter extends Setter
+	public static class MethodSetter extends Setter
 	{
 		public MethodSetter(MethodArg arg, Method method)
 		{
@@ -124,7 +101,7 @@ public class BeanParamArg extends MethodArg
 	}
 	
 	
-	private static class FieldSetter extends Setter
+	public static class FieldSetter extends Setter
 	{
 		public FieldSetter(MethodArg arg, Field field)
 		{
@@ -148,58 +125,6 @@ public class BeanParamArg extends MethodArg
 		
 		
 		private final Field field_;
-	}
-
-	
-	private static class Init
-	{
-		public Init(MethodArgFactory factory)
-		{
-			factory_ = factory;
-		}
-		
-		
-		public Setter[] getSetters()
-		{
-			return setters_.toArray(new Setter[setters_.size()]);
-		}
-
-		
-		public void addSetter(Method method, String propertyName)
-		{
-			if (method != null)
-			{
-				MethodArg arg = factory_.createSetterMethodArg(method, propertyName, false);
-				if (arg != null)
-					add(new MethodSetter(arg, method), method.toString());
-			}
-		}
-		
-		
-		public void addSetter(Field field)
-		{
-			if (field != null)
-			{
-				MethodArg arg = factory_.createFieldArg(field, false);
-				if (arg != null)
-					add(new FieldSetter(arg, field), field.toString());
-			}
-		}
-
-
-		private void add(Setter setter, String key)
-		{
-			if (!done_.contains(key))
-			{
-				done_.add(key);
-				setters_.add(setter);
-			}
-		}
-		
-		
-		private final MethodArgFactory factory_;
-		private final ArrayList<Setter> setters_ = new ArrayList<>();
-		private final HashSet<String> done_ = new HashSet<>();
 	}
 	
 	
