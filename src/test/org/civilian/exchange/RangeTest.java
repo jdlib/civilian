@@ -1,11 +1,12 @@
-package org.civilian.request;
+package org.civilian.exchange;
 
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import org.civilian.CivTest;
-import org.civilian.request.Range.Part;
+import org.civilian.exchange.Range;
+import org.civilian.exchange.Range.Part;
 import org.civilian.server.test.TestApp;
 import org.civilian.server.test.TestRequest;
 import org.civilian.server.test.TestResponse;
