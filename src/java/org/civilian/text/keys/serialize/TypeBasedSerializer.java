@@ -67,5 +67,5 @@ class TypeBasedSerializer<T> extends KeySerializer
 	}
 	
 	
-	private Type<T> type_;
+	private final Type<T> type_;
 }

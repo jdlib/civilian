@@ -18,7 +18,6 @@ package org.civilian.controller;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
-
 import org.civilian.annotation.Segment;
 import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;

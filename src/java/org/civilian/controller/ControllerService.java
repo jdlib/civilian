@@ -20,7 +20,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.HashMap;
-
 import org.civilian.ConfigKeys;
 import org.civilian.annotation.PathParam;
 import org.civilian.annotation.Segment;

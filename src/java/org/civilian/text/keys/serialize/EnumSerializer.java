@@ -15,6 +15,7 @@
  */
 package org.civilian.text.keys.serialize;
 
+
 import org.civilian.text.keys.KeyList;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
@@ -71,5 +72,5 @@ class EnumSerializer<E extends Enum<E>> extends KeySerializer
 	}
 	
 	
-	private Class<E> enumClass_;
+	private final Class<E> enumClass_;
 }

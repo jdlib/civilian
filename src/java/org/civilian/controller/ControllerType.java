@@ -19,7 +19,6 @@ package org.civilian.controller;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import org.civilian.content.ContentNegotiation;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
