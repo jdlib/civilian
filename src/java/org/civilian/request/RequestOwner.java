@@ -1,13 +1,16 @@
 package org.civilian.request;
 
+
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
+import org.civilian.resource.PathProvider;
 import org.civilian.text.service.LocaleServiceList;
+
 
 /**
  * The owner of a Request, provides defaults.
  */
-public interface RequestOwner 
+public interface RequestOwner extends PathProvider 
 {
 	/**
 	 * Returns the default encoding for textual content of responses.

@@ -48,16 +48,16 @@ public abstract class AbstractRequest implements Request
 	 * @param application the associated application 
 	 * @param relativePath the relative path of the request with respect to the application path.
 	 */
-	public AbstractRequest(Application application, String relativePath)
+	public AbstractRequest(RequestOwner owner, String relativePath)
 	{
-		application_ 	= Check.notNull(application, "application");
+		owner_		 	= Check.notNull(owner, "owner");
 		relativePath_	= new Path(relativePath);
 	}
 	
 	
 	protected AbstractRequest(AbstractRequest other)
 	{
-		application_ 			= other.getApplication();
+		owner_		 			= other.getOwner();
 		relativePath_			= other.getRelativePath();
 		acceptedContentTypes_ 	= other.acceptedContentTypes_;
 		resource_				= other.resource_;
@@ -75,9 +75,9 @@ public abstract class AbstractRequest implements Request
 	//-----------------------------
 	
 	
-	@Override public Application getApplication()
+	@Override public RequestOwner getOwner()
 	{
-		return application_;
+		return owner_;
 	}
 
 	
@@ -113,7 +113,7 @@ public abstract class AbstractRequest implements Request
 	@Override public Path getPath()
 	{
 		if (path_ == null)
-			path_ = application_.getPath().add(relativePath_);
+			path_ = owner_.getPath().add(relativePath_);
 		return path_;
 	}
 
@@ -622,7 +622,7 @@ public abstract class AbstractRequest implements Request
 	private Path relativePath_;
 	private Map<PathParam<?>, Object> pathParams_;
 	private LocaleService localeService_;
-	private Application application_;
+	private RequestOwner owner_;
 	private Object contentInput_;
 	private Resource resource_;
 	private Extension extension_;

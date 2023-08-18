@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
-import org.civilian.application.Application;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.resource.Path;
@@ -60,12 +59,6 @@ public class RequestWrapper implements Request
 		return this;
 	}
 	
-
-	@Override public Application getApplication()
-	{
-		return request_.getApplication();
-	}
-
 
 	@Override public RequestOwner getOwner()
 	{

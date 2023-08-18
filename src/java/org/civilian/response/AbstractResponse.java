@@ -71,7 +71,7 @@ public abstract class AbstractResponse implements Response
 	
 	@Override public ResponseOwner getOwner()
 	{
-		return request_.getApplication();
+		return Check.isA(request_.getOwner(), ResponseOwner.class); // TODO
 	}
 
 	

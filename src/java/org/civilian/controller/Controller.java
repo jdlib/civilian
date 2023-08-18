@@ -117,7 +117,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	 */
 	public Application getApplication()
 	{
-		return getRequest().getApplication();
+		return Check.isA(getRequest().getOwner(), Application.class);
 	}
 
 	

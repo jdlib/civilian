@@ -145,18 +145,9 @@ public interface Request extends RequestProvider, ResponseProvider,
 
 	
 	/**
-	 * Returns the application to which this request belongs.
+	 * Returns the owner to which this request belongs.
 	 */
-	public Application getApplication();
-
-	
-	/**
-	 * Returns the owner.
-	 */
-	public default RequestOwner getOwner()
-	{
-		return getApplication();
-	}
+	public RequestOwner getOwner();
 
 	
 	/**
