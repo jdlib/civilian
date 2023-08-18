@@ -59,10 +59,11 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 	/**
 	 * Creates the RequestAdapter.
 	 */
-	public ServletRequestAdapter(Application app, HttpServletRequest servletRequest)
+	public ServletRequestAdapter(Application app, HttpServletRequest servletRequest, HttpServletResponse servletResponse)
 	{
 		super(app, servletRequest.getPathInfo());
 		servletRequest_	= servletRequest;
+		servletResponse_= servletResponse;
 		initEncoding();
 	}
 	
@@ -484,7 +485,7 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 	
 	public HttpServletResponse getServletResponse()
 	{
-		return getResponse().unwrap(HttpServletResponse.class);
+		return servletResponse_;
 	}
 	
 	
@@ -498,6 +499,7 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 
 
 	protected final HttpServletRequest servletRequest_;
+	protected final HttpServletResponse servletResponse_;
 	private Headers headers_;
 	private static final java.lang.reflect.Method GETCONTENT_LENGTH_LONG_METHOD;
 	static 

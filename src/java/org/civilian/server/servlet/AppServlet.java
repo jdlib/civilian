@@ -149,8 +149,8 @@ public class AppServlet implements Servlet
 		try
 		{
 			request = isMultiPartRequest(httpRequest) ? 
-				new MpRequestAdapter(app_, httpRequest) :
-				new SpRequestAdapter(app_, httpRequest);
+				new MpRequestAdapter(app_, httpRequest, httpResponse) :
+				new SpRequestAdapter(app_, httpRequest, httpResponse);
 			// will register with the request	
 			response = new ServletResponseAdapter(request, httpResponse);
 		}

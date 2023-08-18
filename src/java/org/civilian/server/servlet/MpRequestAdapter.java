@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.civilian.application.Application;
@@ -35,9 +36,9 @@ import org.civilian.util.IoUtil;
  */
 class MpRequestAdapter extends ServletRequestAdapter
 {
-	public MpRequestAdapter(Application app, HttpServletRequest servletRequest) throws Exception
+	public MpRequestAdapter(Application app, HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws Exception
 	{
-		super(app, servletRequest);
+		super(app, servletRequest, servletResponse);
 		
 		try
 		{

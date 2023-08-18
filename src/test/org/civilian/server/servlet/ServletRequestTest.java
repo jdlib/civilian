@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Locale;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
@@ -59,13 +60,14 @@ public class ServletRequestTest extends CivTest
 	{
 		servletReq = mock(HttpServletRequest.class);
 		when(servletReq.getLocale()).thenReturn(Locale.ENGLISH);
+		servletResp = mock(HttpServletResponse.class);
 		request = null;
 	}
 	
 	
 	private void init()
 	{
-		request = new SpRequestAdapter(app, servletReq);
+		request = new SpRequestAdapter(app, servletReq, servletResp);
 		response = new ServletResponseAdapter(request, null);
 	}
 	
@@ -335,7 +337,7 @@ public class ServletRequestTest extends CivTest
 		parts.add(part2);
 		when(servletReq.getParts()).thenReturn(parts);
 
-		MpRequestAdapter request = new MpRequestAdapter(app, servletReq);
+		MpRequestAdapter request = new MpRequestAdapter(app, servletReq, servletResp);
 		assertEquals(null, request.getParameter("dummy"));		
 		assertEquals("John", request.getParameter("email"));		
 		assertEquals("photo.jpg", request.getParameter("photo"));		
@@ -385,6 +387,7 @@ public class ServletRequestTest extends CivTest
 
 	private static TestApp app;
 	private HttpServletRequest servletReq;
+	private HttpServletResponse servletResp;
 	private SpRequestAdapter request;
 	@SuppressWarnings("unused")
 	private ServletResponseAdapter response;

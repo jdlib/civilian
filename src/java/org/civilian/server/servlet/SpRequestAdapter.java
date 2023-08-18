@@ -19,6 +19,7 @@ package org.civilian.server.servlet;
 import java.util.Iterator;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.civilian.application.Application;
 import org.civilian.request.Upload;
@@ -30,9 +31,9 @@ import org.civilian.util.Iterators;
  */
 class SpRequestAdapter extends ServletRequestAdapter
 {
-	public SpRequestAdapter(Application app, HttpServletRequest servletRequest)
+	public SpRequestAdapter(Application app, HttpServletRequest servletRequest, HttpServletResponse servletResponse)
 	{
-		super(app, servletRequest);
+		super(app, servletRequest, servletResponse);
 	}
 
 
