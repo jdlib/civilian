@@ -1,6 +1,6 @@
 import java.util.Locale
 import java.util.Date
-import org.civilian.text.LocaleServiceList
+import org.civilian.text.service.LocaleServiceList
 
 
 template(LocaleServiceList services, Locale... locales) mixin html, lang

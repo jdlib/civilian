@@ -45,7 +45,7 @@ public class TestAsyncContext extends AsyncContext
 
 	@Override public void dispatch()
 	{
-		getRequest().getApplication().process(getRequest());
+		throw new UnsupportedOperationException();
 	}
 	
 

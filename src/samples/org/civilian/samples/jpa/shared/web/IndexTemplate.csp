@@ -1,4 +1,4 @@
-import org.civilian.Controller
+import org.civilian.controller.Controller
 
 
 template(IndexForm form, String message, Class<? extends Controller> createCtrlClass) mixin html, formTable

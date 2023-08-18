@@ -1,8 +1,8 @@
 import java.util.Iterator
-import org.civilian.Application
-import org.civilian.Processor
+import org.civilian.application.Application
+import org.civilian.processor.Processor
 import org.civilian.processor.ProcessorList
-import org.civilian.text.LocaleServiceList
+import org.civilian.text.service.LocaleServiceList
 
 
 template(Application app) mixin html

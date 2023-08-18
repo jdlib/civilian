@@ -59,7 +59,7 @@ public class AppTemplate extends Template
 		{
 			out.print(" class=\"active\"");                             // line 23: class="active"
 		}
-		out.println('>');                                               // line 23: >
+		out.println(">");                                               // line 23: >
 		out.increaseTab();
 		out.print("<a");                                                // line 24: <a
 		if (!active)                                                    // line 24: <%?!active%>
@@ -68,7 +68,7 @@ public class AppTemplate extends Template
 			out.print(html.url(path));                                  // line 24: <%html.url(path)%>
 			out.print("\"");                                            // line 24: "
 		}
-		out.println('>');                                               // line 24: >
+		out.println(">");                                               // line 24: >
 		out.increaseTab();
 		out.print(label);                                               // line 25: <%label%>
 		out.printlnIfNotEmpty();

@@ -6,7 +6,6 @@ package org.civilian.tool.resource;
 
 
 import java.time.LocalDateTime;
-
 import org.civilian.application.Application;
 import org.civilian.client.WebResource;
 import org.civilian.resource.Resource;

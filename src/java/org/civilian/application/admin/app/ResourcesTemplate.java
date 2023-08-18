@@ -6,7 +6,6 @@ package org.civilian.application.admin.app;
 
 
 import java.util.Iterator;
-
 import org.civilian.application.Application;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.resource.Resource;
