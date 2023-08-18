@@ -236,8 +236,8 @@ public abstract class AbstractResponse implements Response
 		checkNoContentOutput();
 		
 		// prepare the actual stream interceptors
-		ResponseStreamInterceptor streamInterceptor = streamInterceptor_ != null ?
-			streamInterceptor_.prepareStreamIntercept(this) :
+		ResponseInterceptor<OutputStream> streamInterceptor = streamInterceptor_ != null ?
+			streamInterceptor_.prepareIntercept(this) :
 			null;
 			
 		if (createWriter)
@@ -247,7 +247,7 @@ public abstract class AbstractResponse implements Response
 	}
 	
 	
-	private void initContentStream(ResponseStreamInterceptor streamInterceptor) throws IOException
+	private void initContentStream(ResponseInterceptor<OutputStream> streamInterceptor) throws IOException
 	{
 		OutputStream originalStream = getContentStreamImpl();
 		contentOutput_ = originalStream;
@@ -257,11 +257,11 @@ public abstract class AbstractResponse implements Response
 	}
 	
 		
-	private void initContentWriter(ResponseStreamInterceptor streamInterceptor) throws IOException
+	private void initContentWriter(ResponseInterceptor<OutputStream> streamInterceptor) throws IOException
 	{
 		// prepare the actual writer interceptors
-		ResponseWriterInterceptor writerInterceptor = (writerInterceptor_ != null) ?
-			writerInterceptor_.prepareWriterIntercept(this) :
+		ResponseInterceptor<Writer> writerInterceptor = (writerInterceptor_ != null) ?
+			writerInterceptor_.prepareIntercept(this) :
 			null;
 			
 		// make sure that encoding is initialized, fallback to application encoding
@@ -291,7 +291,7 @@ public abstract class AbstractResponse implements Response
 	 * @param writerInterceptor a writer interceptor, can be null
 	 * @return writer successful created? 
 	 */
-	private boolean initContentWriterNoStream(ResponseWriterInterceptor writerInterceptor) throws IOException
+	private boolean initContentWriterNoStream(ResponseInterceptor<Writer> writerInterceptor) throws IOException
 	{
 		Writer originalWriter = getContentWriterImpl();
 		if (originalWriter == null)
@@ -312,8 +312,8 @@ public abstract class AbstractResponse implements Response
 	 * @param streamInterceptor a stream interceptor, can be null
 	 * @param writerInterceptor a writer interceptor, can be null
 	 */
-	private void initContentWriterWithStream(ResponseStreamInterceptor streamInterceptor,
-		ResponseWriterInterceptor writerInterceptor) throws IOException
+	private void initContentWriterWithStream(ResponseInterceptor<OutputStream> streamInterceptor,
+		ResponseInterceptor<Writer> writerInterceptor) throws IOException
 	{
 		OutputStream originalStream = getContentStreamImpl();
 		contentOutput_ = originalStream;
@@ -397,25 +397,29 @@ public abstract class AbstractResponse implements Response
 	}
 
 	
-	@Override public void addInterceptor(ResponseStreamInterceptor interceptor)
+	@Override public InterceptorBuilder addInterceptor()
 	{
-		Check.notNull(interceptor, "interceptor");
-		checkNoContentOutput();
-		
-		streamInterceptor_ = streamInterceptor_ != null ?
-			new RespStreamInterceptorChain(streamInterceptor_, interceptor) :
-			interceptor;
+		return new InterceptorBuilderImpl();
 	}
+
 	
-	
-	@Override public void addInterceptor(ResponseWriterInterceptor interceptor)
+	private class InterceptorBuilderImpl implements InterceptorBuilder
 	{
-		Check.notNull(interceptor, "interceptor");
-		checkNoContentOutput();
-		
-		writerInterceptor_ = writerInterceptor_ != null ?
-			new RespWriterInterceptorChain(writerInterceptor_, interceptor) :
-			interceptor;
+		@Override public void forStream(ResponseInterceptor<OutputStream> interceptor)
+		{
+			Check.notNull(interceptor, "interceptor");
+			checkNoContentOutput();
+			streamInterceptor_ = ResponseInterceptorChain.of(streamInterceptor_, interceptor);
+		}
+
+	
+		@Override
+		public void forWriter(ResponseInterceptor<Writer> interceptor)
+		{
+			Check.notNull(interceptor, "interceptor");
+			checkNoContentOutput();
+			writerInterceptor_ = ResponseInterceptorChain.of(writerInterceptor_, interceptor);
+		}
 	}
 
 	
@@ -493,6 +497,6 @@ public abstract class AbstractResponse implements Response
 	private String charEncoding_;
 	private Locale contentLanguage_;
 	private Type type_ = Type.NORMAL;
-	private ResponseStreamInterceptor streamInterceptor_;
-	private ResponseWriterInterceptor writerInterceptor_;
+	private ResponseInterceptor<OutputStream> streamInterceptor_;
+	private ResponseInterceptor<Writer> writerInterceptor_;
 }

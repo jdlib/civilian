@@ -24,7 +24,7 @@ import org.civilian.content.CompressionScheme;
 import org.civilian.request.Request;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
-import org.civilian.response.ResponseStreamInterceptor;
+import org.civilian.response.ResponseInterceptor;
 import org.civilian.util.HttpHeaders;
 
 
@@ -70,7 +70,7 @@ public class Compressor extends Processor
 			{
 				Response response = request.getResponse();
 				response.getHeaders().add(HttpHeaders.VARY, "Accept-Encoding");
-				response.addInterceptor(new Interceptor(scheme));
+				response.addInterceptor().forStream(new Interceptor(scheme));
 			}
 		}
 		else if (Logs.PROCESSOR.isWarnEnabled())
@@ -80,7 +80,7 @@ public class Compressor extends Processor
 	}
 	
 	
-	private static class Interceptor implements ResponseStreamInterceptor
+	private static class Interceptor implements ResponseInterceptor<OutputStream>
 	{
 		public Interceptor(CompressionScheme scheme)
 		{
@@ -88,7 +88,7 @@ public class Compressor extends Processor
 		}
 
 
-		@Override public ResponseStreamInterceptor prepareStreamIntercept(Response response)
+		@Override public ResponseInterceptor<OutputStream> prepareIntercept(Response response)
 		{
 			if (response.getRequest().getAttribute(NO_COMPRESSION) != null)
 				return null;

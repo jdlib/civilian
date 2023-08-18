@@ -17,24 +17,24 @@ package org.civilian.response;
 
 
 import java.io.IOException;
-import java.io.Writer;
 
 
 /**
- * A ResponseWriterInterceptor can be used to wrap the Writer of a Response.
- * @see Response#addInterceptor(ResponseWriterInterceptor)
+ * A ResponseInterceptor can be used to wrap the Writer or OutputStream of a Response.
+ * @see Response#addInterceptor()
+ * @param T either Writer or OutputStream
  */
-public interface ResponseWriterInterceptor
+public interface ResponseInterceptor<T>
 {
 	/**
-	 * Called when the Writer of response content is about to be obtained
-	 * for the first time. The ResponseWriterInterceptor may modify the Response
+	 * Called when the output of response content is about to be obtained
+	 * for the first time. The ResponseInterceptor may modify the Response
 	 * (e.g. set headers) 
 	 * @param response the response
 	 * @return an interceptor whose intercept()-method will be called afterwards, or null
 	 * 		if the interceptor decided to not intercept. 
 	 */
-	public ResponseWriterInterceptor prepareWriterIntercept(Response response);
+	public ResponseInterceptor<T> prepareIntercept(Response response);
 	
 	
 	/**
@@ -42,8 +42,8 @@ public interface ResponseWriterInterceptor
 	 * for the first time. The intercept-method should allow to be called multiple
 	 * times. If {@link Response#resetBuffer()} is called, the previous Writer 
 	 * is discarded and created by a new Writer. 
-	 * @param writer the Writer
+	 * @param out the Writer or OutputStream
 	 * @return an Writer which should be used to write response content.
 	 */
-	public Writer intercept(Writer writer) throws IOException; 
+	public T intercept(T out) throws IOException; 
 }

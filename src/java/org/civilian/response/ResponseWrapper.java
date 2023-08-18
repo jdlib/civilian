@@ -208,15 +208,9 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public void addInterceptor(ResponseStreamInterceptor interceptor)
+	@Override public InterceptorBuilder addInterceptor()
 	{
-		response_.addInterceptor(interceptor);
-	}
-
-
-	@Override public void addInterceptor(ResponseWriterInterceptor interceptor)
-	{
-		response_.addInterceptor(interceptor);
+		return response_.addInterceptor();
 	}
 
 	

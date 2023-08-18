@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -605,20 +606,30 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 
 	/**
-	 * Adds a ResponseInterceptor which can wrap the Response OutputStream.
-	 * {@link #getContentStream()} or {@link #getContentWriter()} must not have been called yet.
-	 * @param interceptor the interceptor
+	 * Returns a InterceptorBuilder to adds a ResponseInterceptor
+	 * @return the builder
 	 */
-	public abstract void addInterceptor(ResponseStreamInterceptor interceptor);
-
-
-	/**
-	 * Adds a ResponseWriterInterceptor which can wrap the Response Writer.
-	 * {@link #getContentStream()} or {@link #getContentWriter()} must not have been called yet.
-	 * @param interceptor the interceptor
-	 */
-	public abstract void addInterceptor(ResponseWriterInterceptor interceptor);
+	public abstract InterceptorBuilder addInterceptor();
 	
+	
+	public interface InterceptorBuilder
+	{
+		/**
+		 * Adds a ResponseInterceptor which can wrap the response {@link #getContentStream() OutputStream}.
+		 * {@link #getContentStream()} or {@link #getContentWriterr()} must not have been called yet.
+		 * @param interceptor an interceptor
+		 */
+		public void forStream(ResponseInterceptor<OutputStream> interceptor);
+
+	
+		/**
+		 * Adds a ResponseInterceptor which can wrap the request {@link #getContentWriter() Writer}.
+		 * {@link #getContentStream()} or {@link #getContentReader()} must not have been called yet.
+		 * @param interceptor an interceptor
+		 */
+		public void forWriter(ResponseInterceptor<Writer> interceptor);
+	}
+
 	
 	//-----------------------------------
 	// buffer

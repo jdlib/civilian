@@ -241,7 +241,7 @@ public class AbstractResponseTest extends CivTest
 		response.getContentWriter();
 		try
 		{
-			response.addInterceptor(interceptor1);
+			response.addInterceptor().forStream(interceptor1);
 			fail();
 		}
 		catch(IllegalStateException e)
@@ -251,8 +251,8 @@ public class AbstractResponseTest extends CivTest
 		
 		// add two interceptors and test that they are both executed in the correct order
 		response.clear();
-		response.addInterceptor(interceptor1);
-		response.addInterceptor(interceptor2);
+		response.addInterceptor().forStream(interceptor1);
+		response.addInterceptor().forStream(interceptor2);
 		
 		OutputStream out = response.getContentStream();
 		out.write('0');
@@ -262,8 +262,8 @@ public class AbstractResponseTest extends CivTest
 		// add two interceptors but one will not contribute
 		interceptor1.intercept = false;
 		response.clear();
-		response.addInterceptor(interceptor1);
-		response.addInterceptor(interceptor2);
+		response.addInterceptor().forStream(interceptor1);
+		response.addInterceptor().forStream(interceptor2);
 		TemplateWriter writer = response.getContentWriter();
 		writer.print('0');
 		assertEquals("def0", response.getContentText(true));
@@ -272,8 +272,8 @@ public class AbstractResponseTest extends CivTest
 		interceptor1.intercept = false;
 		interceptor2.intercept = false;
 		response.clear();
-		response.addInterceptor(interceptor1);
-		response.addInterceptor(interceptor2);
+		response.addInterceptor().forStream(interceptor1);
+		response.addInterceptor().forStream(interceptor2);
 		writer = response.getContentWriter();
 		writer.print('0');
 		assertEquals("0", response.getContentText(true));
@@ -283,7 +283,7 @@ public class AbstractResponseTest extends CivTest
 		interceptor1.lazy = true;
 		interceptor1.intercept = true;
 		response.clear();
-		response.addInterceptor(interceptor1);
+		response.addInterceptor().forStream(interceptor1);
 		out = response.getContentStream();
 		out.write('0');
 		assertEquals("0", response.getBufferText());
@@ -300,7 +300,7 @@ public class AbstractResponseTest extends CivTest
 		interceptor1.lazy = false;
 		interceptor1.intercept = true;
 		response.clear();
-		response.addInterceptor(interceptor1);
+		response.addInterceptor().forStream(interceptor1);
 		assertEquals("", response.getBufferText());
 		writer = response.getContentWriter();
 		assertEquals("abc", response.getBufferText());
@@ -325,8 +325,8 @@ public class AbstractResponseTest extends CivTest
 		TestResponseWriterInterceptor ir2 = new TestResponseWriterInterceptor("456");
 		
 		// test two writer interceptors
-		response.addInterceptor(ir1);
-		response.addInterceptor(ir2);
+		response.addInterceptor().forWriter(ir1);
+		response.addInterceptor().forWriter(ir2);
 		Writer out = response.getContentWriter();
 		out.write("z");
 		assertEquals("123456z", response.getContentText(true));
@@ -335,9 +335,9 @@ public class AbstractResponseTest extends CivTest
 		// test a writer interceptor + stream interceptor
 		ir2.intercept = false;
 		response.clear();
-		response.addInterceptor(ir1);
-		response.addInterceptor(ir2);
-		response.addInterceptor(is);
+		response.addInterceptor().forWriter(ir1);
+		response.addInterceptor().forWriter(ir2);
+		response.addInterceptor().forStream(is);
 		out = response.getContentWriter();
 		out.write("z");
 		assertEquals("abc123z", response.getContentText(true));

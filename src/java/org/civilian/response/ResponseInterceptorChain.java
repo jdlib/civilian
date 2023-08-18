@@ -17,42 +17,51 @@ package org.civilian.response;
 
 
 import java.io.IOException;
-import java.io.Writer;
-
 import org.civilian.util.Check;
 
 
-class RespWriterInterceptorChain implements ResponseWriterInterceptor
+class ResponseInterceptorChain<T> implements ResponseInterceptor<T>
 {
-	public static Writer intercept(Writer writer, ResponseWriterInterceptor interceptor) 
+	public static <T> T intercept(T out, ResponseInterceptor<T> interceptor) 
 		throws IOException
 	{
 		if (interceptor != null)
 		{
-			writer = interceptor.intercept(writer);
-			if (writer == null)
-				throw new IllegalArgumentException("interceptor " + interceptor + " returned a null OutputStream");
+			out = interceptor.intercept(out);
+			if (out == null)
+				throw new IllegalArgumentException("interceptor " + interceptor + " returned null");
 		}
-		return writer;
+		return out;
 	}
 	
 	
-	public RespWriterInterceptorChain(ResponseWriterInterceptor i1, ResponseWriterInterceptor i2)
+	public static <T> ResponseInterceptor<T> of(ResponseInterceptor<T> i1, ResponseInterceptor<T> i2)
+	{
+		if (i1 == null)
+			return i2;
+		else if (i2 == null)
+			return i1;
+		else
+			return new ResponseInterceptorChain<>(i1, i2);
+	}
+
+	
+	private ResponseInterceptorChain(ResponseInterceptor<T> i1, ResponseInterceptor<T> i2)
 	{
 		i1_ = Check.notNull(i1, "i1");
 		i2_ = Check.notNull(i2, "i2");
 	}
 	
 	
-	@Override public ResponseWriterInterceptor prepareWriterIntercept(Response response)
+	@Override public ResponseInterceptor<T> prepareIntercept(Response response)
 	{
-		ResponseWriterInterceptor preppedI1_ = i1_.prepareWriterIntercept(response);
-		ResponseWriterInterceptor preppedI2_ = i2_.prepareWriterIntercept(response);
+		ResponseInterceptor<T> preppedI1_ = i1_.prepareIntercept(response);
+		ResponseInterceptor<T> preppedI2_ = i2_.prepareIntercept(response);
 
 		if ((preppedI1_ == i1_) && (preppedI2_ == i2_))
 			return this;
 		else if ((preppedI1_ != null) && (preppedI2_ != null))
-			return new RespWriterInterceptorChain(preppedI1_, preppedI2_);
+			return new ResponseInterceptorChain<>(preppedI1_, preppedI2_);
 		else if (preppedI1_ != null)
 			return preppedI1_;
 		else
@@ -60,14 +69,14 @@ class RespWriterInterceptorChain implements ResponseWriterInterceptor
 	}
 
 	
-	@Override public Writer intercept(Writer writer) throws IOException
+	@Override public T intercept(T out) throws IOException
 	{
-		writer = intercept(writer, i1_);
-		writer = intercept(writer, i2_);
-		return writer;
+		out = intercept(out, i1_);
+		out = intercept(out, i2_);
+		return out;
 	}
 	
 	
-	private ResponseWriterInterceptor i1_;
-	private ResponseWriterInterceptor i2_;
+	private final ResponseInterceptor<T> i1_;
+	private final ResponseInterceptor<T> i2_;
 }

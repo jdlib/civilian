@@ -12,16 +12,16 @@ import org.civilian.template.TemplateWriter;
 class InterceptedTemplateWriter extends TemplateWriter implements InterceptedOutput
 {
 	private static Writer createWriter(OutputStream originalStream, 
-		ResponseStreamInterceptor streamInterceptor,
+		ResponseInterceptor<OutputStream> streamInterceptor,
 		String contentEncoding) throws IOException
 	{
-		OutputStream out = RespStreamInterceptorChain.intercept(originalStream, streamInterceptor);
+		OutputStream out = ResponseInterceptorChain.intercept(originalStream, streamInterceptor);
 		return new OutputStreamWriter(out, contentEncoding);
 	}
 	
 	
 	public InterceptedTemplateWriter(Writer originalWriter, 
-		ResponseWriterInterceptor writerInterceptor) 
+		ResponseInterceptor<Writer> writerInterceptor) 
 		throws IOException
 	{
 		super(originalWriter);
@@ -32,8 +32,8 @@ class InterceptedTemplateWriter extends TemplateWriter implements InterceptedOut
 
 	
 	public InterceptedTemplateWriter(OutputStream originalStream, 
-		ResponseStreamInterceptor streamInterceptor, 
-		ResponseWriterInterceptor writerInterceptor,
+		ResponseInterceptor<OutputStream> streamInterceptor, 
+		ResponseInterceptor<Writer> writerInterceptor,
 		String contentEncoding) throws IOException
 	{
 		super(createWriter(originalStream, streamInterceptor, contentEncoding));
@@ -51,13 +51,13 @@ class InterceptedTemplateWriter extends TemplateWriter implements InterceptedOut
 		{
 			if (!fromCtor)
 				this.lock = this.out = originalWriter_;
-			this.out = RespWriterInterceptorChain.intercept(originalWriter_, writerInterceptor_);
+			this.out = ResponseInterceptorChain.intercept(originalWriter_, writerInterceptor_);
 		}
 		else
 		{
 			if (!fromCtor)
 				this.lock = this.out = createWriter(originalStream_, streamInterceptor_, contentEncoding_);
-			this.out = RespWriterInterceptorChain.intercept(this.out, writerInterceptor_); 
+			this.out = ResponseInterceptorChain.intercept(this.out, writerInterceptor_); 
 		}
 	}
 	
@@ -78,7 +78,7 @@ class InterceptedTemplateWriter extends TemplateWriter implements InterceptedOut
 	
 	private OutputStream originalStream_;
 	private Writer originalWriter_;
-	private ResponseWriterInterceptor writerInterceptor_;
-	private ResponseStreamInterceptor streamInterceptor_;
+	private ResponseInterceptor<Writer> writerInterceptor_;
+	private ResponseInterceptor<OutputStream> streamInterceptor_;
 	private String contentEncoding_;
 }

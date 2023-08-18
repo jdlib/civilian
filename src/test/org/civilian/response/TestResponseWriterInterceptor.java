@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 
-public class TestResponseWriterInterceptor implements ResponseWriterInterceptor
+public class TestResponseWriterInterceptor implements ResponseInterceptor<Writer>
 {
 	public TestResponseWriterInterceptor(String header)
 	{
@@ -14,7 +14,7 @@ public class TestResponseWriterInterceptor implements ResponseWriterInterceptor
 	}
 	
 	
-	@Override public ResponseWriterInterceptor prepareWriterIntercept(Response response)
+	@Override public ResponseInterceptor<Writer> prepareIntercept(Response response)
 	{
 		return intercept ? this : null;
 	}

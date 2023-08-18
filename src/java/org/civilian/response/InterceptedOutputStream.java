@@ -44,10 +44,10 @@ import java.io.Writer;
 class InterceptedOutputStream extends FilterOutputStream implements InterceptedOutput
 {
 	public InterceptedOutputStream(OutputStream originalStream, 
-		ResponseStreamInterceptor interceptor)
+		ResponseInterceptor<OutputStream> interceptor)
 		throws IOException
 	{
-		super(RespStreamInterceptorChain.intercept(originalStream, interceptor));
+		super(ResponseInterceptorChain.intercept(originalStream, interceptor));
 		
 		originalStream_ = originalStream;
 		interceptor_	= interceptor;
@@ -70,7 +70,7 @@ class InterceptedOutputStream extends FilterOutputStream implements InterceptedO
 				writer_.flush();
 			}
 			
-			out = RespStreamInterceptorChain.intercept(originalStream_, interceptor_);
+			out = ResponseInterceptorChain.intercept(originalStream_, interceptor_);
 		}
 		catch(IOException e)
 		{
@@ -96,6 +96,6 @@ class InterceptedOutputStream extends FilterOutputStream implements InterceptedO
 
 	
 	private OutputStream originalStream_;
-	private ResponseStreamInterceptor interceptor_;
+	private ResponseInterceptor<OutputStream> interceptor_;
 	private Flushable writer_;
 }

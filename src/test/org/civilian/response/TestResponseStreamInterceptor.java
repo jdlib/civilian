@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 
-public class TestResponseStreamInterceptor implements ResponseStreamInterceptor
+public class TestResponseStreamInterceptor implements ResponseInterceptor<OutputStream>
 {
 	public TestResponseStreamInterceptor(String header)
 	{
@@ -14,7 +14,7 @@ public class TestResponseStreamInterceptor implements ResponseStreamInterceptor
 	}
 	
 	
-	@Override public ResponseStreamInterceptor prepareStreamIntercept(Response response)
+	@Override public ResponseInterceptor<OutputStream> prepareIntercept(Response response)
 	{
 		return intercept ? this : null;
 	}
