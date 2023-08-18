@@ -66,7 +66,7 @@ public class ResourceDispatch extends Processor
 			if (ctrlType != null)
 			{
 				// resource is associated with a controller
-				ctrlType.createController().process(request);
+				ctrlType.createController().process(request, response);
 				return true; // we handled the request
 			}
 		}

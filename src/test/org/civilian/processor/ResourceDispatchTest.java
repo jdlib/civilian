@@ -62,6 +62,6 @@ public class ResourceDispatchTest extends CivTest
 		assertTrue(dispatch.process(request, response, ProcessorChain.EMPTY));
 		verify(request, times(2)).setResource(idPP);
 		verify(request, times(2)).setPathParams(pathParams);
-		verify(controller).process(request);
+		verify(controller).process(request, response);
 	}
 }

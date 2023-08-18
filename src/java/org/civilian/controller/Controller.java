@@ -131,22 +131,23 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	}
 	
 
-	private void setRequest(Request request)
-	{
-		Check.notNull(request, "request");
-		if (request_ != null)
-			throw new IllegalStateException("already processing");
-		request_ = request;
-	}
-	
-
 	/**
 	 * Returns the response.
 	 * @return the Response
 	 */
 	@Override public Response getResponse()
 	{
-		return getRequest().getResponse();
+		checkProcessing();
+		return response_;
+	}
+	
+
+	private void setRequestResponse(Request request, Response response)
+	{
+		if (request_ != null)
+			throw new IllegalStateException("already processing");
+		request_ = Check.notNull(request, "request");
+		response_= Check.notNull(response, "response");
 	}
 
 	
@@ -227,13 +228,13 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	 * <li>calls the various exit-methods
 	 * </ul>
 	 * @param request the request
+	 * @param request the response
 	 * @throws Exception if an error during processing occurs
 	 */
-	public void process(Request request) throws Exception
+	public void process(Request request, Response response) throws Exception
 	{
-		setRequest(request);
+		setRequestResponse(request, response);
 		
-		Response response = request.getResponse();
 		try
 		{
 			boolean debug = Logs.CONTROLLER.isDebugEnabled();
@@ -269,7 +270,8 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 		finally
 		{
 			exit();
-			request_ = null;
+			request_  = null;
+			response_ = null;
 		}
 	}
 
@@ -365,7 +367,8 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	}
 	
 	
-	private ControllerType type_;
 	private Request request_;
+	private Response response_;
+	private ControllerType type_;
 	private Exception exception_;
 }

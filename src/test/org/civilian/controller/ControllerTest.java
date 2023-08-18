@@ -39,7 +39,7 @@ public class ControllerTest extends CivTest
 			// can't invoke myself
 			try
 			{
-				process(getRequest());
+				process(getRequest(), getResponse());
 			}
 			catch(IllegalStateException e)
 			{
