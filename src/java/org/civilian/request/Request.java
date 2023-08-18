@@ -34,7 +34,6 @@ import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParamProvider;
-import org.civilian.response.Response;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.service.LocaleServiceProvider;
 import org.civilian.text.type.StandardSerializer;
@@ -124,22 +123,6 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	{
 		return this;
 	}
-
-	
-	/**
-	 * Returns the associated response.
-	 */
-	public Response getResponse();
-
-	
-	/**
-	 * Allows to set the response.
-	 * The {@link Response#getRequest() request} of the response must equal this.
-	 * Use this method if you need to wrap the original response to intercept
-	 * invocation of response methods.
-	 * @param response the Response 
-	 */
-	public void setResponse(Response response);
 
 	
 	/**

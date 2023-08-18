@@ -31,7 +31,6 @@ import org.civilian.content.ContentTypeList;
 import org.civilian.resource.Path;
 import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
-import org.civilian.response.Response;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
 import org.civilian.util.http.HeaderMap;
@@ -78,21 +77,6 @@ public abstract class AbstractRequest implements Request
 	@Override public RequestOwner getOwner()
 	{
 		return owner_;
-	}
-
-	
-	@Override public Response getResponse()
-	{
-		return response_;
-	}
-
-
-	@Override public void setResponse(Response response)
-	{
-		Check.notNull(response, "response");
-		if (response.getRequest() != this)
-			throw new IllegalArgumentException("not my response");
-		response_ = response;
 	}
 
 	
@@ -628,7 +612,6 @@ public abstract class AbstractRequest implements Request
 	}
 	
 
-	private Response response_;
 	private Path path_;
 	private Path relativePath_;
 	private Map<PathParam<?>, Object> pathParams_;

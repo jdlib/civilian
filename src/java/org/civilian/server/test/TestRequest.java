@@ -64,7 +64,7 @@ public class TestRequest extends AbstractRequest
 	public TestRequest(Application application, String relativePath)
 	{
 		super(application, relativePath);
-		setResponse(testResponse_ = new TestResponse(this));
+		testResponse_ = new TestResponse(this);
 	}
 
 	
@@ -100,7 +100,7 @@ public class TestRequest extends AbstractRequest
 	public TestRequest(TestRequest request)
 	{
 		super(request);
-		setResponse(testResponse_ = new TestResponse(this, request.getTestResponse()));
+		testResponse_ = new TestResponse(this, request.getTestResponse());
 		
 		method_ 		= request.method_;
 		cookies_		= request.cookies_;

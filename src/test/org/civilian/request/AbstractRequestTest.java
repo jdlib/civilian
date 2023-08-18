@@ -23,7 +23,6 @@ import java.io.Reader;
 import org.civilian.CivTest;
 import org.civilian.server.test.TestApp;
 import org.civilian.server.test.TestRequest;
-import org.civilian.server.test.TestResponse;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,8 +39,7 @@ public class AbstractRequestTest extends CivTest
 	
 	@Before public void before()
 	{
-		request 	= new TestRequest(app);
-		response 	= request.getTestResponse();   
+		request = new TestRequest(app);
 	}
 	
 	
@@ -49,8 +47,6 @@ public class AbstractRequestTest extends CivTest
 	{
 		assertSame(request, request.getRequest());
 		assertSame(app, request.getOwner());
-		
-		request.setResponse(response); // ok
 	}
 	
 	
@@ -134,5 +130,4 @@ public class AbstractRequestTest extends CivTest
 	
 	private static TestApp app;
 	private static TestRequest request;
-	private TestResponse response;
 }

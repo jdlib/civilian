@@ -23,13 +23,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.resource.Path;
 import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
-import org.civilian.response.Response;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
@@ -63,18 +61,6 @@ public class RequestWrapper implements Request
 	@Override public RequestOwner getOwner()
 	{
 		return request_.getOwner();
-	}
-
-	
-	@Override public Response getResponse()
-	{
-		return request_.getResponse();
-	}
-
-
-	@Override public void setResponse(Response response)
-	{
-		request_.setResponse(response);
 	}
 
 	
@@ -388,5 +374,5 @@ public class RequestWrapper implements Request
 	}
 	
 	
-	protected Request request_;
+	protected final Request request_;
 }

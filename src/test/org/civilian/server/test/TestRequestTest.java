@@ -71,9 +71,6 @@ public class TestRequestTest extends CivTest
 
 		// getRequest
 		assertSame(request, request.getRequest());
-
-		// setResponse
-		request.setResponse(response); // ok
 	}
 	
 	

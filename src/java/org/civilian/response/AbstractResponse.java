@@ -59,7 +59,6 @@ public abstract class AbstractResponse implements Response
 	protected AbstractResponse(AbstractRequest request)
 	{
 		request_ = Check.notNull(request, "request");
-		request.setResponse(this);
 	}
 
 	

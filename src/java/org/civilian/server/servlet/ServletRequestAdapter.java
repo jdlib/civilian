@@ -483,7 +483,7 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 	}
 	
 	
-	@Override public ServletResponseAdapter getResponse()
+	public ServletResponseAdapter getResponse()
 	{
 		return response_;
 	}
