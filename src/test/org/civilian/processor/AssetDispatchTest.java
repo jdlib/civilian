@@ -53,7 +53,6 @@ public class AssetDispatchTest extends CivTest
 		ResponseHeaders headers = mock(ResponseHeaders.class);
 		Asset asset 			= mock(Asset.class);
 		AssetService service	= mock(AssetService.class);
-		when(request.getResponse()).thenReturn(response);
 		when(response.getHeaders()).thenReturn(headers);
 		when(service.hasAssets()).thenReturn(Boolean.TRUE);
 		
@@ -102,7 +101,6 @@ public class AssetDispatchTest extends CivTest
 		Response response 		= mock(Response.class);
 		when(service.hasAssets()).thenReturn(Boolean.TRUE);
 		when(request.getRelativePath()).thenReturn(new Path("/customers"));
-		when(request.getResponse()).thenReturn(response);
 		AssetDispatch dispatch 	= new AssetDispatch(s -> true /*prohibited*/, service);
 
 		assertTrue(dispatch.process(request, response, ProcessorChain.EMPTY));

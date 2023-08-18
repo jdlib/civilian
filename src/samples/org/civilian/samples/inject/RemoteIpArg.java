@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package org.civilian.samples.inject;
+package org.civilian.samples.inject;
 
 
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 
 
 /**
@@ -27,7 +28,7 @@ import org.civilian.request.Request;
  */
 public class RemoteIpArg extends MethodArg
 {
-	@Override public Object getValue(Request request) throws Exception
+	@Override public Object getValue(Request request, Response response) throws Exception
 	{
 		return request.getRemoteInfo().getIp();
 	}

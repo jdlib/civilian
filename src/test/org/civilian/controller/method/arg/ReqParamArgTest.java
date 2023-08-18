@@ -30,6 +30,7 @@ import org.civilian.controller.method.arg.reqparam.ReqParamValueArg;
 import org.civilian.request.CookieList;
 import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
+import org.civilian.response.Response;
 import org.civilian.testcase1.Test1PathParams;
 
 
@@ -37,10 +38,11 @@ public class ReqParamArgTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
-		Request request = mock(Request.class);
-		RequestHeaders headers = mock(RequestHeaders.class);
-		Cookie cookie = mock(Cookie.class);
-		CookieList cookies = new CookieList(cookie);
+		Request request 		= mock(Request.class);
+		RequestHeaders headers 	= mock(RequestHeaders.class);
+		Response response		= mock(Response.class);
+		Cookie cookie 			= mock(Cookie.class);
+		CookieList cookies 		= new CookieList(cookie);
 		when(request.getHeaders()).thenReturn(headers);
 		when(request.getCookies()).thenReturn(cookies);
 		when(cookie.getName()).thenReturn("c");
@@ -50,10 +52,10 @@ public class ReqParamArgTest extends CivTest
 		// parameters
 		
 		ReqParamValueArg q = new ParameterValueArg("q"); 
-		q.getValue(request);
+		q.getValue(request, response);
 		verify(request).getParameter("q");
 
-		q.getValues(request);
+		q.getValues(request, response);
 		verify(request).getParameters("q");
 		
 		assertEquals("Parameter \"q\"", q.toString());
@@ -63,10 +65,10 @@ public class ReqParamArgTest extends CivTest
 		// matrix param
 		
 		ReqParamValueArg m = new MatrixParamValueArg("m"); 
-		m.getValue(request);
+		m.getValue(request, response);
 		verify(request).getMatrixParam("m");
 
-		m.getValues(request);
+		m.getValues(request, response);
 		verify(request).getMatrixParams("m");
 		
 		assertEquals("MatrixParam \"m\"", m.toString());
@@ -75,10 +77,10 @@ public class ReqParamArgTest extends CivTest
 		// header param
 
 		ReqParamValueArg h = new HeaderParamValueArg("h");
-		h.getValue(request);
+		h.getValue(request, response);
 		verify(headers).get("h");
 
-		h.getValues(request);
+		h.getValues(request, response);
 		verify(headers).getAll("h");
 		
 		assertEquals("HeaderParam \"h\"", h.toString());
@@ -89,11 +91,11 @@ public class ReqParamArgTest extends CivTest
 
 		ReqParamValueArg c = new CookieParamValueArg("c");
 		ReqParamValueArg x = new CookieParamValueArg("x");
-		assertEquals("cv", c.getValue(request));
-		assertNull(x.getValue(request));
+		assertEquals("cv", c.getValue(request, response));
+		assertNull(x.getValue(request, response));
 
-		assertArrayEquals2(c.getValues(request), "cv");
-		assertArrayEquals2(x.getValues(request));
+		assertArrayEquals2(c.getValues(request, response), "cv");
+		assertArrayEquals2(x.getValues(request, response));
 		
 		assertEquals("CookieParam \"c\"", c.toString());
 		
@@ -102,7 +104,7 @@ public class ReqParamArgTest extends CivTest
 		// cookie object value
 
 		CookieParamObjectArg co = new CookieParamObjectArg("c");
-		assertEquals(cookie, co.getValue(request));
+		assertEquals(cookie, co.getValue(request, response));
 		assertEquals("CookieParam \"c\"", co.toString());
 
 		//---------------------------
@@ -111,11 +113,11 @@ public class ReqParamArgTest extends CivTest
 		PathParamArg<String> arg = new PathParamArg<>(Test1PathParams.BETA, null);
 		assertEquals("PathParam \"beta\"", arg.toString());
 		
-		assertNull(arg.getValue(request));
+		assertNull(arg.getValue(request, response));
 		verify(request).getPathParam(Test1PathParams.BETA);
 		
 		when(request.getPathParam(Test1PathParams.BETA)).thenReturn("b");
-		assertEquals("b", arg.getValue(request));
+		assertEquals("b", arg.getValue(request, response));
 		verify(request, times(2)).getPathParam(Test1PathParams.BETA);
 	}
 }

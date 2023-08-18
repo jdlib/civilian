@@ -19,6 +19,7 @@ package org.civilian.controller.method.arg.conv;
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.request.BadRequestException;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.util.Value;
 
 
@@ -33,11 +34,11 @@ public class ValueArg extends MethodArg
 	}
 	
 	
-	@Override public Object getValue(Request request) throws Exception
+	@Override public Object getValue(Request request, Response response) throws Exception
 	{
 		try
 		{
-			return new Value<>(arg_.getValue(request));
+			return new Value<>(arg_.getValue(request, response));
 		}
 		catch(BadRequestException e)
 		{

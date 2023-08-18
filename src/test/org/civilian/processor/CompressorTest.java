@@ -50,12 +50,12 @@ public class CompressorTest extends CivTest
 	private void assertProcess(String acceptEncoding, String vary, String contentEncoding, String etag, byte... content) throws Exception
 	{
 		request_.getHeaders().set(HeaderNames.ACCEPT_ENCODING, acceptEncoding);
-		ResponseHeaders headers = request_.getResponse().getHeaders();
+		ResponseHeaders headers = response_.getHeaders();
 		
 		// process always returns false
 		assertFalse(compressor_.process(request_, response_, ProcessorChain.EMPTY));
 		
-		request_.getResponse().getContentWriter().print("a");
+		response_.getContentWriter().print("a");
 		assertArrayEquals(content, request_.getTestResponse().getContentBytes(true));
 		
 		assertEquals(vary, headers.get(HeaderNames.VARY));

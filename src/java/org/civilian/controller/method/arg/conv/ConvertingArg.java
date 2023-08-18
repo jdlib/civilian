@@ -19,10 +19,10 @@ package org.civilian.controller.method.arg.conv;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
-
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.controller.method.arg.StringMethodArg;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.text.type.TypeSerializer;
 import org.civilian.type.TypeLib;
@@ -149,12 +149,12 @@ public class ConvertingArg<T> extends MethodArg
 	 * converts into the target value which will be injected into
 	 * argument variable. 
 	 */
-	@Override public T getValue(Request request) throws Exception
+	@Override public T getValue(Request request, Response response) throws Exception
 	{
 		TypeSerializer serializer = isLocaleValue_ ? 
 			request.getLocaleService().getSerializer() : 
 			StandardSerializer.INSTANCE;
-		return converter_.getValue(request, arg_, serializer, defaultValue_);
+		return converter_.getValue(request, response, arg_, serializer, defaultValue_);
 	}
 
 	
@@ -167,10 +167,10 @@ public class ConvertingArg<T> extends MethodArg
 	}
 	
 
-	private StringMethodArg arg_;
-	private T defaultValue_;
-	private boolean isLocaleValue_;
-	private Converter<T> converter_;
+	private final StringMethodArg arg_;
+	private final T defaultValue_;
+	private final boolean isLocaleValue_;
+	private final Converter<T> converter_;
 }
 
 

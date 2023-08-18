@@ -27,11 +27,11 @@ import org.civilian.response.Response;
 public class ResponseArg extends MethodArg
 {
 	/**
-	 * Returns the responser.
+	 * Returns the response.
 	 */
-	@Override public Object getValue(Request request)
+	@Override public Object getValue(Request request, Response response)
 	{
-		return request.getResponse();
+		return response;
 	}
 }
 

@@ -54,7 +54,6 @@ public class RespContentArgTest extends CivTest
 	{
 		Request request = mock(Request.class);
 		Response response = mock(Response.class);
-		when(request.getResponse()).thenReturn(response);
 		when(response.isCommitted()).thenReturn(Boolean.FALSE);
 		when(response.getContentAccess()).thenReturn(Response.ContentAccess.NONE);
 		
@@ -69,16 +68,16 @@ public class RespContentArgTest extends CivTest
 
 	
 		ResponseContentArg arg = new ResponseContentArg(Explicit.class);
-		Object value = arg.getValue(request);
+		Object value = arg.getValue(request, response);
 		assertEquals(Explicit.class, value.getClass());
-		arg.postProcess(request, value);
+		arg.postProcess(request, response, value);
 		assertTrue(((Explicit)value).called);
 
 	
 		arg = new ResponseContentArg(Implicit.class);
-		value = arg.getValue(request);
+		value = arg.getValue(request, response);
 		assertEquals(Implicit.class, value.getClass());
-		arg.postProcess(request, value);
+		arg.postProcess(request, response, value);
 		verify(response).writeContent(value);
 	}
 }

@@ -255,7 +255,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 						ControllerMethod method = negMethod.getMethod();
 						if (debug)
 							Logs.CONTROLLER.debug("#{}", method);
-						method.invoke(this, request);
+						method.invoke(this, request, response);
 					}
 				}
 				else

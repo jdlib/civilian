@@ -23,6 +23,7 @@ import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.controller.method.arg.StringMethodArg;
 import org.civilian.request.BadRequestException;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.text.type.TypeSerializer;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
@@ -30,15 +31,15 @@ import org.civilian.type.TypeLib;
 
 public abstract class SimpleConverter<T> extends Converter<T>
 {
-	@Override public T getValue(Request request, StringMethodArg arg, 
-		TypeSerializer serializer,
-		T defaultValue) throws Exception
+	@Override public T getValue(Request request, Response response, 
+		StringMethodArg arg,
+		TypeSerializer serializer, T defaultValue) throws Exception
 	{
 		T value = null;
 
 		// s = null -> value = null
 		// s = ""   -> value = null possible, for instance for number conversions
-		String s = arg.getValue(request);
+		String s = arg.getValue(request, response);
 		if (s != null)
 			value = convert(arg, serializer, s);
 		

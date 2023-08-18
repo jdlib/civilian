@@ -56,19 +56,19 @@ public class ValueArgTest extends CivTest
 		
 		arg.value = "1";
 		
-		Value<String> v	= (Value<String>)varg.getValue(null);
+		Value<String> v	= (Value<String>)varg.getValue(null, null);
 		assertEquals("1", v.getValue());
 		assertNull(v.getError());
 		assertNull(v.getErrorValue());
 		
 		Exception ex = arg.exception = new RuntimeException();
-		v	= (Value<String>)varg.getValue(null);
+		v	= (Value<String>)varg.getValue(null, null);
 		assertNull(v.getValue());
 		assertEquals(arg.exception, v.getError());
 		assertNull(v.getErrorValue());
 		
 		arg.exception = new BadRequestException("hello", ex).setErrorValue("12.34");
-		v	= (Value<String>)varg.getValue(null);
+		v	= (Value<String>)varg.getValue(null, null);
 		assertNull(v.getValue());
 		assertEquals("12.34", v.getErrorValue());
 	}

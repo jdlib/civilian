@@ -24,6 +24,7 @@ import java.util.TreeSet;
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.controller.method.arg.StringMethodArg;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.text.type.TypeSerializer;
 
 
@@ -36,11 +37,11 @@ public abstract class CollectionConverter<T> extends Converter<Collection<T>>
 	
 
 	@Override public Collection<T> getValue(Request request, 
-		StringMethodArg arg, 
-		TypeSerializer serializer,
-		Collection<T> defaultValue) throws Exception
+		Response response, 
+		StringMethodArg arg,
+		TypeSerializer serializer, Collection<T> defaultValue) throws Exception
 	{
-		String[] values = arg.getValues(request);
+		String[] values = arg.getValues(request, response);
 		return ((values != null) && (values.length > 0)) ? 
 			convert(arg, serializer, values) :
 			defaultValue;

@@ -18,9 +18,9 @@ package org.civilian.controller.method.arg.reqparam;
 
 import java.util.ArrayList;
 import javax.servlet.http.Cookie;
-
 import org.civilian.request.CookieList;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 
 
 /**
@@ -34,14 +34,14 @@ public class CookieParamValueArg extends ReqParamValueArg
 	}
 	
 	
-	@Override public String getValue(Request request) throws Exception
+	@Override public String getValue(Request request, Response response) throws Exception
 	{
 		Cookie cookie = request.getCookies().get(name_);
 		return cookie != null ? cookie.getValue() : null; 
 	}
 	
 
-	@Override public String[] getValues(Request request) throws Exception
+	@Override public String[] getValues(Request request, Response response) throws Exception
 	{
 		ArrayList<String> values = new ArrayList<>(); 
 		CookieList cookies = request.getCookies();

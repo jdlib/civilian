@@ -18,12 +18,15 @@ package org.civilian.controller.method.arg.conv;
 
 import org.civilian.controller.method.arg.StringMethodArg;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.text.type.TypeSerializer;
 
 
 public abstract class Converter<T>
 {
-	public abstract T getValue(Request request, StringMethodArg arg, 
-		TypeSerializer serializer,
+	public abstract T getValue(Request request, 
+		Response response, 
+		StringMethodArg arg,
+		TypeSerializer serializer, 
 		T defaultValue) throws Exception;
 }

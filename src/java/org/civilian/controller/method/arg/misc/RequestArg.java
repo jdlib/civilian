@@ -18,6 +18,7 @@ package org.civilian.controller.method.arg.misc;
 
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 
 
 /**
@@ -28,7 +29,7 @@ public class RequestArg extends MethodArg
 	/**
 	 * Returns the request.
 	 */
-	@Override public Object getValue(Request request)
+	@Override public Object getValue(Request request, Response response)
 	{
 		return request;
 	}

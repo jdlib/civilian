@@ -34,6 +34,7 @@ import org.civilian.content.ContentTypeList;
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.controller.method.arg.factory.MethodArgFactory;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.util.Iterators;
 import org.civilian.util.StringUtil;
 
@@ -208,11 +209,11 @@ public class ControllerMethod
 	/**
 	 * Invokes the action method on the controller.
 	 */
-	public void invoke(Object controller, Request request) throws Exception
+	public void invoke(Object controller, Request request, Response response) throws Exception
 	{
 		Object[] argValues = null;
 		if (args_ != null)
-			argValues = buildArgValues(request);
+			argValues = buildArgValues(request, response);
 		
 		try
 		{
@@ -231,16 +232,16 @@ public class ControllerMethod
 		if (argValues != null)
 		{
 			for (int i=0; i<argValues.length; i++)
-				args_[i].postProcess(request, argValues[i]);
+				args_[i].postProcess(request, response, argValues[i]);
 		}
 	}
 	
 	
-	private Object[] buildArgValues(Request request) throws Exception
+	private Object[] buildArgValues(Request request, Response response) throws Exception
 	{
 		Object[] argValues = new Object[args_.length];
 		for (int i=0; i<argValues.length; i++)
-			argValues[i] = args_[i].getValue(request);
+			argValues[i] = args_[i].getValue(request, response);
 		return argValues;
 	}
 

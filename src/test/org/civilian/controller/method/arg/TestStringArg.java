@@ -17,6 +17,7 @@ package org.civilian.controller.method.arg;
 
 
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 
 
 public class TestStringArg extends StringMethodArg
@@ -28,14 +29,14 @@ public class TestStringArg extends StringMethodArg
 	}
 	
 	
-	@Override public String getValue(Request request) throws Exception
+	@Override public String getValue(Request request, Response response) throws Exception
 	{
 		checkExcception();
 		return value;
 	}
 	
 
-	@Override public String[] getValues(Request request) throws Exception
+	@Override public String[] getValues(Request request, Response response) throws Exception
 	{
 		checkExcception();
 		return values;

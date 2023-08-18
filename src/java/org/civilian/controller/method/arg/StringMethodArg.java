@@ -17,6 +17,7 @@ package org.civilian.controller.method.arg;
 
 
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 
 
 /**
@@ -25,8 +26,8 @@ import org.civilian.request.Request;
  */
 public abstract class StringMethodArg extends MethodArg
 {
-	@Override public abstract String getValue(Request request) throws Exception;
+	@Override public abstract String getValue(Request request, Response response) throws Exception;
 
 
-	public abstract String[] getValues(Request request) throws Exception;
+	public abstract String[] getValues(Request request, Response response) throws Exception;
 }

@@ -17,7 +17,6 @@ package org.civilian.controller.method.arg.misc;
 
 
 import java.lang.reflect.Modifier;
-
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.request.Request;
 import org.civilian.response.Response;
@@ -49,7 +48,7 @@ public class ResponseContentArg extends MethodArg
 	 * Returns a new parameter instance.
 	 */
 	@SuppressWarnings("deprecation")
-	@Override public Object getValue(Request request)
+	@Override public Object getValue(Request request, Response response)
 	{
 		try
 		{
@@ -65,9 +64,8 @@ public class ResponseContentArg extends MethodArg
 	/**
 	 * Writes the parameter object to the response.
 	 */
-	@Override public void postProcess(Request request, Object param) throws Exception
+	@Override public void postProcess(Request request, Response response, Object param) throws Exception
 	{
-		Response response = request.getResponse();
 		if (!response.isCommitted() && (response.getContentAccess() == Response.ContentAccess.NONE))
 		{
 			if (hasRcClass_)
@@ -78,6 +76,6 @@ public class ResponseContentArg extends MethodArg
 	}
 	
 	
-	private Class<?> paramClass_;
-	private boolean hasRcClass_;
+	private final Class<?> paramClass_;
+	private final boolean hasRcClass_;
 }

@@ -17,6 +17,7 @@ package org.civilian.controller.method.arg.reqcontent;
 
 
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.util.IoUtil;
 
 
@@ -25,7 +26,7 @@ import org.civilian.util.IoUtil;
  */
 public class ReqContentStringArg extends RequestContentArg 
 {
-	@Override public Object getValue(Request request) throws Exception
+	@Override public Object getValue(Request request, Response response) throws Exception
 	{
 		return IoUtil.readString(request.getContentReader());
 	}

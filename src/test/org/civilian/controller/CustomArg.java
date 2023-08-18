@@ -18,6 +18,7 @@ package org.civilian.controller;
 
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 
 
 public class CustomArg extends MethodArg
@@ -25,7 +26,7 @@ public class CustomArg extends MethodArg
 	private static final Object VALUE = new Object();
 	
 	
-	@Override public Object getValue(Request request) throws Exception
+	@Override public Object getValue(Request request, Response response) throws Exception
 	{
 		return VALUE;
 	}

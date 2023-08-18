@@ -65,11 +65,11 @@ public class SimpleConverterTest extends CivTest
 		TestStringArg testArg = new TestStringArg();
 		testArg.value = null;
 		
-		assertEquals(null, converter.getValue(null, testArg, StandardSerializer.INSTANCE, null));
-		assertEquals("d",  converter.getValue(null, testArg, StandardSerializer.INSTANCE, "d"));
+		assertEquals(null, converter.getValue(null, null, testArg, StandardSerializer.INSTANCE, null));
+		assertEquals("d",  converter.getValue(null, null, testArg, StandardSerializer.INSTANCE, "d"));
 
 		testArg.value = "x";
-		assertEquals("x", converter.getValue(null, testArg, StandardSerializer.INSTANCE, "d"));
+		assertEquals("x", converter.getValue(null, null, testArg, StandardSerializer.INSTANCE, "d"));
 	}
 
 	
@@ -80,7 +80,7 @@ public class SimpleConverterTest extends CivTest
 		testArg.value = "abc";
 		try
 		{
-			converter.getValue(null, testArg, StandardSerializer.INSTANCE, null);
+			converter.getValue(null, null, testArg, StandardSerializer.INSTANCE, null);
 			fail();
 		}
 		catch(BadRequestException e)

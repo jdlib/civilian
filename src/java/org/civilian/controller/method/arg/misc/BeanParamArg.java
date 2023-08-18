@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 
 
 public class BeanParamArg extends MethodArg
@@ -32,13 +33,13 @@ public class BeanParamArg extends MethodArg
 	}
 	
 	
-	@Override public Object getValue(Request request) throws Exception
+	@Override public Object getValue(Request request, Response response) throws Exception
 	{
 		@SuppressWarnings("deprecation")
 		Object bean = beanClass_.newInstance();
 		
 		for (Setter setter : setters_)
-			setter.injectParam(request, bean);
+			setter.injectParam(request, response, bean);
 			
 		return bean;
 	}
@@ -52,9 +53,9 @@ public class BeanParamArg extends MethodArg
 		}
 		
 		
-		public void injectParam(Request request, Object bean) throws Exception
+		public void injectParam(Request request, Response response, Object bean) throws Exception
 		{
-			Object value = arg_.getValue(request);
+			Object value = arg_.getValue(request, response);
 			try
 			{
 				inject(value, bean);

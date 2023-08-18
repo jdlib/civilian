@@ -19,6 +19,7 @@ package org.civilian.controller.method.arg.reqparam;
 import org.civilian.controller.method.arg.MethodArg;
 import org.civilian.request.Request;
 import org.civilian.resource.pathparam.PathParam;
+import org.civilian.response.Response;
 
 
 /**
@@ -42,7 +43,7 @@ public class PathParamArg<T> extends MethodArg
 	 * converts into the target value which will be injected into
 	 * argument variable. 
 	 */
-	@Override public T getValue(Request request) throws Exception
+	@Override public T getValue(Request request, Response response) throws Exception
 	{
 		T value = request.getPathParam(pathParam_);
 		return value != null ? value : defaultValue_;

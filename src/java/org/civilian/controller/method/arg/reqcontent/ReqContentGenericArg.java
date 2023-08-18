@@ -17,8 +17,8 @@ package org.civilian.controller.method.arg.reqcontent;
 
 
 import java.lang.reflect.Type;
-
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 
 
 /**
@@ -37,7 +37,7 @@ public class ReqContentGenericArg extends RequestContentArg
 	/**
 	 * Uses a content reader from the application to read and return the request content.   
 	 */
-	@Override public Object getValue(Request request) throws Exception
+	@Override public Object getValue(Request request, Response response) throws Exception
 	{
 		return request.readContent(type_, genericType_);
 	}

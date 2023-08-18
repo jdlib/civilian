@@ -18,6 +18,7 @@ package org.civilian.controller.method.arg;
 
 import org.civilian.request.BadRequestException;
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 import org.civilian.util.StringUtil;
 
 
@@ -30,19 +31,22 @@ public abstract class MethodArg
 {
 	/**
 	 * Returns the value of the argument for the given request.
+	 * @param request the request
+	 * @param response the response
 	 * @throws Exception thrown if an error occurs when extracting the value.
 	 * 		The MethodArg should throw a {@link BadRequestException}
 	 * 		to indicate that the request had syntactic errors.
 	 */
-	public abstract Object getValue(Request request) throws Exception;
+	public abstract Object getValue(Request request, Response response) throws Exception;
 
 
 	/**
 	 * Does any post-processing after the controller action method was called.
 	 * @param request the request
-	 * @param value the argument value previously created by {@link #getValue(Request)}.
+	 * @param response the response
+	 * @param value the argument value previously created by {@link #getValue(Request, Response)}.
 	 */
-	public void postProcess(Request request, Object value) throws Exception
+	public void postProcess(Request request, Response response, Object value) throws Exception
 	{
 	}
 

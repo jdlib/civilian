@@ -17,6 +17,7 @@ package org.civilian.controller.method.arg.reqparam;
 
 
 import org.civilian.request.Request;
+import org.civilian.response.Response;
 
 
 /**
@@ -30,13 +31,13 @@ public class HeaderParamValueArg extends ReqParamValueArg
 	}
 	
 	
-	@Override public String getValue(Request request) throws Exception
+	@Override public String getValue(Request request, Response response) throws Exception
 	{
 		return request.getHeaders().get(name_);
 	}
 	
 
-	@Override public String[] getValues(Request request) throws Exception
+	@Override public String[] getValues(Request request, Response response) throws Exception
 	{
 		return request.getHeaders().getAll(name_);
 	}

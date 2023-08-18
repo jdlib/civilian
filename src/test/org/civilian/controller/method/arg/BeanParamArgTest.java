@@ -26,6 +26,7 @@ import org.civilian.controller.method.arg.factory.MethodArgFactory;
 import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
 import org.civilian.resource.pathparam.PathParamMap;
+import org.civilian.response.Response;
 import org.civilian.type.TypeLib;
 import org.civilian.util.http.HeaderNames;
 
@@ -38,13 +39,14 @@ public class BeanParamArgTest extends CivTest
 		MethodArg arg 				= factory.parseBeanParamArgument(Bean.class);
 		Request request 			= mock(Request.class);
 		RequestHeaders headers		= mock(RequestHeaders.class);
+		Response response			= mock(Response.class);
 		when(request.getHeaders()).thenReturn(headers);
 		when(request.getParameter("name")).thenReturn("theName");
 		when(headers.get(HeaderNames.ACCEPT)).thenReturn("text/html");
 		when(request.getParameters("values")).thenReturn(new String[] { "a", "b" });
 		when(request.getParameter("x")).thenReturn("2");
 		
-		Object value = arg.getValue(request);
+		Object value = arg.getValue(request, response);
 		assertNotNull(value);
 		assertEquals(Bean.class, value.getClass());
 		
