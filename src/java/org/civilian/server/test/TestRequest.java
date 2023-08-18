@@ -35,11 +35,11 @@ import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.controller.Controller;
-import org.civilian.internal.ParamList;
 import org.civilian.request.AbstractRequest;
 import org.civilian.request.AsyncContext;
 import org.civilian.request.CookieList;
 import org.civilian.request.Request;
+import org.civilian.request.RequestHeaders;
 import org.civilian.request.Upload;
 import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
@@ -48,6 +48,7 @@ import org.civilian.util.Check;
 import org.civilian.util.IoUtil;
 import org.civilian.util.Iterators;
 import org.civilian.util.http.HeaderNames;
+import org.civilian.util.http.HeaderMap;
 
 
 /**
@@ -396,7 +397,7 @@ public class TestRequest extends AbstractRequest
 	 * Returns a ParamList containing the request parameters.
 	 * The ParamList allows you to add parameters. 
 	 */
-	public ParamList getParameterList()
+	public HeaderMap getParameterList()
 	{
 		return parameters_;
 	}
@@ -676,7 +677,7 @@ public class TestRequest extends AbstractRequest
 	/**
 	 * Returns the request headers.
 	 */
-	@Override public ParamList getHeaders()
+	@Override public RequestHeaders getHeaders()
 	{
 		return headers_;
 	}
@@ -877,12 +878,21 @@ public class TestRequest extends AbstractRequest
 	{
 		return null;
 	}
+	
+	
+	public static class Headers extends HeaderMap implements RequestHeaders
+	{
+		public Headers()
+		{
+			super(true);
+		}
+	}
 
 	
 	private String method_ = Request.Method.GET;
 	private CookieList cookies_;
 	private HashMap<String, Object> attributes_;
-	private ParamList parameters_ = new ParamList();
+	private HeaderMap parameters_ = new HeaderMap();
 	private HashMap<String, Upload> uploads_;
 	private Exception uploadError_;
 	private String charEncoding_ = "UTF-8";
@@ -892,7 +902,7 @@ public class TestRequest extends AbstractRequest
 	private TestServerInfo serverInfo_;
 	private TestRemoteInfo remoteInfo_;
 	private TestLocalInfo localInfo_;
-	private ParamList headers_ = new ParamList(true);
+	private Headers headers_ = new Headers();
 	private TestSession session_;
 	private Locale acceptedLocale_ = Locale.getDefault();
 	private TestResponse testResponse_;

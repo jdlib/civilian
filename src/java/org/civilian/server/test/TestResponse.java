@@ -24,14 +24,15 @@ import java.io.OutputStream;
 import java.io.Writer;
 import javax.servlet.http.Cookie;
 
-import org.civilian.internal.ParamList;
 import org.civilian.request.CookieList;
 import org.civilian.request.Request;
 import org.civilian.request.Session;
 import org.civilian.response.AbstractResponse;
 import org.civilian.response.Response;
+import org.civilian.response.ResponseHeaders;
 import org.civilian.util.Check;
 import org.civilian.util.http.HeaderNames;
+import org.civilian.util.http.HeaderMap;
 
 
 /**
@@ -285,7 +286,7 @@ public class TestResponse extends AbstractResponse
 	}
 
 
-	@Override public ParamList getHeaders()
+	@Override public Headers getHeaders()
 	{
 		return headers_;
 	}
@@ -333,10 +334,18 @@ public class TestResponse extends AbstractResponse
 	}
 	
 	
+	public static class Headers extends HeaderMap implements ResponseHeaders
+	{
+		public Headers()
+		{
+			super(true);
+		}
+	}
+	
 
 	private int statusCode_ = Status.OK;
 	private boolean isCommitted_;
-	private ParamList headers_ = new ParamList(true);
+	private Headers headers_ = new Headers();
 	private String contentType_;
 	private long contentLength_ = -1;
 	private int bufferSize_ = 4096;

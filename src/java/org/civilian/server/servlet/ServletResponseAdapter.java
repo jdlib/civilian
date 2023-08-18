@@ -263,30 +263,27 @@ class ServletResponseAdapter extends AbstractResponse
 		/**
 		 * Forwards to the HttpServletResponse.
 		 */
-		@Override public ResponseHeaders add(String name, String value)
+		@Override public void add(String name, String value)
 		{
 			servletResponse_.addHeader(name, value);
-			return this;
 		}
 	
 	
 		/**
 		 * Forwards to the HttpServletResponse.
 		 */
-		@Override public ResponseHeaders addDate(String name, long value)
+		@Override public void addDate(String name, long value)
 		{
 			servletResponse_.addDateHeader(name, value);
-			return this;
 		}
 	
 	
 		/**
 		 * Forwards to the HttpServletResponse.
 		 */
-		@Override public ResponseHeaders addInt(String name, int value)
+		@Override public void addInt(String name, int value)
 		{
 			servletResponse_.addIntHeader(name, value);
-			return this;
 		}
 	
 	
@@ -327,30 +324,27 @@ class ServletResponseAdapter extends AbstractResponse
 		/**
 		 * Forwards to the HttpServletResponse.
 		 */
-		@Override public ResponseHeaders set(String name, String value)
+		@Override public void set(String name, String value)
 		{
 			servletResponse_.setHeader(name, value);
-			return this;
 		}
 	
 	
 		/**
 		 * Forwards to the HttpServletResponse.
 		 */
-		@Override public ResponseHeaders setDate(String name, long value)
+		@Override public void setDate(String name, long value)
 		{
 			servletResponse_.setDateHeader(name, value);
-			return this;
 		}
 	
 	
 		/**
 		 * Forwards to the HttpServletResponse.
 		 */
-		@Override public ResponseHeaders setInt(String name, int value)
+		@Override public void setInt(String name, int value)
 		{
 			servletResponse_.setIntHeader(name, value);
-			return this;
 		}
 	}
 

@@ -28,13 +28,13 @@ import java.util.Map;
 import org.civilian.application.Application;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
-import org.civilian.internal.ParamList;
 import org.civilian.resource.Path;
 import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.response.Response;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
+import org.civilian.util.http.HeaderMap;
 
 
 /**
@@ -205,7 +205,7 @@ public abstract class AbstractRequest implements Request
 	}
 
 	
-	private ParamList getMatrixParams()
+	private HeaderMap getMatrixParams()
 	{
 		if (readExt().matrixParams == null)
 			parseMatrixParams();
@@ -220,10 +220,10 @@ public abstract class AbstractRequest implements Request
 		int slash = uri.lastIndexOf('/');
 		int colon = uri.indexOf(';', slash + 1);
 		if (colon < 0)
-			writeExt().matrixParams = ParamList.EMPTY;
+			writeExt().matrixParams = HeaderMap.EMPTY;
 		else
 		{
-			ParamList matrixParams = writeExt().matrixParams = new ParamList();
+			HeaderMap matrixParams = writeExt().matrixParams = new HeaderMap();
 			
 			int start = colon + 1;
 			do
@@ -601,7 +601,7 @@ public abstract class AbstractRequest implements Request
 		}
 
 		public AsyncContext asyncContext;
-		public ParamList matrixParams;
+		public HeaderMap matrixParams;
 		public ContentType contentType;
 		public RequestInterceptor<InputStream> streamInterceptor;
 		public RequestInterceptor<Reader> readerInterceptor;

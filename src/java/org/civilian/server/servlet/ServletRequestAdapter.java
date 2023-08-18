@@ -32,7 +32,6 @@ import javax.servlet.http.HttpSession;
 import org.civilian.Logs;
 import org.civilian.application.Application;
 import org.civilian.content.ContentType;
-import org.civilian.internal.ParamList;
 import org.civilian.request.AbstractRequest;
 import org.civilian.request.AsyncContext;
 import org.civilian.request.CookieList;
@@ -46,6 +45,7 @@ import org.civilian.util.ArrayUtil;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.Iterators;
 import org.civilian.util.http.HeaderNames;
+import org.civilian.util.http.HeaderMap;
 
 
 /**
@@ -348,7 +348,7 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 	}
 
 	
-	private class Headers extends ParamList
+	private class Headers extends HeaderMap implements RequestHeaders
 	{
 		/**
 		 * Forwards to the ServletRequest.

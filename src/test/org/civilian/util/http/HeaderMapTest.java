@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal;
+package org.civilian.util.http;
 
 
 import org.junit.Test;
 import org.civilian.CivTest;
 
 
-public class ParamListTest extends CivTest
+public class HeaderMapTest extends CivTest
 {
 	@Test public void test()
 	{
-		ParamList list = new ParamList();
+		HeaderMap list = new HeaderMap();
 		list.add("a", "alpha");
 		assertEquals("alpha", list.get("a"));
 		assertArrayEquals2(list.getAll("a"), "alpha"); 
@@ -47,7 +47,7 @@ public class ParamListTest extends CivTest
 		assertEquals("10", list.get("c"));
 
 	
-		list = new ParamList(true);
+		list = new HeaderMap(true);
 		list.add("a", "alpha");
 		assertEquals("alpha", list.get("A"));
 	}

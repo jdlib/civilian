@@ -32,7 +32,7 @@ public interface ResponseHeaders extends Iterable<String>
 	 * @param value the header value
 	 * @return this 
 	 */
-	public ResponseHeaders add(String name, String value); 
+	public void add(String name, String value); 
 
 
 	/**
@@ -41,7 +41,7 @@ public interface ResponseHeaders extends Iterable<String>
 	 * @param value the date specified in milliseconds since epoch 
 	 * @return this 
 	 */
-	public ResponseHeaders addDate(String name, long value); 
+	public void addDate(String name, long value); 
 
 
 	/**
@@ -50,7 +50,7 @@ public interface ResponseHeaders extends Iterable<String>
 	 * @param value the value 
 	 * @return this 
 	 */
-	public ResponseHeaders addInt(String name, int value); 
+	public void addInt(String name, int value); 
 
 
 	/**
@@ -85,7 +85,7 @@ public interface ResponseHeaders extends Iterable<String>
 	 * @param value the header value
 	 * @return this 
 	 */
-	public ResponseHeaders set(String name, String value); 
+	public void set(String name, String value); 
 
 	
 	/**
@@ -95,7 +95,7 @@ public interface ResponseHeaders extends Iterable<String>
 	 * @param value the date specified in milliseconds since the epoch 
 	 * @return this 
 	 */
-	public ResponseHeaders setDate(String name, long value); 
+	public void setDate(String name, long value); 
 
 
 	/**
@@ -105,5 +105,5 @@ public interface ResponseHeaders extends Iterable<String>
 	 * @param value the value 
 	 * @return this 
 	 */
-	public ResponseHeaders setInt(String name, int value); 
+	public void setInt(String name, int value); 
 }

@@ -24,9 +24,9 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
-import org.civilian.internal.ParamList;
 import org.civilian.request.Request;
 import org.civilian.response.Response;
+import org.civilian.server.test.TestRequest;
 import org.civilian.server.test.TestResponse;
 import org.civilian.util.http.HeaderNames;
 
@@ -121,8 +121,8 @@ public class AssetTest extends CivTest
 		asset.setContentType(ContentType.TEXT_CSS);
 		asset.setCacheControl(AssetCacheControl.DEFAULT);
 		
-		ParamList headers 		= new ParamList(true);
-		TestResponse response 	= createTestResponse(headers);
+		TestRequest.Headers headers	= new TestRequest.Headers();
+		TestResponse response 		= createTestResponse(headers);
 		
 		asset.setLastModified(10000);
 		headers.setDate(HeaderNames.IF_MODIFIED_SINCE, 9500);
@@ -145,11 +145,11 @@ public class AssetTest extends CivTest
 	}
 	
 	
-	private TestResponse createTestResponse(ParamList reqHeaders)
+	private TestResponse createTestResponse(TestRequest.Headers headers)
 	{
 		Request request 			= mock(Request.class);
 		TestResponse response 		= new TestResponse(request);
-		when(request.getHeaders()).thenReturn(reqHeaders != null ? reqHeaders : new ParamList(true));
+		when(request.getHeaders()).thenReturn(headers != null ? headers : new TestRequest.Headers());
 		return response;
 	}
 }

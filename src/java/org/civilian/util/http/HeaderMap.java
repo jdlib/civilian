@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal;
+package org.civilian.util.http;
 
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import org.civilian.request.RequestHeaders;
-import org.civilian.response.ResponseHeaders;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.Type;
 import org.civilian.util.ArrayUtil;
@@ -32,28 +30,27 @@ import org.civilian.util.Value;
 
 
 /**
- * ParamList is a helper class to build parameter or header
- * lists used in request or response implementations.  
+ * HeaderMap is a helper class to build a map of names and values, representing a parameter or header map.
  */
-public class ParamList implements RequestHeaders, ResponseHeaders 
+public class HeaderMap
 {
 	private static final String[] EMPTY_VALUES = new String[0];
-	public static final ParamList EMPTY = new ParamList(false, Collections.<String, String[]>emptyMap() /*immutable*/);
+	public static final HeaderMap EMPTY = new HeaderMap(false, Collections.<String, String[]>emptyMap() /*immutable*/);
 
 	
-	public ParamList()
+	public HeaderMap()
 	{
 		this(false);
 	}
 	
 
-	public ParamList(boolean caseInsensitiveNames)
+	public HeaderMap(boolean caseInsensitiveNames)
 	{
 		this(caseInsensitiveNames, null);
 	}
 
 	
-	public ParamList(boolean caseInsensitiveNames, Map<String,String[]> map)
+	public HeaderMap(boolean caseInsensitiveNames, Map<String,String[]> map)
 	{
 		caseInsensitiveNames_ = caseInsensitiveNames;
 		map_ = map;
@@ -66,19 +63,19 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	}
 	
 	
-	@Override public boolean contains(String name)
+	public boolean contains(String name)
 	{
 		return map_ != null ? get(name) != null : false;
 	}
 	
 	
-	@Override public boolean is(String name, String value)
+	public boolean is(String name, String value)
 	{
 		return ClassUtil.equals(get(name), value);
 	}
 
 
-	@Override public String get(String name)
+	public String get(String name)
 	{
 		String[] v = map_ != null ? map_.get(normName(name)) : null;
 		if (v == null)
@@ -110,7 +107,7 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	}
 
 	
-	@Override public String[] getAll(String name)
+	public String[] getAll(String name)
 	{
 		String[] v = map_ != null ? map_.get(normName(name)) : null;
 		if (v == null)
@@ -129,7 +126,7 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	}
 	
 	
-	@Override public int getInt(String name)
+	public int getInt(String name)
 	{
 		String s = get(name);
 		if (s == null)
@@ -145,7 +142,7 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	}
 	
 	
-	@Override public long getDate(String name)
+	public long getDate(String name)
 	{
 		if (map_ != null)
 		{
@@ -167,13 +164,13 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	}
 
 	
-	@Override public <T> Value<T> get(String name, Type<T> type)
+	public <T> Value<T> get(String name, Type<T> type)
 	{
 		return StandardSerializer.INSTANCE.parseValue(type, get(name));
 	}
 
 	
-	@Override public Iterator<String> iterator()
+	public Iterator<String> iterator()
 	{
 		Iterator<String> thisNames = map_ != null ? map_.keySet().iterator() : null; 
 		Iterator<String> nextNames = getNextNames();
@@ -199,22 +196,21 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	}
 	
 	
-	@Override public ParamList set(String name, String value)
+	public void set(String name, String value)
 	{
 		getMap().put(normName(name), new String[] { value });
-		return this;
 	}
 
 
-	@Override public ParamList setDate(String name, long value)
+	public void setDate(String name, long value)
 	{
-		return set(name, String.valueOf(value));
+		set(name, String.valueOf(value));
 	}
 	
 	
-	@Override public ParamList setInt(String name, int value)
+	public void setInt(String name, int value)
 	{
-		return set(name, String.valueOf(value));
+		set(name, String.valueOf(value));
 	}
 
 	
@@ -224,7 +220,7 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 	}
 	
 	
-	@Override public ParamList add(String name, String value)
+	public void add(String name, String value)
 	{
 		if (value != null)
 		{
@@ -232,20 +228,18 @@ public class ParamList implements RequestHeaders, ResponseHeaders
 			String[] v = getAll(name);
 			getMap().put(name, ArrayUtil.addLast(v, value));
 		}
-		return this;
 	}
 	
 	
-	@Override public ParamList addDate(String name, long value)
+	public void addDate(String name, long value)
 	{
 		add(name, String.valueOf(value));
-		return this;
 	}
 	
 	
-	@Override public ParamList addInt(String name, int value)
+	public void addInt(String name, int value)
 	{
-		return add(name, String.valueOf(value));
+		add(name, String.valueOf(value));
 	}
 	
 
