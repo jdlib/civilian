@@ -90,7 +90,7 @@ public class AssetDispatchTest extends CivTest
 		when(request.getMethod()).thenReturn("GET");
 		when(request.getRelativePath()).thenReturn(new Path("/test/some.css"));
 		assertTrue(dispatch.process(request, response, ProcessorChain.EMPTY));
-		verify(asset).write(response, true);
+		verify(asset).write(request, response, true);
 	}
 	
 	

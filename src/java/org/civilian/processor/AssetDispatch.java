@@ -92,7 +92,7 @@ public class AssetDispatch extends Processor
 		else if ("OPTIONS".equals(method))
 			response.getHeaders().set(HeaderNames.ALLOW, VALID_METHODS);
 		else
-			asset.write(response, !"HEAD".equals(method) /*write content*/);
+			asset.write(request, response, !"HEAD".equals(method) /*write content*/);
 		return true; // we handled this request
 	}
 

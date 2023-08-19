@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
 import org.civilian.content.ContentType;
+import org.civilian.request.Request;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
 import org.civilian.util.http.HeaderNames;
@@ -132,11 +133,11 @@ public abstract class Asset
 	 * @param writeContent should the content writen (false if we
 	 * 		are answering a HEAD request)
 	 */
-	public final void write(Response response, boolean writeContent) throws IOException
+	public final void write(Request request, Response response, boolean writeContent) throws IOException
 	{
 		response.setStatus(Response.Status.SC200_OK);
 		writeHeaders(response);
-		if (writeContent && (length() > 0) && checkIfModified(response))
+		if (writeContent && (length() > 0) && checkIfModified(request, response))
 			writeContent(response);
 	}
 	
@@ -173,9 +174,9 @@ public abstract class Asset
 	}
 
 
-	protected boolean checkIfModified(Response response)
+	protected boolean checkIfModified(Request request, Response response)
 	{
-		long modifiedSince = response.getRequest().getHeaders().getDate(HeaderNames.IF_MODIFIED_SINCE);
+		long modifiedSince = request.getHeaders().getDate(HeaderNames.IF_MODIFIED_SINCE);
 		if ((modifiedSince != -1) && (getLastModified() < modifiedSince + 1000))
 		{
 			response.setStatus(Response.Status.NOT_MODIFIED);
