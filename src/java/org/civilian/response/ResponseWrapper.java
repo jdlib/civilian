@@ -18,6 +18,7 @@ package org.civilian.response;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Iterator;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
 
@@ -244,6 +245,24 @@ public class ResponseWrapper implements Response
 	@Override public ResponseHeaders getHeaders()
 	{
 		return response_.getHeaders();
+	}
+
+
+	@Override public Object getAttribute(String name)
+	{
+		return response_.getAttribute(name);
+	}
+
+
+	@Override public Iterator<String> getAttributeNames()
+	{
+		return response_.getAttributeNames();
+	}
+
+
+	@Override public void setAttribute(String name, Object value)
+	{
+		response_.setAttribute(name, value);
 	}
 
 

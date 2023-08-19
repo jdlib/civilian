@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.Iterator;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -681,6 +682,35 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	public abstract ResponseHeaders getHeaders(); 
 
 
+	//----------------------------
+	// attributes
+	//----------------------------
+	
+	
+	/**
+	 * Returns an attribute which was previously associated with the response.
+	 * @param name the attribute name
+	 * @return the attribute 
+	 * @see #setAttribute(String, Object)
+	 */
+	public Object getAttribute(String name);
+
+	
+	/**
+	 * Returns an iterator for the attribute names stored in the response.
+	 * @return the iterator 
+	 */
+	public Iterator<String> getAttributeNames();
+
+	
+	/**
+	 * Stores an attribute under the given name in the response. 
+	 * @param name the name
+	 * @param value the value
+	 */
+	public void setAttribute(String name, Object value);
+
+	
 	//-----------------------------------
 	// misc
 	//-----------------------------------

@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 
 import org.civilian.Logs;
@@ -33,6 +35,7 @@ import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
+import org.civilian.util.Iterators;
 import org.civilian.util.http.UriEncoder;
 
 
@@ -472,6 +475,40 @@ public abstract class AbstractResponse implements Response
 	protected abstract void resetBufferImpl();
 
 	
+	//----------------------------
+	// attributes
+	//----------------------------
+	
+	
+	/**
+	 * Returns an attribute.
+	 */
+	@Override public Object getAttribute(String name)
+	{
+		return attributes_ != null ? attributes_.get(name) : null;
+	}
+
+
+	/**
+	 * Returns the attribute names.
+	 */
+	@Override public Iterator<String> getAttributeNames()
+	{
+		return attributes_ != null ? attributes_.keySet().iterator() : Iterators.<String>empty();
+	}
+
+	
+	/**
+	 * Allows to set an attribute.
+	 */
+	@Override public void setAttribute(String name, Object value)
+	{
+		if (attributes_ == null)
+			attributes_ = new HashMap<>();
+		attributes_.put(name, value);
+	}
+
+	
 	/**
 	 * Sets all fields of the AbstractRequest to its initial state.
 	 */
@@ -498,4 +535,5 @@ public abstract class AbstractResponse implements Response
 	private Type type_ = Type.NORMAL;
 	private ResponseInterceptor<OutputStream> streamInterceptor_;
 	private ResponseInterceptor<Writer> writerInterceptor_;
+	private HashMap<String, Object> attributes_;
 }

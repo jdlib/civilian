@@ -40,7 +40,7 @@ public class Compressor extends Processor
 	 * An constant to signal that no compression should be applied.
 	 * If a Compression object was installed as interceptor on a Response,
 	 * it will automatically wrap the response OutputStream into a compressing stream.
-	 * To abandon this behavior set this attribute on the request (with some non-null value). 
+	 * To abandon this behaviour set this attribute on the request (with some non-null value). 
 	 */
 	public static final String NO_COMPRESSION = "compressor-none";
 	
