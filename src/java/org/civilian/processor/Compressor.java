@@ -89,7 +89,7 @@ public class Compressor extends Processor
 
 		@Override public ResponseInterceptor<OutputStream> prepareIntercept(Response response)
 		{
-			if (response.getRequest().getAttribute(NO_COMPRESSION) != null)
+			if (response.getAttribute(NO_COMPRESSION) != null)
 				return null;
 
 			ResponseHeaders headers = response.getHeaders();

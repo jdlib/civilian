@@ -36,7 +36,7 @@ public class CompressorTest extends CivTest
 
 		// no compression if someone else applied a content-encoding
 		request_.getTestResponse().getHeaders().setNull(HeaderNames.CONTENT_ENCODING);
-		request_.setAttribute(Compressor.NO_COMPRESSION, Boolean.TRUE);
+		response_.setAttribute(Compressor.NO_COMPRESSION, Boolean.TRUE);
 		assertProcess("deflate", "Accept-Encoding", null, null, "a");
 	}
 	
