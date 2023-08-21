@@ -447,8 +447,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	/**
 	 * Returns the root resource of the application.
 	 */
-	@Override
-	public Resource getRootResource()
+	@Override public Resource getRootResource()
 	{
 		return rootResource_;
 	}

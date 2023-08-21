@@ -18,7 +18,6 @@ package org.civilian.tool.resource;
 
 import java.io.IOException;
 import java.io.StringWriter;
-
 import org.civilian.application.Application;
 import org.civilian.resource.scan.ResourceInfo;
 import org.civilian.resource.scan.ResourceScan;
