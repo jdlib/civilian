@@ -27,13 +27,11 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
-import org.civilian.application.Application;
 import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
 import org.civilian.resource.pathparam.PathParam;
-import org.civilian.response.Url;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
 import org.civilian.util.PathScanner;
@@ -557,35 +555,6 @@ public class Resource implements Iterable<Resource>
 				
 				
 		/**
-		 * Sets the application path for all resoures belonging to
-		 * this resource tree.
-		 * The path is automatically preprended to a {@link Url}
-		 * when the Url is constructed from a Resource.
-		 * When the application is initialized it will automatically initialize
-		 * the path on it's own resource tree.
-		 * @see Application#getPath()
-		 * @see #getAppPath()
-		 * @param appPath the app path
-		 */
-		public void setAppPath(Path appPath)
-		{
-			appPath_ = Check.notNull(appPath, "appPath"); 
-		}
-		
-
-		/**
-		 * Returns the path of the application to which this resource belongs.
-		 * The path is automatically preprended to a {@link Url}
-		 * when the Url is constructed from a Resource.
-		 * Returns the root path if the resource is not attached to an application yet.
-		 */
-		public Path getAppPath()
-		{
-			return appPath_;
-		}
-
-		
-		/**
 		 * Makes the controller service available for all resources belonging to
 		 * this resource tree.
 		 */
@@ -629,7 +598,6 @@ public class Resource implements Iterable<Resource>
 
 		
 		private final Resource root_;
-		private Path appPath_ = Path.ROOT;
 		private ControllerService controllerService_;
 		private ConcurrentHashMap<ControllerSignature,Resource> sig2resource_ = new ConcurrentHashMap<>();
 	}

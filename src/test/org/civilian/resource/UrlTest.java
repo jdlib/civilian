@@ -28,6 +28,7 @@ import org.civilian.request.Request;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParams;
 import org.civilian.response.Response;
+import org.civilian.response.ResponseOwner;
 import org.civilian.response.Url;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.type.StandardSerializer;
@@ -42,9 +43,12 @@ public class UrlTest extends CivTest
 		request_ = mock(Request.class);
 		when(request_.getPath()).thenReturn(new Path("/some/path"));
 		
+		ResponseOwner respOwner = mock(ResponseOwner.class);
+		when(respOwner.getPath()).thenReturn(new Path("/app"));
 		response_ = mock(Response.class);
 		when(response_.getResponse()).thenReturn(response_);
 		when(response_.getRequest()).thenReturn(request_);
+		when(response_.getOwner()).thenReturn(respOwner);
 		when(response_.getUriEncoder()).thenReturn(new UriEncoder());
 		when(response_.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
 		when(response_.addSessionId(anyString())).then(new Answer<String>()
@@ -105,7 +109,6 @@ public class UrlTest extends CivTest
 		PathParam<String> pp2 	= PathParams.forSegment("id2");
 		Resource root 			= new Resource();
 		Resource ppChild   		= new Resource(root, pp);
-		root.getTree().setAppPath(new Path("/app"));
 		
 		when(request_.getPathParam(pp)).thenReturn("abc");
 		

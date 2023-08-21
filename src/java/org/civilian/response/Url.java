@@ -136,7 +136,7 @@ public class Url implements PathParamProvider, ResponseProvider
 	{
 		response_ 	= response;
 		resource_	= resource;
-		prefix_ 	= resource.getTree().getAppPath().toString();
+		prefix_ 	= response.getOwner().getPath().toString();
 
 		int ppCount = resource_.getRoute().getPathParamCount();
 		if (ppCount > 0)
