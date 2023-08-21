@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
-import org.civilian.application.AppConfig;
 import org.civilian.application.Application;
 import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerService;
@@ -37,7 +36,6 @@ import org.civilian.resource.pathparam.PathParam;
 import org.civilian.response.Url;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
-import org.civilian.util.IoUtil;
 import org.civilian.util.PathScanner;
 import org.civilian.util.PathScanner.Mark;
 
@@ -612,38 +610,6 @@ public class Resource implements Iterable<Resource>
 
 		
 		/**
-		 * Sets the default extension used for all resources belonging to
-		 * this resource tree
-		 * The default extension is automatically added to a {@link Url}
-		 * when the Url is constructed from a Resource.<br>
-		 * If a default extension is defined in the application config, it will
-		 * be automatically set on the applications resource tree during application setup.
-		 * @param extension the extension or null if no default extension should be used.
-		 * @see AppConfig#setDefaultResExtension(String)
-		 * @see Url#Url(ResponseProvider, Resource) 
-		 */
-		public void setDefaultExtension(String extension)
-		{
-			// we use a static method to express that it affects the whole tree
-			defaultExtension_ =  IoUtil.normExtension(extension); 
-		}
-		
-
-		/**
-		 * Returns the default extension which should be appended to 
-		 * Urls built for resource of this resource tree.
-		 * When a Url is built using {@link Url#Url(ResponseProvider, Resource)}.
-		 * the extension is automatically appended to the Url.
-		 * @return the extension (without a leading dot), or null if
-		 * 		no extension should be appended to the url.
-		 */
-		public String getDefaultExtension()
-		{
-			return defaultExtension_;
-		}
-
-		
-		/**
 		 * Returns the resource to which the controller with the given 
 		 * signature is mapped.
 		 */
@@ -664,7 +630,6 @@ public class Resource implements Iterable<Resource>
 		
 		private final Resource root_;
 		private Path appPath_ = Path.ROOT;
-		private String defaultExtension_;
 		private ControllerService controllerService_;
 		private ConcurrentHashMap<ControllerSignature,Resource> sig2resource_ = new ConcurrentHashMap<>();
 	}

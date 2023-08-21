@@ -171,12 +171,8 @@ public class ResourceTest extends CivTest
 		Resource.Tree tree = root.getTree();
 		assertSame(tree, child.getTree());
 		
-		assertNull(tree.getDefaultExtension());
 		assertNull(tree.getControllerService());
 		assertEquals("", tree.getAppPath().toString());
-		
-		tree.setDefaultExtension(".html");
-		assertEquals("html", tree.getDefaultExtension());
 	}
 
 	

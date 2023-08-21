@@ -110,12 +110,6 @@ public interface ConfigKeys
 	 */
 	public static final String EXCLUDE = "exclude";
 
-	
-	/**
-	 * A key of the Civilian config.
-	 */
-	public static final String EXTENSION = "extension";
-
 
 	/**
 	 * A key of the Civilian config.

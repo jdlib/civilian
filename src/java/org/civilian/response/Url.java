@@ -728,18 +728,7 @@ public class Url implements PathParamProvider, ResponseProvider
 			if (prefix_ != null)
 				s.append(prefix_);
 			if (resource_ != null)
-			{
 				resource_.getRoute().build(pathParams_, response_.getUriEncoder(), s);
-				if (additionalPath_ == null)
-				{
-					String ext = resource_.getTree().getDefaultExtension();
-					if (ext != null)
-					{
-						s.append('.');
-						s.append(ext);
-					}
-				}
-			}
 			if (additionalPath_ != null)
 				additionalPath_.addTo(s);
 		}

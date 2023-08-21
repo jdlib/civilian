@@ -222,7 +222,6 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 		
 		Resource.Tree tree = rootResource_.getTree();
 		tree.setAppPath(getPath());
-		tree.setDefaultExtension(appConfig.getDefaultResExtension());
 		tree.setControllerService(controllerService_);
 	}
 	

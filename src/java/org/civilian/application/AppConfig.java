@@ -31,14 +31,11 @@ import org.civilian.content.JaxbXmlSerializer;
 import org.civilian.controller.ControllerFactory;
 import org.civilian.request.Request;
 import org.civilian.resource.Resource;
-import org.civilian.response.ResponseProvider;
-import org.civilian.response.Url;
 import org.civilian.text.msg.MsgBundleFactories;
 import org.civilian.text.msg.MsgBundleFactory;
 import org.civilian.text.service.LocaleServiceList;
 import org.civilian.type.TypeLib;
 import org.civilian.util.Check;
-import org.civilian.util.IoUtil;
 import org.civilian.util.Settings;
 
 
@@ -99,7 +96,6 @@ public class AppConfig
 			async_					= settings.getBoolean(ConfigKeys.ASYNC, false); 
 			defaultCharEncoding_	= settings.get(ConfigKeys.ENCODING, ConfigKeys.ENCODING_DEFAULT);
 			typeLib_ 				= new TypeLib();
-			defaultResExtension_	= IoUtil.normExtension(settings.get(ConfigKeys.EXTENSION, null));
 			supportedLocales_		= initLocales(settings);
 			uploadConfig_ 			= initUploadConfig(settings); 
 			reloadConfig_			= initReloadConfig(app, settings);
@@ -466,28 +462,6 @@ public class AppConfig
 			throw new IllegalArgumentException("not a root: " + root);
 		rootResource_ = root;
 	}
-
-	
-	/**
-	 * Returns the default extension used for resource urls
-	 * when a url is built using {@link Url#Url(ResponseProvider, Resource)}.
-	 * @return the extension starting with a dot, or null if
-	 * 		no extension should be appended to the url.
-	 */
-	public String getDefaultResExtension()
-	{
-		return defaultResExtension_;
-	}
-
-	
-	/**
-	 * Sets the default resource extension.
-	 * @param extension the extension
-	 */
-	public void setDefaultResExtension(String extension)
-	{
-		defaultResExtension_ = IoUtil.normExtension(extension);
-	}
 	
 	
 	//----------------------------
@@ -582,7 +556,6 @@ public class AppConfig
 	private AssetConfig assetConfig_;
 	private UploadConfig uploadConfig_;
 	private Resource rootResource_;
-	private String defaultResExtension_;
 	private ReloadConfig reloadConfig_;
 	private boolean async_;
 	private ControllerFactory controllerFactory_;
