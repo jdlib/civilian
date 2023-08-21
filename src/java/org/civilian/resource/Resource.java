@@ -599,7 +599,7 @@ public class Resource implements Iterable<Resource>
 		
 		private final Resource root_;
 		private ControllerService controllerService_;
-		private ConcurrentHashMap<ControllerSignature,Resource> sig2resource_ = new ConcurrentHashMap<>();
+		private final ConcurrentHashMap<ControllerSignature,Resource> sig2resource_ = new ConcurrentHashMap<>();
 	}
 
 	
