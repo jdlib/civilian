@@ -297,6 +297,38 @@ public class Resource implements Iterable<Resource>
 	{
 		return children_.clone();
 	}
+	
+	
+	/**
+	 * Associates the resource with some data object.
+	 * @param data the data object
+	 * @return this
+	 */
+	public Resource setData(Object data)
+	{
+		data_ = data;
+		return this;
+	}
+
+	
+	/**
+	 * Return the data previously set with {@link #setData(Object)}.
+	 * @return the data or null
+	 */
+	public Object getData()
+	{
+		return data_;
+	}
+
+	
+	/**
+	 * Return the data previously set with {@link #setData(Object)}, casted to type T if not null.
+	 * @return the casted data or null
+	 */
+	public <T> T getData(Class<T> type)
+	{
+		return data_ != null ? Check.isA(data_, type) : null;
+	}
 
 	
 	/**
@@ -619,6 +651,7 @@ public class Resource implements Iterable<Resource>
 	private final Route route_;
 	private ControllerSignature ctrlSignature_;
 	private ControllerTypeProvider typeProvider_ = ControllerTypeProvider.EMPTY;
+	private Object data_;
 	private Resource[] children_ = EMPTY;
 	private static Resource[] EMPTY = new Resource[0];
 	private static ResComparator COMPARATOR = new ResComparator(); 
