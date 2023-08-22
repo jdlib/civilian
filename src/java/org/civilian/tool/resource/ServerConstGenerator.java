@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import org.civilian.application.Application;
 import org.civilian.controller.scan.ResourceInfo;
-import org.civilian.controller.scan.ResourceScan;
+import org.civilian.controller.scan.ControllerScan;
 import org.civilian.controller.scan.ScanException;
 import org.civilian.template.TemplateWriter;
 import org.civilian.tool.source.OutputFile;
@@ -124,7 +124,7 @@ public class ServerConstGenerator
 	
 	private void run() throws IOException, ScanException
 	{
-		ResourceScan scan = new ResourceScan(
+		ControllerScan scan = new ControllerScan(
 			options_.app.getControllerConfig(),
 			null,
 			options_.verbose);
@@ -148,7 +148,7 @@ public class ServerConstGenerator
 		// write to class file
 		OutputFile outputFile = options_.outputLocation.getOutputFile(options_.outputPackage, options_.outputName + ".java");
 		if (options_.verbose)
-			ResourceScan.log("writing " + outputFile.file.getAbsolutePath());		
+			ControllerScan.log("writing " + outputFile.file.getAbsolutePath());		
 		outputFile.write(options_.encoding, out.toString());
 	}
 	

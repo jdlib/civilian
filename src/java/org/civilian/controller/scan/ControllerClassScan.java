@@ -30,9 +30,9 @@ import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 
 
-class ResourceFactory
+class ControllerClassScan
 {
-	public ResourceFactory(String rootPackageName, 
+	public ControllerClassScan(String rootPackageName, 
 		ControllerNaming naming,
 		PathParamMap pathParams)
 	{

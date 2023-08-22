@@ -19,7 +19,7 @@ package org.civilian.tool.resource;
 import java.io.StringWriter;
 
 import org.civilian.application.Application;
-import org.civilian.controller.scan.ResourceScan;
+import org.civilian.controller.scan.ControllerScan;
 import org.civilian.resource.Resource;
 import org.civilian.template.TemplateWriter;
 import org.civilian.tool.source.OutputFile;
@@ -132,7 +132,7 @@ public class ClientConstGenerator
 	private void run() throws Exception
 	{
 		log("scanning resources");
-		Resource root = new ResourceScan(options_.app.getControllerConfig(), null, false)
+		Resource root = new ControllerScan(options_.app.getControllerConfig(), null, false)
 			.getRootResource();
 		
 		TemplateWriter out = new TemplateWriter(new StringWriter());

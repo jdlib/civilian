@@ -28,23 +28,23 @@ import org.civilian.util.classpath.ClassPathScan;
  * ResourceScan scans the class path, collects all controller classes
  * of an application and creates a resource tree.
  */
-public class ResourceScan
+public class ControllerScan
 {
 	/**
 	 * Creates a ResourceScan.
 	 */
-	public ResourceScan(
+	public ControllerScan(
 		ControllerConfig config,
 		ClassLoader classLoader,
 		boolean verbose) 
 		throws ScanException
 	{
 		classLoader_	= classLoader != null ? classLoader : getClass().getClassLoader();
-		resFactory_ 	= new ResourceFactory(config.getRootPackage(), config.getNaming(), config.getPathParams()); 
+		classScan_ 	= new ControllerClassScan(config.getRootPackage(), config.getNaming(), config.getPathParams()); 
 		verbose_		= verbose;
 		
 		scanClassPath(config.getRootPackage());
-		rootInfo_ = resFactory_.getRoot();
+		rootInfo_ = classScan_.getRoot();
 		rootInfo_.sortChildren();
 	}
 
@@ -70,7 +70,7 @@ public class ResourceScan
 		Set<String> candidateClasses;
 		try
 		{
-			candidateClasses = scan.collect(resFactory_.getNaming()::isControllerClass);
+			candidateClasses = scan.collect(classScan_.getNaming()::isControllerClass);
 		}
 		catch (Exception e)
 		{
@@ -102,7 +102,7 @@ public class ResourceScan
 		// ignore if not a Controller class (naming false positive) or if abstract 
 		// (map annotations on abstract classes are ignored)
 		if (Controller.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers()))
-			resFactory_.scan((Class<? extends Controller>)c);
+			classScan_.scan((Class<? extends Controller>)c);
 	}
 	
 	
@@ -113,7 +113,7 @@ public class ResourceScan
 		
 	
 	private final ClassLoader classLoader_;
-	private final ResourceFactory resFactory_;
+	private final ControllerClassScan classScan_;
 	private final boolean verbose_;
 	private final ResourceInfo rootInfo_;
 }

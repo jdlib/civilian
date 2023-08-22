@@ -34,7 +34,7 @@ import org.civilian.content.TextSerializer;
 import org.civilian.controller.ControllerConfig;
 import org.civilian.controller.ControllerNaming;
 import org.civilian.controller.ControllerService;
-import org.civilian.controller.scan.ResourceScan;
+import org.civilian.controller.scan.ControllerScan;
 import org.civilian.processor.AssetDispatch;
 import org.civilian.processor.ErrorProcessor;
 import org.civilian.processor.IpFilter;
@@ -216,7 +216,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 			// resource tree not specified: generate on the fly
 			// use the request classloader so in case we are doing class reload
 			// these touched classes will not stick
-			rootResource_ = new ResourceScan(getControllerConfig(), clFactory.getRequestClassLoader(), false)
+			rootResource_ = new ControllerScan(getControllerConfig(), clFactory.getRequestClassLoader(), false)
 				.getRootResource();		
 		}
 		

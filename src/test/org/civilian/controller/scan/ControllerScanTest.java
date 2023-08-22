@@ -20,18 +20,17 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.civilian.CivTest;
 import org.civilian.controller.ControllerConfig;
-import org.civilian.controller.scan.ResourceScan;
 import org.civilian.resource.Resource;
 import org.civilian.testcase1.Test1PathParams;
 import org.junit.Test;
 
 
-public class ResourceScanTest extends CivTest
+public class ControllerScanTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
 		ControllerConfig ctrlConfig = new ControllerConfig("org.civilian.testcase1", Test1PathParams.MAP);  
-		ResourceScan scan = new ResourceScan(ctrlConfig, null, false);
+		ControllerScan scan = new ControllerScan(ctrlConfig, null, false);
 		Resource resource = scan.getRootResource();
 		// resource.print(System.out);
 		
