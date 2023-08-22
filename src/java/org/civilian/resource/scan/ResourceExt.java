@@ -17,7 +17,6 @@ package org.civilian.resource.scan;
 
 
 import java.lang.reflect.AnnotatedElement;
-
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.util.Check;

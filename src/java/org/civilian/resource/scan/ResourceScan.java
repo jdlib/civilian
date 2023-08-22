@@ -18,7 +18,6 @@ package org.civilian.resource.scan;
 
 import java.lang.reflect.Modifier;
 import java.util.Set;
-
 import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerConfig;
 import org.civilian.resource.Resource;
