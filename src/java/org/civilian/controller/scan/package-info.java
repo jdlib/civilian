@@ -16,4 +16,4 @@
 /**
  * Contains support to build the resource tree of an application from a classpath scan. 
  */
-package org.civilian.resource.scan;
+package org.civilian.controller.scan;

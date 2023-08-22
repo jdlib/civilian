@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.resource.scan;
+package org.civilian.controller.scan;
 
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.civilian.CivTest;
 import org.civilian.controller.ControllerConfig;
+import org.civilian.controller.scan.ResourceScan;
 import org.civilian.resource.Resource;
 import org.civilian.testcase1.Test1PathParams;
 import org.junit.Test;
