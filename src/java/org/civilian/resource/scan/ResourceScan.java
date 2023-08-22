@@ -34,17 +34,17 @@ public class ResourceScan
 	 * Creates a ResourceScan.
 	 */
 	public ResourceScan(
-		ControllerConfig ctrlConfig,
+		ControllerConfig config,
 		ClassLoader classLoader,
 		boolean verbose) 
 		throws ScanException
 	{
 		classLoader_	= classLoader != null ? classLoader : getClass().getClassLoader();
-		resFactory_ 	= new ResourceFactory(ctrlConfig.getRootPackage(), ctrlConfig.getNaming(), ctrlConfig.getPathParams()); 
+		resFactory_ 	= new ResourceFactory(config.getRootPackage(), config.getNaming(), config.getPathParams()); 
 		verbose_		= verbose;
 		
-		scanClassPath();
-		rootInfo_		= resFactory_.getRoot();
+		scanClassPath(config.getRootPackage());
+		rootInfo_ = resFactory_.getRoot();
 		rootInfo_.sortChildren();
 	}
 
@@ -61,9 +61,8 @@ public class ResourceScan
 	}
 
 	
-	private void scanClassPath() throws ScanException
+	private void scanClassPath(String rootPackageName) throws ScanException
 	{
-		String rootPackageName = resFactory_.getRootPackage();
 		if (verbose_)
 			log("scanning classes below " + rootPackageName);
 		
@@ -103,7 +102,7 @@ public class ResourceScan
 		// ignore if not a Controller class (naming false positive) or if abstract 
 		// (map annotations on abstract classes are ignored)
 		if (Controller.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers()))
-			resFactory_.mapController((Class<? extends Controller>)c);
+			resFactory_.scan((Class<? extends Controller>)c);
 	}
 	
 	

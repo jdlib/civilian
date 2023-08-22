@@ -49,12 +49,6 @@ class ResourceFactory
 	}
 
 
-	public String getRootPackage()
-	{
-		return rootPackageName_;
-	}
-	
-	
 	public ControllerNaming getNaming()
 	{
 		return naming_;
@@ -68,27 +62,28 @@ class ResourceFactory
 		
 		ControllerPackage cp = packages_.get(packageName);
 		if (cp == null)
-			cp = mapPackage(packageName);
+		{
+			cp = createPackage(packageName);
+			packages_.put(packageName, cp);
+		}
 		return cp;
 	}
 	
 	
-	private ControllerPackage mapPackage(String packageName)
+	private ControllerPackage createPackage(String packageName)
 	{
 		ControllerPackage parent 	= null;
 		String segment		 		= null;
 		if (!packageName.equals(rootPackageName_))
 		{
-			int p = packageName.lastIndexOf('.');
+			int p 	= packageName.lastIndexOf('.');
 			segment = naming_.packagePart2Segment(packageName.substring(p + 1));
 			parent 	= getPackage(packageName.substring(0, p));
 		}
 		
 		Class<?> infoClass		= getPackageInfoClass(packageName);
 		ResourceExt extension	= extFactory_.getExtension(infoClass, segment, false);
-		ControllerPackage cp	= new ControllerPackage(parent, packageName, extension);
-		packages_.put(packageName, cp);
-		return cp;
+		return new ControllerPackage(parent, packageName, extension);
 	}
 
 	
@@ -106,16 +101,15 @@ class ResourceFactory
 
 	
 	/**
-	 * Maps a controller class to a resource. By default the controller resource
+	 * Scan a controller class and map to resources. By default the controller resource
 	 * extends the package resource by the controller class name.
 	 * This method also handles:
 	 * - mapping of default controllers, as defined by the DefaultController annotation
 	 * - mapping of classes with a PathParam annotation
-	 * - mapping of classes with a Path annotation
-	 * @param cp the controller package, containing the resource to which the package is mapped
+	 * - mapping of classes with a Segment annotation
 	 * @param cls the controller class
 	 */
-	public void mapController(Class<? extends Controller> cls)
+	public void scan(Class<? extends Controller> cls)
 	{
 		ControllerPackage cp 	= getPackage(ClassUtil.getPackageName(cls));
 		String segment 			= naming_.className2Segment(cls.getSimpleName());
