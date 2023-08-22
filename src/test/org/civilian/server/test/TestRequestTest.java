@@ -21,7 +21,6 @@ import org.civilian.CivTest;
 import org.civilian.application.admin.AdminApp;
 import org.civilian.application.admin.AdminPathParams;
 import org.civilian.application.admin.AdminResources;
-import org.civilian.application.admin.app.ResourcesController;
 import org.civilian.request.CookieList;
 import org.civilian.response.Url;
 import org.civilian.util.Settings;
@@ -90,9 +89,6 @@ public class TestRequestTest extends CivTest
 		request.setPath(AdminResources.root.$appId.settings, "crm");
 		assertEquals("/crm/settings", request.getRelativePath().toString());
 		assertEquals("crm", request.getPathParam(AdminPathParams.APPID));
-		
-		request.setPath(ResourcesController.class, "test");
-		assertEquals("/test/resources", request.getRelativePath().toString());
 		
 		request.run();
 	}

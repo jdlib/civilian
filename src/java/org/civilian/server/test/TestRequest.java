@@ -34,7 +34,6 @@ import org.civilian.application.Application;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
-import org.civilian.controller.Controller;
 import org.civilian.request.AbstractRequest;
 import org.civilian.request.AsyncContext;
 import org.civilian.request.CookieList;
@@ -203,21 +202,6 @@ public class TestRequest extends AbstractRequest
 	public TestRequest setPath(Resource resource, Object... pathParams)
 	{
 		Url url = new Url(testResponse_, resource);
-		url.setPathParams(pathParams);
-		return setPath(url);
-	}
-
-	
-	/**
-	 * Sets the path of the request relative to the application path.
-	 * @param controllerClass a controller class. The resource associated with the controller
-	 * 		is used to define the path
-	 * @param pathParams the path parameters of the resource  
-	 * @return this
-	 */
-	public TestRequest setPath(Class<? extends Controller> controllerClass, Object... pathParams)
-	{
-		Url url = new Url(testResponse_, controllerClass);
 		url.setPathParams(pathParams);
 		return setPath(url);
 	}
