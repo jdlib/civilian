@@ -27,6 +27,7 @@ import org.civilian.controller.method.ControllerMethod;
 import org.civilian.exchange.RequestResponseProvider;
 import org.civilian.request.Request;
 import org.civilian.resource.Resource;
+import org.civilian.resource.ResourceHandler;
 import org.civilian.response.Response;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleProvider;
@@ -94,7 +95,7 @@ import org.civilian.util.http.HeaderNames;
  * implementation, then the exception is passed to {@link Application#onError(Request, Throwable)}
  * for application-wide error handling.
  */
-public class Controller implements MsgBundleProvider, RequestResponseProvider
+public class Controller implements MsgBundleProvider, RequestResponseProvider, ResourceHandler
 {
 	//------------------------------------
 	// accessors

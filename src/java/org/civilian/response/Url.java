@@ -17,13 +17,11 @@ package org.civilian.response;
 
 
 import java.util.ArrayList;
-import org.civilian.application.Application;
-import org.civilian.controller.Controller;
-import org.civilian.controller.ControllerSignature;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
 import org.civilian.resource.Resource.Tree;
+import org.civilian.resource.ResourceHandler;
 import org.civilian.resource.Route;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParamProvider;
@@ -36,7 +34,7 @@ import org.civilian.util.http.UriEncoder;
 
 
 /**
- * Url allows to build URLs either to address resources within an {@link Application} 
+ * Url allows to build URLs either to address resources within an Application 
  * or arbitrary URLs.<p> 
  * In the first case the target resource can be specified by a {@link Resource} object. 
  * The Url will automatically derive the (absolute) path to that resource.<p>
@@ -101,15 +99,10 @@ public class Url implements PathParamProvider, ResponseProvider
 	 * @param controllerClass the controller class.   
 	 * @see Tree#getDefaultExtension()
 	 */
-	public <C extends Controller> Url(ResponseProvider rp, Class<C> controllerClass)
+	public Url(ResponseProvider rp, Class<? extends ResourceHandler> handlerClass)
 	{
-		Response response 		= Check.notNull(rp, "response provider").getResponse();
-		ControllerSignature sig = new ControllerSignature(controllerClass.getName());
-		Resource resource 		= response.getOwner().getRootResource().getTree().getResource(sig);
-		
-		if (resource == null)
-			throw new IllegalArgumentException(controllerClass.getName() + " not mapped to a resource");
-		
+		Response response 	= Check.notNull(rp, "response provider").getResponse();
+		Resource resource 	= response.getOwner().getResource(handlerClass);
 		init(response, resource);
 	}
 

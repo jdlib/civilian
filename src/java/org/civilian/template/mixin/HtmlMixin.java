@@ -16,10 +16,10 @@
 package org.civilian.template.mixin;
 
 
-import org.civilian.controller.Controller;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
+import org.civilian.resource.ResourceHandler;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseProvider;
 import org.civilian.response.Url;
@@ -322,7 +322,7 @@ public class HtmlMixin
 	 * @throws IllegalStateException thrown if the TemplateWriter does not 
 	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
 	 */
-	public Url url(Class<? extends Controller> controllerClass)
+	public Url url(Class<? extends ResourceHandler> controllerClass)
 	{
 		return new Url(response(), controllerClass);
 	}

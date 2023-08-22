@@ -31,10 +31,10 @@ import org.civilian.application.Application;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.JaxbXmlSerializer;
-import org.civilian.controller.Controller;
 import org.civilian.request.Request;
 import org.civilian.request.RequestProvider;
 import org.civilian.resource.Resource;
+import org.civilian.resource.ResourceHandler;
 import org.civilian.response.std.ErrorResponseHandler;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
@@ -380,7 +380,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * After using this method, the response is committed and should not be written to.
 	 * @throws IllegalStateException if the response has already been committed 
 	 */
-	public default <C extends Controller> void sendRedirect(Class<C> controllerClass) throws IOException
+	public default void sendRedirect(Class<? extends ResourceHandler> controllerClass) throws IOException
 	{
 		sendRedirect(new Url(this, controllerClass));
 	}

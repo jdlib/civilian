@@ -31,9 +31,11 @@ import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.GsonJsonSerializer;
 import org.civilian.content.TextSerializer;
+import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerConfig;
 import org.civilian.controller.ControllerNaming;
 import org.civilian.controller.ControllerService;
+import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.scan.ControllerScan;
 import org.civilian.processor.AssetDispatch;
 import org.civilian.processor.ErrorProcessor;
@@ -46,6 +48,7 @@ import org.civilian.request.Request;
 import org.civilian.request.RequestOwner;
 import org.civilian.resource.Path;
 import org.civilian.resource.Resource;
+import org.civilian.resource.ResourceHandler;
 import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseHandler;
@@ -450,6 +453,17 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	@Override public Resource getRootResource()
 	{
 		return rootResource_;
+	}
+	
+	
+	@Override public Resource getResource(Class<? extends ResourceHandler> handlerClass)
+	{
+		Check.isSuperclassOf(Controller.class, handlerClass);
+		ControllerSignature sig = new ControllerSignature(handlerClass.getName());
+		Resource resource = rootResource_.getTree().getResource(sig);
+		if (resource == null)
+			throw new IllegalArgumentException("no resource for " + handlerClass.getName());
+		return resource;
 	}
 	
 

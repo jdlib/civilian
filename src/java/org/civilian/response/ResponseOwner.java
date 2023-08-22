@@ -4,6 +4,7 @@ package org.civilian.response;
 import org.civilian.content.ContentSerializer;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
+import org.civilian.resource.ResourceHandler;
 import org.civilian.text.service.LocaleServiceList;
 
 
@@ -47,4 +48,12 @@ public interface ResponseOwner extends PathProvider
 	 * Returns the root resource of the owner (application).
 	 */
 	public Resource getRootResource();
+	
+	
+	/**
+	 * Returns the resource which is handled by the given ResourceHandler class.
+	 * @param handlerClass the handler class
+	 * @return the resource
+	 */
+	public Resource getResource(Class<? extends ResourceHandler> handlerClass);
 }
