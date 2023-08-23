@@ -3,7 +3,6 @@ package org.civilian.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.civilian.resource.Resource;
 import org.civilian.util.Check;
 
