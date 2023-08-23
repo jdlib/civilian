@@ -18,7 +18,7 @@ public class StandardSerializer extends TypeSerializer
 	public static final StandardSerializer INSTANCE = new StandardSerializer();
 	
 	
-	public StandardSerializer()
+	private StandardSerializer()
 	{
 		useFormatter((t,v,h) -> v.toString())	.byDefault();
 		useFormatter(this::formatDate)			.on(Type.Category.DATE);
