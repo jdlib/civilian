@@ -13,12 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.resource;
+package org.civilian.controller;
 
 
-import org.civilian.controller.ControllerService;
-import org.civilian.controller.ControllerSignature;
-import org.civilian.controller.ControllerType;
 import org.civilian.util.Check;
 
 
