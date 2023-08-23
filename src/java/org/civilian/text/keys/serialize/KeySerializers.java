@@ -67,7 +67,7 @@ public abstract class KeySerializers
 	 * Creates a KeySerializer for a KeyList whose values have the given class.  
 	 * @param valueClass May be null.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static KeySerializer forType(Class<?> valueClass)
 	{
 		if (valueClass == null)

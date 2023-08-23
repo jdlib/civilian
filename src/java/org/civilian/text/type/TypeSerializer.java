@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.util.function.Function;
 import org.civilian.text.Style;
 import org.civilian.text.keys.KeyType;
+import org.civilian.type.AutoType;
 import org.civilian.type.DiscreteType;
 import org.civilian.type.EnumType;
 import org.civilian.type.Type;
@@ -188,16 +189,10 @@ public abstract class TypeSerializer
 	}
 
 	
-	protected <T> String formatEnum(Type<? extends T> type, T value, Object style)
-	{
-		return ((Enum<?>)value).name();
-	}
-
-
 	@SuppressWarnings("unchecked")
-	protected <T> String formatKey(Type<? extends T> type, T value, Object style)
+	protected <T> String formatAuto(Type<? extends T> type, T value, Object style)
 	{
-		return ((KeyType<Object>)type).format(value);
+		return ((AutoType<T>)type).format(value);
 	}
 	
 	
@@ -314,6 +309,12 @@ public abstract class TypeSerializer
 	{
 		EnumType<?> et = (EnumType<?>)type;
 		return (T)Enum.valueOf(et.getJavaType(), s);
+	}
+
+	
+	protected <T> T parseAuto(Type<T> type, String s) throws Exception
+	{
+		return ((AutoType<T>)type).parse(s);
 	}
 
 	

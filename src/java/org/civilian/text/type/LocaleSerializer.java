@@ -49,9 +49,8 @@ public class LocaleSerializer extends TypeSerializer
 		useFormatter(this::formatDate)					.on(Type.Category.DATE);
 		useFormatter(this::formatDateTime)				.on(Type.Category.DATETIME);
 		useFormatter(this::formatTime)					.on(Type.Category.TIME);
-		useFormatter(this::formatKey)					.on(Type.Category.KEY);
 		useFormatter(this::formatDiscrete)				.on(Type.Category.DISCRETE);
-		useFormatter(this::formatEnum)					.on(Type.Category.ENUM);
+		useFormatter(this::formatAuto)					.on(Type.Category.AUTO);
 		
 		// init parser
 		useSimpleParser(numberFormat_::parseBigDecimal)	.on(BIGDECIMAL);	
@@ -68,9 +67,8 @@ public class LocaleSerializer extends TypeSerializer
 		useParser(this::parseDate)						.on(Type.Category.DATE);
 		useParser(this::parseDateTime)					.on(Type.Category.DATETIME);
 		useParser(this::parseTime)						.on(Type.Category.TIME);
-		useParser(this::parseKey)						.on(Type.Category.KEY);
 		useParser(this::parseDiscrete)					.on(Type.Category.DISCRETE);
-		useParser(this::parseEnum)						.on(Type.Category.ENUM);
+		useParser(this::parseAuto)						.on(Type.Category.AUTO);
 	}
 	
 	

@@ -17,16 +17,16 @@ package org.civilian.type;
 
 
 import org.civilian.util.Check;
+import org.civilian.util.StringUtil;
 
 
 /**
  * A type implementation for enums.
  */
-public class EnumType<T extends Enum<T>> extends Type<T>
+public class EnumType<T extends Enum<T>> extends AutoType<T>
 {
 	public EnumType(Class<T> enumClass)
 	{
-		super(Category.ENUM);
 		enumClass_ = Check.notNull(enumClass, "enumClass");
 	}
 
@@ -34,6 +34,18 @@ public class EnumType<T extends Enum<T>> extends Type<T>
 	@Override public Class<T> getJavaType()
 	{
 		return enumClass_;
+	}
+
+
+ 	@Override public String format(T value) 
+ 	{
+		return value != null ? value.name() : "";
+	}
+
+
+	@Override public T parse(String s) throws Exception 
+	{
+		return StringUtil.isBlank(s) ? null : Enum.valueOf(enumClass_, s);
 	}
 
 	

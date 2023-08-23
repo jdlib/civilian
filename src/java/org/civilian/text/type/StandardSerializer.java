@@ -24,16 +24,14 @@ public class StandardSerializer extends TypeSerializer
 		useFormatter(this::formatDate)			.on(Type.Category.DATE);
 		useFormatter(this::formatTime)			.on(Type.Category.TIME);
 		useFormatter(this::formatDateTime)		.on(Type.Category.DATETIME);
-		useFormatter(this::formatKey)			.on(Type.Category.KEY);
 		useFormatter(this::formatDiscrete)		.on(Type.Category.DISCRETE);
-		useFormatter(this::formatEnum)			.on(Type.Category.ENUM);
+		useFormatter(this::formatAuto)			.on(Type.Category.AUTO);
 		
 		useParser(this::parseDate)				.on(Type.Category.DATE);
 		useParser(this::parseTime)				.on(Type.Category.TIME);
 		useParser(this::parseDateTime)			.on(Type.Category.DATETIME);
-		useParser(this::parseKey)				.on(Type.Category.KEY);
 		useParser(this::parseDiscrete)			.on(Type.Category.DISCRETE);
-		useParser(this::parseEnum)				.on(Type.Category.ENUM);
+		useParser(this::parseAuto)				.on(Type.Category.AUTO);
 		useSimpleParser(BigInteger::new)		.on(BIGINTEGER);
 		useSimpleParser(BigDecimal::new)		.on(BIGDECIMAL);
 		useSimpleParser(Boolean::valueOf)		.on(BOOLEAN);

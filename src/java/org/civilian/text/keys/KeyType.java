@@ -17,6 +17,7 @@ package org.civilian.text.keys;
 
 
 import org.civilian.text.keys.serialize.KeySerializer;
+import org.civilian.type.AutoType;
 import org.civilian.type.Type;
 import org.civilian.util.Check;
 
@@ -27,7 +28,7 @@ import org.civilian.util.Check;
  * i.e. that it is contained in the KeyList.
  * KeyType uses a {@link KeySerializer} to implement parsing and formating of values.
  */
-public class KeyType<VALUE> extends Type<VALUE>
+public class KeyType<VALUE> extends AutoType<VALUE>
 {
 	/**
 	 * Creates a KeyType. 
@@ -37,7 +38,6 @@ public class KeyType<VALUE> extends Type<VALUE>
 	 */
 	public KeyType(KeyList<VALUE> keyList, KeySerializer serializer)
 	{
-		super(Category.KEY);
 		keyList_ 	= Check.notNull(keyList, "keyList");
 		serializer_	= Check.notNull(serializer, "serializer"); 
 	}
@@ -46,7 +46,7 @@ public class KeyType<VALUE> extends Type<VALUE>
 	/**
 	 * Formats a key value.
 	 */
-	public String format(VALUE value)
+	@Override public String format(VALUE value)
 	{
 		return value == null ? "" : getKeySerializer().formatValue(keyList_, value);
 	}
@@ -66,7 +66,7 @@ public class KeyType<VALUE> extends Type<VALUE>
 	/**
 	 * Parses a key value.
 	 */
-	public VALUE parse(String s) throws Exception
+	@Override public VALUE parse(String s) throws Exception
 	{
 		return s != null ? getKeySerializer().parseValue(keyList_, s) : null;
 	}
