@@ -37,5 +37,5 @@ public class EnumType<T extends Enum<T>> extends Type<T>
 	}
 
 	
-	private Class<T> enumClass_;
+	private final Class<T> enumClass_;
 }
