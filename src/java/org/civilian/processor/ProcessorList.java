@@ -18,8 +18,6 @@ package org.civilian.processor;
 
 import java.util.Iterator;
 import java.util.List;
-
-import org.civilian.application.Application;
 import org.civilian.request.Request;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
@@ -28,13 +26,9 @@ import org.civilian.util.Iterators;
 
 /**
  * ProcessorList contains a list of Processors
- * and executes them on after another until a processor
+ * and executes them one after another until a processor
  * signals that it has responded to the request
  * and no further processing should be done.
- * The Application uses ProcessorList to store and invoke
- * its processors.
- * @see Application#getProcessors()
- * @see Application#initProcessors(ProcessorConfig)
  */
 public class ProcessorList extends Processor implements Iterable<Processor>
 {
@@ -123,5 +117,5 @@ public class ProcessorList extends Processor implements Iterable<Processor>
 	}
 
 
-	private Processor[] processors_;
+	private final Processor[] processors_;
 }
