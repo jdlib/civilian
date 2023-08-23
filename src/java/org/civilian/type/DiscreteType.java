@@ -79,6 +79,6 @@ public class DiscreteType<T> extends Type<T>
 	}
 	
 	
-	private T[] list_;
-	private Type<T> type_;
+	private final T[] list_;
+	private final Type<T> type_;
 }
