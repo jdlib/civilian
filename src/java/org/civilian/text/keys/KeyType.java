@@ -17,7 +17,6 @@ package org.civilian.text.keys;
 
 
 import org.civilian.text.keys.serialize.KeySerializer;
-import org.civilian.text.keys.serialize.KeySerializers;
 import org.civilian.type.Type;
 import org.civilian.util.Check;
 
@@ -40,7 +39,7 @@ public class KeyType<VALUE> extends Type<VALUE>
 	{
 		super(Category.KEY);
 		keyList_ 	= Check.notNull(keyList, "keyList");
-		serializer_	= serializer; 
+		serializer_	= Check.notNull(serializer, "serializer"); 
 	}
 
 
@@ -91,8 +90,6 @@ public class KeyType<VALUE> extends Type<VALUE>
 	 */
 	public KeySerializer getKeySerializer()
 	{
-		if (serializer_ == null)
-			serializer_ = KeySerializers.detect(getJavaType());
 		return serializer_;
 	}
 	

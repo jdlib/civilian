@@ -18,6 +18,7 @@ package org.civilian.text.keys;
 
 import org.civilian.form.Select;
 import org.civilian.text.keys.serialize.KeySerializer;
+import org.civilian.util.Check;
 
 
 /**
@@ -28,16 +29,6 @@ import org.civilian.text.keys.serialize.KeySerializer;
  */
 public abstract class KeyList<VALUE>
 {
-	/**
-	 * Creates a KeyList. Its KeySerializer is derived from the values
-	 * contained in the key list.
-	 */
-	protected KeyList()
-	{
-		this((KeySerializer)null);
-	}
-	
-	
 	/**
 	 * Creates a KeyList with a specific KeySerializer.
 	 * @param serializer the key serializer. If null, then the key serializer is derived
@@ -55,7 +46,7 @@ public abstract class KeyList<VALUE>
 	 */
 	protected KeyList(KeyType<VALUE> type)
 	{
-		type_ = type != null ? type : createType(null);
+		type_ = Check.notNull(type, "type");
 	}
 	
 	

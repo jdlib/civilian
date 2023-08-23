@@ -67,7 +67,8 @@ public abstract class KeySerializers
 	 * Creates a KeySerializer for a KeyList whose values have the given class.  
 	 * @param valueClass May be null.
 	 */
-	public static KeySerializer detect(Class<?> valueClass)
+	@SuppressWarnings("unchecked")
+	public static KeySerializer forType(Class<?> valueClass)
 	{
 		if (valueClass == null)
 			return TO_STRING;
@@ -77,7 +78,21 @@ public abstract class KeySerializers
 			return FOR_BOOLEANS;
 		else if (valueClass == Integer.class)
 			return FOR_INTEGERS;
+		else if (valueClass.isEnum())
+			return forEnum((Class)valueClass);
 		else
 			return TO_INDEX;
+	}
+
+
+	public static KeySerializer forValue(Object value)
+	{
+		return forType(value != null ? value.getClass() : null);
+	}
+
+
+	public static KeySerializer forFirstValue(Object... values)
+	{
+		return forValue(values != null && values.length > 0 ? values[0] : null);
 	}
 }

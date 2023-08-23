@@ -17,6 +17,7 @@ package org.civilian.text.keys;
 
 
 import org.civilian.text.keys.serialize.KeySerializer;
+import org.civilian.text.keys.serialize.KeySerializers;
 
 
 /**
@@ -44,7 +45,7 @@ public class SimpleKeyList<V> extends KeyList<V>
 	 */
 	public SimpleKeyList(KeySerializer serializer, V values[], String texts[])
 	{
-		super(serializer);
+		super(serializer != null ? serializer : KeySerializers.forFirstValue(values));
 		if (texts.length != values.length)
 			throw new IllegalArgumentException();
 		values_	= values;
@@ -102,6 +103,6 @@ public class SimpleKeyList<V> extends KeyList<V>
 	}
 
 
-	private String texts_[];
-	private V values_[];
+	private final String texts_[];
+	private final V values_[];
 }

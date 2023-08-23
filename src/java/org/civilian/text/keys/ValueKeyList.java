@@ -17,6 +17,7 @@ package org.civilian.text.keys;
 
 
 import org.civilian.text.keys.serialize.KeySerializer;
+import org.civilian.text.keys.serialize.KeySerializers;
 import org.civilian.util.Check;
 
 
@@ -34,7 +35,7 @@ public class ValueKeyList<VALUE> extends KeyList<VALUE>
 	
 	@SafeVarargs public ValueKeyList(KeySerializer serializer, VALUE... values)
 	{
-		super(serializer);
+		super(serializer != null ? serializer : KeySerializers.forFirstValue(values));
 		values_ = Check.notNull(values, "values");
 	}
 
@@ -57,5 +58,5 @@ public class ValueKeyList<VALUE> extends KeyList<VALUE>
 	}
 
 	
-	private VALUE values_[];
+	private final VALUE values_[];
 }
