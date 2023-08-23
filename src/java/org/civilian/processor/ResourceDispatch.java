@@ -61,12 +61,12 @@ public class ResourceDispatch extends Processor
 		Resource.Match match = root_.match(request.getRelativePath().toString());
 		if (match.completeMatch)
 		{
-			request.setResource(match.resource);
-			request.setPathParams(match.pathParams);
-			
 			ControllerType controllerType = ControllerResourceData.getType(match.resource);
 			if (controllerType != null)
 			{
+				request.setResource(match.resource);
+				request.setPathParams(match.pathParams);
+				
 				// resource is associated with a controller
 				controllerType.createController().process(request, response);
 				return true; // we handled the request
