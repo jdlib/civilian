@@ -57,7 +57,7 @@ public abstract class KeySerializer
 	 */
 	protected static IllegalArgumentException rejectValue(Object s)
 	{
-		return new IllegalArgumentException("not a valid entry '" + s + "'");
+		return new IllegalArgumentException("not a valid value '" + s + "'");
 	}
 }
 

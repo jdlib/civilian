@@ -270,7 +270,7 @@ public class KeyListTest extends CivTest
 		catch(ParseException e)
 		{
 			assert(e.getCause() instanceof IllegalArgumentException);
-			assertEquals("not a valid entry '" + s + "'", e.getCause().getMessage());
+			assertEquals("not a valid value '" + s + "'", e.getCause().getMessage());
 		}
 	}
 }
