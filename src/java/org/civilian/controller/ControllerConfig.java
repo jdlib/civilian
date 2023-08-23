@@ -16,14 +16,12 @@
 package org.civilian.controller;
 
 
-import org.civilian.application.Application;
 import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.util.Check;
 
 
 /**
  * ControllerConfig stores controller related configurations.
- * @see Application#getControllerConfig() 
  */
 public class ControllerConfig
 {
@@ -78,8 +76,6 @@ public class ControllerConfig
 	/**
 	 * Returns the ControllerNaming which provides naming conventions
 	 * for controller classes.
-	 * The naming is specified in the application constructor.
-	 * @see Application#Application(org.civilian.resource.pathparam.PathParamMap, String, ControllerNaming)
 	 */
 	public ControllerNaming getNaming()
 	{
@@ -87,7 +83,7 @@ public class ControllerConfig
 	}
 
 	
-	private PathParamMap pathParams_;
+	private final PathParamMap pathParams_;
 	private final String rootPackage_;
 	private final ControllerNaming naming_;
 }
