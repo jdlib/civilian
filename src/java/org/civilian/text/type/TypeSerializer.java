@@ -19,10 +19,8 @@ package org.civilian.text.type;
 import java.text.ParseException;
 import java.util.function.Function;
 import org.civilian.text.Style;
-import org.civilian.text.keys.KeyType;
 import org.civilian.type.AutoType;
 import org.civilian.type.DiscreteType;
-import org.civilian.type.EnumType;
 import org.civilian.type.Type;
 import org.civilian.type.TypeMap;
 import org.civilian.util.Value;
@@ -295,20 +293,6 @@ public abstract class TypeSerializer
 		if (dt.indexOf(value) < 0)
 			throw new ParseException("not a valid entry '" + s + "'", 0);
 		return value;
-	}
-
-	
-	protected <T> T parseKey(Type<T> type, String s) throws Exception
-	{
-		return ((KeyType<T>)type).parse(s);
-	}
-
-	
-	@SuppressWarnings("unchecked")
-	protected <T> T parseEnum(Type<T> type, String s) throws Exception
-	{
-		EnumType<?> et = (EnumType<?>)type;
-		return (T)Enum.valueOf(et.getJavaType(), s);
 	}
 
 	
