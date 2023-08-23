@@ -26,9 +26,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Stack;
-import java.util.concurrent.ConcurrentHashMap;
 import org.civilian.controller.Controller;
-import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
 import org.civilian.resource.pathparam.PathParam;
@@ -63,7 +61,6 @@ public class Resource implements Iterable<Resource>
 	{
 		parent_ 	= null;
 		route_  	= Route.root();
-		tree_		= new Tree(this);
 		segment_	= "";
 		pathParam_	= null;
 	}
@@ -106,7 +103,6 @@ public class Resource implements Iterable<Resource>
 			throw new IllegalArgumentException("a segment or path param must be provided");
 
 		parent_ 		= Check.notNull(parent, "parent");
-		tree_			= parent.tree_;
 		
 		if (segment != null)
 		{
@@ -133,18 +129,6 @@ public class Resource implements Iterable<Resource>
 	}
 	
 	
-	private synchronized void initTypeProvider(boolean recursive)
-	{
-		typeProvider_ = ControllerTypeProvider.create(this);
-		
-		if (recursive)
-		{
-			for (Resource child : children_)
-				child.initTypeProvider(recursive);
-		}
-	}
-	
-	
 	private synchronized void addChild(Resource resource)
 	{
 		Resource[] children = ArrayUtil.addLast(children_, resource);
@@ -152,16 +136,6 @@ public class Resource implements Iterable<Resource>
 		children_ = children;
 	}
 	
-	
-	/**
-	 * Returns the resource tree which exposes properties
-	 * shared by all resources belonging to the tree.
-	 */
-	public Tree getTree()
-	{
-		return tree_;
-	}
-			
 	
 	/**
 	 * Returns if this resource is the root resource.
@@ -237,17 +211,6 @@ public class Resource implements Iterable<Resource>
 	
 	
 	/**
-	 * Sets the controller signature of the resource.
-	 */
-	public void setControllerSignature(ControllerSignature signature)
-	{
-		tree_.mapResource(this, ctrlSignature_, signature);
-		ctrlSignature_ = signature;
-		initTypeProvider(false);
-	}
-
-	
-	/**
 	 * Returns the ContollerType of the Controller associated with the resource.
 	 * If the Resource does not have a Controller, null is returned. 
 	 * @throws IllegalStateException thrown if the resource has a controller,
@@ -256,7 +219,7 @@ public class Resource implements Iterable<Resource>
 	 */
 	public ControllerType getControllerType() throws IllegalStateException
 	{
-		return typeProvider_.getControllerType(this);
+		return typeProvider_.getControllerType();
 	}
 	
 	
@@ -327,7 +290,8 @@ public class Resource implements Iterable<Resource>
 	 */
 	public <T> T getData(Class<T> type)
 	{
-		return data_ != null ? Check.isA(data_, type) : null;
+		Object data = getData(); // forward to direct accessor to help build mocks
+		return data != null ? Check.isA(data, type) : null;
 	}
 
 	
@@ -414,20 +378,6 @@ public class Resource implements Iterable<Resource>
 	}
 
  	
- 	/**
-	 * Recursively go trough the resource tree and instantiate the controller classes.
-	 * This allows for a test during application startup (in production mode) 
-	 * if the resource tree has valid controller classes.   
-	 */
-	public void touchControllerClasses() throws ClassNotFoundException
-	{
-		if (ctrlSignature_ != null)
-			Class.forName(ctrlSignature_.getClassName());
-		for (int i=0; i<getChildCount(); i++)
-			getChild(i).touchControllerClasses();
-	}
-	
-
 	/**
 	 * Prints the resource tree starting with this resource.
 	 */
@@ -446,10 +396,10 @@ public class Resource implements Iterable<Resource>
 		out.print(s);
 		for (int i=s.length(); i<30; i++)
 			out.print(" ");
-		if (ctrlSignature_ != null)
+		if (data_ != null)
 		{
-			out.print(" c=");
-			out.print(ctrlSignature_);
+			out.print(" d=");
+			out.print(data_);
 			out.print(",");
 		}
 		out.println();
@@ -575,67 +525,6 @@ public class Resource implements Iterable<Resource>
 	
 
 	/**
-	 * Tree stores properties shared by all resources
-	 * belonging to the same tree.
-	 */
-	public static class Tree
-	{
-		private Tree(Resource root)
-		{
-			root_ = root;
-		}
-				
-				
-		/**
-		 * Makes the controller service available for all resources belonging to
-		 * this resource tree.
-		 */
-		public void setControllerService(ControllerService service)
-		{
-			if (controllerService_ != service)
-			{
-				controllerService_ = service;
-				root_.initTypeProvider(true);
-			}
-		}
-
-		
-		/**
-		 * Returns the ControllerService associated with the resource tree.
-		 * @see #setControllerService(ControllerService)
-		 */
-		public ControllerService getControllerService()
-		{
-			return controllerService_;
-		}
-
-		
-		/**
-		 * Returns the resource to which the controller with the given 
-		 * signature is mapped.
-		 */
-		public Resource getResource(ControllerSignature controllerSignature)
-		{
-			return sig2resource_.get(controllerSignature);
-		}
-		
-		
-		private void mapResource(Resource resource, ControllerSignature oldSignature, ControllerSignature newSignature)
-		{
-			if (oldSignature != null)
-				sig2resource_.remove(oldSignature);
-			if (newSignature != null)
-				sig2resource_.put(newSignature, resource);
-		}
-
-		
-		private final Resource root_;
-		private ControllerService controllerService_;
-		private final ConcurrentHashMap<ControllerSignature,Resource> sig2resource_ = new ConcurrentHashMap<>();
-	}
-
-	
-	/**
 	 * Returns a route representation of this resource.
 	 */
 	@Override public String toString()
@@ -644,7 +533,6 @@ public class Resource implements Iterable<Resource>
 	}
 	
 	
-	private final Tree tree_;
 	private final Resource parent_;
 	private final String segment_;
 	private final PathParam<?> pathParam_;

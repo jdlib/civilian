@@ -6,6 +6,7 @@ package org.civilian.samples.crm.web;
 
 
 import org.civilian.controller.ControllerSignature;
+import org.civilian.controller.ControllerResourceData;
 
 
 /**
@@ -14,103 +15,104 @@ import org.civilian.controller.ControllerSignature;
 public interface CrmResources
 {
 	/**
-	 * "/" -> org.civilian.samples.crm.web.root.IndexController
+	 * "/" = org.civilian.samples.crm.web.root.IndexController
 	 */
 	public static final Root root = new Root();
 
 
 	/**
-	 * "/" -> org.civilian.samples.crm.web.root.IndexController
+	 * "/" = org.civilian.samples.crm.web.root.IndexController
 	 */
 	public static class Root extends org.civilian.resource.Resource
 	{
 		public Root()
 		{
-			setControllerSignature(sig("", "IndexController"));
+			super();
+			setData(data(sig("", "IndexController")));
 
 			this.contacts = new Contacts(this);
 			this.customers = new Customers(this);
 			this.login = new org.civilian.resource.Resource(this, "login");
-			this.login.setControllerSignature(sig("", "LoginController"));
+			this.login.setData(data(sig("", "LoginController")));
 			this.logout = new org.civilian.resource.Resource(this, "logout");
-			this.logout.setControllerSignature(sig("", "LogoutController"));
+			this.logout.setData(data(sig("", "LogoutController")));
 			this.opportunities = new Opportunities(this);
 			this.users = new Users(this);
 		}
 
 		/**
-		 * "/contacts" -> org.civilian.samples.crm.web.root.contacts.IndexController
+		 * "/contacts" = org.civilian.samples.crm.web.root.contacts.IndexController
 		 */
 		public final Contacts contacts;
 
 		/**
-		 * "/customers" -> org.civilian.samples.crm.web.root.customers.IndexController
+		 * "/customers" = org.civilian.samples.crm.web.root.customers.IndexController
 		 */
 		public final Customers customers;
 
 		/**
-		 * "/login" -> org.civilian.samples.crm.web.root.LoginController
+		 * "/login" = org.civilian.samples.crm.web.root.LoginController
 		 */
 		public final org.civilian.resource.Resource login;
 
 		/**
-		 * "/logout" -> org.civilian.samples.crm.web.root.LogoutController
+		 * "/logout" = org.civilian.samples.crm.web.root.LogoutController
 		 */
 		public final org.civilian.resource.Resource logout;
 
 		/**
-		 * "/opportunities" -> org.civilian.samples.crm.web.root.opportunities.IndexController
+		 * "/opportunities" = org.civilian.samples.crm.web.root.opportunities.IndexController
 		 */
 		public final Opportunities opportunities;
 
 		/**
-		 * "/users" -> org.civilian.samples.crm.web.root.users.IndexController
+		 * "/users" = org.civilian.samples.crm.web.root.users.IndexController
 		 */
 		public final Users users;
 
 
 		/**
-		 * "/contacts" -> org.civilian.samples.crm.web.root.contacts.IndexController
+		 * "/contacts" = org.civilian.samples.crm.web.root.contacts.IndexController
 		 */
 		public static class Contacts extends org.civilian.resource.Resource
 		{
 			public Contacts(org.civilian.resource.Resource parent)
 			{
 				super(parent, "contacts");
-				setControllerSignature(sig(".contacts", "IndexController"));
+				setData(data(sig(".contacts", "IndexController")));
 
 				this.search = new Search(this);
 				this.$contactId = new org.civilian.resource.Resource(this, org.civilian.samples.crm.web.CrmPathParams.CONTACTID);
-				this.$contactId.setControllerSignature(sig(".contacts.id", "IndexController"));
+				this.$contactId.setData(data(sig(".contacts.id", "IndexController")));
 			}
 
 			/**
-			 * "/contacts/search" -> org.civilian.samples.crm.web.root.contacts.SearchController
+			 * "/contacts/search" = org.civilian.samples.crm.web.root.contacts.SearchController
 			 */
 			public final Search search;
 
 			/**
-			 * "/contacts/{contactId}" -> org.civilian.samples.crm.web.root.contacts.id.IndexController
+			 * "/contacts/{contactId}" = org.civilian.samples.crm.web.root.contacts.id.IndexController
 			 */
 			public final org.civilian.resource.Resource $contactId;
 
 
 			/**
-			 * "/contacts/search" -> org.civilian.samples.crm.web.root.contacts.SearchController
+			 * "/contacts/search" = org.civilian.samples.crm.web.root.contacts.SearchController
 			 */
 			public static class Search extends org.civilian.resource.Resource
 			{
 				public Search(org.civilian.resource.Resource parent)
 				{
 					super(parent, "search");
-					setControllerSignature(sig(".contacts", "SearchController"));
+					setData(data(sig(".contacts", "SearchController")));
 
 					this.filter = new org.civilian.resource.Resource(this, "filter");
-					this.filter.setControllerSignature(sig(".contacts", "SearchController").withMethodSegment("filter"));
+					this.filter.setData(data(sig(".contacts", "SearchController").withMethodSegment("filter")));
 				}
 
 				/**
-				 * "/contacts/search/filter" -> org.civilian.samples.crm.web.root.contacts.SearchController:filter
+				 * "/contacts/search/filter" = org.civilian.samples.crm.web.root.contacts.SearchController:filter
 				 */
 				public final org.civilian.resource.Resource filter;
 			}
@@ -118,88 +120,88 @@ public interface CrmResources
 
 
 		/**
-		 * "/customers" -> org.civilian.samples.crm.web.root.customers.IndexController
+		 * "/customers" = org.civilian.samples.crm.web.root.customers.IndexController
 		 */
 		public static class Customers extends org.civilian.resource.Resource
 		{
 			public Customers(org.civilian.resource.Resource parent)
 			{
 				super(parent, "customers");
-				setControllerSignature(sig(".customers", "IndexController"));
+				setData(data(sig(".customers", "IndexController")));
 
 				this.lookup = new org.civilian.resource.Resource(this, "lookup");
-				this.lookup.setControllerSignature(sig(".customers", "LookupController"));
+				this.lookup.setData(data(sig(".customers", "LookupController")));
 				this.navigation = new org.civilian.resource.Resource(this, "navigation");
-				this.navigation.setControllerSignature(sig(".customers", "NavigationController"));
+				this.navigation.setData(data(sig(".customers", "NavigationController")));
 				this.search = new Search(this);
 				this.$customerId = new $CustomerId(this);
 			}
 
 			/**
-			 * "/customers/lookup" -> org.civilian.samples.crm.web.root.customers.LookupController
+			 * "/customers/lookup" = org.civilian.samples.crm.web.root.customers.LookupController
 			 */
 			public final org.civilian.resource.Resource lookup;
 
 			/**
-			 * "/customers/navigation" -> org.civilian.samples.crm.web.root.customers.NavigationController
+			 * "/customers/navigation" = org.civilian.samples.crm.web.root.customers.NavigationController
 			 */
 			public final org.civilian.resource.Resource navigation;
 
 			/**
-			 * "/customers/search" -> org.civilian.samples.crm.web.root.customers.SearchController
+			 * "/customers/search" = org.civilian.samples.crm.web.root.customers.SearchController
 			 */
 			public final Search search;
 
 			/**
-			 * "/customers/{customerId}" -> org.civilian.samples.crm.web.root.customers.id.IndexController
+			 * "/customers/{customerId}" = org.civilian.samples.crm.web.root.customers.id.IndexController
 			 */
 			public final $CustomerId $customerId;
 
 
 			/**
-			 * "/customers/search" -> org.civilian.samples.crm.web.root.customers.SearchController
+			 * "/customers/search" = org.civilian.samples.crm.web.root.customers.SearchController
 			 */
 			public static class Search extends org.civilian.resource.Resource
 			{
 				public Search(org.civilian.resource.Resource parent)
 				{
 					super(parent, "search");
-					setControllerSignature(sig(".customers", "SearchController"));
+					setData(data(sig(".customers", "SearchController")));
 
 					this.filter = new org.civilian.resource.Resource(this, "filter");
-					this.filter.setControllerSignature(sig(".customers", "SearchController").withMethodSegment("filter"));
+					this.filter.setData(data(sig(".customers", "SearchController").withMethodSegment("filter")));
 				}
 
 				/**
-				 * "/customers/search/filter" -> org.civilian.samples.crm.web.root.customers.SearchController:filter
+				 * "/customers/search/filter" = org.civilian.samples.crm.web.root.customers.SearchController:filter
 				 */
 				public final org.civilian.resource.Resource filter;
 			}
 
 
 			/**
-			 * "/customers/{customerId}" -> org.civilian.samples.crm.web.root.customers.id.IndexController
+			 * "/customers/{customerId}" = org.civilian.samples.crm.web.root.customers.id.IndexController
 			 */
 			public static class $CustomerId extends org.civilian.resource.Resource
 			{
 				public $CustomerId(org.civilian.resource.Resource parent)
 				{
 					super(parent, org.civilian.samples.crm.web.CrmPathParams.CUSTOMERID);
-					setControllerSignature(sig(".customers.id", "IndexController"));
+					setData(data(sig(".customers.id", "IndexController")));
 
 					this.details = new org.civilian.resource.Resource(this, "details");
-					this.details.setControllerSignature(sig(".customers.id", "DetailsController"));
+					this.details.setData(data(sig(".customers.id", "DetailsController")));
 					this.masterdata = new org.civilian.resource.Resource(this, "masterdata");
-					this.masterdata.setControllerSignature(sig(".customers.id", "MasterdataController"));
+					this.masterdata.setData(data(sig(".customers.id", "MasterdataController")));
 				}
 
 				/**
-				 * "/customers/{customerId}/details" -> org.civilian.samples.crm.web.root.customers.id.DetailsController
+				 * "/customers/{customerId}/details" = org.civilian.samples.crm.web.root.customers.id.DetailsController
 				 */
 				public final org.civilian.resource.Resource details;
 
 				/**
-				 * "/customers/{customerId}/masterdata" -> org.civilian.samples.crm.web.root.customers.id.MasterdataController
+				 * "/customers/{customerId}/masterdata" = org.civilian.samples.crm.web.root.customers.id.MasterdataController
 				 */
 				public final org.civilian.resource.Resource masterdata;
 			}
@@ -207,47 +209,47 @@ public interface CrmResources
 
 
 		/**
-		 * "/opportunities" -> org.civilian.samples.crm.web.root.opportunities.IndexController
+		 * "/opportunities" = org.civilian.samples.crm.web.root.opportunities.IndexController
 		 */
 		public static class Opportunities extends org.civilian.resource.Resource
 		{
 			public Opportunities(org.civilian.resource.Resource parent)
 			{
 				super(parent, "opportunities");
-				setControllerSignature(sig(".opportunities", "IndexController"));
+				setData(data(sig(".opportunities", "IndexController")));
 
 				this.search = new Search(this);
 				this.$opportunityId = new org.civilian.resource.Resource(this, org.civilian.samples.crm.web.CrmPathParams.OPPORTUNITYID);
-				this.$opportunityId.setControllerSignature(sig(".opportunities.id", "IndexController"));
+				this.$opportunityId.setData(data(sig(".opportunities.id", "IndexController")));
 			}
 
 			/**
-			 * "/opportunities/search" -> org.civilian.samples.crm.web.root.opportunities.SearchController
+			 * "/opportunities/search" = org.civilian.samples.crm.web.root.opportunities.SearchController
 			 */
 			public final Search search;
 
 			/**
-			 * "/opportunities/{opportunityId}" -> org.civilian.samples.crm.web.root.opportunities.id.IndexController
+			 * "/opportunities/{opportunityId}" = org.civilian.samples.crm.web.root.opportunities.id.IndexController
 			 */
 			public final org.civilian.resource.Resource $opportunityId;
 
 
 			/**
-			 * "/opportunities/search" -> org.civilian.samples.crm.web.root.opportunities.SearchController
+			 * "/opportunities/search" = org.civilian.samples.crm.web.root.opportunities.SearchController
 			 */
 			public static class Search extends org.civilian.resource.Resource
 			{
 				public Search(org.civilian.resource.Resource parent)
 				{
 					super(parent, "search");
-					setControllerSignature(sig(".opportunities", "SearchController"));
+					setData(data(sig(".opportunities", "SearchController")));
 
 					this.filter = new org.civilian.resource.Resource(this, "filter");
-					this.filter.setControllerSignature(sig(".opportunities", "SearchController").withMethodSegment("filter"));
+					this.filter.setData(data(sig(".opportunities", "SearchController").withMethodSegment("filter")));
 				}
 
 				/**
-				 * "/opportunities/search/filter" -> org.civilian.samples.crm.web.root.opportunities.SearchController:filter
+				 * "/opportunities/search/filter" = org.civilian.samples.crm.web.root.opportunities.SearchController:filter
 				 */
 				public final org.civilian.resource.Resource filter;
 			}
@@ -255,47 +257,47 @@ public interface CrmResources
 
 
 		/**
-		 * "/users" -> org.civilian.samples.crm.web.root.users.IndexController
+		 * "/users" = org.civilian.samples.crm.web.root.users.IndexController
 		 */
 		public static class Users extends org.civilian.resource.Resource
 		{
 			public Users(org.civilian.resource.Resource parent)
 			{
 				super(parent, "users");
-				setControllerSignature(sig(".users", "IndexController"));
+				setData(data(sig(".users", "IndexController")));
 
 				this.search = new Search(this);
 				this.$userId = new org.civilian.resource.Resource(this, org.civilian.samples.crm.web.CrmPathParams.USERID);
-				this.$userId.setControllerSignature(sig(".users.id", "IndexController"));
+				this.$userId.setData(data(sig(".users.id", "IndexController")));
 			}
 
 			/**
-			 * "/users/search" -> org.civilian.samples.crm.web.root.users.SearchController
+			 * "/users/search" = org.civilian.samples.crm.web.root.users.SearchController
 			 */
 			public final Search search;
 
 			/**
-			 * "/users/{userId}" -> org.civilian.samples.crm.web.root.users.id.IndexController
+			 * "/users/{userId}" = org.civilian.samples.crm.web.root.users.id.IndexController
 			 */
 			public final org.civilian.resource.Resource $userId;
 
 
 			/**
-			 * "/users/search" -> org.civilian.samples.crm.web.root.users.SearchController
+			 * "/users/search" = org.civilian.samples.crm.web.root.users.SearchController
 			 */
 			public static class Search extends org.civilian.resource.Resource
 			{
 				public Search(org.civilian.resource.Resource parent)
 				{
 					super(parent, "search");
-					setControllerSignature(sig(".users", "SearchController"));
+					setData(data(sig(".users", "SearchController")));
 
 					this.filter = new org.civilian.resource.Resource(this, "filter");
-					this.filter.setControllerSignature(sig(".users", "SearchController").withMethodSegment("filter"));
+					this.filter.setData(data(sig(".users", "SearchController").withMethodSegment("filter")));
 				}
 
 				/**
-				 * "/users/search/filter" -> org.civilian.samples.crm.web.root.users.SearchController:filter
+				 * "/users/search/filter" = org.civilian.samples.crm.web.root.users.SearchController:filter
 				 */
 				public final org.civilian.resource.Resource filter;
 			}
@@ -305,6 +307,12 @@ public interface CrmResources
 		private static ControllerSignature sig(String subPackage, String className)
 		{
 			return new ControllerSignature("org.civilian.samples.crm.web.root" + subPackage + '.' + className);
+		}
+
+
+		private static ControllerResourceData data(ControllerSignature sig)
+		{
+			return new ControllerResourceData(sig);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 import java.util.Iterator
 import org.civilian.application.Application
 import org.civilian.resource.Resource
-import org.civilian.controller.ControllerSignature
+import org.civilian.controller.ControllerResourceData
 
 
 template(Application app)
@@ -17,7 +17,7 @@ mixin html
 				@while(it.hasNext())
 					@Resource resource = it.next();
 					@String route = resource.getRoute().toString();
-					@printControllerEntry(resource.getControllerSignature(), route);				
+					@printControllerEntry(resource, route);				
 		<%%>];
 		
 		$scope.showDetails = function(resource) {
@@ -67,8 +67,9 @@ mixin html
 }}
 
 
-private void printControllerEntry(ControllerSignature sig, String path)
+private void printControllerEntry(Resource resource, String path)
 {{
-	@if (sig != null)
-		{ controller: "<%sig%>", path: "<%path.length() != 0 ? path : "/"%>" },
+	@ControllerResourceData data = ControllerResourceData.of(resource);
+	@if (data != null)
+		{ controller: "<%data.getSignature()%>", path: "<%path.length() != 0 ? path : "/"%>" },
 }}

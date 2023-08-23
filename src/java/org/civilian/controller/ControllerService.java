@@ -84,7 +84,7 @@ public class ControllerService
 	{
 		return getControllerType(new ControllerSignature(ctrlClass.getName()));
 	}
-
+	
 	
 	/**
 	 * CMethods stores the ControllerMethods of a controller.
@@ -358,6 +358,13 @@ public class ControllerService
 		private final TypeLib typeLib_;
 		private final ClassLoader classLoader_;
 		private final HashMap<ControllerSignature, CMethods> signature2methods_ = new HashMap<>();
+	}
+
+	
+	public String getInfo()
+	{
+		// this is used as info string by the ResourceDispatch processor 
+		return toString() + ", reloading " + isReloading();
 	}
 
 	

@@ -6,6 +6,7 @@ package org.civilian.samples.quickstart;
 
 
 import org.civilian.controller.ControllerSignature;
+import org.civilian.controller.ControllerResourceData;
 
 
 /**
@@ -14,46 +15,46 @@ import org.civilian.controller.ControllerSignature;
 public interface QsResources
 {
 	/**
-	 * "/" -> org.civilian.samples.quickstart.IndexController
+	 * "/" = org.civilian.samples.quickstart.IndexController
 	 */
 	public static final Root root = new Root();
 
 
 	/**
-	 * "/" -> org.civilian.samples.quickstart.IndexController
+	 * "/" = org.civilian.samples.quickstart.IndexController
 	 */
 	public static class Root extends org.civilian.resource.Resource
 	{
 		public Root()
 		{
 			super();
-			setControllerSignature(sig("", "IndexController"));
+			setData(data(sig("", "IndexController")));
 
 			this.users = new Users(this);
 		}
 
 		/**
-		 * "/users" -> org.civilian.samples.quickstart.users.IndexController
+		 * "/users" = org.civilian.samples.quickstart.users.IndexController
 		 */
 		public final Users users;
 
 
 		/**
-		 * "/users" -> org.civilian.samples.quickstart.users.IndexController
+		 * "/users" = org.civilian.samples.quickstart.users.IndexController
 		 */
 		public static class Users extends org.civilian.resource.Resource
 		{
 			public Users(org.civilian.resource.Resource parent)
 			{
 				super(parent, "users");
-				setControllerSignature(sig(".users", "IndexController"));
+				setData(data(sig(".users", "IndexController")));
 
 				this.$userId = new org.civilian.resource.Resource(this, org.civilian.samples.quickstart.QsPathParams.USERID);
-				this.$userId.setControllerSignature(sig(".users.id", "IndexController"));
+				this.$userId.setData(data(sig(".users.id", "IndexController")));
 			}
 
 			/**
-			 * "/users/{userId}" -> org.civilian.samples.quickstart.users.id.IndexController
+			 * "/users/{userId}" = org.civilian.samples.quickstart.users.id.IndexController
 			 */
 			public final org.civilian.resource.Resource $userId;
 		}
@@ -62,6 +63,12 @@ public interface QsResources
 		private static ControllerSignature sig(String subPackage, String className)
 		{
 			return new ControllerSignature("org.civilian.samples.quickstart" + subPackage + '.' + className);
+		}
+
+
+		private static ControllerResourceData data(ControllerSignature sig)
+		{
+			return new ControllerResourceData(sig);
 		}
 	}
 }

@@ -34,7 +34,7 @@ private void printResourceClass(Resource resource)
 	@int childCount        = resource.getChildCount();
 	@boolean isRoot        = resource.isRoot(); 
 	@String className      = isRoot ? outputName : buildClassName(resource);
-	@boolean hasController = resource.getControllerSignature() != null;
+	@boolean hasController = resource.getData() != null;
 	public<%?!isRoot%> static<%?%> class <%className%><%?hasController%> extends <%WEBRESOURCE%><%?%> 
 	{
 		public <%className%><%/%>
@@ -52,7 +52,7 @@ private void printResourceClass(Resource resource)
 			@// print field definitions
 			@for (int i=0; i<childCount; i++)
 				@Resource child = resource.getChild(i);
-				@boolean childHasController = child.getControllerSignature() != null;
+				@boolean childHasController = child.getData() != null;
 				@if (!hasController)
 					this.resource_.<%/%> 
 				addChild(<%/%>

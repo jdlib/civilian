@@ -20,6 +20,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.civilian.CivTest;
 import org.civilian.controller.ControllerConfig;
+import org.civilian.controller.ControllerSignature;
+import org.civilian.controller.ControllerResourceData;
 import org.civilian.resource.Resource;
 import org.civilian.testcase1.Test1PathParams;
 import org.junit.Test;
@@ -64,7 +66,8 @@ public class ControllerScanTest extends CivTest
 	{
 		assertTrue(it.hasNext());
 		Resource r = it.next();
+		ControllerSignature sig = ControllerResourceData.getSignature(r);
 		assertEquals(route, 	r.getRoute().toString()); 
-		assertEquals(ctrlSig, 	r.getControllerSignature() != null ? r.getControllerSignature().toString() : null); 
+		assertEquals(ctrlSig, 	sig != null ? sig.toString() : null); 
 	}
 }

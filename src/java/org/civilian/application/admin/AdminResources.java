@@ -6,6 +6,7 @@ package org.civilian.application.admin;
 
 
 import org.civilian.controller.ControllerSignature;
+import org.civilian.controller.ControllerResourceData;
 
 
 /**
@@ -14,20 +15,20 @@ import org.civilian.controller.ControllerSignature;
 public interface AdminResources
 {
 	/**
-	 * "/" -&lt; org.civilian.application.admin.IndexController
+	 * "/" = org.civilian.application.admin.IndexController
 	 */
 	public static final Root root = new Root();
 
 
 	/**
-	 * "/" -&lt; org.civilian.application.admin.IndexController
+	 * "/" = org.civilian.application.admin.IndexController
 	 */
 	public static class Root extends org.civilian.resource.Resource
 	{
 		public Root()
 		{
 			super();
-			setControllerSignature(sig("", "IndexController"));
+			setData(data(sig("", "IndexController")));
 
 			this.$appId = new $AppId(this);
 		}
@@ -47,18 +48,18 @@ public interface AdminResources
 			{
 				this.resource_ = new org.civilian.resource.Resource(parent, org.civilian.application.admin.AdminPathParams.APPID);
 				this.resources = new org.civilian.resource.Resource(this.resource_, "resources");
-				this.resources.setControllerSignature(sig(".app", "ResourcesController"));
+				this.resources.setData(data(sig(".app", "ResourcesController")));
 				this.settings = new org.civilian.resource.Resource(this.resource_, "settings");
-				this.settings.setControllerSignature(sig(".app", "SettingsController"));
+				this.settings.setData(data(sig(".app", "SettingsController")));
 			}
 
 			/**
-			 * "/{appId}/resources" -&lt; org.civilian.application.admin.app.ResourcesController
+			 * "/{appId}/resources" = org.civilian.application.admin.app.ResourcesController
 			 */
 			public final org.civilian.resource.Resource resources;
 
 			/**
-			 * "/{appId}/settings" -&lt; org.civilian.application.admin.app.SettingsController
+			 * "/{appId}/settings" = org.civilian.application.admin.app.SettingsController
 			 */
 			public final org.civilian.resource.Resource settings;
 
@@ -70,6 +71,12 @@ public interface AdminResources
 		private static ControllerSignature sig(String subPackage, String className)
 		{
 			return new ControllerSignature("org.civilian.application.admin" + subPackage + '.' + className);
+		}
+
+
+		private static ControllerResourceData data(ControllerSignature sig)
+		{
+			return new ControllerResourceData(sig);
 		}
 	}
 }

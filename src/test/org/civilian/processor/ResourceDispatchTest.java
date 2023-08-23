@@ -7,7 +7,8 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.controller.Controller;
-import org.civilian.controller.ControllerService;
+import org.civilian.controller.ControllerResourceData;
+import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
 import org.civilian.request.Request;
 import org.civilian.resource.Path;
@@ -21,15 +22,12 @@ public class ResourceDispatchTest extends CivTest
 	@Test public void test() throws Exception
 	{
 		Resource root 		= mock(Resource.class);
-		Resource.Tree tree 	= mock(Resource.Tree.class);
 		Request request 	= mock(Request.class);
 		Response response	= mock(Response.class);
 		Resource idSegment	= mock(Resource.class);
 		Resource idPP		= mock(Resource.class);
 
-		when(root.getControllerType()).thenReturn(null);
-		when(root.getTree()).thenReturn(tree);
-		when(tree.getControllerService()).thenReturn(mock(ControllerService.class));
+		when(root.getData()).thenReturn(null);
 		ResourceDispatch dispatch = new ResourceDispatch(root);
 
 		// request path is "/id" during the test
@@ -56,7 +54,9 @@ public class ResourceDispatchTest extends CivTest
 		// complete match, with path params and controllerType
 		ControllerType type  = mock(ControllerType.class);
 		Controller controller = mock(Controller.class);
-		when(idPP.getControllerType()).thenReturn(type);
+		ControllerResourceData data = new ControllerResourceData(new ControllerSignature(controller.getClass()));
+		data.setTypeProvider(() -> type);
+		when(idPP.getData(ControllerResourceData.class)).thenReturn(data);
 		when(type.createController()).thenReturn(controller);
 		
 		assertTrue(dispatch.process(request, response, ProcessorChain.EMPTY));

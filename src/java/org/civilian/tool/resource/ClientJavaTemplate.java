@@ -73,7 +73,7 @@ class ClientJavaTemplate
 		int childCount        = resource.getChildCount();               // line 34: @int childCount        = resource.getChildCount();
 		boolean isRoot        = resource.isRoot();                      // line 35: @boolean isRoot        = resource.isRoot();
 		String className      = isRoot ? outputName : buildClassName(resource); // line 36: @String className      = isRoot ? outputName : buildClassName(resource);
-		boolean hasController = resource.getControllerSignature() != null; // line 37: @boolean hasController = resource.getControllerSignature() != null;
+		boolean hasController = resource.getData() != null;             // line 37: @boolean hasController = resource.getData() != null;
 		out.print("public");                                            // line 38: public
 		if (!isRoot)                                                    // line 38: <%?!isRoot%>
 		{
@@ -120,7 +120,7 @@ class ClientJavaTemplate
 		for (int i=0; i<childCount; i++)                                // line 53: @for (int i=0; i<childCount; i++)
 		{
 			Resource child = resource.getChild(i);                      // line 54: @Resource child = resource.getChild(i);
-			boolean childHasController = child.getControllerSignature() != null; // line 55: @boolean childHasController = child.getControllerSignature() != null;
+			boolean childHasController = child.getData() != null;       // line 55: @boolean childHasController = child.getData() != null;
 			if (!hasController)                                         // line 56: @if (!hasController)
 			{
 				out.print("this.resource_.");                           // line 57: this.resource_.

@@ -16,7 +16,7 @@
 package org.civilian.processor;
 
 
-import org.civilian.controller.ControllerService;
+import org.civilian.controller.ControllerResourceData;
 import org.civilian.controller.ControllerType;
 import org.civilian.request.Request;
 import org.civilian.resource.Resource;
@@ -31,17 +31,26 @@ import org.civilian.util.Check;
  */
 public class ResourceDispatch extends Processor
 {
-	public ResourceDispatch(Resource rootResource)
-	{
-		rootResource_ = Check.notNull(rootResource, "rootResource");
-		
-		ControllerService service = rootResource.getTree().getControllerService();
-		if (service == null)
-			throw new IllegalStateException("no controller service set on resource tree");
-		info_ = "service: " + service.toString() + ": reloading " + service.isReloading();
-	}
+//	public ResourceDispatch(ControllerService service, Resource root)
+//	{
+//		root_ 	 = Check.notNull(root, "root");
+//		info_ 	 = "service: " + service.toString() + ": reloading " + service.isReloading();
+//	}
 	
 
+	public ResourceDispatch(Resource root, String info)
+	{
+		root_ 	 = Check.notNull(root, "root");
+		info_ 	 = Check.notNull(info, "info");
+	}
+
+	
+	public ResourceDispatch(Resource root)
+	{
+		this(root, ResourceDispatch.class.getName());
+	}
+
+	
 	@Override public String getInfo() 
 	{
 		return info_;
@@ -56,17 +65,17 @@ public class ResourceDispatch extends Processor
 	@Override public boolean process(Request request, Response response, ProcessorChain chain) throws Exception
 	{
 		// find the matching resource: we only handle complete matches
-		Resource.Match match = rootResource_.match(request.getRelativePath().toString());
+		Resource.Match match = root_.match(request.getRelativePath().toString());
 		if (match.completeMatch)
 		{
 			request.setResource(match.resource);
 			request.setPathParams(match.pathParams);
 			
-			ControllerType ctrlType	= match.resource.getControllerType();
-			if (ctrlType != null)
+			ControllerType controllerType = ControllerResourceData.getType(match.resource);
+			if (controllerType != null)
 			{
 				// resource is associated with a controller
-				ctrlType.createController().process(request, response);
+				controllerType.createController().process(request, response);
 				return true; // we handled the request
 			}
 		}
@@ -76,6 +85,6 @@ public class ResourceDispatch extends Processor
 	}
 
 
-	private final Resource rootResource_;
+	private final Resource root_;
 	private final String info_;
 }

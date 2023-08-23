@@ -19,7 +19,6 @@ package org.civilian.controller;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import org.civilian.annotation.Segment;
-import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.util.Check;
@@ -33,8 +32,6 @@ import org.civilian.util.StringUtil;
  * <li>match all action methods which have a {@link Segment} annotation with a certain value 
  * <li>match all action methods which have a {@link PathParam} annotation with a certain value
  * </ul> 
- * ControllerSignature are used by {@link Resource#getControllerSignature() resources}
- * to specify which controller and which of its action methods are used to handle requests for the resource.
  */
 public class ControllerSignature
 {

@@ -34,6 +34,7 @@ import org.civilian.content.TextSerializer;
 import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerConfig;
 import org.civilian.controller.ControllerNaming;
+import org.civilian.controller.ControllerResourceData;
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.scan.ControllerScan;
@@ -223,8 +224,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 				.getRootResource();		
 		}
 		
-		Resource.Tree tree = rootResource_.getTree();
-		tree.setControllerService(controllerService_);
+		sig2resource_ = ControllerResourceData.initTypeProviders(rootResource_, controllerService_);
 	}
 	
 	
@@ -275,7 +275,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 			pconfig.addLast(new IpFilter(ipList));
 		
 		// resource dispatch as next processor
-		pconfig.addLast(new ResourceDispatch(rootResource_));
+		pconfig.addLast(new ResourceDispatch(rootResource_, controllerService_.toString()));
 		
 		// followed by an optional AssetDispatch
 		if (getAssetService().hasAssets())
@@ -460,7 +460,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	{
 		Check.isSuperclassOf(Controller.class, handlerClass);
 		ControllerSignature sig = new ControllerSignature(handlerClass.getName());
-		Resource resource = rootResource_.getTree().getResource(sig);
+		Resource resource = sig2resource_.get(sig);
 		if (resource == null)
 			throw new IllegalArgumentException("no resource for " + handlerClass.getName());
 		return resource;
@@ -742,6 +742,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	private UploadConfig uploadConfig_;
 	private String version_;
 	private ProcessorList processors_ = ProcessorList.EMPTY;
+	private Map<ControllerSignature,Resource> sig2resource_ = Map.of();
 	private final HashMap<String, Object> attributes_ = new HashMap<>();
 	private Map<String,ContentSerializer> contentSerializers_ = Collections.<String,ContentSerializer>emptyMap();
 

@@ -17,43 +17,39 @@ package org.civilian.resource;
 
 
 import org.civilian.controller.ControllerService;
+import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
+import org.civilian.util.Check;
 
 
 /**
  * ControllerTypeProvider can return a ControllerType for a resource. 
  */
-public abstract class ControllerTypeProvider
+public interface ControllerTypeProvider
 {
 	public static final ControllerTypeProvider EMPTY 		= new EmptyTypeProvider();
-	private static final ControllerTypeProvider UNAVAILABLE = new UnavailableTypeProvider();
-	private static final ControllerTypeProvider FORWARDING  = new ForwardingTypeProvider();
+	public static final ControllerTypeProvider UNINITIALIZED = new UninitializedTypeProvider();
 	
 	
-	public static ControllerTypeProvider create(Resource resource)
+	public static ControllerTypeProvider create(ControllerService service, ControllerSignature signature)
 	{
-		if (resource.getControllerSignature() == null)
-			return EMPTY;
-		
-		ControllerService service = resource.getTree().getControllerService();
-		if (service == null)
-			return UNAVAILABLE;
-		else if (service.isReloading())
-			return FORWARDING;
+		if (service.isReloading())
+			return new ForwardingTypeProvider(service, signature);
 		else
-			return new CachingTypeProvider();
+			return new CachingTypeProvider(service, signature);
 	}
 	
-	public abstract ControllerType getControllerType(Resource resource) throws IllegalStateException;
+	
+	public abstract ControllerType getControllerType();
 }
 
 
 /**
  * A ControllerTypeProvider for resources which are not associated with a controller.
  */
-class EmptyTypeProvider extends ControllerTypeProvider
+class EmptyTypeProvider implements ControllerTypeProvider
 {
-	@Override public ControllerType getControllerType(Resource resource)
+	@Override public ControllerType getControllerType()
 	{
 		return null;
 	}
@@ -63,11 +59,11 @@ class EmptyTypeProvider extends ControllerTypeProvider
 /**
  * A ControllerTypeProvider for resources of a tree whose ControllerService is not set.
  */
-class UnavailableTypeProvider extends ControllerTypeProvider
+class UninitializedTypeProvider implements ControllerTypeProvider
 {
-	@Override public ControllerType getControllerType(Resource resource)
+	@Override public ControllerType getControllerType()
 	{
-		throw new IllegalStateException("ControllerType unavailable: resource not connected with ControllerService");
+		throw new IllegalStateException("ControllerTypeProvider not yet initialized");
 	}
 }
 
@@ -78,12 +74,23 @@ class UnavailableTypeProvider extends ControllerTypeProvider
  * This is done again each time a request, good for development which
  * controller class reloading. 
  */
-class ForwardingTypeProvider extends ControllerTypeProvider
+class ForwardingTypeProvider implements ControllerTypeProvider
 {
-	@Override public ControllerType getControllerType(Resource resource)
+	public ForwardingTypeProvider(ControllerService service, ControllerSignature signature)
 	{
-		return resource.getTree().getControllerService().getControllerType(resource.getControllerSignature());
+		service_ 	= Check.notNull(service, "service");
+		signature_	= Check.notNull(signature, "signature");
 	}
+	
+	
+	@Override public ControllerType getControllerType()
+	{
+		return service_.getControllerType(signature_);
+	}
+	
+	
+	private final ControllerService service_;
+	private final ControllerSignature signature_;
 }
 
 
@@ -93,15 +100,21 @@ class ForwardingTypeProvider extends ControllerTypeProvider
  * invocations return the cached ControllerType.
  * Good for production mode. 
  */
-class CachingTypeProvider extends ControllerTypeProvider
+class CachingTypeProvider extends ForwardingTypeProvider 
 {
-	@Override public ControllerType getControllerType(Resource resource)
+	public CachingTypeProvider(ControllerService service, ControllerSignature signature)
 	{
-		if (type_ == null)
-			type_ = resource.getTree().getControllerService().getControllerType(resource.getControllerSignature());
-		return type_;
+		super(service, signature);
 	}
 	
 	
+	@Override public ControllerType getControllerType()
+	{
+		if (type_ == null)
+			type_ = super.getControllerType();
+		return type_;
+	}
+	
+
 	private ControllerType type_;
 }

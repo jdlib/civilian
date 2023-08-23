@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
-import org.civilian.resource.Resource.Tree;
 import org.civilian.resource.ResourceHandler;
 import org.civilian.resource.Route;
 import org.civilian.resource.pathparam.PathParam;

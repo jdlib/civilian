@@ -6,6 +6,7 @@ package org.civilian.samples.jpa.jta;
 
 
 import org.civilian.controller.ControllerSignature;
+import org.civilian.controller.ControllerResourceData;
 
 
 /**
@@ -14,27 +15,27 @@ import org.civilian.controller.ControllerSignature;
 public interface JtaResources
 {
 	/**
-	 * "/" -> org.civilian.samples.jpa.jta.IndexController
+	 * "/" = org.civilian.samples.jpa.jta.IndexController
 	 */
 	public static final Root root = new Root();
 
 
 	/**
-	 * "/" -> org.civilian.samples.jpa.jta.IndexController
+	 * "/" = org.civilian.samples.jpa.jta.IndexController
 	 */
 	public static class Root extends org.civilian.resource.Resource
 	{
 		public Root()
 		{
 			super();
-			setControllerSignature(sig("", "IndexController"));
+			setData(data(sig("", "IndexController")));
 
 			this.create = new org.civilian.resource.Resource(this, "create");
-			this.create.setControllerSignature(sig("", "CreateController"));
+			this.create.setData(data(sig("", "CreateController")));
 		}
 
 		/**
-		 * "/create" -> org.civilian.samples.jpa.jta.CreateController
+		 * "/create" = org.civilian.samples.jpa.jta.CreateController
 		 */
 		public final org.civilian.resource.Resource create;
 
@@ -42,6 +43,12 @@ public interface JtaResources
 		private static ControllerSignature sig(String subPackage, String className)
 		{
 			return new ControllerSignature("org.civilian.samples.jpa.jta" + subPackage + '.' + className);
+		}
+
+
+		private static ControllerResourceData data(ControllerSignature sig)
+		{
+			return new ControllerResourceData(sig);
 		}
 	}
 }

@@ -18,6 +18,8 @@ package org.civilian.controller.scan;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import org.civilian.controller.ControllerResourceData;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
@@ -215,7 +217,8 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 	
 	private static void toResource(Resource resource, ResourceInfo resInfo)
 	{
-		resource.setControllerSignature(resInfo.controllerSignature_);
+		if (resInfo.controllerSignature_ != null)
+			resource.setData(new ControllerResourceData(resInfo.controllerSignature_));
 		
 		int n = resInfo.getChildCount();
 		for (int i=0; i<n; i++)

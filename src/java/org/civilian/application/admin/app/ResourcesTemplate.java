@@ -7,7 +7,7 @@ package org.civilian.application.admin.app;
 
 import java.util.Iterator;
 import org.civilian.application.Application;
-import org.civilian.controller.ControllerSignature;
+import org.civilian.controller.ControllerResourceData;
 import org.civilian.resource.Resource;
 import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
@@ -44,7 +44,7 @@ public class ResourcesTemplate extends Template
 			{
 				Resource resource = it.next();                          // line 18: @Resource resource = it.next();
 				String route = resource.getRoute().toString();          // line 19: @String route = resource.getRoute().toString();
-				printControllerEntry(resource.getControllerSignature(), route); // line 20: @printControllerEntry(resource.getControllerSignature(), route);
+				printControllerEntry(resource, route);                  // line 20: @printControllerEntry(resource, route);
 			}
 		}
 		out.decreaseTab();
@@ -126,15 +126,16 @@ public class ResourcesTemplate extends Template
 	}
 	
 	
-	private void printControllerEntry(ControllerSignature sig, String path)
+	private void printControllerEntry(Resource resource, String path)
 	{
-		if (sig != null)                                                // line 72: @if (sig != null)
+		ControllerResourceData data = ControllerResourceData.of(resource); // line 72: @ControllerResourceData data = ControllerResourceData.of(resource);
+		if (data != null)                                               // line 73: @if (data != null)
 		{
-			out.print("{ controller: \"");                              // line 73: { controller: "
-			out.print(sig);                                             // line 73: <%sig%>
-			out.print("\", path: \"");                                  // line 73: ", path: "
-			out.print(path.length() != 0 ? path : "/");                 // line 73: <%path.length() != 0 ? path : "/"%>
-			out.println("\" },");                                       // line 73: " },
+			out.print("{ controller: \"");                              // line 74: { controller: "
+			out.print(data.getSignature());                             // line 74: <%data.getSignature()%>
+			out.print("\", path: \"");                                  // line 74: ", path: "
+			out.print(path.length() != 0 ? path : "/");                 // line 74: <%path.length() != 0 ? path : "/"%>
+			out.println("\" },");                                       // line 74: " },
 		}
 	}
 

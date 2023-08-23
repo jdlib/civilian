@@ -21,16 +21,13 @@ import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.controller.ControllerService;
+import org.civilian.controller.ControllerResourceData;
 import org.civilian.controller.ControllerSignature;
-import org.civilian.controller.ControllerType;
 import org.civilian.resource.Resource.Match;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParams;
-import org.civilian.testcase1.AlphaController;
 import org.civilian.type.TypeLib;
 
 
@@ -163,87 +160,64 @@ public class ResourceTest extends CivTest
 	}
 	
 	
-	@Test public void testTree()
+	@Test public void testData()
 	{
-		Resource root 	= new Resource();
-		Resource child 	= new Resource(root, "a");
+		Resource resource = new Resource();
+		assertNull(resource.getData());
 		
-		Resource.Tree tree = root.getTree();
-		assertSame(tree, child.getTree());
-		
-		assertNull(tree.getControllerService());
-	}
-
-	
-	@Test public void testControllerInfo()
-	{
-		Resource root = new Resource();
-		assertNull(root.getControllerSignature());
-
-		root.setControllerSignature(null);
-		assertNull(root.getControllerSignature());
-		
-		root.setControllerSignature(new ControllerSignature("test.Controller").withMethodSegment("path"));
-		ControllerSignature sig = root.getControllerSignature();
-		assertEquals("test.Controller", sig.getClassName());
-		assertEquals("path", sig.getMethodSegment());
+		resource.setData(resource);
+		assertSame(resource, resource.getData());
 	}
 	
 	
-	@Test public void testControllerService()
-	{
-		ControllerService service = mock(ControllerService.class);
-		
-		Resource root = new Resource();
-		
-		root.getTree().setControllerService(service);
-		assertEquals(service, root.getTree().getControllerService());
-		root.getTree().setControllerService(service);
-		assertEquals(service, root.getTree().getControllerService());
-	}
-	
-	
-	@Test public void testTypeProvider()
-	{
-		Resource root = new Resource();
-		
-		// empty
-		assertNull(root.getControllerType());
-		
-		// unavailable
-		root.setControllerSignature(new ControllerSignature("MyController"));
-		try
-		{
-			root.getControllerType();
-			fail();
-		}
-		catch(IllegalStateException e)
-		{
-			assertEquals("ControllerType unavailable: resource not connected with ControllerService", e.getMessage());
-		}
-		
-		// forwarding: every call for the controllertype is directed to the service
-		ControllerService service = mock(ControllerService.class);
-		when(service.isReloading()).thenReturn(true);
-		root.getTree().setControllerService(service);
-		root.getControllerType();
-		verify(service).getControllerType(root.getControllerSignature());
-		root.getControllerType();
-		verify(service, times(2)).getControllerType(root.getControllerSignature());
-		
-		// caching: controller type is asked one time and then cached in the source
-		ControllerType type = mock(ControllerType.class);
-		when(service.isReloading()).thenReturn(false);
-		root.setControllerSignature(new ControllerSignature("Ctrl2"));
-		when(service.getControllerType(root.getControllerSignature())).thenReturn(type);
-		
-		assertSame(type, root.getControllerType());
-		verify(service, times(1)).getControllerType(root.getControllerSignature());
-		
-		assertSame(type, root.getControllerType());
-		verify(service, times(1)).getControllerType(root.getControllerSignature());
-	}
-	
+// TODO	
+//	@Test public void testTypeProvider()
+//	{
+//		Resource root = new Resource();
+//		
+//		// empty
+//		assertNull(root.getControllerType());
+//		
+//		// unavailable
+//		root.setData(new ControllerResourceData(new ControllerSignature("MyController")));
+//		try
+//		{
+//			root.getControllerType();
+//			fail();
+//		}
+//		catch(IllegalStateException e)
+//		{
+//			assertEquals("ControllerType unavailable: resource not connected with ControllerService", e.getMessage());
+//		}
+//		
+//		// forwarding: every call for the controllertype is directed to the service
+//		ControllerService service = mock(ControllerService.class);
+//		when(service.isReloading()).thenReturn(true);
+//		root.getTree().setControllerService(service);
+//		root.getControllerType();
+//		verifGetControllerType(service, 1, root);
+//		root.getControllerType();
+//		verifGetControllerType(service, 2, root);
+//		
+//		// caching: controller type is asked one time and then cached in the source
+//		ControllerType type = mock(ControllerType.class);
+//		when(service.isReloading()).thenReturn(false);
+//		root.setData(new ControllerResourceData(new ControllerSignature("Ctrl2")));
+//		when(service.getControllerType(root.getControllerSignature())).thenReturn(type);
+//		
+//		assertSame(type, root.getControllerType());
+//		verifGetControllerType(service, 1, root);
+//		
+//		assertSame(type, root.getControllerType());
+//		verifGetControllerType(service, 1, root);
+//	}
+//	
+//	
+//	private void verifGetControllerType(ControllerService service, int times, Resource resource)
+//	{
+//		ControllerSignature sig = ControllerResourceData.getSignature(resource);
+//		verify(service, times(times)).getControllerType(sig);
+//	}
 	
 	
 	@Test public void testMatch()
@@ -253,8 +227,8 @@ public class ResourceTest extends CivTest
 		Resource ppInt  	= new Resource(root, PP_INT);
 		Resource optparent  = new Resource(root, "optparent");
 		Resource ppOpt  	= new Resource(optparent, PP_OPT);
-		ppInt.setControllerSignature(new ControllerSignature("test.IntController"));
-		ppOpt.setControllerSignature(new ControllerSignature("test.OptController"));
+		ppInt.setData(new ControllerResourceData(new ControllerSignature("test.IntController")));
+		ppOpt.setData(new ControllerResourceData(new ControllerSignature("test.OptController")));
 		
 		MatchAssert a = new MatchAssert(root);
 		
@@ -374,17 +348,6 @@ public class ResourceTest extends CivTest
 		root.print(s);
 	}
 
-	
-	@Test public void testTouch() throws Exception
-	{
-		Resource root = new Resource();
-		root.setControllerSignature(new ControllerSignature(AlphaController.class));
-		
-		new Resource(root, "a");
-		
-		root.touchControllerClasses();
-	}
-	
 	
 	private static PathParam<String>  PP_SEG = PathParams.forSegment("ppseg"); 
 	private static PathParam<Integer> PP_INT = PathParams.forSegment("ppint").converting(TypeLib.INTEGER); 
