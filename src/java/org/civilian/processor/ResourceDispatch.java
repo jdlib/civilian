@@ -31,13 +31,6 @@ import org.civilian.util.Check;
  */
 public class ResourceDispatch extends Processor
 {
-//	public ResourceDispatch(ControllerService service, Resource root)
-//	{
-//		root_ 	 = Check.notNull(root, "root");
-//		info_ 	 = "service: " + service.toString() + ": reloading " + service.isReloading();
-//	}
-	
-
 	public ResourceDispatch(Resource root, String info)
 	{
 		root_ 	 = Check.notNull(root, "root");
