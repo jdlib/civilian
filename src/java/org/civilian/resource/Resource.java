@@ -26,9 +26,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Stack;
-import org.civilian.controller.Controller;
-import org.civilian.controller.ControllerSignature;
-import org.civilian.controller.ControllerType;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
@@ -38,19 +35,13 @@ import org.civilian.util.PathScanner.Mark;
 
 /**
  * Resource represents a resource of a web application, addressable by an URL.
- * A Resource can be associated with a {@link Controller}.<br>
- * When the application receives a request for such a resource, 
- * an instance of the associated Controller is created and invoked to generate 
- * the response.<br>
- * If no resource directly matches the request,
- * the controller of the closest matching parent resource will be used to process the request,
- * using only the fallback actions of the controller.<br>
+ * Controller classes are used to handle requests for resource and dynamicalle generate a respoinse. 
  * There are several options how to construct the resource tree of an application:
- * First the resource tree can be constructed at development or compile time by scanning
- * the controller classes of an application. Second are more unusually the application
- * can decide to build its resource tree by hand and map controller classes to it.
- * It would also be possible to enhance the resource tree at runtime, and remap resources
- * to different controllers.  
+ * <ol>
+ * <li>Scan the application for controller classes at startup.
+ * <li>Scan the application at build time and generate a special class which constructs the resource tree
+ * <li>Build des resource by hand (not recommended);
+ * </ol> 
  */
 public class Resource implements Iterable<Resource>
 {
@@ -196,32 +187,6 @@ public class Resource implements Iterable<Resource>
 		return route_;
 	}
 
-	
-	/**
-	 * Returns the controller signature. It describes the controller class
-	 * which handles requests to this resource. See {@link ControllerSignature}
-	 * for more info.
-	 * @return the signature. If the resource is not a associated with
-	 * 		a controller, null is returned.
-	 */
-	public ControllerSignature getControllerSignature()
-	{
-		return ctrlSignature_;
-	}
-	
-	
-	/**
-	 * Returns the ContollerType of the Controller associated with the resource.
-	 * If the Resource does not have a Controller, null is returned. 
-	 * @throws IllegalStateException thrown if the resource has a controller,
-	 * 		but the resource tree to which this Resource belongs is 
-	 * 		not connected to a ControllerService
-	 */
-	public ControllerType getControllerType() throws IllegalStateException
-	{
-		return typeProvider_.getControllerType();
-	}
-	
 	
 	/**
 	 * Returns the number of resources in the subtree starting with this Resource.
@@ -537,8 +502,6 @@ public class Resource implements Iterable<Resource>
 	private final String segment_;
 	private final PathParam<?> pathParam_;
 	private final Route route_;
-	private ControllerSignature ctrlSignature_;
-	private ControllerTypeProvider typeProvider_ = ControllerTypeProvider.EMPTY;
 	private Object data_;
 	private Resource[] children_ = EMPTY;
 	private static Resource[] EMPTY = new Resource[0];
