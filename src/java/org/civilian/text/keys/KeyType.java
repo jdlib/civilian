@@ -16,7 +16,6 @@
 package org.civilian.text.keys;
 
 
-import org.civilian.text.keys.serialize.KeySerializer;
 import org.civilian.type.AutoType;
 import org.civilian.type.Type;
 import org.civilian.util.Check;

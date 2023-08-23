@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyListBuilder;
-import org.civilian.text.keys.serialize.KeySerializers;
+import org.civilian.text.keys.KeySerializers;
 import org.civilian.text.msg.EmptyMsgBundleFactory;
 import org.civilian.text.msg.MsgBundle;
 import org.civilian.text.msg.MsgBundleFactory;

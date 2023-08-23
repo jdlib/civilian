@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.text.keys.serialize;
+package org.civilian.text.keys;
 
 
-import org.civilian.text.keys.KeyList;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 

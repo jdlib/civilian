@@ -13,11 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.text.keys.serialize;
-
-
-import org.civilian.text.keys.KeyList;
-
+package org.civilian.text.keys;
 
 /**
  * StringTypeSerializer is a ValueSerializer for string-based KeyLists.

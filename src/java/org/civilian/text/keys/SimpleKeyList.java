@@ -15,11 +15,6 @@
  */
 package org.civilian.text.keys;
 
-
-import org.civilian.text.keys.serialize.KeySerializer;
-import org.civilian.text.keys.serialize.KeySerializers;
-
-
 /**
  * SimpleKeyList is a simple KeyList implementation,
  * backed by two arrays for values and texts.

@@ -26,7 +26,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import org.civilian.text.keys.KeyList;
-import org.civilian.text.keys.serialize.KeyListSerializer;
+import org.civilian.text.keys.KeyListSerializer;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 

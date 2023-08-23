@@ -15,10 +15,6 @@
  */
 package org.civilian.text.keys;
 
-
-import org.civilian.text.keys.serialize.KeySerializers;
-
-
 /**
  * A {@link KeyList} implementation for enums.
  * The values of the KeyList are the enum entries, the text
