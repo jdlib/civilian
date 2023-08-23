@@ -421,8 +421,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	/**
 	 * Returns the application status.
 	 */
-	@Override
-	public Status getStatus()
+	@Override public Status getStatus()
 	{
 		return status_;
 	}
@@ -489,8 +488,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	/**
 	 * Returns the LocaleServiceList.
 	 */
-	@Override
-	public LocaleServiceList getLocaleServices()
+	@Override public LocaleServiceList getLocaleServices()
 	{
 		return localeServices_;
 	}
@@ -517,8 +515,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * application/json (based on GSON).
 	 * @see AppConfig#registerContentSerializer(String, ContentSerializer)
 	 */
-	@Override
-	public ContentSerializer getContentSerializer(String contentType)
+	@Override public ContentSerializer getContentSerializer(String contentType)
 	{
 		return contentSerializers_.get(contentType);
 	}
@@ -545,8 +542,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	/**
 	 * Stores an attribute under the given name in the application. 
 	 */
-	@Override
-	public void setAttribute(String name, Object value)
+	@Override public void setAttribute(String name, Object value)
 	{
 		attributes_.put(name, value);
 	}
@@ -558,8 +554,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * @param name the attribute name
 	 * @see #setAttribute(String, Object)
 	 */
-	@Override
-	public Object getAttribute(String name)
+	@Override public Object getAttribute(String name)
 	{
 		return attributes_.get(name);
 	}
@@ -699,8 +694,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * @see Response#sendError(int)  
 	 * @see Response#sendError(int, String, Throwable)  
 	 */
-	@Override
-	public ResponseHandler createErrorHandler(int statusCode, String message, Throwable error)
+	@Override public ResponseHandler createErrorHandler(int statusCode, String message, Throwable error)
 	{
 		return new ErrorResponseHandler(develop(), statusCode, message, error);
 	}
