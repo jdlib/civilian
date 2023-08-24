@@ -21,7 +21,8 @@ template() mixin html
 				
 				<h3>Injection error of a controller parameter</h3>
 				The expected type of the parameter <code>n</code> is <code>int</code>code> and we pass an invalid value:<p>
-				@Url paramUrl = html.url(ParamController.class).addQueryParam("n", "a");
+				@Url paramUrl = html.url(ParamController.class);
+				@paramUrl.queryParams().add("n", "a");
 				<a href="<%paramUrl%>"><%paramUrl%></a>.
 				
 				<h3>A Controller throws an exception during request processing</h3>

@@ -176,61 +176,63 @@ public class UrlTest extends CivTest
 	@Test public void testQueryParams()
 	{
 		Url url = new Url(response_, "index.html");
-		assertEquals(0, url.getQueryParamCount());
+		
+		Url.QueryParamList queryParams = url.queryParams();
+		assertEquals(0, queryParams.size());
 		
 		// clear, remove when empty
-		url.clearQueryParams();
-		url.removeQueryParam((Url.QueryParam)null);
-		assertEquals(0, url.getQueryParamCount());
+		queryParams.clear();
+		queryParams.remove((Url.QueryParam)null);
+		assertEquals(0, queryParams.size());
 
 		// add simple and get
-		url.addEmptyQueryParam("a");
-		url.addQueryParam("b", "2");
-		assertEquals(2, url.getQueryParamCount());
+		queryParams.add("a");
+		queryParams.add("b", "2");
+		assertEquals(2, queryParams.size());
 		assertEquals("index.html?a=&b=2", url.toString());
-		assertEquals("a",  url.getQueryParam(0).getName());
-		assertEquals(null, url.getQueryParam(0).getValue());
-		assertEquals(null, url.getQueryParam("c", false));
-		assertEquals("a",  url.getQueryParam("a", false).getName());
+		assertEquals("a",  queryParams.get(0).getName());
+		assertEquals(null, queryParams.get(0).getValue());
+		assertEquals(null, queryParams.get("c"));
+		assertEquals("a",  queryParams.getRequired("a").getName());
 
 		// escaping
-		url.addQueryParam("a", "#");
+		queryParams.add("a", "#");
 		assertEquals("index.html?a=&b=2&a=%23", url.toString());
 		
 		// remove
-		url.removeQueryParams("a");
+		queryParams.remove("a");
 		assertEquals("index.html?b=2", url.toString());
-		url.getQueryParam(0).setValue(true);
+		queryParams.get(0).setValue(true);
 		assertEquals("index.html?b=true", url.toString());
 		
 		// clear when not empty
-		url.clearQueryParams();
+		queryParams.clear();
 		assertEquals("index.html", url.toString());
 		
 		// value format
-		Url.QueryParam p = url.getQueryParam("d", true);
+		Url.QueryParam p = queryParams.getOrCreate("d");
 		p.setValue(TypeLib.DOUBLE, Double.valueOf(2.0));
 		assertEquals("index.html?d=2.00", url.toString());
 		p.setValue(2);
 		assertEquals("index.html?d=2", url.toString());
-		url.removeQueryParam(p);
-		assertEquals(0, url.getQueryParamCount());
+		queryParams.remove(p);
+		assertEquals(0, queryParams.size());
 
 		// value integers
-		url.addQueryParam("i", 1234);
-		url.addQueryParam("i", Integer.valueOf(78));
+		queryParams.add("i").setValue(1234);
+		queryParams.add("i").setValue(Integer.valueOf(78));
 		assertEquals("index.html?i=1%2C234&i=78", url.toString());
-		url.clearQueryParams();
+		queryParams.clear();
 		
-		url.addQueryParam("b", true);
-		url.addQueryParam("b", Boolean.FALSE);
-		url.addQueryParam("b", TypeLib.BOOLEAN, Boolean.TRUE);
+		queryParams.add("b").setValue(true);
+		queryParams.add("b").setValue(Boolean.FALSE);
+		queryParams.add("b").setValue(TypeLib.BOOLEAN, Boolean.TRUE);
 		assertEquals("index.html?b=true&b=false&b=true", url.toString());
-		url.clearQueryParams();
+		queryParams.clear();
 
 		
 		// fragments
-		url.addQueryParam("x");
+		queryParams.add("x");
 		url.setFragment("frag");
 		assertEquals("frag", url.getFragment());
 		assertEquals("index.html?x=#frag", url.toString());

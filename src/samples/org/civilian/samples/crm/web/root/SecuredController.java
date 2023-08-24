@@ -59,7 +59,7 @@ public abstract class SecuredController extends CrmController
 				// remember the current request path: on successful login, the login resource
 				// will redirect to that path again
 				Url loginUrl = new Url(this, root.login);
-				loginUrl.addQueryParam(CrmConstants.LOGIN_PATH_PARAM, request.getPath().toString());
+				loginUrl.queryParams().add(CrmConstants.LOGIN_PATH_PARAM).setValue(request.getPath().toString());
 				getResponse().sendRedirect(loginUrl);
 			}
 		}

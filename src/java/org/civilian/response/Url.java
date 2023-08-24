@@ -346,188 +346,30 @@ public class Url implements PathParamProvider, ResponseProvider
 	//---------------------------------
 	// query parameters
 	//---------------------------------
-
-
-	/**
-	 * Clears all parameters of the Url.
-	 * @return this
-	 */
-	public Url clearQueryParams()
-	{
-		if (queryParams_ != null)
-			queryParams_.clear();
-		return this;
-	}
-
+	
 
 	/**
-	 * Returns the number of query parameters.
+	 * Returns a list containing the URL's query parameters.
 	 */
-	public int getQueryParamCount()
+	public QueryParamList queryParams()
 	{
-		return queryParams_ != null ? queryParams_.size() : 0;
-	}
-	
-	
-	/**
-	 * Returns the i-th query parameter.
-	 */
-	public QueryParam getQueryParam(int i)
-	{
-		return queryParams_.get(i);
-	}
-
-	
-	/**
-	 * Returns the first query parameter with the given name.
-	 * @param create if true and the url does not contain such a parameter
-	 * 		a new parameter is added.
-	 */
-	public QueryParam getQueryParam(String name, boolean create)
-	{
-		for (int i=0; i<getQueryParamCount(); i++)
-		{
-			QueryParam qp = getQueryParam(i);
-			if (qp.name_.equals(name))
-				return qp;
-		}
-		return create ? addQueryParam(name) : null;
-	}
-
-	
-	/**
-	 * Removes all query parameters with the specified name.
-	 * @return this
-	 */
-	public Url removeQueryParams(String name)
-	{
-		for (int i=getQueryParamCount()-1; i>=0; i--)
-		{
-			if (queryParams_.get(i).name_.equals(name))
-				queryParams_.remove(i);
-		}
-		return this;
-	}
-	
-	
-	/**
-	 * Removes the query parameter from the url.
-	 * @return this
-	 */
-	public Url removeQueryParam(QueryParam param)
-	{
-		if (queryParams_ != null)
-			queryParams_.remove(param);
-		return this;
-	}
-	
-	
-	/**
-	 * Adds a new query parameter to the Url.
-	 * Use the setters on the returned param object to set the parameter value.
-	 */
-	public QueryParam addQueryParam(String name)
-	{
-		QueryParam param = new QueryParam(name);
 		if (queryParams_ == null)
-			queryParams_ = new ArrayList<>();
-		queryParams_.add(param);
-		return param;
+			queryParams_ = new QueryParamList();
+		return queryParams_;
+	}
+
+
+	/**
+	 * Returns if the url has query parameters.
+	 */
+	public boolean hasQueryParams()
+	{
+		return queryParams_ != null && queryParams_.size() > 0; 
 	}
 
 	
 	/**
-	 * Adds a new query parameter to the Url.
-	 * @return this
-	 */
-	public Url addEmptyQueryParam(String name)
-	{
-		addQueryParam(name);
-		return this;
-	}
-
-	
-	/**
-	 * Adds a query parameter with that name and value.
-	 * @return this
-	 */
-	public Url addQueryParam(String name, String value)
-	{
-		addQueryParam(name).setValue(value);
-		return this;
-	}
-	
-	
-	/**
-	 * Adds multiple query parameter with that name and values.
-	 * @return this
-	 */
-	public Url addQueryParams(String name, String... values)
-	{
-		for (String value : values)
-			addQueryParam(name, value);
-		return this;
-	}
-
-	
-	/**
-	 * Adds a query parameter with that name and value.
-	 * @return this
-	 */
-	public Url addQueryParam(String name, int value)
-	{
-		addQueryParam(name).setValue(value);
-		return this;
-	}
-
-	
-	/**
-	 * Adds a query parameter with that name and value.
-	 * @return this
-	 */
-	public Url addQueryParam(String name, Integer value)
-	{
-		addQueryParam(name).setValue(value);
-		return this;
-	}
-
-	
-	/**
-	 * Adds a query parameter with that name and value.
-	 * @return this
-	 */
-	public Url addQueryParam(String name, boolean value)
-	{
-		addQueryParam(name).setValue(value);
-		return this;
-	}
-
-	
-	/**
-	 * Adds a query parameter with that name and value.
-	 * @return this
-	 */
-	public Url addQueryParam(String name, Boolean value)
-	{
-		addQueryParam(name).setValue(value);
-		return this;
-	}
-
-	
-	/**
-	 * Adds a query parameter with that name and value.
-	 * @return this
-	 */
-	public <T> Url addQueryParam(String name, Type<T> type, T value)
-	{
-		addQueryParam(name).setValue(type, value);
-		return this;
-	}
-
-	
-	/**
-	 * QueryParam models a linked list of URL parameters.
-	 * The {@link Url} class uses Param to store its parameters.
+	 * QueryParam represents a URL query parameter.
 	 */
 	public class QueryParam
 	{
@@ -617,11 +459,124 @@ public class Url implements PathParamProvider, ResponseProvider
 		}
 		
 		
-		private String name_;
+		private final String name_;
 		private String value_;
 	}
 	
 	
+	public class QueryParamList extends ArrayList<QueryParam>
+	{
+		private static final long serialVersionUID = 1L;
+		
+		
+		/**
+		 * Adds a new query parameter.
+		 * Use the setters on the returned param object to set the parameter value.
+		 * @param name the parameter name
+		 * @return the new param
+		 */
+		public QueryParam add(String name)
+		{
+			QueryParam param = new QueryParam(name);
+			add(param);
+			return param;
+		}
+		
+		
+		/**
+		 * Adds a new query parameter.
+		 * Use the setters on the returned param object to set the parameter value.
+		 * @param name the parameter name
+		 * @return the new param
+		 */
+		public QueryParamList add(String name, String value)
+		{
+			add(name).setValue(value);
+			return this;
+		}
+		
+		
+		/**
+		 * Adds multiple query parameters with the same name and the given values.
+		 * @return this
+		 */
+		public QueryParamList addQueryParams(String name, String... values)
+		{
+			for (String value : values)
+				add(name, value);
+			return this;
+		}
+		
+
+		@Override public boolean add(QueryParam param)
+		{
+			Check.notNull(param, "param");
+			return super.add(param);
+		}
+		
+		
+		/**
+		 * Returns the first query parameter with the given name.
+		 * @param the name
+		 * @return the first matching parameter or null if none matches
+		 */
+		public QueryParam get(String name)
+		{
+			for (int i=0; i<size(); i++)
+			{
+				QueryParam param = get(i);
+				if (param.name_.equals(name))
+					return param;
+			}
+			return null;
+		}
+		
+		
+		/**
+		 * Returns the first query parameter with the given name.
+		 * @param the name
+		 * @return the first matching parameter
+		 * @throws IllegalStateException if none matches
+		 */
+		public QueryParam getRequired(String name)
+		{
+			QueryParam param = get(name);
+			if (param == null)
+				throw new IllegalStateException("no query parameter '" + name + "'");
+			return param;
+		}
+		
+		
+		/**
+		 * Returns the first query parameter with the given name or creates one no such param exists.
+		 * @param the name
+		 * @return the first matching parameter or the newly created param. Never null.
+		 */
+		public QueryParam getOrCreate(String name)
+		{
+			QueryParam param = get(name);
+			if (param == null)
+				param = add(name);
+			return param;
+		}
+		
+		
+		/**
+		 * Removes all query parameters with the specified name.
+		 * @return this
+		 */
+		public QueryParamList remove(String name)
+		{
+			for (int i=size()-1; i>=0; i--)
+			{
+				if (get(i).name_.equals(name))
+					remove(i);
+			}
+			return this;
+		}
+	}
+	
+
 	//---------------------------------
 	// session
 	//---------------------------------
@@ -751,7 +706,7 @@ public class Url implements PathParamProvider, ResponseProvider
 	private final Resource resource_;
 	private Path additionalPath_;
 	private Object[] pathParams_;
-	private ArrayList<QueryParam> queryParams_;
+	private QueryParamList queryParams_;
 	private String prefix_;
 	private static final Object[] EMPTY_PATH_PARAMS = new Object[0];
 }

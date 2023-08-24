@@ -82,7 +82,8 @@ public class TestRequestTest extends CivTest
 		request.setPath("x");
 		assertEquals("/x", request.getRelativePath().toString());
 		
-		Url url = new Url(response, "/y").addQueryParam("q", "p");
+		Url url = new Url(response, "/y");
+		url.queryParams().add("q", "p");
 		request.setPath(url);
 		assertEquals("p", request.getParameter("q"));
 

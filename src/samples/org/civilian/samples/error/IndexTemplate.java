@@ -44,36 +44,37 @@ public class IndexTemplate extends Template
 		out.println();
 		out.println("<h3>Injection error of a controller parameter</h3>"); // line 22: <h3>Injection error of a controller parameter</h3>
 		out.println("The expected type of the parameter <code>n</code> is <code>int</code>code> and we pass an invalid value:<p>"); // line 23: The expected type of the parameter <code>n</code> is <code>int</code>code> and we pass an invalid value:<p>
-		Url paramUrl = html.url(ParamController.class).addQueryParam("n", "a"); // line 24: @Url paramUrl = html.url(ParamController.class).addQueryParam("n", "a");
-		out.print("<a href=\"");                                        // line 25: <a href="
-		out.print(paramUrl);                                            // line 25: <%paramUrl%>
-		out.print("\">");                                               // line 25: ">
-		out.print(paramUrl);                                            // line 25: <%paramUrl%>
-		out.println("</a>.");                                           // line 25: </a>.
+		Url paramUrl = html.url(ParamController.class);                 // line 24: @Url paramUrl = html.url(ParamController.class);
+		paramUrl.queryParams().add("n", "a");                           // line 25: @paramUrl.queryParams().add("n", "a");
+		out.print("<a href=\"");                                        // line 26: <a href="
+		out.print(paramUrl);                                            // line 26: <%paramUrl%>
+		out.print("\">");                                               // line 26: ">
+		out.print(paramUrl);                                            // line 26: <%paramUrl%>
+		out.println("</a>.");                                           // line 26: </a>.
 		out.println();
-		out.println("<h3>A Controller throws an exception during request processing</h3>"); // line 27: <h3>A Controller throws an exception during request processing</h3>
-		Url failUrl = html.url(FailController.class);                   // line 28: @Url failUrl = html.url(FailController.class);
-		out.print("<a href=\"");                                        // line 29: <a href="
-		out.print(failUrl);                                             // line 29: <%failUrl%>
-		out.print("\">");                                               // line 29: ">
-		out.print(failUrl);                                             // line 29: <%failUrl%>
-		out.println("</a>.");                                           // line 29: </a>.
+		out.println("<h3>A Controller throws an exception during request processing</h3>"); // line 28: <h3>A Controller throws an exception during request processing</h3>
+		Url failUrl = html.url(FailController.class);                   // line 29: @Url failUrl = html.url(FailController.class);
+		out.print("<a href=\"");                                        // line 30: <a href="
+		out.print(failUrl);                                             // line 30: <%failUrl%>
+		out.print("\">");                                               // line 30: ">
+		out.print(failUrl);                                             // line 30: <%failUrl%>
+		out.println("</a>.");                                           // line 30: </a>.
 		out.println();
-		out.println("<h3>Broken Link</h3>");                            // line 31: <h3>Broken Link</h3>
-		out.println("We construct a broken link to demonstrate the default not-found error message:<p>"); // line 32: We construct a broken link to demonstrate the default not-found error message:<p>
-		Url notFoundUrl = html.url(html.path()).append("notfound");     // line 33: @Url notFoundUrl = html.url(html.path()).append("notfound");
-		out.print("<a href=\"");                                        // line 34: <a href="
-		out.print(notFoundUrl);                                         // line 34: <%notFoundUrl%>
-		out.print("\">");                                               // line 34: ">
-		out.print(notFoundUrl);                                         // line 34: <%notFoundUrl%>
-		out.println("</a>.");                                           // line 34: </a>.
-		out.decreaseTab();
-		out.println("</div>");                                          // line 35: </div>
+		out.println("<h3>Broken Link</h3>");                            // line 32: <h3>Broken Link</h3>
+		out.println("We construct a broken link to demonstrate the default not-found error message:<p>"); // line 33: We construct a broken link to demonstrate the default not-found error message:<p>
+		Url notFoundUrl = html.url(html.path()).append("notfound");     // line 34: @Url notFoundUrl = html.url(html.path()).append("notfound");
+		out.print("<a href=\"");                                        // line 35: <a href="
+		out.print(notFoundUrl);                                         // line 35: <%notFoundUrl%>
+		out.print("\">");                                               // line 35: ">
+		out.print(notFoundUrl);                                         // line 35: <%notFoundUrl%>
+		out.println("</a>.");                                           // line 35: </a>.
 		out.decreaseTab();
 		out.println("</div>");                                          // line 36: </div>
 		out.decreaseTab();
-		out.println("</body>");                                         // line 37: </body>
-		out.println("</html>");                                         // line 38: </html>
+		out.println("</div>");                                          // line 37: </div>
+		out.decreaseTab();
+		out.println("</body>");                                         // line 38: </body>
+		out.println("</html>");                                         // line 39: </html>
 	}
 
 

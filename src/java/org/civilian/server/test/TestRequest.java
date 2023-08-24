@@ -222,9 +222,10 @@ public class TestRequest extends AbstractRequest
 			setPathParam(url, i);
 		
 		clearParameters();
-		for (int i=0; i<url.getQueryParamCount(); i++)
+		Url.QueryParamList queryParams = url.queryParams();
+		for (int i=0; i<queryParams.size(); i++)
 		{
-			Url.QueryParam qp = url.getQueryParam(i);
+			Url.QueryParam qp = queryParams.get(i);
 			getParameterList().add(qp.getName(), qp.getValue());
 		}
 		
