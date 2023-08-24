@@ -16,22 +16,22 @@
 package org.civilian.samples.jpa.shared.web;
 
 
-import org.civilian.exchange.RequestResponseProvider;
 import org.civilian.form.Button;
 import org.civilian.form.Form;
 import org.civilian.form.TextField;
+import org.civilian.response.ResponseProvider;
 
 
 public class IndexForm extends Form
 {
-	public IndexForm(RequestResponseProvider owner)
+	public IndexForm(ResponseProvider rp)
 	{
-		super(owner);
+		super(rp);
 		add(code	= new TextField("code"), "Enter a person code").setRequired();
 		add(ok		= Button.submit("OK"));
 	}
 
 
-	public TextField code;
-	public Button ok;
+	public final TextField code;
+	public final Button ok;
 }

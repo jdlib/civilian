@@ -16,17 +16,17 @@
  package org.civilian.samples.game;
 
 
-import org.civilian.exchange.RequestResponseProvider;
 import org.civilian.form.Button;
 import org.civilian.form.Form;
 import org.civilian.form.IntField;
+import org.civilian.response.ResponseProvider;
 
 
 public class GameForm extends Form
 {
-	public GameForm(RequestResponseProvider owner)
+	public GameForm(ResponseProvider rp)
 	{
-		super(owner);
+		super(rp);
 		
 		add(guess 	= new IntField("guess"), "Your guess");
 		add(ok 		= Button.submit("OK"));

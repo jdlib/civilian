@@ -16,17 +16,17 @@
 package org.civilian.samples.jpa.shared.web;
 
 
-import org.civilian.exchange.RequestResponseProvider;
 import org.civilian.form.Button;
 import org.civilian.form.Form;
 import org.civilian.form.TextField;
+import org.civilian.response.ResponseProvider;
 
 
 public class CreateForm extends Form
 {
-	public CreateForm(RequestResponseProvider owner)
+	public CreateForm(ResponseProvider rp)
 	{
-		super(owner);
+		super(rp);
 		
 		add(code 		= new TextField("code"),		"Code").setRequired();
 		add(firstName 	= new TextField("firstName"),	"First Name").setRequired();
@@ -35,8 +35,8 @@ public class CreateForm extends Form
 	}
 
 	
-	public TextField code;
-	public TextField firstName;
-	public TextField lastName;
-	public Button ok;
+	public final TextField code;
+	public final TextField firstName;
+	public final TextField lastName;
+	public final Button ok;
 }

@@ -23,9 +23,9 @@ import java.util.Locale;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.exchange.RequestResponseProvider;
 import org.civilian.request.Request;
 import org.civilian.request.Upload;
+import org.civilian.response.Response;
 import org.civilian.template.TestTemplateWriter;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
@@ -40,8 +40,7 @@ public class ControlTest extends CivTest
 		request = mock(Request.class);
 		when(request.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
 		when(request.getRequest()).thenReturn(request);
-		when(out.response.getRequest()).thenReturn(request);
-		owner = RequestResponseProvider.of(request, out.response);
+		when(response.getRequest()).thenReturn(request);
 	}
 	
 	
@@ -330,7 +329,7 @@ public class ControlTest extends CivTest
 	{
 		FileField field = new FileField("photo");
 		
-		Form form = new Form(owner);
+		Form form = new Form(response);
 		assertFalse(form.isMultipartEncoded());
 		form.add(field);
 		assertTrue(form.isMultipartEncoded());
@@ -354,7 +353,7 @@ public class ControlTest extends CivTest
 
 	@Test public void testButton()
 	{
-		Form form = new Form(owner);
+		Form form = new Form(response);
 		Button button; 
 
 		button = Button.button("OK");
@@ -415,7 +414,7 @@ public class ControlTest extends CivTest
 	
 	@Test public void testFormAdd() throws Exception
 	{
-		Form form = new Form(owner);
+		Form form = new Form(response);
 		assertEquals(0, form.size());
 		
 		Button button = Button.button("OK");
@@ -455,7 +454,7 @@ public class ControlTest extends CivTest
 	
 	@Test public void testFormRead() throws Exception
 	{
-		Form form = new Form(owner);
+		Form form = new Form(response);
 		
 		TextField field = new TextField("name");
 		form.add(field, "Name");
@@ -477,7 +476,7 @@ public class ControlTest extends CivTest
 	
 	@Test public void testFormAttrs()
 	{
-		Form form = new Form(owner);
+		Form form = new Form(response);
 		assertNull(form.getTarget());
 		form.setTarget("blank");
 		assertEquals("blank", form.getTarget());
@@ -508,7 +507,7 @@ public class ControlTest extends CivTest
 	
 	
 	private static Request request;
-	private static RequestResponseProvider owner;
-	private static TestTemplateWriter out = TestTemplateWriter.create();
-	private static KeyList<String> KEYS = KeyLists.forContent(new String[]{ "a", "b"}, new String[]{ "alpha", "beta"});
+	private static final TestTemplateWriter out = TestTemplateWriter.create();
+	private static final Response response = out.response;
+	private static final KeyList<String> KEYS = KeyLists.forContent(new String[]{ "a", "b"}, new String[]{ "alpha", "beta"});
 }

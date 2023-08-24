@@ -19,9 +19,10 @@ package org.civilian.form;
 import java.util.ArrayList;
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Post;
-import org.civilian.exchange.RequestResponseProvider;
 import org.civilian.request.Request;
+import org.civilian.request.RequestProvider;
 import org.civilian.response.Response;
+import org.civilian.response.ResponseProvider;
 import org.civilian.template.HtmlUtil;
 import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
@@ -66,7 +67,7 @@ import org.civilian.util.Check;
  *  submit the form from a Javascript event handler. On the server-side you want to read the request,
  *  add additional controls to the form (depending on the so far entered input), but no error should be triggered yet. 
  */
-public class Form implements RequestResponseProvider
+public class Form implements RequestProvider, ResponseProvider
 {
 	static final String RELOADED = "reloaded";
 	
@@ -76,16 +77,10 @@ public class Form implements RequestResponseProvider
 	 * @param requestProvider allows the form to access the request and read
 	 * 		parameters from the request.
 	 */
-	public Form(RequestResponseProvider owner)
+	public Form(ResponseProvider rp)
 	{
-		owner_ = Check.notNull(owner, "owner");
+		response_ = Check.notNull(rp, "rp").getResponse();
 		setName("f" + getClass().getName().hashCode());
-	}
-
-	
-	public Form(Request request, Response response)
-	{
-		this(RequestResponseProvider.of(request, response));
 	}
 
 	
@@ -95,20 +90,11 @@ public class Form implements RequestResponseProvider
 	
 	
 	/**
-	 * Returns the owner.
-	 */
-	public RequestResponseProvider getOwner()
-	{
-		return owner_;
-	}
-
-	
-	/**
 	 * Returns the request associated with the form.
 	 */
 	@Override public Request getRequest()
 	{
-		return owner_.getRequest();
+		return response_.getRequest();
 	}
 	
 
@@ -117,7 +103,7 @@ public class Form implements RequestResponseProvider
 	 */
 	@Override public Response getResponse()
 	{
-		return owner_.getResponse();
+		return response_;
 	}
 
 	
@@ -662,6 +648,7 @@ public class Form implements RequestResponseProvider
 	}
 	
 
+	private final Response response_;
 	private String name_;
 	private String action_;
 	private String method_ = "POST";
@@ -670,6 +657,5 @@ public class Form implements RequestResponseProvider
 	private Button defaultButton_;
 	private Control<?> errorControl_;
 	private boolean multipartEncoded_;
-	private final RequestResponseProvider owner_;
 	private final ArrayList<Control<?>> controls_ = new ArrayList<>();
 }
