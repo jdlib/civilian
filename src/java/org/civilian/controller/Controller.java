@@ -246,7 +246,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 			if (!response.isCommitted())
 			{
 				NegotiatedMethod negMethod = negotiate(request);
-				if (negMethod.positive())
+				if (negMethod.success())
 				{
 					response.setContentType(negMethod.getContentType());
 					init();

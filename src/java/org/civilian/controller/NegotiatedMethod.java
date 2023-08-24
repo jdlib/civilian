@@ -40,6 +40,7 @@ public class NegotiatedMethod
 	{
 		method_			= Check.notNull(method, "method"); 
 		contentType_	= contentType;
+		error_			= -1;
 	}
 
 	
@@ -49,14 +50,16 @@ public class NegotiatedMethod
 	 */ 
 	public NegotiatedMethod(int error)
 	{
-		error_ = error;
+		method_			= null; 
+		contentType_	= null;
+		error_ 			= error;
 	}
 	
 	
 	/**
 	 * Returns if this NegotiatedMethod holds a ControllerMethod.
 	 */ 
-	public boolean positive()
+	public boolean success()
 	{
 		return method_ != null;
 	}
@@ -90,7 +93,7 @@ public class NegotiatedMethod
 	}
 
 	
-	private ControllerMethod method_;
-	private ContentType contentType_;
-	private int error_;
+	private final ControllerMethod method_;
+	private final ContentType contentType_;
+	private final int error_;
 }
