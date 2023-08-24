@@ -15,6 +15,7 @@
  */
 package org.civilian.response;
 
+
 /**
  * ResponseContent is an object which can generate the
  * content of a response.

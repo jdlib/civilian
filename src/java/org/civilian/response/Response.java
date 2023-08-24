@@ -25,7 +25,6 @@ import java.util.Iterator;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-
 import org.civilian.application.AppConfig;
 import org.civilian.application.Application;
 import org.civilian.content.ContentSerializer;

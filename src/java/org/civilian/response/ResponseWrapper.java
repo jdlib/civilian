@@ -21,7 +21,6 @@ import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
-
 import org.civilian.request.Request;
 import org.civilian.template.TemplateWriter;
 import org.civilian.text.service.LocaleService;
@@ -321,5 +320,5 @@ public class ResponseWrapper implements Response
 	}
 
 
-	protected Response response_;
+	protected final Response response_;
 }
