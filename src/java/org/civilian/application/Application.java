@@ -614,7 +614,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 			}
 			finally
 			{
-				if (!request.isAsyncStarted())
+				if (!response.isAsyncStarted())
 					response.closeContent();
 			}
 		}

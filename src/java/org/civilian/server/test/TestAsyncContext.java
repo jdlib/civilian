@@ -3,10 +3,10 @@ package org.civilian.server.test;
 
 import java.util.ArrayList;
 
-import org.civilian.request.AsyncContext;
-import org.civilian.request.AsyncEvent;
-import org.civilian.request.AsyncListener;
 import org.civilian.request.Request;
+import org.civilian.response.AsyncContext;
+import org.civilian.response.AsyncEvent;
+import org.civilian.response.AsyncListener;
 import org.civilian.response.Response;
 
 

@@ -17,15 +17,16 @@ package org.civilian.server.servlet;
 
 
 import java.io.IOException;
-import org.civilian.request.AsyncContext;
-import org.civilian.request.AsyncEvent;
-import org.civilian.request.AsyncEvent.Type;
-import org.civilian.request.AsyncListener;
+
+import org.civilian.response.AsyncContext;
+import org.civilian.response.AsyncEvent;
+import org.civilian.response.AsyncListener;
+import org.civilian.response.AsyncEvent.Type;
 
 
 class AsyncListenerAdapter implements javax.servlet.AsyncListener
 {
-	public AsyncListenerAdapter(org.civilian.request.AsyncListener listener, AsyncContext context)
+	public AsyncListenerAdapter(org.civilian.response.AsyncListener listener, AsyncContext context)
 	{
 		context_	= context;
 		listener_ 	= listener;

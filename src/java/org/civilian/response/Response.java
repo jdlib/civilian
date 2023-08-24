@@ -711,6 +711,42 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	public void setAttribute(String name, Object value);
 
 	
+	//--------------------------------------
+	// async operations
+	//--------------------------------------
+
+	
+	/**
+	 * Returns the AsyncContext that was created by the most recent call to {@link #startAsync()}
+	 * @return the AsnycContext
+	 * @throws IllegalStateException if startAsync() has not been called.
+	 */
+	public AsyncContext getAsyncContext();
+	
+	
+	/**
+	 * Returns if this request has been put into asynchronous mode by a call to {@link #startAsync()}.
+	 * @return the flag 
+	 */
+	public boolean isAsyncStarted();
+	
+	
+	/**
+	 * Returns if this resonse supports asynchronous mode. 
+	 * @return the flag 
+	 */
+	public boolean isAsyncSupported();
+	
+	
+	/**
+	 * Puts this request into asynchronous mode, and initializes its AsyncContext.
+	 * @return the AsyncContext 
+	 * @throws IllegalStateException if this request does not support asynchronous operations or if called again
+	 * 		in a state where the AsyncContext intervenes, or when the response has been closed.
+	 */
+	public AsyncContext startAsync();
+
+	
 	//-----------------------------------
 	// misc
 	//-----------------------------------

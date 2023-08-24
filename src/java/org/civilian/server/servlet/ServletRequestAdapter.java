@@ -33,7 +33,6 @@ import org.civilian.Logs;
 import org.civilian.application.Application;
 import org.civilian.content.ContentType;
 import org.civilian.request.AbstractRequest;
-import org.civilian.request.AsyncContext;
 import org.civilian.request.CookieList;
 import org.civilian.request.LocalInfo;
 import org.civilian.request.RemoteInfo;
@@ -243,23 +242,6 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 	}
 	
 	
-	//-----------------------------------
-	// async
-	//-----------------------------------
-	
-	
-	@Override public boolean isAsyncSupported()
-	{
-		return servletRequest_.isAsyncSupported();
-	}
-
-
-	@Override protected AsyncContext createAsyncContext()
-	{
-		return new AsyncContextAdapter(this, response_);
-	}
-
-
 	//-----------------------------------
 	// RequestSecurity
 	//-----------------------------------

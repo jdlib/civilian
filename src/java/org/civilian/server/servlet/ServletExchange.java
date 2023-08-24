@@ -2,8 +2,8 @@ package org.civilian.server.servlet;
 
 
 import org.civilian.exchange.Exchange;
-import org.civilian.request.AsyncContext;
 import org.civilian.request.Request;
+import org.civilian.response.AsyncContext;
 import org.civilian.response.Response;
 
 
@@ -30,25 +30,25 @@ public class ServletExchange implements Exchange
 	
 	@Override public AsyncContext getAsyncContext() 
 	{
-		return request_.getAsyncContext();
+		return response_.getAsyncContext();
 	}
 	
 	
 	@Override public boolean isAsyncStarted() 
 	{
-		return request_.isAsyncStarted();
+		return response_.isAsyncStarted();
 	}
 	
 	
 	@Override public boolean isAsyncSupported() 
 	{
-		return request_.isAsyncSupported();
+		return response_.isAsyncSupported();
 	}
 	
 	
 	@Override public AsyncContext startAsync() 
 	{
-		return request_.startAsync();
+		return response_.startAsync();
 	}
 	
 

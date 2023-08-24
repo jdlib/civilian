@@ -16,13 +16,17 @@
 package org.civilian.server.servlet;
 
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import java.io.PrintWriter;
 import java.util.Locale;
+
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
+import org.civilian.response.AsyncContext;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.server.test.TestApp;
 import org.junit.Before;
@@ -185,6 +189,22 @@ public class ServletResponseTest extends CivTest
 
 		headers.set("x", "y");
 		verify(servletResp).setHeader("x", "y");
+	}
+	
+	
+	@Test public void testAsyncInfo() throws Exception
+	{
+		init();
+
+		response.isAsyncSupported();
+		verify(servletReq).isAsyncSupported();
+		assertFalse(response.isAsyncStarted());
+
+		AsyncContext context = response.startAsync();
+		verify(servletReq).startAsync(any(ServletRequest.class), any());
+		
+		assertSame(context, response.getAsyncContext());
+		assertTrue(response.isAsyncStarted());
 	}
 	
 	

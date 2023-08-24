@@ -1,7 +1,7 @@
 package org.civilian.exchange;
 
 
-import org.civilian.request.AsyncContext;
+import org.civilian.response.AsyncContext;
 
 
 /**

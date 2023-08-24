@@ -304,30 +304,6 @@ public class RequestWrapper implements Request
 	}
 
 	
-	@Override public AsyncContext getAsyncContext()
-	{
-		return request_.getAsyncContext();
-	}
-
-
-	@Override public boolean isAsyncStarted()
-	{
-		return request_.isAsyncStarted();
-	}
-
-
-	@Override public AsyncContext startAsync()
-	{
-		return request_.startAsync();
-	}
-
-	
-	@Override public boolean isAsyncSupported()
-	{
-		return request_.isAsyncSupported();
-	}
-	
-
 	@Override public RequestHeaders getHeaders()
 	{
 		return request_.getHeaders();

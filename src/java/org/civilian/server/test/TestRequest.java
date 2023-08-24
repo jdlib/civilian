@@ -35,7 +35,6 @@ import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
 import org.civilian.request.AbstractRequest;
-import org.civilian.request.AsyncContext;
 import org.civilian.request.CookieList;
 import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
@@ -143,7 +142,6 @@ public class TestRequest extends AbstractRequest
 	public TestResponse run() throws Exception
 	{
 		testResponse_.clear();
-		resetAsyncContext();
 		resetContentInput();
 		Check.isA(getOwner(), Application.class).process(this, testResponse_);
 		testResponse_.flushBuffer();
@@ -742,23 +740,6 @@ public class TestRequest extends AbstractRequest
 		private ArrayList<ContentType> types_ = new ArrayList<>(); 
 	}
 	
-	
-	//----------------------------
-	// async
-	//----------------------------
-
-	
-	@Override public boolean isAsyncSupported()
-	{
-		return false;
-	}
-
-
-	@Override protected AsyncContext createAsyncContext()
-	{
-		return new TestAsyncContext(this, getTestResponse());
-	}
-
 	
 	//----------------------------
 	// security

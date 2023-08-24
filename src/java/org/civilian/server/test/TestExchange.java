@@ -2,8 +2,8 @@ package org.civilian.server.test;
 
 
 import org.civilian.exchange.Exchange;
-import org.civilian.request.AsyncContext;
 import org.civilian.request.Request;
+import org.civilian.response.AsyncContext;
 import org.civilian.response.Response;
 
 

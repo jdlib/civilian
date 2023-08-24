@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.request;
+package org.civilian.response;
 
 
-import org.civilian.response.Response;
+import org.civilian.request.Request;
 
 
 /**

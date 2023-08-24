@@ -524,9 +524,75 @@ public abstract class AbstractResponse implements Response
 		charEncoding_		= null;
 		contentOutput_		= null;
 		extension_			= null;
+		resetAsyncContext();
 	}
 
 
+	//------------------------------
+	// async
+	//------------------------------
+
+	
+	/**
+	 * Returns the AsyncContext that was created by the most recent call to {@link #startAsync()}
+	 * @return the AsnycContext
+	 * @throws IllegalStateException if startAsync() has not been called.
+	 */
+	@Override public AsyncContext getAsyncContext()
+	{
+		AsyncContext content = readExt().asyncContext; 
+		if (content == null)
+			throw new IllegalStateException("async not started");
+		return content;
+	}
+	
+	
+	/**
+	 * Returns if this request has been put into asynchronous mode by a call to {@link #startAsync()}. 
+	 */
+	@Override public boolean isAsyncStarted()
+	{
+		return readExt().asyncContext != null;
+	}
+	
+	
+	/**
+	 * Returns if this request supports asynchronous processing. 
+	 */
+	@Override public abstract boolean isAsyncSupported();
+	
+	
+	/**
+	 * Puts this request into asynchronous mode and initializes its AsyncContext.
+	 * @throws IllegalStateException if this request does not support asynchronous operations or if called again
+	 * 		in a state where the AsyncContext intervenes, or when the response has been closed.
+	 */
+	@Override public AsyncContext startAsync()
+	{
+		try
+		{
+			return writeExt().asyncContext = createAsyncContext();
+		}
+		catch(Exception e)
+		{
+			String message = "can't start async mode";
+			if (!isAsyncSupported())
+				message += ", not supported or enabled";
+			throw new IllegalArgumentException(message, e);
+		}
+	}
+	
+	
+	protected abstract AsyncContext createAsyncContext() throws Exception;
+	
+	
+	protected void resetAsyncContext()
+	{
+		if (extension_ != null)
+			extension_.asyncContext = null;
+	}
+	
+	
 	//------------------------------
 	// ext
 	//------------------------------
@@ -553,6 +619,7 @@ public abstract class AbstractResponse implements Response
 		public ResponseInterceptor<OutputStream> streamInterceptor;
 		public ResponseInterceptor<Writer> writerInterceptor;
 		public HashMap<String, Object> attributes;
+		public AsyncContext asyncContext;
 	}
 	
 	

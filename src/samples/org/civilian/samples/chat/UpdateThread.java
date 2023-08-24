@@ -20,7 +20,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
-import org.civilian.request.AsyncContext;
+
+import org.civilian.response.AsyncContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

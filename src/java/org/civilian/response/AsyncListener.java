@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.request;
+package org.civilian.response;
 
 
 /**
- * AsyncListener gets notified when events occurr on a AsyncContext.
+ * AsyncListener gets notified when events occur on a AsyncContext.
  * @see AsyncContext#addListener(AsyncListener)
  */
 public interface AsyncListener

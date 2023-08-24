@@ -46,7 +46,7 @@ public class AjaxController extends Controller
 		out.flush();
 
 		// register the async-context
-		getApplication().addClient(getRequest().startAsync());
+		getApplication().addClient(getResponse().startAsync());
 	}
 	
 	

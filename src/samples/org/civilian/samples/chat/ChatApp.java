@@ -23,9 +23,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.civilian.application.AppConfig;
 import org.civilian.application.Application;
-import org.civilian.request.AsyncContext;
-import org.civilian.request.AsyncEvent;
-import org.civilian.request.AsyncListener;
+import org.civilian.response.AsyncContext;
+import org.civilian.response.AsyncEvent;
+import org.civilian.response.AsyncListener;
 import org.civilian.util.Check;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

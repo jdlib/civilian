@@ -30,7 +30,6 @@ import javax.servlet.http.Part;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
 import org.civilian.content.ContentTypeList;
-import org.civilian.request.AsyncContext;
 import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
 import org.civilian.request.RequestSecurity;
@@ -187,22 +186,6 @@ public class ServletRequestTest extends CivTest
 		
 		request.getContentReader();
 		verify(servletReq).getReader();
-	}
-	
-	
-	@Test public void testAsyncInfo() throws Exception
-	{
-		init();
-
-		request.isAsyncSupported();
-		verify(servletReq).isAsyncSupported();
-		assertFalse(request.isAsyncStarted());
-
-		AsyncContext context = request.startAsync();
-		verify(servletReq).startAsync(any(ServletRequest.class), any());
-		
-		assertSame(context, request.getAsyncContext());
-		assertTrue(request.isAsyncStarted());
 	}
 	
 	

@@ -25,10 +25,12 @@ import java.util.Iterator;
 import java.util.Locale;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.civilian.Logs;
 import org.civilian.response.AbstractResponse;
+import org.civilian.response.AsyncContext;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.util.ClassUtil;
@@ -242,6 +244,23 @@ class ServletResponseAdapter extends AbstractResponse
 	}
 	
 	
+	//-----------------------------------
+	// async
+	//-----------------------------------
+	
+	
+	@Override public boolean isAsyncSupported()
+	{
+		return getServletRequest().isAsyncSupported();
+	}
+
+
+	@Override protected AsyncContext createAsyncContext()
+	{
+		return new AsyncContextAdapter((ServletRequestAdapter)getRequest(), this);
+	}
+
+
 	//----------------------------
 	// ResponseHeaders interface
 	//----------------------------
@@ -358,6 +377,15 @@ class ServletResponseAdapter extends AbstractResponse
 	}
 	
 
+	/**
+	 * Returns the HttpServletRequest.
+	 */
+	public HttpServletRequest getServletRequest()
+	{
+		return ((ServletRequestAdapter)getRequest()).getServletRequest();
+	}
+
+	
 	/**
 	 * Returns the HttpServletResponse, if implClass is ServletResponse.class or
 	 * HttpServletResponse.class 

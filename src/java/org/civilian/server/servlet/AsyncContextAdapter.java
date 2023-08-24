@@ -16,8 +16,8 @@
 package org.civilian.server.servlet;
 
 
-import org.civilian.request.AsyncContext;
-import org.civilian.request.AsyncListener;
+import org.civilian.response.AsyncContext;
+import org.civilian.response.AsyncListener;
 import org.civilian.util.Check;
 
 
@@ -76,5 +76,5 @@ class AsyncContextAdapter extends AsyncContext
 	}
 
 	
-	private javax.servlet.AsyncContext contextImpl_;
+	private final javax.servlet.AsyncContext contextImpl_;
 }

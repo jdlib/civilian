@@ -28,6 +28,7 @@ import org.civilian.request.CookieList;
 import org.civilian.request.Request;
 import org.civilian.request.Session;
 import org.civilian.response.AbstractResponse;
+import org.civilian.response.AsyncContext;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseHeaders;
 import org.civilian.util.Check;
@@ -289,6 +290,23 @@ public class TestResponse extends AbstractResponse
 	@Override public Headers getHeaders()
 	{
 		return headers_;
+	}
+
+	
+	//----------------------------
+	// async
+	//----------------------------
+
+	
+	@Override public boolean isAsyncSupported()
+	{
+		return false;
+	}
+
+
+	@Override protected AsyncContext createAsyncContext()
+	{
+		return new TestAsyncContext(getRequest(), this);
 	}
 
 	
