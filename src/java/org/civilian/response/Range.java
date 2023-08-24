@@ -1,4 +1,4 @@
-package org.civilian.exchange;
+package org.civilian.response;
 
 
 import java.io.File;
@@ -12,10 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
-
 import org.civilian.request.Request;
-import org.civilian.response.Response;
-import org.civilian.response.ResponseHeaders;
 import org.civilian.response.Response.Status;
 import org.civilian.util.Check;
 import org.civilian.util.IoUtil;
