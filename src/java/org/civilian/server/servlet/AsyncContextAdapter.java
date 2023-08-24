@@ -69,6 +69,12 @@ class AsyncContextAdapter extends AsyncContext
 		contextImpl_.setTimeout(timeout);
 	}
 
+
+	@Override public void start(Runnable runnable) 
+	{
+		contextImpl_.start(runnable);
+	}
+
 	
 	private javax.servlet.AsyncContext contextImpl_;
 }

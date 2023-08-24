@@ -68,6 +68,12 @@ public class TestAsyncContext extends AsyncContext
 	}
 	
 	
+	@Override public void start(Runnable runnable) 
+	{
+		runnable.run();
+	}
+
+	
 	private ArrayList<AsyncListener> listeners_;
 	private long timeOut_ = 30000;
 }
