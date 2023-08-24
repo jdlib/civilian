@@ -387,8 +387,9 @@ public class Url implements PathParamProvider, ResponseProvider
 	{
 		for (int i=0; i<getQueryParamCount(); i++)
 		{
-			if (queryParams_.get(i).name_.equals(name))
-				return queryParams_.get(i);
+			QueryParam qp = getQueryParam(i);
+			if (qp.name_.equals(name))
+				return qp;
 		}
 		return create ? addQueryParam(name) : null;
 	}
@@ -619,7 +620,7 @@ public class Url implements PathParamProvider, ResponseProvider
 		private String name_;
 		private String value_;
 	}
-
+	
 	
 	//---------------------------------
 	// session
