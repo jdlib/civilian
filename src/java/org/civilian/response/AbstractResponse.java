@@ -25,7 +25,6 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
-
 import org.civilian.Logs;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
@@ -89,9 +88,10 @@ public abstract class AbstractResponse implements Response
  
 	@Override public UriEncoder getUriEncoder()
 	{
-		if (uriEncoder_ == null)
-			uriEncoder_ = new UriEncoder(); 
-		return uriEncoder_;
+		Extension ext = writeExt();
+		if (ext.uriEncoder == null)
+			ext.uriEncoder = new UriEncoder(); 
+		return ext.uriEncoder;
 	}
 
 	
@@ -238,33 +238,33 @@ public abstract class AbstractResponse implements Response
 		checkNoContentOutput();
 		
 		// prepare the actual stream interceptors
-		ResponseInterceptor<OutputStream> streamInterceptor = streamInterceptor_ != null ?
-			streamInterceptor_.prepareIntercept(this) :
-			null;
+		ResponseInterceptor<OutputStream> interceptor = readExt().streamInterceptor; 
+		if (interceptor != null)
+			interceptor = interceptor.prepareIntercept(this);
 			
 		if (createWriter)
-			initContentWriter(streamInterceptor);
+			initContentWriter(interceptor);
 		else
-			initContentStream(streamInterceptor);
+			initContentStream(interceptor);
 	}
 	
 	
-	private void initContentStream(ResponseInterceptor<OutputStream> streamInterceptor) throws IOException
+	private void initContentStream(ResponseInterceptor<OutputStream> interceptor) throws IOException
 	{
 		OutputStream originalStream = getContentStreamImpl();
 		contentOutput_ = originalStream;
 		
-		if (streamInterceptor != null) 
-			contentOutput_ = new InterceptedOutputStream(originalStream, streamInterceptor);
+		if (interceptor != null) 
+			contentOutput_ = new InterceptedOutputStream(originalStream, interceptor);
 	}
 	
 		
 	private void initContentWriter(ResponseInterceptor<OutputStream> streamInterceptor) throws IOException
 	{
 		// prepare the actual writer interceptors
-		ResponseInterceptor<Writer> writerInterceptor = (writerInterceptor_ != null) ?
-			writerInterceptor_.prepareIntercept(this) :
-			null;
+		ResponseInterceptor<Writer> writerInterceptor = readExt().writerInterceptor; 
+		if (writerInterceptor != null)
+			writerInterceptor = writerInterceptor.prepareIntercept(this);
 			
 		// make sure that encoding is initialized, fallback to application encoding
 		if (charEncoding_ == null)
@@ -301,7 +301,7 @@ public abstract class AbstractResponse implements Response
 		else
 		{
 			contentOutput_ = originalWriter;
-			contentOutput_ = (writerInterceptor_ != null) ?
+			contentOutput_ = (writerInterceptor != null) ?
 				new InterceptedTemplateWriter(originalWriter, writerInterceptor) :
 				new TemplateWriter(originalWriter);
 			return true;
@@ -411,16 +411,17 @@ public abstract class AbstractResponse implements Response
 		{
 			Check.notNull(interceptor, "interceptor");
 			checkNoContentOutput();
-			streamInterceptor_ = ResponseInterceptorChain.of(streamInterceptor_, interceptor);
+			Extension ext = writeExt();
+			ext.streamInterceptor = ResponseInterceptorChain.of(ext.streamInterceptor, interceptor);
 		}
 
 	
-		@Override
-		public void forWriter(ResponseInterceptor<Writer> interceptor)
+		@Override public void forWriter(ResponseInterceptor<Writer> interceptor)
 		{
 			Check.notNull(interceptor, "interceptor");
 			checkNoContentOutput();
-			writerInterceptor_ = ResponseInterceptorChain.of(writerInterceptor_, interceptor);
+			Extension ext = writeExt();
+			ext.writerInterceptor = ResponseInterceptorChain.of(ext.writerInterceptor, interceptor);
 		}
 	}
 
@@ -485,7 +486,8 @@ public abstract class AbstractResponse implements Response
 	 */
 	@Override public Object getAttribute(String name)
 	{
-		return attributes_ != null ? attributes_.get(name) : null;
+		HashMap<String, Object> attributes = readExt().attributes;
+		return attributes != null ? attributes.get(name) : null;
 	}
 
 
@@ -494,7 +496,8 @@ public abstract class AbstractResponse implements Response
 	 */
 	@Override public Iterator<String> getAttributeNames()
 	{
-		return attributes_ != null ? attributes_.keySet().iterator() : Iterators.<String>empty();
+		HashMap<String, Object> attributes = readExt().attributes;
+		return attributes != null ? attributes.keySet().iterator() : Iterators.<String>empty();
 	}
 
 	
@@ -503,9 +506,10 @@ public abstract class AbstractResponse implements Response
 	 */
 	@Override public void setAttribute(String name, Object value)
 	{
-		if (attributes_ == null)
-			attributes_ = new HashMap<>();
-		attributes_.put(name, value);
+		Extension ext = writeExt();
+		if (ext.attributes == null)
+			ext.attributes = new HashMap<>();
+		ext.attributes.put(name, value);
 	}
 
 	
@@ -519,13 +523,54 @@ public abstract class AbstractResponse implements Response
 		contentLanguage_	= null;
 		charEncoding_		= null;
 		contentOutput_		= null;
-		streamInterceptor_	= null;
-		writerInterceptor_	= null;
+		extension_			= null;
 	}
 
 
+	//------------------------------
+	// ext
+	//------------------------------
+
+	
+	/**
+	 * Bundles properties which are null most of the times
+	 */
+	private static class Extension
+	{
+		public Extension()
+		{
+		}
+		
+		
+//		public Extension(Extension other)
+//		{
+//			streamInterceptor	= other.streamInterceptor;
+//			writerInterceptor	= other.writerInterceptor;
+//			attributes			= other.attributes;
+//		}
+
+		public UriEncoder uriEncoder;
+		public ResponseInterceptor<OutputStream> streamInterceptor;
+		public ResponseInterceptor<Writer> writerInterceptor;
+		public HashMap<String, Object> attributes;
+	}
+	
+	
+	private Extension readExt()
+	{
+		return extension_ != null ? extension_ : READ_EXTENSION;
+	}
+	
+	
+	private Extension writeExt()
+	{
+		if (extension_ == null)
+			extension_ = new Extension();
+		return extension_;
+	}
+
+	
 	private Request request_;
-	private UriEncoder uriEncoder_;
 	private LocaleService localeService_;
 	private Flushable contentOutput_;
 	// we duplicate the encoding since we want to know if an encoding was explicitly set
@@ -533,7 +578,6 @@ public abstract class AbstractResponse implements Response
 	private String charEncoding_;
 	private Locale contentLanguage_;
 	private Type type_ = Type.NORMAL;
-	private ResponseInterceptor<OutputStream> streamInterceptor_;
-	private ResponseInterceptor<Writer> writerInterceptor_;
-	private HashMap<String, Object> attributes_;
+	private Extension extension_;
+	private static final Extension READ_EXTENSION = new Extension();
 }
