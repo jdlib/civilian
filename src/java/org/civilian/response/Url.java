@@ -64,9 +64,10 @@ public class Url implements PathParamProvider, ResponseProvider
 		Check.notNull(rp, "response provider");
 		Check.notNull(url, "url");
 		
-		response_ 	= rp.getResponse();
-		prefix_ 	= url;
-		pathParams_	= EMPTY_PATH_PARAMS;
+		response_ 		= rp.getResponse();
+		prefix_ 		= url;
+		pathParams_		= EMPTY_PATH_PARAMS;
+		resource_		= null;
 	}
 	
 	
@@ -82,6 +83,7 @@ public class Url implements PathParamProvider, ResponseProvider
 		response_ 		= Check.notNull(rp, "responseProvider").getResponse();
 		additionalPath_ = Check.notNull(pathProvider, "pathProvider").getPath();
 		pathParams_		= EMPTY_PATH_PARAMS;
+		resource_		= null;
 	}
 	
 	
@@ -100,9 +102,7 @@ public class Url implements PathParamProvider, ResponseProvider
 	 */
 	public Url(ResponseProvider rp, Class<? extends ResourceHandler> handlerClass)
 	{
-		Response response 	= Check.notNull(rp, "response provider").getResponse();
-		Resource resource 	= response.getOwner().getResource(handlerClass);
-		init(response, resource);
+		this(Check.notNull(rp, "response provider"), rp.getResponse().getOwner().getResource(handlerClass));
 	}
 
 	
@@ -119,16 +119,10 @@ public class Url implements PathParamProvider, ResponseProvider
 	 */
 	public Url(ResponseProvider rp, Resource resource)
 	{
-		init(Check.notNull(rp, "response provider").getResponse(),
-			Check.notNull(resource, "resource"));
-	}
-	
-	
-	private void init(Response response, Resource resource)
-	{
-		response_ 	= response;
-		resource_	= resource;
-		prefix_ 	= response.getOwner().getPath().toString();
+		Response response 	= Check.notNull(rp, "response provider").getResponse();
+		response_ 			= response;
+		resource_			= Check.notNull(resource, "resource");
+		prefix_ 			= response.getOwner().getPath().toString();
 
 		int ppCount = resource_.getRoute().getPathParamCount();
 		if (ppCount > 0)
@@ -750,10 +744,10 @@ public class Url implements PathParamProvider, ResponseProvider
 
 	
 	private boolean addSessionId_;
-	private Response response_;
+	private final Response response_;
 	private String fragment_;
 	private TypeSerializer serializer_;
-	private Resource resource_;
+	private final Resource resource_;
 	private Path additionalPath_;
 	private Object[] pathParams_;
 	private ArrayList<QueryParam> queryParams_;
