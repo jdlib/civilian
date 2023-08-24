@@ -37,6 +37,27 @@ import org.civilian.util.http.UriEncoder;
 public class ResponseWrapper implements Response
 {
 	/**
+	 * Returns a ResponseWrapper which forwards to the given response, except 
+	 * it returns the given request when {@link #getRequest()} is called.
+	 * @param request a request
+	 * @param response a response
+	 * @return the wrapper
+	 */
+	public static ResponseWrapper of(Request request, Response response)
+	{
+		Check.notNull(request, "request");
+		Check.notNull(response, "response");
+		return new ResponseWrapper(response)
+		{
+			@Override public Request getRequest()
+			{
+				return request;
+			}
+		};
+	}
+	
+	
+	/**
 	 * Creates a new ResponseWrapper.
 	 */
 	public ResponseWrapper(Response response)
@@ -265,6 +286,30 @@ public class ResponseWrapper implements Response
 		response_.setAttribute(name, value);
 	}
 
+
+	@Override public AsyncContext getAsyncContext()
+	{
+		return response_.getAsyncContext();
+	}
+
+
+	@Override public boolean isAsyncStarted()
+	{
+		return response_.isAsyncStarted();
+	}
+
+
+	@Override public AsyncContext startAsync()
+	{
+		return response_.startAsync();
+	}
+
+	
+	@Override public boolean isAsyncSupported()
+	{
+		return response_.isAsyncSupported();
+	}
+	
 
 	@Override public <T> T unwrap(Class<T> implClass)
 	{
