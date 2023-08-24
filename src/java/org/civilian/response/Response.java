@@ -245,7 +245,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 
 	/**
 	 * Adds the session id to the URL string and returns the new URL string.
-	 * In Servlet terms this method corresponds to HttpServletRequest#encodeURL.  
+	 * In Servlet terms this method corresponds to HttpServletResponse#encodeURL.  
 	 * @return the URL with session id included or the original URL if the session id does not 
 	 * need to be included in the URL.
 	 */
