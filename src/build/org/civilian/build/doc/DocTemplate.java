@@ -2,7 +2,7 @@
  * Generated from DocTemplate.csp
  * Do not edit.
  */
-package org.civilian.internal.build;
+package org.civilian.build.doc;
 
 
 import java.util.List;

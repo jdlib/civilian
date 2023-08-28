@@ -316,7 +316,7 @@
     	<copy todir="${docdir}/res">
 			<fileset dir="${src.doc}/res"/>
     	</copy>
-    	<java classname="org.civilian.internal.build.DocConverter">
+    	<java classname="org.civilian.build.doc.DocConverter">
 			<classpath>
 				<path refid="compile.path"/>	
 				<pathelement path="${build.bin.java}"/>
