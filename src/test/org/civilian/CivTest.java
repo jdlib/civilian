@@ -81,7 +81,7 @@ public class CivTest extends Assert
 	}
 
 	
-	protected Method findMethod(Class<?> c, String name)
+	protected static Method findMethod(Class<?> c, String name)
 	{
 		for (Method method : c.getDeclaredMethods())
 		{
@@ -93,7 +93,7 @@ public class CivTest extends Assert
 	}
 
 
-	protected File createTempDir() throws IOException
+	protected static File createTempDir() throws IOException
 	{
 	    File temp = File.createTempFile("temp", "dir");
 	    if (!temp.delete())
@@ -121,13 +121,13 @@ public class CivTest extends Assert
 	}
 	
 	
-	protected String read(File file) throws Exception
+	protected static String read(File file) throws Exception
 	{
 		return read(file, "UTF-8");
 	}
 	
 	
-	protected String read(File file, String encoding) throws Exception
+	protected static String read(File file, String encoding) throws Exception
 	{
 		try(InputStreamReader in = new InputStreamReader(new FileInputStream(file), encoding))
 		{
@@ -136,7 +136,7 @@ public class CivTest extends Assert
 	}
 	
 
-	protected File createTempFile(String extension, String encoding, String content) throws IOException
+	protected static File createTempFile(String extension, String encoding, String content) throws IOException
 	{
 		File file = File.createTempFile("test", extension);
 		write(file, encoding, content);
@@ -144,7 +144,7 @@ public class CivTest extends Assert
 	}
 
 
-	protected void write(File file, String encoding, String content) throws IOException
+	protected static void write(File file, String encoding, String content) throws IOException
 	{
 		try(OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), encoding))
 		{
@@ -153,13 +153,13 @@ public class CivTest extends Assert
 	}
 	
 	
-	protected String normLineBreak(String s)
+	protected static String normLineBreak(String s)
 	{
 		return s.replace("\r", "");
 	}
 	
 
-	public Object[] getDummyMethodParams(Method method)
+	public static Object[] getDummyMethodParams(Method method)
 	{
 		Class<?>[] pTypes = method.getParameterTypes();
 		if ((pTypes == null) || (pTypes.length == 0))
@@ -174,7 +174,7 @@ public class CivTest extends Assert
 	}
 	
 	
-	public void compareFiles(String expected, String actual)
+	public static void compareFiles(String expected, String actual)
 	{
 		expected = normLinebreak(expected);
 		actual   = normLinebreak(actual);
@@ -182,7 +182,7 @@ public class CivTest extends Assert
 	}
 
 	
-	public String normLinebreak(String s)
+	public static String normLinebreak(String s)
 	{
 		return s != null ? s.replace("\r", "") : null;
 	}
@@ -271,5 +271,5 @@ public class CivTest extends Assert
 	}
 	
 
-	protected static TypeLib TYPELIB = new TypeLib();
+	protected static final TypeLib TYPELIB = new TypeLib();
 }
