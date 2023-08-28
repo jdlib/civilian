@@ -16,6 +16,11 @@
 package org.civilian.controller.method;
 
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import java.lang.reflect.Method;
 import org.civilian.CivTest;
 import org.civilian.annotation.Consumes;
@@ -28,27 +33,22 @@ import org.civilian.controller.Controller;
 import org.civilian.controller.method.arg.factory.MethodArgFactory;
 import org.civilian.request.Request;
 import org.civilian.resource.pathparam.PathParamMap;
-import org.civilian.type.TypeLib;
+import org.civilian.response.Response;
 import org.junit.Test;
 
 
 public class ControllerMethodTest extends CivTest
 {
-	private static final TypeLib TYPE_LIB = new TypeLib();
-
+	private static final MethodArgFactory ARG_FACTORY = new MethodArgFactory(PathParamMap.EMPTY, TYPELIB); 
 	
-	private ControllerMethod getMethod(Class<?> c, String methodName)
+	
+	private static ControllerMethod getMethod(Class<?> c, String methodName)
 	{
-		MethodArgFactory argFactory = new MethodArgFactory(PathParamMap.EMPTY, TYPE_LIB); 
 		Method method = findMethod(c, methodName);
-		return ControllerMethod.create(argFactory, method);
+		return ControllerMethod.create(ARG_FACTORY, method);
 	}
 	
 
-	//-----------------------
-	// classes with test methods
-	//-----------------------
-	
 	private static class InheritBase extends Controller
 	{
 		@Get public void get()
@@ -72,18 +72,18 @@ public class ControllerMethodTest extends CivTest
 	
 	@Test public void testInherit() throws Exception
 	{
-		ControllerMethod action;
+		ControllerMethod method;
 		
-		action = getMethod(InheritBase.class, "get");
-		assertNotNull	(action);
-		assertEquals	("get", action.toString());
-		assertEquals	(InheritBase.class, action.getDeclaringClass());
-		assertIterator	(action.getRequestMethods(), "GET");
-		assertTrue		(action.canInherit(InheritDerived1.class));
-		assertFalse		(action.canInherit(InheritDerived2.class));
-		assertFalse		(action.canInherit(Controller.class));
-		assertFalse		(action.canInherit(null));
-		assertEquals	("@Get", action.getInfo());
+		method = getMethod(InheritBase.class, "get");
+		assertNotNull	(method);
+		assertEquals	("get", method.toString());
+		assertEquals	(InheritBase.class, method.getDeclaringClass());
+		assertIterator	(method.getRequestMethods(), "GET");
+		assertTrue		(method.canInherit(InheritDerived1.class));
+		assertFalse		(method.canInherit(InheritDerived2.class));
+		assertFalse		(method.canInherit(Controller.class));
+		assertFalse		(method.canInherit(null));
+		assertEquals	("@Get", method.getInfo());
 	}
 	
 	
@@ -101,21 +101,21 @@ public class ControllerMethodTest extends CivTest
 	
 	@Test public void testConsume() throws Exception
 	{
-		ControllerMethod action;
+		ControllerMethod method;
 		
-		action = getMethod(ConsumeController.class, "consumeJson");
-		assertTrue(action.canConsume(ContentType.APPLICATION_JSON));
-		assertTrue(action.canConsume(ContentType.ANY));
-		assertTrue(action.canConsume(null));
-		assertFalse(action.canConsume(ContentType.TEXT_HTML));
-		assertEquals(1, action.getConsumesContentTypes().size());
-		assertEquals("@Get @Consumes(application/json)", action.getInfo());
+		method = getMethod(ConsumeController.class, "consumeJson");
+		assertTrue(method.canConsume(ContentType.APPLICATION_JSON));
+		assertTrue(method.canConsume(ContentType.ANY));
+		assertTrue(method.canConsume(null));
+		assertFalse(method.canConsume(ContentType.TEXT_HTML));
+		assertEquals(1, method.getConsumesContentTypes().size());
+		assertEquals("@Get @Consumes(application/json)", method.getInfo());
 		
-		action = getMethod(ConsumeController.class, "consumeAll");
-		assertTrue(action.canConsume(ContentType.APPLICATION_JSON));
-		assertTrue(action.canConsume(ContentType.ANY));
-		assertTrue(action.canConsume(ContentType.TEXT_HTML));
-		assertSame(ContentTypeList.EMPTY, action.getConsumesContentTypes());
+		method = getMethod(ConsumeController.class, "consumeAll");
+		assertTrue(method.canConsume(ContentType.APPLICATION_JSON));
+		assertTrue(method.canConsume(ContentType.ANY));
+		assertTrue(method.canConsume(ContentType.TEXT_HTML));
+		assertSame(ContentTypeList.EMPTY, method.getConsumesContentTypes());
 	}
 
 		
@@ -133,21 +133,21 @@ public class ControllerMethodTest extends CivTest
 	
 	@Test public void testProduces() throws Exception
 	{
-		ControllerMethod action;
+		ControllerMethod method;
 		ContentNegotiation conneg;
 		 
-		action = getMethod(ProducesController.class, "producesSome");
-		assertTrue(action.getProducedContentTypes().contains(ContentType.TEXT_CSS));
-		assertEquals("@Get @Produces(text/css, text/html)", action.getInfo());
+		method = getMethod(ProducesController.class, "producesSome");
+		assertTrue(method.getProducedContentTypes().contains(ContentType.TEXT_CSS));
+		assertEquals("@Get @Produces(text/css, text/html)", method.getInfo());
 		conneg = new ContentNegotiation(ContentType.TEXT_CSS);
-		assertTrue(action.canProduce(conneg));
+		assertTrue(method.canProduce(conneg));
 		conneg = new ContentNegotiation(ContentType.APPLICATION_EXCEL);
-		assertFalse(action.canProduce(conneg));
+		assertFalse(method.canProduce(conneg));
 
-		action = getMethod(ProducesController.class, "producesAll");
-		assertSame(ContentTypeList.EMPTY, action.getProducedContentTypes());
+		method = getMethod(ProducesController.class, "producesAll");
+		assertSame(ContentTypeList.EMPTY, method.getProducedContentTypes());
 		conneg = new ContentNegotiation(ContentType.TEXT_CSS);
-		assertTrue(action.canProduce(conneg));
+		assertTrue(method.canProduce(conneg));
 	}
 		
 
@@ -162,16 +162,45 @@ public class ControllerMethodTest extends CivTest
 		}
 	}
 
-	
 
 	@Test public void testArgs() throws Exception
 	{
-		ControllerMethod action;
+		ControllerMethod method;
 
-		action = getMethod(ArgController.class, "noArgs");
-		assertEquals(0, action.getArgCount());
+		method = getMethod(ArgController.class, "noArgs");
+		assertEquals(0, method.getArgCount());
 
-		action = getMethod(ArgController.class, "withArg");
-		assertEquals(1, action.getArgCount());
+		method = getMethod(ArgController.class, "withArg");
+		assertEquals(1, method.getArgCount());
+	}
+
+
+	private static class InvokeController extends Controller
+	{
+		@Get public void noResult()
+		{
+		}
+
+		@Get public String withResult()
+		{
+			return "Hi";
+		}
+	}
+
+	
+	@Test public void testInvoke() throws Exception
+	{
+		ControllerMethod method;
+		InvokeController controller = new InvokeController();
+		Request request = null;
+		Response response = mock(Response.class);
+
+		method = getMethod(InvokeController.class, "noResult");
+		method.invoke(controller, request, response);
+		verify(response, times(0)).writeContent(any());
+
+		method = getMethod(InvokeController.class, "withResult");
+		method.invoke(controller, request, response);
+		verify(response, times(1)).writeContent("Hi");
 	}
 }
