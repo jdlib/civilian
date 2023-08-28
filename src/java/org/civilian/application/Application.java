@@ -501,8 +501,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * application/json (based on GSON).
 	 * @see AppConfig#registerContentSerializer(ContentType, ContentSerializer)
 	 */
-	@Override
-	public ContentSerializer getContentSerializer(ContentType contentType)
+	@Override public ContentSerializer getContentSerializer(ContentType contentType)
 	{
 		return contentSerializers_.get(contentType != null ? contentType.getValue() : null);
 	}
