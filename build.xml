@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="civilian" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" default="dist">
+<project name="civilian" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" default="help">
 
 	<property name="lib"               value="${basedir}/lib"/>
 	<property name="src.java"          value="${basedir}/src/java"/>
@@ -21,9 +21,8 @@
 	<property name="web"               value="${basedir}/web"/>
 	
 	
-	<description>
-    	Ant build file for Civilian 
-    </description>
+	<description>Ant build file for Civilian
+	</description>
 	
 	
 	<path id="compile.path">
@@ -59,12 +58,21 @@
 	</path>
 	
 	
+	<target name="help" description="prints available targets">
+	    <java classname="org.apache.tools.ant.Main">
+	        <arg value="-projecthelp" />
+	        <arg value="-buildfile" />
+	        <arg value="${ant.file}" />
+	    </java>
+	</target>
+	
+	
     <target name="clear" description="clears the build directory">
     	<delete dir="${build}"/>	
     </target>
 	
 
-	<target name="clientconst" description="runs the ClientContsGenerator" depends="compile">
+	<target name="clientconst" description="runs the ClientConstGenerator" depends="compile">
 		<java classname="org.civilian.tool.resource.ClientConstGenerator">
 			<classpath>
 				<path refid="run.path"/>
@@ -262,8 +270,7 @@
 	</target>
 	
 
-		
- 	<target name="_cspcompile.prep" description="compiles the csp files">
+ 	<target name="_cspcompile.prep">
  		<condition property="csp.needs.compile">
  			<not><available file="${build.bin.java}/org/civilian/tool/csp/CspCompiler.class"/></not>
  		</condition>
@@ -431,7 +438,7 @@
     </target>
 
     	
-    <target name="_jar.prep" description="calls dependent targets for the jar tasks" depends="compile.java, cspcompile, version">
+    <target name="_jar.prep" depends="compile.java, cspcompile, version">
 		<antcall target="compile"/>
 		<tstamp>
 			<format property="TODAY" pattern="yyyy-MM-dd"/>
@@ -473,7 +480,7 @@
     </target>
 	
 
-	<target name="serverconst" description="generates the AdminResources class of the admin app">
+	<target name="serverconst" description="generates the ServerConstGenerator for the admin app and sample apps">
 		<antcall target="_serverconst.run">
 			<param name="serverconst.src" value="${src.java}"/>
 			<param name="serverconst.app" value="org.civilian.application.admin.AdminApp"/>
@@ -493,7 +500,7 @@
     </target>
 	
 	
-	<target name="_serverconst.run" description="generates the AdminResources class of the admin app">
+	<target name="_serverconst.run">
 		<java classname="org.civilian.tool.resource.ServerConstGenerator" classpathref="samples.path">
 			<arg value="-out:package"/>
 			<arg value="${serverconst.src}"/>
