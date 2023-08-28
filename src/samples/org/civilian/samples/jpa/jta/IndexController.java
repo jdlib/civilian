@@ -32,7 +32,7 @@ import org.civilian.samples.jpa.jta.model.PersonService;
 public class IndexController extends JtaController
 {
 	@Get @Post @Produces("text/html") 
-	public void render() throws Exception
+	public IndexTemplate render() throws Exception
 	{
 		IndexForm form = new IndexForm(this);
 		String message = null;
@@ -43,7 +43,7 @@ public class IndexController extends JtaController
 	        message 		= person != null ? "Hello '" + person.getName() + "'" : "(not found)"; 
 		}
 
-		renderPage(new IndexTemplate(form, message, CreateController.class));
+		return new IndexTemplate(form, message, CreateController.class);
 	}
 
 

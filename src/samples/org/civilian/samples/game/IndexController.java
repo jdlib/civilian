@@ -31,7 +31,7 @@ import org.civilian.samples.game.Game.Result;
 public class IndexController extends Controller
 {
 	@Get @Post @Produces("text/html") 
-	public void render() throws Exception
+	public GameTemplate render() throws Exception
 	{
 		Game game 		= getRequest().getSession(true).getCreateAttr(Game.class);
 		GameForm form 	= new GameForm(this);
@@ -51,7 +51,6 @@ public class IndexController extends Controller
 		form.guess.setMin(game.getSmallest());
 		form.guess.setMax(game.getBiggest());
 		
-		GameTemplate t = new GameTemplate(game, form, feedback);
-		getResponse().writeContent(t);
+		return new GameTemplate(game, form, feedback);
 	}
 }

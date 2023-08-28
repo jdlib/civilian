@@ -28,8 +28,8 @@ public class IndexController extends Controller
 	@Inject private Service service;
 	
 	
-	@Get public void get() throws Exception
+	@Get public String get() throws Exception
 	{
-		getResponse().writeText("Testing CDI - got injected service instance:\n" + service);
+		return "Testing CDI - got injected service instance:\n" + service;
 	}
 }

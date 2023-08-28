@@ -38,10 +38,9 @@ public class IndexController extends Controller
 	
 	
 	@Get @Produces("text/plain") 
-	public void get() throws Exception
+	public String get() throws Exception
 	{
-		String message = "calling guice injected service: " + service_.call();
-		getResponse().writeText(message);
+		return "calling guice injected service: " + service_.call();
 	}
 	
 	

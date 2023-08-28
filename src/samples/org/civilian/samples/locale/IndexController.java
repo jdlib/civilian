@@ -26,16 +26,15 @@ import org.civilian.controller.Controller;
 public class IndexController extends Controller
 {
 	@Get @Produces("text/html") 
-	public void get() throws Exception
+	public Object get() throws Exception
 	{
-		IndexTemplate template = new IndexTemplate
+		return new IndexTemplate
 		(
 			getApplication().getLocaleServices(),
 			new Locale("en", "UK"), 
 			new Locale("de", "CH"), 
 			new Locale("fr") 
 		);
-		getResponse().writeContent(template);
 	}
 }
  

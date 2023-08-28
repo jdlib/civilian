@@ -25,7 +25,7 @@ import org.civilian.controller.Controller;
 public class IndexController extends Controller
 {
 	@Get @Post @Produces("text/html") 
-	public void process() throws Exception
+	public IndexTemplate process() throws Exception
 	{
 		IndexForm form = new IndexForm(this);
 		
@@ -37,6 +37,6 @@ public class IndexController extends Controller
 			form.counter.setIntValue(form.counter.getIntValue() + 1);
 		}
 		
-		getResponse().writeContent(new IndexTemplate(form));
+		return new IndexTemplate(form);
 	}
 }

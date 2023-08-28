@@ -24,8 +24,8 @@ import org.civilian.controller.Controller;
 public class IndexController extends Controller
 {
 	@Get @Produces("text/plain")
-	public void get() throws Exception
+	public String get() throws Exception
 	{
-		getResponse().writeContent("Hello World");
+		return "Hello World";
 	}
 }

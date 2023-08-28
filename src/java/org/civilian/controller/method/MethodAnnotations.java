@@ -48,7 +48,7 @@ public class MethodAnnotations
 	public static MethodAnnotations of(Method javaMethod)
 	{
 		int mod = javaMethod.getModifiers();
-		if (Modifier.isPublic(mod) && !Modifier.isStatic(mod) && (javaMethod.getReturnType() == void.class))
+		if (Modifier.isPublic(mod) && !Modifier.isStatic(mod))
 		{
 			AnnotationLookup lookup = new AnnotationLookup(javaMethod); 
 			List<String> reqMethods = lookup.addRequestMethods(null);

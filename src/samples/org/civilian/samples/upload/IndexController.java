@@ -20,24 +20,26 @@ import org.civilian.annotation.Get;
 import org.civilian.annotation.Post;
 import org.civilian.annotation.Produces;
 import org.civilian.controller.Controller;
+import org.civilian.request.Upload;
 
 
 public class IndexController extends Controller
 {
 	@Get @Post @Produces("text/html")
-	public void process() throws Exception
+	public IndexTemplate process() throws Exception
 	{
 		IndexForm form = new IndexForm(this);
 		try
 		{
 			if (form.isSubmitted())
 				form.read();
-			getResponse().writeContent(new IndexTemplate(form));
+			return new IndexTemplate(form);
 		}
 		finally
 		{
-			if (form.file.getUpload() != null)
-				form.file.getUpload().delete();
+			Upload upload = form.file.getUpload();
+			if (upload != null)
+				upload.delete();
 		}
 	}
 }

@@ -217,7 +217,9 @@ public class ControllerMethod
 		
 		try
 		{
-			javaMethod_.invoke(controller, argValues);
+			Object content = javaMethod_.invoke(controller, argValues);
+			if ((content != null) && !response.isCommitted())
+				response.writeContent(content);
 		}
 		catch(InvocationTargetException e)
 		{

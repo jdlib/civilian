@@ -31,12 +31,12 @@ import org.civilian.template.Template;
 public abstract class AdminController extends Controller implements AdminResources
 {
 	@Get @Produces(ContentType.Strings.TEXT_HTML)
-	public void getHtml() throws Exception
+	public PageTemplate getHtml() throws Exception
 	{
 		Resource appResource = getRequest().getResource();
 		if (appResource != root.$appId.resources)
 			appResource = root.$appId.settings;
-		getResponse().writeContent(new PageTemplate(getContentTemplate(), (AdminApp)getApplication(), getViewedApp(), appResource));
+		return new PageTemplate(getContentTemplate(), (AdminApp)getApplication(), getViewedApp(), appResource);
 	}
 	
 
