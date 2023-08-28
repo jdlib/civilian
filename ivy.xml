@@ -28,9 +28,9 @@
 		<dependency conf="build->master" org="org.slf4j" name="slf4j-api" rev="1.7.5"/>
 		<dependency conf="build->master" org="javax.xml.bind" name="jaxb-api" rev="2.3.1"/>
 		
-		<dependency conf="test->master" org="junit" name="junit" rev="4.13.2"/>
+		<dependency conf="test->master,sources" org="junit" name="junit" rev="4.13.2"/>
 		<dependency conf="test->master" org="org.slf4j" name="slf4j-nop" rev="1.7.5"/>
-		<dependency conf="test->default" org="org.mockito" name="mockito-core" rev="5.3.1"/>
+		<dependency conf="test->default,sources" org="org.mockito" name="mockito-core" rev="5.3.1"/>
 		<dependency conf="test->default" org="org.hamcrest" name="hamcrest-core" rev="1.3"/>
 		<dependency conf="test->default" org="com.sun.xml.bind" name="jaxb-impl" rev="2.3.1"/>	
 		<dependency conf="test->default" org="com.sun.xml.bind" name="jaxb-core" rev="2.3.0.1"/>	

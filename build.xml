@@ -462,7 +462,8 @@
 
 
 	<target name="resolve" description="retrieve dependencies with ivy">
-		<ivy:retrieve pattern="lib/[conf]/[artifact]-[revision].[ext]"/>
+		<ivy:retrieve pattern="lib/[conf]/[artifact]-[revision].[ext]" type="jar"/>
+		<ivy:retrieve pattern="lib/[conf]/[artifact]-[revision]-sources.[ext]" type="source"/>
 	</target>
 	
 	
