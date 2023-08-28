@@ -34,9 +34,12 @@ import org.junit.Test;
 
 public class ControllerMethodTest extends CivTest
 {
+	private static final TypeLib TYPE_LIB = new TypeLib();
+
+	
 	private ControllerMethod getMethod(Class<?> c, String methodName)
 	{
-		MethodArgFactory argFactory = new MethodArgFactory(PathParamMap.EMPTY, typeLib_); 
+		MethodArgFactory argFactory = new MethodArgFactory(PathParamMap.EMPTY, TYPE_LIB); 
 		Method method = findMethod(c, methodName);
 		return ControllerMethod.create(argFactory, method);
 	}
@@ -171,7 +174,4 @@ public class ControllerMethodTest extends CivTest
 		action = getMethod(ArgController.class, "withArg");
 		assertEquals(1, action.getArgCount());
 	}
-	
-	
-	private static TypeLib typeLib_ = new TypeLib();
 }
