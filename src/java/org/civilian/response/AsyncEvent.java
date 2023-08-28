@@ -44,7 +44,7 @@ public class AsyncEvent
 
 		/**
 		 *  An asynchronous operation was started.
-		 *  @see Request#startAsync()
+		 *  @see Response#startAsync()
 		 */
 		START,
 

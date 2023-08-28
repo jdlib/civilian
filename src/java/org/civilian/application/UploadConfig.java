@@ -85,7 +85,7 @@ public class UploadConfig
 	
 	
 	/**
-	 * Returns if uploads are enabled.
+	 * @return f uploads are enabled.
 	 */
 	public boolean isEnabled()
 	{
@@ -94,7 +94,7 @@ public class UploadConfig
 
 	
 	/**
-	 * Returns the maximum byte size allowed for upload requests, 
+	 * @return the maximum byte size allowed for upload requests, 
 	 * or -1 if the request size is unlimited. 
 	 */
 	public long getMaxRequestSize()
@@ -104,7 +104,7 @@ public class UploadConfig
 
 
 	/**
-	 * Returns the maximum byte size allowed for single files within an upload request, 
+	 * @return the maximum byte size allowed for single files within an upload request, 
 	 * or -1 if it is not limited.
 	 */
 	public long getMaxFileSize()
@@ -114,7 +114,7 @@ public class UploadConfig
 
 	
 	/**
-	 * Returns the size threshold. If an uploaded file size exceeds the threshold, it 
+	 * @return the size threshold. If an uploaded file size exceeds the threshold, it 
 	 * will be written to the temp directory. 
 	 */
 	public int getFileSizeThreshold()

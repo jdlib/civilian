@@ -74,7 +74,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	/**
 	 * Creates a new form.
-	 * @param requestProvider allows the form to access the request and read
+	 * @param rp allows the form to access the request and read
 	 * 		parameters from the request.
 	 */
 	public Form(ResponseProvider rp)

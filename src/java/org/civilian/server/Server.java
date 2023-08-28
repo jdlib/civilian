@@ -274,6 +274,7 @@ public abstract class Server implements PathProvider
 	
 	/**
 	 * Returns the application with the given id.
+	 * @param id the id
 	 * @return the application or null
 	 */
 	public synchronized ServerApp getApplication(String id)
@@ -295,7 +296,7 @@ public abstract class Server implements PathProvider
 
 	
 	/**
-	 * Returns the develop flag of the Server. 
+	 * @return the develop flag of the Server. 
 	 */
 	public boolean develop()
 	{
@@ -304,36 +305,34 @@ public abstract class Server implements PathProvider
 	
 	
 	/**
-	 * Returns a ResourceLoader to access Server resources. 
+	 * @return the ResourceLoader to access Server resources. 
 	 */
 	public abstract ResourceLoader getResourceLoader();
 	
 	
 	/**
-	 * Returns the ServerFiles associated with the server.
+	 * @return the ServerFiles associated with the server.
 	 */
 	public abstract ServerFiles getServerFiles();
 
 	
-	
-	
-
-	
 	/**
-	 * Returns if the given path is not valid for a file resource request.
-	 * In a servlet environment this is any path pointing into the WEB-INF directory. 
+	 * Returns if the given path is prohibited for a file resource request.
+	 * In a servlet environment this is any path pointing into the WEB-INF directory.
+	 * @param path the path
+	 * @return the prohibited flag
 	 */
 	public abstract boolean isProhibitedPath(String path);
 	
 	
 	/**
-	 * Returns the implementation dependent server version. 
+	 * @return the implementation dependent server version. 
 	 */
 	public abstract String getServerVersion();
 
 
 	/**
-	 * Returns the implementation dependent server info. 
+	 * @return the implementation dependent server info. 
 	 */
 	public abstract String getServerInfo();
 	
@@ -352,7 +351,7 @@ public abstract class Server implements PathProvider
 
 	
 	/**
-	 * Returns a ContentTypeLookup to translate file names into content types. 
+	 * @return a ContentTypeLookup to translate file names into content types. 
 	 */
 	public abstract ContentTypeLookup getContentTypeLookup();
 	
@@ -362,26 +361,30 @@ public abstract class Server implements PathProvider
 	 * the server.
 	 * @param name the attribute name
 	 * @see #setAttribute(String, Object)
+	 * @return the attribute value
 	 */
 	public abstract Object getAttribute(String name); 
 	
 	
 	/**
-	 * Returns an iterator of the attribute names stored in the server. 
+	 * @return an iterator of the attribute names stored in the server. 
 	 */
 	public abstract Iterator<String> getAttributeNames();
 	
 	
 	/**
-	 * Stores an attribute under the given name in the server. 
+	 * Stores an attribute value under the given name in the server.
+	 * @param name the name
+	 * @param value the value 
 	 */
-	public abstract void setAttribute(String name, Object object); 
+	public abstract void setAttribute(String name, Object value); 
 
 	
 	/**
 	 * Logs a message into the server log file.
 	 * In a servlet environment this goes to ServletContext.log()
 	 * Note: The Server itself use slf4j for logging.
+	 * @param msg the message
 	 */
 	public void log(String msg)
 	{
@@ -393,6 +396,8 @@ public abstract class Server implements PathProvider
 	 * Logs a message into the server log file.
 	 * In a servlet environment this goes to ServletContext.log()
 	 * Note: The Server itself use slf4j for logging.
+	 * @param msg the message
+	 * @param throwable a throwable or null
 	 */
 	public abstract void log(String msg, Throwable throwable);
 	
@@ -400,7 +405,10 @@ public abstract class Server implements PathProvider
 	/**
 	 * Returns the underlying implementation of the Server which has the given class
 	 * or null, if the implementation has a different class.
-	 * In a servlet environment you can access the ServletContext in this way. 
+	 * In a servlet environment you can access the ServletContext in this way.
+	 * @param implClass the implementation class
+	 * @param <T> the type of the implementation class
+	 * @return the implementation object or null 
 	 */
 	public abstract <T> T unwrap(Class<T> implClass);
 

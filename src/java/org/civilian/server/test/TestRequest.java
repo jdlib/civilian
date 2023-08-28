@@ -134,7 +134,7 @@ public class TestRequest extends AbstractRequest
 
 	
 	/**
-	 * Invokes {@link Application#process(Request)} with this request. 
+	 * Invokes {@link Application#process(Request, Response)} with this request. 
 	 * Before calling process(), the TestResponse associated with this request
 	 * is cleared first and the content of this request is reset}.
 	 * @return the TestResponse

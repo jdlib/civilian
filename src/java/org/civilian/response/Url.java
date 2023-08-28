@@ -97,8 +97,7 @@ public class Url implements PathParamProvider, ResponseProvider
 	 * Please note that a controller may be mapped to several resources. In this case
 	 * it is undefined which resource is chosen to build the url.
 	 * @param rp a Response or a ResponseProvider whose Response is used by the Url
-	 * @param controllerClass the controller class.   
-	 * @see Tree#getDefaultExtension()
+	 * @param handlerClass the controller class.   
 	 */
 	public Url(ResponseProvider rp, Class<? extends ResourceHandler> handlerClass)
 	{
@@ -115,7 +114,6 @@ public class Url implements PathParamProvider, ResponseProvider
 	 * @param rp a Response or a ResponseProvider whose Response is used by the Url
 	 * @param resource the resource. The resource must not belong to the application which
 	 * 		received the request.   
-	 * @see Tree#getDefaultExtension()
 	 */
 	public Url(ResponseProvider rp, Resource resource)
 	{
@@ -517,7 +515,7 @@ public class Url implements PathParamProvider, ResponseProvider
 		
 		/**
 		 * Returns the first query parameter with the given name.
-		 * @param the name
+		 * @param name the name
 		 * @return the first matching parameter or null if none matches
 		 */
 		public QueryParam get(String name)
@@ -534,7 +532,7 @@ public class Url implements PathParamProvider, ResponseProvider
 		
 		/**
 		 * Returns the first query parameter with the given name.
-		 * @param the name
+		 * @param name the name
 		 * @return the first matching parameter
 		 * @throws IllegalStateException if none matches
 		 */
@@ -549,7 +547,7 @@ public class Url implements PathParamProvider, ResponseProvider
 		
 		/**
 		 * Returns the first query parameter with the given name or creates one no such param exists.
-		 * @param the name
+		 * @param name the name
 		 * @return the first matching parameter or the newly created param. Never null.
 		 */
 		public QueryParam getOrCreate(String name)
