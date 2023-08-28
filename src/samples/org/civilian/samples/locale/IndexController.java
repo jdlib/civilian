@@ -35,7 +35,7 @@ public class IndexController extends Controller
 			new Locale("de", "CH"), 
 			new Locale("fr") 
 		);
-		getResponse().writeTemplate(template);
+		getResponse().writeContent(template);
 	}
 }
  

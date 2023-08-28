@@ -110,7 +110,7 @@ public abstract class SecuredController extends CrmController
 				Path reloadPath = develop() ? getApplication().getServer().getPath() : null;
 				template = new PageTemplate(getResponse(), template, getScript(), sessionUser_, showMenuBar(), reloadPath, getApplication().getAssetService().getPath());
 			}
-			getResponse().writeTemplate(template);
+			getResponse().writeContent(template);
 		}
 	}
 

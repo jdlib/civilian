@@ -37,6 +37,6 @@ public class IndexController extends Controller
 			form.counter.setIntValue(form.counter.getIntValue() + 1);
 		}
 		
-		getResponse().writeTemplate(new IndexTemplate(form));
+		getResponse().writeContent(new IndexTemplate(form));
 	}
 }

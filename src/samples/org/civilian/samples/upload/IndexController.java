@@ -32,7 +32,7 @@ public class IndexController extends Controller
 		{
 			if (form.isSubmitted())
 				form.read();
-			getResponse().writeTemplate(new IndexTemplate(form));
+			getResponse().writeContent(new IndexTemplate(form));
 		}
 		finally
 		{

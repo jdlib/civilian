@@ -69,10 +69,7 @@ public class NotFoundResponseHandler implements ResponseHandler
 	{
 		if (develop_ &&
 			response.getRequest().getAcceptedContentTypes().contains(ContentType.TEXT_HTML))
-		{
-			response.setContentType(ContentType.TEXT_HTML);
-			response.writeTemplate(new NotFoundTemplate(response.getRequest()));
-		}
+			response.writeContent(new NotFoundTemplate(response.getRequest()), ContentType.TEXT_HTML);
 		else
 			response.setStatus(Response.Status.NOT_FOUND);
 	}

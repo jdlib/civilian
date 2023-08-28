@@ -36,7 +36,7 @@ public abstract class AdminController extends Controller implements AdminResourc
 		Resource appResource = getRequest().getResource();
 		if (appResource != root.$appId.resources)
 			appResource = root.$appId.settings;
-		getResponse().writeTemplate(new PageTemplate(getContentTemplate(), (AdminApp)getApplication(), getViewedApp(), appResource));
+		getResponse().writeContent(new PageTemplate(getContentTemplate(), (AdminApp)getApplication(), getViewedApp(), appResource));
 	}
 	
 

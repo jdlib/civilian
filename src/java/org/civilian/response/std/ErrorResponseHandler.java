@@ -92,9 +92,8 @@ public class ErrorResponseHandler implements ResponseHandler
 		if (develop_ && 
 			response.getRequest().getAcceptedContentTypes().contains(ContentType.TEXT_HTML))
 		{
-			response.setContentType(ContentType.TEXT_HTML);
 			ErrorTemplate t = new ErrorTemplate(response.getRequest(), statusCode_, message_, error_);
-			response.writeTemplate(t);
+			response.writeContent(t, ContentType.TEXT_HTML);
 		}
 		else
 		{
@@ -102,10 +101,7 @@ public class ErrorResponseHandler implements ResponseHandler
 			if ((message == null) && develop_ && (error_ != null))
 				message = error_.getMessage();
 			if (message != null)
-			{
-				response.setContentType(ContentType.TEXT_PLAIN);
 				response.writeText(message);
-			}
 		}
 	}
 	

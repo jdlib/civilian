@@ -33,7 +33,7 @@ public class IndexController extends Controller
 {
 	@Get @Produces("text/html") public void get() throws Exception
 	{
-		getResponse().writeTemplate(new IndexTemplate());
+		getResponse().writeContent(new IndexTemplate());
 	}
 	
 	
@@ -48,6 +48,6 @@ public class IndexController extends Controller
 		Response response)
 		throws Exception
 	{
-		response.writeTemplate(new IndexTemplate(remoteIp, acceptHeader, registration));
+		response.writeContent(new IndexTemplate(remoteIp, acceptHeader, registration));
 	}
 }

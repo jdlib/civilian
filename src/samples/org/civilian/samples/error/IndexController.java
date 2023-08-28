@@ -27,6 +27,6 @@ public class IndexController extends Controller
 {
 	@Get public void get() throws Exception
 	{
-		getResponse().writeTemplate(new IndexTemplate());
+		getResponse().writeContent(new IndexTemplate());
 	}
 }

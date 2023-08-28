@@ -391,18 +391,6 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	
 	/**
-	 * Writes a template to the response content. 
-	 * @param template a template object. If null, the method does nothing. Else
-	 * 		it calls {@link Template#print(TemplateWriter)}, passing the 
-	 * 		{@link #getContentWriter() content writer} of this response.
-	 */
-	public default Response writeTemplate(Template template) throws Exception
-	{
-		return writeContent(template);
-	}
-	
-	
-	/**
 	 * Writes JSON data to the response content.
 	 * @param object a object which is converted to JSON.
 	 */

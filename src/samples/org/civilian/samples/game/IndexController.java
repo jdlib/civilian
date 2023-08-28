@@ -52,6 +52,6 @@ public class IndexController extends Controller
 		form.guess.setMax(game.getBiggest());
 		
 		GameTemplate t = new GameTemplate(game, form, feedback);
-		getResponse().writeTemplate(t);
+		getResponse().writeContent(t);
 	}
 }

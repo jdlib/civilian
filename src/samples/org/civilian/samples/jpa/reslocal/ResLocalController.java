@@ -54,6 +54,6 @@ public abstract class ResLocalController extends Controller
 	protected void renderPage(Template content) throws Exception
 	{
 		PageTemplate pt = new PageTemplate(content);
-		getResponse().writeTemplate(pt);
+		getResponse().writeContent(pt);
 	}
 }

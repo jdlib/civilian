@@ -96,7 +96,7 @@ public class LoginController extends CrmController
 	
 	private void render(LoginForm form, String errorMessage) throws Exception
 	{
-		getResponse().writeTemplate(new LoginTemplate(form, errorMessage));
+		getResponse().writeContent(new LoginTemplate(form, errorMessage));
 	}
 
 	

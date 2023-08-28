@@ -180,11 +180,10 @@ public class AbstractResponseTest extends CivTest
 	{
 		TextTemplate t = new TextTemplate("abc");
 		
-		response.writeTemplate(null); // ignored
-		response.writeTemplate(t);
+		response.writeContent(null); // ignored
 		response.writeContent(t);
 		
-		assertEquals("abcabc", response.getContentText(true));
+		assertEquals("abc", response.getContentText(true));
 	}
 
 	
