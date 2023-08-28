@@ -77,8 +77,7 @@ public abstract class Template implements TemplateWriter.Printable
 	 */
 	@Override public synchronized void print(TemplateWriter out) throws Exception
 	{
-		Check.notNull(out, "out");
-		this.out = out;
+		this.out = Check.notNull(out, "out");
 		init();
 		print();
 	}
