@@ -30,9 +30,12 @@ import org.civilian.content.ContentType;
 import org.civilian.content.GsonJsonSerializer;
 import org.civilian.content.JaxbXmlSerializer;
 import org.civilian.content.TextSerializer;
+import org.civilian.controller.ControllerConfig;
 import org.civilian.controller.ControllerFactory;
 import org.civilian.request.Request;
+import org.civilian.resource.Path;
 import org.civilian.resource.Resource;
+import org.civilian.server.Server;
 import org.civilian.text.msg.MsgBundleFactories;
 import org.civilian.text.msg.MsgBundleFactory;
 import org.civilian.text.service.LocaleServiceList;
@@ -88,7 +91,7 @@ public class AppConfig
 	 * @param app the app
 	 * @param settings the settings 
 	 */
-	public AppConfig(Application app, Settings settings)
+	public AppConfig(Server server, Path appPath, ControllerConfig controllerConfig, Settings settings)
 	{
 		try 
 		{
@@ -101,11 +104,11 @@ public class AppConfig
 			typeLib_ 				= new TypeLib();
 			supportedLocales_		= initLocales(settings);
 			uploadConfig_ 			= initUploadConfig(settings); 
-			reloadConfig_			= initReloadConfig(app, settings);
+			reloadConfig_			= initReloadConfig(server.develop(), controllerConfig, settings);
 			initDefaultContentSerializers();
 			
 			// these calls might throw exceptions
-			assetConfig_			= initAssetConfig(app, settings);
+			assetConfig_			= initAssetConfig(server, appPath, settings);
 			msgBundleFactory_		= initText(settings);
 		}
 		catch (Exception e) 
@@ -150,15 +153,15 @@ public class AppConfig
 	}
 	
 	
-	private static ReloadConfig initReloadConfig(Application app, Settings appSettings)
+	private static ReloadConfig initReloadConfig(boolean develop, ControllerConfig controllerConfig, Settings appSettings)
 	{
-		if (app.develop() && appSettings.getBoolean(ConfigKeys.DEV_CLASSRELOAD, false))
+		if (develop && appSettings.getBoolean(ConfigKeys.DEV_CLASSRELOAD, false))
 		{
 			Settings reloadSettings = new Settings(appSettings, ConfigKeys.DEV_CLASSRELOAD + '.');
 			ReloadConfig reloadConfig = new ReloadConfig();
 			reloadConfig.excludes().add(reloadSettings.getArray(ConfigKeys.EXCLUDE));
 			reloadConfig.includes()
-				.add(app.getControllerConfig().getRootPackage())
+				.add(controllerConfig.getRootPackage())
 				.add(reloadSettings.getArray(ConfigKeys.INCLUDE));
 			return reloadConfig;
 		}	
@@ -167,12 +170,12 @@ public class AppConfig
 	}
 	
 	
-	private static AssetConfig initAssetConfig(Application app, Settings appSettings) throws Exception
+	private static AssetConfig initAssetConfig(Server server, Path appPath, Settings appSettings) throws Exception
 	{
 		AssetConfig assetConfig = new AssetConfig();
-		assetConfig.setContentTypeLookup(app.getServer().getContentTypeLookup());
+		assetConfig.setContentTypeLookup(server.getContentTypeLookup());
 		Settings settings = new Settings(appSettings, ConfigKeys.ASSET_PREFIX);
-		for (AssetLocation loc : AssetServices.getLocations(settings, app.getServer(), app.getPath()))
+		for (AssetLocation loc : AssetServices.getLocations(settings, server, appPath))
 			assetConfig.addLocation(loc);
 		return assetConfig;
 	}

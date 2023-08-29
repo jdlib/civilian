@@ -173,7 +173,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 
 	private void initApp(Server.AppInitData data) throws Exception
 	{
-		AppConfig appConfig	= new AppConfig(this, data.settings);
+		AppConfig appConfig	= new AppConfig(getServer(), getPath(), getControllerConfig(), data.settings);
 		try
 		{
 			if (appConfig.getInitException() != null)

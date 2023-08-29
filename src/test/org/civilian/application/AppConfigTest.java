@@ -47,7 +47,7 @@ public class AppConfigTest extends CivTest
 	@Test public void testConfig() throws Exception
 	{
 		TestApp app = new TestApp();
-		AppConfig config = new AppConfig(app, null);
+		AppConfig config = new AppConfig(app.getServer(), app.getPath(), app.getControllerConfig(), null);
 		
 		assertNotNull(config.getSettings());
 		assertNull(config.getVersion());
