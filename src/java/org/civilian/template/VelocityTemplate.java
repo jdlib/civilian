@@ -45,6 +45,6 @@ public class VelocityTemplate extends org.civilian.template.Template
 	}
 	
 	
-	private org.apache.velocity.Template template_;
-	private VelocityContext context_;
+	private final org.apache.velocity.Template template_;
+	private final VelocityContext context_;
 }

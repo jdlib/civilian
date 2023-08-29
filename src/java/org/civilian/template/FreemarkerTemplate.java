@@ -42,6 +42,6 @@ public class FreemarkerTemplate extends org.civilian.template.Template
 	}
 
 	
-	private Object model_;
-	private freemarker.template.Template template_;
+	private final Object model_;
+	private final freemarker.template.Template template_;
 }
