@@ -78,15 +78,7 @@ public class TestRequest extends AbstractRequest
 	 */
 	public TestRequest()
 	{
-		this(createTestApp());
-	}
-	
-	
-	private static Application createTestApp()
-	{
-		TestApp app = new TestApp();
-		app.init();
-		return app;
+		this(new TestApp().init());
 	}
 
 	

@@ -66,16 +66,17 @@ public class TestApp extends Application
 	}
 	
 	
-	public void init()
+	public TestApp init()
 	{
-		init("");
+		return init("");
 	}
 	
 	
-	public void init(String path)
+	public TestApp init(String path)
 	{
 		TestServer server = new TestServer();
 		server.addApp(this, "app", path, null);
+		return this;
 	}
 	
 	
