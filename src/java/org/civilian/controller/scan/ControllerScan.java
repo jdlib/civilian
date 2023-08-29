@@ -49,13 +49,13 @@ public class ControllerScan
 	}
 
 	
-	public ResourceInfo getRootInfo() throws ScanException
+	public ResourceInfo getRootInfo()
 	{
 		return rootInfo_;
 	}
 	
 	
-	public Resource getRootResource() throws ScanException
+	public Resource getRootResource()
 	{
 		return rootInfo_.toResource();
 	}
