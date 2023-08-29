@@ -116,13 +116,12 @@ public class ServerConstGenerator
 	
 	
 	private ServerConstGenerator(Options options) 
-		throws ScanException
 	{
 		options_ = options;
 	}
 	
 	
-	private void run() throws IOException, ScanException
+	private void run() throws IOException
 	{
 		ControllerScan scan = new ControllerScan(
 			options_.app.getControllerConfig(),
@@ -203,5 +202,5 @@ public class ServerConstGenerator
 	}
 	
 	
-	private Options options_;
+	private final Options options_;
 }

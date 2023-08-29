@@ -37,7 +37,6 @@ public class ControllerScan
 		ControllerConfig config,
 		ClassLoader classLoader,
 		boolean verbose) 
-		throws ScanException
 	{
 		classLoader_	= classLoader != null ? classLoader : getClass().getClassLoader();
 		classScan_ 	= new ControllerClassScan(config.getRootPackage(), config.getNaming(), config.getPathParams()); 
@@ -61,7 +60,7 @@ public class ControllerScan
 	}
 
 	
-	private void scanClassPath(String rootPackageName) throws ScanException
+	private void scanClassPath(String rootPackageName)
 	{
 		if (verbose_)
 			log("scanning classes below " + rootPackageName);
