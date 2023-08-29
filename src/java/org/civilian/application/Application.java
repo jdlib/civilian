@@ -163,10 +163,10 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 				log.error(toString() + ": error during forced close()", e2);
 			}
 			
-			processors_ = new ProcessorList(new ErrorProcessor(new ErrorResponseHandler(
-				data.server.develop(),
+			processors_ = new ProcessorList(new ErrorProcessor(createErrorHandler(
 				Response.Status.SC503_SERVICE_UNAVAILABLE,
-				this + " encountered an error during initialization", e)));
+				this + " encountered an error during initialization", 
+				e)));
 		}
 	}
 
