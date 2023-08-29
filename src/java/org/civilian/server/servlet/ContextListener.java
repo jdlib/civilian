@@ -44,7 +44,7 @@ public class ContextListener implements ServletContextListener
 		if (servletContext.getMajorVersion() < 3)
 			servletContext.log("civilian needs a servlet engine >= 3.0");
 		else
-			adapter_ = new ServletServer(servletContext);
+			server_ = new ServletServer(servletContext);
 	}
 	
 	
@@ -53,10 +53,10 @@ public class ContextListener implements ServletContextListener
 	 */
 	@Override public void contextDestroyed(ServletContextEvent event)
 	{
-		if (adapter_ != null)
-			adapter_.contextDestroyed(event);
+		if (server_ != null)
+			server_.contextDestroyed(event);
 	}
 
 	
-	private ServletServer adapter_;
+	private ServletServer server_;
 }
