@@ -633,7 +633,7 @@ public class TestRequest extends AbstractRequest
 	/**
 	 * Returns the request headers.
 	 */
-	@Override public RequestHeaders getHeaders()
+	@Override public Headers getHeaders()
 	{
 		return headers_;
 	}

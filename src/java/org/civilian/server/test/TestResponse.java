@@ -23,9 +23,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import javax.servlet.http.Cookie;
-
 import org.civilian.request.CookieList;
-import org.civilian.request.Request;
 import org.civilian.request.Session;
 import org.civilian.response.AbstractResponse;
 import org.civilian.response.AsyncContext;
@@ -41,18 +39,9 @@ import org.civilian.util.http.HeaderMap;
  */
 public class TestResponse extends AbstractResponse
 {
-	public TestResponse(Request request)
+	public TestResponse(TestRequest request)
 	{
 		super(request);
-	}
-	
-	
-	public TestResponse(TestRequest request, TestResponse response)
-	{
-		this(request);
-		
-		headers_ 		= response.headers_;
-		bufferSize_ 	= response.bufferSize_;
 	}
 	
 	

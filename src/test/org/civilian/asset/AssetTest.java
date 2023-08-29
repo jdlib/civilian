@@ -21,10 +21,8 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import org.junit.Test;
-import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
-import org.civilian.request.Request;
 import org.civilian.response.Response;
 import org.civilian.server.test.TestRequest;
 import org.civilian.server.test.TestResponse;
@@ -96,8 +94,10 @@ public class AssetTest extends CivTest
 	{
 		ContentEncodedAsset asset = new ContentEncodedAsset(new TestAsset("content"), "br");
 		
-		TestResponse response = createTestResponse(null);
-		asset.write(response.getRequest(), response, false);
+		TestRequest request		= new TestRequest();
+		TestResponse response 	= request.getTestResponse();
+		
+		asset.write(request, response, false);
 		
 		assertEquals("br", response.getHeaders().get(HeaderNames.CONTENT_ENCODING));
 	}
@@ -121,9 +121,9 @@ public class AssetTest extends CivTest
 		asset.setContentType(ContentType.TEXT_CSS);
 		asset.setCacheControl(AssetCacheControl.DEFAULT);
 		
-		TestRequest.Headers headers	= new TestRequest.Headers();
-		TestResponse response 		= createTestResponse(headers);
-		Request request		 		= response.getRequest();
+		TestRequest request			= new TestRequest();
+		TestRequest.Headers headers	= request.getHeaders();
+		TestResponse response 		= request.getTestResponse();
 		
 		asset.setLastModified(10000);
 		headers.setDate(HeaderNames.IF_MODIFIED_SINCE, 9500);
@@ -143,14 +143,5 @@ public class AssetTest extends CivTest
 		assertEquals("ISO-8859-1", response.getCharEncoding());
 		assertEquals(Response.Status.SC200_OK, response.getStatus());
 		assertEquals("content", response.getContentText(true));
-	}
-	
-	
-	private TestResponse createTestResponse(TestRequest.Headers headers)
-	{
-		Request request 			= mock(Request.class);
-		TestResponse response 		= new TestResponse(request);
-		when(request.getHeaders()).thenReturn(headers != null ? headers : new TestRequest.Headers());
-		return response;
 	}
 }
