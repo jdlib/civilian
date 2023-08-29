@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.internal.resource.scan;
+package org.civilian.util.classpath;
 
 
 import java.util.Set;
 import org.civilian.CivTest;
-import org.civilian.util.classpath.ClassPathScan;
 import org.junit.Test;
 
 
