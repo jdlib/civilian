@@ -70,11 +70,11 @@ public class StdTest extends CivTest
 	
 	private Exception sendErrorResponse(boolean develop)
 	{
-		ErrorResponseHandler errResponse = new ErrorResponseHandler(develop, 
+		ErrorResponseHandler handler = new ErrorResponseHandler(develop, 
 			Response.Status.INTERNAL_SERVER_ERROR, 
 			"some error", 
 			new RuntimeException("unexpected"));
-		return errResponse.send(out.response);
+		return handler.send(out.response);
 	}
 	
 	
