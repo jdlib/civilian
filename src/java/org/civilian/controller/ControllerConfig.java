@@ -48,7 +48,7 @@ public class ControllerConfig
 	 */
 	public ControllerConfig(String rootPackage, PathParamMap pathParams, ControllerNaming naming)
 	{
-		pathParams_ = pathParams != null ? pathParams : PathParamMap.EMPTY;
+		pathParams_  = pathParams != null ? pathParams : PathParamMap.EMPTY;
 		rootPackage_ = Check.notNull(rootPackage, "rootPackage");
 		naming_ 	 = naming != null ? naming : new ControllerNaming();
 	}
