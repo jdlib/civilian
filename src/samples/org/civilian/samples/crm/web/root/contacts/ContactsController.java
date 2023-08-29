@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package org.civilian.samples.crm.web.root.contacts;
+package org.civilian.samples.crm.web.root.contacts;
 
 
 import org.civilian.samples.crm.web.root.SecuredController;

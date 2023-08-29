@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package org.civilian.samples.guice;
+package org.civilian.samples.guice;
 
 
 import com.google.inject.Guice;

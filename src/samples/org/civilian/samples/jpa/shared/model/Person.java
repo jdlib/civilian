@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package org.civilian.samples.jpa.shared.model;
+package org.civilian.samples.jpa.shared.model;
 
 
 import javax.persistence.Column;
