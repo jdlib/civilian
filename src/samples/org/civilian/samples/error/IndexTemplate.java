@@ -43,7 +43,7 @@ public class IndexTemplate extends Template
 		out.println("different output.");                               // line 20: different output.
 		out.println();
 		out.println("<h3>Injection error of a controller parameter</h3>"); // line 22: <h3>Injection error of a controller parameter</h3>
-		out.println("The expected type of the parameter <code>n</code> is <code>int</code>code> and we pass an invalid value:<p>"); // line 23: The expected type of the parameter <code>n</code> is <code>int</code>code> and we pass an invalid value:<p>
+		out.println("The expected type of the parameter <code>n</code> is <code>int</code> and we pass an invalid value:<p>"); // line 23: The expected type of the parameter <code>n</code> is <code>int</code> and we pass an invalid value:<p>
 		Url paramUrl = html.url(ParamController.class);                 // line 24: @Url paramUrl = html.url(ParamController.class);
 		paramUrl.queryParams().add("n", "a");                           // line 25: @paramUrl.queryParams().add("n", "a");
 		out.print("<a href=\"");                                        // line 26: <a href="

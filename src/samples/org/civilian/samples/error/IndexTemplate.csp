@@ -20,7 +20,7 @@ template() mixin html
 				different output.
 				
 				<h3>Injection error of a controller parameter</h3>
-				The expected type of the parameter <code>n</code> is <code>int</code>code> and we pass an invalid value:<p>
+				The expected type of the parameter <code>n</code> is <code>int</code> and we pass an invalid value:<p>
 				@Url paramUrl = html.url(ParamController.class);
 				@paramUrl.queryParams().add("n", "a");
 				<a href="<%paramUrl%>"><%paramUrl%></a>.
