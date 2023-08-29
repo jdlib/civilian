@@ -2,7 +2,6 @@ package org.civilian.resource.pathparam;
 
 
 import org.civilian.util.PathScanner;
-import org.civilian.util.http.UriEncoder;
 import org.junit.Assert;
 
 
@@ -62,11 +61,10 @@ public class PathParamAssert<T>
 	
 	public PathParamAssert<T> build(T value, String expected)
 	{
-		Assert.assertEquals(expected, param_.buildPath(value, uriEncoder_));
+		Assert.assertEquals(expected, param_.buildPath(value));
 		return this;
 	}
 
 	
 	private final PathParam<T> param_;
-	private final UriEncoder uriEncoder_ = new UriEncoder(); 
 }

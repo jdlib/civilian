@@ -23,98 +23,113 @@ import org.civilian.util.Check;
  * UriEncoder is a helper class to 
  * <a href="https://en.wikipedia.org/wiki/Percent_encoding">percent encode</a>
  * URIs or URLs. Reserved characters in a string are converted in a percent-encoded
- * representation.  
+ * representation.  Non-ASCII characters are converted to their UTF-8 byte representation
+ * and then percent encoded.
  */
 public class UriEncoder
 {
-	/**
-	 * Returns if the string needs encoding.
-	 */
-	public static boolean needsEncoding(String value)
+	private UriEncoder()
 	{
-		Check.notNull(value, "value");
-		return firstToEncode(value) >= 0;
 	}
 	
 	
-	/**
-	 * Creates a UriEncoder and invokes {@link #encode(String)}.
-	 */
-	public static String encodeString(String value)
-	{
-		Check.notNull(value, "value");
-		int n = firstToEncode(value);
-		return n < 0 ? value : new UriEncoder().encodeSlow(value, n);
-	}
-	
-
 	/**
 	 * Encodes a string. 
 	 */
-	public String encode(String value)
+	public static String encode(String s)
 	{
-		Check.notNull(value, "value");
-		int n = firstToEncode(value);
-		return n < 0 ? value : encodeSlow(value, n);
+		Check.notNull(s, "s");
+		int n = s.length();
+		for (int i=0; i<n; ) 
+		{
+		    int codePoint = s.codePointAt(i);
+		    if (needsEncoding(codePoint))
+		    	return encodeSlow(s, i);
+		    i += Character.charCount(codePoint);
+		}
+		return s;
 	}
 	
 	
-	private String encodeSlow(String value, int first)
+	private static String encodeSlow(String s, int start)
 	{
 		StringBuilder out = new StringBuilder();
-		out.append(value, 0, first);
-		encode(value, out, first);
+		out.append(s, 0, start);
+		encode(s, out, start);
 		return out.toString();
 	}
 	
-	
+
 	/**
 	 * Encodes a string and appends the result to a StringBuilder. 
 	 */
-	public void encode(String value, StringBuilder out)
+	public static void encode(String s, StringBuilder out)
 	{
-		Check.notNull(value, "value");
-		encode(value, out, 0);
-	}
-	
-	
-	public void encode(String value, StringBuilder out, int first)
-	{
-		int length = value.length();
-		for (int i=first; i<length; i++)
-		{
-			char c = value.charAt(i);
-			if (needsNoEncoding(c))
-				out.append(c);
-			else
-			{
-				if (percentEncoder_ == null)
-					percentEncoder_ = new PercentEncoder();
-				percentEncoder_.escape(c, out);
-			}
-		}
-	}
-	
-	
-	private static boolean needsNoEncoding(char c)
-	{
-		return (c < 128) && UNRESERVED_CHARS[c];
-	}
-	
-	
-	private static int firstToEncode(String value)
-	{
-		int length = value.length();
-		for (int i=0; i<length; i++)
-		{
-			if (!needsNoEncoding(value.charAt(i)))
-				return i;
-		}
-		return -1;
+		Check.notNull(s, "s");
+		Check.notNull(out, "out");
+		encode(s, out, 0);
 	}
 
 	
-	private PercentEncoder percentEncoder_;
+	private static void encode(String s, StringBuilder out, int start)
+	{
+		int n = s.length();
+		for (int i=start; i<n; ) 
+		{
+		    int codePoint = s.codePointAt(i);
+		    if (needsEncoding(codePoint))
+		    	escapeCodePoint(out, codePoint);
+		    else
+		    	out.append((char)codePoint);
+		    	
+		    i += Character.charCount(codePoint);
+		}
+	}
+	
+	
+	private static boolean needsEncoding(int codePoint)
+	{
+		return (codePoint >= 128) || !UNRESERVED_CHARS[codePoint];
+	}
+	
+	
+	private static void escapeCodePoint(StringBuilder out, int codePoint)
+	{
+        if (codePoint < 0x80)
+        {
+        	// 1 byte, at most 7 bits
+        	escapeByte(out, codePoint);
+        }
+        else if (codePoint < 0x800) 
+        {
+        	// 2 bytes, 11 bits
+        	escapeByte(out, 0xc0 | (codePoint >> 6));
+        	escapeByte(out, 0x80 | (codePoint & 0x3f));
+        } 
+        else if (codePoint < 0x10000)
+        {
+            escapeByte(out, 0xe0 | ((codePoint >> 12)));
+            escapeByte(out, 0x80 | ((codePoint >> 6) & 0x3f));
+            escapeByte(out, 0x80 | (codePoint & 0x3f));
+        }
+        else 
+        {
+        	escapeByte(out, 0xf0 | ((codePoint >> 18)));
+        	escapeByte(out, 0x80 | ((codePoint >> 12) & 0x3f));
+        	escapeByte(out, 0x80 | ((codePoint >>  6) & 0x3f));
+        	escapeByte(out, 0x80 | (codePoint & 0x3f));
+        } 
+	}
+	
+
+	private static void escapeByte(StringBuilder out, int n)
+	{
+		out.append('%');
+		out.append(HEX_DIGITS[n / 16]);
+		out.append(HEX_DIGITS[n % 16]);
+	}
+	
+
     private static final boolean UNRESERVED_CHARS[] = new boolean[128];
 	static
 	{
@@ -129,4 +144,5 @@ public class UriEncoder
 		UNRESERVED_CHARS['~'] = true;
 		UNRESERVED_CHARS['_'] = true;
 	}
+	private static final char HEX_DIGITS[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 }

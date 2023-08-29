@@ -17,7 +17,6 @@ package org.civilian.resource.pathparam;
 
 
 import org.civilian.util.PathScanner;
-import org.civilian.util.http.UriEncoder;
 
 
 /**
@@ -48,9 +47,9 @@ public class SegmentPathParam extends PathParam<String>
 	}
 
 
-	@Override public void buildPath(String value, UriEncoder encoder, StringBuilder path)
+	@Override public void buildPath(String value, StringBuilder path)
 	{
-		buildPathSegment(value, encoder, path);
+		buildPathSegment(value, path);
 	}
 
 	

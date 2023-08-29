@@ -3,7 +3,6 @@ package org.civilian.resource.pathparam;
 
 import org.civilian.type.Type;
 import org.civilian.util.PathScanner;
-import org.civilian.util.http.UriEncoder;
 
 
 public class ConvertingPathParam<T> extends TypeBasedPathParam<T>
@@ -21,9 +20,9 @@ public class ConvertingPathParam<T> extends TypeBasedPathParam<T>
 	}
 	
 
-	@Override public void buildPath(T value, UriEncoder encoder, StringBuilder path)
+	@Override public void buildPath(T value, StringBuilder path)
 	{
-		inner_.buildPath(format(value), encoder, path);
+		inner_.buildPath(format(value), path);
 	}
 	
 

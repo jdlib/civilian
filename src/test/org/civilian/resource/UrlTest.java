@@ -33,7 +33,6 @@ import org.civilian.response.Url;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.TypeLib;
-import org.civilian.util.http.UriEncoder;
 
 
 public class UrlTest extends CivTest
@@ -49,7 +48,6 @@ public class UrlTest extends CivTest
 		when(response_.getResponse()).thenReturn(response_);
 		when(response_.getRequest()).thenReturn(request_);
 		when(response_.getOwner()).thenReturn(respOwner);
-		when(response_.getUriEncoder()).thenReturn(new UriEncoder());
 		when(response_.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
 		when(response_.addSessionId(anyString())).then(new Answer<String>()
 		{

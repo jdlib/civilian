@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.civilian.util.Check;
 import org.civilian.util.PathScanner;
-import org.civilian.util.http.UriEncoder;
 
 
 public class MultiSegmentPathParam extends PathParam<String[]>
@@ -52,10 +51,10 @@ public class MultiSegmentPathParam extends PathParam<String[]>
 	}
 	
 
-	@Override public void buildPath(String[] value, UriEncoder encoder, StringBuilder path)
+	@Override public void buildPath(String[] value, StringBuilder path)
 	{
 		for (String part : value)
-			buildPathSegment(part, encoder, path); 
+			buildPathSegment(part, path); 
 	}
 	
 

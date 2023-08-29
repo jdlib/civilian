@@ -26,7 +26,6 @@ import org.civilian.template.TemplateWriter;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
-import org.civilian.util.http.UriEncoder;
 
 
 /**
@@ -99,12 +98,6 @@ public class ResponseWrapper implements Response
 	@Override public String addSessionId(String url)
 	{
 		return response_.addSessionId(url);
-	}
-
-
-	@Override public UriEncoder getUriEncoder()
-	{
-		return response_.getUriEncoder();
 	}
 
 

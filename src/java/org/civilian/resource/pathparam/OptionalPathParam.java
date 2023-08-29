@@ -4,7 +4,6 @@ package org.civilian.resource.pathparam;
 import java.util.Optional;
 
 import org.civilian.util.PathScanner;
-import org.civilian.util.http.UriEncoder;
 
 
 /**
@@ -34,10 +33,10 @@ public class OptionalPathParam<T> extends PathParam<Optional<T>>
 	}
 	
 	
-	@Override public void buildPath(Optional<T> value, UriEncoder encoder, StringBuilder path)
+	@Override public void buildPath(Optional<T> value, StringBuilder path)
 	{
 		if (value.isPresent())
-			inner_.buildPath(value.get(), encoder, path);
+			inner_.buildPath(value.get(), path);
 	}
 	
 

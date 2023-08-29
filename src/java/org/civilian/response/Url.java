@@ -448,12 +448,12 @@ public class Url implements PathParamProvider, ResponseProvider
 		}
 
 		
-		void append(UriEncoder encoder, StringBuilder s)
+		void append(StringBuilder s)
 		{
-			encoder.encode(name_, s);
+			UriEncoder.encode(name_, s);
 			s.append('=');
 			if (value_ != null)
-				encoder.encode(value_, s);
+				UriEncoder.encode(value_, s);
 		}
 		
 		
@@ -668,7 +668,7 @@ public class Url implements PathParamProvider, ResponseProvider
 			if (prefix_ != null)
 				s.append(prefix_);
 			if (resource_ != null)
-				resource_.getRoute().build(pathParams_, response_.getUriEncoder(), s);
+				resource_.getRoute().build(pathParams_, s);
 			if (additionalPath_ != null)
 				additionalPath_.addTo(s);
 		}
@@ -680,7 +680,7 @@ public class Url implements PathParamProvider, ResponseProvider
 				for (int i=0; i<n; i++)
 				{
 					s.append(i == 0 ? '?' : '&');
-					queryParams_.get(i).append(response_.getUriEncoder(), s);
+					queryParams_.get(i).append(s);
 				}
 			}
 			if (fragment_ != null)

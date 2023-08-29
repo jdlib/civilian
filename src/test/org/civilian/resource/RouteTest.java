@@ -20,7 +20,6 @@ import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParams;
-import org.civilian.util.http.UriEncoder;
 
 
 public class RouteTest extends CivTest
@@ -28,7 +27,6 @@ public class RouteTest extends CivTest
 	public static final PathParam<String> PARAM1 = PathParams.forSegment("p1");
 	public static final PathParam<String> PARAM2 = PathParams.forSegment("p2");
 	public static final PathParam<String> PARAM3 = PathParams.forSegment("p3");
-	public static final UriEncoder ENCODER = new UriEncoder();
 	
 	
 	/**
@@ -57,7 +55,7 @@ public class RouteTest extends CivTest
 	@Test public void testRootRoute()
 	{
 		Route route = Route.root();
-		assertEquals("/", route.build(null, ENCODER));
+		assertEquals("/", route.build(null));
 		
 		assertTrue(route.isRoot());
 		assertEquals(1, route.size());
@@ -72,7 +70,7 @@ public class RouteTest extends CivTest
 
 		Route route2 = route.addSegment("def");
 		assertNotSame(route2, route);
-		assertEquals("/def", route2.build(null, ENCODER));
+		assertEquals("/def", route2.build(null));
 	}
 
 	
@@ -82,7 +80,7 @@ public class RouteTest extends CivTest
 	@Test public void testConstantRoute()
 	{
 		Route route = assertCreate("/abc", ConstantRoute.class, Route.constant("/abc"));
-		assertEquals("/abc", route.build(null, ENCODER));
+		assertEquals("/abc", route.build(null));
 		
 		assertFalse(route.isRoot());
 		assertEquals(1, route.size());
@@ -97,19 +95,19 @@ public class RouteTest extends CivTest
 
 		Route route2 = route.addSegment("def");
 		assertNotSame(route2, route);
-		assertEquals("/abc/def", route2.build(null, ENCODER));
+		assertEquals("/abc/def", route2.build(null));
 	
 		assertCreate("/abc/{p1}", RouteList.class, route.addPathParam(PARAM1));
 
 		route = assertCreate("http://www.test.com/", ConstantRoute.class, Route.constant("http://www.test.com/"));
 		route2 = route.addSegment("def");
 		assertNotSame(route2, route);
-		assertEquals("http://www.test.com/def", route2.build(null, ENCODER));
+		assertEquals("http://www.test.com/def", route2.build(null));
 		assertTrue(route2 instanceof ConstantRoute);
 		
 		// test escapng
 		Route routeEscaped = Route.root().addSegment("x y");  
-		assertEquals("/x%20y", routeEscaped.build(null, ENCODER));
+		assertEquals("/x%20y", routeEscaped.build(null));
 	}
 	
 	
@@ -120,17 +118,17 @@ public class RouteTest extends CivTest
 	{
 		Route url1 = Route.constant("http://test.com");
 		Route url2 = Route.constant("http://test.com/");
-		assertEquals("http://test.com",  url1.build(null, ENCODER));
-		assertEquals("http://test.com/", url1.build(null, ENCODER));
+		assertEquals("http://test.com",  url1.build(null));
+		assertEquals("http://test.com/", url1.build(null));
 		
-		assertEquals("http://test.com/customers",  url1.addSegment("/customers").build(null, ENCODER));
-		assertEquals("http://test.com/customers/", url1.addSegment("/customers/").build(null, ENCODER));
-		assertEquals("http://test.com/customers",  url2.addSegment("/customers").build(null, ENCODER));
-		assertEquals("http://test.com/customers/", url2.addSegment("/customers/").build(null, ENCODER));
+		assertEquals("http://test.com/customers",  url1.addSegment("/customers").build(null));
+		assertEquals("http://test.com/customers/", url1.addSegment("/customers/").build(null));
+		assertEquals("http://test.com/customers",  url2.addSegment("/customers").build(null));
+		assertEquals("http://test.com/customers/", url2.addSegment("/customers/").build(null));
 		
 		Object[] params = new Object[] { "pp" }; 
-		assertEquals("http://test.com/pp",  url1.addPathParam(PARAM1).build(params, ENCODER));
-		assertEquals("http://test.com/pp",  url2.addPathParam(PARAM1).build(params, ENCODER));
+		assertEquals("http://test.com/pp",  url1.addPathParam(PARAM1).build(params));
+		assertEquals("http://test.com/pp",  url2.addPathParam(PARAM1).build(params));
 	}
 	
 	
@@ -142,11 +140,11 @@ public class RouteTest extends CivTest
 	{
 		StringBuilder s = new StringBuilder("http://test.com/");
 		
-		Route.constant("/customers/").build(null, ENCODER);
+		Route.constant("/customers/").build(null);
 		assertEquals("http://test.com/customers/", s.toString());
 
 		Object[] params = new Object[] { "pp" }; 
-		Route.root().addPathParam(PARAM1).build(params, ENCODER);
+		Route.root().addPathParam(PARAM1).build(params);
 		assertEquals("http://test.com/pp", s.toString());
 	}
 	
@@ -165,7 +163,7 @@ public class RouteTest extends CivTest
 		Object[] params = new Object[1]; 
 		try
 		{
-			assertEquals("ignore", route.build(params, ENCODER));
+			assertEquals("ignore", route.build(params));
 			fail();
 		}
 		catch(IllegalStateException e)
@@ -176,7 +174,7 @@ public class RouteTest extends CivTest
 		try
 		{
 			params[0] = Boolean.TRUE; // String is expected
-			assertEquals("ignore", route.build(params, ENCODER));
+			assertEquals("ignore", route.build(params));
 			fail();
 		}
 		catch(IllegalArgumentException e)
@@ -184,7 +182,7 @@ public class RouteTest extends CivTest
 		}
 
 		params[0] = "www";
-		assertEquals("/www", route.build(params, ENCODER));
+		assertEquals("/www", route.build(params));
 		
 		assertEquals(1, route.getPathParamCount());
 		assertEquals(PARAM1, route.getPathParam(0));
@@ -207,7 +205,7 @@ public class RouteTest extends CivTest
 		params[1] = "yyy";
 		assertFalse(route.isRoot());
 		assertEquals(3, route.size());
-		assertEquals("/www/x/yyy", route.build(params, ENCODER));
+		assertEquals("/www/x/yyy", route.build(params));
 		assertEquals(2, route.getPathParamCount());
 		assertEquals(PARAM1, route.getPathParam(0));
 		assertEquals(PARAM2, route.getPathParam(1));
@@ -238,7 +236,7 @@ public class RouteTest extends CivTest
 
 		Object[] params = new Object[1]; 
 		params[0] = "%/ ";
-		assertEquals("/%25%2F%20/x", route.build(params, ENCODER));
+		assertEquals("/%25%2F%20/x", route.build(params));
 	}
 	
 	

@@ -37,7 +37,7 @@ public class UriEncoderTest extends CivTest
 	
 	private void assertEncode(String in, String expectedOut)
 	{
-		String actualOut = UriEncoder.encodeString(in);
+		String actualOut = UriEncoder.encode(in);
 		assertEquals(expectedOut, actualOut); 
 	}
 }

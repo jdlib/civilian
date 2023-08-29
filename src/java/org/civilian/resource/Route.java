@@ -70,7 +70,7 @@ public abstract class Route
 	public Route addSegment(String segment)
 	{
 		Check.notNull(segment, "segment");
-		return segment.length() == 0 ? this : addEscapedSegment(UriEncoder.encodeString(segment));
+		return segment.length() == 0 ? this : addEscapedSegment(UriEncoder.encode(segment));
 	}
 
 	
@@ -139,10 +139,10 @@ public abstract class Route
 	 * 		equal {@link #getPathParamCount()}.
 	 * @return the path
 	 */
-	public String build(Object[] pathParamValues, UriEncoder encoder)
+	public String build(Object[] pathParamValues)
 	{
 		StringBuilder s = new StringBuilder();
-		build(pathParamValues, encoder, s);
+		build(pathParamValues, s);
 		return s.toString();
 	}
 		
@@ -151,7 +151,7 @@ public abstract class Route
 	 * Builds a path string from the route, using the given PathParam values and UriEncoder.
 	 * @param s receives the constructed path  
 	 */
-	public abstract void build(Object[] pathParams, UriEncoder encoder, StringBuilder s);
+	public abstract void build(Object[] pathParams, StringBuilder s);
 
 	
 	/**
@@ -212,7 +212,7 @@ class RootRoute extends Route
 	}
 	
 
-	@Override public void build(Object[] pathParams, UriEncoder encoder, StringBuilder s)
+	@Override public void build(Object[] pathParams, StringBuilder s)
 	{
 		if (s.length() == 0)
 			s.append('/');
@@ -276,7 +276,7 @@ class ConstantRoute extends Route
 	}
 
 	
-	@Override public void build(Object[] pathParams, UriEncoder encoder, StringBuilder s)
+	@Override public void build(Object[] pathParams, StringBuilder s)
 	{
 		removeLastSlash(s);
 		s.append(path_);
@@ -333,7 +333,7 @@ class PathParamRoute<T> extends Route
 
 	
 	@SuppressWarnings("unchecked")
-	@Override public void build(Object[] pathParams, UriEncoder encoder, StringBuilder s)
+	@Override public void build(Object[] pathParams, StringBuilder s)
 	{
 		Check.notNull(pathParams, "pathParams");
 		Object value = pathParams[ppIndex_];
@@ -342,7 +342,7 @@ class PathParamRoute<T> extends Route
 		if (!ClassUtil.isA(value, pathParam_.getType()))
 			throw new IllegalArgumentException("path parameter '" + value + " does not match the type of path parameter '" + pathParam_.toDetailedString() + "'"); 
 		removeLastSlash(s);
-		pathParam_.buildPath((T)value, encoder, s);
+		pathParam_.buildPath((T)value, s);
 	}
 	
 
@@ -440,10 +440,10 @@ class RouteList extends Route
 	}
 
 	
-	@Override public void build(Object[] pathParams, UriEncoder encoder, StringBuilder s)
+	@Override public void build(Object[] pathParams, StringBuilder s)
 	{
 		for (int i=0; i<list_.length; i++)
-			list_[i].build(pathParams, encoder, s);
+			list_[i].build(pathParams, s);
 	}
 	
 	

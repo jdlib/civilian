@@ -3,7 +3,6 @@ package org.civilian.resource.pathparam;
 
 import org.civilian.util.Check;
 import org.civilian.util.PathScanner;
-import org.civilian.util.http.UriEncoder;
 
 
 /**
@@ -33,10 +32,10 @@ public class PrecededPathParam<T> extends PathParam<T>
 	}
 	
 	
-	@Override public void buildPath(T value, UriEncoder encoder, StringBuilder path)
+	@Override public void buildPath(T value, StringBuilder path)
 	{
-		buildPathSegment(segment_, encoder, path);
-		inner_.buildPath(value, encoder, path);
+		buildPathSegment(segment_, path);
+		inner_.buildPath(value, path);
 	}
 	
 	

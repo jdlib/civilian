@@ -40,7 +40,6 @@ import org.civilian.template.TemplateWriter;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.service.LocaleServiceProvider;
 import org.civilian.util.Check;
-import org.civilian.util.http.UriEncoder;
 
 
 /**
@@ -250,13 +249,6 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * need to be included in the URL.
 	 */
 	public abstract String addSessionId(String url);
-	
-
-	/**
-	 * Returns a UriEncoder object which can be used to percent encode all characters of URLs or URIs which
-	 * are reserved characters and may not be used in a URL.
-	 */
-	public abstract UriEncoder getUriEncoder();
 
 	
 	//------------------------------

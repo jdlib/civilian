@@ -66,8 +66,6 @@ public class AbstractResponseTest extends CivTest
 		assertSame(app, 		response.getOwner());
 		assertSame(response, 	response.getResponse());
 		
-		assertNotNull(response.getUriEncoder());
-
 		LocaleService lsEn = new LocaleService(Locale.ENGLISH);
 		LocaleService lsDe = new LocaleService(Locale.GERMAN);
 		request.setLocaleService(lsEn);

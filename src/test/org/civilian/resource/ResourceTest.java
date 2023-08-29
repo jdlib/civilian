@@ -71,7 +71,7 @@ public class ResourceTest extends CivTest
 		Resource root  = new Resource();
 		Resource child = new Resource(root, "x z");
 		assertEquals("x z", child.getSegment());
-		assertEquals("/x%20z", child.getRoute().build(null, null));
+		assertEquals("/x%20z", child.getRoute().build(null));
 	}
 	
 	

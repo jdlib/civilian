@@ -87,12 +87,11 @@ public abstract class PathParam<T>
 	 * The returned path should be a valid path string according to the rules
 	 * of {@link Path}.
 	 * @param value path parameter value
-	 * @param encoder a UriEncoder which can be used to encode reserved characters.
 	 */
-	public String buildPath(T value, UriEncoder encoder)
+	public String buildPath(T value)
 	{
 		StringBuilder s = new StringBuilder();
-		buildPath(value, encoder, s);
+		buildPath(value, s);
 		return s.toString();
 	}
 
@@ -102,20 +101,19 @@ public abstract class PathParam<T>
 	 * The returned path should be a valid path string according to the rules
 	 * of {@link Path}.
 	 * @param value path parameter value
-	 * @param encoder a UriEncoder which can be used to encode reserved characters
 	 * @param path the path of the pattern is appended to the StringBuilder 
 	 */
-	public abstract void buildPath(T value, UriEncoder encoder, StringBuilder path);
+	public abstract void buildPath(T value, StringBuilder path);
 
 	
 	/**
 	 * Helper method foe buildPath. Appends a single segment to the path.
 	 */
-	protected void buildPathSegment(String segment, UriEncoder encoder, StringBuilder path)
+	protected void buildPathSegment(String segment, StringBuilder path)
 	{
 		Check.notEmpty(segment, "segment");
 		path.append('/');
-		encoder.encode(segment, path);
+		UriEncoder.encode(segment, path);
 	}
 	
 

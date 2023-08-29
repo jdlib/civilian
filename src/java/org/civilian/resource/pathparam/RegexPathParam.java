@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
 
 import org.civilian.util.Check;
 import org.civilian.util.PathScanner;
-import org.civilian.util.http.UriEncoder;
 
 
 /**
@@ -79,10 +78,10 @@ public class RegexPathParam extends PathParam<String>
 	/**
 	 * Builds a string path for the path parameter, given the value of a path parameter.
 	 */
-	@Override public void buildPath(String value, UriEncoder encoder, StringBuilder path)
+	@Override public void buildPath(String value, StringBuilder path)
 	{
 		String segment = buildPattern_.replace("*", value);
-		buildPathSegment(segment, encoder, path);
+		buildPathSegment(segment, path);
 	}
 	
 	

@@ -434,32 +434,6 @@ public class WebUrl implements PathParamProvider
 	
 	
 	//---------------------------------
-	// uriencoder
-	//---------------------------------
-
-	
-	/**
-	 * Sets the UriEncoder which should be used to encode parameters.
-	 */
-	public WebUrl setUriEncoder(UriEncoder uriEncoder)
-	{
-		uriEncoder_ = uriEncoder;
-		return this;
-	}
-	
-
-	/**
-	 * Returns the UriEncoder which should be used to encode parameters.
-	 */
-	public UriEncoder getUriEncoder()
-	{
-		if (uriEncoder_ == null)
-			uriEncoder_ = new UriEncoder();
-		return uriEncoder_;
-	}
-	
-	
-	//---------------------------------
 	// inner classes
 	//---------------------------------
 	
@@ -553,12 +527,12 @@ public class WebUrl implements PathParamProvider
 		}
 
 		
-		void append(UriEncoder encoder, StringBuilder s)
+		void append(StringBuilder s)
 		{
-			encoder.encode(name_, s);
+			UriEncoder.encode(name_, s);
 			s.append('=');
 			if (value_ != null)
-				encoder.encode(value_, s);
+				UriEncoder.encode(value_, s);
 		}
 		
 		
@@ -579,7 +553,7 @@ public class WebUrl implements PathParamProvider
 	{
 		StringBuilder s = new StringBuilder();
 		
-		route_.build(pathParams_, getUriEncoder(), s);
+		route_.build(pathParams_, s);
 		if (additionalPath_ != null)
 			additionalPath_.addTo(s);
 		if (params_ != null)
@@ -588,7 +562,7 @@ public class WebUrl implements PathParamProvider
 			for (int i=0; i<n; i++)
 			{
 				s.append(i == 0 ? '?' : '&');
-				params_.get(i).append(getUriEncoder(), s);
+				params_.get(i).append(s);
 			}
 		}
 		if (fragment_ != null)
@@ -601,7 +575,6 @@ public class WebUrl implements PathParamProvider
 	}
 	
 	
-	private UriEncoder uriEncoder_;
 	private String fragment_;
 	private Route route_;
 	private Path additionalPath_;

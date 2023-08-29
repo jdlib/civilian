@@ -23,7 +23,6 @@ import org.civilian.type.DateType;
 import org.civilian.type.TypeLib;
 import org.civilian.util.Check;
 import org.civilian.util.PathScanner;
-import org.civilian.util.http.UriEncoder;
 
 
 /**
@@ -84,7 +83,7 @@ public class YMDPathParam<T> extends PathParam<T>
 	/**
 	 * Implementation.
 	 */
-	@Override public void buildPath(T value, UriEncoder encoder, StringBuilder path)
+	@Override public void buildPath(T value, StringBuilder path)
 	{
 		DateType<T> dateType = type_;
 		appendSegment(dateType.getYear(value),  4, path);

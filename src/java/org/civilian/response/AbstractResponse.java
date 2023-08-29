@@ -35,7 +35,6 @@ import org.civilian.template.TemplateWriter;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
 import org.civilian.util.Iterators;
-import org.civilian.util.http.UriEncoder;
 
 
 /**
@@ -86,15 +85,6 @@ public abstract class AbstractResponse implements Response
 	}
 
  
-	@Override public UriEncoder getUriEncoder()
-	{
-		Extension ext = writeExt();
-		if (ext.uriEncoder == null)
-			ext.uriEncoder = new UriEncoder(); 
-		return ext.uriEncoder;
-	}
-
-	
 	@Override public LocaleService getLocaleService()
 	{
 		return localeService_ != null ? localeService_ : request_.getLocaleService();
@@ -615,7 +605,6 @@ public abstract class AbstractResponse implements Response
 //			attributes			= other.attributes;
 //		}
 
-		public UriEncoder uriEncoder;
 		public ResponseInterceptor<OutputStream> streamInterceptor;
 		public ResponseInterceptor<Writer> writerInterceptor;
 		public HashMap<String, Object> attributes;
