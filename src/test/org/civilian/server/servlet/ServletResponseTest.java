@@ -57,7 +57,7 @@ public class ServletResponseTest extends CivTest
 	private void init()
 	{
 		request  = new SpRequestAdapter(app, servletReq, servletResp);
-		response = new ServletResponseAdapter(request, servletResp);
+		response = new ServletResponseAdapter(request);
 	}
 	
 	

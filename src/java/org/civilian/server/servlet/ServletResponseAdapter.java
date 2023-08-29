@@ -43,10 +43,10 @@ class ServletResponseAdapter extends AbstractResponse
 	/**
 	 * Creates a new ServletResponseAdapter.
 	 */
-	public ServletResponseAdapter(ServletRequestAdapter request, HttpServletResponse response)
+	public ServletResponseAdapter(ServletRequestAdapter request)
 	{
 		super(request);
-		servletResponse_ = response;
+		servletResponse_ = request.getServletResponse();
 	}
 	
 

@@ -57,11 +57,11 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 	/**
 	 * Creates the RequestAdapter.
 	 */
-	public ServletRequestAdapter(Application app, HttpServletRequest httpRequest, HttpServletResponse httpResponse)
+	public ServletRequestAdapter(Application app, HttpServletRequest servletRequest, HttpServletResponse servletResponse)
 	{
-		super(app, httpRequest.getPathInfo());
-		servletRequest_	= httpRequest;
-		response_ 		= new ServletResponseAdapter(this, httpResponse);
+		super(app, servletRequest.getPathInfo());
+		servletRequest_		= servletRequest;
+		servletResponse_	= servletResponse;
 		initEncoding();
 	}
 	
@@ -260,7 +260,7 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 
 	@Override public boolean authenticate() throws IOException, ServletException
 	{
-		return servletRequest_.authenticate(response_.getServletResponse());
+		return servletRequest_.authenticate(servletResponse_);
 	}
 
 
@@ -464,9 +464,9 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 	}
 	
 	
-	public ServletResponseAdapter getResponse()
+	public HttpServletResponse getServletResponse()
 	{
-		return response_;
+		return servletResponse_;
 	}
 	
 	
@@ -480,7 +480,7 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 
 
 	protected final HttpServletRequest servletRequest_;
-	protected final ServletResponseAdapter response_;
+	protected final HttpServletResponse servletResponse_;
 	private Headers headers_;
 	private static final java.lang.reflect.Method GETCONTENT_LENGTH_LONG_METHOD;
 	static 
