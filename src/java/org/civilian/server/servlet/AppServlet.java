@@ -26,7 +26,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.civilian.Logs;
 import org.civilian.Version;
 import org.civilian.application.Application;

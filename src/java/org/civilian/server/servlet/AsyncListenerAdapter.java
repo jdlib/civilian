@@ -17,7 +17,6 @@ package org.civilian.server.servlet;
 
 
 import java.io.IOException;
-
 import org.civilian.response.AsyncContext;
 import org.civilian.response.AsyncEvent;
 import org.civilian.response.AsyncListener;

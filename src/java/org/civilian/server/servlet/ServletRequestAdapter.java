@@ -28,7 +28,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.civilian.Logs;
 import org.civilian.application.Application;
 import org.civilian.content.ContentType;
