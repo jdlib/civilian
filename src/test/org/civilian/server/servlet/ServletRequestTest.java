@@ -73,8 +73,9 @@ public class ServletRequestTest extends CivTest
 	
 	@Test public void testAccessors() throws Exception
 	{
-		when(servletReq.getMethod()).thenReturn("GET");
 		init();
+
+		when(servletReq.getMethod()).thenReturn("GET");
 
 		assertSame(app,			request.getOwner());
 		assertSame(servletReq,	request.getServletRequest());
@@ -96,6 +97,7 @@ public class ServletRequestTest extends CivTest
 		when(servletReq.getRequestURL()).thenReturn(new StringBuffer("http:test//app/alpha"));
 		when(servletReq.getParameterNames()).thenReturn(getEnum("a"));
 		when(servletReq.getParameterValues("a")).thenReturn(new String[] { "1", "2" });
+
 		init();
 
 		assertEquals("/app/alpha", 	request.getPath().toString());
@@ -122,11 +124,12 @@ public class ServletRequestTest extends CivTest
 	
 	@Test public void testParameters() throws Exception
 	{
+		init();
+
 		String[] aParamValues = { "1", "2"};
 		when(servletReq.getParameter("id")).thenReturn("15");
 		when(servletReq.getParameter("a")).thenReturn("1");
 		when(servletReq.getParameterValues("a")).thenReturn(aParamValues);
-		init();
 
 		assertEquals("15",	request.getParameter("id"));
 		assertEquals(15,	request.getParameter("id", TypeLib.INTEGER).getValue().intValue());
@@ -139,13 +142,13 @@ public class ServletRequestTest extends CivTest
 	
 	@Test public void testMatrixParams() throws Exception
 	{
-		String[] aParamValues = { "1", "2"};
-
 		// test extension and matrix parameters
 		when(servletReq.getPathInfo()).thenReturn("/alpha.html");
 		when(servletReq.getRequestURI()).thenReturn("/app;ignored=1/alpha.html;x=y;z;mp=1;mp=2");
-		init();
 
+		init();
+		
+		String[] aParamValues = { "1", "2"};
 		assertEquals("/app/alpha.html", request.getPath().toString());
 		assertEquals("y",				request.getMatrixParam("x"));
 		assertEquals("",				request.getMatrixParam("z"));
@@ -191,6 +194,8 @@ public class ServletRequestTest extends CivTest
 	
 	@Test public void testHeaders() throws Exception
 	{
+		init();
+
 		String[] array = new String[] { "1", "2" }; 
 		when(servletReq.getHeader("x")).thenReturn("abc");
 		when(servletReq.getHeader("i")).thenReturn("123");
@@ -198,7 +203,6 @@ public class ServletRequestTest extends CivTest
 		when(servletReq.getDateHeader("l")).thenReturn(3344L);
 		when(servletReq.getHeaders("a")).thenReturn(getEnum(array));
 		when(servletReq.getHeaderNames()).thenReturn(getEnum("b", "c"));
-		init();
 		
 		RequestHeaders headers = request.getHeaders();
 		
@@ -231,8 +235,9 @@ public class ServletRequestTest extends CivTest
 	
 	@Test public void testLocale() throws Exception
 	{
-		when(servletReq.getPathInfo()).thenReturn("/alpha");
 		init();
+
+		when(servletReq.getPathInfo()).thenReturn("/alpha");
 
 		assertSame(Locale.ENGLISH, request.getAcceptedLocale());
 		verify(servletReq).getHeader("Accept-Language");
@@ -296,8 +301,9 @@ public class ServletRequestTest extends CivTest
 	
 	@Test public void testMultiPart() throws Exception
 	{
-		when(servletReq.getPathInfo()).thenReturn("/multi");
 		init();
+
+		when(servletReq.getPathInfo()).thenReturn("/multi");
 
 		// uploads
 		assertFalse(request.hasUploads());
@@ -336,6 +342,8 @@ public class ServletRequestTest extends CivTest
 
 	@Test public void testRequestInfos()
 	{
+		init();
+
 		when(servletReq.getProtocol()).thenReturn("HTTP 1.0");
 		when(servletReq.getScheme()).thenReturn("http");
 		when(servletReq.getProtocol()).thenReturn("http");
@@ -348,7 +356,6 @@ public class ServletRequestTest extends CivTest
 		when(servletReq.getLocalAddr()).thenReturn("5.5.5.5");
 		when(servletReq.getLocalName()).thenReturn("local");
 		when(servletReq.getLocalPort()).thenReturn(70);
-		init();
 
 		assertEquals("http://host:8080", request.getServerInfo().toString());
 		assertEquals("http", request.getServerInfo().getProtocol());
