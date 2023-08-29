@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package org.civilian.samples.chat;
+package org.civilian.samples.chat;
 
 
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
 import org.civilian.application.AppConfig;
 import org.civilian.application.Application;
 import org.civilian.response.AsyncContext;

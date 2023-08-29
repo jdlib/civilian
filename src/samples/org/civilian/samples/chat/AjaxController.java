@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package org.civilian.samples.chat;
+package org.civilian.samples.chat;
 
 
 import java.io.PrintWriter;
-
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Post;
 import org.civilian.annotation.Produces;
@@ -52,10 +51,9 @@ public class AjaxController extends Controller
 	
 	@Post @Produces("text/plain") public void post(
 		@Parameter("action") String action,
-		@Parameter("name") String name) throws Exception
+		@Parameter("name") String name,
+		@Parameter("message") String message) throws Exception
 	{
-		Response response = getResponse();
-
 		String broadcastMsg = null;
 		
 		if ("login".equals(action))
@@ -65,12 +63,11 @@ public class AjaxController extends Controller
 		}
 		else if ("post".equals(action))
 		{
-			String message = getRequest().getParameter("message");
 			if ((name != null) && (message != null))
 				broadcastMsg = createMessageScript(name, message);
 		}
 		
-			
+		Response response = getResponse();
 		if (broadcastMsg != null)
 		{
 			getApplication().broadcastMessage(broadcastMsg);

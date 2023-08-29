@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package org.civilian.samples.chat;
+package org.civilian.samples.chat;
 
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
-
 import org.civilian.response.AsyncContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +67,6 @@ public class UpdateThread extends Thread
 	}
 
 
-	private BlockingQueue<String> messages_;
-	private Queue<AsyncContext> asyncContexts_;
+	private final BlockingQueue<String> messages_;
+	private final Queue<AsyncContext> asyncContexts_;
 }
