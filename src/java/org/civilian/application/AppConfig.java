@@ -27,7 +27,9 @@ import org.civilian.asset.service.AssetLocation;
 import org.civilian.asset.service.AssetServices;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
+import org.civilian.content.GsonJsonSerializer;
 import org.civilian.content.JaxbXmlSerializer;
+import org.civilian.content.TextSerializer;
 import org.civilian.controller.ControllerFactory;
 import org.civilian.request.Request;
 import org.civilian.resource.Resource;
@@ -36,6 +38,7 @@ import org.civilian.text.msg.MsgBundleFactory;
 import org.civilian.text.service.LocaleServiceList;
 import org.civilian.type.TypeLib;
 import org.civilian.util.Check;
+import org.civilian.util.ClassUtil;
 import org.civilian.util.Settings;
 
 
@@ -99,6 +102,7 @@ public class AppConfig
 			supportedLocales_		= initLocales(settings);
 			uploadConfig_ 			= initUploadConfig(settings); 
 			reloadConfig_			= initReloadConfig(app, settings);
+			initDefaultContentSerializers();
 			
 			// these calls might throw exceptions
 			assetConfig_			= initAssetConfig(app, settings);
@@ -110,6 +114,16 @@ public class AppConfig
 		}
 	}
 	
+	
+	private void initDefaultContentSerializers()
+	{
+		if (getContentSerializer(ContentType.TEXT_PLAIN) == null)
+			contentSerializers_.put(ContentType.TEXT_PLAIN.getValue(), new TextSerializer());
+		if ((getContentSerializer(ContentType.APPLICATION_JSON) == null) && 
+			ClassUtil.getPotentialClass("com.google.gson.Gson", Object.class, null) != null)
+			contentSerializers_.put(ContentType.APPLICATION_JSON.getValue(), new GsonJsonSerializer());
+	}
+
 	
 	private static Locale[] initLocales(Settings settings)
 	{

@@ -1,7 +1,7 @@
 package org.civilian.response;
 
 
-import org.civilian.content.ContentSerializer;
+import org.civilian.content.ContentSerializerConfig;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
 import org.civilian.resource.ResourceHandler;
@@ -14,22 +14,19 @@ import org.civilian.text.service.LocaleServiceList;
 public interface ResponseOwner extends PathProvider
 {
 	/**
-	 * Returns the default encoding for textual content of responses.
+	 * @return the default encoding for textual content of responses.
 	 */
 	public String getDefaultCharEncoding();
 	
 	
 	/**
-	 * Returns a ContentSerializer for the content type.
-	 * @return the ContentSerializer or null if no suitable serializer is available
-	 * By default the application possesses ContentSerializers for text/plain and
-	 * application/json (based on GSON).
+	 * @return a ContentSerializerMap.
 	 */
-	public ContentSerializer getContentSerializer(String contentType);
+	public ContentSerializerConfig getContentSerializers();
 
 
 	/**
-	 * Returns a LocaleServiceList.
+	 * @return a LocaleServiceList.
 	 */
 	public LocaleServiceList getLocaleServices();
 	

@@ -602,7 +602,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 		if ((contentType == null) && (type == String.class))
 			contentType = ContentType.TEXT_PLAIN;
 			
-		ContentSerializer reader = getOwner().getContentSerializer(contentType);
+		ContentSerializer reader = getOwner().getContentSerializers().get(contentType);
 		if (reader == null)
 			throw new IllegalStateException("don't know how to read content with content type '" + contentType + "'");
 		

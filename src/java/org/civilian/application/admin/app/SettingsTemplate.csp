@@ -1,8 +1,9 @@
-import java.util.Iterator
+import java.util.Map
 import org.civilian.application.Application
 import org.civilian.processor.Processor
 import org.civilian.processor.ProcessorList
 import org.civilian.text.service.LocaleServiceList
+import org.civilian.content.ContentSerializer
 
 
 template(Application app) mixin html
@@ -42,17 +43,34 @@ template(Application app) mixin html
 		</td>
 		<td>org.civilian.Application.getLocaleServices().getLocale(i)</td>
 	</tr>
-	<tr>
-		<td>ContentSerializers</td>
-		<td>
-			@Iterator<String> cts = app.getContentSerializerTypes();
-			@for (int i=0; cts.hasNext(); i++)
-				@String ct = cts.next();
-				<%?i > 0%><br><%?%><%ct%>: <%app.getContentSerializer(ct).getClass().getName()%> 
-		</td>
-		<td>org.civilian.Application.getContentSerializerTypes()</td>
-	</tr>
 	</table>
+	@printProcessors(app.getProcessors());
+	@printContentSerializers(app.getContentSerializers().toMap());
+}}
+
+
+private void printContentSerializers(Map<String,ContentSerializer> map)
+{{
+	<h4>Content Serializers</h4>
+	<table class="table table-striped table-bordered table-condensed">
+	<tr>
+		<th>#</th>
+		<th>Content Type</th>
+		<th>Class</th>
+	</tr>
+	@int i=1;
+	@for (Map.Entry<String,ContentSerializer> entry : app.getContentSerializers().toMap().entrySet())
+		<tr>
+			<td><%i++%></td>
+			<td><%entry.getKey()%></td>
+			<td><%entry.getValue().getClass().getName()%></td>
+		</tr>
+	</table>
+}}
+
+
+private void printProcessors(ProcessorList processors)
+{{
 	<h4>Processor Pipeline</h4>
 	<table class="table table-striped table-bordered table-condensed">
 	<tr>
@@ -61,12 +79,11 @@ template(Application app) mixin html
 		<th>Info</th>
 		<th>Class</th>
 	</tr>
-	@ProcessorList processors = app.getProcessors();
-	@for (int i=0; i<processors.size(); i++)
-		@Processor processor = processors.get(i);
-		@String[] infos      = processor.getInfo().split("\\n"); 
+	@int i=1;
+	@for (Processor processor : processors)
+		@String[] infos = processor.getInfo().split("\\n"); 
 		<tr>
-			<td><%i+1%></td>
+			<td><%i++%></td>
 			<td><%processor.getClass().getSimpleName()%></td>
 			<td>
 				@for (int j=0; j<infos.length; j++)

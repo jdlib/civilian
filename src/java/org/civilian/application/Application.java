@@ -16,7 +16,6 @@
 package org.civilian.application;
 
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -28,9 +27,8 @@ import org.civilian.asset.service.AssetConfig;
 import org.civilian.asset.service.AssetService;
 import org.civilian.asset.service.AssetServices;
 import org.civilian.content.ContentSerializer;
+import org.civilian.content.ContentSerializerConfig;
 import org.civilian.content.ContentType;
-import org.civilian.content.GsonJsonSerializer;
-import org.civilian.content.TextSerializer;
 import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerConfig;
 import org.civilian.controller.ControllerNaming;
@@ -62,7 +60,6 @@ import org.civilian.server.TempServer;
 import org.civilian.text.service.LocaleServiceList;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
-import org.civilian.util.Iterators;
 import org.civilian.util.Settings;
 import org.slf4j.Logger;
 
@@ -193,7 +190,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 			version_				= appConfig.getVersion();
 			assetService_			= initAssets(appConfig.getAssetConfig());
 			uploadConfig_			= appConfig.getUploadConfig();
-			contentSerializers_ 	= appConfig.getContentSerializers();
+			contentSerializers_ 	= new ContentSerializerConfig(appConfig.getContentSerializers());
 			localeServices_			= new LocaleServiceList( 
 				appConfig.getTypeLib(),
 				appConfig.getMsgBundleFactory(), 
@@ -201,7 +198,6 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 				appConfig.getSupportedLocales());
 		}
 		
-		initDefaultContentSerializers();
 		
 		// determine the ClassLoader factory used to load controllers
 		ClassLoaderFactory clFactory = createClassLoaderFactory(appConfig.getReloadConfig());
@@ -234,20 +230,6 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * @throws Exception if an error during initialization occurs.
 	 */
 	protected abstract void init(AppConfig config) throws Exception;
-	
-	
-	/**
-	 * Adds ContentSerializers for text/plain and application/json
-	 * if not done in init(Appconfig). 
-	 */
-	private void initDefaultContentSerializers()
-	{
-		if (getContentSerializer(ContentType.TEXT_PLAIN) == null)
-			contentSerializers_.put(ContentType.TEXT_PLAIN.getValue(), new TextSerializer());
-		if ((getContentSerializer(ContentType.APPLICATION_JSON) == null) && 
-			ClassUtil.getPotentialClass("com.google.gson.Gson", Object.class, null) != null)
-			contentSerializers_.put(ContentType.APPLICATION_JSON.getValue(), new GsonJsonSerializer());
-	}
 	
 	
 	/**
@@ -495,39 +477,16 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	
 
 	/**
-	 * Returns a ContentSerializer for the content type.
-	 * @return the ContentSerializer or null if no suitable serializer is available
+	 * Returns the ContentSerializerMap used by the application.
 	 * By default the application possesses ContentSerializers for text/plain and
 	 * application/json (based on GSON).
 	 * @see AppConfig#registerContentSerializer(ContentType, ContentSerializer)
 	 */
-	@Override public ContentSerializer getContentSerializer(ContentType contentType)
+	@Override public ContentSerializerConfig getContentSerializers()
 	{
-		return contentSerializers_.get(contentType != null ? contentType.getValue() : null);
+		return contentSerializers_;
 	}
 	
-	
-	/**
-	 * Returns a ContentSerializer for the content type.
-	 * @return the ContentSerializer or null if no suitable serializer is available
-	 * By default the application possesses ContentSerializers for text/plain and
-	 * application/json (based on GSON).
-	 * @see AppConfig#registerContentSerializer(String, ContentSerializer)
-	 */
-	@Override public ContentSerializer getContentSerializer(String contentType)
-	{
-		return contentSerializers_.get(contentType);
-	}
-
-	
-	/**
-	 * Returns an iterator for all ContentTypes with a registered ContentSerializer.
-	 */
-	public Iterator<String> getContentSerializerTypes()
-	{
-		return Iterators.unmodifiable(contentSerializers_.keySet().iterator());
-	}
-
 	
 	/**
 	 * Returns the UploadConfig which defines upload limits and location. 
@@ -737,7 +696,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	private ProcessorList processors_ = ProcessorList.EMPTY;
 	private Map<ControllerSignature,Resource> sig2resource_ = Map.of();
 	private final HashMap<String, Object> attributes_ = new HashMap<>();
-	private Map<String,ContentSerializer> contentSerializers_ = Collections.<String,ContentSerializer>emptyMap();
+	private ContentSerializerConfig contentSerializers_ = ContentSerializerConfig.EMPTY;
 
 	// lifecycle property 
 	private Status status_ = Status.CREATED;

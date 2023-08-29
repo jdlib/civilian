@@ -177,7 +177,7 @@ public abstract class AbstractResponse implements Response
 		else
 			setContentType(contentType);
 		
-		ContentSerializer serializer = getOwner().getContentSerializer(contentType);
+		ContentSerializer serializer = getOwner().getContentSerializers().get(contentType);
 		if (serializer != null)
 			serializer.write(object, getContentWriter());
 		else if (object instanceof String)

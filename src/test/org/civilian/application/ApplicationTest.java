@@ -20,6 +20,7 @@ import java.io.IOException;
 import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.ConfigKeys;
+import org.civilian.content.ContentSerializerConfig;
 import org.civilian.content.ContentType;
 import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.server.test.TestApp;
@@ -98,7 +99,7 @@ public class ApplicationTest extends CivTest
 		app.setAttribute("x", "y");
 		assertEquals("y", app.getAttribute("x"));
 		assertEquals("x", app.getAttributeNames().next());
-		assertNull(app.getContentSerializer(ContentType.APPLICATION_JSON));
+		assertNull(app.getContentSerializers().get(ContentType.APPLICATION_JSON));
 	}
 	
 	
@@ -119,9 +120,10 @@ public class ApplicationTest extends CivTest
 		assertTrue(testApp.getControllerService().isReloading());
 		assertNotNull(testApp.getProcessors());
 		assertNotNull(testApp.getRootResource());
-		assertNull(testApp.getContentSerializer(ContentType.APPLICATION_EXCEL));
-		assertNotNull(testApp.getContentSerializer(ContentType.APPLICATION_JSON));
-		assertNotNull(testApp.getContentSerializer(ContentType.TEXT_PLAIN));
+		ContentSerializerConfig ctm = testApp.getContentSerializers();
+		assertNull(ctm.get(ContentType.APPLICATION_EXCEL));
+		assertNotNull(ctm.get(ContentType.APPLICATION_JSON));
+		assertNotNull(ctm.get(ContentType.TEXT_PLAIN));
 	}
 	
 	

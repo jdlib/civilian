@@ -631,7 +631,7 @@ public class TestRequest extends AbstractRequest
 				ContentType contentType = getContentType();
 				if (contentType == null)
 					throw new IllegalStateException("no content-type set");
-				ContentSerializer serializer = getOwner().getContentSerializer(contentType);
+				ContentSerializer serializer = getOwner().getContentSerializers().get(contentType);
 				if (serializer == null)
 					throw new IllegalStateException("don't know how to write content with content type '" + contentType + "'");
 				contentString_ = serializer.write(content);
