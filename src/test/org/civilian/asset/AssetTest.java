@@ -95,7 +95,7 @@ public class AssetTest extends CivTest
 		ContentEncodedAsset asset = new ContentEncodedAsset(new TestAsset("content"), "br");
 		
 		TestRequest request		= new TestRequest();
-		TestResponse response 	= request.getTestResponse();
+		TestResponse response 	= new TestResponse(request);
 		
 		asset.write(request, response, false);
 		
@@ -123,7 +123,7 @@ public class AssetTest extends CivTest
 		
 		TestRequest request			= new TestRequest();
 		TestRequest.Headers headers	= request.getHeaders();
-		TestResponse response 		= request.getTestResponse();
+		TestResponse response 		= new TestResponse(request);
 		
 		asset.setLastModified(10000);
 		headers.setDate(HeaderNames.IF_MODIFIED_SINCE, 9500);

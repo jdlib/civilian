@@ -70,10 +70,10 @@ public class SamplesTest extends Assert
 		assertEquals("/", crmApp.getPath().print());
 		
 		TestRequest request 	= new TestRequest(crmApp);
-		TestResponse response	= request.getTestResponse();	
+		TestResponse response	= new TestResponse(request);	
 		
 		// access /customers and verify redirect to login page
-		request.setPath(CrmResources.root.customers);
+		request.setPath(response, CrmResources.root.customers);
 		request.setAcceptedContentTypes(ContentType.TEXT_HTML);
 		assertEquals("/customers", request.getPath().print());
 		response.process();
@@ -82,7 +82,7 @@ public class SamplesTest extends Assert
 		
 		// access /login and post a login as ajax: assert that we have a session
 		request.setMethod("POST");
-		request.setPath(CrmResources.root.login);
+		request.setPath(response, CrmResources.root.login);
 		request.setAcceptedContentTypes(ContentType.APPLICATION_JSON);
 		request.setParameter("name", "user").setParameter("password", "!user").setParameter("language", "en");
 		response.process();
@@ -91,7 +91,7 @@ public class SamplesTest extends Assert
 		
 		// access /customers again
 		request.setMethod("GET");
-		request.setPath(CrmResources.root.customers);
+		request.setPath(response, CrmResources.root.customers);
 		request.setAcceptedContentTypes(ContentType.TEXT_HTML);
 		response.process();
 		assertEquals(200, response.getStatus());

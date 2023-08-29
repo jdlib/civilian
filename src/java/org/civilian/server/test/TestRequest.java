@@ -41,6 +41,7 @@ import org.civilian.request.RequestHeaders;
 import org.civilian.request.Upload;
 import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
+import org.civilian.response.Response;
 import org.civilian.response.Url;
 import org.civilian.util.Check;
 import org.civilian.util.IoUtil;
@@ -60,7 +61,6 @@ public class TestRequest extends AbstractRequest
 	public TestRequest(Application application, String relativePath)
 	{
 		super(application, relativePath);
-		testResponse_ = new TestResponse(this);
 	}
 
 	
@@ -87,15 +87,6 @@ public class TestRequest extends AbstractRequest
 		TestApp app = new TestApp();
 		app.init();
 		return app;
-	}
-
-	
-	/**
-	 * Returns the TestResponse object associated with the TestRequest. 
-	 */
-	public TestResponse getTestResponse()
-	{
-		return testResponse_;
 	}
 
 	
@@ -147,9 +138,9 @@ public class TestRequest extends AbstractRequest
 	 * @param pathParams the path parameters of the resource  
 	 * @return this
 	 */
-	public TestRequest setPath(Resource resource, Object... pathParams)
+	public TestRequest setPath(Response response, Resource resource, Object... pathParams)
 	{
-		Url url = new Url(testResponse_, resource);
+		Url url = new Url(response, resource);
 		url.setPathParams(pathParams);
 		return setPath(url);
 	}
@@ -821,6 +812,5 @@ public class TestRequest extends AbstractRequest
 	private Headers headers_ = new Headers();
 	private TestSession session_;
 	private Locale acceptedLocale_ = Locale.getDefault();
-	private TestResponse testResponse_;
 	private static final byte[] EMPTY_BYTES = new byte[0];
 }

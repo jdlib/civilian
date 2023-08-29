@@ -114,7 +114,7 @@ public class RangeTest extends CivTest
 			
 			TestApp app = new TestApp();
 			TestRequest request = new TestRequest(app);
-			TestResponse response = request.getTestResponse();
+			TestResponse response = new TestResponse(request);
 			request.getHeaders().set(HeaderNames.RANGE, Range.build().add(0, 2).end().toString());
 			
 			Range.writeRange(file, request, response);

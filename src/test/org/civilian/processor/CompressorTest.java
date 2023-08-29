@@ -14,7 +14,7 @@ public class CompressorTest extends CivTest
 	@Test public void test() throws Exception
 	{
 		request_ 	= new TestRequest();
-		response_	= request_.getTestResponse();
+		response_	= new TestResponse(request_);
 		compressor_ = new Compressor();
 		
 		// no Accept-encoding header

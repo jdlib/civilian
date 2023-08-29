@@ -56,7 +56,7 @@ public class AbstractResponseTest extends CivTest
 	private void init()
 	{
 		request 	= new TestRequest(app);
-		response 	= request.getTestResponse();   
+		response 	= new TestResponse(request);   
 	}
 	
 			

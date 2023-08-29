@@ -15,7 +15,7 @@ public class DecompressorTest extends CivTest
 	@Test public void test() throws Exception
 	{
 		request_ 		= new TestRequest();
-		response_		= request_.getTestResponse();
+		response_		= new TestResponse(request_);
 		decompressor_ 	= new Decompressor();
 		
 		request_.setContent("a");

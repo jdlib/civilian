@@ -42,7 +42,7 @@ public class TestRequestTest extends CivTest
 	@Before public void before()
 	{
 		request 	= new TestRequest(app_);
-		response 	= request.getTestResponse();   
+		response 	= new TestResponse(request);   
 	}
 	
 	
@@ -87,7 +87,7 @@ public class TestRequestTest extends CivTest
 		request.setPath(url);
 		assertEquals("p", request.getParameter("q"));
 
-		request.setPath(AdminResources.root.$appId.settings, "crm");
+		request.setPath(response, AdminResources.root.$appId.settings, "crm");
 		assertEquals("/crm/settings", request.getRelativePath().toString());
 		assertEquals("crm", request.getPathParam(AdminPathParams.APPID));
 		

@@ -25,6 +25,7 @@ import org.civilian.content.ContentType;
 import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.server.test.TestApp;
 import org.civilian.server.test.TestRequest;
+import org.civilian.server.test.TestResponse;
 import org.civilian.server.test.TestServer;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.Settings;
@@ -131,7 +132,8 @@ public class ApplicationTest extends CivTest
 	{
 		TestApp app = new TestApp();
 		TestRequest request = new TestRequest(app);
+		TestResponse response = new TestResponse(request);
 		
-		app.process(request, request.getTestResponse());
+		app.process(request, response);
 	}
 }
