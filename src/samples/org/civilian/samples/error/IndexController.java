@@ -25,8 +25,8 @@ import org.civilian.controller.Controller;
  */
 public class IndexController extends Controller
 {
-	@Get public void get() throws Exception
+	@Get public IndexTemplate get()
 	{
-		getResponse().writeContent(new IndexTemplate());
+		return new IndexTemplate();
 	}
 }

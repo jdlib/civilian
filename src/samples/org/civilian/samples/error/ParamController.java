@@ -23,8 +23,8 @@ import org.civilian.controller.Controller;
 
 public class ParamController extends Controller
 {
-	@Get public void get(@Parameter("n") int n) throws Exception
+	@Get public String get(@Parameter("n") int n)
 	{
-		getResponse().writeText("n = " + n);
+		return "n = " + n;
 	}
 }
