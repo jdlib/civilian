@@ -48,7 +48,7 @@ import org.civilian.util.http.HeaderMap;
 
 
 /**
- * A Request implementation which wraps a HttpServletRequest.
+ * A Request implementation which presents a HttpServletRequest as civilian Request.
  */
 abstract class ServletRequestAdapter extends AbstractRequest implements RequestSecurity
 {
