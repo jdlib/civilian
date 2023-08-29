@@ -521,7 +521,7 @@ public abstract class AbstractRequest implements Request
 	private Path relativePath_;
 	private Map<PathParam<?>, Object> pathParams_;
 	private LocaleService localeService_;
-	private RequestOwner owner_;
+	private final RequestOwner owner_;
 	private Object contentInput_;
 	private Resource resource_;
 	private Extension extension_;

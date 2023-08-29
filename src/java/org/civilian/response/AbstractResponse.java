@@ -615,7 +615,7 @@ public abstract class AbstractResponse implements Response
 	}
 
 	
-	private Request request_;
+	private final Request request_;
 	private LocaleService localeService_;
 	private Flushable contentOutput_;
 	// we duplicate the encoding since we want to know if an encoding was explicitly set
