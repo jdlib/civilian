@@ -490,19 +490,6 @@ public abstract class AbstractRequest implements Request
 	 */
 	private static class Extension
 	{
-		public Extension()
-		{
-		}
-		
-		
-		public Extension(Extension other)
-		{
-			matrixParams		= other.matrixParams;
-			contentType			= other.contentType;
-			streamInterceptor	= other.streamInterceptor;
-			readerInterceptor	= other.readerInterceptor;
-		}
-
 		public HeaderMap matrixParams;
 		public ContentType contentType;
 		public RequestInterceptor<InputStream> streamInterceptor;

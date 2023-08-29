@@ -91,7 +91,7 @@ public class TestRequestTest extends CivTest
 		assertEquals("/crm/settings", request.getRelativePath().toString());
 		assertEquals("crm", request.getPathParam(AdminPathParams.APPID));
 		
-		request.run();
+		response.process();
 	}
 	
 	

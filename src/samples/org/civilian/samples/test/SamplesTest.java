@@ -76,7 +76,7 @@ public class SamplesTest extends Assert
 		request.setPath(CrmResources.root.customers);
 		request.setAcceptedContentTypes(ContentType.TEXT_HTML);
 		assertEquals("/customers", request.getPath().print());
-		request.run();
+		response.process();
 		assertEquals(302, response.getStatus());
 		assertEquals("/login?path=%2Fcustomers", response.getHeaders().get(HeaderNames.LOCATION));
 		
@@ -85,7 +85,7 @@ public class SamplesTest extends Assert
 		request.setPath(CrmResources.root.login);
 		request.setAcceptedContentTypes(ContentType.APPLICATION_JSON);
 		request.setParameter("name", "user").setParameter("password", "!user").setParameter("language", "en");
-		request.run();
+		response.process();
 		assertEquals(200, response.getStatus());
 		assertNotNull(request.getSession(false));
 		
@@ -93,10 +93,8 @@ public class SamplesTest extends Assert
 		request.setMethod("GET");
 		request.setPath(CrmResources.root.customers);
 		request.setAcceptedContentTypes(ContentType.TEXT_HTML);
-		request.run();
+		response.process();
 		assertEquals(200, response.getStatus());
 		assertEquals(ContentType.TEXT_HTML, response.getContentType());
-
-		System.out.println("done");
 	}
 }

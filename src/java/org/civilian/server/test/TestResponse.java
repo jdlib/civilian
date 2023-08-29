@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import javax.servlet.http.Cookie;
+
+import org.civilian.application.Application;
 import org.civilian.request.CookieList;
 import org.civilian.request.Session;
 import org.civilian.response.AbstractResponse;
@@ -45,9 +47,31 @@ public class TestResponse extends AbstractResponse
 	}
 	
 	
+	@Override public TestRequest getRequest()
+	{
+		return (TestRequest)super.getRequest();
+	}
+
+	
 	@Override public boolean isCommitted()
 	{
 		return isCommitted_;
+	}
+	
+	
+	/**
+	 * Invokes {@link Application#process(Request, Response)} with this request. 
+	 * Before calling process(), the TestResponse associated with this request
+	 * is cleared first and the content of this request is reset}.
+	 * @return the TestResponse
+	 */
+	public TestResponse process() throws Exception
+	{
+		clear();
+		getRequest().resetContentInput();
+		Check.isA(getOwner(), Application.class).process(getRequest(), this);
+		flushBuffer();
+		return this;
 	}
 	
 	

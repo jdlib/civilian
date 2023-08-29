@@ -51,8 +51,6 @@ import org.civilian.util.http.HeaderMap;
 
 /**
  * TestRequest is a {@link Request} implementation to be used in a test environment.
- * Create a TestRequest for an application, set its properties, {@link #run() run}
- * the request, and then evaluate the returned response.
  */
 public class TestRequest extends AbstractRequest
 {
@@ -100,27 +98,6 @@ public class TestRequest extends AbstractRequest
 		return testResponse_;
 	}
 
-	
-	//-----------------------------
-	// run
-	//-----------------------------
-
-	
-	/**
-	 * Invokes {@link Application#process(Request, Response)} with this request. 
-	 * Before calling process(), the TestResponse associated with this request
-	 * is cleared first and the content of this request is reset}.
-	 * @return the TestResponse
-	 */
-	public TestResponse run() throws Exception
-	{
-		testResponse_.clear();
-		resetContentInput();
-		Check.isA(getOwner(), Application.class).process(this, testResponse_);
-		testResponse_.flushBuffer();
-		return testResponse_;
-	}
-	
 	
 	//-----------------------------
 	// method
