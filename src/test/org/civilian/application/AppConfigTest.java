@@ -18,7 +18,9 @@ package org.civilian.application;
 
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.server.test.TestApp;
+import org.civilian.controller.ControllerConfig;
+import org.civilian.resource.Path;
+import org.civilian.server.TempServer;
 
 
 public class AppConfigTest extends CivTest
@@ -46,8 +48,7 @@ public class AppConfigTest extends CivTest
 
 	@Test public void testConfig() throws Exception
 	{
-		TestApp app = new TestApp();
-		AppConfig config = new AppConfig(app.getServer(), app.getPath(), app.getControllerConfig(), null);
+		AppConfig config = new AppConfig(TempServer.INSTANCE, new Path("/app"), new ControllerConfig("org.example"), null);
 		
 		assertNotNull(config.getSettings());
 		assertNull(config.getVersion());
