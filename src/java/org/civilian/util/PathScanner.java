@@ -37,17 +37,19 @@ public class PathScanner
 	public PathScanner(String path)
 	{
 		path_ 	= path != null ? path : "";
-		end_	= path_.length();
+		int end	= path_.length();
 		
 		// ignore trailing extension
 		int lastSlashPos	= path_.lastIndexOf('/');
 		int extPos 			= path_.indexOf('.', lastSlashPos + 1);
 		if (extPos >= 0)
-			end_ = extPos;
+			end = extPos;
 		
 		// ignore trailing '/index'
-		if ((end_ >= 6) && path_.regionMatches(end_ - 6, "/index", 0, 6))
-			end_ -= 6;
+		if ((end >= 6) && path_.regionMatches(end - 6, "/index", 0, 6))
+			end -= 6;
+		
+		end_ = end;
 		
 		// ignore leading '/'
 		if ((end_ > 0) && (path_.charAt(0) == '/'))
@@ -257,7 +259,7 @@ public class PathScanner
 	}
 	
 	
-	private int end_;
+	private final int end_;
 	private final String path_;
 	private int segmentStart_;
 	private int segmentEnd_;
