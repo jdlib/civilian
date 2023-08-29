@@ -34,6 +34,7 @@ import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.Iterators;
 import org.civilian.util.ResourceLoader;
+import org.civilian.util.ResourceLoaders;
 import org.civilian.util.Settings;
 import org.civilian.util.StringUtil;
 
@@ -73,7 +74,7 @@ class ServletServer extends Server
 		servletContext_.setAttribute(getClass().getName(), this);
 		
 		path_ 				= new Path(servletContext_.getContextPath());
-		resourceLoader_		= ResourceLoader.builder.forSerlvetContext(servletContext);
+		resourceLoader_		= ResourceLoaders.forSerlvetContext(servletContext);
 		contentTypeLookup_	= ContentTypeLookup.forServletContext(servletContext);
 		
 		

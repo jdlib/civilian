@@ -38,6 +38,7 @@ import org.civilian.util.Check;
 import org.civilian.util.FileType;
 import org.civilian.util.Iterators;
 import org.civilian.util.ResourceLoader;
+import org.civilian.util.ResourceLoaders;
 import org.civilian.util.Settings;
 
 
@@ -76,7 +77,7 @@ public class TestServer extends Server
 	{
 		directory_ 			= FileType.EXISTENT_DIR.check(dir);
 		contentTypeLookup_ 	= ContentTypeLookup.forMap(EXT_2_CONTENTTYPES);
-		resourceLoader_ 	= ResourceLoader.builder.forDirectory(directory_);
+		resourceLoader_ 	= ResourceLoaders.forDirectory(directory_);
 	}
 	
 	

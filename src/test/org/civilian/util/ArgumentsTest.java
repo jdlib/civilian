@@ -27,7 +27,7 @@ public class ArgumentsTest extends CivTest
 	{
 		ResourceLoader loader;
 		
-		loader = ResourceLoader.builder.forString("test.txt", "a\n#comment\nb c");
+		loader = ResourceLoaders.forString("test.txt", "a\n#comment\nb c");
 		Arguments args = new Arguments(loader, "one", "@test.txt", "two");
 		args.consume("one");
 		args.consume("a");
@@ -36,7 +36,7 @@ public class ArgumentsTest extends CivTest
 		args.consume("two");
 		assertFalse(args.hasMore());
 		
-		loader = ResourceLoader.builder.forString("test.txt", "@test.txt");
+		loader = ResourceLoaders.forString("test.txt", "@test.txt");
 		try
 		{
 			new Arguments(loader, "@test.txt");

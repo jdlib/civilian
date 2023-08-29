@@ -33,11 +33,11 @@ public class ResourceLoaderTest extends CivTest
 {
 	@Test public void testClass() throws Exception
 	{
-		ResourceLoader loader = ResourceLoader.builder.forClass(getClass());
+		ResourceLoader loader = ResourceLoaders.forClass(getClass());
 		URL url = loader.getResourceUrl(getClass().getSimpleName() + ".class");
 		assertTrue(url.toString().endsWith("org/civilian/util/ResourceLoaderTest.class"));
 
-		loader = ResourceLoader.builder.forClass(BigInteger.class);
+		loader = ResourceLoaders.forClass(BigInteger.class);
 		Enumeration<URL> urls = loader.getResourceUrls("BigDecimal.class");
 		assertTrue(urls.nextElement().toString().endsWith("java/math/BigDecimal.class"));
 		assertFalse(urls.hasMoreElements());
@@ -46,7 +46,7 @@ public class ResourceLoaderTest extends CivTest
 
 	@Test public void testEmpty() throws Exception
 	{
-		ResourceLoader loader = ResourceLoader.builder.empty();
+		ResourceLoader loader = ResourceLoaders.empty();
 		assertNull(loader.getResourceUrl(null));
 		assertNull(loader.getResourceAsStream(null));
 		assertNull(loader.getResourceAsReader(null, null));
@@ -56,8 +56,8 @@ public class ResourceLoaderTest extends CivTest
 
 	@Test public void testChained() throws Exception
 	{
-		ResourceLoader empty  = ResourceLoader.builder.empty();
-		ResourceLoader loader = ResourceLoader.builder.chain(empty, empty);
+		ResourceLoader empty  = ResourceLoaders.empty();
+		ResourceLoader loader = ResourceLoaders.chain(empty, empty);
 		assertNull(loader.getResourceUrl(null));
 		assertNull(loader.getResourceAsStream(null));
 		assertNull(loader.getResourceAsReader(null, null));
@@ -69,17 +69,17 @@ public class ResourceLoaderTest extends CivTest
 	{
 		File temp = File.createTempFile("loader", ".txt");
 		
-		ResourceLoader fileLoader = ResourceLoader.builder.forFile(temp);
+		ResourceLoader fileLoader = ResourceLoaders.forFile(temp);
 		assertEquals(temp.toURI().toURL(), fileLoader.getResourceUrl(temp.getName()));
 		assertNull(fileLoader.getResourceUrl("x"));
 		assertNull(fileLoader.getResourceAsStream("x"));
 		
-		ResourceLoader dirLoader = ResourceLoader.builder.forDirectory(temp.getParentFile()); 
+		ResourceLoader dirLoader = ResourceLoaders.forDirectory(temp.getParentFile()); 
 		assertEquals(temp.toURI().toURL(), dirLoader.getResourceUrl(temp.getName()));
 		assertNull(dirLoader.getResourceUrl("invalidname"));
 		assertNull(dirLoader.getResourceAsStream("invalidname"));
 
-		ResourceLoader dirLoader2 = ResourceLoader.builder.forDirectory(temp); 
+		ResourceLoader dirLoader2 = ResourceLoaders.forDirectory(temp); 
 		assertEquals(temp.toURI().toURL(), dirLoader2.getResourceUrl(temp.getName()));
 	}
 
@@ -87,7 +87,7 @@ public class ResourceLoaderTest extends CivTest
 	@Test public void testServletContextLoader() throws Exception
 	{
 		ServletContext context = mock(ServletContext.class); 
-		ResourceLoader loader = ResourceLoader.builder.forSerlvetContext(context);
+		ResourceLoader loader = ResourceLoaders.forSerlvetContext(context);
 		loader.getResourceAsStream("x");
 		verify(context).getResourceAsStream("x");
 		
@@ -118,7 +118,7 @@ public class ResourceLoaderTest extends CivTest
 
 	@Test public void testClassLoaderLoader() throws Exception
 	{
-		ResourceLoader loader = ResourceLoader.builder.forSystemClassLoader();
+		ResourceLoader loader = ResourceLoaders.forSystemClassLoader();
 		URL url = loader.getResourceUrl("java/lang/String.class");
 		assertTrue(url.toString().endsWith("/java/lang/String.class"));
 

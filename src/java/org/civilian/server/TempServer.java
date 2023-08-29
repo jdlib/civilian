@@ -20,6 +20,7 @@ import java.util.Iterator;
 import org.civilian.resource.Path;
 import org.civilian.util.Iterators;
 import org.civilian.util.ResourceLoader;
+import org.civilian.util.ResourceLoaders;
 import org.civilian.content.ContentTypeLookup;
 
 
@@ -71,7 +72,7 @@ public class TempServer extends Server
 	
 	@Override public ResourceLoader getResourceLoader()
 	{
-		return ResourceLoader.builder.empty();
+		return ResourceLoaders.empty();
 	}
 	
 	
