@@ -76,6 +76,6 @@ class PartUpload extends Upload
 	}
 	
 	
-	private Part part_;
-	private String fileName_;
+	private final Part part_;
+	private final String fileName_;
 }
