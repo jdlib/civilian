@@ -95,15 +95,6 @@ public class TestRequestTest extends CivTest
 	}
 	
 	
-	@Test public void testCopy()
-	{
-		request.setMethod("POST");
-		
-		TestRequest request2 = new TestRequest(request);
-		assertEquals("POST", request2.getMethod());
-	}
-	
-	
 	private static TestServer context_;
 	private static AdminApp app_;
 	private TestRequest request;

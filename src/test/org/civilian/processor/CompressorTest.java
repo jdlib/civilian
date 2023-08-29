@@ -27,15 +27,15 @@ public class CompressorTest extends CivTest
 		assertProcess("deflate", "Accept-Encoding", "deflate", null, (byte)120, (byte)-100);
 
 		// Accept-encoding = deflate, also modifies etag
-		request_.getTestResponse().getHeaders().set(HeaderNames.ETAG, "a");
+		response_.getHeaders().set(HeaderNames.ETAG, "a");
 		assertProcess("deflate", "Accept-Encoding", "deflate", "a-deflate", (byte)120, (byte)-100);
 
 		// no compression if someone else applied a content-encoding
-		request_.getTestResponse().getHeaders().set(HeaderNames.CONTENT_ENCODING, "someotherenc");
+		response_.getHeaders().set(HeaderNames.CONTENT_ENCODING, "someotherenc");
 		assertProcess("deflate", "Accept-Encoding", "someotherenc", null, "a");
 
 		// no compression if someone else applied a content-encoding
-		request_.getTestResponse().getHeaders().setNull(HeaderNames.CONTENT_ENCODING);
+		response_.getHeaders().setNull(HeaderNames.CONTENT_ENCODING);
 		response_.setAttribute(Compressor.NO_COMPRESSION, Boolean.TRUE);
 		assertProcess("deflate", "Accept-Encoding", null, null, "a");
 	}
@@ -56,13 +56,13 @@ public class CompressorTest extends CivTest
 		assertFalse(compressor_.process(request_, response_, ProcessorChain.EMPTY));
 		
 		response_.getContentWriter().print("a");
-		assertArrayEquals(content, request_.getTestResponse().getContentBytes(true));
+		assertArrayEquals(content, response_.getContentBytes(true));
 		
 		assertEquals(vary, headers.get(HeaderNames.VARY));
 		assertEquals(contentEncoding, headers.get(HeaderNames.CONTENT_ENCODING));
 		assertEquals(etag, headers.get(HeaderNames.ETAG));
 
-		request_.getTestResponse().clear();
+		response_.clear();
 	}
 	
 	

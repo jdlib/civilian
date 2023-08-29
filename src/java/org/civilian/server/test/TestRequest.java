@@ -90,33 +90,6 @@ public class TestRequest extends AbstractRequest
 		app.init();
 		return app;
 	}
-	
-	
-	/**
-	 * Creates a TestRequest which copies the settings from another request.
-	 */
-	public TestRequest(TestRequest request)
-	{
-		super(request);
-		testResponse_ = new TestResponse(this, request.getTestResponse());
-		
-		method_ 		= request.method_;
-		cookies_		= request.cookies_;
-		attributes_		= request.attributes_;
-		parameters_ 	= request.parameters_;
-		uploads_		= request.uploads_;
-		uploadError_	= request.uploadError_;
-		charEncoding_	= request.charEncoding_;
-		contentBytes_ 	= request.contentBytes_;
-		contentString_ 	= request.contentString_;
-		security_ 		= request.security_;
-		serverInfo_ 	= request.serverInfo_;
-		remoteInfo_ 	= request.remoteInfo_;
-		localInfo_ 		= request.localInfo_;
-		headers_ 		= request.headers_;
-		session_ 		= request.session_;
-		acceptedLocale_ = request.acceptedLocale_; 
-	}
 
 	
 	/**

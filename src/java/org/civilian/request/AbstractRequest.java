@@ -54,21 +54,6 @@ public abstract class AbstractRequest implements Request
 	}
 	
 	
-	protected AbstractRequest(AbstractRequest other)
-	{
-		owner_		 			= other.getOwner();
-		relativePath_			= other.getRelativePath();
-		acceptedContentTypes_ 	= other.acceptedContentTypes_;
-		resource_				= other.resource_;
-		localeService_			= other.localeService_;
-
-		if (other.pathParams_ != null)
-			pathParams_ = new HashMap<>(other.pathParams_);
-		if (other.extension_ != null)
-			extension_ = new Extension(other.extension_);
-	}
-
-
 	//-----------------------------
 	// general accessors
 	//-----------------------------
