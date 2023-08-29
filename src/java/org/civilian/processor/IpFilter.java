@@ -18,7 +18,6 @@ package org.civilian.processor;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-
 import org.civilian.Logs;
 import org.civilian.request.Request;
 import org.civilian.response.Response;

@@ -19,7 +19,6 @@ package org.civilian.processor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import org.civilian.application.Application;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
