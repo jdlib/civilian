@@ -49,22 +49,13 @@ public class ServletResponseTest extends CivTest
 		servletReq  = mock(HttpServletRequest.class);
 		servletResp = mock(HttpServletResponse.class);
 		when(servletReq.getLocale()).thenReturn(Locale.GERMAN);
-		request = null;
-		response = null;
-	}
-
-	
-	private void init()
-	{
 		request  = new SpRequestAdapter(app, servletReq, servletResp);
 		response = new ServletResponseAdapter(request);
 	}
-	
+
 	
 	@Test public void testSimpleMethods()
 	{
-		init();
-		
 		response.addCookie(null);
 		verify(servletResp).addCookie(null);
 
@@ -88,8 +79,6 @@ public class ServletResponseTest extends CivTest
 	
 	@Test public void testSendError() throws Exception
 	{
-		init();
-		
 		assertFalse(response.isCommitted());
 		response.sendError(123, "msg", null);
 		
@@ -101,7 +90,6 @@ public class ServletResponseTest extends CivTest
 	@Test public void testSendRedirect() throws Exception
 	{
 		when(servletResp.encodeRedirectURL("x")).thenReturn("x!id");
-		init();
 		
 		assertFalse(response.isCommitted());
 		response.sendRedirect("x");
@@ -113,7 +101,6 @@ public class ServletResponseTest extends CivTest
 	@Test public void testWriter() throws Exception
 	{
 		when(servletResp.getWriter()).thenReturn(mock(PrintWriter.class));
-		init();
 		
 		response.getContentWriter();
 		verify(servletResp).getWriter();
@@ -122,8 +109,6 @@ public class ServletResponseTest extends CivTest
 	
 	@Test public void testOutputstream() throws Exception
 	{
-		init();
-		
 		response.getContentStream();
 		verify(servletResp).getOutputStream();
 	}
@@ -131,8 +116,6 @@ public class ServletResponseTest extends CivTest
 	
 	@Test public void testContent() throws Exception
 	{
-		init();
-		
 		assertNull(response.getContentType());
 		response.setContentType(ContentType.APPLICATION_EXCEL);
 		assertSame(ContentType.APPLICATION_EXCEL.getValue(), response.getContentType());
@@ -144,8 +127,6 @@ public class ServletResponseTest extends CivTest
 
 	@Test public void testBuffer() throws Exception
 	{
-		init();
-
 		response.flushBuffer();
 		verify(servletResp).flushBuffer();
 
@@ -162,8 +143,6 @@ public class ServletResponseTest extends CivTest
 	
 	@Test public void testHeaders() throws Exception
 	{
-		init();
-		
 		ResponseHeaders headers = response.getHeaders();
 		
 		headers.add("x", "y");
@@ -194,8 +173,6 @@ public class ServletResponseTest extends CivTest
 	
 	@Test public void testAsyncInfo() throws Exception
 	{
-		init();
-
 		response.isAsyncSupported();
 		verify(servletReq).isAsyncSupported();
 		assertFalse(response.isAsyncStarted());
