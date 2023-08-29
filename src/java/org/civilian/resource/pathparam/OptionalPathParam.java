@@ -2,7 +2,6 @@ package org.civilian.resource.pathparam;
 
 
 import java.util.Optional;
-
 import org.civilian.util.PathScanner;
 
 

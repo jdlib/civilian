@@ -18,7 +18,6 @@ package org.civilian.resource.pathparam;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
-
 import org.civilian.type.DateType;
 import org.civilian.type.Type;
 

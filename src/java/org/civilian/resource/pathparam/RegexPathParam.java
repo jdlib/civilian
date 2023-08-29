@@ -18,7 +18,6 @@ package org.civilian.resource.pathparam;
 
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
-
 import org.civilian.util.Check;
 import org.civilian.util.PathScanner;
 

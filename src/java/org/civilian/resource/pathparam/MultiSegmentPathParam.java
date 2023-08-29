@@ -18,7 +18,6 @@ package org.civilian.resource.pathparam;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.civilian.util.Check;
 import org.civilian.util.PathScanner;
 
