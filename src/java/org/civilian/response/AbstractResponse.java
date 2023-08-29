@@ -28,7 +28,6 @@ import java.util.Locale;
 import org.civilian.Logs;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
-import org.civilian.request.AbstractRequest;
 import org.civilian.request.Request;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;
@@ -48,16 +47,6 @@ public abstract class AbstractResponse implements Response
 	 * @param request the associated request.
 	 */
 	protected AbstractResponse(Request request)
-	{
-		request_ = Check.notNull(request, "request");
-	}
-
-
-	/**
-	 * Creates a new AbstractResponse.
-	 * @param request the associated request.
-	 */
-	protected AbstractResponse(AbstractRequest request)
 	{
 		request_ = Check.notNull(request, "request");
 	}
