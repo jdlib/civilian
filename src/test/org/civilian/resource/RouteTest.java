@@ -35,7 +35,7 @@ public class RouteTest extends CivTest
 	@Test public void testCreate()
 	{
 		// Route.root()
-		assertCreate("/", 			RootRoute.class,		Route.root()); 
+		assertCreate("/", 			RootRoute.class,		Route.ROOT); 
 
 		// Route.path()
 		assertCreate("/", 			RootRoute.class, 	 	Route.constant(null)); 
@@ -54,7 +54,7 @@ public class RouteTest extends CivTest
 	 */
 	@Test public void testRootRoute()
 	{
-		Route route = Route.root();
+		Route route = Route.ROOT;
 		assertEquals("/", route.build(null));
 		
 		assertTrue(route.isRoot());
@@ -106,7 +106,7 @@ public class RouteTest extends CivTest
 		assertTrue(route2 instanceof ConstantRoute);
 		
 		// test escapng
-		Route routeEscaped = Route.root().addSegment("x y");  
+		Route routeEscaped = Route.ROOT.addSegment("x y");  
 		assertEquals("/x%20y", routeEscaped.build(null));
 	}
 	
@@ -144,7 +144,7 @@ public class RouteTest extends CivTest
 		assertEquals("http://test.com/customers/", s.toString());
 
 		Object[] params = new Object[] { "pp" }; 
-		Route.root().addPathParam(PARAM1).build(params);
+		Route.ROOT.addPathParam(PARAM1).build(params);
 		assertEquals("http://test.com/pp", s.toString());
 	}
 	
@@ -155,7 +155,7 @@ public class RouteTest extends CivTest
 	 */
 	@Test public void testParamRoute()
 	{
-		Route route = assertCreate("/{p1}", PathParamRoute.class, Route.root().addPathParam(PARAM1)); 
+		Route route = assertCreate("/{p1}", PathParamRoute.class, Route.ROOT.addPathParam(PARAM1)); 
 		assertEquals(1, route.size());
 		assertFalse(route.isRoot());
 		
@@ -199,7 +199,7 @@ public class RouteTest extends CivTest
 	 */
 	@Test public void testRouteList()
 	{
-		Route route = assertCreate("/{p1}/x/{p2}", RouteList.class, Route.root().addPathParam(PARAM1).addSegment("x").addPathParam(PARAM2)); 
+		Route route = assertCreate("/{p1}/x/{p2}", RouteList.class, Route.ROOT.addPathParam(PARAM1).addSegment("x").addPathParam(PARAM2)); 
 		Object[] params = new Object[2]; 
 		params[0] = "www";
 		params[1] = "yyy";
@@ -219,7 +219,7 @@ public class RouteTest extends CivTest
 		assertEquals("/{p1}/x/{p2}/y", route.toString());
 
 		// test append of 
-		route = assertCreate("/{p1}/x", RouteList.class, Route.root().addPathParam(PARAM1).addSegment("x")); 
+		route = assertCreate("/{p1}/x", RouteList.class, Route.ROOT.addPathParam(PARAM1).addSegment("x")); 
 		assertEquals(2, route.size());
 		route = route.addSegment("y");
 		assertEquals(2, route.size());
@@ -232,7 +232,7 @@ public class RouteTest extends CivTest
 	 */
 	@Test public void testPatternEscaping()
 	{
-		Route route = assertCreate("/{p1}/x", RouteList.class, Route.root().addPathParam(PARAM1).addSegment("x")); 
+		Route route = assertCreate("/{p1}/x", RouteList.class, Route.ROOT.addPathParam(PARAM1).addSegment("x")); 
 
 		Object[] params = new Object[1]; 
 		params[0] = "%/ ";

@@ -31,16 +31,10 @@ import org.civilian.util.http.UriEncoder;
  */
 public abstract class Route
 {
-	private static final Route ROOT = new RootRoute();
-	
-	
 	/**
-	 * @return a Route which represents the root path "/". 
+	 * The singleton Route which represents the root path "/". 
 	 */
-	public static final Route root()
-	{
-		return ROOT;
-	}
+	public static final Route ROOT = new RootRoute();
 
 	
 	/**

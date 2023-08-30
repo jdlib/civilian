@@ -41,7 +41,7 @@ public class ResourceTest extends CivTest
 		assertSame	(root, root.getRoot());
 		assertEquals("", root.getSegment());
 		assertNull	(root.getPathParam());
-		assertSame	(Route.root(), root.getRoute());
+		assertSame	(Route.ROOT, root.getRoute());
 		assertEquals(1, root.size());
 		assertEquals(0, root.getChildCount());
 		assertEquals("/", root.toString());

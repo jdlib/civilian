@@ -52,7 +52,7 @@ public class Resource
 	public Resource()
 	{
 		parent_ 	= null;
-		route_  	= Route.root();
+		route_  	= Route.ROOT;
 		segment_	= "";
 		pathParam_	= null;
 	}
