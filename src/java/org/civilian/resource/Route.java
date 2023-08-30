@@ -196,7 +196,7 @@ class RootRoute extends Route
 	}
 
 	
-	@Override public int indexOf(PathParam<?> pattern)
+	@Override public int indexOf(PathParam<?> pathParam)
 	{
 		return -1;
 	}
@@ -244,7 +244,7 @@ class ConstantRoute extends Route
 	}
 
 	
-	@Override public int indexOf(PathParam<?> pattern)
+	@Override public int indexOf(PathParam<?> pathParam)
 	{
 		return -1;
 	}
@@ -309,9 +309,9 @@ class PathParamRoute<T> extends Route
 	}
 
 	
-	@Override public int indexOf(PathParam<?> pattern)
+	@Override public int indexOf(PathParam<?> pathParam)
 	{
-		return pathParam_ == pattern ? ppIndex_ : -1;
+		return pathParam_ == pathParam ? ppIndex_ : -1;
 	}
 	
 	
@@ -387,9 +387,9 @@ class RouteList extends Route
 	{
 		for (int i=0; i<list_.length; i++)
 		{
-			PathParam<?> pattern = list_[i].getPathParam(index);
-			if (pattern != null)
-				return pattern;
+			PathParam<?> pathParam = list_[i].getPathParam(index);
+			if (pathParam != null)
+				return pathParam;
 		}
 		return null;
 	}
