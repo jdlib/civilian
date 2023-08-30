@@ -16,7 +16,6 @@
 package org.civilian.resource;
 
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
@@ -48,12 +47,6 @@ public class UrlTest extends CivTest
 		when(response_.getOwner()).thenReturn(respOwner);
 		when(response_.url()).thenCallRealMethod();
 		when(response_.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
-	}
-	
-	
-	@Before public void beforeTest()
-	{
-		sessionId_ = "";
 	}
 	
 
@@ -205,5 +198,4 @@ public class UrlTest extends CivTest
 
 	private static Request request_;
 	private static Response response_;
-	private static String sessionId_;
 }
