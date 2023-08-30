@@ -43,7 +43,7 @@ public class TestResponse extends AbstractResponse
 {
 	public TestResponse(TestRequest request)
 	{
-		super(request);
+		super((Application)request.getOwner(), request);
 	}
 	
 	

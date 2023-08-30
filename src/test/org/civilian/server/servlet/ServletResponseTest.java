@@ -50,7 +50,7 @@ public class ServletResponseTest extends CivTest
 		servletResp = mock(HttpServletResponse.class);
 		when(servletReq.getLocale()).thenReturn(Locale.GERMAN);
 		request  = new SpRequestAdapter(app, servletReq, servletResp);
-		response = new ServletResponseAdapter(request);
+		response = new ServletResponseAdapter(app, request);
 	}
 
 	

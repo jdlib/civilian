@@ -46,8 +46,9 @@ public abstract class AbstractResponse implements Response
 	 * Creates a new AbstractResponse.
 	 * @param request the associated request.
 	 */
-	protected AbstractResponse(Request request)
+	protected AbstractResponse(ResponseOwner owner, Request request)
 	{
+		owner_	 = Check.notNull(owner, "owner");
 		request_ = Check.notNull(request, "request");
 	}
 
@@ -60,7 +61,7 @@ public abstract class AbstractResponse implements Response
 	
 	@Override public ResponseOwner getOwner()
 	{
-		return Check.isA(request_.getOwner(), ResponseOwner.class); // TODO
+		return owner_;
 	}
 
 	
@@ -616,6 +617,7 @@ public abstract class AbstractResponse implements Response
 
 	
 	private final Request request_;
+	private final ResponseOwner owner_;
 	private LocaleService localeService_;
 	private Flushable contentOutput_;
 	// we duplicate the encoding since we want to know if an encoding was explicitly set

@@ -150,7 +150,7 @@ public class AppServlet implements Servlet
 			request = isMultiPartRequest(httpRequest) ? 
 				new MpRequestAdapter(app_, httpRequest, httpResponse) :
 				new SpRequestAdapter(app_, httpRequest, httpResponse);
-			response = new ServletResponseAdapter(request);
+			response = new ServletResponseAdapter(app_, request);
 		}
 		catch(Exception e)
 		{

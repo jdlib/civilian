@@ -28,6 +28,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.civilian.Logs;
+import org.civilian.application.Application;
 import org.civilian.response.AbstractResponse;
 import org.civilian.response.AsyncContext;
 import org.civilian.response.Response;
@@ -43,9 +44,9 @@ class ServletResponseAdapter extends AbstractResponse
 	/**
 	 * Creates a new ServletResponseAdapter.
 	 */
-	public ServletResponseAdapter(ServletRequestAdapter request)
+	public ServletResponseAdapter(Application app, ServletRequestAdapter request)
 	{
-		super(request);
+		super(app, request);
 		servletResponse_ = request.getServletResponse();
 	}
 	
