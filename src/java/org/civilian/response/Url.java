@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
-import org.civilian.resource.ResourceHandler;
 import org.civilian.resource.Route;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParamProvider;
@@ -81,24 +80,6 @@ public class Url implements PathParamProvider
 		additionalPath_ = Check.notNull(pathProvider, "pathProvider").getPath();
 		pathParams_		= EMPTY_PATH_PARAMS;
 		resource_		= null;
-	}
-	
-	
-	/**
-	 * Creates a Url consisting of the path to the resource whose
-	 * controller has the given class.<br>
-	 * The path may contain path parameters for which you then must provide
-	 * values. Path parameters shared by the current request are automatically initialized. 
-	 * If the application defines a default extension for resource urls,
-	 * it is also appended to the Url.<br>
-	 * Please note that a controller may be mapped to several resources. In this case
-	 * it is undefined which resource is chosen to build the url.
-	 * @param response a Response
-	 * @param handlerClass the controller class.   
-	 */
-	public Url(Response response, Class<? extends ResourceHandler> handlerClass)
-	{
-		this(Check.notNull(response, "response"), response.getOwner().getResource(handlerClass));
 	}
 
 	

@@ -345,11 +345,14 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 		
 		/**
 		 * Builds a Url to to the Resource whose controller has the given class.
+		 * Please note that a controller may be mapped to several resources. In this case
+	     * it is undefined which resource is chosen to build the url.
 		 * @return the result 
 		 */
 		public T to(Class<? extends ResourceHandler> handlerClass) throws E
 		{
-			return to(new Url(response_, handlerClass));
+			Resource resource = response_.getOwner().getResource(handlerClass);
+			return to(resource);
 		}
 
 		

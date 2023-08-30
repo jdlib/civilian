@@ -324,7 +324,7 @@ public class HtmlMixin
 	 */
 	public Url url(Class<? extends ResourceHandler> controllerClass)
 	{
-		return new Url(response(), controllerClass);
+		return response().url().to(controllerClass);
 	}
 
 	
