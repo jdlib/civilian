@@ -45,29 +45,30 @@ public abstract class SecuredController extends CrmController
 	 */
 	@Override protected final void checkAccess() throws Exception
 	{
-		Request request = getRequest();
-		Session session = request.getSession(false /*do not create*/);
+		Request request 	= getRequest();
+		Response response 	= getResponse();
+		Session session 	= request.getSession(false /*do not create*/);
 		if (session != null)
 			sessionUser_ = (SessionUser)session.getAttribute(CrmConstants.ATTR_USER);
 		
 		if (sessionUser_ == null)
 		{
 			if (request.getHeaders().is(HeaderNames.X_REQUESTED_WITH, "XMLHttpRequest"))
-				getResponse().sendError(Response.Status.UNAUTHORIZED);
+				response.sendError(Response.Status.UNAUTHORIZED);
 			else
 			{
 				// remember the current request path: on successful login, the login resource
 				// will redirect to that path again
-				Url loginUrl = new Url(this, root.login);
-				loginUrl.queryParams().add(CrmConstants.LOGIN_PATH_PARAM).setValue(request.getPath().toString());
+				Url loginUrl = response.url().to(root.login);
+				loginUrl.queryParams().add(CrmConstants.LOGIN_PATH_PARAM, request.getPath().toString());
 				getResponse().redirect().to(loginUrl);
 			}
 		}
 		else
 		{
 			// check access successful: initialize the locale to the locale specified at login
-			getRequest().setLocaleService(sessionUser_.localeService);
-			getResponse().setLocaleService(sessionUser_.localeService);
+			request.setLocaleService(sessionUser_.localeService);
+			response.setLocaleService(sessionUser_.localeService);
 			checkCrmAccess();
 		}
 	}

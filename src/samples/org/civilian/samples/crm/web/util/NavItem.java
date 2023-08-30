@@ -56,7 +56,7 @@ public class NavItem
 
 	public NavItem setTemplateUrl(Resource resource)
 	{
-		Url url = new Url(response_, resource);
+		Url url = response_.url().to(resource);
 		for (int i=0; i<url.getPathParamCount(); i++)
 			url.setPathParam(i, DEFAULT_ID);
 		this.templateUrl = url.toString(); 

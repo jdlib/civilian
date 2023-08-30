@@ -19,8 +19,6 @@ package org.civilian.resource;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import static org.mockito.Mockito.*;
 import java.util.Locale;
 import org.civilian.CivTest;
@@ -48,14 +46,8 @@ public class UrlTest extends CivTest
 		when(response_.getResponse()).thenReturn(response_);
 		when(response_.getRequest()).thenReturn(request_);
 		when(response_.getOwner()).thenReturn(respOwner);
+		when(response_.url()).thenCallRealMethod();
 		when(response_.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
-		when(response_.addSessionId(anyString())).then(new Answer<String>()
-		{
-			@Override public String answer(InvocationOnMock invocation) throws Throwable
-			{
-				return (String)invocation.getArguments()[0] + sessionId_;
-			}
-		});
 	}
 	
 	
@@ -103,7 +95,7 @@ public class UrlTest extends CivTest
 		
 		when(request_.getPathParam(pp)).thenReturn("abc");
 		
-		Url url = new Url(response_, ppChild);
+		Url url = response_.url().to(ppChild);
 		assertEquals(1, 		url.getPathParamCount());
 		assertEquals("abc", 	url.getPathParam(0));
 		assertSame  (pp, 		url.getPathParamDef(0));

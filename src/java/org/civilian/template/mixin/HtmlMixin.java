@@ -313,7 +313,7 @@ public class HtmlMixin
 	 */
 	public Url url(Resource resource)
 	{
-		return new Url(response(), resource);
+		return response().url().to(resource);
 	}
 
 	

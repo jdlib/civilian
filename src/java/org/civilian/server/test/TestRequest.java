@@ -132,7 +132,7 @@ public class TestRequest extends AbstractRequest
 	 */
 	public TestRequest setPath(Response response, Resource resource, Object... pathParams)
 	{
-		Url url = new Url(response, resource);
+		Url url = response.url().to(resource);
 		url.setPathParams(pathParams);
 		return setPath(url);
 	}

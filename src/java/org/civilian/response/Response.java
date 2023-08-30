@@ -339,10 +339,11 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 		 */
 		public T to(Resource resource) throws E
 		{
+			Check.notNull(resource, "resource");
 			return to(new Url(response_, resource));
 		}
-
 		
+
 		/**
 		 * Builds a Url to to the Resource whose controller has the given class.
 		 * Please note that a controller may be mapped to several resources. In this case
