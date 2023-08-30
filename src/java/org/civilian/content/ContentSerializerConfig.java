@@ -18,6 +18,7 @@ public class ContentSerializerConfig
 
 	/**
 	 * Returns a ContentSerializer for the content type.
+	 * @param contentType a content type
 	 * @return the ContentSerializer or null if no suitable serializer is available
 	 * By default the application possesses ContentSerializers for text/plain and
 	 * application/json (based on GSON).
@@ -30,6 +31,7 @@ public class ContentSerializerConfig
 	
 	/**
 	 * Returns a ContentSerializer for the content type.
+	 * @param contentType a content type
 	 * @return the ContentSerializer or null if no suitable serializer is available
 	 */
 	public ContentSerializer get(String contentType)
@@ -39,7 +41,7 @@ public class ContentSerializerConfig
 
 	
 	/**
-	 * Returns the serializers as Java Map.
+	 * @return the serializers as Java Map.
 	 */
 	public Map<String,ContentSerializer> toMap()
 	{

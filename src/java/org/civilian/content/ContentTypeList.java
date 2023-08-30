@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-
 import org.civilian.util.Check;
 import org.civilian.util.Iterators;
 import org.civilian.util.http.HeaderParser;
@@ -127,6 +126,7 @@ public class ContentTypeList implements Iterable<ContentType>
 	
 	/**
 	 * Creates a ContentTypeList.
+	 * @param types the content types
 	 */
 	public ContentTypeList(List<ContentType> types)
 	{
@@ -134,9 +134,6 @@ public class ContentTypeList implements Iterable<ContentType>
 	}
 
 	
-	/**
-	 * Creates a ContentTypeList.
-	 */
 	private ContentTypeList(Exception parseException, List<ContentType> types)
 	{
 		this(parseException, types.toArray(new ContentType[types.size()]));
@@ -145,6 +142,7 @@ public class ContentTypeList implements Iterable<ContentType>
 	
 	/**
 	 * Creates a ContentTypeList.
+	 * @param types the content types
 	 */
 	public ContentTypeList(ContentType... types)
 	{
@@ -163,7 +161,7 @@ public class ContentTypeList implements Iterable<ContentType>
 
 	
 	/**
-	 * Returns the size of the list.
+	 * @return the size of the list.
 	 */
 	public int size()
 	{
@@ -172,7 +170,8 @@ public class ContentTypeList implements Iterable<ContentType>
 	
 	
 	/**
-	 * Returns if the content type is contained in the list.
+	 * @param contentType a content type
+	 * @return f the content type is contained in the list.
 	 */
 	public boolean contains(ContentType contentType)
 	{
@@ -187,7 +186,8 @@ public class ContentTypeList implements Iterable<ContentType>
 
 	
 	/**
-	 * Returns the i-th content type.
+	 * @param i the index
+	 * @return he i-th content type.
 	 */
 	public ContentType get(int i)
 	{
@@ -196,7 +196,8 @@ public class ContentTypeList implements Iterable<ContentType>
 	
 	
 	/**
-	 * Returns if the given content type matches at least
+	 * @param type a content type
+	 * @return if the given content type matches at least
 	 * one content type in the list.
 	 */
 	public boolean matchesSome(ContentType type)
@@ -211,7 +212,8 @@ public class ContentTypeList implements Iterable<ContentType>
 	
 
 	/**
-	 * Returns if any content type in the given list matches at least
+	 * @param list the list
+	 * @return if any content type in the given list matches at least
 	 * one content type in this list.
 	 */
 	public boolean matchesSome(ContentTypeList list)
@@ -226,7 +228,7 @@ public class ContentTypeList implements Iterable<ContentType>
 	
 	
 	/**
-	 * Returns an iterator for the content types.
+	 * @return an iterator for the content types.
 	 */
 	@Override public Iterator<ContentType> iterator()
 	{
@@ -235,7 +237,7 @@ public class ContentTypeList implements Iterable<ContentType>
 
 	
 	/**
-	 * Returns a parse exception, if the list was created by {@link #parse(String...)}
+	 * @return a parse exception, if the list was created by {@link #parse(String...)}
 	 * and a syntax error was detected.
 	 */
 	public Exception getParseException()
@@ -245,7 +247,7 @@ public class ContentTypeList implements Iterable<ContentType>
 			
 	
 	/**
-	 * Returns a string representation of the ContentTypes.
+	 * @return a string representation of the ContentTypes.
 	 * It has the format of an Accept-Header.
 	 */
 	@Override public String toString()

@@ -48,6 +48,7 @@ public class GsonJsonSerializer extends ContentSerializer
 	/**
 	 * Creates a new JsonSerializer. The gson object of the serializer
 	 * is obtained from the builder
+	 * @param build a builder
 	 */
 	public GsonJsonSerializer(GsonBuilder builder)
 	{
@@ -59,7 +60,7 @@ public class GsonJsonSerializer extends ContentSerializer
 	
 	/**
 	 * Creates a new JsonSerializer based on the gson object.
-
+	 * @param gson a gson
 	 */
 	public GsonJsonSerializer(Gson gson)
 	{
@@ -67,9 +68,6 @@ public class GsonJsonSerializer extends ContentSerializer
 	}
 	
 	
-	/**
-	 * Uses the JsonService of the application to parse the content.    
-	 */
 	@SuppressWarnings("unchecked")
 	@Override public <T> T read(Class<T> type, Type genericType, Reader reader) throws Exception
 	{

@@ -41,6 +41,7 @@ public abstract class ContentSerializer
 	 * @param type the type of the constructed object
 	 * @param reader a reader 
 	 * @param <T> type class  
+	 * @return the result object  
 	 * @throws Exception if an exception occurs
 	 */
 	public <T> T read(Class<T> type, Reader reader) throws Exception
