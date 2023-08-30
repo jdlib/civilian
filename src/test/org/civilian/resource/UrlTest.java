@@ -56,7 +56,6 @@ public class UrlTest extends CivTest
 		sessionId_ = "";
 	}
 	
-	
 
 	@Test public void testCreateReqPath()
 	{
