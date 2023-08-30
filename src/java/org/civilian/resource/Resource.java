@@ -129,7 +129,7 @@ public class Resource implements Iterable<Resource>
 	
 	
 	/**
-	 * Returns if this resource is the root resource.
+	 * @return if this resource is the root resource.
 	 */
 	public boolean isRoot()
 	{
@@ -138,7 +138,7 @@ public class Resource implements Iterable<Resource>
 
 	
 	/**
-	 * Returns the root resource.
+	 * @return the root resource.
 	 */
 	public Resource getRoot()
 	{
@@ -150,7 +150,7 @@ public class Resource implements Iterable<Resource>
 
 	
 	/**
-	 * Returns the parent resource or null if this is the root resource
+	 * @return the parent resource or null if this is the root resource
 	 */
 	public Resource getParent()
 	{
@@ -162,6 +162,7 @@ public class Resource implements Iterable<Resource>
 	 * Returns the segment by which this resource extends
 	 * the parent resource. Returns null if the resource extends 
 	 * by a path-param. Returns "" if the resource is the root.
+	 * @return the segment
 	 */
 	public String getSegment()
 	{
@@ -171,7 +172,7 @@ public class Resource implements Iterable<Resource>
 
 	/**
 	 * Returns the PathParam by which this resource extends the parent resource
-	 * Returns null, if the resource is the root or extends by a segment.
+	 * @return the PathParam or null, if the resource is the root or extends by a segment.
 	 */
 	public PathParam<?> getPathParam()
 	{
@@ -180,7 +181,7 @@ public class Resource implements Iterable<Resource>
 	
 	
 	/**
-	 * Returns the Route from the application root to this resource.
+	 * @return the Route from the application root to this resource.
 	 */
 	public Route getRoute()
 	{
@@ -189,7 +190,7 @@ public class Resource implements Iterable<Resource>
 
 	
 	/**
-	 * Returns the number of resources in the subtree starting with this Resource.
+	 * @return the number of resources in the subtree starting with this Resource.
 	 */
 	public int size()
 	{
@@ -201,7 +202,7 @@ public class Resource implements Iterable<Resource>
 	
 	
 	/**
-	 * Returns the number of child resources.
+	 * @return the number of child resources.
 	 */
 	public int getChildCount()
 	{
@@ -210,7 +211,8 @@ public class Resource implements Iterable<Resource>
 
 	
 	/**
-	 * Returns the i-th child resource.
+	 * @param i the child index
+	 * @return the i-th child resource.
 	 */
 	public Resource getChild(int i)
 	{
@@ -219,7 +221,7 @@ public class Resource implements Iterable<Resource>
 
 
 	/**
-	 * Returns a the children 
+	 * @return the children 
 	 */
 	public Resource[] getChildren()
 	{
@@ -251,6 +253,8 @@ public class Resource implements Iterable<Resource>
 	
 	/**
 	 * Return the data previously set with {@link #setData(Object)}, casted to type T if not null.
+	 * @param type class
+	 * @param <T> the class type
 	 * @return the casted data or null
 	 */
 	public <T> T getData(Class<T> type)
@@ -345,6 +349,7 @@ public class Resource implements Iterable<Resource>
  	
 	/**
 	 * Prints the resource tree starting with this resource.
+	 * @param out a PrintStream
 	 */
 	public void print(PrintStream out)
 	{
@@ -354,6 +359,7 @@ public class Resource implements Iterable<Resource>
 	
 	/**
 	 * Prints the resource tree starting with this resource.
+	 * @param out a PrintWriter
 	 */
 	public void print(PrintWriter out)
 	{

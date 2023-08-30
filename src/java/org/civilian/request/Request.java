@@ -588,7 +588,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	 * 		content reader is available.
 	 * 		The exception is a {@link BadRequestException} if the ContentSerializer
 	 * 		recognized bad syntax in the content.  
-	 * @see Application#getContentSerializer(ContentType)
+	 * @see Application#getContentSerializers()
 	 * @see ContentSerializer#read(Class, java.lang.reflect.Type, Reader)
 	 */
 	public default <T> T readContent(Class<T> type, java.lang.reflect.Type genericType) 

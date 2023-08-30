@@ -334,16 +334,21 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 
 
 		/**
-		 * Builds a Url to to the given Resource.
+		 * Builds a Url to the given Resource.
+		 * The path may contain path parameters for which you then must provide
+		 * values. Path parameters shared by the current request are automatically initialized.
+		 * @param resource a resource 
 		 * @return the result 
 		 */
 		public T to(Resource resource) throws E
 		{
 			Check.notNull(resource, "resource");
-			return to(new Url(response_, resource));
+			Url url = new Url(response_, response_.getOwner());
+			url.setResource(resource).copyPathParams(response_.getRequest());
+			return to(url);
 		}
 		
-
+		
 		/**
 		 * Builds a Url to to the Resource whose controller has the given class.
 		 * Please note that a controller may be mapped to several resources. In this case

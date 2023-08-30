@@ -449,8 +449,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	
 
 	/**
-	 * Returns the controller service which provides
-	 * access to controller types. 
+	 * @return the controller service provides access to controller types. 
 	 */
 	public ControllerService getControllerService()
 	{
@@ -459,7 +458,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	
 
 	/**
-	 * Returns the controller config. 
+	 * @return the controller config. 
 	 */
 	public ControllerConfig getControllerConfig()
 	{
@@ -468,7 +467,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 
 	
 	/**
-	 * Returns the LocaleServiceList.
+	 * @return the LocaleServiceList.
 	 */
 	@Override public LocaleServiceList getLocaleServices()
 	{
@@ -489,7 +488,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	
 	
 	/**
-	 * Returns the UploadConfig which defines upload limits and location. 
+	 * @return the UploadConfig which defines upload limits and location. 
 	 */
 	public UploadConfig getUploadConfig()
 	{
@@ -635,7 +634,9 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * socket connection was aborted by the client.
 	 * The default implementation returns false (not to ignore the error).
 	 * Derived application classes should override the method and implement
-	 * their own strategy. 
+	 * their own strategy.
+	 * @param error the error
+	 * @return should the error be ignored 
 	 */
 	public boolean ignoreError(Throwable error)
 	{
@@ -662,6 +663,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * Returns a ResponseHandler object which is used 
 	 * to send a response to the client, if no processor handled the request.
 	 * Applications can return a different implementation to tweak the not-found-response.
+	 * @return the handler
 	 */
 	public ResponseHandler createNotFoundHandler()
 	{

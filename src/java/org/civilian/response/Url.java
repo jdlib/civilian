@@ -59,8 +59,6 @@ public class Url implements PathParamProvider
 	{
 		lsProvider_		= Check.notNull(lsProvider, "lsProvider");
 		path_ 			= Check.notNull(path, "path");
-		pathParams_		= EMPTY_PATH_PARAMS;
-		resource_		= null;
 	}
 	
 	
@@ -77,30 +75,26 @@ public class Url implements PathParamProvider
 
 	
 	/**
-	 * Creates a Url consisting of the path to the given resource.
-	 * The path may contain path parameters for which you then must provide
-	 * values. Path parameters shared by the current request are automatically initialized. 
-	 * If the application defines a default extension for resource urls,
-	 * it is also appended to the Url.
-	 * @param rp a Response or a ResponseProvider whose Response is used by the Url
-	 * @param resource the resource. The resource must not belong to the application which
-	 * 		received the request.   
+	 * Extend the Url by the path of the given resource.
+	 * and dimensions the path params of the URL according to the path param count of the resource's route.
+	 * @param resource a resource or null if any current should be cleared.
+	 * @return this	
 	 */
-	public Url(ResponseProvider rp, Resource resource)
+	public Url setResource(Resource resource)
 	{
-		Response response 	= Check.notNull(rp, "response provider").getResponse();
-		lsProvider_			= response;
-		resource_			= Check.notNull(resource, "resource");
-		path_ 				= response.getOwner().getPath().toString();
-
-		int ppCount = resource_.getRoute().getPathParamCount();
-		if (ppCount > 0)
-		{
-			pathParams_	= new Object[ppCount];
-			copyPathParams(response.getRequest());
-		}
-		else
-			pathParams_	= EMPTY_PATH_PARAMS;
+		resource_ 	= resource;
+		int ppCount = resource != null ? resource.getRoute().getPathParamCount() : 0;
+		pathParams_	= ppCount > 0 ? new Object[ppCount] : EMPTY_PATH_PARAMS;
+		return this;
+	}
+	
+	
+	/**
+	 * @return the resource previously set by {@link #setResource(Resource)}.
+	 */
+	public Resource getResource()
+	{
+		return resource_;
 	}
 	
 	
@@ -111,16 +105,6 @@ public class Url implements PathParamProvider
 		return resource_.getRoute();
 	}
 
-	
-	/**
-	 * Returns the resource if the Url was constructed from a resource or
-	 * from a controller class. Else it returns null.	
-	 */
-	public Resource getResource()
-	{
-		return resource_;
-	}
-	
 	
 	/**
 	 * Explicitly sets the TypeSerializer used by the Url when it
@@ -160,7 +144,8 @@ public class Url implements PathParamProvider
 	 * Returns the number of path parameters within the Url.
 	 * A positive count is only possible for Urls which have been
 	 * constructed by passing a Resource object to the 
-	 * {@link Url#Url(ResponseProvider, Resource) constructor}.
+	 * @see #setResource(Resource)
+	 * @return the count
 	 */
 	public int getPathParamCount()
 	{
@@ -169,7 +154,7 @@ public class Url implements PathParamProvider
 
 
 	/**
-	 * Returns the i-th path param value.
+	 * @return the i-th path param value.
 	 */
 	public Object getPathParam(int index)
 	{
@@ -178,8 +163,7 @@ public class Url implements PathParamProvider
 
 	
 	/**
-	 * Returns path param value belonging to the given
-	 * PathParam.
+	 * @return the path param value belonging to the given PathParam.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override public <T> T getPathParam(PathParam<T> pathParam)
@@ -236,12 +220,13 @@ public class Url implements PathParamProvider
 	
 	/**
 	 * Copies the path parameters from the provider to this url.
+	 * If the Url does not have path params the method does nothing.
 	 * @return this
 	 */
 	public Url copyPathParams(PathParamProvider provider)
 	{
-		Check.notNull(provider, "provider");
-		getRoute().extractPathParams(provider, pathParams_);
+		if (pathParams_.length > 0)
+			getRoute().extractPathParams(provider, pathParams_);
 		return this;
 	}
 
@@ -591,12 +576,12 @@ public class Url implements PathParamProvider
 	}
 
 	
-	private String fragment_;
 	private TypeSerializer serializer_;
-	private final Resource resource_;
-	private Object[] pathParams_;
 	private QueryParamList queryParams_;
+	private Object[] pathParams_ = EMPTY_PATH_PARAMS;
+	private Resource resource_;
 	private final String path_;
 	private final LocaleServiceProvider lsProvider_;
+	private String fragment_;
 	private static final Object[] EMPTY_PATH_PARAMS = new Object[0];
 }
