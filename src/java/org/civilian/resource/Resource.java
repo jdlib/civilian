@@ -29,6 +29,7 @@ import java.util.Stack;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
+import org.civilian.util.Iterators;
 import org.civilian.util.PathScanner;
 import org.civilian.util.PathScanner.Mark;
 
@@ -43,7 +44,7 @@ import org.civilian.util.PathScanner.Mark;
  * <li>Build the resource by hand (not recommended);
  * </ol> 
  */
-public class Resource implements Iterable<Resource>
+public class Resource
 {
 	/**
 	 * Creates a new root resource.
@@ -221,9 +222,18 @@ public class Resource implements Iterable<Resource>
 
 
 	/**
-	 * @return the children 
+	 * @return an Iterable for the children of the resource. 
 	 */
-	public Resource[] getChildren()
+	public Iterable<Resource> children()
+	{
+		return () -> Iterators.unique(Iterators.forValues(children_));
+	}
+
+	
+	/**
+	 * @return the children as array. 
+	 */
+	public Resource[] getChildArray()
 	{
 		return children_.clone();
 	}
@@ -375,27 +385,27 @@ public class Resource implements Iterable<Resource>
 		}
 		out.println();
 		
-		for (int i=0; i<getChildCount(); i++)
-			getChild(i).print(out);
+		for (Resource child : children())
+			child.print(out);
 	}
 	
 	
 	/**
-	 * Returns a depth-first iterator for the resource tree
+	 * Returns a Iterable which can provide a depth-first iterator for the resource tree
 	 * starting with this resource.
 	 */
-	@Override public Iterator<Resource> iterator()
+	public Iterable<Resource> tree()
 	{
-		return new It(this);
+		return () -> new TreeIt(this);
 	}
 	
 	
 	/**
 	 * A depth-first iterator of the resource tree.
 	 */
-	private static class It implements Iterator<Resource>
+	private static class TreeIt implements Iterator<Resource>
 	{
-		public It(Resource root)
+		public TreeIt(Resource root)
 		{
 			next_ = root;
 		}
@@ -447,7 +457,7 @@ public class Resource implements Iterable<Resource>
 		
 		
 		private Resource next_;
-		private Stack<Integer> childIndexStack_ = new Stack<>();
+		private final Stack<Integer> childIndexStack_ = new Stack<>();
 	}
 
 

@@ -36,7 +36,7 @@ public class ControllerScanTest extends CivTest
 		Resource resource = scan.getRootResource();
 		// resource.print(System.out);
 		
-		Iterator<Resource> it = resource.iterator();
+		Iterator<Resource> it = resource.tree().iterator();
 		assertNext(it, "/", 					"org.civilian.testcase1.IndexController");
 		assertNext(it, "/alpha", 				"org.civilian.testcase1.AlphaController");
 		assertNext(it, "/beta",					"org.civilian.testcase1.beta.IndexController");

@@ -106,22 +106,22 @@ public class ResourceTest extends CivTest
 	@Test public void testChildOrder()
 	{
 		Resource root = new Resource();
-		assertArrayEquals2(root.getChildren());
+		assertArrayEquals2(root.getChildArray());
 		
 		Resource ppInt = new Resource(root, PP_INT);
-		assertArrayEquals2(root.getChildren(), ppInt);
+		assertArrayEquals2(root.getChildArray(), ppInt);
 		
 		// segments come before path params
 		Resource seg2 = new Resource(root, "seg2");
-		assertArrayEquals2(root.getChildren(), seg2, ppInt);
+		assertArrayEquals2(root.getChildArray(), seg2, ppInt);
 
 		// path params are ordered by name
 		Resource ppSeg = new Resource(root, PP_SEG);
-		assertArrayEquals2(root.getChildren(), seg2, ppInt, ppSeg);
+		assertArrayEquals2(root.getChildArray(), seg2, ppInt, ppSeg);
 
 		// segment params are ordered by name
 		Resource seg1 = new Resource(root, "seg1");
-		assertArrayEquals2(root.getChildren(), seg1, seg2, ppInt, ppSeg);
+		assertArrayEquals2(root.getChildArray(), seg1, seg2, ppInt, ppSeg);
 	}
 	
 	
@@ -132,7 +132,7 @@ public class ResourceTest extends CivTest
 		Resource child1	 	= new Resource(root, 	"1");
 		Resource child11 	= new Resource(child1,	"1");
 		
-		Iterator<Resource> it = root.iterator();
+		Iterator<Resource> it = root.tree().iterator();
 		assertTrue(it.hasNext());
 		try
 		{
@@ -275,7 +275,7 @@ public class ResourceTest extends CivTest
 		Resource root2 			= new Resource();
 		Resource ra  			= new Resource(root2, ppa);
 		Resource rb  			= new Resource(root2, ppb);
-		assertArrayEquals2(root2.getChildren(), ra, rb); // sorted by param name
+		assertArrayEquals2(root2.getChildArray(), ra, rb); // sorted by param name
 		
 		a = new MatchAssert(root2);
 		

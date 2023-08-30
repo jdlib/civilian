@@ -58,8 +58,8 @@ public class ControllerResourceData
 			sig2resource.put(sig, resource);
 		}		
 		
-		for (int i=0; i<resource.getChildCount(); i++)
-			initTypeProviders(resource.getChild(i), service, sig2resource);
+		for (Resource child : resource.children())
+			initTypeProviders(child, service, sig2resource);
 	}
 
 	
@@ -73,8 +73,8 @@ public class ControllerResourceData
 		ControllerSignature signature = getSignature(resource);
 		if (signature != null)
 			Class.forName(signature.getClassName());
-		for (int i=0; i<resource.getChildCount(); i++)
-			touchControllerClasses(resource.getChild(i));
+		for (Resource child : resource.children())
+			touchControllerClasses(child);
 	}
 	
 	

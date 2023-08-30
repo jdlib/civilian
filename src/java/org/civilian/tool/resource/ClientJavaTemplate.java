@@ -70,159 +70,155 @@ class ClientJavaTemplate
 			out.println();
 		}
 		printResourceComment(resource);                                 // line 33: @printResourceComment(resource);
-		int childCount        = resource.getChildCount();               // line 34: @int childCount        = resource.getChildCount();
-		boolean isRoot        = resource.isRoot();                      // line 35: @boolean isRoot        = resource.isRoot();
-		String className      = isRoot ? outputName : buildClassName(resource); // line 36: @String className      = isRoot ? outputName : buildClassName(resource);
-		boolean hasController = resource.getData() != null;             // line 37: @boolean hasController = resource.getData() != null;
-		out.print("public");                                            // line 38: public
-		if (!isRoot)                                                    // line 38: <%?!isRoot%>
+		boolean isRoot        = resource.isRoot();                      // line 34: @boolean isRoot        = resource.isRoot();
+		String className      = isRoot ? outputName : buildClassName(resource); // line 35: @String className      = isRoot ? outputName : buildClassName(resource);
+		boolean hasController = resource.getData() != null;             // line 36: @boolean hasController = resource.getData() != null;
+		out.print("public");                                            // line 37: public
+		if (!isRoot)                                                    // line 37: <%?!isRoot%>
 		{
-			out.print(" static");                                       // line 38: static
+			out.print(" static");                                       // line 37: static
 		}
-		out.print(" class ");                                           // line 38: class
-		out.print(className);                                           // line 38: <%className%>
-		if (hasController)                                              // line 38: <%?hasController%>
+		out.print(" class ");                                           // line 37: class
+		out.print(className);                                           // line 37: <%className%>
+		if (hasController)                                              // line 37: <%?hasController%>
 		{
-			out.print(" extends ");                                     // line 38: extends
-			out.print(WEBRESOURCE);                                     // line 38: <%WEBRESOURCE%>
+			out.print(" extends ");                                     // line 37: extends
+			out.print(WEBRESOURCE);                                     // line 37: <%WEBRESOURCE%>
 		}
 		out.printlnIfNotEmpty();
-		out.println("{");                                               // line 39: {
+		out.println("{");                                               // line 38: {
 		out.increaseTab();
-		out.print("public ");                                           // line 40: public
-		out.print(className);                                           // line 40: <%className%>
-		if (isRoot)                                                     // line 41: @if (isRoot)
+		out.print("public ");                                           // line 39: public
+		out.print(className);                                           // line 39: <%className%>
+		if (isRoot)                                                     // line 40: @if (isRoot)
 		{
-			out.println("(String url)");                                // line 42: (String url)
+			out.println("(String url)");                                // line 41: (String url)
 		}
-		else                                                            // line 43: @else
+		else                                                            // line 42: @else
 		{
-			out.print("(");                                             // line 44: (
-			out.print(WEBRESOURCE);                                     // line 44: <%WEBRESOURCE%>
-			out.println(" parent)");                                    // line 44: parent)
+			out.print("(");                                             // line 43: (
+			out.print(WEBRESOURCE);                                     // line 43: <%WEBRESOURCE%>
+			out.println(" parent)");                                    // line 43: parent)
 		}
-		out.println("{");                                               // line 45: {
+		out.println("{");                                               // line 44: {
 		out.increaseTab();
-		if (hasController)                                              // line 46: @if (hasController)
+		if (hasController)                                              // line 45: @if (hasController)
 		{
-			out.print("super");                                         // line 47: super
+			out.print("super");                                         // line 46: super
 		}
-		else                                                            // line 48: @else
+		else                                                            // line 47: @else
 		{
-			out.print("this.resource_ = new ");                         // line 49: this.resource_ = new
-			out.print(WEBRESOURCE);                                     // line 49: <%WEBRESOURCE%>
+			out.print("this.resource_ = new ");                         // line 48: this.resource_ = new
+			out.print(WEBRESOURCE);                                     // line 48: <%WEBRESOURCE%>
 		}
-		out.print("(");                                                 // line 50: (
-		printCtorArgs(resource, "parent");                              // line 50: <%printCtorArgs(resource, "parent");%>
-		out.println(");");                                              // line 50: );
+		out.print("(");                                                 // line 49: (
+		printCtorArgs(resource, "parent");                              // line 49: <%printCtorArgs(resource, "parent");%>
+		out.println(");");                                              // line 49: );
 		out.println();
-		// print field definitions                                      // line 52: @// print field definitions
-		for (int i=0; i<childCount; i++)                                // line 53: @for (int i=0; i<childCount; i++)
+		// print field definitions                                      // line 51: @// print field definitions
+		for (Resource child : resource.children())                      // line 52: @for (Resource child : resource.children())
 		{
-			Resource child = resource.getChild(i);                      // line 54: @Resource child = resource.getChild(i);
-			boolean childHasController = child.getData() != null;       // line 55: @boolean childHasController = child.getData() != null;
-			if (!hasController)                                         // line 56: @if (!hasController)
+			boolean childHasController = child.getData() != null;       // line 53: @boolean childHasController = child.getData() != null;
+			if (!hasController)                                         // line 54: @if (!hasController)
 			{
-				out.print("this.resource_.");                           // line 57: this.resource_.
+				out.print("this.resource_.");                           // line 55: this.resource_.
 			}
-			out.print("addChild(");                                     // line 58: addChild(
-			if (!childHasController)                                    // line 59: @if (!childHasController)
+			out.print("addChild(");                                     // line 56: addChild(
+			if (!childHasController)                                    // line 57: @if (!childHasController)
 			{
-				out.print("(");                                         // line 60: (
+				out.print("(");                                         // line 58: (
 			}
-			out.print("this.");                                         // line 61: this.
-			out.print(buildFieldName(child));                           // line 61: <%buildFieldName(child)%>
-			out.print(" = new ");                                       // line 61: = new
-			if (child.getChildCount() == 0)                             // line 62: @if (child.getChildCount() == 0)
+			out.print("this.");                                         // line 59: this.
+			out.print(buildFieldName(child));                           // line 59: <%buildFieldName(child)%>
+			out.print(" = new ");                                       // line 59: = new
+			if (child.getChildCount() == 0)                             // line 60: @if (child.getChildCount() == 0)
 			{
-				out.print(WEBRESOURCE);                                 // line 63: <%WEBRESOURCE%>
-				out.print("(");                                         // line 63: (
-				printCtorArgs(child, hasController ? "this" : "this.resource_"); // line 63: <%printCtorArgs(child, hasController ? "this" : "this.resource_");%>
-				out.print(")");                                         // line 63: )
+				out.print(WEBRESOURCE);                                 // line 61: <%WEBRESOURCE%>
+				out.print("(");                                         // line 61: (
+				printCtorArgs(child, hasController ? "this" : "this.resource_"); // line 61: <%printCtorArgs(child, hasController ? "this" : "this.resource_");%>
+				out.print(")");                                         // line 61: )
 			}
-			else                                                        // line 64: @else
+			else                                                        // line 62: @else
 			{
-				out.print(buildClassName(child));                       // line 65: <%buildClassName(child)%>
-				out.print("(this)");                                    // line 65: (this)
+				out.print(buildClassName(child));                       // line 63: <%buildClassName(child)%>
+				out.print("(this)");                                    // line 63: (this)
 			}
-			if (!childHasController)                                    // line 66: @if (!childHasController)
+			if (!childHasController)                                    // line 64: @if (!childHasController)
 			{
-				out.print(").resource_");                               // line 67: ).resource_
+				out.print(").resource_");                               // line 65: ).resource_
 			}
-			out.println(");");                                          // line 68: );
+			out.println(");");                                          // line 66: );
 		}
 		out.decreaseTab();
-		out.println("}");                                               // line 69: }
-		// print field declarations                                     // line 70: @// print field declarations
-		for (int i=0; i<childCount; i++)                                // line 71: @for (int i=0; i<childCount; i++)
+		out.println("}");                                               // line 67: }
+		// print field declarations                                     // line 68: @// print field declarations
+		for (Resource child : resource.children())                      // line 69: @for (Resource child : resource.children())
 		{
 			out.println();
-			Resource child = resource.getChild(i);                      // line 73: @Resource child = resource.getChild(i);
-			printResourceComment(child);                                // line 74: @printResourceComment(child);
-			out.print("public final ");                                 // line 75: public final
-			out.print(child.getChildCount() > 0 ? buildClassName(child) : WEBRESOURCE); // line 75: <%child.getChildCount() > 0 ? buildClassName(child) : WEBRESOURCE%>
-			out.print(" ");                                             // line 75: 
-			out.print(buildFieldName(child));                           // line 75: <%buildFieldName(child)%>
-			out.println(";");                                           // line 75: ;
+			printResourceComment(child);                                // line 71: @printResourceComment(child);
+			out.print("public final ");                                 // line 72: public final
+			out.print(child.getChildCount() > 0 ? buildClassName(child) : WEBRESOURCE); // line 72: <%child.getChildCount() > 0 ? buildClassName(child) : WEBRESOURCE%>
+			out.print(" ");                                             // line 72: 
+			out.print(buildFieldName(child));                           // line 72: <%buildFieldName(child)%>
+			out.println(";");                                           // line 72: ;
 		}
-		for (int i=0; i<childCount; i++)                                // line 76: @for (int i=0; i<childCount; i++)
+		for (Resource child : resource.children())                      // line 73: @for (Resource child : resource.children())
 		{
-			Resource child = resource.getChild(i);                      // line 77: @Resource child = resource.getChild(i);
-			if (child.getChildCount() > 0)                              // line 78: @if (child.getChildCount() > 0)
+			if (child.getChildCount() > 0)                              // line 74: @if (child.getChildCount() > 0)
 			{
-				printResourceClass(child);                              // line 79: @printResourceClass(child);
+				printResourceClass(child);                              // line 75: @printResourceClass(child);
 			}
 		}
-		if (!hasController)                                             // line 80: @if (!hasController)
+		if (!hasController)                                             // line 76: @if (!hasController)
 		{
 			out.println();
-			out.println("// hidden since not mapped to a controller");  // line 82: // hidden since not mapped to a controller
-			out.print("private final ");                                // line 83: private final
-			out.print(WEBRESOURCE);                                     // line 83: <%WEBRESOURCE%>
-			out.println(" resource_;");                                 // line 83: resource_;
+			out.println("// hidden since not mapped to a controller");  // line 78: // hidden since not mapped to a controller
+			out.print("private final ");                                // line 79: private final
+			out.print(WEBRESOURCE);                                     // line 79: <%WEBRESOURCE%>
+			out.println(" resource_;");                                 // line 79: resource_;
 		}
 		out.decreaseTab();
-		out.println("}");                                               // line 84: }
+		out.println("}");                                               // line 80: }
 	}
 	
 	
 	
 	private void printResourceComment(Resource resource)
 	{
-		out.println("/**");                                             // line 91: /**
-		out.print(" * Resource \"");                                    // line 92: * Resource "
-		out.print(resource);                                            // line 92: <%resource%>
-		out.print("\"");                                                // line 92: "
-		if (resource.isRoot())                                          // line 92: <%?resource.isRoot()%>
+		out.println("/**");                                             // line 87: /**
+		out.print(" * Resource \"");                                    // line 88: * Resource "
+		out.print(resource);                                            // line 88: <%resource%>
+		out.print("\"");                                                // line 88: "
+		if (resource.isRoot())                                          // line 88: <%?resource.isRoot()%>
 		{
-			out.print(" of application ");                              // line 92: of application
-			out.print(app.getClass().getName());                        // line 92: <%app.getClass().getName()%>
+			out.print(" of application ");                              // line 88: of application
+			out.print(app.getClass().getName());                        // line 88: <%app.getClass().getName()%>
 		}
-		out.println(".");                                               // line 92: .
-		out.println(" */");                                             // line 93: */
+		out.println(".");                                               // line 88: .
+		out.println(" */");                                             // line 89: */
 	}
 	
 	
 	private void printCtorArgs(Resource resource, String parent)
 	{
-		if (!resource.isRoot())                                         // line 99: @if (!resource.isRoot())
+		if (!resource.isRoot())                                         // line 95: @if (!resource.isRoot())
 		{
-			out.print(parent);                                          // line 100: <%parent%>
-			out.print(", ");                                            // line 100: ,
-			if (resource.getSegment() != null)                          // line 101: @if (resource.getSegment() != null)
+			out.print(parent);                                          // line 96: <%parent%>
+			out.print(", ");                                            // line 96: ,
+			if (resource.getSegment() != null)                          // line 97: @if (resource.getSegment() != null)
 			{
-				out.print("\"");                                        // line 102: "
-				out.print(resource.getSegment());                       // line 102: <%resource.getSegment()%>
-				out.print("\"");                                        // line 102: "
+				out.print("\"");                                        // line 98: "
+				out.print(resource.getSegment());                       // line 98: <%resource.getSegment()%>
+				out.print("\"");                                        // line 98: "
 			}
-			else                                                        // line 103: @else
+			else                                                        // line 99: @else
 			{
-				out.print(app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())); // line 104: <%app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())%>
+				out.print(app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())); // line 100: <%app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())%>
 			}
 		}
-		else                                                            // line 105: @else
+		else                                                            // line 101: @else
 		{
-			out.print("url");                                           // line 106: url
+			out.print("url");                                           // line 102: url
 		}
 	}
 	

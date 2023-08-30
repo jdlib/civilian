@@ -1,4 +1,3 @@
-import java.util.Iterator
 import org.civilian.application.Application
 import org.civilian.resource.Resource
 import org.civilian.controller.ControllerResourceData
@@ -13,11 +12,8 @@ mixin html
 		$scope.resources = [
 			@Resource rootRes = app.getRootResource();
 			@if (rootRes != null)
-				@Iterator<Resource> it = rootRes.iterator();
-				@while(it.hasNext())
-					@Resource resource = it.next();
-					@String route = resource.getRoute().toString();
-					@printControllerEntry(resource, route);				
+				@for (Resource descendant : rootRes.tree())
+					@printControllerEntry(descendant);				
 		<%%>];
 		
 		$scope.showDetails = function(resource) {
@@ -67,9 +63,10 @@ mixin html
 }}
 
 
-private void printControllerEntry(Resource resource, String path)
+private void printControllerEntry(Resource resource)
 {{
 	@ControllerResourceData data = ControllerResourceData.of(resource);
 	@if (data != null)
+		@String path = resource.getRoute().toString();
 		{ controller: "<%data.getSignature()%>", path: "<%path.length() != 0 ? path : "/"%>" },
 }}
