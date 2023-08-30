@@ -34,6 +34,9 @@ import org.civilian.type.TypeLib;
 
 public class UrlTest extends CivTest
 {
+	private static final LocaleService LS = new LocaleService(Locale.ENGLISH);
+	
+	
 	@BeforeClass public static void beforeClass()
 	{
 		request_ = mock(Request.class);
@@ -46,14 +49,15 @@ public class UrlTest extends CivTest
 		when(response_.getRequest()).thenReturn(request_);
 		when(response_.getOwner()).thenReturn(respOwner);
 		when(response_.url()).thenCallRealMethod();
-		when(response_.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
+		when(response_.getLocaleService()).thenReturn(LS);
 	}
 	
 
-	@Test public void testCreateReqPath()
+	@Test public void testCreatePath()
 	{
-		Url url = new Url(response_, request_.getPath());
+		Url url = new Url(LS, request_.getPath());
 		assertEquals("/some/path", url.toString());
+		assertSame(url.getSerializer(), LS.getSerializer());
 		
 		url.setSerializer(StandardSerializer.INSTANCE);
 		assertSame(StandardSerializer.INSTANCE, url.getSerializer());
@@ -64,16 +68,16 @@ public class UrlTest extends CivTest
 	{
 		Url url;
 		
-		url = new Url(response_, "/");
+		url = new Url(LS, "/");
 		assertEquals("/", url.toString());
 		
-		url = new Url(response_, "/index.html");
+		url = new Url(LS, "/index.html");
 		assertEquals("/index.html", url.toString());
 		
-		url = new Url(response_, "index.html");
+		url = new Url(LS, "index.html");
 		assertEquals("index.html", url.toString());
 
-		url = new Url(response_, "http://test.com");
+		url = new Url(LS, "http://test.com");
 		assertEquals("http://test.com", url.toString());
 	}
 	
@@ -120,7 +124,7 @@ public class UrlTest extends CivTest
 	
 	@Test public void testAddPath()
 	{
-		Url url = new Url(response_, "/");
+		Url url = new Url(LS, "/");
 		
 		url.append("a");
 		assertEquals("/a", url.toString());
@@ -132,7 +136,7 @@ public class UrlTest extends CivTest
 
 	@Test public void testQueryParams()
 	{
-		Url url = new Url(response_, "index.html");
+		Url url = new Url(LS, "index.html");
 		
 		Url.QueryParamList queryParams = url.queryParams();
 		assertEquals(0, queryParams.size());
