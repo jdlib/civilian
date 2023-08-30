@@ -333,6 +333,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * the {@link Server}. The id was defined within
 	 * <code>civilian.ini</code>.
 	 * @see Server#getApplication(String) 
+	 * @return the id
 	 */
 	@Override public String getId()
 	{
@@ -344,6 +345,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * Returns the application version.
 	 * The optional version can be defined during setup.
 	 * @see AppConfig#setVersion(String)
+	 * @return the version
 	 */
 	public String getVersion()
 	{
@@ -365,7 +367,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 
 
 	/**
-	 * Returns the server in which the application is running.
+	 * @return the server in which the application is running.
 	 */
 	@Override public Server getServer()
 	{
@@ -374,7 +376,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	
 	
 	/**
-	 * Returns the default encoding for textual content of responses.
+	 * @return the default encoding for textual content of responses.
 	 */
 	@Override public String getDefaultCharEncoding()
 	{
@@ -383,7 +385,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 
 	
 	/**
-	 * Returns the path from the server root to the application.
+	 * @return the path from the server root to the application.
 	 */
 	@Override public Path getPath()
 	{
@@ -392,7 +394,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 
 	
 	/**
-	 * Returns the relative path from the server to the application.
+	 * @return the relative path from the server to the application.
 	 */
 	@Override public Path getRelativePath()
 	{ 
@@ -401,7 +403,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 
 	
 	/**
-	 * Returns the application status.
+	 * @return the application status.
 	 */
 	@Override public Status getStatus()
 	{
@@ -410,7 +412,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 
 	
 	/**
-	 * Returns the AssetService used to serve assets.
+	 * @return the AssetService used to serve assets.
 	 */
 	public AssetService getAssetService()
 	{
@@ -419,8 +421,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 
 	
 	/**
-	 * Returns the processor list.
-	 * The processor list contains the processors which are used to process requests.
+	 * @return the processor list. The processor list contains the processors which are used to process requests.
 	 */
 	public ProcessorList getProcessors()
 	{
@@ -509,6 +510,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * Returns an attribute which was previously associated with
 	 * the application.
 	 * @param name the attribute name
+	 * @return the attribute
 	 * @see #setAttribute(String, Object)
 	 */
 	@Override public Object getAttribute(String name)
@@ -518,7 +520,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 
 
 	/**
-	 * Returns an iterator of the attribute names stored in the application. 
+	 * @return an iterator of the attribute names stored in the application. 
 	 */
 	public Iterator<String> getAttributeNames()
 	{

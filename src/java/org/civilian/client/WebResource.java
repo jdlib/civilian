@@ -97,7 +97,7 @@ public class WebResource
 
 	
 	/**
-	 * Returns if this resource is the root resource.
+	 * @return if this resource is the root resource.
 	 */
 	public boolean isRoot()
 	{
@@ -106,7 +106,7 @@ public class WebResource
 
 	
 	/**
-	 * Returns the root resource.
+	 * @return the root resource.
 	 */
 	public WebResource getRoot()
 	{
@@ -115,7 +115,7 @@ public class WebResource
 
 	
 	/**
-	 * Returns the parent resource.
+	 * @return the parent resource.
 	 */
 	public WebResource getParent()
 	{
@@ -124,7 +124,7 @@ public class WebResource
 	
 	
 	/**
-	 * Returns the segment of this Resource by which the parent resource
+	 * @return the segment of this Resource by which the parent resource
 	 * is extended. Returns null, if the resource is the root or extends by a path-param.
 	 */
 	public String getSegment()
@@ -134,7 +134,7 @@ public class WebResource
 	
 
 	/**
-	 * Returns the PathParam of this Resource by which the parent resource
+	 * @return the PathParam of this Resource by which the parent resource
 	 * is extended. Returns null, if the resource is the root or extends by a segment.
 	 */
 	public PathParam<?> getPathParam()
@@ -144,7 +144,7 @@ public class WebResource
 	
 	
 	/**
-	 * Returns the Route from the application root to this resource.
+	 * @return the Route from the application root to this resource.
 	 */
 	public Route getRoute()
 	{
@@ -153,7 +153,7 @@ public class WebResource
 
 	
 	/**
-	 * Returns the number of child resources.
+	 * @return he number of child resources.
 	 */
 	public int getChildCount()
 	{
@@ -162,7 +162,8 @@ public class WebResource
 
 	
 	/**
-	 * Returns the i-th child resource.
+	 * @param i the child index
+	 * @return the i-th child resource.
 	 */
 	public WebResource getChild(int i)
 	{
@@ -171,19 +172,22 @@ public class WebResource
 
 	
 	/**
-	 * Adds a new resource.
+	 * Adds a new child resource.
+	 * @param child the resource
+	 * @return the resource
 	 */
-	protected WebResource addChild(WebResource resource)
+	protected WebResource addChild(WebResource child)
 	{
 		if (children_ == null)
 			children_ = new ArrayList<>();
-		children_.add(resource);
-		return resource;
+		children_.add(child);
+		return child;
 	}
 
 
 	/**
 	 * Prints the resource tree starting with this resource.
+	 * @param out a PrintWriter
 	 */
 	public void print(PrintWriter out)
 	{
