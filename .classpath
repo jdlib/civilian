@@ -28,7 +28,7 @@
 	<classpathentry kind="lib" path="lib/build/poi-4.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/build/poi-ooxml-4.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/build/jaxb-api-2.3.1.jar"/>
-	<classpathentry kind="lib" path="lib/test/junit-4.13.2.jar"/>
+	<classpathentry kind="lib" path="lib/test/junit-4.13.2.jar" sourcepath="lib/test/junit-4.13.2-sources.jar"/>
 	<classpathentry kind="lib" path="lib/test/byte-buddy-1.14.4.jar"/>
 	<classpathentry kind="lib" path="lib/test/byte-buddy-agent-1.14.4.jar"/>
 	<classpathentry kind="lib" path="lib/test/mockito-core-5.3.1.jar" sourcepath="lib/test/mockito-core-5.3.1-sources.jar"/>
