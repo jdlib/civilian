@@ -26,7 +26,6 @@ import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParams;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseOwner;
-import org.civilian.response.Url;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.TypeLib;

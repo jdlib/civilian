@@ -35,6 +35,7 @@ import org.civilian.request.RequestProvider;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
 import org.civilian.resource.ResourceHandler;
+import org.civilian.resource.Url;
 import org.civilian.response.std.ErrorResponseHandler;
 import org.civilian.template.Template;
 import org.civilian.template.TemplateWriter;

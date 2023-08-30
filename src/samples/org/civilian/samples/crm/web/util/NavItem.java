@@ -17,9 +17,9 @@ package org.civilian.samples.crm.web.util;
 
 
 import org.civilian.resource.Resource;
+import org.civilian.resource.Url;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseProvider;
-import org.civilian.response.Url;
 
 
 /**

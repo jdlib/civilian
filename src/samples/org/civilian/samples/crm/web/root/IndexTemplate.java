@@ -5,7 +5,7 @@
 package org.civilian.samples.crm.web.root;
 
 
-import org.civilian.response.Url;
+import org.civilian.resource.Url;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.CrmResources;
 import org.civilian.template.Template;

@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.civilian.response;
+package org.civilian.resource;
 
 
 import java.util.ArrayList;
-import org.civilian.resource.PathProvider;
-import org.civilian.resource.Resource;
-import org.civilian.resource.Route;
+
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParamProvider;
+import org.civilian.response.Response;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.service.LocaleServiceProvider;
 import org.civilian.text.type.TypeSerializer;

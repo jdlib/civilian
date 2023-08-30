@@ -5,7 +5,7 @@
 package org.civilian.samples.error;
 
 
-import org.civilian.response.Url;
+import org.civilian.resource.Url;
 import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 

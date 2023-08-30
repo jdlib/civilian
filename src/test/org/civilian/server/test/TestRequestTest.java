@@ -22,7 +22,7 @@ import org.civilian.application.admin.AdminApp;
 import org.civilian.application.admin.AdminPathParams;
 import org.civilian.application.admin.AdminResources;
 import org.civilian.request.CookieList;
-import org.civilian.response.Url;
+import org.civilian.resource.Url;
 import org.civilian.util.Settings;
 import org.junit.Before;
 import org.junit.BeforeClass;

@@ -1,6 +1,6 @@
 import org.civilian.server.ServerApp
 import org.civilian.resource.Resource
-import org.civilian.response.Url
+import org.civilian.resource.Url
 import org.civilian.template.Template
 
 
