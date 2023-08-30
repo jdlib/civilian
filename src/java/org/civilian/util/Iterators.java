@@ -31,7 +31,7 @@ import java.util.NoSuchElementException;
 public abstract class Iterators
 {
 	/**
-	 * Returns an empty Iterator. 
+	 * @return an empty Iterator. 
 	 */
 	public static <T> Iterator<T> empty()
 	{
@@ -62,7 +62,7 @@ public abstract class Iterators
 
 	
 	/**
-	 * Returns an Iterator for an array. 
+	 * @return an Iterator for an array. 
 	 */
 	@SafeVarargs
 	public static <T,S extends T> Iterator<T> forValues(S... array)
@@ -72,7 +72,7 @@ public abstract class Iterators
 	
 
 	/**
-	 * Returns an Iterator for an array part. 
+	 * @return an Iterator for an array part. 
 	 */
 	public static <T,S extends T> Iterator<T> forValues(S[] array, int start, int end)
 	{
@@ -81,7 +81,7 @@ public abstract class Iterators
 
 	
 	/**
-	 * Returns an Iterator which wraps a enumeration. 
+	 * @return an Iterator which wraps a enumeration. 
 	 */
 	public static <T> Iterator<T> asIterator(Enumeration<T> enumeration)
 	{
@@ -90,7 +90,7 @@ public abstract class Iterators
 
 	
 	/**
-	 * Returns an enumeration which wraps an iterator. 
+	 * @return an enumeration which wraps an iterator. 
 	 */
 	public static <T> Enumeration<T> asEnumeration(Iterator<T> iterator)
 	{
@@ -99,7 +99,7 @@ public abstract class Iterators
 
 	
 	/**
-	 * Returns an Iterator which returns zero or one values.
+	 * @return an Iterator which returns zero or one values.
 	 * @param value the value. If it is not null, the iterator wiull returns
 	 * 		this values, else it returns no value. 
 	 */
@@ -110,7 +110,7 @@ public abstract class Iterators
 
 	
 	/**
-	 * Returns an Iterator which returns zero or one values.
+	 * @return an Iterator which returns zero or one values.
 	 * @param value the value
 	 * @param hasNext if true, the iterator will return the value, else
 	 * 		it will return nothing  
@@ -122,7 +122,7 @@ public abstract class Iterators
 
 	
 	/**
-	 * Returns an Iterator which joins the given iterators.
+	 * @return an Iterator which joins the given iterators.
 	 */
 	@SafeVarargs
 	public static <T> Iterator<T> join(Iterator<T>... iterators)
@@ -141,7 +141,7 @@ public abstract class Iterators
 
 	
 	/**
-	 * Makes an iterator unmodifiable. 
+	 * @return an unmodifiable iterator. 
 	 */
 	public static <T> Iterator<T> unmodifiable(Iterator<T> it)
 	{
@@ -188,9 +188,9 @@ public abstract class Iterators
 		}
 
 
-		private S[] elements_;
+		private final S[] elements_;
 		private int index_;
-		private int end_;
+		private final int end_;
 	}
 
 
@@ -220,7 +220,7 @@ public abstract class Iterators
 		}
 		
 		
-		private Enumeration<T> enumeration_;
+		private final Enumeration<T> enumeration_;
 	}
 
 
@@ -244,7 +244,7 @@ public abstract class Iterators
 		}
 
 		
-		private Iterator<T> iterator_;
+		private final Iterator<T> iterator_;
 	}
 
 
@@ -279,7 +279,7 @@ public abstract class Iterators
 		
 		
 		private boolean hasNext_;
-		private T value_;
+		private final T value_;
 	}
 
 
@@ -309,7 +309,7 @@ public abstract class Iterators
 		}
 		
 		
-		private Iterator<T> it_;
+		private final Iterator<T> it_;
 	}
 
 
