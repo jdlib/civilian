@@ -79,16 +79,6 @@ public class IteratorsTest extends CivTest
 	}
 	
 	
-	@Test public void testAddAll()
-	{
-		Iterator<String> it = Iterators.forValue("a");
-		List<String> list = Iterators.addAll(new ArrayList<String>(), it);
-		assertEquals(1, list.size());
-		assertEquals("a", list.get(0));
-	}
-	
-	
-	
 	@Test public void testJoin()
 	{
 		Iterator<String> it1 = Iterators.forValue("1");

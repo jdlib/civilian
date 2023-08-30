@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -36,28 +35,6 @@ public abstract class Iterators
 	public static <T> Iterator<T> empty()
 	{
 		return Collections.<T>emptyList().iterator();	
-	}
-
-	
-	/**
-	 * Adds all elements to the list. 
-	 */
-	public static <T> List<T> addAll(List<T> list, Iterator<T> it)
-	{
-		while(it.hasNext())
-			list.add(it.next());
-		return list;
-	}
-
-	
-	/**
-	 * Adds all elements to the list. 
-	 */
-	public static <T> List<T> addAll(List<T> list, Enumeration<T> it)
-	{
-		while(it.hasMoreElements())
-			list.add(it.nextElement());
-		return list;
 	}
 
 	

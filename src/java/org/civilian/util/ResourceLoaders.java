@@ -387,7 +387,10 @@ class ChainedLoader extends ResourceLoader
 	{
 		ArrayList<URL> urls = new ArrayList<>();
 		for (int i=0; i<loaders_.length; i++)
-			Iterators.addAll(urls, loaders_[i].getResourceUrls(name));
+		{
+			for (Enumeration<URL> resUrls = loaders_[i].getResourceUrls(name); resUrls.hasMoreElements(); )
+				urls.add(resUrls.nextElement());
+		}
 		return Iterators.asEnumeration(urls.iterator());
 	}
 	
