@@ -35,12 +35,12 @@ import org.civilian.util.PathScanner.Mark;
 
 /**
  * Resource represents a resource of a web application, addressable by an URL.
- * Controller classes are used to handle requests for resource and dynamicalle generate a respoinse. 
+ * Controller classes are used to handle requests for resource and dynamically generate a response. 
  * There are several options how to construct the resource tree of an application:
  * <ol>
  * <li>Scan the application for controller classes at startup.
  * <li>Scan the application at build time and generate a special class which constructs the resource tree
- * <li>Build des resource by hand (not recommended);
+ * <li>Build the resource by hand (not recommended);
  * </ol> 
  */
 public class Resource implements Iterable<Resource>
