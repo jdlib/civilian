@@ -43,7 +43,7 @@ public class CreateController extends JtaController
 			person.setLastName(form.lastName.getValue());
 			
 			personService.persist(person);
-			getResponse().sendRedirect(root);
+			getResponse().sendRedirect().to(root);
 		}
 		else
 			renderPage(new CreateTemplate(form));

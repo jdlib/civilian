@@ -32,6 +32,7 @@ import org.civilian.content.ContentType;
 import org.civilian.content.JaxbXmlSerializer;
 import org.civilian.request.Request;
 import org.civilian.request.RequestProvider;
+import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
 import org.civilian.resource.ResourceHandler;
 import org.civilian.response.std.ErrorResponseHandler;
@@ -40,6 +41,7 @@ import org.civilian.template.TemplateWriter;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.service.LocaleServiceProvider;
 import org.civilian.util.Check;
+import org.civilian.util.CheckedFunction;
 
 
 /**
@@ -302,6 +304,76 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	
 	//------------------------------
+	// url
+	//------------------------------
+
+	
+	/**
+	 * A builder for Urls.
+	 * @param <T> the result type of the build process.
+	 */
+	public static class UrlBuilder<T,E extends Throwable>
+	{
+		protected UrlBuilder(Response response, CheckedFunction<Url,T,E> end)
+		{
+			response_ 	= response;
+			end_ 		= end;
+		}
+		
+		
+		public T to(String urlString) throws E
+		{
+			return to(new Url(response_, urlString));
+		}
+		
+		
+		public T to(PathProvider pathProvider) throws E
+		{
+			return to(new Url(response_, pathProvider));
+		}
+
+
+		/**
+		 * Builds a Url to to the given Resource.
+		 * @return the result 
+		 */
+		public T to(Resource resource) throws E
+		{
+			return to(new Url(response_, resource));
+		}
+
+		
+		/**
+		 * Builds a Url to to the Resource whose controller has the given class.
+		 * @return the result 
+		 */
+		public T to(Class<? extends ResourceHandler> handlerClass) throws E
+		{
+			return to(new Url(response_, handlerClass));
+		}
+
+		
+		public T to(Url url) throws E
+		{
+			return end_.apply(Check.notNull(url, "url"));
+		}
+		
+		
+		protected final Response response_;
+		protected final CheckedFunction<Url,T,E> end_;
+	}
+	
+	
+	/**
+	 * @return a UrlBuilder which allows you to build a url backed by this response
+	 */
+	public default UrlBuilder<Url,RuntimeException> url()
+	{
+		return new UrlBuilder<>(this, url -> url);
+	}
+	
+	
+	//------------------------------
 	// error
 	//------------------------------
 
@@ -342,38 +414,13 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 */
 	public abstract void sendRedirect(String url) throws IOException;
 
-	
-	/**
-	 * Sends a redirect response. 
-	 * After using this method, the response is committed and should not be written to.
-	 * @throws IllegalStateException if the response has already been committed 
-	 */
-	public default void sendRedirect(Url url) throws IOException
-	{
-		sendRedirect(url.toString());
-	}
-
 
 	/**
-	 * Sends a redirect response to the given Resource. 
-	 * After using this method, the response is committed and should not be written to.
-	 * @throws IllegalStateException if the response has already been committed 
+	 * @return a UrlBuilder which calls {@link #sendRedirect()} using the created URL. 
 	 */
-	public default void sendRedirect(Resource resource) throws IOException
+	public default UrlBuilder<Void,IOException> sendRedirect()
 	{
-		sendRedirect(new Url(this, resource));
-	}
-
-
-	/**
-	 * Sends a redirect response to the Resource whose controller has the given
-	 * class. 
-	 * After using this method, the response is committed and should not be written to.
-	 * @throws IllegalStateException if the response has already been committed 
-	 */
-	public default void sendRedirect(Class<? extends ResourceHandler> controllerClass) throws IOException
-	{
-		sendRedirect(new Url(this, controllerClass));
+		return new UrlBuilder<>(this, url -> { sendRedirect(url.toString()); return null; }); 
 	}
 
 	

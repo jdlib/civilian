@@ -106,14 +106,14 @@ public class AbstractResponseTest extends CivTest
 
 	@Test public void testRedirect() throws Exception
 	{
-		response.sendRedirect(new Url(response, "x"));
+		response.sendRedirect().to("x");
 		assertSame(Response.Type.REDIRECT, response.getType());
 		assertEquals("x", response.getHeaders().get(HeaderNames.LOCATION));
 		assertTrue(response.isCommitted());
 		
 		try
 		{
-			response.sendRedirect(new Resource());
+			response.sendRedirect().to(new Resource());
 		}
 		catch(IllegalStateException e)
 		{

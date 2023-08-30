@@ -105,7 +105,7 @@ public class LoginController extends CrmController
 		if (form.path.hasValue())
 			getResponse().sendRedirect(form.path.getValue());
 		else
-			getResponse().sendRedirect(root);
+			getResponse().sendRedirect().to(root);
 	}
 	
 	

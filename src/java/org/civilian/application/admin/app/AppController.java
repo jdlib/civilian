@@ -28,7 +28,7 @@ public abstract class AppController extends AdminController
 		String appId = getRequest().getPathParam(AdminPathParams.APPID);
 		viewedApp_ 	 = getApplication().getServer().getApplication(appId, Application.class);
 		if (viewedApp_ == null)
-			getResponse().sendRedirect(root);
+			getResponse().sendRedirect().to(root);
 	}
 	
 	

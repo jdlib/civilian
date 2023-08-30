@@ -39,7 +39,7 @@ public class CreateController extends ResLocalController
 			person.setLastName(form.lastName.getValue());
 			
 			PersonService.persist(person);
-			getResponse().sendRedirect(IndexController.class);
+			getResponse().sendRedirect().to(IndexController.class);
 		}
 		else
 			renderPage(new CreateTemplate(form));

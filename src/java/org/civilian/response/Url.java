@@ -96,12 +96,12 @@ public class Url implements PathParamProvider
 	 * it is also appended to the Url.<br>
 	 * Please note that a controller may be mapped to several resources. In this case
 	 * it is undefined which resource is chosen to build the url.
-	 * @param rp a Response or a ResponseProvider whose Response is used by the Url
+	 * @param response a Response
 	 * @param handlerClass the controller class.   
 	 */
-	public Url(ResponseProvider rp, Class<? extends ResourceHandler> handlerClass)
+	public Url(Response response, Class<? extends ResourceHandler> handlerClass)
 	{
-		this(Check.notNull(rp, "response provider"), rp.getResponse().getOwner().getResource(handlerClass));
+		this(Check.notNull(response, "response"), response.getOwner().getResource(handlerClass));
 	}
 
 	
