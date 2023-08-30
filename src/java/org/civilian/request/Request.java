@@ -190,10 +190,10 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 		s.append(getOriginalPath());
 
 		boolean hasParam = false;
-		for (Iterator<String> pnames = getParameterNames(); pnames.hasNext(); )
+		for (Iterator<String> pnames = getParamNames(); pnames.hasNext(); )
 		{
 			String pname = pnames.next();
-			for (String pvalue : getParameters(pname)) 
+			for (String pvalue : getParams(pname)) 
 			{
 				s.append(hasParam ? '&' : '?').append(pname).append('=').append(pvalue);
 				hasParam = true;
@@ -281,42 +281,26 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	 * @param name the parameter name
 	 * @return the parameter value 
 	 */
-	public String getParameter(String name);
-
-	
-	/**
-	 * Returns the value of a parameter wrapped in a Value object.
-	 * If the parameter does not exist, the Value is {@link Value#hasValue() empty}. 
-	 * If the conversion of the parameter to the requested type fails, the 
-	 * Value contains the {@link Value#getError() conversion error}.
-	 * @param<T> the type of the parameter value
-	 * @param name the parameter name
-	 * @param type the parameter type
-	 * @return the parameter value
-	 */
-	public default <T> Value<T> getParameter(String name, Type<T> type)
-	{
-		return StandardSerializer.INSTANCE.parseValue(type, getParameter(name));
-	}
+	public String getParam(String name);
 
 	
 	/**
 	 * Returns a String array containing all values of a request parameter. 
 	 * @return the values or an empty array with length 0 if the parameter does not exist.
 	 */
-	public String[] getParameters(String name);
+	public String[] getParams(String name);
 	
 
 	/**
 	 * Returns an Iterator for the names of the parameters contained in this request.
 	 */
-	public Iterator<String> getParameterNames();
+	public Iterator<String> getParamNames();
 
 	
 	/**
 	 * Returns a map of all request parameter names and values.
 	 */
-	public Map<String,String[]> getParameterMap();
+	public Map<String,String[]> getParamMap();
 
 
 	//----------------------------

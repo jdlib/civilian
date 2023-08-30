@@ -276,7 +276,7 @@ public class TestRequest extends AbstractRequest
 	/**
 	 * Returns a request parameter.
 	 */
-	@Override public String getParameter(String name)
+	@Override public String getParam(String name)
 	{
 		return parameters_.get(name);
 	}
@@ -285,7 +285,7 @@ public class TestRequest extends AbstractRequest
 	/**
 	 * Returns all values of a request parameter.
 	 */
-	@Override public String[] getParameters(String name)
+	@Override public String[] getParams(String name)
 	{
 		return parameters_.getAll(name);
 	}
@@ -294,7 +294,7 @@ public class TestRequest extends AbstractRequest
 	/**
 	 * Returns the names of all request parameters.
 	 */
-	@Override public Iterator<String> getParameterNames()
+	@Override public Iterator<String> getParamNames()
 	{
 		return parameters_.iterator();
 	}
@@ -303,7 +303,7 @@ public class TestRequest extends AbstractRequest
 	/**
 	 * Returns a map of all request parameters.
 	 */
-	@Override public Map<String, String[]> getParameterMap()
+	@Override public Map<String, String[]> getParamMap()
 	{
 		return parameters_.getMap();
 	}

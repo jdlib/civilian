@@ -53,10 +53,10 @@ public class ReqParamArgTest extends CivTest
 		
 		ReqParamValueArg q = new ParameterValueArg("q"); 
 		q.getValue(request, response);
-		verify(request).getParameter("q");
+		verify(request).getParam("q");
 
 		q.getValues(request, response);
-		verify(request).getParameters("q");
+		verify(request).getParams("q");
 		
 		assertEquals("Parameter \"q\"", q.toString());
 		

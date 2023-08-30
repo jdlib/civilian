@@ -85,7 +85,7 @@ public class TestRequestTest extends CivTest
 		Url url = new Url(response, "/y");
 		url.queryParams().add("q", "p");
 		request.setPath(url);
-		assertEquals("p", request.getParameter("q"));
+		assertEquals("p", request.getParam("q"));
 
 		request.setPath(response, AdminResources.root.$appId.settings, "crm");
 		assertEquals("/crm/settings", request.getRelativePath().toString());

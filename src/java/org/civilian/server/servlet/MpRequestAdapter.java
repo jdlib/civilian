@@ -104,27 +104,27 @@ class MpRequestAdapter extends ServletRequestAdapter
 	}
 
 
-	@Override public String getParameter(String name)
+	@Override public String getParam(String name)
 	{
-		String[] p = getParameters(name);
+		String[] p = getParams(name);
 		return p.length == 0 ? null : p[0];
 	}
 
 
-	@Override public String[] getParameters(String name)
+	@Override public String[] getParams(String name)
 	{
 		String[] p = parameters_.get(name);
 		return p != null ? p : EMPTY_PARAMS;
 	}
 	
 	
-	@Override public Iterator<String> getParameterNames()
+	@Override public Iterator<String> getParamNames()
 	{
 		return parameters_.keySet().iterator();
 	}
 	
 	
-	@Override public Map<String,String[]> getParameterMap()
+	@Override public Map<String,String[]> getParamMap()
 	{
 		return new HashMap<>(parameters_); 
 	}

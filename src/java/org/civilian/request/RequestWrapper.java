@@ -142,27 +142,27 @@ public class RequestWrapper implements Request
 	}
 
 
-	@Override public String getParameter(String name)
+	@Override public String getParam(String name)
 	{
-		return request_.getParameter(name);
+		return request_.getParam(name);
 	}
 
 
-	@Override public String[] getParameters(String name)
+	@Override public String[] getParams(String name)
 	{
-		return request_.getParameters(name);
+		return request_.getParams(name);
 	}
 
 
-	@Override public Iterator<String> getParameterNames()
+	@Override public Iterator<String> getParamNames()
 	{
-		return request_.getParameterNames();
+		return request_.getParamNames();
 	}
 
 
-	@Override public Map<String, String[]> getParameterMap()
+	@Override public Map<String, String[]> getParamMap()
 	{
-		return request_.getParameterMap();
+		return request_.getParamMap();
 	}
 
 

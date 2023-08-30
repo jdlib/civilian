@@ -493,7 +493,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	private String getNameParam()
 	{
-		return name_ != null ? getRequest().getParameter(name_) : null;
+		return name_ != null ? getRequest().getParam(name_) : null;
 	}
 
 	

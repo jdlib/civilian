@@ -100,7 +100,7 @@ public class Checkbox extends Control<Boolean>
 	 */
 	@Override protected void parse(Request request)
 	{
-		String value = request.getParameter(getName());
+		String value = request.getParam(getName());
 		setBooleanValue("on".equals(value)); // we send value="on" 
 		setStatus(Status.OK);
 	}

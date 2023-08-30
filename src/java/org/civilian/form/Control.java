@@ -539,7 +539,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	private <E> void parseList(Request request)
 	{
 		// request.getParameters() always returns a non-null array
-		String s[] = request.getParameters(getName());
+		String s[] = request.getParams(getName());
 		try
 		{
 			@SuppressWarnings("unchecked")
@@ -556,7 +556,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	
 	private String getRequestString(Request request)
 	{
-		String s = request.getParameter(getName());
+		String s = request.getParam(getName());
 		if (s != null)
 		{
 			s = s.trim();

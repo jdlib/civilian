@@ -131,12 +131,11 @@ public class ServletRequestTest extends CivTest
 		when(servletReq.getParameter("a")).thenReturn("1");
 		when(servletReq.getParameterValues("a")).thenReturn(aParamValues);
 
-		assertEquals("15",	request.getParameter("id"));
-		assertEquals(15,	request.getParameter("id", TypeLib.INTEGER).getValue().intValue());
-		assertEquals("1",	request.getParameter("a"));	
-		assertEquals(null,	request.getParameter("b"));	
-		assertArrayEquals(aParamValues,	request.getParameters("a"));	
-		assertEquals(0,		request.getParameters("b").length);
+		assertEquals("15",	request.getParam("id"));
+		assertEquals("1",	request.getParam("a"));	
+		assertEquals(null,	request.getParam("b"));	
+		assertArrayEquals(aParamValues,	request.getParams("a"));	
+		assertEquals(0,		request.getParams("b").length);
 	}
 	
 	
@@ -327,9 +326,9 @@ public class ServletRequestTest extends CivTest
 		when(servletReq.getParts()).thenReturn(parts);
 
 		MpRequestAdapter request = new MpRequestAdapter(app, servletReq, servletResp);
-		assertEquals(null, request.getParameter("dummy"));		
-		assertEquals("John", request.getParameter("email"));		
-		assertEquals("photo.jpg", request.getParameter("photo"));		
+		assertEquals(null, request.getParam("dummy"));		
+		assertEquals("John", request.getParam("email"));		
+		assertEquals("photo.jpg", request.getParam("photo"));		
 		
 		assertTrue(request.hasUploads());
 		assertNull(request.getUpload("dummy"));

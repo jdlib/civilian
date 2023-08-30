@@ -64,14 +64,14 @@ public class ControlTest extends CivTest
 		assertEquals(-1, select.getSelectedIndex());
 		assertEquals(null, select.getSelectedText());
 		
-		when(request.getParameter(select.getName())).thenReturn(null);
+		when(request.getParam(select.getName())).thenReturn(null);
 		assertTrue(select.read(request));
 		select.setRequired(true);
 		assertFalse(select.read(request));
-		when(request.getParameter(select.getName())).thenReturn("a");
+		when(request.getParam(select.getName())).thenReturn("a");
 		assertTrue(select.read(request));
 		assertEquals("a", select.getValue());
-		when(request.getParameter(select.getName())).thenReturn("x");
+		when(request.getParam(select.getName())).thenReturn("x");
 		assertFalse(select.read(request));
 		assertNull(select.getValue());
 		assertEquals("x", select.getErrorValue());
@@ -168,7 +168,7 @@ public class ControlTest extends CivTest
 		assertOut(field, "<input type='number' name='n' value=''>");
 		
 		field.setName("ifield");
-		when(request.getParameter("ifield")).thenReturn("a");
+		when(request.getParam("ifield")).thenReturn("a");
 		assertFalse(field.read(request));
 		assertEquals(Control.Status.PARSE_ERROR, field.getStatus());
 		assertTrue(field.getError() instanceof ParseException);
@@ -181,7 +181,7 @@ public class ControlTest extends CivTest
 		assertFalse(field.read(request));
 		
 		field.setReadOnly(false);
-		when(request.getParameter("ifield")).thenReturn("");
+		when(request.getParam("ifield")).thenReturn("");
 		assertTrue(field.read(request));
 		assertEquals(null, field.getValue());
 
@@ -462,12 +462,12 @@ public class ControlTest extends CivTest
 		
 		form.clearErrorControl();
 		when(request.getRequest()).thenReturn(request);
-		when(request.getParameter("name")).thenReturn(null);
+		when(request.getParam("name")).thenReturn(null);
 		assertFalse(form.read());
 		assertFalse(form.isOk());
 		assertSame(field, form.getErrorControl());
 
-		when(request.getParameter("name")).thenReturn("John");
+		when(request.getParam("name")).thenReturn("John");
 		assertTrue(form.read());
 		assertTrue(form.isOk());
 		assertNull(form.getErrorControl());
@@ -502,7 +502,7 @@ public class ControlTest extends CivTest
 
 	private void setParam(String name, String value)
 	{
-		when(request.getParameter(name)).thenReturn(value);
+		when(request.getParam(name)).thenReturn(value);
 	}
 	
 	

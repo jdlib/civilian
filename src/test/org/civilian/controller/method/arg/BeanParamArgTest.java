@@ -41,10 +41,10 @@ public class BeanParamArgTest extends CivTest
 		RequestHeaders headers		= mock(RequestHeaders.class);
 		Response response			= mock(Response.class);
 		when(request.getHeaders()).thenReturn(headers);
-		when(request.getParameter("name")).thenReturn("theName");
+		when(request.getParam("name")).thenReturn("theName");
 		when(headers.get(HeaderNames.ACCEPT)).thenReturn("text/html");
-		when(request.getParameters("values")).thenReturn(new String[] { "a", "b" });
-		when(request.getParameter("x")).thenReturn("2");
+		when(request.getParams("values")).thenReturn(new String[] { "a", "b" });
+		when(request.getParam("x")).thenReturn("2");
 		
 		Object value = arg.getValue(request, response);
 		assertNotNull(value);

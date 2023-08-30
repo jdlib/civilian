@@ -263,7 +263,7 @@ public class Button extends Control<String>
 		if (form == null)
 			return false;
 		
-		String param = form.getRequest().getParameter(getName());
+		String param = form.getRequest().getParam(getName());
 		if (param != null)
 			return param.equals(getValue());
 		else
@@ -281,7 +281,7 @@ public class Button extends Control<String>
 			return false;
 		else
 		{
-			String param = form.getRequest().getParameter(getName());
+			String param = form.getRequest().getParam(getName());
 			return (param != null) && param.equals(getValue());
 		}
 	}

@@ -36,26 +36,26 @@ class SpRequestAdapter extends ServletRequestAdapter
 	}
 
 
-	@Override public String getParameter(String name)
+	@Override public String getParam(String name)
 	{
 		return servletRequest_.getParameter(name);
 	}
 
 
-	@Override public String[] getParameters(String name)
+	@Override public String[] getParams(String name)
 	{
 		String[] p = servletRequest_.getParameterValues(name);
 		return p != null ? p : EMPTY_PARAMS;
 	}
 	
 	
-	@Override public Iterator<String> getParameterNames()
+	@Override public Iterator<String> getParamNames()
 	{
 		return Iterators.asIterator(servletRequest_.getParameterNames());
 	}
 	
 	
-	@Override public Map<String,String[]> getParameterMap()
+	@Override public Map<String,String[]> getParamMap()
 	{
 		return servletRequest_.getParameterMap();
 	}
