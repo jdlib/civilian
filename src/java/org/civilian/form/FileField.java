@@ -104,7 +104,7 @@ public class FileField extends Control<Upload[]>
 	
 	@Override protected void parse(Request request)
 	{
-		uploads_ = request.getUploads(getName());
+		uploads_ = request.getUploads().getAll(getName());
 		setValue(uploads_);
 	}
 	

@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.request.Request;
 import org.civilian.request.Upload;
+import org.civilian.request.Uploads;
 import org.civilian.response.Response;
 import org.civilian.template.TestTemplateWriter;
 import org.civilian.text.keys.KeyList;
@@ -337,7 +338,10 @@ public class ControlTest extends CivTest
 		assertOut(field, "<input type='file' name='photo'>");
 		
 		Upload upload = mock(Upload.class);
-		when(request.getUploads("photo")).thenReturn(new Upload[] { upload });
+		when(upload.getName()).thenReturn("photo");
+		Uploads uploads = Uploads.of(upload);
+		
+		when(request.getUploads()).thenReturn(uploads);
 		field.read(request);
 		assertSame(upload, field.getUpload());
 	}

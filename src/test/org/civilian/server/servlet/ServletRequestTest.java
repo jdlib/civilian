@@ -34,6 +34,7 @@ import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
 import org.civilian.request.RequestSecurity;
 import org.civilian.request.Upload;
+import org.civilian.request.Uploads;
 import org.civilian.request.RequestSecurity.SessionIdSource;
 import org.civilian.server.test.TestApp;
 import org.civilian.request.Session;
@@ -305,10 +306,11 @@ public class ServletRequestTest extends CivTest
 		when(servletReq.getPathInfo()).thenReturn("/multi");
 
 		// uploads
-		assertFalse(request.hasUploads());
-		assertNull (request.getUpload("file"));
-		assertFalse(request.getUploadNames().hasNext());
-		assertNull (request.getUploadError());
+		Uploads uploads = request.getUploads();
+		assertTrue(uploads.isEmpty());
+		assertNull(uploads.get("file"));
+		assertNull(uploads.error());
+		assertFalse(uploads.names().hasNext());
 		
 		Part part1 = mock(Part.class);
 		Part part2 = mock(Part.class);
@@ -330,10 +332,11 @@ public class ServletRequestTest extends CivTest
 		assertEquals("John", request.getParam("email"));		
 		assertEquals("photo.jpg", request.getParam("photo"));		
 		
-		assertTrue(request.hasUploads());
-		assertNull(request.getUpload("dummy"));
-		assertNull(request.getUploadError());
-		Upload upload = request.getUpload("photo");
+		uploads = request.getUploads();
+		assertFalse(uploads.isEmpty());
+		assertNull(uploads.get("dummy"));
+		assertNull(uploads.error());
+		Upload upload = uploads.get("photo");
 		assertNotNull(upload);
 		assertEquals(3L, upload.length());
 	}

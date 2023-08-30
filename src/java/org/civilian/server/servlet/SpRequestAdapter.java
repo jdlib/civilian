@@ -21,7 +21,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.civilian.application.Application;
-import org.civilian.request.Upload;
+import org.civilian.request.Uploads;
 import org.civilian.util.Iterators;
 
 
@@ -66,36 +66,9 @@ class SpRequestAdapter extends ServletRequestAdapter
 	//----------------------------
 	
 	
-	@Override public boolean hasUploads()
+	@Override public Uploads getUploads()
 	{
-		return false;
-	}
-	
-
-	@Override public Upload getUpload(String name)
-	{
-		return null;
-	}
-
-	
-	@Override public Upload[] getUploads(String name)
-	{
-		return new Upload[0];
-	}
-
-	
-	@Override public Iterator<String> getUploadNames()
-	{
-		return Iterators.<String>empty();
-	}
-
-
-	/**
-	 * Returns null.
-	 */
-	@Override public Exception getUploadError()
-	{
-		return null;
+		return Uploads.EMPTY;
 	}
 }
 

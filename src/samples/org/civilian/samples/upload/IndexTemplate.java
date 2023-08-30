@@ -70,65 +70,66 @@ public class IndexTemplate extends Template
 		out.decreaseTab();
 		out.println("</table>");                                        // line 36: </table>
 		form.end(out);                                                  // line 37: @form.end(out);
-		if (request.getUploadError() != null)                           // line 38: @if (request.getUploadError() != null)
+		Exception uploadError = request.getUploads().error();           // line 38: @Exception uploadError = request.getUploads().error();
+		if (uploadError != null)                                        // line 39: @if (uploadError != null)
 		{
-			out.println("<p>");                                         // line 39: <p>
-			out.println("<h3>2. The server received an error:</h3>");   // line 40: <h3>2. The server received an error:</h3>
-			out.println("<code>request.getUploadError()</code> says<p><br>"); // line 41: <code>request.getUploadError()</code> says<p><br>
-			html.stackTrace(request.getUploadError());                  // line 42: <%html.stackTrace(request.getUploadError());%>
+			out.println("<p>");                                         // line 40: <p>
+			out.println("<h3>2. The server received an error:</h3>");   // line 41: <h3>2. The server received an error:</h3>
+			out.println("<code>request.getUploads().error()</code> says<p><br>"); // line 42: <code>request.getUploads().error()</code> says<p><br>
+			html.stackTrace(uploadError);                               // line 43: <%html.stackTrace(uploadError);%>
 			out.printlnIfNotEmpty();
 		}
-		else                                                            // line 43: @else
+		else                                                            // line 44: @else
 		{
-			Upload[] uploads = form.file.getUploads();                  // line 44: @Upload[] uploads = form.file.getUploads();
-			if (uploads.length != 0)                                    // line 45: @if (uploads.length != 0)
+			Upload[] uploads = form.file.getUploads();                  // line 45: @Upload[] uploads = form.file.getUploads();
+			if (uploads.length != 0)                                    // line 46: @if (uploads.length != 0)
 			{
-				out.println("<p>");                                     // line 46: <p>
-				out.print("<h3 style=\"margin-top:30px\">2. The server received "); // line 47: <h3 style="margin-top:30px">2. The server received
-				out.print(uploads.length);                              // line 47: <%uploads.length%>
-				out.println(" uploads</h3>");                           // line 47: uploads</h3>
-				out.println("<table class=\"table table-bordered table-form\">"); // line 48: <table class="table table-bordered table-form">
-				out.println("<tr>");                                    // line 49: <tr>
+				out.println("<p>");                                     // line 47: <p>
+				out.print("<h3 style=\"margin-top:30px\">2. The server received "); // line 48: <h3 style="margin-top:30px">2. The server received
+				out.print(uploads.length);                              // line 48: <%uploads.length%>
+				out.println(" uploads</h3>");                           // line 48: uploads</h3>
+				out.println("<table class=\"table table-bordered table-form\">"); // line 49: <table class="table table-bordered table-form">
+				out.println("<tr>");                                    // line 50: <tr>
 				out.increaseTab();
-				out.println("<th>#</th>");                              // line 50: <th>#</th>
-				out.println("<th>upload.length()</th>");                // line 51: <th>upload.length()</th>
-				out.println("<th>upload.getContentType()</th>");        // line 52: <th>upload.getContentType()</th>
-				out.println("<th>upload.getFileName()</th>");           // line 53: <th>upload.getFileName()</th>
+				out.println("<th>#</th>");                              // line 51: <th>#</th>
+				out.println("<th>upload.length()</th>");                // line 52: <th>upload.length()</th>
+				out.println("<th>upload.getContentType()</th>");        // line 53: <th>upload.getContentType()</th>
+				out.println("<th>upload.getFileName()</th>");           // line 54: <th>upload.getFileName()</th>
 				out.decreaseTab();
-				out.println("</tr>");                                   // line 54: </tr>
-				for (int i=0; i<uploads.length; i++)                    // line 55: @for (int i=0; i<uploads.length; i++)
+				out.println("</tr>");                                   // line 55: </tr>
+				for (int i=0; i<uploads.length; i++)                    // line 56: @for (int i=0; i<uploads.length; i++)
 				{
-					Upload upload = uploads[i];                         // line 56: @Upload upload = uploads[i];
-					out.println("<tr>");                                // line 57: <tr>
+					Upload upload = uploads[i];                         // line 57: @Upload upload = uploads[i];
+					out.println("<tr>");                                // line 58: <tr>
 					out.increaseTab();
-					out.print("<td>");                                  // line 58: <td>
-					out.print(i);                                       // line 58: <%i%>
-					out.println("</td>");                               // line 58: </td>
 					out.print("<td>");                                  // line 59: <td>
-					out.print(lang.format(upload.length()));            // line 59: <%lang.format(upload.length())%>
-					out.println(" bytes</td>");                         // line 59: bytes</td>
+					out.print(i);                                       // line 59: <%i%>
+					out.println("</td>");                               // line 59: </td>
 					out.print("<td>");                                  // line 60: <td>
-					out.print(upload.getContentType());                 // line 60: <%upload.getContentType()%>
-					out.println("</td>");                               // line 60: </td>
+					out.print(lang.format(upload.length()));            // line 60: <%lang.format(upload.length())%>
+					out.println(" bytes</td>");                         // line 60: bytes</td>
 					out.print("<td>");                                  // line 61: <td>
-					out.print(upload.getFileName());                    // line 61: <%upload.getFileName()%>
+					out.print(upload.getContentType());                 // line 61: <%upload.getContentType()%>
 					out.println("</td>");                               // line 61: </td>
+					out.print("<td>");                                  // line 62: <td>
+					out.print(upload.getFileName());                    // line 62: <%upload.getFileName()%>
+					out.println("</td>");                               // line 62: </td>
 					out.decreaseTab();
-					out.println("</tr>");                               // line 62: </tr>
+					out.println("</tr>");                               // line 63: </tr>
 				}
-				out.println("</table>");                                // line 63: </table>
-				out.println("</div>");                                  // line 64: </div>
+				out.println("</table>");                                // line 64: </table>
+				out.println("</div>");                                  // line 65: </div>
 			}
-			else if (request.hasMethod("POST"))                         // line 65: @else if (request.hasMethod("POST"))
+			else if (request.hasMethod("POST"))                         // line 66: @else if (request.hasMethod("POST"))
 			{
-				out.println("Did not receive any uploads... :-(<br>");  // line 66: Did not receive any uploads... :-(<br>
+				out.println("Did not receive any uploads... :-(<br>");  // line 67: Did not receive any uploads... :-(<br>
 			}
 		}
 		out.decreaseTab();
-		out.println("</div>");                                          // line 67: </div>
 		out.println("</div>");                                          // line 68: </div>
-		out.println("</body>");                                         // line 69: </body>
-		out.println("</html>");                                         // line 70: </html>
+		out.println("</div>");                                          // line 69: </div>
+		out.println("</body>");                                         // line 70: </body>
+		out.println("</html>");                                         // line 71: </html>
 	}
 
 

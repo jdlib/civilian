@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import org.civilian.application.Application;
 import org.civilian.request.Upload;
+import org.civilian.request.Uploads;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.IoUtil;
 
@@ -39,26 +40,31 @@ class MpRequestAdapter extends ServletRequestAdapter
 	{
 		super(app, servletRequest, servletResponse);
 		
+		// extract parameters from the request and put it into our parameter map
+		parameters_ = new HashMap<>(servletRequest.getParameterMap());
+		
+		// now parse the parts of the request
+		String encoding = servletRequest.getCharacterEncoding();
+		if (encoding == null)
+			encoding = app.getDefaultCharEncoding();
+
+		Uploads uploads;
 		try
 		{
-			// extract parameters from the request and put it into our parameter map
-			parameters_ = new HashMap<>(servletRequest.getParameterMap());
-			
-			// now parse the parts of the request
-			String encoding = servletRequest.getCharacterEncoding();
-			if (encoding == null)
-				encoding = app.getDefaultCharEncoding();
+			Map<String,Upload[]> uploadMap = new HashMap<>();
 			for (Part part : servletRequest_.getParts())
-				readPart(part, encoding);
+				readPart(part, encoding, uploadMap);
+			uploads = Uploads.of(uploadMap);
 		}
 		catch(IllegalStateException e)
 		{
-			uploadError_ = e;
+			uploads = Uploads.of(e);
 		}
+		uploads_ = uploads;
 	}
 	
 	
-	private void readPart(Part part, String encoding) throws IOException
+	private void readPart(Part part, String encoding, Map<String,Upload[]> uploadMap) throws IOException
 	{
 		PartInfo info = new PartInfo(part);
 		if (info.isFormData)
@@ -67,8 +73,8 @@ class MpRequestAdapter extends ServletRequestAdapter
 			if (info.fileName != null)
 			{
 				addParam(partName, info.fileName);
-				PartUpload upload = new PartUpload(part, info.fileName);
-				addUpload(partName, upload);
+				PartUpload partUpload = new PartUpload(part, info.fileName);
+				addUpload(partName, partUpload, uploadMap);
 			}
 			else
 				addParam(partName, readPartValue(part, encoding));
@@ -76,15 +82,15 @@ class MpRequestAdapter extends ServletRequestAdapter
 	}
 	
 	
-	private void addUpload(String name, PartUpload upload)
+	private static void addUpload(String name, PartUpload partUpload, Map<String,Upload[]> uploadMap)
 	{
-		Upload[] uploads = uploads_.get(name);
+		Upload[] uploads = uploadMap.get(name);
 		if (uploads == null)
-			uploads = new Upload[] { upload };
+			uploads = new Upload[] { partUpload };
 		else
-			uploads = ArrayUtil.addLast(uploads, upload);
+			uploads = ArrayUtil.addLast(uploads, partUpload);
 		
-		uploads_.put(name, uploads);
+		uploadMap.put(name, uploads);
 	}
 	
 	
@@ -141,44 +147,12 @@ class MpRequestAdapter extends ServletRequestAdapter
 	}
 	
 	
-	//----------------------------
-	// uploads
-	//----------------------------
-	
-	
-	@Override public Upload getUpload(String name)
+	@Override public Uploads getUploads()
 	{
-		Upload[] uploads = uploads_.get(name);
-		return uploads != null ? uploads[0] : null;
-	}
-
-	
-	@Override public Upload[] getUploads(String name)
-	{
-		Upload[] uploads = uploads_.get(name);
-		return uploads != null ? uploads.clone() : Upload.EMPTY_LIST;
-	}
-
-	
-	@Override public Iterator<String> getUploadNames()
-	{
-		return uploads_.keySet().iterator();
-	}
-	
-
-	@Override public boolean hasUploads()
-	{
-		return uploads_.size() > 0;
+		return uploads_;
 	}
 	
 	
-	@Override public Exception getUploadError()
-	{
-		return uploadError_;
-	}
-	
-
-	private Exception uploadError_;
-	private HashMap<String,String[]> parameters_ = new HashMap<>(); 
-	private HashMap<String,Upload[]> uploads_ = new HashMap<>(); 
+	private final HashMap<String,String[]> parameters_; 
+	private final Uploads uploads_; 
 }

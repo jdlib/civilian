@@ -38,7 +38,7 @@ import org.civilian.request.AbstractRequest;
 import org.civilian.request.CookieList;
 import org.civilian.request.Request;
 import org.civilian.request.RequestHeaders;
-import org.civilian.request.Upload;
+import org.civilian.request.Uploads;
 import org.civilian.resource.Resource;
 import org.civilian.resource.Url;
 import org.civilian.resource.pathparam.PathParam;
@@ -344,95 +344,17 @@ public class TestRequest extends AbstractRequest
 	
 	
 	/**
-	 * Returns if the request has uploads.
+	 * Returns the uploads.
 	 */
-	@Override public boolean hasUploads()
+	@Override public Uploads getUploads()
 	{
-		return uploads_ != null && uploads_.size() > 0;
-	}
-	
-
-	/**
-	 * Returns a upload.
-	 */
-	@Override public Upload getUpload(String name)
-	{
-		return uploads_ != null ? uploads_.get(name) : null;
+		return uploads_ != null ? uploads_ : Uploads.EMPTY;
 	}
 
-	
-	/**
-	 * Returns all uploads for the given name.
-	 */
-	@Override public Upload[] getUploads(String name)
-	{
-		Upload upload = getUpload(name);
-		return upload != null ? new Upload[] { upload } : new Upload[0];
-	}
 
-	
-	/**
-	 * Returns the names of all uploads.
-	 */
-	@Override public Iterator<String> getUploadNames()
+	public void setUploads(Uploads uploads)
 	{
-		return uploads_ != null ? uploads_.keySet().iterator() : Iterators.<String>empty();
-	}
-	
-	
-	/**
-	 * Allows you to add an upload.
-	 * @return this
-	 */
-	public TestRequest addUpload(Upload upload)
-	{
-		if (uploads_ == null)
-			uploads_ = new HashMap<>();
-		uploads_.put(upload.getName(), upload);
-		return this;
-	}
-
-	
-	/**
-	 * Adds and returns a TestUpload object. Use setters on
-	 * the returned object to set further details.
-	 */
-	public TestUpload addUpload(String name, String fileName)
-	{
-		TestUpload upload = new TestUpload(name, fileName);
-		addUpload(upload);
-		return upload;
-	}
-
-	
-	/**
-	 * Allows you to clear the uploads.
-	 * @return this
-	 */
-	public TestRequest clearUploads()
-	{
-		uploads_ = null;
-		return this;
-	}
-	
-	
-	/**
-	 * Returns any upload error.
-	 */
-	@Override public Exception getUploadError()
-	{
-		return uploadError_;
-	}
-	
-
-	/**
-	 * Allows you to set the upload error.
-	 * @return this
-	 */
-	public TestRequest setUploadError(Exception error)
-	{
-		uploadError_ = error;
-		return this;
+		uploads_ = uploads;
 	}
 
 	
@@ -792,8 +714,7 @@ public class TestRequest extends AbstractRequest
 	private CookieList cookies_;
 	private HashMap<String, Object> attributes_;
 	private HeaderMap parameters_ = new HeaderMap();
-	private HashMap<String, Upload> uploads_;
-	private Exception uploadError_;
+	private Uploads uploads_;
 	private String charEncoding_ = "UTF-8";
 	private byte[] contentBytes_;
 	private String contentString_;

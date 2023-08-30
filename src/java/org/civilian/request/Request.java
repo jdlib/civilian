@@ -385,46 +385,9 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	
 	
 	/**
-	 * Returns if the request contains uploads.
+	 * Returns the upload of the request.
 	 */
-	public boolean hasUploads();
-
-	
-	/**
-	 * Returns the first Upload object with the given name.
-	 * In Servlet terms the Upload object corresponds to a javax.servlet.http.Part object 
-	 * in a multipart/form-data request whose content disposition contains
-	 * a filename parameter and whose name equals the given name.
-	 * @return the upload
-	 */
-	public Upload getUpload(String name);
-
-	
-	/**
-	 * Returns all Upload objects with the given name.
-	 * In Servlet terms the Upload object corresponds to a javax.servlet.http.Part object 
-	 * in a multipart/form-data request whose content disposition contains
-	 * a filename parameter and whose name equals the given name.
-	 * @return the uploads
-	 */
-	public Upload[] getUploads(String name);
-
-	
-	/**
-	 * Returns an exception if the request contains uploaded files and
-	 * one ore more files violated constraints defined by the {@link Application#getUploadConfig() UploadConfig}.
-	 * In this case the request parameters may not be properly initialized.
-	 * Therefore for upload requests you should check upload errors first, before you evaluate request parameters.
-	 * @return the upload error  
-	 */
-	public Exception getUploadError();
-
-	
-	/**
-	 * Returns an iterator for all Upload names.
-	 * @see #getUpload(String)
-	 */
-	public Iterator<String> getUploadNames();
+	public Uploads getUploads();
 
 	
 	//------------------------------

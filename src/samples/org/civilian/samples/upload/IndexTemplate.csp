@@ -35,11 +35,12 @@ template(IndexForm form) mixin html, lang, formTable
 			@formTable.row(form.ok);
 		</table>
 		@form.end(out);
-		@if (request.getUploadError() != null)
+		@Exception uploadError = request.getUploads().error();
+		@if (uploadError != null)
 			<p>
 			<h3>2. The server received an error:</h3>
-			<code>request.getUploadError()</code> says<p><br>
-			<%html.stackTrace(request.getUploadError());%>
+			<code>request.getUploads().error()</code> says<p><br>
+			<%html.stackTrace(uploadError);%>
 		@else
 			@Upload[] uploads = form.file.getUploads();
 			@if (uploads.length != 0)

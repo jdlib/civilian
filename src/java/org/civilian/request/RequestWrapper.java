@@ -208,33 +208,9 @@ public class RequestWrapper implements Request
 	}
 
 
-	@Override public boolean hasUploads()
+	@Override public Uploads getUploads()
 	{
-		return request_.hasUploads();
-	}
-
-
-	@Override public Upload getUpload(String name)
-	{
-		return request_.getUpload(name);
-	}
-
-
-	@Override public Upload[] getUploads(String name)
-	{
-		return request_.getUploads(name);
-	}
-
-
-	@Override public Exception getUploadError()
-	{
-		return request_.getUploadError();
-	}
-
-
-	@Override public Iterator<String> getUploadNames()
-	{
-		return request_.getUploadNames();
+		return request_.getUploads();
 	}
 
 
