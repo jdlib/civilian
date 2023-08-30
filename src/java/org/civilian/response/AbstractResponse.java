@@ -116,7 +116,7 @@ public abstract class AbstractResponse implements Response
 	 * After using this method, the response is committed and should not be written to.
 	 * @throws IllegalStateException if the response has already been committed 
 	 */
-	@Override public void sendRedirect(String url) throws IOException
+	@Override public void redirect(String url) throws IOException
 	{
 		checkNotCommitted();
 		setType(Type.REDIRECT, false);

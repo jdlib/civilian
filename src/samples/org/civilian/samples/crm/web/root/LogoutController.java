@@ -31,6 +31,6 @@ public class LogoutController extends CrmController
 		Session session = getRequest().getSession(false);
 		if (session != null)
 			session.invalidate();
-		getResponse().sendRedirect().to(root.login);
+		getResponse().redirect().to(root.login);
 	}
 }

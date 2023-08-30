@@ -92,7 +92,7 @@ public class ServletResponseTest extends CivTest
 		when(servletResp.encodeRedirectURL("x")).thenReturn("x!id");
 		
 		assertFalse(response.isCommitted());
-		response.sendRedirect("x");
+		response.redirect("x");
 		
 		verify(servletResp).sendRedirect("x!id");
 	}

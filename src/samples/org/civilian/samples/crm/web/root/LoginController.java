@@ -103,9 +103,9 @@ public class LoginController extends CrmController
 	private void redirect(LoginForm form) throws Exception
 	{
 		if (form.path.hasValue())
-			getResponse().sendRedirect(form.path.getValue());
+			getResponse().redirect(form.path.getValue());
 		else
-			getResponse().sendRedirect().to(root);
+			getResponse().redirect().to(root);
 	}
 	
 	

@@ -406,7 +406,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 
 	
 	//------------------------------
-	// sendRedirect
+	// redirect
 	//------------------------------
 	
 	
@@ -415,15 +415,15 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * After using this method, the response is committed and should not be written to.
 	 * @throws IllegalStateException if the response has already been committed 
 	 */
-	public abstract void sendRedirect(String url) throws IOException;
+	public abstract void redirect(String url) throws IOException;
 
 
 	/**
-	 * @return a UrlBuilder which calls {@link #sendRedirect()} using the created URL. 
+	 * @return a UrlBuilder which calls {@link #redirect(String)} using the created URL. 
 	 */
-	public default UrlBuilder<Void,IOException> sendRedirect()
+	public default UrlBuilder<Void,IOException> redirect()
 	{
-		return new UrlBuilder<>(this, url -> { sendRedirect(url.toString()); return null; }); 
+		return new UrlBuilder<>(this, url -> { redirect(url.toString()); return null; }); 
 	}
 
 	

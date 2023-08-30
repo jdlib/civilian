@@ -120,9 +120,9 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public void sendRedirect(String url) throws IOException
+	@Override public void redirect(String url) throws IOException
 	{
-		response_.sendRedirect(url);
+		response_.redirect(url);
 	}
 
 
