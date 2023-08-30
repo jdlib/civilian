@@ -24,6 +24,7 @@ import org.civilian.resource.Route;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParamProvider;
 import org.civilian.text.service.LocaleService;
+import org.civilian.text.service.LocaleServiceProvider;
 import org.civilian.text.type.TypeSerializer;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
@@ -51,17 +52,14 @@ public class Url implements PathParamProvider
 {
 	/**
 	 * Creates a Url consisting of the given string value. 
-	 * @param rp a Response or a ResponseProvider whose Response is used by the Url
+	 * @param lsProvider can provide a LocaleService
 	 * @param url either a relative or absolute path to address a resource on
 	 *		the same server or a fully qualified URL.
 	 */
-	public Url(ResponseProvider rp, String url)
+	public Url(LocaleServiceProvider lsProvider, String url)
 	{
-		Check.notNull(rp, "response provider");
-		Check.notNull(url, "url");
-		
-		response_ 		= rp.getResponse();
-		prefix_ 		= url;
+		lsProvider_		= Check.notNull(lsProvider, "lsProvider");
+		prefix_ 		= Check.notNull(url, "url");
 		pathParams_		= EMPTY_PATH_PARAMS;
 		resource_		= null;
 	}
@@ -74,9 +72,9 @@ public class Url implements PathParamProvider
 	 * @param pathProvider provides a path. Classes like Path, Context, Application
 	 * 		Request, etc. are examples of PathProviders.   
 	 */
-	public Url(ResponseProvider rp, PathProvider pathProvider)
+	public Url(LocaleServiceProvider lsProvider, PathProvider pathProvider)
 	{
-		response_ 		= Check.notNull(rp, "responseProvider").getResponse();
+		lsProvider_		= Check.notNull(lsProvider, "lsProvider");
 		additionalPath_ = Check.notNull(pathProvider, "pathProvider").getPath();
 		pathParams_		= EMPTY_PATH_PARAMS;
 		resource_		= null;
@@ -96,7 +94,7 @@ public class Url implements PathParamProvider
 	public Url(ResponseProvider rp, Resource resource)
 	{
 		Response response 	= Check.notNull(rp, "response provider").getResponse();
-		response_ 			= response;
+		lsProvider_			= response;
 		resource_			= Check.notNull(resource, "resource");
 		prefix_ 			= response.getOwner().getPath().toString();
 
@@ -104,7 +102,7 @@ public class Url implements PathParamProvider
 		if (ppCount > 0)
 		{
 			pathParams_	= new Object[ppCount];
-			copyPathParams(response_.getRequest());
+			copyPathParams(response.getRequest());
 		}
 		else
 			pathParams_	= EMPTY_PATH_PARAMS;
@@ -153,7 +151,7 @@ public class Url implements PathParamProvider
 	public TypeSerializer getSerializer()
 	{
 		if (serializer_ == null)
-			serializer_ = response_.getLocaleService().getSerializer();
+			serializer_ = lsProvider_.getLocaleService().getSerializer();
 		return serializer_;
 	}
 
@@ -634,7 +632,6 @@ public class Url implements PathParamProvider
 	}
 
 	
-	private final Response response_;
 	private String fragment_;
 	private TypeSerializer serializer_;
 	private final Resource resource_;
@@ -642,5 +639,6 @@ public class Url implements PathParamProvider
 	private Object[] pathParams_;
 	private QueryParamList queryParams_;
 	private String prefix_;
+	private final LocaleServiceProvider lsProvider_;
 	private static final Object[] EMPTY_PATH_PARAMS = new Object[0];
 }
