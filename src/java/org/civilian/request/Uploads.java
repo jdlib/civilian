@@ -47,7 +47,7 @@ public interface Uploads
 
 	
 	/**
-	 * @returns the number of Uploads.
+	 * @return the number of Uploads.
 	 */
 	public int size();
 

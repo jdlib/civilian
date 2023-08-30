@@ -213,6 +213,8 @@ public class ContentType
 	 * If the string is null, then null is returned.
 	 * If it is one of the predefined content types, the corresponding constant
 	 * is returned, else a new content-type object is created.
+	 * @param s a string
+	 * @return the content type
 	 */
 	public static ContentType getContentType(String s)
 	{
@@ -252,6 +254,8 @@ public class ContentType
 	/**
 	 * Creates a ContentType for the given main part and sub part.
 	 * '*' or null values are allowed and interpreted as wildcard.
+	 * @param mainPart the main part
+	 * @param subPart the sub part
 	 */
 	public ContentType(String mainPart, String subPart)
 	{
@@ -261,6 +265,8 @@ public class ContentType
 	
 	/**
 	 * Creates a ContentType for the given main part, sub part and quality.
+	 * @param mainPart the main part
+	 * @param subPart the sub part
 	 * @param quality a value &gt;= 0.0
 	 */
 	public ContentType(String mainPart, String subPart, double quality)
@@ -272,6 +278,8 @@ public class ContentType
 	
 	/**
 	 * Creates a copy of a ContentType with the given quality.
+	 * @param contentType another ContentType
+	 * @param quality the quality
 	 */
 	public ContentType(ContentType contentType, double quality)
 	{
@@ -306,7 +314,7 @@ public class ContentType
 
 
 	/**
-	 * Returns the string representation of the ContentType.
+	 * @return the string representation of the ContentType.
 	 */
 	public String getValue()
 	{
@@ -317,6 +325,9 @@ public class ContentType
 	/**
 	 * Returns if the string representation of the ContentType
 	 * equals the given string.
+	 * @param contentType content type
+	 * @return has value?
+	 * 
 	 */
 	public boolean hasValue(String contentType)
 	{
@@ -345,7 +356,8 @@ public class ContentType
 	
 	
 	/**
-	 * Returns if the main part of this ContentType matches the given string, i.e.
+	 * @param part the part
+	 * @return if the main part of this ContentType matches the given string, i.e.
 	 * if either this type or the given type is the wildcard or they are equal.
 	 */
 	public boolean matchesMainPart(String part)
@@ -355,7 +367,8 @@ public class ContentType
 
 	
 	/**
-	 * Returns if the subtype of this ContentType matches the given subtype, i.e.
+	 * @param part the part
+	 * @return if the subtype of this ContentType matches the given subtype, i.e.
 	 * if either this subtype or the given subtype is the wildcard or if they are equal.
 	 */
 	public boolean matchesSubPart(String part)
@@ -365,7 +378,8 @@ public class ContentType
 
 	
 	/**
-	 * Returns if the type and subtype of this ContentType and the other ContentType match.
+	 * @return if the type and subtype of this ContentType and the other ContentType match.
+	 * @param contentType the content type
 	 */
 	public boolean matches(ContentType contentType)
 	{
@@ -380,7 +394,7 @@ public class ContentType
 	
 	
 	/**
-	 * Returns if neither the main part nor sub part represent the wildcard. 
+	 * @return if neither the main part nor sub part represent the wildcard. 
 	 */
 	public boolean isConcrete()
 	{
@@ -394,7 +408,8 @@ public class ContentType
 	 * codes the willigness of the client to accept a response with such content-type.
 	 * For content-types used on the server side (when specified in a {@link Produces @Produces} annotation,
 	 * it is a number &gt;= 0. It can be used to boost specific content-types which have the same
-	 * client quality.  
+	 * client quality.
+	 * @return the quality  
 	 */
 	public double getQuality()
 	{
@@ -403,7 +418,7 @@ public class ContentType
 	
 	
 	/**
-	 * Returns a new ContentType with the given quality.
+	 * @return a new ContentType with the given quality.
 	 * @param quality a number &gt;= 0.
 	 */
 	public ContentType withQuality(double quality)
@@ -421,7 +436,7 @@ public class ContentType
 	
 	
 	/**
-	 * Returns the specificity of the content-type.
+	 * @return the specificity of the content-type.
 	 * @see #getSpecificity(String, String) 
 	 */
 	public int getSpecificity()
@@ -438,6 +453,7 @@ public class ContentType
 	 * It returns 3 for content-types x/y<br>
 	 * @param mainPart the main part of a ContentType or null, if wildcard "*"
 	 * @param subPart the sub part of a ContentType or null, if wildcard "*"
+	 * @return the specificity
 	 */
 	public static int getSpecificity(String mainPart, String subPart)
 	{
@@ -449,7 +465,7 @@ public class ContentType
 
 	
 	/**
-	 * Returns a hash code.
+	 * @return a hash code.
 	 */
 	@Override public int hashCode()
 	{
@@ -460,6 +476,7 @@ public class ContentType
 	/**
 	 * Tests if the given object represents the same content type string,
 	 * but ignoring differences in quality or parameters.
+	 * @return equals?
 	 */
 	@Override public boolean equals(Object other)
 	{
@@ -468,7 +485,8 @@ public class ContentType
 	
 	
 	/**
-	 * Tests if the given ContentType represents the same content type string,
+	 * @return if the given ContentType represents the same content type string,
+	 * @param other another ContentType
 	 * @param compareQuality if true then the quality value of the ContentType is also
 	 * 		included, to test if they are equal
 	 */
@@ -482,7 +500,7 @@ public class ContentType
 
 
 	/**
-	 * Returns the string representation of the ContentType. If the quality is not 1.0,
+	 * @return he string representation of the ContentType. If the quality is not 1.0,
 	 * the string representation contains a quality parameter.
 	 */
 	@Override public String toString()

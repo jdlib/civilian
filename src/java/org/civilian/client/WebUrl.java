@@ -37,7 +37,8 @@ import org.civilian.util.http.UriEncoder;
 public class WebUrl implements PathParamProvider
 {
 	/**
-	 * Creates a WebUrl consisting of the given URL string. 
+	 * Creates a WebUrl consisting of the given URL string.
+	 * @param url the url 
 	 */
 	public WebUrl(String url)
 	{
@@ -48,6 +49,7 @@ public class WebUrl implements PathParamProvider
 	/**
 	 * Creates a WebUrl consisting of the route to the given resource, prefixed
 	 * by the application URL.
+	 * @param resource the resource 
 	 */
 	public WebUrl(WebResource resource)
 	{
@@ -58,6 +60,7 @@ public class WebUrl implements PathParamProvider
 	/**
 	 * Creates a WebUrl consisting of the route to the given resource, prefixed
 	 * by the application URL.
+	 * @param route the route
 	 */
 	public WebUrl(Route route)
 	{
@@ -69,6 +72,7 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Appends a path snippet to the Url.
+	 * @param path the path
 	 * @return this
 	 */
 	public WebUrl addPath(String path)
@@ -99,6 +103,7 @@ public class WebUrl implements PathParamProvider
 	
 	
 	/**
+	 * @param index the index
 	 * @return the i-th path param value.
 	 */
 	public Object getPathParam(int index)
@@ -119,6 +124,7 @@ public class WebUrl implements PathParamProvider
 	
 	
 	/**
+	 * @param index the index
 	 * @return the i-th path-param object which defines the path parameter.
 	 */
 	public PathParam<?> getPathParamDef(int index)
@@ -129,6 +135,7 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Sets the first path parameter value.
+	 * @param value the value
 	 * @return this
 	 */
 	public WebUrl setPathParam(Object value)
@@ -140,6 +147,8 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Sets the i-th path parameter value.
+	 * @param index the param index
+	 * @param value the param value
 	 * @return this
 	 */
 	public WebUrl setPathParam(int index, Object value)
@@ -153,6 +162,7 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Sets the path parameters values.
+	 * @param values the values
 	 * @return this
 	 */
 	public WebUrl setPathParams(Object... values)
@@ -164,8 +174,8 @@ public class WebUrl implements PathParamProvider
 	
 	
 	/**
-	 * Copies the path parameters from another url or
-	 * PathParamProvider.
+	 * Copies the path parameters from another url or PathParamProvider.
+	 * @param provider the provdier 
 	 * @return this
 	 */
 	public WebUrl copyPathParams(PathParamProvider provider)
@@ -178,6 +188,9 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Sets the path parameter who is defined by the PathParam.
+	 * @param param the path param
+	 * @param value the value
+	 * @param <T> the param type
 	 * @return this
 	 */
 	public <T> WebUrl setPathParam(PathParam<T> param, T value)
@@ -192,8 +205,11 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Sets the path parameter who is defined by the PathParam.
+	 * @param param the param
+	 * @param value the value
+	 * @return this
 	 */
-	public <T> WebUrl setPathParam(PathParam<Integer> param, int value)
+	public WebUrl setPathParam(PathParam<Integer> param, int value)
 	{
 		return setPathParam(param, Integer.valueOf(value));
 	}
@@ -238,6 +254,7 @@ public class WebUrl implements PathParamProvider
 	
 	
 	/**
+	 * @param i the param index
 	 * @return the i-th query parameter.
 	 */
 	public QueryParam getQueryParam(int i)
@@ -248,8 +265,10 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Returns the first query parameter with the given name.
+	 * @param name the param name
 	 * @param create if true and the url does not contain such a parameter
 	 * 		a new parameter with that name is added.
+	 * @return the query param or null if not found
 	 */
 	public QueryParam getQueryParam(String name, boolean create)
 	{
@@ -264,6 +283,7 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Removes all query parameters with the specified name.
+	 * @param name the name
 	 * @return this
 	 */
 	public WebUrl removeQueryParam(String name)
@@ -278,7 +298,8 @@ public class WebUrl implements PathParamProvider
 	
 	
 	/**
-	 * Removes all query parameters with the specified name.
+	 * Removes the query param.
+	 * @param param the param
 	 * @return this
 	 */
 	public WebUrl removeQueryParam(QueryParam param)
@@ -292,6 +313,8 @@ public class WebUrl implements PathParamProvider
 	/**
 	 * Adds a new query parameter to the Url.
 	 * Use the setters on the returned Url to set the parameter value.
+	 * @param name the param name
+	 * @return the new query param
 	 */
 	public QueryParam addQueryParam(String name)
 	{
@@ -305,6 +328,7 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Adds a new parameter to the Url.
+	 * @param name the param name
 	 * @return this
 	 */
 	public WebUrl addEmptyQueryParam(String name)
@@ -316,6 +340,8 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Adds a query parameter with that name and value.
+	 * @param name the param name
+	 * @param value the param value
 	 * @return this
 	 */
 	public WebUrl addQueryParam(String name, String value)
@@ -327,6 +353,8 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Adds a query parameter with that name and value.
+	 * @param name the name
+	 * @param value the value
 	 * @return this
 	 */
 	public WebUrl addQueryParam(String name, int value)
@@ -338,6 +366,8 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Adds a query parameter with that name and value.
+	 * @param name the name
+	 * @param value the value
 	 * @return this
 	 */
 	public WebUrl addQueryParam(String name, Integer value)
@@ -349,6 +379,8 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Adds a query parameter with that name and value.
+	 * @param name the name
+	 * @param value the value
 	 * @return this
 	 */
 	public WebUrl addQueryParam(String name, boolean value)
@@ -360,6 +392,8 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Adds a query parameter with that name and value.
+	 * @param name the name
+	 * @param value the value
 	 * @return this
 	 */
 	public WebUrl addQueryParam(String name, Boolean value)
@@ -371,6 +405,10 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Adds a query parameter with that name, type and value.
+	 * @param name the name
+	 * @param type the type
+	 * @param value the value
+	 * @param <T> the type class
 	 * @return this
 	 */
 	public <T> WebUrl addQueryParam(String name, Type<T> type, T value)
@@ -388,6 +426,7 @@ public class WebUrl implements PathParamProvider
 	/**
 	 * Explicitly sets the TypeSerializer used by the Url when it
 	 * formats typed parameters to a parameter string.
+	 * @param serializer the serializer
 	 * @see QueryParam#setValue(Type, Object) 
 	 * @return this
 	 */
@@ -410,6 +449,7 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Sets the default TypeSerializer used by Urls.
+	 * @param serializer the serializer
 	 */
 	public void setDefaultTypeSerializer(TypeSerializer serializer)
 	{
@@ -433,6 +473,7 @@ public class WebUrl implements PathParamProvider
 	
 	/**
 	 * Specifies the fragment which should be added to the end of the Url.
+	 * @param fragment the fragment
 	 * @return this
 	 */
 	public WebUrl setFragment(String fragment)
@@ -443,7 +484,7 @@ public class WebUrl implements PathParamProvider
 	
 	
 	/**
-	 * Returns the fragment which will be added to the end of the Url.
+	 * @return the fragment which will be added to the end of the Url.
 	 */
 	public String getFragment()
 	{
@@ -472,7 +513,7 @@ public class WebUrl implements PathParamProvider
 		
 		
 		/**
-		 * Returns the query parameter name.
+		 * @return the query parameter name.
 		 */
 		public String getName()
 		{
@@ -481,7 +522,7 @@ public class WebUrl implements PathParamProvider
 		
 
 		/**
-		 * Returns the query parameter value.
+		 * @return the query parameter value.
 		 */
 		public String getValue()
 		{
@@ -491,6 +532,7 @@ public class WebUrl implements PathParamProvider
 		
 		/**
 		 * Set the value of the query parameter to a string.
+		 * @param value the value
 		 */
 		public void setValue(String value)
 		{
@@ -500,6 +542,7 @@ public class WebUrl implements PathParamProvider
 		
 		/**
 		 * Sets the int value of the query parameter.
+		 * @param value the value
 		 */
 		public void setValue(int value)
 		{
@@ -509,6 +552,7 @@ public class WebUrl implements PathParamProvider
 		
 		/**
 		 * Sets the Integer value of the query parameter.
+		 * @param value the value
 		 */
 		public void setValue(Integer value)
 		{
@@ -518,6 +562,7 @@ public class WebUrl implements PathParamProvider
 		
 		/**
 		 * Sets the boolean value of the query parameter.
+		 * @param value the value
 		 */
 		public void setValue(boolean value)
 		{
@@ -527,6 +572,7 @@ public class WebUrl implements PathParamProvider
 		
 		/**
 		 * Sets the boolean value of the query parameter.
+		 * @param value the value
 		 */
 		public void setValue(Boolean value)
 		{
@@ -536,7 +582,10 @@ public class WebUrl implements PathParamProvider
 		
 		/**
 		 * Sets the value of the query parameter.
-		 * The Urls type serializer is used to convert the value to a string. 
+		 * The Urls type serializer is used to convert the value to a string.
+		 * @param type the type
+		 * @param value the value
+		 * @param <T> the type class 
 		 * @see WebUrl#getSerializer()
 		 */
 		public <T> void setValue(Type<T> type, T value)
@@ -554,7 +603,7 @@ public class WebUrl implements PathParamProvider
 		}
 		
 		
-		private String name_;
+		private final String name_;
 		private String value_;
 	}
 	

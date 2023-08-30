@@ -82,6 +82,7 @@ public abstract class AssetService implements PathProvider
 	 * Returns if the AssetService can serve assets. If an application
 	 * does not define any AssetServices, it still will have an AssetService 
 	 * which just can't serve any assets.
+	 * @return has assets?
 	 */
 	public abstract boolean hasAssets();
 	

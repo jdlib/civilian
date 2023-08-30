@@ -53,6 +53,7 @@ public class CivResourceLocation extends JavaResourceLocation
 	
 	/**
 	 * Creates a new CivAssetsLocation object.
+	 * @param path the path
 	 */
 	public CivResourceLocation(String path)
 	{

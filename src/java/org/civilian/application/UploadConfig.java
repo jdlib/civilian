@@ -43,6 +43,7 @@ public class UploadConfig
 
 	/**
 	 * Creates a new UploadConfig initialized from the given config.
+	 * @param settings the settings
 	 */
 	public UploadConfig(Settings settings)
 	{
@@ -125,7 +126,8 @@ public class UploadConfig
 	
 	/**
 	 * Returns the directory where files will be stored temporarily when their length 
-	 * exceeds the size threshold. 
+	 * exceeds the size threshold.
+	 * @return the temp directory 
 	 */
 	public String getTempDirectory()
 	{

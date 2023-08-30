@@ -139,6 +139,7 @@ public abstract class CompressionScheme
 	
 	/**
 	 * Returns a CompressionScheme for a name.
+	 * @param name a name
 	 * @return the scheme or null if not registered.
 	 */
 	public static CompressionScheme get(String name)
@@ -149,6 +150,8 @@ public abstract class CompressionScheme
 	
 	/**
 	 * Returns a CompressionScheme for a name.
+	 * @param name a name
+	 * @param defaultScheme a default scheme
 	 * @return the scheme or the defaultScheme if not registered.
 	 */
 	public static CompressionScheme get(String name, CompressionScheme defaultScheme)
@@ -159,7 +162,7 @@ public abstract class CompressionScheme
 
 	
 	/**
-	 * Returns the preferred CompressionScheme. By default this is the "gzip" scheme.
+	 * @return the preferred CompressionScheme. By default this is the "gzip" scheme.
 	 */
 	public static CompressionScheme getPreferred()
 	{
@@ -169,6 +172,7 @@ public abstract class CompressionScheme
 	
 	/**
 	 * Sets the preferred compression scheme.
+	 * @param preferred the preferred scheme
 	 */
 	public static void setPreferred(CompressionScheme preferred)
 	{
@@ -177,7 +181,7 @@ public abstract class CompressionScheme
 
 	
 	/**
-	 * Returns the preferred CompressionScheme. By default this is the "gzip" scheme.
+	 * @return the preferred CompressionScheme. By default this is the "gzip" scheme.
 	 */
 	public static CompressionScheme getIdentity()
 	{
@@ -186,12 +190,15 @@ public abstract class CompressionScheme
 
 	
 	/**
-	 * Sets the preferred compression scheme.
+	 * Sets the identity compression scheme.
+	 * @param identity the scheme
 	 */
 	public static void setIdentity(CompressionScheme identity)
 	{
 		identity_ = Check.notNull(identity, "identity");
 	}
+	
+	
 	/**
 	 * Returns the best matching Compression-Scheme for the Accept-Encoding header of a request. 
 	 * @param accept a String defining the accepted compression schemes, as given by
@@ -295,7 +302,7 @@ public abstract class CompressionScheme
 	
 	
 	/**
-	 * Returns the name.
+	 * @return the name.
 	 */
 	public String getName()
 	{
@@ -304,7 +311,7 @@ public abstract class CompressionScheme
 
 	
 	/**
-	 * Returns if this scheme is the identity scheme.
+	 * @return if this scheme is the identity scheme.
 	 */
 	public boolean isIdentity()
 	{
@@ -314,12 +321,18 @@ public abstract class CompressionScheme
 	
 	/**
 	 * Wraps a InputStream for compressed binary content which decompresses the data.
+	 * @param in a InputStream
+	 * @return the wrapped stream
+	 * @throws IOException if a IO error occurs
 	 */
 	public abstract InputStream wrap(InputStream in) throws IOException;
 
 	
 	/**
 	 * Wraps a OutputStream for uncompressed binary content which compresses the data.
+	 * @param out a OutputStream
+	 * @return the wrapped stream
+	 * @throws IOException if a IO error occurs
 	 */
 	public abstract OutputStream wrap(OutputStream out) throws IOException;
 
