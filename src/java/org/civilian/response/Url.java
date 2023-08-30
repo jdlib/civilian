@@ -55,9 +55,6 @@ public class Url implements PathParamProvider
 	 * @param rp a Response or a ResponseProvider whose Response is used by the Url
 	 * @param url either a relative or absolute path to address a resource on
 	 *		the same server or a fully qualified URL.
-	 *		In the later case the Url will not add a session id to
-	 *		the url string
-	 * @see #addSessionId(boolean)
 	 */
 	public Url(ResponseProvider rp, String url)
 	{
