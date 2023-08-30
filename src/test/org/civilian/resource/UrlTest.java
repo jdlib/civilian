@@ -88,15 +88,9 @@ public class UrlTest extends CivTest
 		assertEquals("/index.html", url.toString());
 		
 		url = new Url(response_, "index.html");
-		assertFalse(url.addSessionId());
 		assertEquals("index.html", url.toString());
 
-		url = new Url(response_, "index.html");
-		url.addSessionId(false);
-		assertEquals("index.html", url.toString());
-		
 		url = new Url(response_, "http://test.com");
-		assertFalse(url.addSessionId());
 		assertEquals("http://test.com", url.toString());
 	}
 	
@@ -153,24 +147,6 @@ public class UrlTest extends CivTest
 	}
 	
 
-	@Test public void testSessionId()
-	{
-		Url url;
-		
-		url = new Url(response_, "/");
-		assertEquals("/", url.toString());
-		
-		assertFalse(url.addSessionId());
-		url.addSessionId(true);
-		assertTrue(url.addSessionId());
-		sessionId_ = "!x";
-		assertEquals("/!x", url.toString());
-
-		url.addSessionId(false);
-		assertEquals("/", url.toString());
-	}
-	
-	
 	@Test public void testQueryParams()
 	{
 		Url url = new Url(response_, "index.html");

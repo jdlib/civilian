@@ -576,35 +576,6 @@ public class Url implements PathParamProvider, ResponseProvider
 	
 
 	//---------------------------------
-	// session
-	//---------------------------------
-
-	
-	/**
-	 * Sets if the server adds a session id to the Url 
-	 * string, when {@link #toString()} is called.
-	 * By default the session id is not added.
-	 * @return this
-	 */
-	public Url addSessionId(boolean mode)
-	{
-		addSessionId_ = mode;
-		return this;
-	}
-	
-	
-	/**
-	 * Returns if the server adds a session id to the Url 
-	 * string, when {@link #toString()} is called.
-	 * By default the session id will not be added.
-	 */
-	public boolean addSessionId()
-	{
-		return addSessionId_;
-	}
-
-	
-	//---------------------------------
 	// fragment
 	//---------------------------------
 
@@ -690,14 +661,10 @@ public class Url implements PathParamProvider, ResponseProvider
 			}
 		}
 		
-		String url = s.toString();
-		if (addSessionId_)
-			url = response_.addSessionId(url);
-		return url;
+		return s.toString();
 	}
 
 	
-	private boolean addSessionId_;
 	private final Response response_;
 	private String fragment_;
 	private TypeSerializer serializer_;
