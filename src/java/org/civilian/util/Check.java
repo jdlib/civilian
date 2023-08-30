@@ -66,13 +66,14 @@ public class Check
 
 
 	/**
-	 * Checks that a string is not null and has length &gt; 0.
-	 * @param s the string
-	 * @return the string
-	 * @param what describes the string.
-	 * @exception IllegalArgumentException if the string is empty.
+	 * Checks that a CharSequence is not null and has length &gt; 0.
+	 * @param s the CharSequence
+	 * @param what describes the string
+	 * @param <T> the CharSequence type
+	 * @return the CharSequence
+	 * @exception IllegalArgumentException if the CharSequence is empty.
 	 */
-	public static String notEmpty(String s, String what)
+	public static <T extends CharSequence> T notEmpty(T s, String what)
 	{
 		notNull(s, what);
 		if (s.length() == 0)
