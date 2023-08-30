@@ -26,7 +26,7 @@ import org.civilian.util.http.UriEncoder;
 
 /**
  * Route presents a route from a resource root down to a single resource.
- * A route can be converted into a path string, given values for all path parameter contained
+ * A route can be converted into a path string, given values for all path parameters contained
  * in the Route.  
  */
 public abstract class Route
@@ -149,15 +149,16 @@ public abstract class Route
 	
 	/**
 	 * Builds a path string from the route, using the given PathParam values and UriEncoder.
+	 * @param pathParams the path param values
 	 * @param s receives the constructed path  
 	 */
 	public abstract void build(Object[] pathParams, StringBuilder s);
 
 	
 	/**
-	 * Returns if the last character in the StringBuilder is a slash. 
+	 * Remove the last character in the StringBuilder if it is a slash '\' character. 
 	 */
-	protected void removeLastSlash(StringBuilder s)
+	protected static void removeLastSlash(StringBuilder s)
 	{
 		int length = s.length();
 		if ((length > 0) && (s.charAt(length - 1) == '/'))
