@@ -64,6 +64,8 @@ public abstract class AssetServices
 	 * @param appSettings the application settings 
 	 * @param server the server
 	 * @param appPath the path to the application
+	 * @throws Exception if an exception occurs
+	 * @return the location list
 	 */
 	public static List<AssetLocation> getLocations(Settings appSettings, Server server, Path appPath)
 		throws Exception
@@ -99,6 +101,8 @@ public abstract class AssetServices
 	 * @param locSettings the location settings
 	 * @param server the server
 	 * @param appPath the application path
+	 * @return the location
+	 * @throws Exception if an exception occurs
 	 */
 	public static AssetLocation getLocation(String definition, Settings locSettings, Server server, Path appPath)
 		throws Exception
@@ -163,6 +167,7 @@ public abstract class AssetServices
      * file paths relative to that root directory.
 	 * @param path the path of the AssetLocation below the asset-root. 
 	 * @param dir the root directory. 
+	 * @return the location
 	 */
 	public static AssetLocation getDirectoryLocation(String path, File dir)
 	{
@@ -176,6 +181,7 @@ public abstract class AssetServices
 	 * @param serverRootDir the server root directory 
 	 * @param directory a directory. If null, then the server root directory is used. If relative
 	 * 		then the (server directory)/directory is used. Else if absolute the directory itself is used.
+	 * @return the location
 	 */
 	public static AssetLocation getDirectoryLocation(String path, File serverRootDir, String directory)
 	{
@@ -200,6 +206,7 @@ public abstract class AssetServices
 	 * @param prefix the prefix path of the resources.
 	 * 		Must not be empty for security reasons. Asset paths are translated 
 	 * 		into resource names by prepending the prefix to the asset path.
+	 * @return the location
 	 */
 	public static AssetLocation getJavaResourceLocation(String path, String prefix)
 	{
@@ -211,6 +218,9 @@ public abstract class AssetServices
 	 * Returns an AssetLocation which serves Java resources from civilian.jar.
 	 * @param path the path of the AssetLocation below the asset root.
 	 * 		If null, the path "civilian" is used.
+	 * @param appPath the path to the application
+	 * @param develop the develop flag
+	 * @return the location
 	 */
 	public static AssetLocation getCivResourceLocation(String path, String appPath, boolean develop)
 	{
@@ -240,6 +250,7 @@ public abstract class AssetServices
 	 * (see {@link AssetService#hasAssets()}).<br>
 	 * @param prefixPath a path to be prepended to the paths of the given services
 	 * @param services a list of services.
+	 * @return the combined service
 	 */
 	public static AssetService combine(Path prefixPath, AssetService... services)
 	{

@@ -37,8 +37,7 @@ public class AssetConfig
 	public static final int DEFAULT_MAX_CACHE_SIZE = 1024*1024;
 	
 	/**
-	 * Returns the maximum size of files which are 
-	 * cached in memory. The default size is 1MB.  
+	 * @return the maximum size of files which are cached in memory. The default size is 1MB.  
 	 */
 	public int getMaxCachedSize()
 	{
@@ -67,7 +66,7 @@ public class AssetConfig
 	
 	
 	/**
-	 * Returns the number of AssetLocations.
+	 * @return the number of AssetLocations.
 	 */
 	public int getLocationCount()
 	{
@@ -99,7 +98,7 @@ public class AssetConfig
 
 	
 	/**
-	 * Returns the AssetLocation for a relative location path.
+	 * @return the AssetLocation for a relative location path.
 	 */
 	public AssetLocation getLocation(String path)
 	{
@@ -109,7 +108,7 @@ public class AssetConfig
 
 
 	/**
-	 * Returns the AssetLocation.
+	 * @return the AssetLocation.
 	 */
 	public AssetLocation[] getLocations()
 	{
@@ -123,6 +122,7 @@ public class AssetConfig
 	 * Returns the lookup service which should be used to derive
 	 * content-types from asset file names. By default the ContentLookup of the 
 	 * {@link Server#getContentTypeLookup() server} is used. 
+	 * @return the lookup
 	 */
 	public ContentTypeLookup getContentTypeLookup()
 	{

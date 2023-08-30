@@ -56,8 +56,7 @@ public abstract class AssetLocation extends AssetService
 
 	
 	/**
-	 * Returns the absolute path from the server root to the 
-	 * asset location.
+	 * @return the absolute path from the server root to the asset location.
 	 */
 	@Override public Path getPath()
 	{
@@ -66,7 +65,7 @@ public abstract class AssetLocation extends AssetService
 	
 	
 	/**
-	 * Returns the path of the asset location relative to the asset root.
+	 * @return the path of the asset location relative to the asset root.
 	 */
 	public Path getRelativePath()
 	{
@@ -75,7 +74,7 @@ public abstract class AssetLocation extends AssetService
 
 	
 	/**
-	 * Returns true.
+	 * @return true.
 	 */
 	@Override public boolean hasAssets()
 	{
@@ -86,6 +85,7 @@ public abstract class AssetLocation extends AssetService
 	/**
 	 * Sets the default character encoding of the assets served by this
 	 * AssetLocation.
+	 * @param encoding the encoding
 	 */
 	public void setCharEncoding(String encoding)
 	{
@@ -107,6 +107,7 @@ public abstract class AssetLocation extends AssetService
 	/**
 	 * Sets the default content-type of the assets served by this
 	 * AssetLocation.
+	 * @param contentType the content type
 	 */
 	public void setContentType(ContentType contentType)
 	{
@@ -115,7 +116,7 @@ public abstract class AssetLocation extends AssetService
 
 	
 	/**
-	 * Returns the ContentType associated with the location or
+	 * @return the ContentType associated with the location or
 	 * null, if the assets of this location do not have
 	 * a specific content-type.
 	 */
@@ -136,8 +137,7 @@ public abstract class AssetLocation extends AssetService
 
 	
 	/**
-	 * Return the AssetCacheControl used by this location.
-	 * @return
+	 * @return the AssetCacheControl used by this location.
 	 */
 	public AssetCacheControl getCacheControl()
 	{
@@ -212,6 +212,7 @@ public abstract class AssetLocation extends AssetService
 	 * Implements the retrieval of an asset for a request.
 	 * @param path the path of the asset relative to this location
 	 * @return the asset or null if not found
+	 * @throws Exception if an exception occurs
 	 */
 	protected abstract Asset find(Path path) throws Exception;
 
@@ -229,7 +230,7 @@ public abstract class AssetLocation extends AssetService
 	
 	
 	/**
-	 * Returns an info-string describing the location parameters.
+	 * @return an info-string describing the location parameters.
 	 */
 	protected abstract String getInfoParam();
 
