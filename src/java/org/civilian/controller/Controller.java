@@ -104,7 +104,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 
 	
 	/**
-	 * Returns the develop flag of the application.
+	 * @return the develop flag of the application.
 	 * @see Application#develop
 	 */
 	public boolean develop()
@@ -114,7 +114,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 
 
 	/**
-	 * Returns the application to which the controller belongs.
+	 * @return the application to which the controller belongs.
 	 */
 	public Application getApplication()
 	{
@@ -123,7 +123,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 
 	
 	/**
-	 * Returns the request.
+	 * @return the request.
 	 */
 	@Override public Request getRequest()
 	{
@@ -133,7 +133,6 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	
 
 	/**
-	 * Returns the response.
 	 * @return the Response
 	 */
 	@Override public Response getResponse()
@@ -153,8 +152,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 
 	
 	/**
-	 * Returns the type of the controller.
-	 * @return the ControllerType
+	 * @return the type of the controller.
 	 */
 	public ControllerType getControllerType()
 	{
@@ -229,7 +227,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	 * <li>calls the various exit-methods
 	 * </ul>
 	 * @param request the request
-	 * @param request the response
+	 * @param response the response
 	 * @throws Exception if an error during processing occurs
 	 */
 	public void process(Request request, Response response) throws Exception
@@ -286,7 +284,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	
 
 	/**
-	 * Returns if the controller is currently processing a request.
+	 * @return if the controller is currently processing a request.
 	 */
 	public boolean isProcessing()
 	{
@@ -309,7 +307,8 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	 * If the resource does not allow access, it should either set
 	 * an appropriate response status code, or redirect the response.<br>
 	 * The controller can use the request or response object, but should not 
-	 * rely on any other initializations. 
+	 * rely on any other initializations.
+	 * @throws Exception allowed to throw any exception 
 	 */
 	protected void checkAccess() throws Exception
 	{
@@ -320,6 +319,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	 * Called when no action method matches the request.
 	 * The default implementation sends an response error.
 	 * @param error the suggested response error code (405, 406, 415)
+	 * @throws Exception allowed to throw any exception 
 	 */
 	protected void reject(int error) throws Exception
 	{
@@ -331,6 +331,7 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	 * Initialize the controller. Called after {@link #checkAccess()} was called. 
 	 * Derived classes can put common initialization code here.
 	 * The default implementation is empty.
+	 * @throws Exception allowed to throw any exception 
 	 */
 	protected void init() throws Exception
 	{
@@ -353,6 +354,8 @@ public class Controller implements MsgBundleProvider, RequestProvider, ResponseP
 	 * The default implementation just rethrows the exception which will then be delivered
 	 * to {@link Application#onError(Request, Response, Throwable)}.
 	 * Derived controller implementations which want to handle errors should override this method.
+	 * @param e an exception
+	 * @throws Exception allowed to throw any exception 
 	 */
 	protected void onError(Exception e) throws Exception
 	{
