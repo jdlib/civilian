@@ -33,7 +33,7 @@ import org.civilian.text.keys.KeyListBuilder;
 
 
 /**
- * Maps to /opportunities/search and /opportunities/search/filter
+ * Maps to /opportunities/search
  */
 public class SearchController extends OpportunitiesController
 {
@@ -50,7 +50,7 @@ public class SearchController extends OpportunitiesController
 	}
 	
 	
-	// maps to /customers/search/filter
+	// maps to /opportunities/search/filter
 	@Segment("filter")
 	@Consumes(ContentType.Strings.APPLICATION_JSON) 
 	@Get public void getFilters(NgReply reply) throws Exception
