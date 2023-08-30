@@ -35,7 +35,7 @@ public abstract class Route
 	
 	
 	/**
-	 * Returns a Route which represents the root path "/". 
+	 * @return a Route which represents the root path "/". 
 	 */
 	public static final Route root()
 	{
@@ -44,7 +44,7 @@ public abstract class Route
 
 	
 	/**
-	 * Returns a Route for a constant path or url.
+	 * @return a Route for a constant path or url.
 	 */
 	public static final Route constant(String path)
 	{
@@ -55,7 +55,7 @@ public abstract class Route
 
 	
 	/**
-	 * Returns if this Route represents the root path.
+	 * @return if this Route represents the root path.
 	 */
 	public boolean isRoot()
 	{
@@ -64,7 +64,7 @@ public abstract class Route
 	
 	
 	/**
-	 * Returns a Route which represents this route + the given path.
+	 * @return a Route which represents this route + the given path.
 	 * @param segment a non null segment.
 	 */
 	public Route addSegment(String segment)
@@ -81,7 +81,7 @@ public abstract class Route
 
 	
 	/**
-	 * Returns a Route which represents this route + the path schema defined
+	 * @return a Route which represents this route + the path schema defined
 	 * by the PathParam.
 	 */
 	public Route addPathParam(PathParam<?> pathParam)
@@ -92,7 +92,7 @@ public abstract class Route
 
 	
 	/**
-	 * Returns the number of constant and variable (PathParam) parts contained in the route.
+	 * @return the number of constant and variable (PathParam) parts contained in the route.
 	 */
 	int size()
 	{
@@ -104,19 +104,19 @@ public abstract class Route
 
 	
 	/**
-	 * Returns the number of PathParams contained in this route.
+	 * @return the number of PathParams contained in this route.
 	 */
 	public abstract int getPathParamCount();
 
 
 	/**
-	 * Returns the i-th PathParam contained in this route.
+	 * @return the i-th PathParam contained in this route.
 	 */
 	public abstract PathParam<?> getPathParam(int index);
 
 	
 	/**
-	 * Returns the index of the PathParam within this route.
+	 * @return the index of the PathParam within this route.
 	 */
 	public abstract int indexOf(PathParam<?> pathParam);
 
@@ -166,7 +166,7 @@ public abstract class Route
 	
 
 	/**
-	 * Returns a debug representation of the Route.
+	 * @return a debug representation of the Route.
 	 */
 	@Override public abstract String toString();
 }
