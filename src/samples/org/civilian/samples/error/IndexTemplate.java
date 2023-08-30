@@ -62,7 +62,7 @@ public class IndexTemplate extends Template
 		out.println();
 		out.println("<h3>Broken Link</h3>");                            // line 32: <h3>Broken Link</h3>
 		out.println("We construct a broken link to demonstrate the default not-found error message:<p>"); // line 33: We construct a broken link to demonstrate the default not-found error message:<p>
-		Url notFoundUrl = html.url(html.path()).append("notfound");     // line 34: @Url notFoundUrl = html.url(html.path()).append("notfound");
+		Url notFoundUrl = html.url(html.path().add("notfound"));        // line 34: @Url notFoundUrl = html.url(html.path().add("notfound"));
 		out.print("<a href=\"");                                        // line 35: <a href="
 		out.print(notFoundUrl);                                         // line 35: <%notFoundUrl%>
 		out.print("\">");                                               // line 35: ">

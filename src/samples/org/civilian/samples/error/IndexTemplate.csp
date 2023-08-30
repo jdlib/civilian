@@ -31,7 +31,7 @@ template() mixin html
 
 				<h3>Broken Link</h3>
 				We construct a broken link to demonstrate the default not-found error message:<p>
-				@Url notFoundUrl = html.url(html.path()).append("notfound");
+				@Url notFoundUrl = html.url(html.path().add("notfound"));
 				<a href="<%notFoundUrl%>"><%notFoundUrl%></a>.
 			</div>
 		</div>

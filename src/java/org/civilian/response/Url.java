@@ -66,8 +66,7 @@ public class Url implements PathParamProvider
 	
 	
 	/**
-	 * Creates a Url consisting of the path provided
-	 * by the PathProvider.
+	 * Creates a Url consisting of the path provided by the PathProvider.
 	 * @param rp a Response or a ResponseProvider whose Response is used by the Url
 	 * @param pathProvider provides a path. Classes like Path, Context, Application
 	 * 		Request, etc. are examples of PathProviders.   
@@ -78,6 +77,7 @@ public class Url implements PathParamProvider
 		additionalPath_ = Check.notNull(pathProvider, "pathProvider").getPath();
 		pathParams_		= EMPTY_PATH_PARAMS;
 		resource_		= null;
+		prefix_			= null;
 	}
 
 	
@@ -153,37 +153,6 @@ public class Url implements PathParamProvider
 		if (serializer_ == null)
 			serializer_ = lsProvider_.getLocaleService().getSerializer();
 		return serializer_;
-	}
-
-
-	/**
-	 * Prepends a url snippet at the beginning of the url string.
-	 * @return this.
-	 */
-	public Url prepend(String url)
-	{
-		Check.notNull(url, "url");
-		if (prefix_ == null)
-			prefix_ = url;
-		else if (url.endsWith("/") && prefix_.startsWith("/"))
-			prefix_ = url + prefix_.substring(1);
-		else
-			prefix_ = url + prefix_;
-		return this;
-	}
-	
-	
-	/**
-	 * Appends a path snippet to the Url. 
-	 * @return this
-	 */
-	public Url append(String path)
-	{
-		if (additionalPath_ != null)
-			additionalPath_ = additionalPath_.add(path);
-		else
-			additionalPath_ = new Path(path);
-		return this;
 	}
 	
 	
@@ -638,7 +607,7 @@ public class Url implements PathParamProvider
 	private Path additionalPath_;
 	private Object[] pathParams_;
 	private QueryParamList queryParams_;
-	private String prefix_;
+	private final String prefix_;
 	private final LocaleServiceProvider lsProvider_;
 	private static final Object[] EMPTY_PATH_PARAMS = new Object[0];
 }

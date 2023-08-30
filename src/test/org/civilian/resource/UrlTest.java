@@ -122,18 +122,6 @@ public class UrlTest extends CivTest
 	}
 
 	
-	@Test public void testAddPath()
-	{
-		Url url = new Url(LS, "/");
-		
-		url.append("a");
-		assertEquals("/a", url.toString());
-		
-		url.append("/test.xml");
-		assertEquals("/a/test.xml", url.toString());
-	}
-	
-
 	@Test public void testQueryParams()
 	{
 		Url url = new Url(LS, "index.html");
