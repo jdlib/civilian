@@ -226,7 +226,7 @@ public class Resource
 	 */
 	public Iterable<Resource> children()
 	{
-		return () -> Iterators.unique(Iterators.forValues(children_));
+		return () -> Iterators.unmodifiable(Iterators.forValues(children_));
 	}
 
 	
