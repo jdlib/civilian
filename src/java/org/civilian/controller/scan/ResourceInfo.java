@@ -18,7 +18,6 @@ package org.civilian.controller.scan;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 import org.civilian.controller.ControllerResourceData;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.resource.Resource;

@@ -20,7 +20,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
 import java.lang.reflect.Method;
 import org.civilian.CivTest;
 import org.civilian.annotation.Consumes;

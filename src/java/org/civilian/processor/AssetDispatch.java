@@ -17,7 +17,6 @@ package org.civilian.processor;
 
 
 import java.util.function.Predicate;
-
 import org.civilian.request.Request;
 import org.civilian.application.Application;
 import org.civilian.asset.Asset;

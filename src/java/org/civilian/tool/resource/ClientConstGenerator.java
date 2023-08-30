@@ -17,7 +17,6 @@ package org.civilian.tool.resource;
 
 
 import java.io.StringWriter;
-
 import org.civilian.application.Application;
 import org.civilian.controller.scan.ControllerScan;
 import org.civilian.resource.Resource;

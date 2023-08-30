@@ -17,7 +17,6 @@ package org.civilian.resource;
 
 
 import java.util.ArrayList;
-
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParamProvider;
 import org.civilian.response.Response;
