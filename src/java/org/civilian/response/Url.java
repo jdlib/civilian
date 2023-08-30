@@ -48,7 +48,7 @@ import org.civilian.util.http.UriEncoder;
  * {@link Response#getUriEncoder()} UriEncoder} of the response. The Url class also takes
  * care to add the session id to URL if needed. 
  */
-public class Url implements PathParamProvider, ResponseProvider
+public class Url implements PathParamProvider
 {
 	/**
 	 * Creates a Url consisting of the given string value. 
@@ -148,15 +148,6 @@ public class Url implements PathParamProvider, ResponseProvider
 	public Resource getResource()
 	{
 		return resource_;
-	}
-	
-	
-	/**
-	 * Returns the response which was passed to the Url constructor.
-	 */
-	@Override public Response getResponse()
-	{
-		return response_;
 	}
 	
 	
