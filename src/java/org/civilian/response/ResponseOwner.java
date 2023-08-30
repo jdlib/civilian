@@ -34,15 +34,19 @@ public interface ResponseOwner extends PathProvider
 	/**
 	 * Returns an ResponseHandler which is used by the response
 	 * to send an error to the client. Applications can 
-	 * return a different implementation to tweak the error response. 
+	 * return a different implementation to tweak the error response.
+	 * @param statusCode the status code
+	 * @param message a message
+	 * @param error an error 
 	 * @see Response#sendError(int)  
-	 * @see Response#sendError(int, String, Throwable)  
+	 * @see Response#sendError(int, String, Throwable)
+	 * @return the handler  
 	 */
 	public ResponseHandler createErrorHandler(int statusCode, String message, Throwable error);
 	
 	
 	/**
-	 * Returns the root resource of the owner (application).
+	 * @return the root resource of the owner (application).
 	 */
 	public Resource getRootResource();
 	

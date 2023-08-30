@@ -40,6 +40,8 @@ public abstract class ContentSerializer
 	 * a certain type.
 	 * @param type the type of the constructed object
 	 * @param reader a reader 
+	 * @param <T> type class  
+	 * @throws Exception if an exception occurs
 	 */
 	public <T> T read(Class<T> type, Reader reader) throws Exception
 	{
@@ -53,6 +55,9 @@ public abstract class ContentSerializer
 	 * @param type the type of the constructed object
 	 * @param genericType the generic type of the constructed object or null if not known
 	 * @param reader a reader 
+	 * @param <T> type class  
+	 * @return the result object  
+	 * @throws Exception if an exception occurs
 	 */
 	public abstract <T> T read(Class<T> type, Type genericType, Reader reader) throws Exception; 
 
@@ -60,7 +65,10 @@ public abstract class ContentSerializer
 	/**
 	 * Constructs a object of a certain type, given a string representation.
 	 * @param type the type of the constructed object
-	 * @param s a string 
+	 * @param s a string
+	 * @param <T> type class
+	 * @return the result object  
+	 * @throws Exception if an exception occurs
 	 */
 	public <T> T read(Class<T> type, String s) throws Exception
 	{
@@ -73,6 +81,9 @@ public abstract class ContentSerializer
 	 * @param type the type of the constructed object
 	 * @param genericType the generic type of the constructed object
 	 * @param s a string 
+	 * @param <T> type class  
+	 * @return the result object  
+	 * @throws Exception if an exception occurs
 	 */
 	public <T> T read(Class<T> type, Type genericType, String s) throws Exception
 	{
@@ -82,12 +93,18 @@ public abstract class ContentSerializer
 	
 	/**
 	 * Writes the value to the writer. 
+	 * @param value a value
+	 * @param writer a writer
+	 * @throws Exception if an exception occurs
 	 */
 	public abstract void write(Object value, Writer writer) throws Exception; 
 
 
 	/**
-	 * Converts the value to a string. 
+	 * Converts the value to a string.
+	 * @param value a value
+	 * @return the string
+	 * @throws Exception if an exception occurs
 	 */
 	public String write(Object value) throws Exception
 	{
@@ -114,7 +131,9 @@ public abstract class ContentSerializer
 	
 	
 	/**
-	 * Returns the internal implementation object which has the given class.
+	 * @param implClass the implementation class
+	 * @return the internal implementation object which has the given class.
+	 * @param <T> type class  
 	 */
 	public abstract <T> T unwrap(Class<T> implClass);
 	

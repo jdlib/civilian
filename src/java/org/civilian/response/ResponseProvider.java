@@ -22,7 +22,7 @@ package org.civilian.response;
 public interface ResponseProvider
 {
 	/**
-	 * Returns the Response.
+	 * @return the Response.
 	 */
 	public Response getResponse();
 }
