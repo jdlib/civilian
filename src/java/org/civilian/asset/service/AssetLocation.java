@@ -95,7 +95,8 @@ public abstract class AssetLocation extends AssetService
 	
 	/**
 	 * Returns the encoding of the assets served by this
-	 * AssetLocation, or null if not known or no common encoding exists. 
+	 * AssetLocation, or null if not known or no common encoding exists.
+	 * @return the encoding 
 	 */
 	public String getCharEncoding()
 	{

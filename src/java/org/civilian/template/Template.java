@@ -36,7 +36,7 @@ import org.civilian.util.Check;
 public abstract class Template implements TemplateWriter.Printable
 {
 	/**
-	 * Returns the TemplateWriter or null, if the template is not printed.
+	 * @return the TemplateWriter or null, if the template is not printed.
 	 */
 	public TemplateWriter out()
 	{
@@ -46,6 +46,8 @@ public abstract class Template implements TemplateWriter.Printable
 	
 	/**
 	 * Prints the template and returns it as string.
+	 * @return the string
+	 * @throws Exception any exception allowed
 	 */
 	public String printString() throws Exception
 	{
@@ -59,6 +61,8 @@ public abstract class Template implements TemplateWriter.Printable
 	 * Prints the template, using the given Writer.
 	 * The method constructs a TemplateWriter from the writer and
 	 * then calls {@link #print(TemplateWriter)}.
+	 * @param out a Writer
+	 * @throws Exception any exception
 	 */
 	public void print(Writer out) throws Exception
 	{
@@ -105,6 +109,7 @@ public abstract class Template implements TemplateWriter.Printable
 	
 	/**
 	 * Needs to be implemented by derived classes.
+	 * @throws Exception any exception
 	 */
 	protected abstract void print() throws Exception;
 	

@@ -63,6 +63,10 @@ public class AppFactory
 	 * Even if creation fails and we cannot instantiate the application object
 	 * we push a DefaultApp object, which - when invoked - will present
 	 * an error message.
+	 * @param settings the settings
+	 * @param id the app id
+	 * @param appPrefix TODO
+	 * @throws Exception any exception
 	 */
 	protected void createCustomApp(Settings settings, String id, String appPrefix)
 		throws Exception

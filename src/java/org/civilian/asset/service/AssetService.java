@@ -52,7 +52,9 @@ public abstract class AssetService implements PathProvider
 
 	
 	/**
-	 * Returns an asset or null if not found.
+	 * @param assetPath a path to an asset
+	 * @return an asset found at that path or null if not found.
+	 * @throws Exception if an exception occurs
 	 */
 	public Asset getAsset(String assetPath) throws Exception
 	{
@@ -64,6 +66,7 @@ public abstract class AssetService implements PathProvider
 	 * Returns an asset for a given path.
 	 * @param path the asset path
 	 * @return the asset or null if not found
+	 * @throws Exception if an exception occurs
 	 */
 	public abstract Asset getAsset(Path path) throws Exception;
 

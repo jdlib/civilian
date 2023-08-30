@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.function.Predicate;
-
 import org.civilian.Logs;
 import org.civilian.util.Check;
 import org.civilian.util.IoUtil;
@@ -126,6 +125,8 @@ public class DevRequestClassLoader extends ClassLoader
 	/**
 	 * We are only interested in loading classes which are files
 	 * on the disk.
+	 * @param name the class name
+	 * @return the class
 	 */
 	protected Class<?> defineFileClass(String name)
 	{

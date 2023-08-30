@@ -46,7 +46,7 @@ public abstract class Asset
     
 
 	/**
-	 * Returns the content type of the asset or null
+	 * @return the content type of the asset or null
 	 * if not known or determined.
 	 */
 	public abstract ContentType getContentType();
@@ -54,6 +54,7 @@ public abstract class Asset
 	
 	/**
 	 * Sets the content type of the asset.
+	 * @param contentType the content type
 	 */
 	public abstract void setContentType(ContentType contentType);
 
@@ -73,14 +74,13 @@ public abstract class Asset
 
 	
 	/**
-	 * Returns the byte length of the asset data.
-	 * @return the length
+	 * @return the byte length of the asset data.
 	 */
 	public abstract long length();
 	
 	
 	/**
-	 * Returns the cache control of the Asset.
+	 * @return the cache control of the Asset.
 	 */
 	public abstract AssetCacheControl getCacheControl();
 	
@@ -116,6 +116,8 @@ public abstract class Asset
 
 	/**
 	 * Returns the asset content as byte array.
+	 * @throws IOException if an IO error occurs
+	 * @return the byte array
 	 */
 	public abstract byte[] getContent() throws IOException;
 	
@@ -123,15 +125,18 @@ public abstract class Asset
 	/**
 	 * Returns if an cached asset file is still valid, i.e.
 	 * its source has not changed since the Asset was created.
+	 * @return is valid?
 	 */
 	public abstract boolean isValid();
 	
 	
 	/**
 	 * Writes the asset to the response.
+	 * @param request the request, used to access the If-Modified-Since header
 	 * @param response the response
 	 * @param writeContent should the content writen (false if we
 	 * 		are answering a HEAD request)
+	 * @throws IOException if an IO error occurs
 	 */
 	public final void write(Request request, Response response, boolean writeContent) throws IOException
 	{
@@ -145,12 +150,15 @@ public abstract class Asset
 	/**
 	 * Writes a last-modified and max-age header to the response,
 	 * if the last modified date is known.
+	 * @param response the response
 	 */
 	protected abstract void writeHeaders(Response response);
  	
 	
 	/**
 	 * Allows to access the protected method {@link #writeHeaders(Response)}
+	 * @param asset an asset
+	 * @param response a response
 	 */
 	protected void writeHeaders(Asset asset, Response response)
 	{
@@ -161,12 +169,17 @@ public abstract class Asset
 	/**
 	 * Sets content-related headers and writes the asset content
 	 * to the response.
+	 * @param response the response
+	 * @throws IOException if an IO error occurs
 	 */
 	protected abstract void writeContent(Response response) throws IOException;
 	
 
 	/**
 	 * Allows to access the protected method {@link #writeContent(Asset,Response)}
+	 * @param asset an asset
+	 * @param response a response
+	 * @throws IOException if an IO error occurs
 	 */
 	protected void writeContent(Asset asset, Response response) throws IOException
 	{
@@ -188,7 +201,8 @@ public abstract class Asset
 
 
 	/**
-	 * Returns an InputStream for the asset content.
+	 * @return an InputStream for the asset content.
+	 * @throws IOException if an IO error occurs
 	 */
 	public abstract InputStream getInputStream() throws IOException;
 	
@@ -197,6 +211,8 @@ public abstract class Asset
 	 * Returns a Reader for the asset content.
 	 * If no encoding is set on the asset, an IllegalArgumentException
 	 * is thrown.
+	 * @throws IOException if an IO error occurs
+	 * @return the reader
 	 */
 	public Reader getReader() throws IOException
 	{
@@ -206,7 +222,8 @@ public abstract class Asset
 	
 	
 	/**
-	 * Returns an Asset which keeps its content in memory if applicable.
+	 * @return an Asset which keeps its content in memory if applicable.
+	 * @throws IOException if an IO error occurs
 	 */
 	public abstract Asset cache() throws IOException;
 

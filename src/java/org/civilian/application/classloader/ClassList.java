@@ -31,7 +31,7 @@ import org.civilian.util.StringUtil;
 public class ClassList
 {
 	/**
-	 * Returns the size of the list.
+	 * @return the size of the list.
 	 */
 	public int size()
 	{
@@ -41,6 +41,8 @@ public class ClassList
 
 	/**
 	 * Adds a Item to the list.
+	 * @param item the item
+	 * @return this
 	 */
 	private ClassList add(Item item)
 	{
@@ -58,6 +60,8 @@ public class ClassList
 	 * <li>or a string ending with '*' or '.', therefore including
 	 * 		all classes whose qualified name starts with that package
 	 * </ul>
+	 * @param name the name defining the item
+	 * @return this
 	 */
 	public ClassList add(String name)
 	{
@@ -82,7 +86,9 @@ public class ClassList
 	
 	/**
 	 * Adds multiple names.
+	 * @param names the names
 	 * @see #add(String)
+	 * @return this
 	 */
 	public ClassList add(String... names)
 	{
@@ -94,6 +100,8 @@ public class ClassList
 	
 	/**
 	 * Adds a class.
+	 * @param c the class
+	 * @return this
 	 */
 	public ClassList addClass(Class<?> c)
 	{
@@ -103,6 +111,8 @@ public class ClassList
 	
 	/**
 	 * Adds a package. All class in or below that package are included.
+	 * @param c a class defining a package
+	 * @return this
 	 */
 	public ClassList addPackage(Class<?> c)
 	{
@@ -111,7 +121,8 @@ public class ClassList
 
 	
 	/**
-	 * Tests if the name is in the list..
+	 * @param name a name
+	 * @return if the name is in the list..
 	 */
 	public boolean contains(String name)
 	{
@@ -127,6 +138,9 @@ public class ClassList
 	}
 
 	
+	/**
+	 * @return a string representation of the list.
+	 */
 	@Override public String toString()
 	{
 		return list_.toString();

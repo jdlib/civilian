@@ -391,7 +391,7 @@ public class Resource
 	
 	
 	/**
-	 * Returns a Iterable which can provide a depth-first iterator for the resource tree
+	 * @return a Iterable which can provide a depth-first iterator for the resource tree
 	 * starting with this resource.
 	 */
 	public Iterable<Resource> tree()

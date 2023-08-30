@@ -16,9 +16,9 @@
 package org.civilian.asset;
 
 
+import org.civilian.template.TemplateWriter;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.util.Check;
-import org.civilian.template.TemplateWriter;
 
 
 /**
@@ -58,7 +58,7 @@ public class AssetList implements TemplateWriter.Printable
 
 	
 	/**
-	 * Returns the number of asset paths stored in the list.
+	 * @return the number of asset paths stored in the list.
 	 */
 	public int size()
 	{
@@ -67,7 +67,8 @@ public class AssetList implements TemplateWriter.Printable
 	
 	
 	/**
-	 * Returns the path of the i-th asset.
+	 * @param i the asset index  
+	 * @return the path of the i-th asset.
 	 */
 	public String getPath(int i)
 	{
@@ -76,7 +77,7 @@ public class AssetList implements TemplateWriter.Printable
 	
 	
 	/**
-	 * Returns the type of the asset list.
+	 * @return the type of the asset list.
 	 */
 	public Type getType()
 	{
@@ -106,6 +107,7 @@ public class AssetList implements TemplateWriter.Printable
 		 * It should print HTML content to include the item, 
 		 * e.g. a css link element or script element.
 		 * @param path the path to the item of the asset list
+		 * @param html the HtmlMixin
 		 */
 		public void printRef(String path, HtmlMixin html);
 	}
