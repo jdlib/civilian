@@ -16,7 +16,7 @@
 package org.civilian.samples.test;
 
 
-import org.civilian.util.ClassUtil;
+import java.util.Objects;
 
 
 /**
@@ -34,7 +34,7 @@ public abstract class Assert
 
 	public static void assertEquals(Object expected, Object actual)
 	{
-		if (!ClassUtil.equals(expected, actual))
+		if (!Objects.equals(expected, actual))
 			throw new IllegalArgumentException("expected " + expected + ", but was " + actual); 
 	}
 

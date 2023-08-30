@@ -25,6 +25,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import org.civilian.application.Application;
 import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
@@ -39,7 +40,6 @@ import org.civilian.text.service.LocaleServiceProvider;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.Type;
 import org.civilian.util.Check;
-import org.civilian.util.ClassUtil;
 import org.civilian.util.Value;
 
 
@@ -146,7 +146,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	 */
 	public default boolean hasMethod(String method)
 	{
-		return ClassUtil.equals(getMethod(), method);
+		return Objects.equals(getMethod(), method);
 	}
 
 

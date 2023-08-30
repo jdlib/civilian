@@ -25,15 +25,6 @@ import java.lang.annotation.Annotation;
 public abstract class ClassUtil
 {
 	/**
-	 * Tests if two objects are equal.
-	 */
-	public static boolean equals(Object s1, Object s2)
-	{
-		return s1 == null ? s2 == null : s1.equals(s2);
-	}
-	
-
-	/**
 	 * Returns the package part of the class name (without a trailing dot).
 	 * Alternatively you could use Class.getPackage.getName(), but
 	 * since Class.getPackage could return null, this method is safer.

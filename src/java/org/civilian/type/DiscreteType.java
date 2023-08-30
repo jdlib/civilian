@@ -16,8 +16,8 @@
 package org.civilian.type;
 
 
+import java.util.Objects;
 import org.civilian.util.Check;
-import org.civilian.util.ClassUtil;
 
 
 /**
@@ -63,7 +63,7 @@ public class DiscreteType<T> extends Type<T>
 	{
 		for (int i=0; i<list_.length; i++)
 		{
-			if (ClassUtil.equals(value, list_[i]))
+			if (Objects.equals(value, list_[i]))
 				return i;
 		}
 		return -1;

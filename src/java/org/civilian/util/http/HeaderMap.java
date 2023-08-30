@@ -20,11 +20,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.type.Type;
 import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
-import org.civilian.util.ClassUtil;
 import org.civilian.util.Iterators;
 import org.civilian.util.Value;
 
@@ -71,7 +71,7 @@ public class HeaderMap
 	
 	public boolean is(String name, String value)
 	{
-		return ClassUtil.equals(get(name), value);
+		return Objects.equals(get(name), value);
 	}
 
 
