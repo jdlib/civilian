@@ -117,7 +117,7 @@ public class DateFormat implements Serializable
 
 	
 	/**
-	 * Returns the locale of this DateFormat.
+	 * @return the locale of this DateFormat.
 	 */
 	public Locale getLocale()
 	{
@@ -126,8 +126,7 @@ public class DateFormat implements Serializable
 	
 
 	/**
-	 * Returns the locale dependent symbol which separates date parts
-	 * (e.g. '.' or '/').
+	 * @return the locale dependent symbol which separates date parts (e.g. '.' or '/').
 	 */
 	public char getSeparatorSymbol()
 	{
@@ -136,7 +135,7 @@ public class DateFormat implements Serializable
 
 
 	/**
-	 * Returns the position (0-2) of the day value in date string.
+	 * @return the position (0-2) of the day value in date string.
 	 */
 	public int getDayPosition()
 	{
@@ -145,7 +144,7 @@ public class DateFormat implements Serializable
 
 
 	/**
-	 * Returns the position (0-2) of the month value in date string.
+	 * @return the position (0-2) of the month value in date string.
 	 */
 	public int getMonthPosition()
 	{
@@ -154,7 +153,7 @@ public class DateFormat implements Serializable
 
 
 	/**
-	 * Returns the position (0-2) of the year value in date string.
+	 * @return the position (0-2) of the year value in date string.
 	 */
 	public int getYearPosition()
 	{
@@ -163,7 +162,7 @@ public class DateFormat implements Serializable
 
 	
 	/**
-	 * Returns the name of a month
+	 * @return the name of a month
 	 * @param month the month (ranging from 1 to 12)
 	 */
 	public String getMonthName(int month)
@@ -173,7 +172,7 @@ public class DateFormat implements Serializable
 		
 		
 	/**
-	 * Returns the short name of a month
+	 * @return the short name of a month
 	 * @param month the month (ranging from 1 to 12)
 	 */
 	public String getShortMonthName(int month)
@@ -183,7 +182,7 @@ public class DateFormat implements Serializable
 
 	
 	/**
-	 * Returns the name of a weekday.
+	 * @return the name of a weekday.
 	 * @param dow the weekday
 	 */
 	public String getWeekdayName(DayOfWeek dow)
@@ -193,7 +192,7 @@ public class DateFormat implements Serializable
 		
 		
 	/**
-	 * Returns the short name of a weekday
+	 * @return the short name of a weekday
 	 * @param dow the weekday
 	 */
 	public String getShortWeekdayName(DayOfWeek dow)
@@ -210,7 +209,6 @@ public class DateFormat implements Serializable
 	}
 	
 
-	
 	private String getName(String names[], int index)
 	{
 		try
@@ -382,6 +380,6 @@ public class DateFormat implements Serializable
 	private int monthPosition_;
 	private int yearPosition_;
 	private char separatorSymbol_;
-	private DateFormatSymbols symbols_;
+	private final DateFormatSymbols symbols_;
 	private final Locale locale_;
 }
