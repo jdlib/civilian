@@ -5,10 +5,11 @@
 package org.civilian.samples.crm.web.template;
 
 
+import org.civilian.template.CspTemplate;
 import org.civilian.template.Template;
 
 
-public class ModuleTemplate extends Template
+public class ModuleTemplate extends CspTemplate
 {
 	public ModuleTemplate(Template detailTemplate)
 	{

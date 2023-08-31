@@ -17,22 +17,8 @@ package org.civilian.template;
 
 
 /**
- * TextTemplate is a Template implementation for simple string output.
+ * CspTemplate is a template to which uses a TemplateWriter.
  */
-public class TextTemplate extends Template
+public abstract class CspTemplate extends Template
 {
-	public TextTemplate(String text)
-	{
-		text_ = text;
-	}
-
-	
-	@Override protected void print() throws Exception
-	{
-		if (text_ != null)
-			out.print(text_);
-	}
-
-
-	private final String text_;
 }

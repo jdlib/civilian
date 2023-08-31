@@ -5,11 +5,12 @@
 package org.civilian.samples.jpa.shared.web;
 
 
+import org.civilian.template.CspTemplate;
 import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 
 
-public class PageTemplate extends Template
+public class PageTemplate extends CspTemplate
 {
 	public PageTemplate(Template content)
 	{

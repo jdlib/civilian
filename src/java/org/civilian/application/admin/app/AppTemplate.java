@@ -6,11 +6,12 @@ package org.civilian.application.admin.app;
 
 
 import org.civilian.application.Application;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 
 
-public class AppTemplate extends Template
+public class AppTemplate extends CspTemplate
 {
 	public AppTemplate(Application app, Template content, int activeTab)
 	{

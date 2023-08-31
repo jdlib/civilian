@@ -5,12 +5,12 @@
 package org.civilian.samples.crm.web.template;
 
 
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.LangMixin;
 import org.civilian.text.msg.MsgId;
 
 
-public class MultiPanelTemplate extends Template
+public class MultiPanelTemplate extends CspTemplate
 {
 	public MultiPanelTemplate(MsgId type)
 	{

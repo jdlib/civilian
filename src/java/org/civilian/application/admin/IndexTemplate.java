@@ -10,11 +10,11 @@ import org.civilian.Version;
 import org.civilian.resource.Url;
 import org.civilian.server.Server;
 import org.civilian.server.ServerApp;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.HtmlMixin;
 
 
-public class IndexTemplate extends Template
+public class IndexTemplate extends CspTemplate
 {
 	public IndexTemplate(Server server)
 	{

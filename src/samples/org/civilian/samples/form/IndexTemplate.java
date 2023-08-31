@@ -5,12 +5,12 @@
 package org.civilian.samples.form;
 
 
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 
 
-public class IndexTemplate extends Template
+public class IndexTemplate extends CspTemplate
 {
 	public IndexTemplate(IndexForm form)
 	{

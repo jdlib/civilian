@@ -8,12 +8,12 @@ package org.civilian.samples.crm.web.root;
 import org.civilian.resource.Url;
 import org.civilian.samples.crm.text.Message;
 import org.civilian.samples.crm.web.CrmResources;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
 
 
-public class IndexTemplate extends Template
+public class IndexTemplate extends CspTemplate
 {
 	@Override protected void init()
 	{

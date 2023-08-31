@@ -6,11 +6,11 @@ package org.civilian.samples.error;
 
 
 import org.civilian.resource.Url;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.HtmlMixin;
 
 
-public class IndexTemplate extends Template
+public class IndexTemplate extends CspTemplate
 {
 	@Override protected void init()
 	{

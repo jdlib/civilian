@@ -7,13 +7,13 @@ package org.civilian.samples.upload;
 
 import org.civilian.request.Request;
 import org.civilian.request.Upload;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
 
 
-public class IndexTemplate extends Template
+public class IndexTemplate extends CspTemplate
 {
 	public IndexTemplate(IndexForm form)
 	{

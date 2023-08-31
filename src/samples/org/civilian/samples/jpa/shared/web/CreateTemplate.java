@@ -5,11 +5,11 @@
 package org.civilian.samples.jpa.shared.web;
 
 
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.FormTableMixin;
 
 
-public class CreateTemplate extends Template
+public class CreateTemplate extends CspTemplate
 {
 	public CreateTemplate(CreateForm form)
 	{

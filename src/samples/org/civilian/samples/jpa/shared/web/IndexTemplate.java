@@ -6,12 +6,12 @@ package org.civilian.samples.jpa.shared.web;
 
 
 import org.civilian.controller.Controller;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 
 
-public class IndexTemplate extends Template
+public class IndexTemplate extends CspTemplate
 {
 	public IndexTemplate(IndexForm form, String message, Class<? extends Controller> createCtrlClass)
 	{

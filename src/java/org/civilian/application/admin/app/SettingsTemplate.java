@@ -10,12 +10,12 @@ import org.civilian.application.Application;
 import org.civilian.content.ContentSerializer;
 import org.civilian.processor.Processor;
 import org.civilian.processor.ProcessorList;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.text.service.LocaleServiceList;
 
 
-public class SettingsTemplate extends Template
+public class SettingsTemplate extends CspTemplate
 {
 	public SettingsTemplate(Application app)
 	{

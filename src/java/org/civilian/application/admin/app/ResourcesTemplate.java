@@ -8,11 +8,11 @@ package org.civilian.application.admin.app;
 import org.civilian.application.Application;
 import org.civilian.controller.ControllerResourceData;
 import org.civilian.resource.Resource;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.HtmlMixin;
 
 
-public class ResourcesTemplate extends Template
+public class ResourcesTemplate extends CspTemplate
 {
 	public ResourcesTemplate(Application app)
 	{

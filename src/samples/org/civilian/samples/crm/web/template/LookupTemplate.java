@@ -6,11 +6,11 @@ package org.civilian.samples.crm.web.template;
 
 
 import org.civilian.samples.crm.text.Message;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.LangMixin;
 
 
-public class LookupTemplate extends Template
+public class LookupTemplate extends CspTemplate
 {
 	@Override protected void init()
 	{

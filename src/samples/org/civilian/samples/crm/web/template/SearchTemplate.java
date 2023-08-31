@@ -6,7 +6,7 @@ package org.civilian.samples.crm.web.template;
 
 
 import org.civilian.samples.crm.text.Message;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.LangMixin;
 
 
@@ -15,7 +15,7 @@ import org.civilian.template.mixin.LangMixin;
 * @param toolbar: if embedded in a module panel, the searchpanel has a toolbar to navigate to
 * 		the detail view
 */
-public class SearchTemplate extends Template
+public class SearchTemplate extends CspTemplate
 {
 	public SearchTemplate(boolean withToolbar)
 	{

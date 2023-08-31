@@ -5,12 +5,12 @@
 package org.civilian.samples.game;
 
 
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 
 
-public class GameTemplate extends Template
+public class GameTemplate extends CspTemplate
 {
 	public GameTemplate(Game game, GameForm form, String feedback)
 	{

@@ -6,7 +6,7 @@ package org.civilian.response.std;
 
 
 import org.civilian.request.Request;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.HtmlMixin;
 
 
@@ -14,7 +14,7 @@ import org.civilian.template.mixin.HtmlMixin;
 * Used by ErrorResponse to print out error information
 * during development.
 */
-public class ErrorTemplate extends Template
+public class ErrorTemplate extends CspTemplate
 {
 	public ErrorTemplate(Request request, int status, String message, Throwable error)
 	{

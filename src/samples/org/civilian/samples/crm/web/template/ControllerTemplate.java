@@ -5,10 +5,11 @@
 package org.civilian.samples.crm.web.template;
 
 
+import org.civilian.template.CspTemplate;
 import org.civilian.template.Template;
 
 
-public class ControllerTemplate extends Template
+public class ControllerTemplate extends CspTemplate
 {
 	public ControllerTemplate(Template content, String controller)
 	{
@@ -19,14 +20,14 @@ public class ControllerTemplate extends Template
 
 	@Override protected void print() throws Exception
 	{
-		out.print("<div ng-controller=\"");                             // line 3: <div ng-controller="
-		out.print(controller);                                          // line 3: <%controller%>
-		out.println("\">");                                             // line 3: ">
+		out.print("<div ng-controller=\"");                             // line 6: <div ng-controller="
+		out.print(controller);                                          // line 6: <%controller%>
+		out.println("\">");                                             // line 6: ">
 		out.increaseTab();
-		out.print(content);                                             // line 4: <%content%>
+		out.print(content);                                             // line 7: <%content%>
 		out.printlnIfNotEmpty();
 		out.decreaseTab();
-		out.println("</div>");                                          // line 5: </div>
+		out.println("</div>");                                          // line 8: </div>
 	}
 
 

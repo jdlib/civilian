@@ -8,11 +8,12 @@ package org.civilian.application.admin;
 import org.civilian.resource.Resource;
 import org.civilian.resource.Url;
 import org.civilian.server.ServerApp;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 
 
-public class PageTemplate extends Template
+public class PageTemplate extends CspTemplate
 {
 	public PageTemplate(Template content, AdminApp adminApp, ServerApp viewedApp, Resource appResource)
 	{

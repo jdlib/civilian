@@ -6,14 +6,14 @@ package org.civilian.response.std;
 
 
 import org.civilian.request.Request;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 
 
 /**
 * Used by NotFoundResponse to print out context information
 * during development.
 */
-public class NotFoundTemplate extends Template
+public class NotFoundTemplate extends CspTemplate
 {
 	public NotFoundTemplate(Request request)
 	{

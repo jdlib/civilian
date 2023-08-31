@@ -5,14 +5,14 @@
 package org.civilian.samples.quickstart;
 
 
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.HtmlMixin;
 
 
 /**
 * Template for IndexController.
 */
-public class IndexTemplate extends Template
+public class IndexTemplate extends CspTemplate
 {
 	@Override protected void init()
 	{

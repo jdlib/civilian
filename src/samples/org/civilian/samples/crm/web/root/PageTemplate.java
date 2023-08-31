@@ -14,13 +14,14 @@ import org.civilian.samples.crm.web.CrmResources;
 import org.civilian.samples.crm.web.SessionUser;
 import org.civilian.samples.crm.web.util.NavItem;
 import org.civilian.samples.crm.web.util.Script;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.Template;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
 import org.civilian.text.msg.MsgId;
 
 
-public class PageTemplate extends Template
+public class PageTemplate extends CspTemplate
 {
 	public PageTemplate(Response response, Template content, Script script, SessionUser sessionUser, boolean showNavigation, Path reloadPath, Path assetPath)
 	{

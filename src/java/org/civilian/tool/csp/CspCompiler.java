@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import org.civilian.template.ComponentBuilder;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.TemplateWriter;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
@@ -480,8 +480,8 @@ public class CspCompiler
 		}
 		if ((classData_.extendsClass == null) && !classData_.standalone)
 		{
-			classData_.imports.add(Template.class);
-			classData_.extendsClass = Template.class.getSimpleName();
+			classData_.imports.add(CspTemplate.class);
+			classData_.extendsClass = CspTemplate.class.getSimpleName();
 		}
 
 		//-------------------------------------
