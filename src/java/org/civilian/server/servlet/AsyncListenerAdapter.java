@@ -63,6 +63,6 @@ class AsyncListenerAdapter implements javax.servlet.AsyncListener
 	}
 	
 	
-	private AsyncListener listener_;
-	private AsyncContext context_;
+	private final AsyncListener listener_;
+	private final AsyncContext context_;
 }
