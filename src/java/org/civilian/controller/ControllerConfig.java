@@ -45,6 +45,9 @@ public class ControllerConfig
 	
 	/**
 	 * Creates a new ControllerConfig.
+	 * @param rootPackage the root package
+	 * @param PathParamMap the path params
+	 * @param naming the naming
 	 */
 	public ControllerConfig(String rootPackage, PathParamMap pathParams, ControllerNaming naming)
 	{
@@ -55,7 +58,7 @@ public class ControllerConfig
 	
 	
 	/**
-	 * Returns the list of path parameters used by an application.
+	 * @return the list of path parameters used by an application.
 	 */
 	public PathParamMap getPathParams()
 	{
@@ -64,7 +67,7 @@ public class ControllerConfig
 
 	
 	/**
-	 * Returns the root package of the application controller classes.
+	 * @return the root package of the application controller classes.
 	 * The root package is specified in the application constructor.
 	 */
 	public String getRootPackage()
@@ -74,7 +77,7 @@ public class ControllerConfig
 	
 	
 	/**
-	 * Returns the ControllerNaming which provides naming conventions
+	 * @return the ControllerNaming which provides naming conventions
 	 * for controller classes.
 	 */
 	public ControllerNaming getNaming()

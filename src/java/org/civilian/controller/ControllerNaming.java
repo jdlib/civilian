@@ -56,6 +56,8 @@ public class ControllerNaming
 	
 	/**
 	 * Creates a new ControllerNaming. 
+	 * @param controllerSuffix the suffix of controller classes
+	 * @param indexSegment the name of the index segment.
 	 */
 	public ControllerNaming(String controllerSuffix, String indexSegment)
 	{
@@ -71,6 +73,7 @@ public class ControllerNaming
 	 * classes which are introspected in a second step.
 	 * {@link #DEFAULT_CONTROLLER_SUFFIX "Controller"}
 	 * @param simpleClassName the simple name of a class
+	 * @return is controller class
 	 */
 	public boolean isControllerClass(String simpleClassName)
 	{
@@ -80,7 +83,9 @@ public class ControllerNaming
 
 	/**
 	 * Converts a package part into a resource segment.
-	 * The default implementation converts the part to lower case. 
+	 * The default implementation converts the part to lower case.
+	 * @param the packagePart
+	 * @return the segment 
 	 */
 	public String packagePart2Segment(String packagePart)
 	{
@@ -96,6 +101,8 @@ public class ControllerNaming
 	 * converts the name to lower case. If the obtained segment equals
 	 * "index", it is also set to null, mapping the controller class
 	 * to its package.
+	 * @param simpleClassName a simple class name
+	 * @return the segment
 	 */
 	public String className2Segment(String simpleClassName)
 	{

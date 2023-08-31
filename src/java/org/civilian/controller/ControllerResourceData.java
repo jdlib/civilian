@@ -66,7 +66,9 @@ public class ControllerResourceData
 	/**
 	 * Recursively go trough the resource tree and instantiate the controller classes.
 	 * This allows for a test during application startup (in production mode) 
-	 * if the resource tree has valid controller classes.   
+	 * if the resource tree has valid controller classes.
+	 * @param resource a resource
+	 * @throws ClassNotFoundException if a controller class could not be found   
 	 */
 	public static void touchControllerClasses(Resource resource) throws ClassNotFoundException
 	{

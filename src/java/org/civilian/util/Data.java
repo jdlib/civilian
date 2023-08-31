@@ -40,8 +40,8 @@ public class Data
 	
 	
 	/**
-	 * Adds the value.
-	 * @param value a non-null value
+	 * Adds the values.
+	 * @param values an array of values
 	 */
 	public void addAll(Object... values)
 	{
