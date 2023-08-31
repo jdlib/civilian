@@ -126,7 +126,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 
 	
 	/**
-	 * Returns the owner to which this request belongs.
+	 * @return the owner to which this request belongs.
 	 */
 	public RequestOwner getOwner();
 
@@ -140,7 +140,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	
 
 	/**
-	 * Returns if the request has the given method.
+	 * @return if the request has the given method.
 	 * @param method the method name
 	 * @see #getMethod()
 	 */
@@ -156,13 +156,13 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	
 	
 	/**
-	 * Returns the absolute path of this request.  
+	 * @return the absolute path of this request.  
 	 */
 	@Override public Path getPath();
 
 	
 	/**
-	 * Returns the path of this request relative to the application path.
+	 * @return the path of this request relative to the application path.
 	 * @see Application#getPath()
 	 */
 	public Path getRelativePath();
@@ -285,20 +285,21 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 
 	
 	/**
-	 * Returns a String array containing all values of a request parameter. 
+	 * Returns a String array containing all values of a request parameter.
+	 * @param name the name 
 	 * @return the values or an empty array with length 0 if the parameter does not exist.
 	 */
 	public String[] getParams(String name);
 	
 
 	/**
-	 * Returns an Iterator for the names of the parameters contained in this request.
+	 * @return an Iterator for the names of the parameters contained in this request.
 	 */
 	public Iterator<String> getParamNames();
 
 	
 	/**
-	 * Returns a map of all request parameter names and values.
+	 * @return a map of all request parameter names and values.
 	 */
 	public Map<String,String[]> getParamMap();
 
@@ -312,8 +313,10 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	 * Sets the value of a path parameter.
 	 * This is usually automatically done during resource dispatch, when 
 	 * the request path is parsed, and path segments are recognized to match 
-	 * defined PathParams. 
-	 * @param<T> the type of the parameter value
+	 * defined PathParams.
+	 * @param pathParam the path param
+	 * @param value the param value 
+	 * @param <T> the type of the parameter value
 	 */
 	public <T> void setPathParam(PathParam<T> pathParam, T value);
 
@@ -324,6 +327,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	 * the request path is parsed, and path segments are recognized to match 
 	 * defined PathParams. 
 	 * All previous path parameters are cleared.
+	 * @param pathParams the path params
 	 */
 	public void setPathParams(Map<PathParam<?>,Object> pathParams);
 	
@@ -336,7 +340,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	
 	
 	/**
-	 * Returns an Iterator for all path parameters recognized in this request. 
+	 * @return an Iterator for all path parameters recognized in this request. 
 	 */
 	public Iterator<PathParam<?>> getPathParams();
 	
@@ -349,12 +353,15 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	/**
 	 * Returns the value of a matrix parameter, or null if such a matrix parameter does not exist.
 	 * Matrix parameters are only recognized in the last segment of the request path.
+	 * @param name the matrix param name
+	 * @return the param value
 	 */
 	public String getMatrixParam(String name);
 	
 	
 	/**
 	 * Returns the values of a matrix parameter as a string array.
+	 * @param name the matrix param name
 	 * @return the array. The array is empty if the matrix parameter is not contained
 	 * 		in this request. 
 	 */
@@ -366,6 +373,10 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	 * If the parameter does not exist, the Value is empty.
 	 * If the conversion of the parameter to the requested type fails, the 
 	 * Value contains the error.
+	 * @param name the matrix param name
+	 * @param type the matrix param type
+	 * @param <T> the type class
+	 * @return the value
 	 */
 	public default <T> Value<T> getMatrixParam(String name, Type<T> type)
 	{
@@ -374,7 +385,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 
 	
 	/**
-	 * Returns an Iterator of matrix parameter names contained in this request.
+	 * @return an Iterator of matrix parameter names contained in this request.
 	 */
 	public Iterator<String> getMatrixParamNames();
 
@@ -385,7 +396,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	
 	
 	/**
-	 * Returns the upload of the request.
+	 * @return the upload of the request.
 	 */
 	public Uploads getUploads();
 
@@ -445,7 +456,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	
 
 	/**
-	 * Returns the preferred Locales for returned content, in decreasing order.
+	 * @return the preferred Locales for returned content, in decreasing order.
 	 * This list is defined by the Accept-Language header.<br> 
 	 */
 	public abstract Iterator<Locale> getAcceptedLocales(); 
@@ -459,27 +470,27 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	/**
 	 * Returns the character encoding used for the request content, or
 	 * null if not specified.
-	 * @return encoding
+	 * @return the encoding
 	 */
 	public String getCharEncoding();
 
 
 	/**
 	 * Explicitly sets the character encoding of the content.
+	 * @param encoding the encoding
+	 * @throws UnsupportedEncodingException if the encoding is not supported
 	 */
 	public void setCharEncoding(String encoding) throws UnsupportedEncodingException;
 
 
 	/**
-	 * Returns the length of the content in bytes, or -1 if not known. 
-	 * @return the length
+	 * @return the length of the content in bytes, or -1 if not known. 
 	 */
 	public long getContentLength();
 	
 	
 	/**
-	 * Returns the content type of the request content or null if not known.
-	 * @return the ContentType
+	 * @return the content type of the request content or null if not known.
 	 */
 	public ContentType getContentType();
 	

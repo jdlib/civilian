@@ -81,7 +81,7 @@ public class ControllerMethod
 
 	
 	/**
-	 * Returns name of the Java method represented by this action.
+	 * @return the name of the Java method represented by this action.
 	 */
 	public String getName()
 	{
@@ -90,7 +90,7 @@ public class ControllerMethod
 
 	
 	/**
-	 * Returns the Java method represented by this action.
+	 * @return the Java method represented by this action.
 	 */
 	public Method getJavaMethod()
 	{
@@ -99,7 +99,7 @@ public class ControllerMethod
 
 	
 	/**
-	 * Returns the controller class which declared the method.
+	 * @return the controller class which declared the method.
 	 */
 	public Class<?> getDeclaringClass()
 	{
@@ -108,7 +108,7 @@ public class ControllerMethod
 
 	
 	/**
-	 * Returns an iterator for all supported HTTP request methods.
+	 * @return an iterator for all supported HTTP request methods.
 	 * @see Request#getMethod()
 	 */
 	public Iterator<String> getRequestMethods()
@@ -118,7 +118,8 @@ public class ControllerMethod
 	
 	
 	/**
-	 * Returns if the ControllerMethod can be inherited by the given derived controller class.
+	 * @param controllerClass a controller class
+	 * @return if the ControllerMethod can be inherited by the given derived controller class.
 	 * For this the derived controller class must not override the method. 
 	 */
 	public boolean canInherit(Class<?> controllerClass)
@@ -148,6 +149,8 @@ public class ControllerMethod
 	 * the given content type. Returns true if either no {@link Consumes} annotation
 	 * was set on the method or the {@link Consumes} annotation
 	 * matches that content type.
+	 * @param contentType a content type
+	 * @return can consume?
 	 */
 	public boolean canConsume(ContentType contentType)
 	{
@@ -162,7 +165,7 @@ public class ControllerMethod
 
 	
 	/**
-	 * Returns a ContentTypeList for all content types defined by a {@link Consumes} annotation
+	 * @return a ContentTypeList for all content types defined by a {@link Consumes} annotation
 	 * on the action method. The list is empty if no {@link Consumes} annotation was set.
 	 */
 	public ContentTypeList getConsumesContentTypes()
@@ -172,7 +175,8 @@ public class ControllerMethod
 
 	
 	/**
-	 * Returns if this action can produce a ContentType which is more than suitable
+	 * @param connect the ContentNegotiation
+	 * @return if this action can produce a ContentType which is more than suitable
 	 * than the previously best type found by the ContentNegotiation.
 	 */
 	public boolean canProduce(ContentNegotiation conneg)
@@ -182,7 +186,7 @@ public class ControllerMethod
 	
 	
 	/**
-	 * Returns a ContentTypeList for all content types defined by a {@link Produces} annotation
+	 * @return a ContentTypeList for all content types defined by a {@link Produces} annotation
 	 * on the action method. The list is empty if no {@link Produces} annotation was set.
 	 */
 	public ContentTypeList getProducedContentTypes()
@@ -192,7 +196,7 @@ public class ControllerMethod
 
 
 	/**
-	 * Returns the number of arguments injected into the method.
+	 * @return the number of arguments injected into the method.
 	 */
 	public int getArgCount()
 	{
@@ -208,6 +212,10 @@ public class ControllerMethod
 	
 	/**
 	 * Invokes the action method on the controller.
+	 * @param controller the controller object
+	 * @param request the request
+	 * @param response the response
+	 * @throws Exception if invocation fails or the controller methods throws an exception
 	 */
 	public void invoke(Object controller, Request request, Response response) throws Exception
 	{
@@ -249,7 +257,7 @@ public class ControllerMethod
 
 	
 	/**
-	 * Returns an information string of the Action for debug purposes.
+	 * @return an information string of the Action for debug purposes.
 	 */
 	public String getInfo()
 	{
