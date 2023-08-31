@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Locale;
-
 import org.civilian.application.Application;
 import org.civilian.response.Response;
 import org.civilian.text.msg.MsgBundle;
@@ -32,12 +31,6 @@ import org.junit.Assert;
 
 public class TestTemplateWriter extends TemplateWriter
 {
-	static
-	{
-		TemplateWriter.setDefaultLineSeparator("\n");
-	}
-	
-	
 	public static TestTemplateWriter create()
 	{
 		return create("UTF-8");
