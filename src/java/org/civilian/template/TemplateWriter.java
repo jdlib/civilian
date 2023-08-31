@@ -453,7 +453,6 @@ public class TemplateWriter extends PrintWriter
 	private char tabChars_[] = defaultTabChars_;
 	private char lineSeparator_[] = defaultLineSeparator_;
 	private boolean autoFlush_;
-	private Object[] attributes_;
 	private IOException error_;
 	private Data data_;
 	private static char[] defaultTabChars_ = { '\t' };
