@@ -129,5 +129,5 @@ public class AbstractRequestTest extends CivTest
 	
 	
 	private static TestApp app;
-	private static TestRequest request;
+	private TestRequest request;
 }
