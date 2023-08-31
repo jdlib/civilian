@@ -43,6 +43,8 @@ public abstract class ContentTypeLookup
 	
 	/**
 	 * Creates a constant ContentTypeLookup which always returns the same content type.
+	 * @param contentType a ContentType
+	 * @return the ContentTypeLookup
 	 */
 	public static final ContentTypeLookup constant(ContentType contentType)
 	{
@@ -53,6 +55,8 @@ public abstract class ContentTypeLookup
 	/**
 	 * Creates a ContentTypeLookup from the map which maps extensions (without leading
 	 * dots) to content types..
+	 * @param ext2type a map
+	 * @return the ContentTypeLookup
 	 */
 	public static final ContentTypeLookup forMap(Map<String,ContentType> ext2type)
 	{
@@ -63,6 +67,8 @@ public abstract class ContentTypeLookup
 	/**
 	 * Creates a ContentTypeLookup which uses the content-type configuration
 	 * of a ServletContext.
+	 * @param context a ServletContext
+	 * @return the ContentTypeLookup
 	 */
 	public static final ContentTypeLookup forServletContext(ServletContext context)
 	{
@@ -72,6 +78,8 @@ public abstract class ContentTypeLookup
 	
 	/**
 	 * Returns the content type of the given file, or null if the content type is not known.
+	 * @param fileName the file name
+	 * @return the content type
 	 */
 	public abstract ContentType forFile(String fileName);
 
@@ -79,6 +87,9 @@ public abstract class ContentTypeLookup
 	/**
 	 * Returns the content type of the given file, 
 	 * or the default type if the content type is not known.
+	 * @param fileName the file name
+	 * @param defaultType the default
+	 * @return the content type
 	 */
 	public ContentType forFile(String fileName, ContentType defaultType)
 	{
@@ -89,6 +100,8 @@ public abstract class ContentTypeLookup
 	
 	/**
 	 * Returns the content type of the given file extension, or null if the content type is not known.
+	 * @param extension an extension
+	 * @return the content type
 	 */
 	public abstract ContentType forExtension(String extension);
 
@@ -96,6 +109,9 @@ public abstract class ContentTypeLookup
 	/**
 	 * Returns the content type of the given file extension, or 
 	 * the default type if the content type is not known.
+	 * @param extension an extension
+	 * @param defaultType the default
+	 * @return the content type
 	 */
 	public ContentType forExtension(String extension, ContentType defaultType)
 	{
