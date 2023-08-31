@@ -48,7 +48,7 @@ public class GsonJsonSerializer extends ContentSerializer
 	/**
 	 * Creates a new JsonSerializer. The gson object of the serializer
 	 * is obtained from the builder
-	 * @param build a builder
+	 * @param builder a builder
 	 */
 	public GsonJsonSerializer(GsonBuilder builder)
 	{
