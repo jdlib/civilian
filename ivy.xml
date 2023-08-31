@@ -13,7 +13,7 @@
 		<dependency conf="build->master" org="com.google.code.gson" name="gson" rev="2.2.4"/>
 		<dependency conf="build->master" org="com.google.inject" name="guice" rev="3.0"/>
 		<dependency conf="build->master" org="javax.inject" name="javax.inject" rev="1"/>
-		<dependency conf="build->master" org="javax.servlet" name="javax.servlet-api" rev="3.0.1"/>
+		<dependency conf="build->master,sources" org="javax.servlet" name="javax.servlet-api" rev="3.0.1"/>
 		<dependency conf="build->master" org="javax.enterprise" name="cdi-api" rev="1.2"/>		
 		<dependency conf="build->master" org="javax.ejb" name="ejb-api" rev="3.0"/>		
 		<dependency conf="build->master" org="javax.el" name="el-api" rev="1.0"/>
