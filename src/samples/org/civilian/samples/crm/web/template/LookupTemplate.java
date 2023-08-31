@@ -21,8 +21,8 @@ public class LookupTemplate extends Template
 
 	@Override protected void exit()
 	{
-		super.exit();
 		lang = null;
+		super.exit();
 	}
 
 

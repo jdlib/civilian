@@ -27,8 +27,8 @@ public class MultiPanelTemplate extends Template
 
 	@Override protected void exit()
 	{
-		super.exit();
 		lang = null;
+		super.exit();
 	}
 
 

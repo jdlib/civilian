@@ -25,9 +25,9 @@ public class IndexTemplate extends Template
 
 	@Override protected void exit()
 	{
-		super.exit();
 		lang = null;
 		html = null;
+		super.exit();
 	}
 
 

@@ -30,9 +30,9 @@ public class GameTemplate extends Template
 
 	@Override protected void exit()
 	{
-		super.exit();
 		html = null;
 		formTable = null;
+		super.exit();
 	}
 
 

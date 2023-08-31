@@ -32,10 +32,10 @@ public class LoginTemplate extends Template
 
 	@Override protected void exit()
 	{
-		super.exit();
 		html = null;
 		lang = null;
 		formTable = null;
+		super.exit();
 	}
 
 

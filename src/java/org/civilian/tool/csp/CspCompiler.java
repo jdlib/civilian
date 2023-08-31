@@ -784,12 +784,12 @@ public class CspCompiler
 			out.print("@Override ");
 		out.println("protected void exit()");
 		out.beginBlock();
-			out.println("super.exit();");
 			for (MixinField mixin : classData_.mixins)
 			{
 				out.print(mixin.fieldName);
 				out.println(" = null;");
 			}
+			out.println("super.exit();");
 		out.endBlock();
 		out.println();
 		out.println();

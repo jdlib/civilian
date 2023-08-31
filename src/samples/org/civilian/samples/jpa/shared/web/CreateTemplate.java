@@ -26,8 +26,8 @@ public class CreateTemplate extends Template
 
 	@Override protected void exit()
 	{
-		super.exit();
 		formTable = null;
+		super.exit();
 	}
 
 

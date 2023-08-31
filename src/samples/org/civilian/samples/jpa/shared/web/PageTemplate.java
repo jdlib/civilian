@@ -26,8 +26,8 @@ public class PageTemplate extends Template
 
 	@Override protected void exit()
 	{
-		super.exit();
 		html = null;
+		super.exit();
 	}
 
 
