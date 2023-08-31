@@ -433,12 +433,6 @@ public class TemplateWriter extends PrintWriter
 	}
 	
 	
-	public void setData(Data data)
-	{
-		data_ = data;
-	}
-
-	
 	/**
 	 * Calls and returns toString() of the wrapped writer. 
 	 */

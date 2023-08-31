@@ -102,8 +102,6 @@ public class TemplateWriterTest extends CivTest
 		assertSame(data, out.getData());
 		data.add("a");
 		assertSame("a", data.get(String.class));
-		out.setData(null);
-		assertNotSame(data, out.getData());
 	}
 
 	
