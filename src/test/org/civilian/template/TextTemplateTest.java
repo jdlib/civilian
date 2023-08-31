@@ -16,10 +16,7 @@
 package org.civilian.template;
 
 
-import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
-import org.civilian.response.AbstractResponse;
-import org.civilian.response.Response;
 import org.junit.Test;
 
 
@@ -27,14 +24,10 @@ public class TextTemplateTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
-		TemplateWriter out 	= mock(TemplateWriter.class);
-		Response response	= mock(AbstractResponse.class);
-		when(response.getContentWriter()).thenReturn(out);
-		doCallRealMethod().when(response).writeContent(any(), anyString());
-		
 		TextTemplate template = new TextTemplate("hallo");
-		response.writeContent(template, "");
-		
-		verify(out).print("hallo");
+		assertEquals("hallo", template.printString());
+
+		template = new TextTemplate(null);
+		assertEquals("", template.printString());
 	}
 }
