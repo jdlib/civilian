@@ -27,7 +27,6 @@ import org.civilian.application.factory.AppFactory;
 import org.civilian.content.ContentTypeLookup;
 import org.civilian.resource.Path;
 import org.civilian.resource.PathProvider;
-import org.civilian.template.TemplateWriter;
 import org.civilian.util.Check;
 import org.civilian.util.Settings;
 import org.civilian.util.ResourceLoader;
@@ -51,19 +50,6 @@ public abstract class Server implements PathProvider
 	 * The server log. 
 	 */
 	private static final Logger log = Logs.SERVER;
-	
-	
-	static
-	{
-		// in a server environment we want generated responses (html especially) to use a simple "\n"
-		// for linebreaks 
-		TemplateWriter.setDefaultLineSeparator("\n");
-	}
-	
-	
-	//--------------------------
-	// civilian.ini
-	//--------------------------
 	
 	
 	//--------------------------

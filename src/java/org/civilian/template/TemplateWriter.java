@@ -55,8 +55,7 @@ public class TemplateWriter extends PrintWriter
 	
 	/**
 	 * Sets the default line separator used by a new TemplateWriter.
-	 * By default this is the OS dependent line separator.
-	 * But when used within a Civilian web application, it is set to a single '\n' character. 
+	 * By default this is '\n' (in accordance to our primary goal to produce web content.
 	 */ 
 	public static void setDefaultLineSeparator(String separator)
 	{
@@ -450,5 +449,5 @@ public class TemplateWriter extends PrintWriter
 	private IOException error_;
 	private Data data_;
 	private static char[] defaultTabChars_ = { '\t' };
-	private static char[] defaultLineSeparator_ = getChars(System.getProperty("line.separator"), "separator");
+	private static char[] defaultLineSeparator_ = { '\n' };
 }
