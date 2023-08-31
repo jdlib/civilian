@@ -105,8 +105,7 @@ public class PackageDetector
 	{
 		try
 		{
-			BufferedReader r = new BufferedReader(new FileReader(file));
-			try
+			try (BufferedReader r = new BufferedReader(new FileReader(file)))
 			{
 				String line;
 				while((line = r.readLine()) != null)
@@ -115,10 +114,6 @@ public class PackageDetector
 					if (matcher.find())
 						return matcher.group(1);
 				}
-			}
-			finally
-			{
-				r.close();
 			}
 		}
 		catch(IOException e)

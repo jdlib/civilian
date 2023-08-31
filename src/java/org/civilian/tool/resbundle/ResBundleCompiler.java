@@ -309,14 +309,9 @@ public class ResBundleCompiler
 			File parent = file.getParentFile();
 			IoUtil.mkdirs(parent);
 				
-			Writer fileOut = new OutputStreamWriter(new FileOutputStream(file), charSet);
-			try
+			try (Writer fileOut = new OutputStreamWriter(new FileOutputStream(file), charSet))
 			{
 				fileOut.write(stringOut.toString());
-			}
-			finally
-			{
-				fileOut.close();
 			}
 		}
 		

@@ -66,14 +66,9 @@ public abstract class Upload
 	 */
 	public void write(File file) throws IOException
 	{
-		FileOutputStream out = new FileOutputStream(file);
-		try
+		try (FileOutputStream out = new FileOutputStream(file))
 		{
 			IoUtil.copy(getInputStream(), out);
-		}
-		finally
-		{
-			out.close();
 		}
 	}
 

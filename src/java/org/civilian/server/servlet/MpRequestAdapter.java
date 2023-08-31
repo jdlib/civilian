@@ -97,15 +97,10 @@ class MpRequestAdapter extends ServletRequestAdapter
 	private String readPartValue(Part part, String encoding) throws IOException
 	{
 		char c[] = new char[(int)part.getSize()];
-		InputStreamReader in = new InputStreamReader(part.getInputStream(), encoding);
-		try
+		try (InputStreamReader in = new InputStreamReader(part.getInputStream(), encoding))
 		{
 			int length = IoUtil.read(in, c, 0, c.length);
 			return new String(c, 0, length);
-		}
-		finally
-		{
-			in.close();
 		}
 	}
 

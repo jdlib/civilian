@@ -137,7 +137,6 @@ public class RangeTest extends CivTest
 				"Content-Range: bytes 4-5/6\r\n" + 
 				"EF", response.getContentText(true));
 		}
-		
 		finally
 		{
 			file.delete();
