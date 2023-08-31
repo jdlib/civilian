@@ -21,6 +21,7 @@ import java.io.StringWriter;
 import org.junit.Before;
 import org.junit.Test;
 import org.civilian.CivTest;
+import org.civilian.util.Data;
 
 
 public class TemplateWriterTest extends CivTest
@@ -95,18 +96,14 @@ public class TemplateWriterTest extends CivTest
 	}
 
 
-	@Test public void testContext() throws Exception
+	@Test public void testData() throws Exception
 	{
-		assertNull(out.getAttribute(String.class));
-		String a = "a";
-		out.addAttribute(a);
-		assertSame(a, out.getAttribute(String.class));
-		out.addAttribute("b");
-		assertSame(a, out.getAttribute(String.class));
-		
-		Integer one = Integer.valueOf(1);
-		out.addAttribute(one);
-		assertSame(one, out.getAttribute(Integer.class));
+		Data data = out.getData();
+		assertSame(data, out.getData());
+		data.add("a");
+		assertSame("a", data.get(String.class));
+		out.setData(null);
+		assertNotSame(data, out.getData());
 	}
 
 	

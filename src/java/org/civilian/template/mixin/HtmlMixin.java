@@ -35,13 +35,15 @@ public class HtmlMixin
 {
 	/**
 	 * Creates a new HtmlMixin.
-	 * @param out the TemplateWriter.
+	 * @param out the TemplateWriter
 	 */
 	public HtmlMixin(TemplateWriter out)
 	{
-		this.out = Check.notNull(out, "out");
+		this.out  = Check.notNull(out, "out");
+		ResponseProvider rp = out.getData().get(ResponseProvider.class);
+		response_ = rp != null ? rp.getResponse() : null;
 	}
-
+	
 	
 	/**
 	 * Prints a link element whose href attribute is the given css path.
@@ -158,8 +160,6 @@ public class HtmlMixin
 	 * Prints a meta tag for the content-type plus encoding of the response.
 	 * @see #metaHttpEquiv(String, String)
 	 * @see Response#getContentTypeAndEncoding()
-	 * @throws IllegalStateException thrown if the TemplateWriter does not 
-	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
 	 */
 	public void metaContentType()
 	{
@@ -262,8 +262,7 @@ public class HtmlMixin
 	 */
 	private void initPath()
 	{
-		Response response = out.getAttribute(Response.class);
-		path_ = response != null ? response.getOwner().getPath() : Path.ROOT;
+		path_ = response_ != null ? response_.getOwner().getPath() : Path.ROOT;
 	}
 	
 	
@@ -308,8 +307,6 @@ public class HtmlMixin
 
 	/**
 	 * Returns a Url object with the resource path.
-	 * @throws IllegalStateException thrown if the TemplateWriter does not 
-	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
 	 */
 	public Url url(Resource resource)
 	{
@@ -319,8 +316,6 @@ public class HtmlMixin
 	
 	/**
 	 * Returns a Url object with the path of the resource associated with the controller.
-	 * @throws IllegalStateException thrown if the TemplateWriter does not 
-	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
 	 */
 	public Url url(Class<? extends ResourceHandler> controllerClass)
 	{
@@ -330,8 +325,6 @@ public class HtmlMixin
 	
 	/**
 	 * Returns a Url with the given value.  
-	 * @throws IllegalStateException thrown if the TemplateWriter does not 
-	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
 	 */
 	public Url url(String value)
 	{
@@ -341,8 +334,6 @@ public class HtmlMixin
 	
 	/**
 	 * Returns a Url with the path of the given path provider.  
-	 * @throws IllegalStateException thrown if the TemplateWriter does not 
-	 * 		have a Response as {@link TemplateWriter#getAttribute(java.lang.Class) context object}
 	 */
 	public Url url(PathProvider pp)
 	{
@@ -401,12 +392,12 @@ public class HtmlMixin
 	private Response response()
 	{
 		if (response_ == null)
-			response_ = out.getSafeAttribute(ResponseProvider.class).getResponse();
+			throw new UnsupportedOperationException("this operation needs a Response object which is passed in Template.getData()");
 		return response_;
 	}
 	
 
 	private final TemplateWriter out;
-	private Response response_;
+	private final Response response_;
 	private Path path_;
 }

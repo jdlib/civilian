@@ -134,15 +134,44 @@ public abstract class AbstractResponse implements Response
 	{
 		if (object == null)
 			return this;
-		
 		if (object instanceof Template)
 		{
-			if (contentType != null)
-				setContentType(contentType);
-			((Template)object).print(getContentWriter());	
+			writeTemplate((Template)object, contentType);
 			return this;
 		}
 		
+		contentType = initWriteContentType(object, contentType);
+		
+		ContentSerializer serializer = getOwner().getContentSerializers().get(contentType);
+		if (serializer != null)
+			serializer.write(object, getContentWriter());
+		else if (object instanceof String)
+			getContentWriter().write((String)object);
+		else
+			throw new IllegalStateException("no ContentSerializer for content type '" + contentType + "' to write a '" + object.getClass().getName() + "'. Are third party libraries missing?");
+		
+		return this;
+	}
+	
+	
+	private void writeTemplate(Template template, String contentType) throws Exception
+	{
+		if (contentType != null)
+			setContentType(contentType);
+		template.getData().add(this);
+		try
+		{
+			template.print(getContentWriter());
+		}
+		finally
+		{
+			template.getData().remove(this);
+		}
+	}
+	
+	
+	private String initWriteContentType(Object object, String contentType)
+	{
 		if (contentType == null) 
 		{
 			contentType = getContentType();
@@ -156,16 +185,7 @@ public abstract class AbstractResponse implements Response
 		}
 		else
 			setContentType(contentType);
-		
-		ContentSerializer serializer = getOwner().getContentSerializers().get(contentType);
-		if (serializer != null)
-			serializer.write(object, getContentWriter());
-		else if (object instanceof String)
-			getContentWriter().write((String)object);
-		else
-			throw new IllegalStateException("no ContentSerializer for content type '" + contentType + "' to write a '" + object.getClass().getName() + "'. Are third party libraries missing?");
-		
-		return this;
+		return contentType;
 	}
 
 	
@@ -261,8 +281,6 @@ public abstract class AbstractResponse implements Response
 			{
 				if (!(contentOutput_ instanceof TemplateWriter))
 					initContentWriterForError();
-				TemplateWriter tw = (TemplateWriter)contentOutput_; 
-				tw.addAttribute(this);
 			}
 		}
 	}

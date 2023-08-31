@@ -33,6 +33,16 @@ public class Test1 extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		lang = null;
+		htm = null;
+		html = null;
+		myMixin = null;
+		super.exit();
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		out.println("<start>");                                         // line 11: <start>

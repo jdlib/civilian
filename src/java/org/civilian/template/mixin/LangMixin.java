@@ -34,7 +34,7 @@ import org.civilian.util.Check;
  * It contains a TypeSerializer to format values and a MsgBundle to translate message ids.
  * <p>
  * The LangMixin tries to initialize the TypeSerializer and MsgBundle from a 
- * {@link LocaleServiceProvider} in the TemplateWriter {@link TemplateWriter#getAttribute(Class) context}.
+ * {@link LocaleServiceProvider} in the TemplateWriter {@link TemplateWriter#getData() data}.
  * If the TemplateWriter was created by a Response, the Response acts as the LocaleServiceProvider,
  * and therefore the mixin uses the TypeSerializer and MsgBundle of the response.  
  * Else the mixin defaults to {@link LocaleSerializer#SYSTEM_LOCALE_SERIALIZER} and an empty message bundle.
@@ -50,7 +50,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 	{
 		Check.notNull(out, "out");
 		
-		LocaleServiceProvider lsp = out.getAttribute(LocaleServiceProvider.class);
+		LocaleServiceProvider lsp = out.getData().get(LocaleServiceProvider.class);
 		init(lsp != null ? lsp.getLocaleService() : LocaleService.SYSTEM_LOCALE_LOCALESERVICE); 
 	}
 	

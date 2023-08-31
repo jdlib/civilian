@@ -19,6 +19,7 @@ package org.civilian.template;
 import java.io.StringWriter;
 import java.io.Writer;
 import org.civilian.util.Check;
+import org.civilian.util.Data;
 
 
 /**
@@ -87,12 +88,14 @@ public abstract class Template implements TemplateWriter.Printable
 		try
 		{
 			this.out = out;
+			out.setData(getData());
 			init();
 			print();
 		}
 		finally
 		{
 			this.out = null;
+			out.setData(null);
 			exit();
 		}
 	}
@@ -125,5 +128,12 @@ public abstract class Template implements TemplateWriter.Printable
 	protected abstract void print() throws Exception;
 	
 	
+	public Data getData()
+	{
+		return data_;
+	}
+	
+	
 	protected TemplateWriter out;
+	private Data data_ = new Data();
 }

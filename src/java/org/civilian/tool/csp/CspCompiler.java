@@ -679,7 +679,6 @@ public class CspCompiler
 
 		if (classData_.standalone)
 			printClassPublicPrintMethod(out);
-
 		if (!classData_.mixins.isEmpty())
 		{
 			printClassInitMethod(out);

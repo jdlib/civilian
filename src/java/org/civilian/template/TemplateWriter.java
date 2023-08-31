@@ -19,10 +19,9 @@ package org.civilian.template;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
-import org.civilian.util.ArrayUtil;
 import org.civilian.util.Check;
-import org.civilian.util.ClassUtil;
 import org.civilian.util.ClosedWriter;
+import org.civilian.util.Data;
 
 
 /**
@@ -31,7 +30,6 @@ import org.civilian.util.ClosedWriter;
  * then tab characters are automatically inserted at the beginning of the line, according
  * to the tab count. The default tab characters is a single '\t' character, but you can
  * chose any string instead (e.g. "  ").<p> 
- * A TemplateWriter can be {@link #addAttribute(Object) associated} with multiple context objects. 
  */
 public class TemplateWriter extends PrintWriter
 {
@@ -169,59 +167,6 @@ public class TemplateWriter extends PrintWriter
 	}
 
 
-	//------------------------
-	// context
-	//------------------------
-
-	
-	/**
-	 * Associates the TemplateWriter with an arbitrary attribute.
-     * When the TemplateWriter is constructed within a Civilian request
-	 * the Response is automatically added as attribute. 
-	 */
-	public void addAttribute(Object attr)
-	{
-		Check.notNull(attr, "attr");
-		attributes_ = attributes_ == null ?
-			new Object[] { attr } :
-			ArrayUtil.addLast(attributes_, attr);
-	}
-
-	
-	/**
-	 * Returns the first attribute of the TemplateWriter that has
-	 * the given class.
-	 * @return the attribute object or null.
-	 */
-	public <T> T getAttribute(Class<? extends T> cls)
-	{
-		if (attributes_ != null)
-		{
-			for (Object attr : attributes_)
-			{
-				T t = ClassUtil.unwrap(attr, cls);
-    			if (t != null)
-    				return t;
-			}
-		}
-		return null;
-	}
-	
-	
-	/**
-	 * Returns the first attribute object of the TemplateWriter that has
-	 * the given class.  
-	 * @throws IllegalStateException if there is no such object,
-	 */
-	public <T> T getSafeAttribute(Class<? extends T> cls)
-	{
-		T attr = getAttribute(cls);
-		if (attr != null)
-			return attr;
-		throw new IllegalStateException("no attribute with " + cls.getName());
-	}
-
-	
 	//-------------------------------------------------------
 	// In fact the whole printwriter class is duplicated here
 	// since this class should be a printwriter but
@@ -480,6 +425,20 @@ public class TemplateWriter extends PrintWriter
 	}
 	
 	
+	public Data getData()
+	{
+		if (data_ == null)
+			data_ = new Data();
+		return data_;
+	}
+	
+	
+	public void setData(Data data)
+	{
+		data_ = data;
+	}
+
+	
 	/**
 	 * Calls and returns toString() of the wrapped writer. 
 	 */
@@ -496,6 +455,7 @@ public class TemplateWriter extends PrintWriter
 	private boolean autoFlush_;
 	private Object[] attributes_;
 	private IOException error_;
+	private Data data_;
 	private static char[] defaultTabChars_ = { '\t' };
 	private static char[] defaultLineSeparator_ = getChars(System.getProperty("line.separator"), "separator");
 }
