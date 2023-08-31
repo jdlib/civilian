@@ -5,10 +5,10 @@
 package test;
 
 
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 
 
-public abstract class Test6 extends Template
+public abstract class Test6 extends CspTemplate
 {
 
 }

@@ -7,13 +7,13 @@ package org.civilian.template.csp;
 
 import java.util.ArrayList;
 import com.app.MyMixin;
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
 
 
 /* Class-Comment */
-public class Test1 extends Template
+public class Test1 extends CspTemplate
 {
 	public Test1(String... names, ArrayList<String,String > someList1, ArrayList<? extends X<String>> someList2)
 	{

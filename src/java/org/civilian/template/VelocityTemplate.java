@@ -16,6 +16,7 @@
 package org.civilian.template;
 
 
+import java.io.PrintWriter;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.civilian.util.Check;
@@ -39,7 +40,7 @@ public class VelocityTemplate extends org.civilian.template.Template
 	}
 
 	
-	@Override protected void print() throws Exception
+	@Override public void print(PrintWriter out, Object... data)
 	{
 		template_.merge(context_, out);
 	}

@@ -5,11 +5,11 @@
 package org.civilian.template.csp;
 
 
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 import org.civilian.template.mixin.TableMixin;
 
 
-public class Test4 extends Template
+public class Test4 extends CspTemplate
 {
 	@Override protected void init()
 	{

@@ -5,10 +5,10 @@
 package org.civilian.template.csp;
 
 
-import org.civilian.template.Template;
+import org.civilian.template.CspTemplate;
 
 
-public class Test5 extends Template
+public class Test5 extends CspTemplate
 {
 	public Test5(String name)
 	{

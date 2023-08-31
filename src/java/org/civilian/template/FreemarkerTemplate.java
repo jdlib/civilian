@@ -17,6 +17,7 @@ package org.civilian.template;
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 
 /**
@@ -36,7 +37,7 @@ public class FreemarkerTemplate extends org.civilian.template.Template
 	}
 	
 	
-	@Override protected void print() throws IOException, freemarker.template.TemplateException
+	@Override public void print(PrintWriter out, Object... data) throws IOException, freemarker.template.TemplateException
 	{
 		template_.process(model_, out);  
 	}

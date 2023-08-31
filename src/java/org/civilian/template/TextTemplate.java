@@ -16,6 +16,9 @@
 package org.civilian.template;
 
 
+import java.io.PrintWriter;
+
+
 /**
  * TextTemplate is a Template implementation for simple string output.
  */
@@ -27,7 +30,7 @@ public class TextTemplate extends Template
 	}
 
 	
-	@Override protected void print() throws Exception
+	@Override public void print(PrintWriter out, Object... data)
 	{
 		if (text_ != null)
 			out.print(text_);
