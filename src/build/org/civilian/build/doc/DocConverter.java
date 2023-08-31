@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import org.civilian.template.TemplateWriter;
@@ -49,7 +50,7 @@ public class DocConverter
 			List<String> input = new ArrayList<>(); 
 			read(null, inputFile, "", input);	
 			
-			try(TemplateWriter out = new TemplateWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8")))
+			try(TemplateWriter out = new TemplateWriter(new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8)))
 			{
 				DocTemplate template = new DocTemplate(inputFile.getName(), input);
 				template.print(out);
@@ -60,7 +61,7 @@ public class DocConverter
 	
 	private void read(File parentFile, File inputFile, String indent, List<String> lines) throws IOException
 	{
-		try(Reader in = new InputStreamReader(new FileInputStream(inputFile), "UTF-8"))
+		try(Reader in = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8))
 		{
 			String[] all = IoUtil.readLines(in, false);
 			VarConverter varConverter = new VarConverter(javaDocDir_, parentFile, inputFile); 
