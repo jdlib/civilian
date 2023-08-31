@@ -21,6 +21,14 @@ public class MasterdataTemplate extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		super.exit();
+		t = null;
+		lang = null;
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		out.println("<form name=\"form\" ng-submit=\"nothing()\" ng-controller=\"MasterDataController\">"); // line 6: <form name="form" ng-submit="nothing()" ng-controller="MasterDataController">

@@ -27,6 +27,13 @@ public class AppTemplate extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		super.exit();
+		html = null;
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		out.print("<h3>Application ");                                  // line 7: <h3>Application

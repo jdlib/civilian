@@ -26,6 +26,14 @@ public class IndexTemplate extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		super.exit();
+		html = null;
+		formTable = null;
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		out.println("<!DOCTYPE html>");                                 // line 3: <!DOCTYPE html>

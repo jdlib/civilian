@@ -93,12 +93,13 @@ public abstract class Template implements TemplateWriter.Printable
 		finally
 		{
 			this.out = null;
+			exit();
 		}
 	}
 	
 	
 	/**
-	 * Allows derived implementation to initialize before the template is printed 
+	 * Allows derived implementation to initialize before the template is printed .
 	 * Called by {@link #print(TemplateWriter)} when {@link #out} was set, before {@link #print()} is called.
 	 * The default implementation is empty.
 	 */
@@ -106,6 +107,16 @@ public abstract class Template implements TemplateWriter.Printable
 	{
 	}
 	
+	
+	/**
+	 * Allows derived implementation to performe operations after the template is printed .
+	 * Called by {@link #print(TemplateWriter)} after {@link #print()} was called.
+	 * The default implementation is empty.
+	 */
+	protected void exit()
+	{
+	}
+
 	
 	/**
 	 * Needs to be implemented by derived classes.

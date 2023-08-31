@@ -21,6 +21,13 @@ public class IndexTemplate extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		super.exit();
+		html = null;
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		out.println("<!DOCTYPE html>");                                 // line 6: <!DOCTYPE html>

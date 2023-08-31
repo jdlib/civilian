@@ -25,6 +25,13 @@ public class MultiPanelTemplate extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		super.exit();
+		lang = null;
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		out.println("<div class=\"row-fluid\">");                       // line 7: <div class="row-fluid">

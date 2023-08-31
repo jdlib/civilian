@@ -30,6 +30,13 @@ public class SearchTemplate extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		super.exit();
+		lang = null;
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		out.println("<div ng-controller=\"SearchController\" class=\"row-fluid\">"); // line 12: <div ng-controller="SearchController" class="row-fluid">

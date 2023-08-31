@@ -30,6 +30,15 @@ public class IndexTemplate extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		super.exit();
+		html = null;
+		lang = null;
+		formTable = null;
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		Request request = form.getRequest();                            // line 7: @Request request = form.getRequest();

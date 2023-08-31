@@ -681,7 +681,10 @@ public class CspCompiler
 			printClassPublicPrintMethod(out);
 
 		if (!classData_.mixins.isEmpty())
+		{
 			printClassInitMethod(out);
+			printClassExitMethod(out);
+		}
 
 		if (classData_.hasMainTemplate)
 		{
@@ -775,6 +778,24 @@ public class CspCompiler
 	}
 
 
+	private void printClassExitMethod(SourceWriter out)
+	{
+		if (!classData_.standalone)
+			out.print("@Override ");
+		out.println("protected void exit()");
+		out.beginBlock();
+			out.println("super.exit();");
+			for (MixinField mixin : classData_.mixins)
+			{
+				out.print(mixin.fieldName);
+				out.println(" = null;");
+			}
+		out.endBlock();
+		out.println();
+		out.println();
+	}
+	
+	
 	private void printFields(SourceWriter out) throws CspException, IOException
 	{
 		out.println();

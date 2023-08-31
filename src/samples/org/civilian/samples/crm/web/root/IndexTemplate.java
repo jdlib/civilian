@@ -23,6 +23,14 @@ public class IndexTemplate extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		super.exit();
+		lang = null;
+		html = null;
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		out.println("<div class=\"row-fluid\">");                       // line 8: <div class="row-fluid">

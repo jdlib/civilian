@@ -19,6 +19,13 @@ public class LookupTemplate extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		super.exit();
+		lang = null;
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		out.println("<div class=\"lookup-table\">");                    // line 7: <div class="lookup-table">

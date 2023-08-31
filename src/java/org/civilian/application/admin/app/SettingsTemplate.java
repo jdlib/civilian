@@ -30,6 +30,13 @@ public class SettingsTemplate extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		super.exit();
+		html = null;
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		out.println("<table class=\"table table-striped table-bordered table-condensed\">"); // line 11: <table class="table table-striped table-bordered table-condensed">

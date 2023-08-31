@@ -24,6 +24,13 @@ public class CreateTemplate extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		super.exit();
+		formTable = null;
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		out.println("<h1>Create Person</h1>");                          // line 3: <h1>Create Person</h1>

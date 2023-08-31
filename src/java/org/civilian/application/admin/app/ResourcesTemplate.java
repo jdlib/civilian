@@ -27,6 +27,13 @@ public class ResourcesTemplate extends Template
 	}
 
 
+	@Override protected void exit()
+	{
+		super.exit();
+		html = null;
+	}
+
+
 	@Override protected void print() throws Exception
 	{
 		html.script("civilian/admin/angular.min.1.2.13.js");            // line 9: @html.script("civilian/admin/angular.min.1.2.13.js");
