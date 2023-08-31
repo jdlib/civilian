@@ -34,7 +34,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.text.msg.MsgId;
 import org.civilian.tool.source.OutputLocation;
 import org.civilian.tool.source.PackageDetector;
@@ -207,7 +207,7 @@ public class ResBundleCompiler
 		
 		for (Output output : langOutputs_)
 		{
-			TemplateWriter out = output.out;
+			CspWriter out = output.out;
 			out.print("# Generated from ");
 			out.print(config_.excelFile.getName());
 			out.print(" at ");
@@ -239,7 +239,7 @@ public class ResBundleCompiler
 				
 				t.lang[i] = text;
 				
-				TemplateWriter out = langOutputs_[i].out;
+				CspWriter out = langOutputs_[i].out;
 				out.print(id);
 				out.print("=");
 				
@@ -296,7 +296,7 @@ public class ResBundleCompiler
 		public Output(File file)
 		{
 			this.file = file;
-			this.out  = new TemplateWriter(stringOut = new StringWriter());
+			this.out  = new CspWriter(stringOut = new StringWriter());
 		}
 
 		
@@ -317,7 +317,7 @@ public class ResBundleCompiler
 		
 		
 		public final File file;
-		public TemplateWriter out;
+		public CspWriter out;
 		private StringWriter stringOut;
 	}
 	

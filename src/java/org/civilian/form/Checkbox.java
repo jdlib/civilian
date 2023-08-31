@@ -18,7 +18,7 @@ package org.civilian.form;
 
 import org.civilian.request.Request;
 import org.civilian.template.HtmlUtil;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 
@@ -118,7 +118,7 @@ public class Checkbox extends Control<Boolean>
 	/**
 	 * Prints the checkbox markup.
 	 */
-	@Override public void print(TemplateWriter out, String... attrs)
+	@Override public void print(CspWriter out, String... attrs)
 	{
 		if (text_ != null)
 			out.print("<label>");

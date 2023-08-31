@@ -11,18 +11,17 @@ import java.io.Writer;
 /**
  * InterceptedOutputStream is a helper class to implement Response.flushBuffer().
  * If the response output is not intercepted, then the response outputstream or writer
- * is the original servlet outputstream or writer (wrapped in a TemplateWriter).
+ * is the original servlet outputstream or writer.
  * In this case we just need to call resetBuffer on the underlying ServletResponse.
  * If the response output is intercepted then the user has obtained the 
  * following chain of OutpuStreams (upto the InterceptedOutputStream)
- * or writer (upto the TemplateWriter)
+ * or writer
  * <ol>
  * <li>ServletOutputStream
  * <li>InterceptedStream 1, e.g. GzipOutputStream, ... 
  * <li>InterceptedStream n
  * <li>InterceptedOutputStream, returned by Response.getContentStream()
  * <li>OutputStreamWriter
- * <li>TemplateWriter, returned by Response.getContentWriter()
  * </ol>
  * In case of a resetBuffer() call we still forward it to ServletResponse.resetBuffer().
  * But the writer and outputstream chain needs some handling:

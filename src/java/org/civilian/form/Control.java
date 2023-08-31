@@ -18,7 +18,7 @@ package org.civilian.form;
 
 import org.civilian.request.Request;
 import org.civilian.template.HtmlUtil;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.text.Style;
 import org.civilian.text.type.StandardSerializer;
 import org.civilian.text.type.TypeSerializer;
@@ -40,10 +40,10 @@ import org.civilian.util.Check;
  * <li>a required-flag,
  * <li>status information,
  * <li>the capability to read its value from a Request object,
- * <li>the capability to print its markup to a TemplateWriter
+ * <li>the capability to print its markup to a CspWriter
  * </ul>
  */
-public abstract class Control<T> implements TemplateWriter.Printable
+public abstract class Control<T> implements CspWriter.Printable
 {
 	/**
 	 * Status is an Enum for the status of a Control.
@@ -830,7 +830,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	/**
 	 * Prints the control.
 	 */
-	@Override public void print(TemplateWriter out)
+	@Override public void print(CspWriter out)
 	{
 		print(out, (String[])null);
 	}
@@ -841,14 +841,14 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	 * @param attrs a list of attribute names and values which
 	 * 		should be printed in the start tag of the control element.
 	 */
-	public abstract void print(TemplateWriter out, String... attrs);
+	public abstract void print(CspWriter out, String... attrs);
 
 	
 	/**
 	 * Prints the generic attributes stored in {@link #attribute_} and
 	 * runtime attributes.
 	 */
-	protected void printAttrs(TemplateWriter out, String... attrs)
+	protected void printAttrs(CspWriter out, String... attrs)
 	{
 		if (attribute_ != null)
 			out.print(attribute_);
@@ -860,7 +860,7 @@ public abstract class Control<T> implements TemplateWriter.Printable
 	 * Prints a javascript snippet to set the focus to this control.
 	 * @param printScript if true the snippet is surrounded by script-tags.
 	 */
-	public void focus(TemplateWriter out, boolean printScript)
+	public void focus(CspWriter out, boolean printScript)
 	{
 		if (printScript)
 			out.println("<script>");

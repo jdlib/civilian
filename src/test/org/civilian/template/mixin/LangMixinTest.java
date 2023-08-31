@@ -19,14 +19,14 @@ package org.civilian.template.mixin;
 import org.junit.Test;
 import java.time.LocalDate;
 import org.civilian.CivTest;
-import org.civilian.template.TestTemplateWriter;
+import org.civilian.template.TestCspWriter;
 
 
 public class LangMixinTest extends CivTest
 {
 	@Test public void testFormat()
 	{
-		TestTemplateWriter out = TestTemplateWriter.create("ISO-8859-1");
+		TestCspWriter out = TestCspWriter.create("ISO-8859-1");
 		LangMixin lang = new LangMixin(out);
 		
 		// dates
@@ -55,7 +55,7 @@ public class LangMixinTest extends CivTest
 
 	@Test public void testAccessors()
 	{
-		TestTemplateWriter out = TestTemplateWriter.create("ISO-8859-1");
+		TestCspWriter out = TestCspWriter.create("ISO-8859-1");
 		LangMixin locale = new LangMixin(out);
 
 		assertEquals("?key", locale.msg("key"));

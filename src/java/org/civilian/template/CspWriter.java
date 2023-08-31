@@ -25,16 +25,16 @@ import org.civilian.util.Data;
 
 
 /**
- * TemplateWriter is a PrintWriter to write pretty indented files.
- * TemplateWriter maintains a {@link #getTabCount() tab count}. When a new line is started
+ * CspWriter is a PrintWriter to write pretty indented files.
+ * CspWriter maintains a {@link #getTabCount() tab count}. When a new line is started
  * then tab characters are automatically inserted at the beginning of the line, according
  * to the tab count. The default tab characters is a single '\t' character, but you can
  * chose any string instead (e.g. "  ").<p> 
  */
-public class TemplateWriter extends PrintWriter
+public class CspWriter extends PrintWriter
 {
 	/**
-	 * Sets the default characters used by a new TemplateWriter to indent a line.
+	 * Sets the default characters used by a new CspWriter to indent a line.
 	 * By default a indent consists of a single tab character.
 	 * @see #setTabChars(String)
 	 */ 
@@ -45,7 +45,7 @@ public class TemplateWriter extends PrintWriter
 
 	
 	/**
-	 * Returns the default characters used by a new TemplateWriter to indent a line.
+	 * Returns the default characters used by a new CspWriter to indent a line.
 	 */ 
 	public static String getDefaultTabChars()
 	{
@@ -54,7 +54,7 @@ public class TemplateWriter extends PrintWriter
 
 	
 	/**
-	 * Sets the default line separator used by a new TemplateWriter.
+	 * Sets the default line separator used by a new CspWriter.
 	 * By default this is '\n' (in accordance to our primary goal to produce web content.
 	 */ 
 	public static void setDefaultLineSeparator(String separator)
@@ -64,7 +64,7 @@ public class TemplateWriter extends PrintWriter
 
 	
 	/**
-	 * Returns the default line separator used by a new TemplateWriter.
+	 * Returns the default line separator used by a new CspWriter.
 	 */ 
 	public static String getDefaultLineSeparator()
 	{
@@ -73,22 +73,22 @@ public class TemplateWriter extends PrintWriter
 
 	
 	/**
-	 * Creates a new TemplateWriter.
+	 * Creates a new CspWriter.
 	 * @param out a Writer
 	 */
-	public TemplateWriter(Writer out)
+	public CspWriter(Writer out)
 	{
 		this(out, false);
 	}
 
 
 	/**
-	 * Creates a TemplateWriter.
+	 * Creates a CspWriter.
 	 * @param out a Writer
 	 * @param autoFlush - a boolean; if true, the println() methods will flush
 	 *      the output buffer
 	 */
-	public TemplateWriter(Writer out, boolean autoFlush)
+	public CspWriter(Writer out, boolean autoFlush)
 	{
 		super(out, false);
 		autoFlush_ = autoFlush;
@@ -379,7 +379,7 @@ public class TemplateWriter extends PrintWriter
 	
 	
 	/**
-	 * If a not-null Printable is passed to the TemplateWriter,
+	 * If a not-null Printable is passed to the CspWriter,
 	 * then the printable is asked to print itself. 
 	 */
 	public void print(Printable printable)
@@ -406,14 +406,14 @@ public class TemplateWriter extends PrintWriter
 	 * Printable is a interface for print-aware classes who 
 	 * implement a custom print strategy. Templates and form controls
 	 * are examples of Printables.
-	 * If you pass a Printable to {@link TemplateWriter#print(Object)} or
-	 * TemplateWriter#print(Printable), then the {@link #print(TemplateWriter)}
-	 * method of the Printable is called by the TemplateWriter, allowing
+	 * If you pass a Printable to {@link CspWriter#print(Object)} or
+	 * CspWriter#print(Printable), then the {@link #print(CspWriter)}
+	 * method of the Printable is called by the CspWriter, allowing
 	 * to Printable to print itself.
 	 */
 	public static interface Printable 
 	{
-		public void print(TemplateWriter out) throws Exception;
+		public void print(CspWriter out) throws Exception;
 	}
 
 	

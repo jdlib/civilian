@@ -22,7 +22,7 @@ import org.civilian.application.Application;
 import org.civilian.controller.scan.ResourceInfo;
 import org.civilian.controller.scan.ControllerScan;
 import org.civilian.controller.scan.ScanException;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.tool.source.OutputFile;
 import org.civilian.tool.source.OutputLocation;
 import org.civilian.util.Arguments;
@@ -142,7 +142,7 @@ public class ServerConstGenerator
 			options_.app, 
 			options_.timestamp);
 		StringWriter out = new StringWriter();
-		t.print(new TemplateWriter(out));
+		t.print(new CspWriter(out));
 
 		// write to class file
 		OutputFile outputFile = options_.outputLocation.getOutputFile(options_.outputPackage, options_.outputName + ".java");

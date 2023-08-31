@@ -18,7 +18,7 @@ package org.civilian.form;
 
 import org.civilian.request.Request;
 import org.civilian.template.HtmlUtil;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.util.Check;
@@ -290,7 +290,7 @@ public class Button extends Control<String>
 	/**
 	 * Prints the button markup.
 	 */
-	@Override public void print(TemplateWriter out, String... attrs)
+	@Override public void print(CspWriter out, String... attrs)
 	{
 		start(out, attrs);
 		if (variant_.buttonTag)
@@ -301,7 +301,7 @@ public class Button extends Control<String>
 	}
 	
 
-	public void start(TemplateWriter out)
+	public void start(CspWriter out)
 	{
 		start(out, (String[])null);
 	}
@@ -310,7 +310,7 @@ public class Button extends Control<String>
 	/**
 	 * Prints the button start tag.
 	 */
-	public void start(TemplateWriter out, String... attrs)
+	public void start(CspWriter out, String... attrs)
 	{
 		out.print('<');
 		out.print(variant_.tag());
@@ -335,7 +335,7 @@ public class Button extends Control<String>
 	/**
 	 * Prints the button end tag.
 	 */
-	public void end(TemplateWriter out)
+	public void end(CspWriter out)
 	{
 		if (variant_.buttonTag)
 		{

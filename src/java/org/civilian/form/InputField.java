@@ -17,7 +17,7 @@ package org.civilian.form;
 
 
 import org.civilian.template.HtmlUtil;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.util.Check;
 
 
@@ -209,7 +209,7 @@ public abstract class InputField<T> extends Control<T>
 	/**
 	 * Helper method to prints the start tag of the InputField.
 	 */
-	protected void open(TemplateWriter out, String type, String... attrs)
+	protected void open(CspWriter out, String type, String... attrs)
 	{
 		out.print("<input");
 		HtmlUtil.attr(out, "type", type);
@@ -232,7 +232,7 @@ public abstract class InputField<T> extends Control<T>
 	/**
 	 * Prints the field markup.
 	 */
-	@Override public void print(TemplateWriter out, String... attrs)
+	@Override public void print(CspWriter out, String... attrs)
 	{
 		open(out, getInputType(), attrs);
 		out.print('>');

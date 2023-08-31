@@ -108,7 +108,7 @@ public class TestResponse extends AbstractResponse
 	}
 
 	
-	@Override protected void sendRedirectImpl(String url) throws IOException
+	@Override protected void redirectImpl(String url) throws IOException
 	{
 		resetBuffer();
 		getHeaders().set(HeaderNames.LOCATION, url);

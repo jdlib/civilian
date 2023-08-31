@@ -12,7 +12,7 @@ import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.scan.ResourceInfo;
 import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.JavaName;
 
@@ -29,7 +29,7 @@ class ServerTemplate
 	}
 
 
-	public synchronized void print(TemplateWriter out)
+	public synchronized void print(CspWriter out)
 	{
 		if (out == null)
 			throw new IllegalArgumentException("out is null");
@@ -341,5 +341,5 @@ class ServerTemplate
 	protected String outputName;
 	protected Application app;
 	protected boolean timestamp;
-	protected TemplateWriter out;
+	protected CspWriter out;
 }

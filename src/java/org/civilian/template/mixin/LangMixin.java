@@ -16,7 +16,7 @@
 package org.civilian.template.mixin;
 
 
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.text.NumberStyle;
 import org.civilian.text.Style;
 import org.civilian.text.msg.MsgBundle;
@@ -34,8 +34,8 @@ import org.civilian.util.Check;
  * It contains a TypeSerializer to format values and a MsgBundle to translate message ids.
  * <p>
  * The LangMixin tries to initialize the TypeSerializer and MsgBundle from a 
- * {@link LocaleServiceProvider} in the TemplateWriter {@link TemplateWriter#getData() data}.
- * If the TemplateWriter was created by a Response, the Response acts as the LocaleServiceProvider,
+ * {@link LocaleServiceProvider} in the CspWriter {@link CspWriter#getData() data}.
+ * If the CspWriter was created by a Response, the Response acts as the LocaleServiceProvider,
  * and therefore the mixin uses the TypeSerializer and MsgBundle of the response.  
  * Else the mixin defaults to {@link LocaleSerializer#SYSTEM_LOCALE_SERIALIZER} and an empty message bundle.
  * <p>
@@ -46,7 +46,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 	/**
 	 * Creates a new LangMixin object.
 	 */
-	public LangMixin(TemplateWriter out)
+	public LangMixin(CspWriter out)
 	{
 		Check.notNull(out, "out");
 		

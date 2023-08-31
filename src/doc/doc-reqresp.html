@@ -29,9 +29,8 @@
 					<li><a href="#respstatus">Status</a>, 
 						<a href="#respheaders">Headers</a>, 
 						<a href="#respcontent">Content</a>, 
-						<a href="#respwriter">TemplateWriter</a>, 
 						<a href="#resperror">sendError</a>,
-						<a href="#respredirect">sendRedirect</a>, 
+						<a href="#respredirect">redirect</a>, 
 						<a href="#respbuffer">Buffer</a> 
 				</ul>
 			<li><a href="#content">Content Serialization</a></li>
@@ -191,13 +190,6 @@
 		These methods are based on Civilians <a href="#content">content serialization</a> framework 
 		which allows easy conversion from application objects to data-formats like JSON or XML. 
 		
-		<h3 id="respwriter">TemplateWriter</h3>
-		The writer returned by {javadoc:response.Response#getContentWriter() Response.getContentWriter()} is 
-		an instance of class {javadoc:template.TemplateWriter}.<br>
-		Besides being a <code>java.io.PrintWriter</code>, TemplateWriter allows to produces pretty indentend (HTML) output.
-		Being a PrintWriter the TemplateWriter can be passed to any <a href="doc-templates.html">template system</a> like Velocity or Freemaker.
-		But its additional functionality is especially used by Civilians own template system <a href="doc-templates-csp.html">CSP</a>.
-
 		<h3 id="resperror">sendError</h3>
 		Response provides the {javadoc:response.Response#sendError(int) sendError(int)} and
 		{javadoc:response.Response#sendError(int,$java*lang*String,$java*lang*Throwable) sendError(int,String,Throwable)}
@@ -206,8 +198,8 @@
 		to the client.<br>
 		The exact error response sent to the client can be tweaked by overriding {javadoc:application.Application#createErrorResponse()}.
 
-		<h3 id="respredirect">sendRedirect</h3>
-		Response provides several {javadoc:response.Response#sendRedirect(java*lang*String) sendRedirect(*)} methods
+		<h3 id="respredirect">redirect</h3>
+		Response provides several {javadoc:response.Response#redirect(java*lang*String) redirect(*)} methods
 		to send the client a redirect to another URL.
 
 		<h3 id="respbuffer">Response buffer</h3>

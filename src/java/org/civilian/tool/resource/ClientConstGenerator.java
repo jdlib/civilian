@@ -20,7 +20,7 @@ import java.io.StringWriter;
 import org.civilian.application.Application;
 import org.civilian.controller.scan.ControllerScan;
 import org.civilian.resource.Resource;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.tool.source.OutputFile;
 import org.civilian.tool.source.OutputLocation;
 import org.civilian.util.Arguments;
@@ -134,7 +134,7 @@ public class ClientConstGenerator
 		Resource root = new ControllerScan(options_.app.getControllerConfig(), null, false)
 			.getRootResource();
 		
-		TemplateWriter out = new TemplateWriter(new StringWriter());
+		CspWriter out = new CspWriter(new StringWriter());
 		switch(options_.language)
 		{
 			case JAVA:
@@ -147,7 +147,7 @@ public class ClientConstGenerator
 	}
 	
 	
-	private void writeJava(Resource root, TemplateWriter out) throws Exception
+	private void writeJava(Resource root, CspWriter out) throws Exception
 	{
 		String javaPackage 		= ClassUtil.getPackageName(options_.javaClass);
 		String javaSimpleClass	= ClassUtil.cutPackageName(options_.javaClass);

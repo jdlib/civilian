@@ -91,7 +91,7 @@ class ServletResponseAdapter extends AbstractResponse
 	/**
 	 * Forwards to the HttpServletResponse.
 	 */
-	@Override protected void sendRedirectImpl(String url) throws IOException
+	@Override protected void redirectImpl(String url) throws IOException
 	{
 		if (Logs.RESPONSE.isDebugEnabled())
 			Logs.RESPONSE.debug("redirect to " + url);

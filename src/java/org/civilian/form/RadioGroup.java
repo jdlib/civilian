@@ -17,7 +17,7 @@ package org.civilian.form;
 
 
 import org.civilian.template.HtmlUtil;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.type.TypeSerializer;
 import org.civilian.type.Type;
@@ -69,7 +69,7 @@ public class RadioGroup<T> extends Control<T>
 	/**
 	 * Prints all radio buttons of the group.
 	 */
-	@Override public void print(TemplateWriter out, String... attrs)
+	@Override public void print(CspWriter out, String... attrs)
 	{
 		Printer printer = getPrinter(out);
 		printer.setAttrs(attrs);
@@ -88,7 +88,7 @@ public class RadioGroup<T> extends Control<T>
 	 * Returns a printer which allows you to print single radio buttons and 
 	 * control the layout. 
 	 */
-	public Printer getPrinter(TemplateWriter out)
+	public Printer getPrinter(CspWriter out)
 	{
 		return new Printer(out);
 	}
@@ -100,7 +100,7 @@ public class RadioGroup<T> extends Control<T>
 	 */
 	public class Printer
 	{
-		public Printer(TemplateWriter out)
+		public Printer(CspWriter out)
 		{
 			Check.notNull(out, "out");
 			this.out = out;
@@ -182,7 +182,7 @@ public class RadioGroup<T> extends Control<T>
 		
 		private String[] attrs_;
 		private String[] nextAttrs_;
-		private TemplateWriter out;
+		private CspWriter out;
 		private TypeSerializer serializer_; 
 	}
 

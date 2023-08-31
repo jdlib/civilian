@@ -327,8 +327,8 @@ public class GreetingTemplate extends Template
 			<pre><code>out.print("Hey ");<br>out.print(name);<br>out.print(", 1 + 2 = ");<br>out.println(1 + 2);</code></pre>
 		</div>
 
-		The field <code>out</code> is a {javadoc:template.TemplateWriter} inherited from the {javadoc:template.Template} base class.
-		TemplateWriter in the end is just a <code>java.io.PrintWriter</code>. Therefore all values are finally
+		The field <code>out</code> is a {javadoc:template.CspWriter} inherited from the {javadoc:template.Template} base class.
+		CspWriter in the end is just a <code>java.io.PrintWriter</code>. Therefore all values are finally
 		serialized to strings calling <code>value.toString()</code> or <code>String.valueOf(value)</code> before they are written to the output.
 		So it only makes sense to print simple objects like Strings or primitive values. If you print a fancy Customer object 
 		it will just simply fallback to its toString() method. 
@@ -345,7 +345,7 @@ public class GreetingTemplate extends Template
 		<div class="highlight">
 			<pre><code>out.print("Hey ");<br>doSomething(name);<br>out.println("!");</code></pre>
 		</div>
-		Why you want to do this? Of course because the called method prints something to the output (having access to the TemplateWriter
+		Why you want to do this? Of course because the called method prints something to the output (having access to the CspWriter
 		or obtaining it as parameter) or produces some side-effect.
 		Again the <a href="mixin">Mixins</a> provide good use cases for this technique. Here is a brief glimpse, using the 
 		{javadoc:template.mixin.HtmlMixin#text(java*lang*String) HtmlMixin} to escape a string and write it to the output: 
@@ -507,7 +507,7 @@ private int area;</code></pre></div>
 		Similar, the second embedded expression calls a method <code>lang.format(int)</code>. This method formats the
 		integer parameter according the locale of the response and returns the formated value (which is then printed to the output).<br>
 		Now, <code>html</code> and <code>lang</code> are just fields in the generated template class with access to
-		the {javadoc:template.TemplateWriter}.<br>
+		the {javadoc:template.CspWriter}.<br>
 		These fields are not available by default but must explicitly be defined. The syntax section already explained how
 		to do that:
 		<div class="highlight">
@@ -650,15 +650,15 @@ private int area;</code></pre></div>
 		 
 		<h2 id="standalone">CSP as standalone template system</h2>
 		When you don't instruct otherwise the generated template class is derived from {javadoc:template.Template} and operates
-		on a {javadoc:template.TemplateWriter}. This tightly binds the template to Civilians request processing context.<br>
+		on a {javadoc:template.CspWriter}. This tightly binds the template to Civilians request processing context.<br>
 		<p>
 		But CSP can simply be turned into a standalone template system: If you use the <code>extends</code> instruction
 		to not derive from {javadoc:template.Template}   
 		<div class="highlight">
 			<pre><code>template ... extends - ...</code></pre>
 		</div>
-		then the generated toplevel class will operate on a {javadoc:template.TemplateWriter} and will have no other dependencies to Civilian classes.
-		The TemplateWriter actually implements the pretty indentation stuff. You construct a TemplateWriter simply by passing a Writer class
+		then the generated toplevel class will operate on a {javadoc:template.CspWriter} and will have no other dependencies to Civilian classes.
+		The CspWriter actually implements the pretty indentation stuff. You construct a CspWriter simply by passing a Writer class
 		to its constructor.
 
 		<h2 id="composition">Template reuse</h2>

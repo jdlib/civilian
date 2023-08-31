@@ -25,7 +25,7 @@
 		methods like {javadoc:response.Response#writeJson(java*lang*Object) Response.writeJson} to produce the response content.
 		Easy.<br>But in case of HTML output more needs to be done.       
 		<p>
-		The {javadoc:response.Response#getContentWriter() Response} class itself offers a {javadoc:template.TemplateWriter} to which we can directly
+		The {javadoc:response.Response#getContentWriter() Response} class itself offers a {javadoc:template.CspWriter} to which we can directly
 		write the content, in a series of <code>print</code> calls. But this approach only works for really simple content. 
 		Templates to the rescue!
 		<p>
@@ -74,7 +74,7 @@
 		are well-established template systems.
 		<p>
 		Both libraries provide own template classes. Given a Freemarker or Velocity template object you can easily produce response content
-		by writing the template to the {javadoc:template.TemplateWriter} of the response. 
+		by writing the template to the {javadoc:template.CspWriter} of the response. 
 		<p>
 		To turn a Freemarker or Velocity template into a Civilian template you can additionally use 
 		{javadoc:template.FreemarkerTemplate} and {javadoc:template.VelocityTemplate}. They are simple wrappers for their native

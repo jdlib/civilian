@@ -20,7 +20,7 @@ import org.civilian.form.Control;
 import org.civilian.form.Control.Category;
 import org.civilian.form.Form;
 import org.civilian.template.HtmlUtil;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.util.Check;
 
 
@@ -32,7 +32,7 @@ public class FormTableMixin
 	/**
 	 * Creates a new FormTableMixin.
 	 */
-	public FormTableMixin(TemplateWriter out)
+	public FormTableMixin(CspWriter out)
 	{
 		this.out = Check.notNull(out, "out");
 	}
@@ -295,7 +295,7 @@ public class FormTableMixin
 	}
 
 
-	private TemplateWriter out;
+	private CspWriter out;
 	private String requiredLabelClass_; 
 	private String errorControlClass_ = "error"; 
 	private LangMixin lang_; 

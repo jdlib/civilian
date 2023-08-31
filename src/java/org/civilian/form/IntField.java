@@ -17,7 +17,7 @@ package org.civilian.form;
 
 
 import org.civilian.template.HtmlUtil;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.text.NumberStyle;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
@@ -150,7 +150,7 @@ public class IntField extends InputField<Integer>
 	}
 
 	
-	@Override protected void open(TemplateWriter out, String type, String... attrs)
+	@Override protected void open(CspWriter out, String type, String... attrs)
 	{
 		super.open(out, type, attrs);
 		if (min_ != null)

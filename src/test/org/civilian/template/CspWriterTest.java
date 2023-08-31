@@ -24,12 +24,12 @@ import org.civilian.CivTest;
 import org.civilian.util.Data;
 
 
-public class TemplateWriterTest extends CivTest
+public class CspWriterTest extends CivTest
 {
 	@Before public void before()
 	{
 		stringOut = new StringWriter();
-		out = new TemplateWriter(stringOut);
+		out = new CspWriter(stringOut);
 		out.setLineSeparator("\n");
 	}
 	
@@ -107,13 +107,13 @@ public class TemplateWriterTest extends CivTest
 	
 	@Test public void testPrintable()
 	{
-		TestTemplateWriter out = TestTemplateWriter.create("ISO-8859-1");
+		TestCspWriter out = TestCspWriter.create("ISO-8859-1");
 		
 		out.print((Object)null);
 		out.assertOut("null");
 		
-		out.print(new TemplateWriter.Printable() {
-			@Override public void print(TemplateWriter out) throws Exception
+		out.print(new CspWriter.Printable() {
+			@Override public void print(CspWriter out) throws Exception
 			{
 				out.print("hallo");
 			}
@@ -123,8 +123,8 @@ public class TemplateWriterTest extends CivTest
 		final Exception cause = new Exception();
 		try
 		{
-			out.print(new TemplateWriter.Printable() {
-				@Override public void print(TemplateWriter out) throws Exception
+			out.print(new CspWriter.Printable() {
+				@Override public void print(CspWriter out) throws Exception
 				{
 					throw cause;
 				}
@@ -139,5 +139,5 @@ public class TemplateWriterTest extends CivTest
 
 	
 	private StringWriter stringOut;
-	private TemplateWriter out;
+	private CspWriter out;
 }

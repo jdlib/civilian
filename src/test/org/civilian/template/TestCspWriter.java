@@ -29,15 +29,15 @@ import org.civilian.text.service.LocaleService;
 import org.junit.Assert;
 
 
-public class TestTemplateWriter extends TemplateWriter
+public class TestCspWriter extends CspWriter
 {
-	public static TestTemplateWriter create()
+	public static TestCspWriter create()
 	{
 		return create("UTF-8");
 	}
 	
 	
-	public static TestTemplateWriter create(String encoding)
+	public static TestCspWriter create(String encoding)
 	{
 		Application app = mock(Application.class);
 		
@@ -50,7 +50,7 @@ public class TestTemplateWriter extends TemplateWriter
 		
 		StringWriter stringOut = new StringWriter();
 		StringBuffer buffer = stringOut.getBuffer();
-		TestTemplateWriter out = new TestTemplateWriter(stringOut, response);
+		TestCspWriter out = new TestCspWriter(stringOut, response);
 		out.app 		= app;
 		out.response 	= response;
 		out.service		= service;
@@ -69,7 +69,7 @@ public class TestTemplateWriter extends TemplateWriter
 	}
 	
 	
-	public TestTemplateWriter(Writer writer, Response response)
+	public TestCspWriter(Writer writer, Response response)
 	{
 		super(writer);
 		getData().add(response);

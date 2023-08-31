@@ -6,7 +6,7 @@ package org.civilian.build.doc;
 
 
 import java.util.List;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.util.StringUtil;
 
 
@@ -19,7 +19,7 @@ public class DocTemplate
 	}
 
 
-	public synchronized void print(TemplateWriter out)
+	public synchronized void print(CspWriter out)
 	{
 		if (out == null)
 			throw new IllegalArgumentException("out is null");
@@ -128,5 +128,5 @@ public class DocTemplate
 
 	protected String inputFile;
 	protected List<String> lines;
-	protected TemplateWriter out;
+	protected CspWriter out;
 }

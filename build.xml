@@ -401,7 +401,7 @@
                 <include name="org/civilian/tool/resbundle/ResBundleCompiler*.class"/>
                 <include name="org/civilian/tool/resbundle/ConstClassTemplate.class"/>
                 <include name="org/civilian/tool/resbundle/Translation.class"/>
-                <include name="org/civilian/template/TemplateWriter*.class"/>
+                <include name="org/civilian/template/CspWriter*.class"/>
                 <include name="org/civilian/util/Arguments.class"/>
                 <include name="org/civilian/util/Check.class"/>
                 <include name="org/civilian/util/ClassUtil.class"/>

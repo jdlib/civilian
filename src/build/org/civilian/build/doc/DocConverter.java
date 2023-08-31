@@ -26,7 +26,7 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.util.Arguments;
 import org.civilian.util.FileType;
 import org.civilian.util.IoUtil;
@@ -50,7 +50,7 @@ public class DocConverter
 			List<String> input = new ArrayList<>(); 
 			read(null, inputFile, "", input);	
 			
-			try(TemplateWriter out = new TemplateWriter(new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8)))
+			try(CspWriter out = new CspWriter(new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8)))
 			{
 				DocTemplate template = new DocTemplate(inputFile.getName(), input);
 				template.print(out);

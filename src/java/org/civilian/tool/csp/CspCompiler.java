@@ -27,7 +27,7 @@ import java.util.HashMap;
 
 import org.civilian.template.ComponentBuilder;
 import org.civilian.template.CspTemplate;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
@@ -460,12 +460,12 @@ public class CspCompiler
 				classData_.standalone   = true;
 				classData_.extendsClass = null;
 
-				String writerClass = TemplateWriter.class.getSimpleName();
+				String writerClass = CspWriter.class.getSimpleName();
 				if (scanner_.nextKeyword("using"))
 					writerClass = nextScannerToken("using");
 
-				if ("TemplateWriter".equals(writerClass))
-					writerClass = TemplateWriter.class.getName();
+				if ("CspWriter".equals(writerClass))
+					writerClass = CspWriter.class.getName();
 
 				classData_.writerClass = writerClass;
 				classData_.writerClassSimple = ClassUtil.cutPackageName(writerClass);

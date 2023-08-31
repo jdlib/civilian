@@ -120,14 +120,14 @@ public abstract class AbstractResponse implements Response
 	{
 		checkNotCommitted();
 		setType(Type.REDIRECT, false);
-		sendRedirectImpl(url);
+		redirectImpl(url);
 	}
 
 	
 	/**
-	 * Implements sendRedirect. Should commit the response.
+	 * Implements redirect. Should commit the response.
 	 */
-	protected abstract void sendRedirectImpl(String url) throws IOException;
+	protected abstract void redirectImpl(String url) throws IOException;
 
 
 	@Override public Response writeContent(Object object, String contentType) throws Exception

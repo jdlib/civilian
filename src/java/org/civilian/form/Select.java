@@ -17,7 +17,7 @@ package org.civilian.form;
 
 
 import org.civilian.template.HtmlUtil;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.text.keys.KeyList;
 import org.civilian.type.Type;
 import org.civilian.util.Check;
@@ -161,7 +161,7 @@ public class Select<T> extends Control<T>
 	/**
 	 * Prints the field markup.
 	 */
-	@Override public void print(TemplateWriter out, String... attrs)
+	@Override public void print(CspWriter out, String... attrs)
 	{
 		start(out, attrs);
 		out.increaseTab();
@@ -175,7 +175,7 @@ public class Select<T> extends Control<T>
 	/**
 	 * Prints the start tag of the select element.
 	 */
-	public void start(TemplateWriter out)
+	public void start(CspWriter out)
 	{
 		start(out, (String[])null);
 	}
@@ -184,7 +184,7 @@ public class Select<T> extends Control<T>
 	/**
 	 * Prints the start tag of the select element.
 	 */
-	public void start(TemplateWriter out, String... attrs)
+	public void start(CspWriter out, String... attrs)
 	{
 		out.print("<select");
 		HtmlUtil.attr(out, "name", getName());
@@ -204,7 +204,7 @@ public class Select<T> extends Control<T>
 	/**
 	 * Prints the end tag of the select element.
 	 */
-	public void end(TemplateWriter out)
+	public void end(CspWriter out)
 	{
 		out.print("</select>");
 	}
@@ -213,7 +213,7 @@ public class Select<T> extends Control<T>
 	/**
 	 * Prints the option list of the select elements.
 	 */
-	public void printOptions(TemplateWriter out)
+	public void printOptions(CspWriter out)
 	{
 		int keySize 			= keyList_.size();
 		boolean useOptionGroups = useOptionGroups();
@@ -242,7 +242,7 @@ public class Select<T> extends Control<T>
 	 * @param text the option text
 	 * @param selected is the option selected?
 	 */
-	public void printOption(TemplateWriter out, T value, String text, boolean selected)
+	public void printOption(CspWriter out, T value, String text, boolean selected)
 	{
 		String s = formatValue(value);
 		printOptionImpl(out, s, text, selected);
@@ -252,7 +252,7 @@ public class Select<T> extends Control<T>
 	/**
 	 * Prints a single option.
 	 */
-	public void printOption(TemplateWriter out, int i)
+	public void printOption(CspWriter out, int i)
 	{
 		T value				= keyList_.getValue(i);
 		String svalue		= keyList_.getType().format(value, i);
@@ -262,7 +262,7 @@ public class Select<T> extends Control<T>
 	}
 	
 	
-	private void printOptionImpl(TemplateWriter out, String value, String text, boolean selected)
+	private void printOptionImpl(CspWriter out, String value, String text, boolean selected)
 	{
 		out.print("<option");
 		HtmlUtil.attr(out, "value", value);
@@ -274,14 +274,14 @@ public class Select<T> extends Control<T>
 	}
 
 	
-	public void printDefaultOption(TemplateWriter out)
+	public void printDefaultOption(CspWriter out)
 	{
 		if (defaultText_ != null)
 			printOption(out, defaultKey_, defaultText_, false);
 	}
 	
 	
-	public void printGroupStart(TemplateWriter out, String label)
+	public void printGroupStart(CspWriter out, String label)
 	{
 		out.print("<optgroup");
 		HtmlUtil.attr(out, "label", label);
@@ -290,7 +290,7 @@ public class Select<T> extends Control<T>
 	}
 
 
-	public void printGroupEnd(TemplateWriter out)
+	public void printGroupEnd(CspWriter out)
 	{
 		out.decreaseTab();
 		out.print("</optgroup>");

@@ -21,14 +21,14 @@ import org.civilian.util.Check;
 
 
 /**
- * CspTemplate is a template to which uses a TemplateWriter.
+ * CspTemplate is a template to which uses a CspWriter.
  */
-public abstract class CspTemplate extends Template implements TemplateWriter.Printable
+public abstract class CspTemplate extends Template implements CspWriter.Printable
 {
 	/**
-	 * @return the TemplateWriter or null, if the template is not printed.
+	 * @return the CspWriter or null, if the template is not printed.
 	 */
-	public TemplateWriter out()
+	public CspWriter out()
 	{
 		return out;
 	}
@@ -36,8 +36,8 @@ public abstract class CspTemplate extends Template implements TemplateWriter.Pri
 	
 	/**
 	 * Prints the template, using the given Writer.
-	 * The method constructs a TemplateWriter from the writer and
-	 * then calls {@link #print(TemplateWriter)}.
+	 * The method constructs a CspWriter from the writer and
+	 * then calls {@link #print(CspWriter)}.
 	 * @param out a Writer
 	 * @param data optioanl context data
 	 * @throws Exception any exception
@@ -45,11 +45,11 @@ public abstract class CspTemplate extends Template implements TemplateWriter.Pri
 	@Override public void print(PrintWriter out, Object... data) throws Exception
 	{
 		Check.notNull(out, "out");
-		if (out instanceof TemplateWriter)
-			print((TemplateWriter)out);
+		if (out instanceof CspWriter)
+			print((CspWriter)out);
 		else
 		{
-			TemplateWriter tw = new TemplateWriter(out, false);
+			CspWriter tw = new CspWriter(out, false);
 			if (data.length > 0)
 				tw.getData().addAll(data);
 			print(tw);
@@ -58,11 +58,11 @@ public abstract class CspTemplate extends Template implements TemplateWriter.Pri
 	
 	
 	/**
-	 * Prints the template, using the given TemplateWriter.
-	 * The method stores the TemplateWriter in the field {@link #out}
+	 * Prints the template, using the given CspWriter.
+	 * The method stores the CspWriter in the field {@link #out}
 	 * and the calls {@link #print()}.
 	 */
-	@Override public synchronized void print(TemplateWriter out) throws Exception
+	@Override public synchronized void print(CspWriter out) throws Exception
 	{
 		Check.notNull(out, "out");
 		if (this.out != null)
@@ -83,7 +83,7 @@ public abstract class CspTemplate extends Template implements TemplateWriter.Pri
 	
 	/**
 	 * Allows derived implementation to initialize before the template is printed .
-	 * Called by {@link #print(TemplateWriter)} when {@link #out} was set, before {@link #print()} is called.
+	 * Called by {@link #print(CspWriter)} when {@link #out} was set, before {@link #print()} is called.
 	 * The default implementation is empty.
 	 */
 	protected void init()
@@ -93,7 +93,7 @@ public abstract class CspTemplate extends Template implements TemplateWriter.Pri
 	
 	/**
 	 * Allows derived implementation to performe operations after the template is printed .
-	 * Called by {@link #print(TemplateWriter)} after {@link #print()} was called.
+	 * Called by {@link #print(CspWriter)} after {@link #print()} was called.
 	 * The default implementation is empty.
 	 */
 	protected void exit()
@@ -108,5 +108,5 @@ public abstract class CspTemplate extends Template implements TemplateWriter.Pri
 	protected abstract void print() throws Exception;
 	
 	
-	protected TemplateWriter out;
+	protected CspWriter out;
 }

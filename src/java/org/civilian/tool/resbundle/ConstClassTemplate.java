@@ -8,7 +8,7 @@ package org.civilian.tool.resbundle;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.JavaName;
 
@@ -24,7 +24,7 @@ class ConstClassTemplate
 	}
 
 
-	public synchronized void print(TemplateWriter out)
+	public synchronized void print(CspWriter out)
 	{
 		if (out == null)
 			throw new IllegalArgumentException("out is null");
@@ -192,5 +192,5 @@ class ConstClassTemplate
 	protected String packageName;
 	protected LocalDateTime generationTime;
 	protected List<Translation> translations;
-	protected TemplateWriter out;
+	protected CspWriter out;
 }

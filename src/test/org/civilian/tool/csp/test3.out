@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import com.Data2;
 import com.test.data.Data1;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 
 
 class Test3 implements Serializable
 {
-	public synchronized void print(TemplateWriter out) throws IOException
+	public synchronized void print(CspWriter out) throws IOException
 	{
 		if (out == null)
 			throw new IllegalArgumentException("out is null");
@@ -29,5 +29,5 @@ class Test3 implements Serializable
 	}
 
 
-	protected TemplateWriter out;
+	protected CspWriter out;
 }

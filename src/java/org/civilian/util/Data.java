@@ -71,7 +71,7 @@ public class Data
 	
 	
 	/**
-	 * Returns the first attribute object of the TemplateWriter that has
+	 * Returns the first attribute object of the CspWriter that has
 	 * the given class.  
 	 * @throws IllegalStateException if there is no such object,
 	 */

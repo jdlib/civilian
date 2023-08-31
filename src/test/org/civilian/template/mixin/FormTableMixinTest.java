@@ -23,7 +23,7 @@ import org.civilian.CivTest;
 import org.civilian.form.Form;
 import org.civilian.form.TextField;
 import org.civilian.request.Request;
-import org.civilian.template.TestTemplateWriter;
+import org.civilian.template.TestCspWriter;
 import org.civilian.text.service.LocaleService;
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class FormTableMixinTest extends CivTest
 	@Test public void test()
 	{
 		Request request = mock(Request.class);
-		TestTemplateWriter out = TestTemplateWriter.create();
+		TestCspWriter out = TestCspWriter.create();
 		when(out.response.getRequest()).thenReturn(request);
 		when(request.getLocaleService()).thenReturn(new LocaleService(Locale.ENGLISH));
 		when(request.getRequest()).thenReturn(request);

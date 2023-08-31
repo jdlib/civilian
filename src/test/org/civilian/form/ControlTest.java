@@ -27,7 +27,7 @@ import org.civilian.request.Request;
 import org.civilian.request.Upload;
 import org.civilian.request.Uploads;
 import org.civilian.response.Response;
-import org.civilian.template.TestTemplateWriter;
+import org.civilian.template.TestCspWriter;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
 import org.civilian.text.service.LocaleService;
@@ -511,7 +511,7 @@ public class ControlTest extends CivTest
 	
 	
 	private static Request request;
-	private static final TestTemplateWriter out = TestTemplateWriter.create();
+	private static final TestCspWriter out = TestCspWriter.create();
 	private static final Response response = out.response;
 	private static final KeyList<String> KEYS = KeyLists.forContent(new String[]{ "a", "b"}, new String[]{ "alpha", "beta"});
 }

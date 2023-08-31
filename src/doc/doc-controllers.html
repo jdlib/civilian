@@ -45,7 +45,7 @@
 			Civilians <a href="doc-reqresp.html#content">content serialization</a> and 
 			<a href="doc-templates.html">template system</a> can help to implement this.
 		<li>Alternative responses would be to send an {javadoc:response.Response#sendError(int) error status}, 
-			or a {javadoc:response.Response#sendRedirect(java*lang*String) redirect} to another resource.
+			or a {javadoc:response.Response#redirect(java*lang*String) redirect} to another resource.
 		</ol>
 		Controllers are not meant to contain a lot of code. Ideally they are just the glue between the frontend request and back-end services,
 		translating request parameters, invoke back-end services and convert data models into response views. 

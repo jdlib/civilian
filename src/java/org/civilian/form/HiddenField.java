@@ -17,7 +17,7 @@ package org.civilian.form;
 
 
 import org.civilian.template.HtmlUtil;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.type.Type;
 import org.civilian.type.TypeLib;
 import org.civilian.util.Check;
@@ -108,7 +108,7 @@ public class HiddenField<T> extends Control<T>
 	/**
 	 * Prints the field markup.
 	 */
-	@Override public void print(TemplateWriter out, String... attrs)
+	@Override public void print(CspWriter out, String... attrs)
 	{
 		out.print("<input");
 		HtmlUtil.attr(out, "type", "hidden", false);

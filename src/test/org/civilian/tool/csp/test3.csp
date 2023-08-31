@@ -8,7 +8,7 @@ import ../Data2;
 
 template
 	package-access
-	extends - using TemplateWriter
+	extends - using CspWriter
 	implements Serializable
 	throws IOException
 {{

@@ -17,10 +17,10 @@ package org.civilian.tool.csp;
 
 
 import java.io.StringWriter;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 
 
-class SourceWriter extends TemplateWriter
+class SourceWriter extends CspWriter
 {
 	public SourceWriter(StringWriter out)
 	{

@@ -178,7 +178,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 		NONE,
 		
 		/**
-		 * A TemplateWriter is used to produce the response body.
+		 * A PrintWriter is used to produce the response body.
 		 * @see #getContentWriter()
 		 */
 		WRITER,
@@ -638,7 +638,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	/**
 	 * Close the content output, either the {@link #getContentStream() OutputStream}
-	 * or {@link #getContentWriter() TemplateWriter}.
+	 * or {@link #getContentWriter() PrintWriter}.
 	 * This method is called automatically at the end of request {@link Application#process(Request) processing}.
 	 */
 	public abstract void closeContent();

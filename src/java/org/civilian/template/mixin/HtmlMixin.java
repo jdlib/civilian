@@ -24,7 +24,7 @@ import org.civilian.resource.Url;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseProvider;
 import org.civilian.template.HtmlUtil;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.util.Check;
 
 
@@ -35,9 +35,9 @@ public class HtmlMixin
 {
 	/**
 	 * Creates a new HtmlMixin.
-	 * @param out the TemplateWriter
+	 * @param out the CspWriter
 	 */
-	public HtmlMixin(TemplateWriter out)
+	public HtmlMixin(CspWriter out)
 	{
 		this.out  = Check.notNull(out, "out");
 		ResponseProvider rp = out.getData().get(ResponseProvider.class);
@@ -246,7 +246,7 @@ public class HtmlMixin
 	 * This is either the default path or a path previously set
 	 * by #setPath(Path). 
 	 * The default path equals the application path if the   
-	 * TemplateWriter was initialized from a Civilian response.
+	 * CspWriter was initialized from a Civilian response.
 	 * Else the default path is simple the root path.
 	 */
 	public Path path()
@@ -397,7 +397,7 @@ public class HtmlMixin
 	}
 	
 
-	private final TemplateWriter out;
+	private final CspWriter out;
 	private final Response response_;
 	private Path path_;
 }

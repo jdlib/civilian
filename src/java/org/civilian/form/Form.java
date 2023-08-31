@@ -24,7 +24,7 @@ import org.civilian.request.RequestProvider;
 import org.civilian.response.Response;
 import org.civilian.response.ResponseProvider;
 import org.civilian.template.HtmlUtil;
-import org.civilian.template.TemplateWriter;
+import org.civilian.template.CspWriter;
 import org.civilian.util.Check;
 
 
@@ -543,7 +543,7 @@ public class Form implements RequestProvider, ResponseProvider
 	/**
 	 * Prints the form start tag and all hidden fields.
 	 */
-	public void start(TemplateWriter out)
+	public void start(CspWriter out)
 	{
 		start(out, (String[])null);
 	}
@@ -554,7 +554,7 @@ public class Form implements RequestProvider, ResponseProvider
 	 * @param attrs a list of attribute names and values which
 	 * 		should be printed in the start tag of the control element.
 	 */
-	public void start(TemplateWriter out, String... attrs)
+	public void start(CspWriter out, String... attrs)
 	{
 		out.print("<form");
 		printAttrs(out);
@@ -564,7 +564,7 @@ public class Form implements RequestProvider, ResponseProvider
 	}
 	
 	
-	public void printHiddenFields(TemplateWriter out)
+	public void printHiddenFields(CspWriter out)
 	{
 		// each form has a hidden field equal to the form name
 		// it is used to decide if the form was submitted by
@@ -593,7 +593,7 @@ public class Form implements RequestProvider, ResponseProvider
 	/**
 	 * Prints the attributes of the form start tag.
 	 */
-	public void printAttrs(TemplateWriter out)
+	public void printAttrs(CspWriter out)
 	{
 		Response response = getResponse();
 		HtmlUtil.attr(out, "method", method_);
@@ -617,9 +617,9 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	/**
 	 * Prints the form end tag.
-	 * Calls {@link #end(TemplateWriter, Control) end(out, null)};
+	 * Calls {@link #end(CspWriter, Control) end(out, null)};
 	 */
-	public void end(TemplateWriter out)
+	public void end(CspWriter out)
 	{
 		end(out, null);		
 	}
@@ -630,14 +630,14 @@ public class Form implements RequestProvider, ResponseProvider
 	 * If the form contains controls which need scripts to be printed after the end tag,
 	 * these scripts are also printed.
 	 */
-	public void end(TemplateWriter out, Control<?> focusControl)
+	public void end(CspWriter out, Control<?> focusControl)
 	{
 		out.println("</form>");
 		focus(out, focusControl);
 	}
 	
 	
-	public void focus(TemplateWriter out, Control<?> focusControl)
+	public void focus(CspWriter out, Control<?> focusControl)
 	{
 		if (getErrorControl() != null)
 			focusControl = getErrorControl();
