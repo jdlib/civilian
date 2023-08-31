@@ -70,7 +70,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 	
 	
 	/**
-	 * Returns the ControllerClass of the controller.
+	 * @return the ControllerClass of the controller.
 	 */
 	public Class<? extends Controller> getControllerClass()
 	{
@@ -78,9 +78,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 	}
 	
 	
-	/**
-	 * Support unit test.
-	 */
+	// Supports unit tests
 	boolean contains(ControllerMethod method)
 	{
 		for (ControllerMethod m : methods_)
@@ -93,7 +91,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 
 	
 	/**
-	 * Creates a Controller and initializes it's type.
+	 * @return creates a Controller and initializes it's type.
 	 * @see Controller#setControllerType(ControllerType)
 	 */
 	public Controller createController()
@@ -115,7 +113,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 		
 	
 	/**
-	 * Returns an iterator for all controller methods.
+	 * @return an iterator for all controller methods.
 	 */
 	@Override public Iterator<ControllerMethod> iterator()
 	{
@@ -124,7 +122,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 
 	
 	/**
-	 * Returns the number of ControllerMethods.
+	 * @return the number of ControllerMethods.
 	 */
 	public int getMethodCount()
 	{
@@ -133,7 +131,8 @@ public class ControllerType implements Iterable<ControllerMethod>
 	
 	
 	/**
-	 * Returns the i-th ControllerMethod.
+	 * @param i the method index
+	 * @return the i-th ControllerMethod.
 	 */
 	public ControllerMethod getMethod(int i)
 	{
@@ -143,6 +142,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 	
 	/**
 	 * Returns a ControllerMethod for a request.
+	 * @param request a request
 	 * @return a NegotiatedMethod object containing the method + selected response content-type
 	 * 		or an error code
 	 */
@@ -160,6 +160,9 @@ public class ControllerType implements Iterable<ControllerMethod>
 	/**
 	 * Selects a ControllerMethod which matches the request method, request content type
 	 * and accepted response content-types.
+	 * @param requestMethod the request method
+	 * @param requestContentType the request content type
+	 * @param acceptedResponseTypes the accepted response content types
 	 * @return a NegotiatedMethod object containing the method + selected response content-type
 	 * 		or an error code
 	 */
@@ -199,7 +202,8 @@ public class ControllerType implements Iterable<ControllerMethod>
 
 	
 	/**
-	 * Returns the controller method for the given Java method.
+	 * @param method the method
+	 * @return the controller method for the given Java method.
 	 */
 	public ControllerMethod getMethod(Method method)
 	{
@@ -213,7 +217,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 	
 
 	/**
-	 * Returns the controller method with the given Java method name.
+	 * @return the controller method with the given Java method name.
 	 * @param javaName the Java method name
 	 */
 	public ControllerMethod getMethod(String javaName)
@@ -227,6 +231,7 @@ public class ControllerType implements Iterable<ControllerMethod>
 	 * @param javaName the Java method name
 	 * @param paramTypes the method parameter types. Pass an explicit null if you
 	 * 		want to compare the method name only.
+	 * @return the method
 	 */
 	public ControllerMethod getMethod(String javaName, Class<?>... paramTypes)
 	{

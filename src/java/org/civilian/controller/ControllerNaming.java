@@ -84,7 +84,7 @@ public class ControllerNaming
 	/**
 	 * Converts a package part into a resource segment.
 	 * The default implementation converts the part to lower case.
-	 * @param the packagePart
+	 * @param packagePart the packagePart
 	 * @return the segment 
 	 */
 	public String packagePart2Segment(String packagePart)

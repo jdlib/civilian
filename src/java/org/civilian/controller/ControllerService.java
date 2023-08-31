@@ -43,6 +43,8 @@ public class ControllerService
 	 * 		arguments of controller action methods.
 	 * @param typeLib the type library used by an application. Needed to handle
 	 * 		arguments of controller action methods.
+	 * @param ctrlFactory a ControllerFactory
+	 * @param clFactory a ClassLoaderFactory
 	 */
 	public ControllerService(PathParamMap pathParams, TypeLib typeLib, 
 		ControllerFactory ctrlFactory,
@@ -64,6 +66,7 @@ public class ControllerService
 	 * for each request. To use this feature, develop mode must be true,
 	 * and the application needs key {@link ConfigKeys#DEV_CLASSRELOAD}
 	 * set to true in its application settings.
+	 * @return reloading?
 	 */
 	public boolean isReloading()
 	{
@@ -72,7 +75,8 @@ public class ControllerService
 
 	
 	/**
-	 * Returns a ControllerType for a {@link ControllerSignature controller signature}. 
+	 * @param signature the signature
+	 * @return a ControllerType for a {@link ControllerSignature controller signature}. 
 	 */
 	public ControllerType getControllerType(ControllerSignature signature)
 	{

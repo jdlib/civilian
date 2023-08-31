@@ -101,7 +101,7 @@ public class ControllerSignature
 
 	
 	/**
-	 * Returns the class name.
+	 * @return the class name.
 	 */
 	public String getClassName()
 	{
@@ -110,7 +110,7 @@ public class ControllerSignature
 
 
 	/**
-	 * Returns the method segment or null.
+	 * @return the method segment or null.
 	 */
 	public String getMethodSegment()
 	{
@@ -119,7 +119,7 @@ public class ControllerSignature
 	
 
 	/**
-	 * Returns the method path param or null.
+	 * @return the method path param or null.
 	 */
 	public PathParam<?> getMethodPathParam()
 	{
@@ -131,6 +131,7 @@ public class ControllerSignature
 	 * Returns if the given Java method of the associated controller matches the filter
 	 * defined by the method segment and path or param of this signature.
 	 * @param javaMethod a controller action method
+	 * @return matches?
 	 */
 	public boolean matchJavaMethod(Method javaMethod)
 	{
