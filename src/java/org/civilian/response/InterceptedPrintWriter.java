@@ -4,12 +4,11 @@ package org.civilian.response;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Writer;
 
-import org.civilian.template.TemplateWriter;
 
-
-class InterceptedTemplateWriter extends TemplateWriter implements InterceptedOutput
+class InterceptedPrintWriter extends PrintWriter implements InterceptedOutput
 {
 	private static Writer createWriter(OutputStream originalStream, 
 		ResponseInterceptor<OutputStream> streamInterceptor,
@@ -20,7 +19,7 @@ class InterceptedTemplateWriter extends TemplateWriter implements InterceptedOut
 	}
 	
 	
-	public InterceptedTemplateWriter(Writer originalWriter, 
+	public InterceptedPrintWriter(Writer originalWriter, 
 		ResponseInterceptor<Writer> writerInterceptor) 
 		throws IOException
 	{
@@ -31,7 +30,7 @@ class InterceptedTemplateWriter extends TemplateWriter implements InterceptedOut
 	}
 
 	
-	public InterceptedTemplateWriter(OutputStream originalStream, 
+	public InterceptedPrintWriter(OutputStream originalStream, 
 		ResponseInterceptor<OutputStream> streamInterceptor, 
 		ResponseInterceptor<Writer> writerInterceptor,
 		String contentEncoding) throws IOException

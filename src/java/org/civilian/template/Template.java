@@ -19,7 +19,6 @@ package org.civilian.template;
 import java.io.StringWriter;
 import java.io.Writer;
 import org.civilian.util.Check;
-import org.civilian.util.Data;
 
 
 /**
@@ -63,15 +62,21 @@ public abstract class Template implements TemplateWriter.Printable
 	 * The method constructs a TemplateWriter from the writer and
 	 * then calls {@link #print(TemplateWriter)}.
 	 * @param out a Writer
+	 * @param data optioanl context data
 	 * @throws Exception any exception
 	 */
-	public void print(Writer out) throws Exception
+	public void print(Writer out, Object... data) throws Exception
 	{
 		Check.notNull(out, "out");
-		TemplateWriter tw = out instanceof TemplateWriter ? 
-			(TemplateWriter)out : 
-			new TemplateWriter(out, false);
-		print(tw);
+		if (out instanceof TemplateWriter)
+			print((TemplateWriter)out);
+		else
+		{
+			TemplateWriter tw = new TemplateWriter(out, false);
+			if (data.length > 0)
+				tw.getData().addAll(data);
+			print(tw);
+		}
 	}
 	
 	
@@ -88,14 +93,12 @@ public abstract class Template implements TemplateWriter.Printable
 		try
 		{
 			this.out = out;
-			out.setData(getData());
 			init();
 			print();
 		}
 		finally
 		{
 			this.out = null;
-			out.setData(null);
 			exit();
 		}
 	}
@@ -128,12 +131,5 @@ public abstract class Template implements TemplateWriter.Printable
 	protected abstract void print() throws Exception;
 	
 	
-	public Data getData()
-	{
-		return data_;
-	}
-	
-	
 	protected TemplateWriter out;
-	private Data data_ = new Data();
 }

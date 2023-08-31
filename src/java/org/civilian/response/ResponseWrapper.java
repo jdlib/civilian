@@ -18,11 +18,11 @@ package org.civilian.response;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.Locale;
 import javax.servlet.http.Cookie;
 import org.civilian.request.Request;
-import org.civilian.template.TemplateWriter;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
@@ -158,7 +158,7 @@ public class ResponseWrapper implements Response
 	}
 
 
-	@Override public TemplateWriter getContentWriter() throws IOException
+	@Override public PrintWriter getContentWriter() throws IOException
 	{
 		return response_.getContentWriter();
 	}

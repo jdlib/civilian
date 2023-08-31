@@ -525,7 +525,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * The method may not be called if {@link #getContentStream()} was called before.
 	 * @see Application#getDefaultCharEncoding()
 	 */
-	public abstract TemplateWriter getContentWriter() throws IOException;
+	public abstract PrintWriter getContentWriter() throws IOException;
 
 	
 	/**

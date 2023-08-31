@@ -40,6 +40,20 @@ public class Data
 	
 	
 	/**
+	 * Adds the value.
+	 * @param value a non-null value
+	 */
+	public void addAll(Object... values)
+	{
+		if (values != null)
+		{
+			for (Object value : values)
+				add(value);
+		}
+	}
+
+	
+	/**
 	 * Returns the first value that has the given class.
 	 * @param cls a class
 	 * @return the value or null if not found.

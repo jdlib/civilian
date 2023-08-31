@@ -31,7 +31,6 @@ import org.civilian.content.ContentSerializer;
 import org.civilian.content.ContentType;
 import org.civilian.request.Request;
 import org.civilian.template.Template;
-import org.civilian.template.TemplateWriter;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;
 import org.civilian.util.Iterators;
@@ -159,15 +158,7 @@ public abstract class AbstractResponse implements Response
 	{
 		if (contentType != null)
 			setContentType(contentType);
-		template.getData().add(this);
-		try
-		{
-			template.print(getContentWriter());
-		}
-		finally
-		{
-			template.getData().remove(this);
-		}
+		template.print(getContentWriter(), this); // we provide the response as context data
 	}
 	
 	
@@ -217,11 +208,11 @@ public abstract class AbstractResponse implements Response
 	}
 
 
-	@Override public TemplateWriter getContentWriter() throws IOException
+	@Override public PrintWriter getContentWriter() throws IOException
 	{
 		if (!(contentOutput_ instanceof Writer))
 			initContentOutput(true /*we want a writer*/);
-		return (TemplateWriter)contentOutput_;
+		return (PrintWriter)contentOutput_;
 	}
 	
 	
@@ -280,7 +271,7 @@ public abstract class AbstractResponse implements Response
 		{
 			if (contentOutput_ != null)
 			{
-				if (!(contentOutput_ instanceof TemplateWriter))
+				if (!(contentOutput_ instanceof PrintWriter))
 					initContentWriterForError();
 			}
 		}
@@ -288,28 +279,27 @@ public abstract class AbstractResponse implements Response
 
 	
 	/**
-	 * Creates a TemplateWriter from a implementation writer.
+	 * Creates a PrintWriter from a implementation writer.
 	 * @param writerInterceptor a writer interceptor, can be null
 	 * @return writer successful created? 
 	 */
 	private boolean initContentWriterNoStream(ResponseInterceptor<Writer> writerInterceptor) throws IOException
 	{
-		PrintWriter originalWriter = getContentWriterImpl();
-		if (originalWriter == null)
+		PrintWriter writer = getContentWriterImpl();
+		if (writer == null)
 			return false;
 		else
 		{
-			contentOutput_ = originalWriter;
-			contentOutput_ = (writerInterceptor != null) ?
-				new InterceptedTemplateWriter(originalWriter, writerInterceptor) :
-				new TemplateWriter(originalWriter);
+			if (writerInterceptor != null)
+				writer = new InterceptedPrintWriter(writer, writerInterceptor);
+			contentOutput_ = writer;
 			return true;
 		}
 	}
 	
 		
 	/**
-	 * Creates a TemplateWriter from a implementation OutputStream.
+	 * Creates a PrintWriter from a implementation OutputStream.
 	 * @param streamInterceptor a stream interceptor, can be null
 	 * @param writerInterceptor a writer interceptor, can be null
 	 */
@@ -320,9 +310,9 @@ public abstract class AbstractResponse implements Response
 		contentOutput_ = originalStream;
 		
 		if ((streamInterceptor != null) || (writerInterceptor != null))
-			contentOutput_ = new InterceptedTemplateWriter(originalStream, streamInterceptor, writerInterceptor, charEncoding_);
+			contentOutput_ = new InterceptedPrintWriter(originalStream, streamInterceptor, writerInterceptor, charEncoding_);
 		else
-			contentOutput_ = new TemplateWriter(new OutputStreamWriter(originalStream, charEncoding_));
+			contentOutput_ = new PrintWriter(new OutputStreamWriter(originalStream, charEncoding_));
 	}
 		
 
@@ -333,7 +323,7 @@ public abstract class AbstractResponse implements Response
 	{
 		if (contentOutput_ instanceof OutputStream)
 			contentOutput_ = new OutputStreamWriter((OutputStream)contentOutput_, getCharEncoding());
-		contentOutput_ = new TemplateWriter((Writer)contentOutput_);
+		contentOutput_ = new PrintWriter((Writer)contentOutput_);
 	}
 	
 	

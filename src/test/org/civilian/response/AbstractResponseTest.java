@@ -19,6 +19,7 @@ package org.civilian.response;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Locale;
 import org.civilian.CivTest;
@@ -27,7 +28,6 @@ import org.civilian.resource.Resource;
 import org.civilian.server.test.TestApp;
 import org.civilian.server.test.TestRequest;
 import org.civilian.server.test.TestResponse;
-import org.civilian.template.TemplateWriter;
 import org.civilian.template.TextTemplate;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.keys.KeyLists;
@@ -147,7 +147,7 @@ public class AbstractResponseTest extends CivTest
 		assertNull(response.getCharEncoding());
 		assertSame(Response.ContentAccess.NONE, response.getContentAccess());
 
-		TemplateWriter out = response.getContentWriter();
+		PrintWriter out = response.getContentWriter();
 		
 		assertSame(app.getDefaultCharEncoding(), response.getCharEncoding());
 		response.setCharEncoding("x");
@@ -260,7 +260,7 @@ public class AbstractResponseTest extends CivTest
 		response.clear();
 		response.addInterceptor().forStream(interceptor1);
 		response.addInterceptor().forStream(interceptor2);
-		TemplateWriter writer = response.getContentWriter();
+		PrintWriter writer = response.getContentWriter();
 		writer.print('0');
 		assertEquals("def0", response.getContentText(true));
 
