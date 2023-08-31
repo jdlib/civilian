@@ -19,7 +19,7 @@ package org.civilian.server.servlet;
 import java.io.Flushable;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Writer;
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
@@ -128,7 +128,7 @@ class ServletResponseAdapter extends AbstractResponse
 	/**
 	 * Forwards to the HttpServletResponse.
 	 */
-	@Override protected Writer getContentWriterImpl() throws IOException
+	@Override protected PrintWriter getContentWriterImpl() throws IOException
 	{
 		return servletResponse_.getWriter();
 	}

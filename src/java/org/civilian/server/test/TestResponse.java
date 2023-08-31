@@ -21,7 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.Flushable;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Writer;
+import java.io.PrintWriter;
 import javax.servlet.http.Cookie;
 
 import org.civilian.application.Application;
@@ -157,7 +157,10 @@ public class TestResponse extends AbstractResponse
 	}
 
 	
-	@Override protected Writer getContentWriterImpl() throws IOException
+	/**
+	 * Returns null, Response will construct a Writer from the OutputStream instead.
+	 */
+	@Override protected PrintWriter getContentWriterImpl() throws IOException
 	{
 		return null;
 	}

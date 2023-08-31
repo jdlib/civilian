@@ -21,6 +21,7 @@ import java.io.Flushable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -293,7 +294,7 @@ public abstract class AbstractResponse implements Response
 	 */
 	private boolean initContentWriterNoStream(ResponseInterceptor<Writer> writerInterceptor) throws IOException
 	{
-		Writer originalWriter = getContentWriterImpl();
+		PrintWriter originalWriter = getContentWriterImpl();
 		if (originalWriter == null)
 			return false;
 		else
@@ -353,12 +354,12 @@ public abstract class AbstractResponse implements Response
 	
 	
 	/**
-	 * Provides a Writer to write text Response content.
+	 * Provides a PrintWriter to write text Response content.
 	 * In a servlet environment this returns HttpServletResponse#getWriter().
 	 * If an implementation does not have an own writer implementation
 	 * (but only OutputStreams, it should return null).
 	 */
-	protected abstract Writer getContentWriterImpl() throws IOException;
+	protected abstract PrintWriter getContentWriterImpl() throws IOException;
 	
 	
 	@Override public Response setContentLanguage(Locale locale)
