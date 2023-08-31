@@ -169,7 +169,7 @@ public class ServletRequestTest extends CivTest
 	{
 		init();
 
-		when(servletReq.getContentLength()).thenReturn(20);
+		when(servletReq.getContentLengthLong()).thenReturn(20L);
 		assertEquals(20L, request.getContentLength());
 
 		assertEquals(null, request.getCharEncoding());

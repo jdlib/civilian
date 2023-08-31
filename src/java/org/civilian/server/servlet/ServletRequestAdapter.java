@@ -24,11 +24,9 @@ import java.util.Iterator;
 import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.civilian.Logs;
 import org.civilian.application.Application;
 import org.civilian.content.ContentType;
 import org.civilian.request.AbstractRequest;
@@ -199,18 +197,7 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 	
 	@Override public long getContentLength()
 	{
-		if (GETCONTENT_LENGTH_LONG_METHOD != null)
-		{
-			try
-			{
-				return ((Long)GETCONTENT_LENGTH_LONG_METHOD.invoke(servletRequest_)).longValue();
-			}
-			catch(Exception e)
-			{
-				Logs.REQUEST.error("unexpected", e);
-			}
-		}
-		return servletRequest_.getContentLength();
+		return servletRequest_.getContentLengthLong();
 	}
 	
 	
@@ -482,17 +469,4 @@ abstract class ServletRequestAdapter extends AbstractRequest implements RequestS
 	protected final HttpServletRequest servletRequest_;
 	protected final HttpServletResponse servletResponse_;
 	private Headers headers_;
-	private static final java.lang.reflect.Method GETCONTENT_LENGTH_LONG_METHOD;
-	static 
-	{
-		java.lang.reflect.Method m = null;
-		try
-		{
-			m = ServletRequest.class.getMethod("getContentLengthLong");
-		}
-		catch(Exception e)
-		{
-		}
-		GETCONTENT_LENGTH_LONG_METHOD = m;
-	}
 }
