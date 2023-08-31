@@ -36,16 +36,16 @@ public class AjaxController extends Controller
 	}
 	
 	
-	@Get @Produces("text/html") public void get() throws Exception
+	@Get @Produces("text/html") public void get(Response response) throws Exception
 	{
 		// some browser require some content
-		PrintWriter out = getResponse().getContentWriter();
+		PrintWriter out = response.getContentWriter();
 		for (int i=0; i<20; i++)
 			out.write(JUNK);
 		out.flush();
 
 		// register the async-context
-		getApplication().addClient(getResponse().startAsync());
+		getApplication().addClient(response.startAsync());
 	}
 	
 	
