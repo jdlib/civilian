@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.civilian.request.Request;
 import org.civilian.response.AsyncContext;
 import org.civilian.response.AsyncEvent;
-import org.civilian.response.AsyncListener;
+import org.civilian.response.AsyncEventListener;
 import org.civilian.response.Response;
 
 
@@ -18,7 +18,7 @@ public class TestAsyncContext extends AsyncContext
 	}
 
 
-	@Override public void addListener(AsyncListener listener)
+	@Override public void addEventListener(AsyncEventListener listener)
 	{
 		if (listeners_ == null)
 			listeners_ = new ArrayList<>();
@@ -31,7 +31,7 @@ public class TestAsyncContext extends AsyncContext
 		if (listeners_ != null)
 		{
 			AsyncEvent event = new AsyncEvent(type, this);
-			for (AsyncListener listener : listeners_)
+			for (AsyncEventListener listener : listeners_)
 				listener.onEvent(event);
 		}
 	}
@@ -74,6 +74,6 @@ public class TestAsyncContext extends AsyncContext
 	}
 
 	
-	private ArrayList<AsyncListener> listeners_;
+	private ArrayList<AsyncEventListener> listeners_;
 	private long timeOut_ = 30000;
 }

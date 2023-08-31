@@ -17,10 +17,10 @@ package org.civilian.response;
 
 
 /**
- * AsyncListener gets notified when events occur on a AsyncContext.
- * @see AsyncContext#addListener(AsyncListener)
+ * AsyncEventListener gets notified when events occur on a AsyncContext.
+ * @see AsyncContext#addEventListener(AsyncEventListener)
  */
-public interface AsyncListener
+public interface AsyncEventListener
 {
 	/**
 	 * Notifies the listener.

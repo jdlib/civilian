@@ -17,7 +17,7 @@ package org.civilian.server.servlet;
 
 
 import org.civilian.response.AsyncContext;
-import org.civilian.response.AsyncListener;
+import org.civilian.response.AsyncEventListener;
 import org.civilian.util.Check;
 
 
@@ -32,10 +32,10 @@ class AsyncContextAdapter extends AsyncContext
 	}
 	
 	
-	@Override public void addListener(AsyncListener listener)
+	@Override public void addEventListener(AsyncEventListener listener)
 	{
 		Check.notNull(listener, "listener");
-		contextImpl_.addListener(new AsyncListenerAdapter(listener, this));
+		contextImpl_.addListener(new AsyncEventListenerAdapter(listener, this));
 	}
 	
 

@@ -35,7 +35,7 @@ public class ScanTest extends CivTest
 		assertTrue(adapters.contains("org.civilian.server.servlet.SpRequestAdapter"));
 		assertTrue(adapters.contains("org.civilian.server.servlet.SessionAdapter"));
 		assertTrue(adapters.contains("org.civilian.server.servlet.AsyncContextAdapter"));
-		assertTrue(adapters.contains("org.civilian.server.servlet.AsyncListenerAdapter"));
+		assertTrue(adapters.contains("org.civilian.server.servlet.AsyncEventListenerAdapter"));
 	}
 
 

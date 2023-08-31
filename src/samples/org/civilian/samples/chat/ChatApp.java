@@ -24,7 +24,7 @@ import org.civilian.application.AppConfig;
 import org.civilian.application.Application;
 import org.civilian.response.AsyncContext;
 import org.civilian.response.AsyncEvent;
-import org.civilian.response.AsyncListener;
+import org.civilian.response.AsyncEventListener;
 import org.civilian.util.Check;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,12 +68,12 @@ public class ChatApp extends Application
 	public void addClient(AsyncContext context)
 	{
 		context.setTimeout(10*60*1000); // 10 minutes
-		context.addListener(new Listener());
+		context.addEventListener(new Listener());
 		asyncContexts_.add(context);
 	}
 	
 	
-	private class Listener implements AsyncListener
+	private class Listener implements AsyncEventListener
 	{
 		@Override public void onEvent(AsyncEvent event)
 		{

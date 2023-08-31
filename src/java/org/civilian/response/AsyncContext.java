@@ -36,9 +36,9 @@ public abstract class AsyncContext
 	
 	
 	/**
-	 * Adds a new AsyncListener to the context
+	 * Adds a new AsyncEventListener to the context
 	 */
-	public abstract void addListener(AsyncListener listener);
+	public abstract void addEventListener(AsyncEventListener listener);
 	
 	
 	/**
@@ -88,7 +88,7 @@ public abstract class AsyncContext
 	/**
 	 * Sets the timeout in milliseconds. If {@link #complete()} is not called within
 	 * the timeout duration, the response is stopped and a timeout event is 
-	 * sent to any AsyncListener. 
+	 * sent to any AsyncEventListener. 
 	 * @param milliSeconds the timeout in milliSeconds. If &lt;= 0, no timeout is applied.
 	 */
 	public abstract void setTimeout(long milliSeconds);

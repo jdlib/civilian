@@ -19,13 +19,13 @@ package org.civilian.server.servlet;
 import java.io.IOException;
 import org.civilian.response.AsyncContext;
 import org.civilian.response.AsyncEvent;
-import org.civilian.response.AsyncListener;
+import org.civilian.response.AsyncEventListener;
 import org.civilian.response.AsyncEvent.Type;
 
 
-class AsyncListenerAdapter implements javax.servlet.AsyncListener
+class AsyncEventListenerAdapter implements javax.servlet.AsyncListener
 {
-	public AsyncListenerAdapter(org.civilian.response.AsyncListener listener, AsyncContext context)
+	public AsyncEventListenerAdapter(org.civilian.response.AsyncEventListener listener, AsyncContext context)
 	{
 		context_	= context;
 		listener_ 	= listener;
@@ -63,6 +63,6 @@ class AsyncListenerAdapter implements javax.servlet.AsyncListener
 	}
 	
 	
-	private final AsyncListener listener_;
+	private final AsyncEventListener listener_;
 	private final AsyncContext context_;
 }
