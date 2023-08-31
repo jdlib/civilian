@@ -16,26 +16,8 @@
 package org.civilian.samples.crm.web;
 
 
-import org.civilian.asset.AssetList;
-
-
 public interface CrmConstants
 {
 	public static final String ATTR_USER = "user";
 	public static final String LOGIN_PATH_PARAM = "path";
-	
-
-	// CSS_ASSETS contains all css-assets by the crm application
-	// PageTemplate uses it to print the stylesheet links
-	public static final AssetList CSS_ASSETS = new AssetList
-	(
-		// this is a css list:
-		AssetList.CSS_TYPE,	
-		// items:
-		"css/lib/bootstrap.css", 
-		"css/lib/toastr.css",
-		"css/lib/flick/jquery-ui-1.10.3.custom.min.css",
-		"css/samples.css",
-		"css/crm.css"
-	); 
 }

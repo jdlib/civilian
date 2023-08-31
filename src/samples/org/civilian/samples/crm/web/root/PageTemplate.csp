@@ -4,7 +4,6 @@ import org.civilian.resource.Path
 import org.civilian.template.Template
 import org.civilian.text.msg.MsgId
 import ../../text.Message
-import ../CrmConstants
 import ../CrmResources
 import ../SessionUser
 import ../util.Script
@@ -20,7 +19,11 @@ template(Response response, Template content, Script script, SessionUser session
 		@html.metaContentType();
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>Civilian CRM</title>
-		<%CrmConstants.CSS_ASSETS%>
+		@html.linkCss("css/lib/bootstrap.css");
+		@html.linkCss("css/lib/toastr.css");
+		@html.linkCss("css/lib/flick/jquery-ui-1.10.3.custom.min.css");
+		@html.linkCss("css/samples.css");
+		@html.linkCss("css/crm.css");
 	</head>
 	<body<%?showNavigation%> ng-controller="MenuController"<%?%>>
 	<div class="navbar navbar-fixed-top">
