@@ -21,7 +21,7 @@ import org.civilian.util.Check;
 
 /**
  * AsyncEvent represents an event of asynchronous request processing.
- * An AsyncEvent is issued by a {@link AsyncContext AsyncContext} and delivered
+ * An AsyncEvent is issued by a {@link AsyncContext} and delivered
  * to {@link AsyncListener}s.
  */
 public class AsyncEvent
