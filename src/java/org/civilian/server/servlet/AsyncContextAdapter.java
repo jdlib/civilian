@@ -18,7 +18,7 @@ package org.civilian.server.servlet;
 
 import org.civilian.response.AsyncContext;
 import org.civilian.response.AsyncEventListener;
-import org.civilian.util.Check;
+import org.civilian.response.AsyncWriteListener;
 
 
 class AsyncContextAdapter extends AsyncContext
@@ -26,7 +26,7 @@ class AsyncContextAdapter extends AsyncContext
 	public AsyncContextAdapter(ServletRequestAdapter request, ServletResponseAdapter response)
 	{
 		super(request, response);
-		contextImpl_ = request.getServletRequest().startAsync(
+		servletAsyncContext_ = request.getServletRequest().startAsync(
 			request.getServletRequest(),
 			response.getServletResponse());
 	}
@@ -34,47 +34,52 @@ class AsyncContextAdapter extends AsyncContext
 	
 	@Override public void addEventListener(AsyncEventListener listener)
 	{
-		Check.notNull(listener, "listener");
-		contextImpl_.addListener(new AsyncEventListenerAdapter(listener, this));
+		servletAsyncContext_.addListener(new AsyncEventListenerAdapter(listener, this));
+	}
+
+
+	@Override public void addWriteListener(AsyncWriteListener listener) 
+	{
+		throw new Error("not yet implemented");
 	}
 	
 
 	@Override public void complete()
 	{
 		getResponse().closeContent();
-		contextImpl_.complete();
+		servletAsyncContext_.complete();
 	}
 	
 
 	@Override public void dispatch()
 	{
-		contextImpl_.dispatch();
+		servletAsyncContext_.dispatch();
 	}
 
 	
 	@Override public void dispatch(String path)
 	{
-		contextImpl_.dispatch(path);
+		servletAsyncContext_.dispatch(path);
 	}
 	
 
 	@Override public long getTimeout()
 	{
-		return contextImpl_.getTimeout();
+		return servletAsyncContext_.getTimeout();
 	}
 
 	
 	@Override public void setTimeout(long timeout)
 	{
-		contextImpl_.setTimeout(timeout);
+		servletAsyncContext_.setTimeout(timeout);
 	}
 
 
 	@Override public void start(Runnable runnable) 
 	{
-		contextImpl_.start(runnable);
+		servletAsyncContext_.start(runnable);
 	}
 
 	
-	private final javax.servlet.AsyncContext contextImpl_;
+	private final javax.servlet.AsyncContext servletAsyncContext_;
 }

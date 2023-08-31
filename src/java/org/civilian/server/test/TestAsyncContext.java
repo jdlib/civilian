@@ -2,11 +2,12 @@ package org.civilian.server.test;
 
 
 import java.util.ArrayList;
-
+import java.util.List;
 import org.civilian.request.Request;
 import org.civilian.response.AsyncContext;
 import org.civilian.response.AsyncEvent;
 import org.civilian.response.AsyncEventListener;
+import org.civilian.response.AsyncWriteListener;
 import org.civilian.response.Response;
 
 
@@ -20,18 +21,22 @@ public class TestAsyncContext extends AsyncContext
 
 	@Override public void addEventListener(AsyncEventListener listener)
 	{
-		if (listeners_ == null)
-			listeners_ = new ArrayList<>();
-		listeners_.add(listener);
+		eventListeners_.add(listener);
 	}
 	
 	
+	@Override public void addWriteListener(AsyncWriteListener listener)
+	{
+		writeListeners_.add(listener);
+	}
+
+	
 	private void fire(AsyncEvent.Type type)
 	{
-		if (listeners_ != null)
+		if (eventListeners_ != null)
 		{
 			AsyncEvent event = new AsyncEvent(type, this);
-			for (AsyncEventListener listener : listeners_)
+			for (AsyncEventListener listener : eventListeners_)
 				listener.onEvent(event);
 		}
 	}
@@ -74,6 +79,7 @@ public class TestAsyncContext extends AsyncContext
 	}
 
 	
-	private ArrayList<AsyncEventListener> listeners_;
+	private List<AsyncEventListener> eventListeners_ = new ArrayList<>();
+	private List<AsyncWriteListener> writeListeners_ = new ArrayList<>();
 	private long timeOut_ = 30000;
 }

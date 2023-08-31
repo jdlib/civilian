@@ -37,8 +37,16 @@ public abstract class AsyncContext
 	
 	/**
 	 * Adds a new AsyncEventListener to the context
+	 * @param listener the listener
 	 */
 	public abstract void addEventListener(AsyncEventListener listener);
+	
+	
+	/**
+	 * Adds a new AsyncWriteListener to the context
+	 * @param listener the listener
+	 */
+	public abstract void addWriteListener(AsyncWriteListener listener);
 	
 	
 	/**

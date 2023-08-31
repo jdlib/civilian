@@ -21,14 +21,15 @@ import org.civilian.response.AsyncContext;
 import org.civilian.response.AsyncEvent;
 import org.civilian.response.AsyncEventListener;
 import org.civilian.response.AsyncEvent.Type;
+import org.civilian.util.Check;
 
 
 class AsyncEventListenerAdapter implements javax.servlet.AsyncListener
 {
 	public AsyncEventListenerAdapter(org.civilian.response.AsyncEventListener listener, AsyncContext context)
 	{
-		context_	= context;
-		listener_ 	= listener;
+		listener_ 	= Check.notNull(listener, "listener");
+		context_	= Check.notNull(context, "context");
 	}
 	
 	
