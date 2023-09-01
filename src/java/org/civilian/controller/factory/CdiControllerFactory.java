@@ -73,7 +73,7 @@ public class CdiControllerFactory implements ControllerFactory
     
 	/**
 	 * Creates a new CdiControllerFactory.
-	 * @throws IllegalStateException if the CDI BeanManager cannot be obtained
+	 * @param beanManager the beanManager used by the factory 
 	 */
 	public CdiControllerFactory(BeanManager beanManager)
 	{

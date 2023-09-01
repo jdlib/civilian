@@ -46,6 +46,7 @@ public abstract class MethodArg
 	 * @param request the request
 	 * @param response the response
 	 * @param value the argument value previously created by {@link #getValue(Request, Response)}.
+	 * @throws Exception allowed to throw any exception
 	 */
 	public void postProcess(Request request, Response response, Object value) throws Exception
 	{

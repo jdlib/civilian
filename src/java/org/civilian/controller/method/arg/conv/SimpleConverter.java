@@ -51,7 +51,9 @@ public abstract class SimpleConverter<T> extends Converter<T>
 	 * Converts a string parameter into a value.
 	 * @param arg the call argument which provided the string value or null	if 
 	 * 		not called in the context of a argument injection
+	 * @param serializer the serializer
 	 * @param stringValue the value, must not be null.
+	 * @return the value
 	 * @throws Exception thrown if conversion throws an error. If arg is not null, 
 	 * 		the error is catched and turned into a BadRequestException 
 	 */
@@ -77,7 +79,10 @@ public abstract class SimpleConverter<T> extends Converter<T>
 	
 	/**
 	 * Converts a string parameter into a value.
+	 * @param serializer the serializer to use
 	 * @param stringValue the value, must not be null.
+	 * @throws Exception thrown if a conversion error occurs
+	 * @return the converted value
 	 */
 	protected abstract T convertImpl(TypeSerializer serializer, String stringValue) throws Exception;
 

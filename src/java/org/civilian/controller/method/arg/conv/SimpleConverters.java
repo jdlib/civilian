@@ -36,6 +36,7 @@ public abstract class SimpleConverters
 	 * Creates a new SimpleConverter. 
 	 * @param typeLib a type library 
 	 * @param c the class. SimpleConverter does not handle parameterized types.
+	 * @param <T> the return type
 	 * @return the converter or null if class c is not supported 
 	 */
 	@SuppressWarnings("unchecked")

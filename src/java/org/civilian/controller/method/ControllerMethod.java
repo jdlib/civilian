@@ -175,7 +175,7 @@ public class ControllerMethod
 
 	
 	/**
-	 * @param connect the ContentNegotiation
+	 * @param conneg the ContentNegotiation
 	 * @return if this action can produce a ContentType which is more than suitable
 	 * than the previously best type found by the ContentNegotiation.
 	 */
