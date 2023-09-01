@@ -312,7 +312,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * A builder for Urls.
 	 * @param <T> the result type of the build process.
 	 */
-	public static class UrlBuilder<T,E extends Throwable>
+	public static class UrlBuilder<T,E extends Exception>
 	{
 		protected UrlBuilder(Response response, CheckedFunction<Url,T,E> end)
 		{

@@ -16,9 +16,17 @@
 package org.civilian.server.servlet;
 
 
+import java.io.IOException;
+
+import javax.servlet.ServletInputStream;
+import javax.servlet.ServletOutputStream;
+
 import org.civilian.response.AsyncContext;
 import org.civilian.response.AsyncEventListener;
-import org.civilian.response.AsyncWriteListener;
+import org.civilian.response.AsyncInput;
+import org.civilian.response.AsyncOutput;
+import org.civilian.util.Check;
+import org.civilian.util.CheckedRunnable;
 
 
 class AsyncContextAdapter extends AsyncContext
@@ -38,13 +46,29 @@ class AsyncContextAdapter extends AsyncContext
 	}
 
 
-	@Override public void addWriteListener(AsyncWriteListener listener) 
+	@Override public AsyncInput getAsyncInput() throws IOException
 	{
-		throw new Error("not yet implemented");
+		if (asyncInput_ == null)
+		{
+			ServletInputStream in = Check.isA(getRequest().getContentStream(), ServletInputStream.class);
+			asyncInput_ = new AsyncInputAdapter(in);
+		}
+		return asyncInput_;
+	}
+
+	
+	@Override public AsyncOutput getAsyncOutput() throws IOException
+	{
+		if (asyncOutput_ == null)
+		{
+			ServletOutputStream out = Check.isA(getResponse().getContentStream(), ServletOutputStream.class);
+			asyncOutput_ = new AsyncOutputAdapter(out);
+		}
+		return asyncOutput_;
 	}
 	
 
-	@Override public void complete()
+	@Override protected void completeImpl()
 	{
 		getResponse().closeContent();
 		servletAsyncContext_.complete();
@@ -75,11 +99,14 @@ class AsyncContextAdapter extends AsyncContext
 	}
 
 
-	@Override public void start(Runnable runnable) 
+	@Override public void start(CheckedRunnable<?> runnable) 
 	{
-		servletAsyncContext_.start(runnable);
+		Check.notNull(runnable, "runnable");
+		servletAsyncContext_.start(runnable.unchecked());
 	}
 
 	
 	private final javax.servlet.AsyncContext servletAsyncContext_;
+	private AsyncInputAdapter asyncInput_;
+	private AsyncOutputAdapter asyncOutput_;
 }

@@ -9,12 +9,11 @@ import java.util.function.Function;
  * Similar to {@link Function} but allows to throw checked exceptions.
  * @param <T> the type of the input to the function
  * @param <R> the type of the result of the function
- * @param <E> the type of the Throwable
+ * @param <E> the type of the Exception
  */
 @FunctionalInterface
-public interface CheckedFunction<T, R, E extends Throwable> 
+public interface CheckedFunction<T, R, E extends Exception> 
 {
-
     /**
      * Applies this function to the given argument.
      *

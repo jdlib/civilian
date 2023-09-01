@@ -19,7 +19,7 @@
 		<dependency conf="build->master" org="javax.el" name="el-api" rev="1.0"/>
 		<dependency conf="build->master" org="org.apache.poi" name="poi" rev="4.0.1"/>
 		<dependency conf="build->master" org="org.apache.poi" name="poi-ooxml" rev="4.0.1"/>
-		<dependency conf="build->master" org="org.apache.tomcat" name="tomcat-catalina" rev="7.0.54"/>
+		<dependency conf="build->master,sources" org="org.apache.tomcat" name="tomcat-catalina" rev="9.0.80"/>
 		<dependency conf="build->master" org="org.apache.velocity" name="velocity" rev="1.7"/>
 		<dependency conf="build->master" org="org.eclipse.jetty.aggregate" name="jetty-all-server" rev="8.1.15.v20140411"/>
 		<dependency conf="build->master" org="org.eclipse.persistence" name="javax.persistence" rev="2.1.0"/>

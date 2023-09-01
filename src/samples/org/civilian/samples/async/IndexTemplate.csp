@@ -1,0 +1,16 @@
+template mixin html
+{{
+	<!DOCTYPE html>
+	<html>
+	<head>
+		@html.metaContentType();
+		@html.linkCss("css/lib/bootstrap.css"); 
+		@html.linkCss("css/samples.css");
+		<title>Civilian Async Sample</title>
+	</head>
+	<body>
+		<h1>Async Sample</h1>
+		<a href="<%html.url(RunnableController.class)%>" target="_blank">Running async in a new thread</a>.
+	</body>
+	</html>
+}}

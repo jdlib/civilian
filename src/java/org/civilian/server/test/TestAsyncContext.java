@@ -7,8 +7,11 @@ import org.civilian.request.Request;
 import org.civilian.response.AsyncContext;
 import org.civilian.response.AsyncEvent;
 import org.civilian.response.AsyncEventListener;
-import org.civilian.response.AsyncWriteListener;
+import org.civilian.response.AsyncInput;
+import org.civilian.response.AsyncOutput;
 import org.civilian.response.Response;
+import org.civilian.util.Check;
+import org.civilian.util.CheckedRunnable;
 
 
 public class TestAsyncContext extends AsyncContext
@@ -25,9 +28,15 @@ public class TestAsyncContext extends AsyncContext
 	}
 	
 	
-	@Override public void addWriteListener(AsyncWriteListener listener)
+	@Override public AsyncInput getAsyncInput()
 	{
-		writeListeners_.add(listener);
+		throw new UnsupportedOperationException();
+	}
+
+	
+	@Override public AsyncOutput getAsyncOutput()
+	{
+		throw new UnsupportedOperationException();
 	}
 
 	
@@ -42,7 +51,7 @@ public class TestAsyncContext extends AsyncContext
 	}
 	
 
-	@Override public void complete()
+	@Override protected void completeImpl()
 	{
 		getResponse().closeContent();
 		fire(AsyncEvent.Type.COMPLETE);
@@ -73,13 +82,20 @@ public class TestAsyncContext extends AsyncContext
 	}
 	
 	
-	@Override public void start(Runnable runnable) 
+	@Override public void start(CheckedRunnable<? extends Exception> runnable) 
 	{
-		runnable.run();
+		Check.notNull(runnable, "runnable");
+		try 
+		{
+			runnable.run();
+		} 
+		catch (Throwable e) 
+		{
+			throw new IllegalStateException("error when running " + runnable, e);
+		}
 	}
 
 	
 	private List<AsyncEventListener> eventListeners_ = new ArrayList<>();
-	private List<AsyncWriteListener> writeListeners_ = new ArrayList<>();
 	private long timeOut_ = 30000;
 }

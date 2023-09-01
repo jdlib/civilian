@@ -16,7 +16,12 @@
 package org.civilian.response;
 
 
+import java.io.IOException;
+
 import org.civilian.request.Request;
+import org.civilian.util.Check;
+import org.civilian.util.CheckedConsumer;
+import org.civilian.util.CheckedRunnable;
 
 
 /**
@@ -43,16 +48,40 @@ public abstract class AsyncContext
 	
 	
 	/**
-	 * Adds a new AsyncWriteListener to the context
-	 * @param listener the listener
+	 * Return the AsyncInput of the context. 
+	 * @throws IOException if an IO error occurs
 	 */
-	public abstract void addWriteListener(AsyncWriteListener listener);
+	public abstract AsyncInput getAsyncInput() throws IOException;
+	
+	
+	/**
+	 * Return the AsyncOutput of the context. 
+	 * @throws IOException if an IO error occurs
+	 */
+	public abstract AsyncOutput getAsyncOutput() throws IOException;
 	
 	
 	/**
 	 * Completes the asynchronous request and closes the associated response. 
 	 */
-	public abstract void complete();
+	public void complete()
+	{
+		if (!completed_)
+		{
+			completed_ = true;
+			completeImpl();
+		}
+	}
+	
+	
+	protected abstract void completeImpl();
+	
+	
+	public boolean isCompleted()
+	{
+		return completed_;
+	}
+	
 	
 	
 	/**
@@ -87,9 +116,16 @@ public abstract class AsyncContext
 	}
 	
 	
-	public abstract void start(Runnable runnable);
+	public abstract void start(CheckedRunnable<?> runnable);
 
 
+	public void start(CheckedConsumer<AsyncContext, ?> consumer)
+	{
+		Check.notNull(consumer, "consumer");
+		start(() -> consumer.accept(this));
+	}
+
+	
 	public abstract long getTimeout();
 
 
@@ -104,4 +140,5 @@ public abstract class AsyncContext
 	
 	private final Request request_;
 	private final Response response_;
+	private boolean completed_;
 }
