@@ -411,7 +411,8 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	 * The locale data can be set explicitly by {@link #setLocaleService(LocaleService)}.
 	 * If not explicitly set, it is derived from the preferred locale ({@link Request#getAcceptedLocale()}).
 	 * If the preferred locale is not contained in the list of supported locales (see {@link Application#getLocaleServices()})
-	 * then the default application locale will be used.  
+	 * then the default application locale will be used.
+	 * @return the service  
 	 */
 	@Override public LocaleService getLocaleService();
 	
@@ -420,6 +421,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	 * Sets the locale data associated with the request.
 	 * This overrides the default locale data, as defined by the preferred locale.
 	 * A use case is to set the locale according to the preferences stored in a user session.
+	 * @param service the service
 	 */
 	public void setLocaleService(LocaleService service);
 
@@ -427,6 +429,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	/**
 	 * Sets the locale data associated with the request to the locale data with
 	 * the given locale
+	 * @param locale the locale
 	 */
 	public default void setLocaleService(Locale locale)
 	{
@@ -497,6 +500,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	
 	/**
 	 * Overrides the content type of the request.
+	 * @param contentType the content type
 	 */
 	public void setContentType(ContentType contentType);
 	
@@ -528,7 +532,10 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	/**
 	 * Reads the content and transforms it into an Object of the given type.
 	 * This method is a shortcut for readContent(type, type).
+	 * @param type the class
+	 * @param <T> the class type
 	 * @return the transformed content
+	 * @throws Exception thrown during read
 	 */
 	public default <T> T readContent(Class<T> type) throws Exception
 	{
@@ -542,12 +549,14 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	 * to read the content.
 	 * @param type the type of the expected object
 	 * @param genericType the generic type of the expected object or null not known
+	 * @param <T> the class type
+	 * @throws BadRequestException if the ContentSerializer
+	 * 		recognizes bad syntax in the content.
 	 * @throws Exception if reading throws a runtime exception or no suitable
 	 * 		content reader is available.
-	 * 		The exception is a {@link BadRequestException} if the ContentSerializer
-	 * 		recognized bad syntax in the content.  
 	 * @see Application#getContentSerializers()
 	 * @see ContentSerializer#read(Class, java.lang.reflect.Type, Reader)
+	 * @return the content object
 	 */
 	public default <T> T readContent(Class<T> type, java.lang.reflect.Type genericType) 
 		throws BadRequestException, Exception
@@ -675,6 +684,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	
 	/**
 	 * Prints request info to the PrintStream.
+	 * @param out a PrintStream
 	 */
 	public default void print(PrintStream out)
 	{
@@ -685,6 +695,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	
 	/**
 	 * Prints request info to the PrintWriter.
+	 * @param out a PrintWriter
 	 */
 	public default void print(PrintWriter out)
 	{
@@ -710,6 +721,8 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	 * Returns the underlying implementation of the request which has the given class
 	 * or null, if the implementation has a different class.
 	 * In a servlet environment Request wraps a HttpServletRequest.
+	 * @param implClass a class
+	 * @param <T> a class type
 	 * @return the implementation
 	 */
 	public <T> T unwrap(Class<T> implClass);

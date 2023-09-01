@@ -134,6 +134,8 @@ public class ConvertingArg<T> extends MethodArg
 	 * Creates a new ConvertingArg object.
 	 * @param arg the inner arg
 	 * @param defaultValue the default value, if the parameter is not part of the request
+	 * @param isLocaleValue true if the locale serializer should be applied, false for standard serializer
+	 * @param converter a converter
 	 */
 	protected ConvertingArg(StringMethodArg arg, T defaultValue, boolean isLocaleValue, Converter<T> converter)
 	{

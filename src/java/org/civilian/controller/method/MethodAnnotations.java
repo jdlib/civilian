@@ -43,6 +43,7 @@ public class MethodAnnotations
 	 * <li>the method is public and not static and has return type void
 	 * <li>at least one {@link RequestMethod} annotation is present on the method itself or one of its overridden ancestors
 	 * </ul>
+	 * @param javaMethod the java method
 	 * @return a MethodAnnotations object or null
 	 */
 	public static MethodAnnotations of(Method javaMethod)

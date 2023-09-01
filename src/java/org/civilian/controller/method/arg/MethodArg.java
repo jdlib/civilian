@@ -33,6 +33,7 @@ public abstract class MethodArg
 	 * Returns the value of the argument for the given request.
 	 * @param request the request
 	 * @param response the response
+	 * @return the value
 	 * @throws Exception thrown if an error occurs when extracting the value.
 	 * 		The MethodArg should throw a {@link BadRequestException}
 	 * 		to indicate that the request had syntactic errors.
@@ -53,6 +54,9 @@ public abstract class MethodArg
 
 	/**
 	 * Helper method to build a string representation of the argument plus a name.
+	 * @param arg an argument
+	 * @param name it's name
+	 * @return the string representation
 	 */
 	protected String toString(String arg, String name)
 	{
