@@ -143,6 +143,16 @@ public abstract class SecuredController extends CrmController
 	}
 	
 	
+	/**
+	 * Does the HTML representation of the resource show the main navigation
+	 * menu-bar? 
+	 */
+	protected boolean showMenuBar()
+	{
+		return false;
+	}
+	
+	
 	public abstract String getModuleController();
 	
 	

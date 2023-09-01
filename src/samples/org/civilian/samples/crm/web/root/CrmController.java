@@ -33,14 +33,4 @@ public abstract class CrmController extends Controller implements CrmResources
 	{
 		return (CrmApp)super.getApplication();
 	}
-	
-	
-	/**
-	 * Does the HTML representation of the resource show the main navigation
-	 * menu-bar? 
-	 */
-	protected boolean showMenuBar()
-	{
-		return false;
-	}
 }
