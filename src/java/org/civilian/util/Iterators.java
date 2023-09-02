@@ -17,10 +17,10 @@ package org.civilian.util;
 
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -34,7 +34,7 @@ public abstract class Iterators
 	 */
 	public static <T> Iterator<T> empty()
 	{
-		return Collections.<T>emptyList().iterator();	
+		return List.<T>of().iterator(); 
 	}
 
 	

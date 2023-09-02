@@ -26,7 +26,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -265,7 +264,7 @@ public class ResBundleCompiler
 	
 	private void compileConstants(String packageName, List<Translation> translations)
 	{
-		Collections.sort(translations);
+		translations.sort(null);
 		ConstClassTemplate t = new ConstClassTemplate(config_, packageName, generationTime_, translations);
 		t.print(constantsOutput_.out);
 	}

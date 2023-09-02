@@ -16,7 +16,6 @@
 package org.civilian.util.http;
 
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -35,7 +34,7 @@ import org.civilian.util.Value;
 public class HeaderMap
 {
 	private static final String[] EMPTY_VALUES = new String[0];
-	public static final HeaderMap EMPTY = new HeaderMap(false, Collections.<String, String[]>emptyMap() /*immutable*/);
+	public static final HeaderMap EMPTY = new HeaderMap(false, Map.of() /*immutable*/);
 
 	
 	public HeaderMap()

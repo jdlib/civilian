@@ -11,6 +11,7 @@ public class OutputController extends Controller
 	@Get
 	public void get()
 	{
+		@SuppressWarnings("unused")
 		AsyncContext context = getResponse().startAsync();
 	}
 }

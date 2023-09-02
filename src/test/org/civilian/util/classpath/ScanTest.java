@@ -28,7 +28,7 @@ public class ScanTest extends CivTest
 		ClassPathScan scan = new ClassPathScan("org.civilian.server.servlet");
 		Set<String> adapters = scan.collect(className -> className.endsWith("Adapter"));
 		
-		assertEquals(7, adapters.size());
+		assertEquals(9, adapters.size());
 		assertTrue(adapters.contains("org.civilian.server.servlet.ServletResponseAdapter"));
 		assertTrue(adapters.contains("org.civilian.server.servlet.ServletRequestAdapter"));
 		assertTrue(adapters.contains("org.civilian.server.servlet.MpRequestAdapter"));
@@ -36,6 +36,8 @@ public class ScanTest extends CivTest
 		assertTrue(adapters.contains("org.civilian.server.servlet.SessionAdapter"));
 		assertTrue(adapters.contains("org.civilian.server.servlet.AsyncContextAdapter"));
 		assertTrue(adapters.contains("org.civilian.server.servlet.AsyncEventListenerAdapter"));
+		assertTrue(adapters.contains("org.civilian.server.servlet.AsyncInputAdapter"));
+		assertTrue(adapters.contains("org.civilian.server.servlet.AsyncOutputAdapter"));
 	}
 
 

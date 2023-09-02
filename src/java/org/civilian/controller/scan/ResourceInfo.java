@@ -17,8 +17,6 @@ package org.civilian.controller.scan;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
-
 import org.civilian.controller.ControllerResourceData;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.resource.Resource;
@@ -164,7 +162,7 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 	{
 		if (children_ != null)
 		{
-			Collections.sort(children_);
+			children_.sort(null);
 			for (ResourceInfo child : children_)
 				child.sortChildren();
 		}

@@ -17,7 +17,6 @@ package org.civilian.content;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -78,7 +77,7 @@ public class ContentTypeList implements Iterable<ContentType>
 			}
 		}
 		if ((comparator != null) && (types.size() > 1))
-			Collections.sort(types, comparator);
+			types.sort(comparator);
 
 		return new ContentTypeList(exception, types);
 	}

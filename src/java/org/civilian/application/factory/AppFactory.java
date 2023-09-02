@@ -2,7 +2,6 @@ package org.civilian.application.factory;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import org.civilian.ConfigKeys;
@@ -113,7 +112,7 @@ public class AppFactory
 				}
 			}
 		}
-		Collections.sort(ids);
+		ids.sort(null);
 		return ids;
 	}
 	
