@@ -41,6 +41,7 @@ public class AssetDispatch extends Processor
 {
 	/**
 	 * Creates a new AssetDispatch.
+	 * @param prohibitedTest a predicate to test if a path is prohibited for asset dispatch
 	 * @param assetService the asset service used by the AssetDispatch.
 	 */
 	public AssetDispatch(Predicate<String> prohibitedTest, AssetService assetService)

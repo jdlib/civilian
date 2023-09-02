@@ -23,25 +23,25 @@ package org.civilian.request;
 public abstract class LocalInfo
 {
 	/**
-	 * Returns the address of the IP interface on which the request was received.
+	 * @return the address of the IP interface on which the request was received.
 	 */
 	public abstract String getIp();
 	
 
 	/**
-	 * Returns the host name of the IP interface on which the request was received.
+	 * @return the host name of the IP interface on which the request was received.
 	 */
 	public abstract String getHost();
 
 	
 	/**
-	 * Returns the port of the IP interface on which the request was received.
+	 * @return the port of the IP interface on which the request was received.
 	 */
 	public abstract int getPort();
 	
 
 	/**
-	 * Returns a descriptive info string of the LocalInfo.
+	 * @return a descriptive info string of the LocalInfo.
 	 */
 	@Override public String toString()
 	{

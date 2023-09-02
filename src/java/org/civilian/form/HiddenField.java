@@ -31,6 +31,7 @@ public class HiddenField<T> extends Control<T>
 	/**
 	 * Creates a HiddenField with string type.
 	 * @param name the field name
+	 * @return the HiddenField
 	 */
 	public static HiddenField<String> create(String name)
 	{
@@ -42,6 +43,7 @@ public class HiddenField<T> extends Control<T>
 	 * Creates a HiddenField with string type.
 	 * @param name the field name
 	 * @param value the field value
+	 * @return the HiddenField
 	 */
 	public static HiddenField<String> create(String name, String value)
 	{
@@ -55,6 +57,7 @@ public class HiddenField<T> extends Control<T>
 	 * Creates a HiddenField with integer type.
 	 * @param name the field name
 	 * @param value the field value
+	 * @return the HiddenField
 	 */
 	public static HiddenField<Integer> create(String name, int value)
 	{
@@ -66,6 +69,7 @@ public class HiddenField<T> extends Control<T>
 	 * Creates a HiddenField with integer type.
 	 * @param name the field name
 	 * @param value the field value
+	 * @return the HiddenField
 	 */
 	public static HiddenField<Integer> create(String name, Integer value)
 	{
@@ -88,7 +92,7 @@ public class HiddenField<T> extends Control<T>
 
 	
 	/**
-	 * Returns the type of the keylist.
+	 * @return the type of the keylist.
 	 */
 	@Override public Type<T> getType()
 	{
@@ -97,7 +101,7 @@ public class HiddenField<T> extends Control<T>
 
 	
 	/**
-	 * Returns Category.HIDDEN. 
+	 * @return Category.HIDDEN. 
 	 */
 	@Override public Category getCategory()
 	{
@@ -106,7 +110,7 @@ public class HiddenField<T> extends Control<T>
 	
 	
 	/**
-	 * Prints the field markup.
+	 * {@inheritDoc}
 	 */
 	@Override public void print(CspWriter out, String... attrs)
 	{
@@ -120,7 +124,7 @@ public class HiddenField<T> extends Control<T>
 	
 	
 	/**
-	 * Returns null.
+	 * @return null.
 	 */
 	@Override public Control<?> toInputField()
 	{

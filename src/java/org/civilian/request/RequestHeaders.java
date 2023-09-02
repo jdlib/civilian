@@ -28,14 +28,14 @@ import org.civilian.util.Value;
 public interface RequestHeaders extends Iterable<String>
 {
 	/**
-	 * Returns if the request contains a header with that name. 
+	 * @return if the request contains a header with that name. 
 	 * @param name the case insensitive header name
 	 */
 	public boolean contains(String name);
 	
 	
 	/**
-	 * Returns if the value of the header equals the given value.
+	 * @return if the value of the header equals the given value.
 	 * @param name the case insensitive header name
 	 * @param value the comparison value
 	 */
@@ -43,7 +43,7 @@ public interface RequestHeaders extends Iterable<String>
 
 	
 	/**
-	 * Returns the value of a header, or null if the request does not 
+	 * @return the value of a header, or null if the request does not 
 	 * have such a header. 
 	 * @param name the case insensitive header name
 	 */
@@ -57,6 +57,8 @@ public interface RequestHeaders extends Iterable<String>
 	 * Value object contains the error.
 	 * @param name the case insensitive header name
 	 * @param type the header type
+	 * @param <T> the type's type
+	 * @return the value
 	 */
 	public <T> Value<T> get(String name, Type<T> type);
 
@@ -89,19 +91,23 @@ public interface RequestHeaders extends Iterable<String>
 	
 	
 	/**
-	 * Returns an iterator for the header names contained in the request. 
+	 * @return an iterator for the header names contained in the request. 
 	 */
 	@Override public Iterator<String> iterator(); 
 	
 	
 	/**
 	 * Sets the header to the given values. 
+	 * @param name the header name
+	 * @param value the header value 
 	 */
 	public void set(String name, String value);
 	
 	
 	/**
-	 * Adds a header. 
+	 * Adds a header.
+	 * @param name the header name
+	 * @param value the header value 
 	 */
 	public void add(String name, String value);
 }

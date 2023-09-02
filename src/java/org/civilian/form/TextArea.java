@@ -69,7 +69,7 @@ public class TextArea extends Control<String>
 
 	
 	/**
-	 * Returns the number of rows.
+	 * @return the number of rows.
 	 */
 	@Override public int getRows()
 	{
@@ -79,6 +79,8 @@ public class TextArea extends Control<String>
 	
 	/**
 	 * Sets the number of rows.
+	 * @param rows the rows
+	 * @return this
 	 */
 	public TextArea setRows(int rows)
 	{
@@ -88,7 +90,7 @@ public class TextArea extends Control<String>
 
 	
 	/**
-	 * Returns the number of columns.
+	 * @return the number of columns.
 	 */
 	public int getCols()
 	{
@@ -98,6 +100,8 @@ public class TextArea extends Control<String>
 	
 	/**
 	 * Sets the number of columns.
+	 * @param cols the cols
+	 * @return this
 	 */
 	public TextArea setCols(int cols)
 	{
@@ -114,7 +118,7 @@ public class TextArea extends Control<String>
 
 	
 	/**
-	 * Prints the field markup.
+	 * {@inheritDoc}
 	 */
 	@Override public void print(CspWriter out, String... attrs)
 	{
@@ -141,7 +145,7 @@ public class TextArea extends Control<String>
 	
 	
 	/**
-	 * Returns this.
+	 * @return this.
 	 */
 	@Override public Control<?> toFocusControl()
 	{

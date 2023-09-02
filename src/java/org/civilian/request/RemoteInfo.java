@@ -23,20 +23,20 @@ package org.civilian.request;
 public abstract class RemoteInfo
 {
 	/**
-	 * Returns the IP address of the remote client.
+	 * @return the IP address of the remote client.
 	 */
 	public abstract String getIp();
 	
 	
 	/**
-	 * Returns the fully qualified name of the remote client, or the IP address if
+	 * @return the fully qualified name of the remote client, or the IP address if
 	 * the host name was not resolved..
 	 */
 	public abstract String getHost();
 
 	
 	/**
-	 * Returns the source port of the remote client.
+	 * @return the source port of the remote client.
 	 */
 	public abstract int getPort();
 
