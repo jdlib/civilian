@@ -241,11 +241,15 @@ public class Resource
 	
 	/**
 	 * Associates the resource with some data object.
+	 * The framework will store the ControllerSignature of an associated controller in the data.
 	 * @param data the data object
 	 * @return this
+	 * @throws IllegalStateException if the data was already set, prevents from overriding
 	 */
 	public Resource setData(Object data)
 	{
+		if (data_ != null)
+			throw new IllegalStateException("data already set");
 		data_ = data;
 		return this;
 	}
@@ -258,19 +262,6 @@ public class Resource
 	public Object getData()
 	{
 		return data_;
-	}
-
-	
-	/**
-	 * Return the data previously set with {@link #setData(Object)}, casted to type T if not null.
-	 * @param type class
-	 * @param <T> the class type
-	 * @return the casted data or null
-	 */
-	public <T> T getData(Class<T> type)
-	{
-		Object data = getData(); // forward to direct accessor to help build mocks
-		return data != null ? Check.isA(data, type) : null;
 	}
 
 	
@@ -518,8 +509,8 @@ public class Resource
 	private final String segment_;
 	private final PathParam<?> pathParam_;
 	private final Route route_;
-	private Object data_;
 	private Resource[] children_ = EMPTY;
+	private Object data_;
 	private static Resource[] EMPTY = new Resource[0];
 	private static ResComparator COMPARATOR = new ResComparator(); 
 }

@@ -7,9 +7,9 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 import org.civilian.controller.Controller;
-import org.civilian.controller.ControllerResourceData;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.controller.ControllerType;
+import org.civilian.controller.ControllerTypeProvider;
 import org.civilian.request.Request;
 import org.civilian.resource.Path;
 import org.civilian.resource.Resource;
@@ -50,9 +50,10 @@ public class ResourceDispatchTest extends CivTest
 		// complete match, with path params and controllerType
 		ControllerType type  = mock(ControllerType.class);
 		Controller controller = mock(Controller.class);
-		ControllerResourceData data = new ControllerResourceData(new ControllerSignature(controller.getClass()));
-		data.setTypeProvider(() -> type);
-		when(idPP.getData(ControllerResourceData.class)).thenReturn(data);
+		ControllerSignature sig = new ControllerSignature(controller.getClass());
+		ControllerTypeProvider tp = () -> type; 
+		sig.setData(tp);
+		when(idPP.getData()).thenReturn(sig);
 		when(type.createController()).thenReturn(controller);
 		
 		assertTrue(dispatch.process(request, response, ProcessorChain.EMPTY));

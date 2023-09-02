@@ -68,12 +68,12 @@ public class CspTest extends CivTest
 
 	private void assertCompile(String testCase) throws Exception
 	{
-		String compiled = compile(testCase);
+		String actual = compile(testCase);
 
 		File outFile = findTestFile(testCase + ".out");
 		String expected = read(outFile);
 
-		compareFiles(expected, compiled);
+		compareFiles(expected, actual);
 	}
 
 

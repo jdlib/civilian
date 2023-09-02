@@ -146,6 +146,31 @@ public class ControllerSignature
 	}
 	
 	
+	/**
+	 * @return the data previously set by {@link #setData(Object)} or null.
+	 */
+	public Object getData()
+	{
+		return data_;
+	}
+
+	
+	/**
+	 * Associates the signature with some data object.
+	 * The framework will store the ControllerTypeProvider in the data.
+	 * @param data the data
+	 * @return this
+	 * @throws IllegalStateException if the data was already set, prevents from overriding
+	 */
+	public ControllerSignature setData(Object data) 
+	{
+		if (data_ != null)
+			throw new IllegalStateException("data already set");
+		data_ = data;
+		return this;
+	}
+	
+	
 	@Override public int hashCode()
 	{
 		int hashCode = className_.hashCode();
@@ -187,4 +212,5 @@ public class ControllerSignature
 	private final String className_;
 	private final String methodSegment_;
 	private final PathParam<?> methodPathParam_;
+	private Object data_;
 }

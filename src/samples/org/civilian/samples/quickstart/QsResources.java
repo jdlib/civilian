@@ -6,7 +6,6 @@ package org.civilian.samples.quickstart;
 
 
 import org.civilian.controller.ControllerSignature;
-import org.civilian.controller.ControllerResourceData;
 
 
 /**
@@ -28,7 +27,7 @@ public interface QsResources
 		public Root()
 		{
 			super();
-			setData(data(sig("", "IndexController")));
+			setData(sig("", "IndexController"));
 
 			this.users = new Users(this);
 		}
@@ -47,10 +46,10 @@ public interface QsResources
 			public Users(org.civilian.resource.Resource parent)
 			{
 				super(parent, "users");
-				setData(data(sig(".users", "IndexController")));
+				setData(sig(".users", "IndexController"));
 
 				this.$userId = new org.civilian.resource.Resource(this, org.civilian.samples.quickstart.QsPathParams.USERID);
-				this.$userId.setData(data(sig(".users.id", "IndexController")));
+				this.$userId.setData(sig(".users.id", "IndexController"));
 			}
 
 			/**
@@ -63,12 +62,6 @@ public interface QsResources
 		private static ControllerSignature sig(String subPackage, String className)
 		{
 			return new ControllerSignature("org.civilian.samples.quickstart" + subPackage + '.' + className);
-		}
-
-
-		private static ControllerResourceData data(ControllerSignature sig)
-		{
-			return new ControllerResourceData(sig);
 		}
 	}
 }

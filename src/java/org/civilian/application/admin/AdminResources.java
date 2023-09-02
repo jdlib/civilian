@@ -6,7 +6,6 @@ package org.civilian.application.admin;
 
 
 import org.civilian.controller.ControllerSignature;
-import org.civilian.controller.ControllerResourceData;
 
 
 /**
@@ -28,7 +27,7 @@ public interface AdminResources
 		public Root()
 		{
 			super();
-			setData(data(sig("", "IndexController")));
+			setData(sig("", "IndexController"));
 
 			this.$appId = new $AppId(this);
 		}
@@ -48,9 +47,9 @@ public interface AdminResources
 			{
 				this.resource_ = new org.civilian.resource.Resource(parent, org.civilian.application.admin.AdminPathParams.APPID);
 				this.resources = new org.civilian.resource.Resource(this.resource_, "resources");
-				this.resources.setData(data(sig(".app", "ResourcesController")));
+				this.resources.setData(sig(".app", "ResourcesController"));
 				this.settings = new org.civilian.resource.Resource(this.resource_, "settings");
-				this.settings.setData(data(sig(".app", "SettingsController")));
+				this.settings.setData(sig(".app", "SettingsController"));
 			}
 
 			/**
@@ -71,12 +70,6 @@ public interface AdminResources
 		private static ControllerSignature sig(String subPackage, String className)
 		{
 			return new ControllerSignature("org.civilian.application.admin" + subPackage + '.' + className);
-		}
-
-
-		private static ControllerResourceData data(ControllerSignature sig)
-		{
-			return new ControllerResourceData(sig);
 		}
 	}
 }

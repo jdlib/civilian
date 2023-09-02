@@ -6,15 +6,15 @@ import org.civilian.testcase1.AlphaController;
 import org.junit.Test;
 
 
-public class ControllerResourceDataTest 
+public class ControllerTypeProviderTest 
 {
 	@Test public void testTouch() throws Exception
 	{
 		Resource root = new Resource();
-		root.setData(new ControllerResourceData(new ControllerSignature(AlphaController.class)));
+		root.setData(new ControllerSignature(AlphaController.class));
 		
 		new Resource(root, "a");
 		
-		ControllerResourceData.touchControllerClasses(root);
+		ControllerTypeProvider.touchControllerClasses(root);
 	}
 }

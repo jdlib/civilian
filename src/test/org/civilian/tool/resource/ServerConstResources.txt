@@ -6,7 +6,6 @@ package org.civilian.testcase1;
 
 
 import org.civilian.controller.ControllerSignature;
-import org.civilian.controller.ControllerResourceData;
 
 
 /**
@@ -28,15 +27,15 @@ public interface Test1Resources
 		public Root()
 		{
 			super();
-			setData(data(sig("", "IndexController")));
+			setData(sig("", "IndexController"));
 
 			this.alpha = new org.civilian.resource.Resource(this, "alpha");
-			this.alpha.setData(data(sig("", "AlphaController")));
+			this.alpha.setData(sig("", "AlphaController"));
 			this.beta = new Beta(this);
 			this.delta = new Delta(this);
 			this.mixed = new Mixed(this);
 			this.$gammaId = new org.civilian.resource.Resource(this, org.civilian.testcase1.Test1PathParams.GAMMA);
-			this.$gammaId.setData(data(sig("", "GammaController")));
+			this.$gammaId.setData(sig("", "GammaController"));
 		}
 
 		/**
@@ -73,13 +72,13 @@ public interface Test1Resources
 			public Beta(org.civilian.resource.Resource parent)
 			{
 				super(parent, "beta");
-				setData(data(sig(".beta", "IndexController")));
+				setData(sig(".beta", "IndexController"));
 
 				this.have_space = new org.civilian.resource.Resource(this, "have space");
-				this.have_space.setData(data(sig(".beta", "PathController")));
+				this.have_space.setData(sig(".beta", "PathController"));
 				this.some = new Some(this);
 				this.$beta = new org.civilian.resource.Resource(this, org.civilian.testcase1.Test1PathParams.BETA);
-				this.$beta.setData(data(sig(".beta.object", "IndexController")));
+				this.$beta.setData(sig(".beta.object", "IndexController"));
 			}
 
 			/**
@@ -106,12 +105,12 @@ public interface Test1Resources
 				public Some(org.civilian.resource.Resource parent)
 				{
 					super(parent, "some");
-					setData(data(sig(".beta", "SomeController")));
+					setData(sig(".beta", "SomeController"));
 
 					this.thing = new org.civilian.resource.Resource(this, "thing");
-					this.thing.setData(data(sig(".beta", "SomeController").withMethodSegment("thing")));
+					this.thing.setData(sig(".beta", "SomeController").withMethodSegment("thing"));
 					this.$one = new org.civilian.resource.Resource(this, org.civilian.testcase1.Test1PathParams.ONE);
-					this.$one.setData(data(sig(".beta", "SomeController").withMethodPathParam(org.civilian.testcase1.Test1PathParams.ONE)));
+					this.$one.setData(sig(".beta", "SomeController").withMethodPathParam(org.civilian.testcase1.Test1PathParams.ONE);
 				}
 
 				/**
@@ -136,7 +135,7 @@ public interface Test1Resources
 			{
 				this.resource_ = new org.civilian.resource.Resource(parent, "delta");
 				this.run = new org.civilian.resource.Resource(this.resource_, "run");
-				this.run.setData(data(sig(".delta", "RunController")));
+				this.run.setData(sig(".delta", "RunController"));
 			}
 
 			/**
@@ -157,10 +156,10 @@ public interface Test1Resources
 			public Mixed(org.civilian.resource.Resource parent)
 			{
 				super(parent, "mixed");
-				setData(data(sig(".miXed", "IndexController")));
+				setData(sig(".miXed", "IndexController"));
 
 				this.something = new org.civilian.resource.Resource(this, "something");
-				this.something.setData(data(sig(".miXed", "someThingController")));
+				this.something.setData(sig(".miXed", "someThingController"));
 			}
 
 			/**
@@ -173,12 +172,6 @@ public interface Test1Resources
 		private static ControllerSignature sig(String subPackage, String className)
 		{
 			return new ControllerSignature("org.civilian.testcase1" + subPackage + '.' + className);
-		}
-
-
-		private static ControllerResourceData data(ControllerSignature sig)
-		{
-			return new ControllerResourceData(sig);
 		}
 	}
 }

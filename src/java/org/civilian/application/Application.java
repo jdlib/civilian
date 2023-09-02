@@ -32,9 +32,9 @@ import org.civilian.content.ContentType;
 import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerConfig;
 import org.civilian.controller.ControllerNaming;
-import org.civilian.controller.ControllerResourceData;
 import org.civilian.controller.ControllerService;
 import org.civilian.controller.ControllerSignature;
+import org.civilian.controller.ControllerTypeProvider;
 import org.civilian.controller.scan.ControllerScan;
 import org.civilian.processor.AssetDispatch;
 import org.civilian.processor.ErrorProcessor;
@@ -220,7 +220,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 				.getRootResource();		
 		}
 		
-		sig2resource_ = ControllerResourceData.initTypeProviders(rootResource_, controllerService_);
+		sig2resource_ = ControllerTypeProvider.initTypeProviders(rootResource_, controllerService_);
 	}
 	
 	

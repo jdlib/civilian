@@ -23,7 +23,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.junit.Test;
 import org.civilian.CivTest;
-import org.civilian.controller.ControllerResourceData;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.resource.Resource.Match;
 import org.civilian.resource.pathparam.PathParam;
@@ -227,8 +226,8 @@ public class ResourceTest extends CivTest
 		Resource ppInt  	= new Resource(root, PP_INT);
 		Resource optparent  = new Resource(root, "optparent");
 		Resource ppOpt  	= new Resource(optparent, PP_OPT);
-		ppInt.setData(new ControllerResourceData(new ControllerSignature("test.IntController")));
-		ppOpt.setData(new ControllerResourceData(new ControllerSignature("test.OptController")));
+		ppInt.setData(new ControllerSignature("test.IntController"));
+		ppOpt.setData(new ControllerSignature("test.OptController"));
 		
 		MatchAssert a = new MatchAssert(root);
 		

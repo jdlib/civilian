@@ -16,8 +16,8 @@
 package org.civilian.processor;
 
 
-import org.civilian.controller.ControllerResourceData;
 import org.civilian.controller.ControllerType;
+import org.civilian.controller.ControllerTypeProvider;
 import org.civilian.request.Request;
 import org.civilian.resource.Resource;
 import org.civilian.response.Response;
@@ -61,7 +61,7 @@ public class ResourceDispatch extends Processor
 		Resource.Match match = root_.match(request.getRelativePath().toString());
 		if (match.completeMatch)
 		{
-			ControllerType controllerType = ControllerResourceData.getType(match.resource);
+			ControllerType controllerType = ControllerTypeProvider.getType(match.resource);
 			if (controllerType != null)
 			{
 				request.setResource(match.resource);

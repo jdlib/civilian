@@ -3,7 +3,6 @@ import org.civilian.application.Application
 import org.civilian.resource.Resource
 import org.civilian.resource.pathparam.PathParam
 import org.civilian.controller.ControllerSignature
-import org.civilian.controller.ControllerResourceData
 import org.civilian.controller.scan.ResourceInfo
 import org.civilian.util.ClassUtil
 import org.civilian.util.JavaName
@@ -23,7 +22,6 @@ template(ResourceInfo root, String outputPackage, String outputName, Application
 	
 
 	import <%ControllerSignature.class.getName()%>;
-	import <%ControllerResourceData.class.getName()%>;
 	
 		
 	<%%>/**
@@ -99,12 +97,6 @@ private void printResourceClass(ResourceInfo info)
 			{
 				return new ControllerSignature("<%ctrlRootPackage_%>" + subPackage + '.' + className);
 			}
-			<%%>
-			<%%>
-			private static ControllerResourceData data(ControllerSignature sig)
-			{
-				return new ControllerResourceData(sig);
-			}
 	}
 }}
 
@@ -136,12 +128,12 @@ private void printSetCtrlSeg(ResourceInfo info)
 	@String packageName = ClassUtil.getPackageName(sig.getClassName());
 	@String simpleName  = ClassUtil.cutPackageName(sig.getClassName());
 	@String packagePart = packageName.substring(ctrlRootPackage_.length());
-	setData(data(sig(<%stringArg(packagePart)%>, <%stringArg(simpleName)%>)<%/%>
+	setData(sig(<%stringArg(packagePart)%>, <%stringArg(simpleName)%>)<%/%>
 	@if (sig.getMethodSegment() != null)
 		.withMethodSegment("<%sig.getMethodSegment()%>")<%/%>
 	@else if (sig.getMethodPathParam() != null)
-		.withMethodPathParam(<%pathParamConst(sig.getMethodPathParam())%>)<%/%>
-	));
+		.withMethodPathParam(<%pathParamConst(sig.getMethodPathParam())%><%/%>
+	);
 }}
 
 
