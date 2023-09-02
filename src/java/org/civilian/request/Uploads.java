@@ -66,6 +66,7 @@ public interface Uploads
 	 * In Servlet terms the Upload object corresponds to a javax.servlet.http.Part object 
 	 * in a multipart/form-data request whose content disposition contains
 	 * a filename parameter and whose name equals the given name.
+	 * @param name a name
 	 * @return the upload or null
 	 */
 	public Upload get(String name);
@@ -76,6 +77,7 @@ public interface Uploads
 	 * In Servlet terms the Upload object corresponds to a javax.servlet.http.Part object 
 	 * in a multipart/form-data request whose content disposition contains
 	 * a filename parameter and whose name equals the given name.
+	 * @param name a name
 	 * @return the uploads
 	 */
 	public Upload[] getAll(String name);
@@ -92,7 +94,7 @@ public interface Uploads
 
 	
 	/**
-	 * Returns an iterator for all Upload names.
+	 * @return an iterator for all Upload names.
 	 * @see #get(String)
 	 */
 	public Iterator<String> names();

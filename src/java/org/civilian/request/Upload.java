@@ -38,31 +38,34 @@ public abstract class Upload
 		
 	/**
 	 * Deletes the upload file including any temporary files.
-	 * @throws IOException
+	 * @throws IOException if an IO error occurs
 	 */
 	public abstract void delete() throws IOException;
 
 	
 	/**
-	 * Returns the length of the uploaded file.
+	 * @return the length of the uploaded file.
 	 */
 	public abstract long length();
 
 	
 	/**
-	 * Returns the content type of the uploaded file.
+	 * @return the content type of the uploaded file.
 	 */
 	public abstract String getContentType();
 
 	
 	/**
-	 * Returns an input stream to the uploaded data.
+	 * @return an input stream to the uploaded data.
+	 * @throws IOException if an IO error occurs
 	 */
 	public abstract InputStream getInputStream() throws IOException;
 
 	
 	/**
 	 * Writes the upload to the specified file.
+	 * @param file a file
+	 * @throws IOException if an IO error occurs
 	 */
 	public void write(File file) throws IOException
 	{
@@ -74,13 +77,13 @@ public abstract class Upload
 
 	
 	/**
-	 * Returns the name of the upload parameter. 
+	 * @return the name of the upload parameter. 
 	 */
 	public abstract String getName();
 
 
 	/**
-	 * Returns the filename of the upload, indicating the original
+	 * @return the filename of the upload, indicating the original
 	 * filename of the uploaded file.
 	 */
 	public abstract String getFileName();

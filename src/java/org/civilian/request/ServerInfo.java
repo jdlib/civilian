@@ -23,33 +23,33 @@ package org.civilian.request;
 public abstract class ServerInfo
 {
 	/**
-	 * Returns protocol and version used for the request.
+	 * @return protocol and version used for the request.
 	 * E.g. HTTP/1.1
 	 */
 	public abstract String getProtocol();
 
 	
 	/**
-	 * Returns the protocol scheme used for the request.
+	 * @return the protocol scheme used for the request.
 	 * E.g. http, https, ftp.
 	 */
 	public abstract String getScheme();
 	
 
 	/**
-	 * Returns the host name of the server.
+	 * @return the host name of the server.
 	 */
 	public abstract String getHost();
 	
 	
 	/**
-	 * Returns the port used for the request.
+	 * @return the port used for the request.
 	 */
 	public abstract int getPort();
 
 	
 	/**
-	 * Returns a string representation of the ServerInfo.
+	 * @return a string representation of the ServerInfo.
 	 */
 	@Override public String toString()
 	{

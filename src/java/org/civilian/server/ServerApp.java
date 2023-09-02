@@ -38,7 +38,7 @@ public abstract class ServerApp implements PathProvider
 
 	
 	/**
-	 * Returns the application status.
+	 * @return the application status.
 	 */
 	public abstract Status getStatus();
 
@@ -49,25 +49,25 @@ public abstract class ServerApp implements PathProvider
 	 * the {@link Server}. The id was defined within
 	 * <code>civilian.ini</code>.
 	 * @see Server#getApplication(String) 
+	 * @return the id
 	 */
 	public abstract String getId();
 	
 	
 	/**
-	 * Returns the path from the server root to the application.
+	 * @return the path from the server root to the application.
 	 */
-	@Override
-	public abstract Path getPath();
+	@Override public abstract Path getPath();
 	
 	
 	/**
-	 * Returns the relative path from the server to the application.
+	 * @return the relative path from the server to the application.
 	 */
 	public abstract Path getRelativePath();
 
 	
 	/**
-	 * Returns the server in which the application is running.
+	 * @return the server in which the application is running.
 	 */
 	public abstract Server getServer();
 	

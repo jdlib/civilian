@@ -50,6 +50,9 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	/**
 	 * Tests if the path starts with the given prefix and 
 	 * either equals the path or ends at a segment boundary.
+	 * @param path a path string
+	 * @param prefix a prefix
+	 * @return starts with?
 	 */
 	public static boolean startsWith(String path, String prefix)
 	{
@@ -71,6 +74,8 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	 * A trailing '/' is removed from the path and a leading
 	 * '/' is added to any non-root path, whereas the root path
 	 * is represented as the string "".
+	 * @param path a path string
+	 * @return the normed path string
 	 */
 	public static String norm(String path)
 	{
@@ -87,6 +92,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	
 	/**
 	 * Creates a new Path from the path string.
+	 * @param value a path string
 	 */
 	public Path(String value)
 	{
@@ -104,7 +110,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	
 	
 	/**
-	 * Implements PathProvider and returns this.
+	 * @return Implements PathProvider and returns this.
 	 */
 	@Override public Path getPath()
 	{
@@ -113,7 +119,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	
 	
 	/**
-	 * Returns the path string.
+	 * @return the path string.
 	 * If this path is the root path, then "" is returned.
 	 */
 	public String getValue()
@@ -123,7 +129,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	
 	
 	/**
-	 * Returns a printable version of the path.
+	 * @return a printable version of the path.
 	 * If this path is the root path, "/" is returned. 
 	 */
 	public String print()
@@ -158,7 +164,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	
 
 	/**
-	 * Returns the length of the path string.
+	 * @return the length of the path string.
 	 */
 	@Override public int length()
 	{
@@ -167,7 +173,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 
 
 	/**
-	 * Returns the character at the given index.
+	 * @return the character at the given index.
 	 * Implements the CharSequence interface.
 	 */
 	@Override public char charAt(int index)
@@ -177,7 +183,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 
 
 	/**
-	 * Returns a character subsequence from the path string.
+	 * @return a character subsequence from the path string.
 	 * Implements the CharSequence interface.
 	 */
 	@Override public CharSequence subSequence(int start, int end)
@@ -187,7 +193,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 
 	
 	/**
-	 * Returns if this path is the root path.
+	 * @return if this path is the root path.
 	 */
 	public boolean isRoot()
 	{
@@ -196,7 +202,8 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	
 	
 	/**
-	 * Returns a path which corresponds to this path + the given path.
+	 * @param path a path
+	 * @return a path which corresponds to this path + the given path.
 	 */
 	public Path add(Path path)
 	{
@@ -210,7 +217,8 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	
 	
 	/**
-	 * Returns a path which corresponds to this path + the given path.
+	 * @param path a path
+	 * @return a path which corresponds to this path + the given path.
 	 */
 	public Path add(String path)
 	{
@@ -226,6 +234,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 
 	/**
 	 * Adds the path to the StringBuilder.
+	 * @param s a StringBuilder
 	 */
 	public void addTo(StringBuilder s)
 	{
@@ -246,7 +255,8 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	
 	
 	/**
-	 * Tests if the path starts with the prefix and 
+	 * @param prefix a prefix
+	 * @return if the path starts with the prefix and 
 	 * either equals the path or ends at a segment boundary.
 	 */
 	public boolean startsWith(String prefix)
@@ -256,7 +266,8 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	
 	
 	/**
-	 * Tests if the path starts with the other path.
+	 * @param path a path
+	 * @return if the path starts with the other path.
 	 */
 	public boolean startsWith(Path path)
 	{
@@ -268,7 +279,9 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	/**
 	 * Tests if this path starts with the path.
 	 * If true a new path with the start path removed
-	 * is returned else null is returned. 
+	 * is returned else null is returned.
+	 * @param path a path
+	 * @return the result path
 	 */
 	public Path cutStart(Path path)
 	{
@@ -314,7 +327,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 
 
 	/**
-	 * Returns true iif the other object is a Path and
+	 * @return true iif the other object is a Path and
 	 * has the same path value. 
 	 */
 	@Override public boolean equals(Object other)
@@ -324,7 +337,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	
 	
 	/**
-	 * Returns the hash code of the path value. 
+	 * @return the hash code of the path value. 
 	 */
 	@Override public int hashCode()
 	{
@@ -333,7 +346,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 	
 	
 	/**
-	 * Returns the path string.
+	 * @return the path string.
 	 */
 	@Override public String toString()
 	{

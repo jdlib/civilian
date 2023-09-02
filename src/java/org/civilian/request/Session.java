@@ -81,6 +81,7 @@ public interface Session
 	 * If no attribute is bound, a new object is created.
 	 * @param c the attribute class
 	 * @param name the attribute name
+	 * @param <T> the attribute type
 	 */
 	@SuppressWarnings("deprecation")
 	public default <T> T getAttrOrCreate(Class<T> c, String name) throws InstantiationException, IllegalAccessException
@@ -96,7 +97,7 @@ public interface Session
 
 	
 	/**
-	 * @return  an enumeration of all names of attributes bound to the session. 
+	 * @return an enumeration of all names of attributes bound to the session. 
 	 */
 	public Enumeration<String> getAttributeNames();
 	
@@ -104,6 +105,7 @@ public interface Session
 	/**
 	 * Sets a session attribute. 
 	 * @param name a name
+	 * @param value a value
 	 */
 	public void setAttribute(String name, Object value);
 	
@@ -132,6 +134,9 @@ public interface Session
 	 * Returns the underlying implementation of the sessopm which has the given class
 	 * or null, if the implementation has a different class.
 	 * In a servlet environment Session wraps a HttpSession.
+	 * @param implClass a implementation class
+	 * @param <T> the implementation type
+	 * @return the implementation or null
 	 */
 	public <T> T unwrap(Class<T> implClass);
 	
@@ -163,7 +168,9 @@ public interface Session
 		
 		
 		/**
-		 * Removes an attribute. 
+		 * Removes an attribute.
+		 * @param name an attribute name
+		 * @return this 
 		 */
 		public Optional removeAttribute(String name)
 		{

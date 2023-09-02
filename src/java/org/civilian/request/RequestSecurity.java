@@ -50,7 +50,7 @@ public interface RequestSecurity
 	
 	
 	/**
-	 * Was the request made using a secure channel, e.g. HTTPS?
+	 * @return Was the request made using a secure channel, e.g. HTTPS?
 	 */
 	public boolean isSecure();
 	
@@ -72,13 +72,13 @@ public interface RequestSecurity
 	
 	
 	/**
-	 * Returns a Principal object with the name of the current authenticated user, or null if the user has has not been authenticated
+	 * @return  a Principal object with the name of the current authenticated user, or null if the user has has not been authenticated
 	 */
 	public Principal getUserPrincipal();
 	
 	
 	/**
-	 * Returns if the authenticated user has the specified role, as defined by server mechanisms. 
+	 * @return if the authenticated user has the specified role, as defined by server mechanisms. 
 	 */
 	public boolean isUserInRole(String role);
 	
@@ -97,19 +97,19 @@ public interface RequestSecurity
 	
 	
 	/**
-	 * Returns the session id specified by the client.
+	 * @return the session id specified by the client.
 	 */
 	public String getRequestedSessionId();
 	
 	
 	/**
-	 * Returns the source of the request session id.
+	 * @return the source of the request session id.
 	 */
 	public SessionIdSource getRequestedSessionIdSource(); 
 	
 	
 	/**
-	 * Returns if the requested session id is valid.
+	 * @return if the requested session id is valid.
 	 */
 	public boolean isRequestedSessionIdValid();
 }
