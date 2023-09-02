@@ -1,5 +1,5 @@
 import java.util.Locale
-import java.util.Date
+import java.time.LocalDate
 import org.civilian.text.service.LocaleServiceList
 
 
@@ -16,17 +16,18 @@ template(LocaleServiceList services, Locale... locales) mixin html, lang
 	<body>
 		<h1>Locale Sample</h1>
 		<table>
+			@LocalDate date = LocalDate.now();
 			@for (Locale locale : locales)
-				@printLocale(locale);
+				@lang.init(services.getService(locale));
+				@printLocale(locale, date);
 		</table>
 	</body>
 	</html>
 }}
 
 
-private void printLocale(Locale locale)
+private void printLocale(Locale locale, LocalDate date)
 {{
-	@lang.init(services.getService(locale));
 	<tr>
 		<td colspan="2"><hr></td>
 	</tr>
@@ -35,7 +36,7 @@ private void printLocale(Locale locale)
 		<td><b><%locale%>, <%locale.getDisplayName()%></b></td>
 	</tr>
 	<tr>
-		<td>numbers</td>
+		<td>number</td>
 		<td><%lang.format(1234567890)%></td>		
 	</tr>
 	<tr>
@@ -44,7 +45,7 @@ private void printLocale(Locale locale)
 	</tr>
 	<tr>
 		<td>date</td>
-		<td><%lang.format(new Date())%></td>		
+		<td><%lang.format(date)%></td>		
 	</tr>
 	<tr>
 		<td>translation</td>
