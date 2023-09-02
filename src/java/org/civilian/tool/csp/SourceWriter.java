@@ -69,7 +69,7 @@ class SourceWriter extends CspWriter
 
 	public void printSrcln(String s, int lineIndex)
 	{
-		if (printSrcMap_)
+		if (printSrcMap_ && (s != null))
 		{
 			int column = getColumn();
 			for (int i=column; i<=70; i++)

@@ -415,6 +415,7 @@ public class CspCompiler
 				throw new CspException("template end '" + END_TEMPLATE_SECTION + "' expected", scanner_);
 
 			String line = scanner_.getLine();
+			int lineIndex = scanner_.getLineIndex();
 			parse(line, tline);
 
 			if (END_TEMPLATE_SECTION.equals(tline.content))
@@ -440,12 +441,12 @@ public class CspCompiler
 					{
 						block.isCodeBlock = true;
 						out.print(tline.content);
-						printSrcMapComment(out, tline.original);
+						out.printSrcln(tline.original, lineIndex);
 					}
 				}
 				else if (tline.type == TemplateLine.Type.literal)
 				{
-					printTemplateLiteralLine(out, tline.content, true);
+					printTemplateLiteralLine(out, tline.content, true, lineIndex);
 				}
 				else if (tline.type == TemplateLine.Type.componentStart)
 				{
@@ -460,21 +461,21 @@ public class CspCompiler
 
 					if (p < 0)
 					{
-						printTemplateComponentStart(out, componentLevel, tline.content, true, declare);
+						printTemplateComponentStart(out, componentLevel, tline.content, true, declare, lineIndex);
 					}
 					else
 					{
 						String cbExpr = tline.content.substring(0, p).trim();
-						printTemplateComponentStart(out, componentLevel, cbExpr, false, declare);
-						printTemplateLiteralLine(out, tline.content.substring(p + 1).trim(), false);
-						printTemplateComponentEnd(out, componentLevel--, false, null);
+						printTemplateComponentStart(out, componentLevel, cbExpr, false, declare, lineIndex);
+						printTemplateLiteralLine(out, tline.content.substring(p + 1).trim(), false, lineIndex);
+						printTemplateComponentEnd(out, componentLevel--, false, null, lineIndex);
 					}
 				}
 				else if (tline.type == TemplateLine.Type.componentEnd)
 				{
 					if (componentLevel < 0)
 						throw new CspException("unmatched component end", scanner_);
-					printTemplateComponentEnd(out, componentLevel--, true, tline.original);
+					printTemplateComponentEnd(out, componentLevel--, true, tline.original, lineIndex);
 				}
 				else
 					throw new CspException("unexpected line type " + tline.type, scanner_);
@@ -529,7 +530,7 @@ public class CspCompiler
 	}
 
 
-	private void printTemplateComponentStart(SourceWriter out, int level, String cbExpr, boolean multiLine, boolean declare)
+	private void printTemplateComponentStart(SourceWriter out, int level, String cbExpr, boolean multiLine, boolean declare, int lineIndex)
 	{
 		String var = getCbVar(level);
 		if (declare)
@@ -546,26 +547,22 @@ public class CspCompiler
 		out.print(multiLine);
 		out.print(");");
 
-		printSrcMapComment(out, cbExpr);
+		out.printSrcln(cbExpr, lineIndex);
 	}
 
 
-	private void printTemplateComponentEnd(SourceWriter out, int level, boolean multiLine, String comment)
+	private void printTemplateComponentEnd(SourceWriter out, int level, boolean multiLine, String comment, int lineIndex)
 	{
 		String var = getCbVar(level);
 		out.print(var);
 		out.print(".endComponent(");
 		out.print(multiLine);
 		out.print(");"); // ends the wrapper block
-
-		if (comment != null)
-			printSrcMapComment(out, comment);
-		else
-			out.println();
+		out.printSrcln(comment, lineIndex);
 	}
 
 
-	private void printTemplateLiteralLine(SourceWriter out, String line, boolean usePrintln) throws CspException
+	private void printTemplateLiteralLine(SourceWriter out, String line, boolean usePrintln, int lineIndex) throws CspException
 	{
 		int length = line.length();
 		int start = 0;
@@ -581,20 +578,20 @@ public class CspCompiler
 				{
 					// <%%> detected
 					if (start < p)
-						printTemplateText(out, line, start, p, false);
+						printTemplateText(out, line, start, p, false, lineIndex);
 					start = p + 4;
 				}
 				else
 				{
 					// <%% detected: print literal
-					printTemplateText(out, line, start, p+2, false);
+					printTemplateText(out, line, start, p+2, false, lineIndex);
 					start = p + 3;
 				}
 			}
 			else
 			{
 				if (start < p)
-					printTemplateText(out, line, start, p, false);
+					printTemplateText(out, line, start, p, false, lineIndex);
 
 				int q = line.indexOf("%>", p);
 
@@ -612,14 +609,14 @@ public class CspCompiler
 					String snippetRaw  = line.substring(p, q + 2);
 					String snippetCode = line.substring(p +2, q).trim();
 
-					printTemplateSnippet(out, snippetRaw, snippetCode);
+					printTemplateSnippet(out, snippetRaw, snippetCode, lineIndex);
 					lastPartWasCode = true;
 				}
 				start = q + 2;
 			}
 		}
 		if (start < length)
-			printTemplateText(out, line, start, length, usePrintln);
+			printTemplateText(out, line, start, length, usePrintln, lineIndex);
 		else if (usePrintln)
 		{
 			if (lastPartWasCode)
@@ -630,7 +627,7 @@ public class CspCompiler
 	}
 
 
-	private void printTemplateText(SourceWriter out, String content, int start, int end, boolean usePrintln)
+	private void printTemplateText(SourceWriter out, String content, int start, int end, boolean usePrintln, int lineIndex)
 	{
 		out.print(usePrintln ? "out.println(\"" : "out.print(\"");
 		for (int i=start; i<end; i++)
@@ -653,7 +650,7 @@ public class CspCompiler
 			}
 		}
 		out.print("\");");
-		printSrcMapComment(out, content.substring(start, end));
+		out.printSrcln(content.substring(start, end), lineIndex);
 	}
 
 
@@ -662,7 +659,7 @@ public class CspCompiler
 	 * @param raw the snippet including the boundaries "&lt;%" and "%&gt;".
 	 * @param code the code content, trimmed.
 	 */
-	private void printTemplateSnippet(SourceWriter out, String raw, String code) throws CspException
+	private void printTemplateSnippet(SourceWriter out, String raw, String code, int lineIndex) throws CspException
 	{
 		if (code.charAt(0) == '?')
 		{
@@ -671,7 +668,7 @@ public class CspCompiler
 				out.print("if (");
 				out.print(code.substring(1).trim());
 				out.print(")");
-				printSrcMapComment(out, raw);
+				out.printSrcln(raw, lineIndex);
 				out.beginBlock();
 			}
 			else
@@ -680,21 +677,15 @@ public class CspCompiler
 		else if (code.endsWith(";"))
 		{
 			out.print(code);
-			printSrcMapComment(out, raw);
+			out.printSrcln(raw, lineIndex);
 		}
 		else
 		{
 			out.print("out.print(");
 			out.print(code);
 			out.print(");");
-			printSrcMapComment(out, raw);
+			out.printSrcln(raw, lineIndex);
 		}
-	}
-
-
-	private void printSrcMapComment(SourceWriter out, String s)
-	{
-		out.printSrcln(s, scanner_.getLineIndex());
 	}
 
 
