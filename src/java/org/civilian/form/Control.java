@@ -964,15 +964,6 @@ public abstract class Control<T> implements CspWriter.Printable
 		s.append(']');
 		return s.toString();
 	}
-	
-	
-	/**
-	 * Tests if two objects are equal
-	 */
-	protected static boolean equals(Object o1, Object o2)
-	{
-		return o1 == null ? o2 == null : o1.equals(o2);
-	}
 
 	
 	private T value_;

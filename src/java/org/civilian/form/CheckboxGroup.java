@@ -17,6 +17,9 @@ package org.civilian.form;
 
 
 import org.civilian.template.HtmlUtil;
+
+import java.util.Objects;
+
 import org.civilian.template.CspWriter;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.type.TypeSerializer;
@@ -81,7 +84,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 		{
 			for (int i=values.length - 1; i>=0; i--)
 			{
-				if (equals(value, values[i]))
+				if (Objects.equals(value, values[i]))
 					return true;
 			}
 		}

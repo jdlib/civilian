@@ -17,6 +17,9 @@ package org.civilian.form;
 
 
 import org.civilian.template.HtmlUtil;
+
+import java.util.Objects;
+
 import org.civilian.template.CspWriter;
 import org.civilian.text.keys.KeyList;
 import org.civilian.text.type.TypeSerializer;
@@ -148,7 +151,7 @@ public class RadioGroup<T> extends Control<T>
 		 */
 		public void print(T value, String text)
 		{
-			print(value, text, RadioGroup.equals(value, getValue()));
+			print(value, text, Objects.equals(value, getValue()));
 		}
 		
 		

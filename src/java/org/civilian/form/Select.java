@@ -17,6 +17,9 @@ package org.civilian.form;
 
 
 import org.civilian.template.HtmlUtil;
+
+import java.util.Objects;
+
 import org.civilian.template.CspWriter;
 import org.civilian.text.keys.KeyList;
 import org.civilian.type.Type;
@@ -257,7 +260,7 @@ public class Select<T> extends Control<T>
 		T value				= keyList_.getValue(i);
 		String svalue		= keyList_.getType().format(value, i);
 		String text 		= keyList_.getText(i);
-		boolean selected	= equals(value, getValue());
+		boolean selected	= Objects.equals(value, getValue());
 		printOptionImpl(out, svalue, text, selected);
 	}
 	
