@@ -109,6 +109,8 @@ public abstract class InputField<T> extends Control<T>
 	
 	/**
 	 * Set the value of the input fields type attribute.
+	 * @param inputType the inputType
+	 * @return this
 	 */
 	public InputField<T> setInputType(String inputType)
 	{
@@ -118,7 +120,7 @@ public abstract class InputField<T> extends Control<T>
 	
 	
 	/**
-	 * Returns the value of the input fields type attribute.
+	 * @return the value of the input fields type attribute.
 	 */
 	public String getInputType()
 	{
@@ -127,7 +129,7 @@ public abstract class InputField<T> extends Control<T>
 
 	
 	/**
-	 * Returns the number of displayed characters.
+	 * @return the number of displayed characters.
 	 */
 	public int getSize()
 	{
@@ -137,6 +139,8 @@ public abstract class InputField<T> extends Control<T>
 	
 	/**
 	 * Sets the number of displayed characters.
+	 * @param size the size
+	 * @return this
 	 */
 	public InputField<T> setSize(int size)
 	{
@@ -146,7 +150,7 @@ public abstract class InputField<T> extends Control<T>
 
 	
 	/**
-	 * Returns the maximum number of characters which can be entered
+	 * @return the maximum number of characters which can be entered
 	 * into the text field.
 	 */
 	public int getMaxLength()
@@ -158,6 +162,8 @@ public abstract class InputField<T> extends Control<T>
 	/**
 	 * Sets the maximum number of characters which can be entered
 	 * into the text field.
+	 * @param maxLength the maxLength
+	 * @return this
 	 */
 	public InputField<T> setMaxLength(int maxLength)
 	{
@@ -169,7 +175,7 @@ public abstract class InputField<T> extends Control<T>
 
 	
 	/**
-	 * Returns the value of the HTML5 placeholder attribute.
+	 * @return the value of the HTML5 placeholder attribute.
 	 */
 	public String getPlaceholder()
 	{
@@ -179,6 +185,8 @@ public abstract class InputField<T> extends Control<T>
 	
 	/**
 	 * Sets the value of the HTML5 placeholder attribute.
+	 * @param placeHolder the placeHolder
+	 * @return this
 	 */
 	public InputField<T> setPlaceholder(String placeHolder)
 	{
@@ -188,7 +196,7 @@ public abstract class InputField<T> extends Control<T>
 
 	
 	/**
-	 * Returns the value of the HTML5 pattern attribute.
+	 * @return the value of the HTML5 pattern attribute.
 	 */
 	public String getPattern()
 	{
@@ -198,6 +206,8 @@ public abstract class InputField<T> extends Control<T>
 	
 	/**
 	 * Sets the value of the HTML5 pattern attribute.
+	 * @param pattern a pattern
+	 * @return this
 	 */
 	public InputField<T> setPattern(String pattern)
 	{
@@ -208,6 +218,9 @@ public abstract class InputField<T> extends Control<T>
 	
 	/**
 	 * Helper method to prints the start tag of the InputField.
+	 * @param out a writer
+	 * @param type the type
+	 * @param attrs the attributes
 	 */
 	protected void open(CspWriter out, String type, String... attrs)
 	{
@@ -240,7 +253,7 @@ public abstract class InputField<T> extends Control<T>
 
 	
 	/**
-	 * Returns this.
+	 * @return this
 	 */
 	@Override public Control<?> toFocusControl()
 	{

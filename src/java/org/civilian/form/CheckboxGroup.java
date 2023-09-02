@@ -57,7 +57,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 
 	
 	/**
-	 * Returns the size of the key list.
+	 * @return the size of the key list.
 	 */
 	public int size()
 	{
@@ -66,7 +66,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 	
 
 	/**
-	 * Returns the KeyList.
+	 * @return the KeyList.
 	 */
 	public KeyList<T> getKeyList()
 	{
@@ -75,7 +75,8 @@ public class CheckboxGroup<T> extends Control<T[]>
 	
 	
 	/**
-	 * Tests if the checkbox associated with the given value is checked.
+	 * @param value a value
+	 * @return if the checkbox associated with the given value is checked.
 	 */
 	public boolean isChecked(T value)
 	{
@@ -109,8 +110,9 @@ public class CheckboxGroup<T> extends Control<T[]>
 	
 	 
 	/**
-	 * Returns a printer which allows you to print single radio buttons and 
-	 * control the layout. 
+	 * @return a printer which allows you to print single radio buttons and 
+	 * control the layout.
+	 * @param out a CspWriter 
 	 */
 	public Printer getPrinter(CspWriter out)
 	{
@@ -147,6 +149,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 		/**
 		 * Prints the checkbox which corresponds to the 
 		 * i-th entry in the KeyList.
+		 * @param i the key index
 		 */
 		public void print(int i)
 		{

@@ -46,7 +46,7 @@ public class RadioGroup<T> extends Control<T>
 
 	
 	/**
-	 * Returns the type of the keylist.
+	 * @return the type of the keylist.
 	 */
 	@Override public Type<T> getType()
 	{
@@ -55,7 +55,7 @@ public class RadioGroup<T> extends Control<T>
 	
 	
 	/**
-	 * Returns the KeyList.
+	 * @return the KeyList.
 	 */
 	public KeyList<T> getKeyList()
 	{
@@ -71,6 +71,8 @@ public class RadioGroup<T> extends Control<T>
 	
 	/**
 	 * Prints all radio buttons of the group.
+	 * @param out a writer
+	 * @param attrs additional attributes
 	 */
 	@Override public void print(CspWriter out, String... attrs)
 	{
@@ -88,7 +90,8 @@ public class RadioGroup<T> extends Control<T>
 	
 	
 	/**
-	 * Returns a printer which allows you to print single radio buttons and 
+	 * @param out a writer
+	 * @return a printer which allows you to print single radio buttons and 
 	 * control the layout. 
 	 */
 	public Printer getPrinter(CspWriter out)
@@ -125,6 +128,7 @@ public class RadioGroup<T> extends Control<T>
 		
 		/**
 		 * Prints the i-th radio button.
+		 * @param i the button index
 		 */
 		public void print(int i)
 		{
@@ -136,6 +140,7 @@ public class RadioGroup<T> extends Control<T>
 		 * Prints the radio button with the given values.
 		 * Call this method for every radio button, if you explicitly want
 		 * to control its layout.
+		 * @param value the value of the radio button
 		 */
 		public void print(T value)
 		{
@@ -185,11 +190,11 @@ public class RadioGroup<T> extends Control<T>
 		
 		private String[] attrs_;
 		private String[] nextAttrs_;
-		private CspWriter out;
-		private TypeSerializer serializer_; 
+		private final CspWriter out;
+		private final TypeSerializer serializer_; 
 	}
 
 
-	private KeyList<T> keyList_;
+	private final KeyList<T> keyList_;
 	private boolean horizontal_ = true;
 }

@@ -124,7 +124,9 @@ public class MethodArgFactory
 	 * evaluated to generate the MethodArg. The MethodArg
 	 * defaults to the parameter with the name of the bean property.
 	 * @param method a setter method
-	 * @param beanProperty the name of beam property which is set by the method.  
+	 * @param beanProperty the name of beam property which is set by the method.
+	 * @param mustExist mustExist?
+	 * @return the MethodArg
 	 */
 	public MethodArg createSetterMethodArg(Method method, String beanProperty, boolean mustExist)
 	{
@@ -152,6 +154,9 @@ public class MethodArgFactory
 	 * The field annotations and type are 
 	 * evaluated to generate the MethodArg. 
 	 * The MethodArg defaults to the request parameter with the field name.
+	 * @param field a field
+	 * @param mustExist mustExist?
+	 * @return the MethodArg
 	 */
 	public MethodArg createFieldArg(Field field, boolean mustExist)
 	{

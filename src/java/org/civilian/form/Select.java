@@ -50,7 +50,7 @@ public class Select<T> extends Control<T>
 
 	
 	/**
-	 * Returns the type of the keylist.
+	 * @return the type of the keylist.
 	 */
 	@Override public Type<T> getType()
 	{
@@ -59,7 +59,7 @@ public class Select<T> extends Control<T>
 	
 
 	/**
-	 * Returns the KeyList passed to the Select constructor.
+	 * @return the KeyList passed to the Select constructor.
 	 */
 	public KeyList<T> getKeyList()
 	{
@@ -68,7 +68,7 @@ public class Select<T> extends Control<T>
 	
 
 	/**
-	 * Returns the text corresponding to the selected value within the KeyList of the field.
+	 * @return the text corresponding to the selected value within the KeyList of the field.
 	 */
 	public String getSelectedText()
 	{
@@ -77,7 +77,7 @@ public class Select<T> extends Control<T>
 	
 
 	/**
-	 * Returns the index corresponding to the selected value within the KeyList of the field.
+	 * @return the index corresponding to the selected value within the KeyList of the field.
 	 */
 	public int getSelectedIndex()
 	{
@@ -86,7 +86,7 @@ public class Select<T> extends Control<T>
 
 	
 	/**
-	 * Returns the value of the size attribute which determines the number of displayed rows.
+	 * @return the value of the size attribute which determines the number of displayed rows.
 	 */
 	@Override public int getRows()
 	{
@@ -96,6 +96,8 @@ public class Select<T> extends Control<T>
 	
 	/**
 	 * Sets the size of the select field which determines the number of displayed rows.
+	 * @param rows the row count
+	 * @return this
 	 */
 	public Select<T> setRows(int rows)
 	{
@@ -121,7 +123,7 @@ public class Select<T> extends Control<T>
 
 	
 	/**
-	 * Returns if the Select prints out option groups.
+	 * @return if the Select prints out option groups.
 	 * If true, then every item in the KeyList with a null value
 	 * is interpreted as option group, instead of a normal key entry.
 	 * The default is not to use option groups.
@@ -134,6 +136,8 @@ public class Select<T> extends Control<T>
 	
 	/**
 	 * Sets if the select uses option groups.
+	 * @param on the flag
+	 * @return this
 	 */
 	public Select<T> setUseOptionGroups(boolean on)
 	{
@@ -177,6 +181,7 @@ public class Select<T> extends Control<T>
 	
 	/**
 	 * Prints the start tag of the select element.
+	 * @param out a writer
 	 */
 	public void start(CspWriter out)
 	{
@@ -186,6 +191,8 @@ public class Select<T> extends Control<T>
 		
 	/**
 	 * Prints the start tag of the select element.
+	 * @param out the writer
+	 * @param attrs additional attributes
 	 */
 	public void start(CspWriter out, String... attrs)
 	{
@@ -206,6 +213,7 @@ public class Select<T> extends Control<T>
 
 	/**
 	 * Prints the end tag of the select element.
+	 * @param out a writer
 	 */
 	public void end(CspWriter out)
 	{
@@ -215,6 +223,7 @@ public class Select<T> extends Control<T>
 	
 	/**
 	 * Prints the option list of the select elements.
+	 * @param out the writer
 	 */
 	public void printOptions(CspWriter out)
 	{
@@ -241,6 +250,7 @@ public class Select<T> extends Control<T>
 	
 	/**
 	 * Prints a single option in the select field's option list
+	 * @param out the writer
 	 * @param value the option value
 	 * @param text the option text
 	 * @param selected is the option selected?
@@ -254,6 +264,8 @@ public class Select<T> extends Control<T>
 	
 	/**
 	 * Prints a single option.
+	 * @param out a writer
+	 * @param i the option index
 	 */
 	public void printOption(CspWriter out, int i)
 	{
@@ -301,7 +313,7 @@ public class Select<T> extends Control<T>
 	
 	
 	/**
-	 * Returns this.
+	 * @return this
 	 */
 	@Override public Control<T> toFocusControl()
 	{

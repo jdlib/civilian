@@ -54,6 +54,9 @@ public class CombinedContentType extends ContentType
 	 * and a produced type (e.g. given by the @Produces annotation on a controller action method).  
 	 * If the content types are not compatible (i.e. their types or subtypes are not compatible)
 	 * null is returned.
+	 * @param acceptedType the accepted type
+	 * @param producedType the produced type
+	 * @return the combined content type
 	 */
 	public static CombinedContentType create(ContentType acceptedType, ContentType producedType)
 	{
@@ -65,6 +68,10 @@ public class CombinedContentType extends ContentType
 	 * Returns a CombinedContentType object built from the accepted and produced type, but only if it is higher 
 	 * ranked than the actual best combined type. If such a type exists the new combined type is returned, 
 	 * else null is returned.
+	 * @param acceptedType the accepted type
+	 * @param producedType the produced type
+	 * @param actualBest the actual best type
+	 * @return the combined content type
 	 */
 	public static CombinedContentType negotiate(ContentType acceptedType, ContentType producedType, CombinedContentType actualBest)
 	{
@@ -116,7 +123,7 @@ public class CombinedContentType extends ContentType
 	
 	
 	/**
-	 * Returns the server quality parameter.
+	 * @return the server quality parameter.
 	 */
 	public double getServerQuality()
 	{
@@ -125,7 +132,7 @@ public class CombinedContentType extends ContentType
 
 
 	/**
-	 * Returns the distance of the combined content type. It is the 
+	 * @return the distance of the combined content type. It is the 
 	 * the number of type and subtype wildcards replaced with a concrete
 	 * value (therefore distance is 0, 1 or 2).
 	 */

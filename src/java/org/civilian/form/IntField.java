@@ -40,7 +40,7 @@ public class IntField extends InputField<Integer>
 	
 	
 	/**
-	 * Returns TypeLib.INTEGER.
+	 * @return TypeLib.INTEGER.
 	 */
 	@Override public Type<Integer> getType()
 	{
@@ -61,6 +61,7 @@ public class IntField extends InputField<Integer>
 	
 	/**
 	 * Sets the minimum allowed value.
+	 * @param min the minimum value
 	 * @return this
 	 */
 	public IntField setMin(int min)
@@ -71,7 +72,7 @@ public class IntField extends InputField<Integer>
 	
 	
 	/**
-	 * Returns the minimum value. 
+	 * @return the minimum value. 
 	 */
 	public Integer getMin()
 	{
@@ -81,6 +82,7 @@ public class IntField extends InputField<Integer>
 
 	/**
 	 * Sets the maximum allowed value.
+	 * @param max the maximum value
 	 * @return this
 	 */
 	public IntField setMax(int max)
@@ -91,7 +93,7 @@ public class IntField extends InputField<Integer>
 
 
 	/**
-	 * Returns the maximum value. 
+	 * @return the maximum value. 
 	 */
 	public Integer getMax()
 	{
@@ -101,6 +103,8 @@ public class IntField extends InputField<Integer>
 
 	/**
 	 * Sets the minimum and maximum allowed values.
+	 * @param min the minimum value
+	 * @param max the maximum value
 	 * @return this
 	 */
 	public IntField setMinMax(int min, int max)
@@ -114,6 +118,7 @@ public class IntField extends InputField<Integer>
 	/**
 	 * Sets the step attribute of the text field.
 	 * The step attribute specifies the legal number intervals for an element.
+	 * @param step the step value
 	 * @return this
 	 */
 	public IntField setStep(int step)
@@ -124,7 +129,7 @@ public class IntField extends InputField<Integer>
 	
 	
 	/**
-	 * Returns the step value. 
+	 * @return the step value. 
 	 */
 	public Integer getStep()
 	{
@@ -133,7 +138,7 @@ public class IntField extends InputField<Integer>
 	
 
 	/**
-	 * Returns the style object previously set by #setStyle().
+	 * @return the style object previously set by #setStyle().
 	 */
 	@Override public NumberStyle getStyle()
 	{
@@ -143,6 +148,7 @@ public class IntField extends InputField<Integer>
 	
 	/**
 	 * Sets the style object which should be used when formatting the control value.
+	 * @param style the style
 	 */
 	public void setStyle(NumberStyle style)
 	{
