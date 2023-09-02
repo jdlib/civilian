@@ -17,14 +17,13 @@ package org.civilian.samples.helloworld;
 
 
 import org.civilian.annotation.Get;
-import org.civilian.annotation.Produces;
 import org.civilian.controller.Controller;
 
 
 public class IndexController extends Controller
 {
-	@Get @Produces("text/plain")
-	public String get() throws Exception
+	@Get
+	public String get()
 	{
 		return "Hello World";
 	}
