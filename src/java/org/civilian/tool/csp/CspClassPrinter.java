@@ -13,11 +13,10 @@ import org.civilian.util.Check;
  */
 class CspClassPrinter
 {
-	public CspClassPrinter(SourceWriter out, ClassData classData, boolean printSrcMap)
+	public CspClassPrinter(SourceWriter out, ClassData classData)
 	{
-		this.out = Check.notNull(out, "out");
-		classData_ = Check.notNull(classData, "classData");
-		printSrcMap_ = printSrcMap;
+		this.out 	= Check.notNull(out, "out");
+		classData_ 	= Check.notNull(classData, "classData");
 	}
 	
 	
@@ -118,7 +117,7 @@ class CspClassPrinter
 		else if ((classData_.superCall != null) || (classData_.superArgs != null))
 		{
 			out.print(classData_.superCall);
-			printSrcMapComment(out, classData_.superCall, classData_.superCallLine);
+			out.printSrcln(classData_.superCall, classData_.superCallLine);
 		}
 		for (Argument arg : classData_.arguments)
 		{
@@ -233,23 +232,6 @@ class CspClassPrinter
 	}
 	
 	
-	private void printSrcMapComment(SourceWriter out, String s, int lineIndex)
-	{
-		if (printSrcMap_)
-		{
-			int column = out.getColumn();
-			for (int i=column; i<=70; i++)
-				out.print(' ');
-			out.print(" // line ");
-			out.print(lineIndex +  1);
-			out.print(": ");
-			out.print(s.trim());
-		}
-		out.println();
-	}
-
-
 	private final SourceWriter out;
 	private final ClassData classData_;
-	private final boolean printSrcMap_;
 }

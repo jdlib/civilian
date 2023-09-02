@@ -22,10 +22,11 @@ import org.civilian.template.CspWriter;
 
 class SourceWriter extends CspWriter
 {
-	public SourceWriter(StringWriter out)
+	public SourceWriter(StringWriter out, boolean printSrcMap)
 	{
 		super(out);
-		buffer_ = out.getBuffer();
+		printSrcMap_ 	= printSrcMap;
+		buffer_ 		= out.getBuffer();
 	}
 	
 	/**
@@ -65,5 +66,24 @@ class SourceWriter extends CspWriter
 		return col;
 	}
 
-	private StringBuffer buffer_; 
+
+	public void printSrcln(String s, int lineIndex)
+	{
+		if (printSrcMap_)
+		{
+			int column = getColumn();
+			for (int i=column; i<=70; i++)
+				print(' ');
+			print(" // line ");
+			print(lineIndex +  1);
+			print(": ");
+			print(s.trim());
+		}
+		println();
+	}
+
+
+	
+	private final StringBuffer buffer_;
+	private final boolean printSrcMap_;
 }

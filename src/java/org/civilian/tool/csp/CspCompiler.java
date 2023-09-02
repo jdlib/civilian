@@ -325,7 +325,7 @@ public class CspCompiler
 	private String compile(File templFile, JavaOutput output) throws CspException, IOException
 	{
 		StringWriter sw  = new StringWriter();
-		SourceWriter out = new SourceWriter(sw);
+		SourceWriter out = new SourceWriter(sw, options_.srcMap);
 
 		if (scanner_.nextKeyword("java"))
 		{
@@ -350,11 +350,11 @@ public class CspCompiler
 			// since the template body can contain a super-call which
 			// we need in printClassData
 			StringWriter swBody	 = new StringWriter();
-			SourceWriter outBody = new SourceWriter(swBody);
+			SourceWriter outBody = new SourceWriter(swBody, options_.srcMap);
 			outBody.increaseTab();
 			compileJavaLines(outBody, true);
 
-			CspClassPrinter printer = new CspClassPrinter(out, classData_, options_.srcMap);
+			CspClassPrinter printer = new CspClassPrinter(out, classData_);
 			printer.print(templFile, options_.timestamp, swBody.toString());
 		}
 		out.flush();
@@ -693,23 +693,7 @@ public class CspCompiler
 
 	private void printSrcMapComment(SourceWriter out, String s)
 	{
-		printSrcMapComment(out, s, scanner_.getLineIndex());
-	}
-
-
-	private void printSrcMapComment(SourceWriter out, String s, int lineIndex)
-	{
-		if (options_.srcMap)
-		{
-			int column = out.getColumn();
-			for (int i=column; i<=70; i++)
-				out.print(' ');
-			out.print(" // line ");
-			out.print(lineIndex +  1);
-			out.print(": ");
-			out.print(s.trim());
-		}
-		out.println();
+		out.printSrcln(s, scanner_.getLineIndex());
 	}
 
 
