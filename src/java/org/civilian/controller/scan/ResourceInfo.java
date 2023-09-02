@@ -87,7 +87,7 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 	
 
 	/**
-	 * @returns the number of child Path objects.
+	 * @return the number of child Path objects.
 	 */
 	public int getChildCount()
 	{
@@ -97,7 +97,7 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 	
 	/**
 	 * @param i the child index
-	 * @returns the i-th child.
+	 * @return the i-th child.
 	 */
 	public ResourceInfo getChild(int i)
 	{

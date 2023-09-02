@@ -26,6 +26,7 @@ public class ScanException extends RuntimeException
 	
 	/**
 	 * Creates a ScanException.
+	 * @param message a message
 	 */
 	public ScanException(String message)
 	{
@@ -35,6 +36,8 @@ public class ScanException extends RuntimeException
 
 	/**
 	 * Creates a ScanException.
+	 * @param message a message
+	 * @param cause optional: the cause
 	 */
 	public ScanException(String message, Exception cause)
 	{

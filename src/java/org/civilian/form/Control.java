@@ -118,13 +118,14 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	
 	/**
-	 * Returns the type.
+	 * @return the type.
 	 */
 	public abstract Type<T> getType();
 	
 	
 	/**
 	 * Tests if the given type equals the type of this control.
+	 * @param type a type
 	 */
 	protected void checkType(Type<?> type)
 	{
@@ -134,7 +135,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	
 	/**
-	 * Returns the name of the Control.
+	 * @return the name of the Control.
 	 */
 	public String getName()
 	{
@@ -144,6 +145,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Sets the name of the Control.
+	 * @param name the name
 	 */
 	public void setName(String name)
 	{
@@ -154,6 +156,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	/**
 	 * Sets the form. Called by the form, when the control is {@link Form#add(Control) added}
 	 * to the form.
+	 * @param form the form
 	 */
 	protected void setForm(Form form)
 	{
@@ -164,7 +167,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	
 	/**
-	 * Returns the form to which the control was added.
+	 * @return the form to which the control was added.
 	 * Returns null when called before the control was added to a form.
 	 * @see Form#add(Control)
 	 */
@@ -175,7 +178,7 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	
 	/**
-	 * Returns the form to which the control was added.
+	 * @return the form to which the control was added.
 	 * @throws IllegalStateException when the field was not yet added to a form.
 	 */
 	public Form getSafeForm()
@@ -187,7 +190,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 
 	/**
-	 * Returns the value.
+	 * @return the value.
 	 */
 	public T getValue()
 	{
@@ -196,7 +199,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	
 	/**
-	 * Returns if the {@link #getValue() control value} is not null. 
+	 * @return if the {@link #getValue() control value} is not null. 
 	 */
 	public boolean hasValue()
 	{
@@ -206,6 +209,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Sets the value.
+	 * @param value the value
 	 */
 	public void setValue(T value)
 	{
@@ -215,6 +219,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Unchecked version of setValue()
+	 * @param value the value
 	 */
 	@SuppressWarnings("unchecked")
 	private void setValueUc(Object value)
@@ -224,7 +229,7 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	
 	/**
-	 * Casts the stored value to a Number and returns its integer value.
+	 * @return casts the stored value to a Number and returns its integer value.
 	 */
 	public int getIntValue()
 	{
@@ -234,6 +239,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Sets the value.
+	 * @param value the value
 	 * @throws IllegalArgumentException if the type of this Value
 	 * 		is not Integer.
 	 */
@@ -246,6 +252,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Casts the stored value to a Boolean and returns its boolean value.
+	 * @return the value
 	 */
 	public boolean getBooleanValue()
 	{
@@ -255,6 +262,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Sets the value of a boolean parameter.
+	 * @param value the value
 	 * @throws IllegalArgumentException if the type of this Value
 	 * 		is not Boolean.
 	 */
@@ -267,6 +275,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Casts the stored value to a Number and returns its double value.
+	 * @return the value
 	 */
 	public double getDoubleValue()
 	{
@@ -276,6 +285,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Sets the value of a double parameter.
+	 * @param value the value
 	 * @throws IllegalArgumentException if the type of this Value
 	 * 		is not Double.
 	 */
@@ -296,7 +306,7 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	
 	/**
-	 * Returns any parse exception which was caught during a 
+	 * @return any parse exception which was caught during a 
 	 * previous call to parse.
 	 */
 	public Exception getError()
@@ -306,7 +316,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	
 	/**
-	 * Returns the original string value, which was passed to parse()
+	 * @return the original string value, which was passed to parse()
 	 * and caused a parse exception
 	 */
 	public String getErrorValue()
@@ -316,7 +326,7 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	
 	/**
-	 * Returns if the Value has an error, because of an 
+	 * @return if the Value has an error, because of an 
 	 * unsuccessful parse operation.
 	 */
 	public boolean hasError()
@@ -338,6 +348,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	 * Returns the number of rows of the control. The default implementation returns 1.
 	 * The number of rows can be used for layout decisions, e.g. for vertical alignment
 	 * of a control in a HTML table cell. 
+	 * @return the number of rows
 	 */
 	public int getRows()
 	{
@@ -346,7 +357,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	
 	/**
-	 * Returns the control category. 
+	 * @return the control category. 
 	 * The default implementation returns Category.INPUT.
 	 */
 	public Category getCategory()
@@ -356,7 +367,7 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	
 	/**
-	 * Returns the label of the control.
+	 * @return the label of the control.
 	 */
 	public Object getLabel()
 	{
@@ -366,6 +377,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Sets the label of the control.
+	 * @param label the label
 	 * @return this
 	 */
 	public Control<T> setLabel(Object label)
@@ -376,7 +388,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	
 	/**
-	 * Returns if the control has a label.
+	 * @return if the control has a label.
 	 */
 	public boolean hasLabel()
 	{
@@ -385,7 +397,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 
 	/**
-	 * Returns data associated with the control.
+	 * @return data associated with the control.
 	 * @see #setData(Object)
 	 */
 	public Object getData()
@@ -396,6 +408,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Associates the control with arbitrary data.
+	 * @param data the data
 	 * @return this
 	 */
 	public Control<T> setData(Object data)
@@ -409,6 +422,8 @@ public abstract class Control<T> implements CspWriter.Printable
 	 * Sets the value of an HTML attribute on the control.
 	 * Use this method if the control class does not provide
 	 * an explicit access method for that attribute.
+	 * @param name the name
+	 * @param value the value
 	 * @return this
 	 */
 	public Control<T> setAttribute(String name, String value)
@@ -421,6 +436,8 @@ public abstract class Control<T> implements CspWriter.Printable
 	/**
 	 * Returns the value of an HTML attribute previously set 
 	 * by {@link #setAttribute(String, String)}.
+	 * @param name the name
+	 * @return the attribute
 	 */
 	public String getAttribute(String name)
 	{
@@ -429,7 +446,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	
 	/**
-	 * Returns the HTML id of the control. By default it is null.
+	 * @return the HTML id of the control. By default it is null.
 	 */
 	public String getId()
 	{
@@ -439,6 +456,8 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Sets the HTML id of the control.
+	 * @param id the id
+	 * @return this
 	 */
 	public Control<T> setId(String id)
 	{
@@ -464,6 +483,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	 * to {@link Status#VALIDATION_ERROR}, if custom validation fails. Another entry point 
 	 * for custom validation is {@link Form#validate(boolean)} which is called when the whole
 	 * form was {@link Form#read() read} from the request.
+	 * @param request a request
 	 * @return returns if the new status of the control is Status#OK.
 	 * @see #isOk()
 	 */
@@ -478,6 +498,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	/**
 	 * Reads the control value, using the request of the form
 	 * to which the field belongs.
+	 * @return true iif the Control has a value
 	 * @see Control#read(Request)
 	 */
 	public boolean read()
@@ -489,6 +510,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	/**
 	 * Reads the value from the request, but does
 	 * not change the value and status in case of an error or a missing value.
+	 * @param request a request
 	 * @return true iif the Control has a value
 	 */
 	public boolean readDefault(Request request)
@@ -505,6 +527,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	 * Parses the value from the request and updates the status.
 	 * Called by read(Request). Overwrite this method if the Control
 	 * has a special way to parse a request value.
+	 * @param request a request
 	 */
 	protected void parse(Request request)
 	{
@@ -576,7 +599,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	 * Returns if the control is required. A required control with no value
 	 * has status STATUS_MISSING.
 	 * @see #getStatus()
-	 * @see #read(Request)
+	 * @return the flag
 	 */
 	public boolean isRequired()
 	{
@@ -588,6 +611,8 @@ public abstract class Control<T> implements CspWriter.Printable
 	 * Marks the control as required. The default is not required.
 	 * The required flag influences the status of the control
 	 * when its value is read from a request.
+	 * @param isRequired the flag
+	 * @return this
 	 */
 	public Control<T> setRequired(boolean isRequired)
 	{
@@ -610,7 +635,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	
 	/**
-	 * Returns if the control is read-only.
+	 * @return if the control is read-only.
 	 */
 	public boolean isReadOnly()
 	{
@@ -620,6 +645,8 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Sets if the control is readonly.
+	 * @param isReadOnly the flag
+	 * @return this
 	 */
 	public Control<T> setReadOnly(boolean isReadOnly)
 	{
@@ -634,6 +661,7 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	/**
 	 * Sets a control to readonly.
+	 * @return this
 	 */
 	public Control<T> setReadOnly()
 	{
@@ -642,7 +670,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	
 	/**
-	 * Returns if the control is disabled.
+	 * @return if the control is disabled.
 	 */
 	public boolean isDisabled()
 	{
@@ -652,6 +680,8 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	/**
 	 * Sets if the control is disabled.
+	 * @param disabled the flag
+	 * @return this
 	 */
 	public Control<T> setDisabled(boolean disabled)
 	{
@@ -666,6 +696,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Sets the control disabled.
+	 * @return this
 	 */
 	public Control<T> setDisabled()
 	{
@@ -679,7 +710,7 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	
 	/**
-	 * Returns the status of the control.
+	 * @return the status of the control.
 	 */
 	public Status getStatus()
 	{
@@ -688,7 +719,8 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	
 	/**
-	 * Returns if the control has a certain status.
+	 * @param status a status
+	 * @return if the control has a certain status.
 	 */
 	public boolean hasStatus(Status status)
 	{
@@ -700,7 +732,9 @@ public abstract class Control<T> implements CspWriter.Printable
 	 * Sets the status of the control.
 	 * If the field is part of a form, and the status is not Status.OK,
 	 * the field will set itself as the forms error control
+	 * @param status a status
 	 * @see Form#setErrorControl(Control)
+	 * @return this
 	 */
 	public Control<T> setStatus(Status status)
 	{
@@ -737,7 +771,7 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	
 	/**
-	 * Returns if the control has {@link Status#OK}.
+	 * @return if the control has {@link Status#OK}.
 	 */
 	public boolean isOk()
 	{
@@ -757,6 +791,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	 * Additionally, the control determines if the form was {@link Form#isReloaded() reloaded}.
 	 * In this case it reads its value from the request, without setting any error (see {@link #readDefault(Request)}.
 	 * If the form was submitted, the field reads its value from the request.
+	 * @param defaultValue a default value
 	 */
 	public void reloadOnChange(T defaultValue)
 	{
@@ -779,6 +814,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	 * If the control has an {@link #getErrorValue()} because
 	 * it was initialized from an invalid request, the error value
 	 * is returned. Else the value converted to a string is returned.
+	 * @return the formatted value
 	 */
 	public String format()
 	{
@@ -787,7 +823,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	
 	/**
-	 * Returns the control value formatted as a string.
+	 * @return the control value formatted as a string.
 	 */
 	protected String formatValue()
 	{
@@ -796,7 +832,8 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	
 	/**
-	 * Returns the control value formatted as a string.
+	 * @param value a value
+	 * @return the control value formatted as a string.
 	 */
 	protected String formatValue(T value)
 	{
@@ -813,7 +850,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	
 	/**
-	 * Returns a style object which is passed to the TypeSerializer when
+	 * @return a style object which is passed to the TypeSerializer when
 	 * formatting a value.
 	 */
 	protected Style getStyle()
@@ -829,6 +866,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Prints the control.
+	 * @param out a CspWriter
 	 */
 	@Override public void print(CspWriter out)
 	{
@@ -838,6 +876,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Prints the control.
+	 * @param out a CspWriter
 	 * @param attrs a list of attribute names and values which
 	 * 		should be printed in the start tag of the control element.
 	 */
@@ -847,6 +886,9 @@ public abstract class Control<T> implements CspWriter.Printable
 	/**
 	 * Prints the generic attributes stored in {@link #attribute_} and
 	 * runtime attributes.
+	 * @param out a CspWriter
+	 * @param attrs a list of attribute names and values which
+	 * 		should be printed in the start tag of the control element.
 	 */
 	protected void printAttrs(CspWriter out, String... attrs)
 	{
@@ -858,6 +900,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	
 	/**
 	 * Prints a javascript snippet to set the focus to this control.
+	 * @param out a CspWriter
 	 * @param printScript if true the snippet is surrounded by script-tags.
 	 */
 	public void focus(CspWriter out, boolean printScript)
@@ -885,7 +928,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	 * Returns this control or a sub-control of this control which is able to receive the focus.
 	 * Returns null if the control (and none of its sub-controls) may not receive the focus
 	 * (e.g. HiddenFields). 
-	 * The default implementation returns null.
+	 * @return the control. The default implementation returns null.
 	 */
 	public Control<?> toFocusControl()
 	{
@@ -897,7 +940,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	 * Returns this control or a subcontrol of this control which is able to receive input from a user.
 	 * Returns null if the control (and none of its sub-control) may not receive input.
 	 * (e.g. HiddenFields, Buttons). 
-	 * The default implementation returns this.
+	 * @return the control. The default implementation returns null.
 	 */
 	public Control<?> toInputField()
 	{
@@ -906,7 +949,7 @@ public abstract class Control<T> implements CspWriter.Printable
 
 	
 	/**
-	 * Returns a debug representation of the control.
+	 * @return a debug representation of the control.
 	 */
 	@Override public String toString()
 	{

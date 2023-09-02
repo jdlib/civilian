@@ -27,6 +27,7 @@ public class ControllerConfig
 {
 	/**
 	 * Creates a new ControllerConfig.
+	 * @param rootPackage the root package
 	 */
 	public ControllerConfig(String rootPackage)
 	{
@@ -36,6 +37,8 @@ public class ControllerConfig
 	
 	/**
 	 * Creates a new ControllerConfig.
+	 * @param rootPackage the root package
+	 * @param pathParams the path params
 	 */
 	public ControllerConfig(String rootPackage, PathParamMap pathParams)
 	{
@@ -46,7 +49,7 @@ public class ControllerConfig
 	/**
 	 * Creates a new ControllerConfig.
 	 * @param rootPackage the root package
-	 * @param PathParamMap the path params
+	 * @param pathParams the path params
 	 * @param naming the naming
 	 */
 	public ControllerConfig(String rootPackage, PathParamMap pathParams, ControllerNaming naming)

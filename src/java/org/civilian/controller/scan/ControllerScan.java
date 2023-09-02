@@ -32,6 +32,9 @@ public class ControllerScan
 {
 	/**
 	 * Creates a ResourceScan.
+	 * @param config the controller config
+	 * @param classLoader a class loader
+	 * @param verbose verbose output?
 	 */
 	public ControllerScan(
 		ControllerConfig config,

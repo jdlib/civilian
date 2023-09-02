@@ -30,6 +30,8 @@ public class Attribute implements CspWriter.Printable
 	/**
 	 * Returns the attribute with a given name from the linked list
 	 * of attributes starting with the given Attribute object.
+	 * @param attribute the first attribute
+	 * @param name the attribute name
 	 * @return the attribute with the specified name or null if not found
 	 */
 	public static Attribute getAttribute(Attribute attribute, String name)
@@ -47,6 +49,8 @@ public class Attribute implements CspWriter.Printable
 	/**
 	 * Returns the value of an attribute with a certain name within
 	 * the linked list of attributes starting with the given attribute.
+	 * @param attribute the first attribute
+	 * @param name the attribute name
 	 * @return the value or null if not found
 	 */
 	public static String getValue(Attribute attribute, String name)
@@ -59,6 +63,9 @@ public class Attribute implements CspWriter.Printable
 	/**
 	 * Sets the value of an attribute with a given name within the linked list
 	 * of attributes starting with the given Attribute object.
+	 * @param start the start attribute
+	 * @param name the attribute name
+	 * @param value the attribute value
 	 * @return the new start of the linked list.
 	 */
 	public static Attribute setAttribute(Attribute start, String name, String value)
@@ -99,7 +106,7 @@ public class Attribute implements CspWriter.Printable
 	
 	
 	/**
-	 * Returns the next attribute.
+	 * @return the next attribute.
 	 */
 	public Attribute next()
 	{
@@ -109,7 +116,8 @@ public class Attribute implements CspWriter.Printable
 
 	/**
 	 * Prints this attribute and the following attributes
-	 * to the response writer.
+	 * to the writer.
+	 * @param out a writer
 	 */
 	@Override public void print(CspWriter out)
 	{
