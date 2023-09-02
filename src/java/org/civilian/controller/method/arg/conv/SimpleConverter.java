@@ -69,7 +69,7 @@ public abstract class SimpleConverter<T> extends Converter<T>
 			if (arg != null)
 			{
 				String message = arg.toString() + ": invalid value \"" + stringValue + '"';
-				throw new BadRequestException(message, e).setErrorValue(stringValue);
+				throw new BadRequestException(message, e, stringValue);
 			}
 			else
 				throw e;

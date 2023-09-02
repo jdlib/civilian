@@ -39,6 +39,7 @@ public class CookieList extends ArrayList<Cookie>
 	
 	/**
 	 * Creates a cookie list filled with the given cookies.
+	 * @param cookies some cookies
 	 */
 	public CookieList(Cookie... cookies)
 	{
@@ -48,7 +49,8 @@ public class CookieList extends ArrayList<Cookie>
 	
 	
 	/**
-	 * Returns the cookie with the given name.
+	 * @param name a name
+	 * @return the cookie with the given name.
 	 */
 	public Cookie get(String name)
 	{

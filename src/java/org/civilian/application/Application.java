@@ -619,7 +619,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 			
 			BadRequestException e = (BadRequestException)error;
 			if (!response.isCommitted())
-				response.sendError(e.getStatusCode(), e.getMessage(), e.getCause());
+				response.sendError(Response.Status.SC400_BAD_REQUEST, e.getMessage(), e.getCause());
 		}
 		else if (!ignoreError(error))
 		{

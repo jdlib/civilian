@@ -47,7 +47,7 @@ public abstract class Processor
 
 	
 	/**
-	 * Returns information about the processor.
+	 * @return information about the processor.
 	 * Used by the admin app to list processors.
 	 */
 	public abstract String getInfo();

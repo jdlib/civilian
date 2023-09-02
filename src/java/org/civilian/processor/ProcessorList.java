@@ -62,7 +62,8 @@ public class ProcessorList extends Processor implements Iterable<Processor>
 	
 
 	/**
-	 * Returns the i-th processor in the list.
+	 * @param i a processor index
+	 * @return the i-th processor in the list.
 	 */
 	public Processor get(int i)
 	{
@@ -71,7 +72,8 @@ public class ProcessorList extends Processor implements Iterable<Processor>
 	
 	
 	/**
-	 * Returns the first processor in the list with the given
+	 * @param procClass a processor class
+	 * @return the first processor in the list with the given
 	 * class or null if none found.
 	 */
 	public Processor get(Class<? extends Processor> procClass)

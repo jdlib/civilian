@@ -581,7 +581,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 		{
 			String message = reader.describeReadError(e);
 			if (message != null)
-				throw new BadRequestException("RequestContent: " + message, e);
+				throw new BadRequestException("RequestContent: " + message, e, null);
 			else
 				throw e;
 		}

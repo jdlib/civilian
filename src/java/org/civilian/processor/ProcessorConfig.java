@@ -33,6 +33,7 @@ public class ProcessorConfig
 {
 	/**
 	 * Adds a processor to the processor list at the first position.
+	 * @param processor a processor
 	 */
 	public void addFirst(Processor processor)
 	{
@@ -43,6 +44,7 @@ public class ProcessorConfig
 	
 	/**
 	 * Adds a processor to the processor list at the last position.
+	 * @param processor a processor
 	 */
 	public void addLast(Processor processor)
 	{
@@ -53,6 +55,8 @@ public class ProcessorConfig
 
 	/**
 	 * Adds a processor to the processor list before the processor with the given class.
+	 * @param beforeClass a processor class
+	 * @param processor a processor
 	 */
 	public void addBefore(Class<? extends Processor> beforeClass, Processor processor)
 	{
@@ -69,6 +73,8 @@ public class ProcessorConfig
 	
 	/**
 	 * Adds a processor to the processor list after the processor with the given class.
+	 * @param afterClass a processor class
+	 * @param processor a processor
 	 */
 	public void addAfter(Class<? extends Processor> afterClass, Processor processor)
 	{
@@ -84,7 +90,7 @@ public class ProcessorConfig
 
 	
 	/**
-	 * Returns the processor list for direct manipulation.
+	 * @return the processor list for direct manipulation.
 	 */
 	public List<Processor> getList()
 	{
@@ -93,7 +99,8 @@ public class ProcessorConfig
 	
 
 	/**
-	 * Returns the first position of a processor with the given
+	 * @param processorClass a processor class
+	 * @return the first position of a processor with the given
 	 * class within the list. 
 	 */
 	public int indexOf(Class<? extends Processor> processorClass)

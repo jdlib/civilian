@@ -17,7 +17,6 @@ package org.civilian.request;
 
 
 import org.civilian.response.Response;
-import org.civilian.response.Response.Status;
 
 
 /**
@@ -38,59 +37,20 @@ public class BadRequestException extends Exception
 
 	
 	/**
-	 * The default response status code used by BadRequestExceptions.
-	 * It is set to {@link Status#SC400_BAD_REQUEST} by default.
-	 */
-	public static int defaultStatusCode = Response.Status.SC400_BAD_REQUEST;
-	
-	
-	/**
-	 * Creates a new BadRequestException with status code {@link #defaultStatusCode}.
-	 * @param message a diagnostic message which can be shown to the client.
-	 * @param cause an exception which caused the error in the first place
-	 */
-	public BadRequestException(String message, Throwable cause)
-	{
-		this(defaultStatusCode, message, cause);
-	}
-
-	
-	/**
 	 * Creates a new BadRequestException.
-	 * @param statusCode the response status code
 	 * @param message a diagnostic message which can be shown to the client.
 	 * @param cause an exception which caused the error in the first place
+	 * @param errorValue an error value
 	 */
-	public BadRequestException(int statusCode, String message, Throwable cause)
+	public BadRequestException(String message, Throwable cause, String errorValue)
 	{
 		super(message, cause);
-		statusCode_ = statusCode;
+		errorValue_ = errorValue;
 	}
 	
 	
 	/**
-	 * Returns the status code which should be used when an error response is 
-	 * sent to the client.
-	 */
-	public int getStatusCode()
-	{
-		return statusCode_;
-	}
-	
-	
-	/**
-	 * Sets the status code.
-	 * @return this
-	 */
-	public BadRequestException setStatusCode(int statusCode)
-	{
-		statusCode_ = statusCode;
-		return this;
-	}
-
-	
-	/**
-	 * Returns the value which caused the exception.
+	 * @return the value which caused the exception.
 	 */
 	public String getErrorValue()
 	{
@@ -98,17 +58,5 @@ public class BadRequestException extends Exception
 	}
 	
 
-	/**
-	 * Sets the value which caused the exception.
-	 * @return this
-	 */
-	public BadRequestException setErrorValue(String value)
-	{
-		errorValue_ = value;
-		return this;
-	}
-
-	
-	private int statusCode_;
-	private String errorValue_;
+	private final String errorValue_;
 }

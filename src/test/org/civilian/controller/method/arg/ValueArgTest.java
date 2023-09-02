@@ -67,7 +67,7 @@ public class ValueArgTest extends CivTest
 		assertEquals(arg.exception, v.getError());
 		assertNull(v.getErrorValue());
 		
-		arg.exception = new BadRequestException("hello", ex).setErrorValue("12.34");
+		arg.exception = new BadRequestException("hello", ex, "12.34");
 		v	= (Value<String>)varg.getValue(null, null);
 		assertNull(v.getValue());
 		assertEquals("12.34", v.getErrorValue());
