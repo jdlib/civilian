@@ -33,7 +33,7 @@ public class IndexController extends Controller
 	@Get @Post @Produces("text/html") 
 	public GameTemplate render() throws Exception
 	{
-		Game game 		= getRequest().getSession(true).getCreateAttr(Game.class);
+		Game game 		= getRequest().getSession(true).getAttrOrCreate(Game.class);
 		GameForm form 	= new GameForm(this);
 		String feedback = null;
 		

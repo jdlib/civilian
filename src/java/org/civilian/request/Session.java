@@ -70,9 +70,9 @@ public interface Session
 	 * If no attribute is bound, a new object is created.
 	 * @param c the attribute class
 	 */
-	public default <T> T getCreateAttr(Class<T> c) throws InstantiationException, IllegalAccessException
+	public default <T> T getAttrOrCreate(Class<T> c) throws InstantiationException, IllegalAccessException
 	{
-		return getCreateAttr(c, c.getName());
+		return getAttrOrCreate(c, c.getName());
 	}
 
 	
@@ -83,7 +83,7 @@ public interface Session
 	 * @param name the attribute name
 	 */
 	@SuppressWarnings("deprecation")
-	public default <T> T getCreateAttr(Class<T> c, String name) throws InstantiationException, IllegalAccessException
+	public default <T> T getAttrOrCreate(Class<T> c, String name) throws InstantiationException, IllegalAccessException
 	{
 		T value = c.cast(getAttribute(name));
 		if (value == null)
