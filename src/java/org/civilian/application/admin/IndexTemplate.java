@@ -5,7 +5,7 @@
 package org.civilian.application.admin;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 import org.civilian.Version;
 import org.civilian.resource.Url;
 import org.civilian.server.Server;
@@ -118,7 +118,7 @@ public class IndexTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<td>System Date</td>");                            // line 53: <td>System Date</td>
 		out.print("<td>");                                              // line 54: <td>
-		out.print(new Date());                                          // line 54: <%new Date()%>
+		out.print(LocalDate.now());                                     // line 54: <%LocalDate.now()%>
 		out.println("</td>");                                           // line 54: </td>
 		out.println("<td></td>");                                       // line 55: <td></td>
 		out.decreaseTab();

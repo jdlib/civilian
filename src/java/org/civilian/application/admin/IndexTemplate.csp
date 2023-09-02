@@ -1,4 +1,4 @@
-import java.util.Date
+import java.time.LocalDate
 import org.civilian.Version
 import org.civilian.server.Server
 import org.civilian.server.ServerApp
@@ -51,7 +51,7 @@ template(Server server) mixin html
 	</tr>
 	<tr>
 		<td>System Date</td>
-		<td><%new Date()%></td>
+		<td><%LocalDate.now()%></td>
 		<td></td>
 	</tr>
 	</table>
