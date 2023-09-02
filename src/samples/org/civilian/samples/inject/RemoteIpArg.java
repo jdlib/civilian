@@ -26,7 +26,7 @@ import org.civilian.response.Response;
  * to inject values into parameters of controller
  * action methods which are annotated with @RemoteIp.
  */
-public class RemoteIpArg extends MethodArg
+class RemoteIpArg extends MethodArg
 {
 	@Override public Object getValue(Request request, Response response) throws Exception
 	{

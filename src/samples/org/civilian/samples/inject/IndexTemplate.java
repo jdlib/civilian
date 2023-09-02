@@ -54,7 +54,7 @@ public class IndexTemplate extends CspTemplate
 		out.println("<div class=\"span6 offset3\">");                   // line 14: <div class="span6 offset3">
 		out.increaseTab();
 		out.println("<h1>Inject Sample</h1>");                          // line 15: <h1>Inject Sample</h1>
-		out.println("demonstrates use of annotations to inject request values into controller method parameters."); // line 16: demonstrates use of annotations to inject request values into controller method parameters.
+		out.println("Demonstrates use of annotations to inject request values into controller method parameters."); // line 16: Demonstrates use of annotations to inject request values into controller method parameters.
 		out.println("<p style=\"margin-bottom: 20px\">");               // line 17: <p style="margin-bottom: 20px">
 		if (registration == null)                                       // line 18: @if (registration == null)
 		{
@@ -81,7 +81,7 @@ public class IndexTemplate extends CspTemplate
 			out.println("<table class=\"table\">");                     // line 31: <table class="table">
 			out.println("<tr>");                                        // line 32: <tr>
 			out.increaseTab();
-			out.println("<td>Your IP is</td>");                         // line 33: <td>Your IP is</td>
+			out.println("<td>Your IP</td>");                            // line 33: <td>Your IP</td>
 			out.print("<td>");                                          // line 34: <td>
 			html.text(remoteIp);                                        // line 34: <%html.text(remoteIp);%>
 			out.println("</td>");                                       // line 34: </td>
@@ -89,7 +89,7 @@ public class IndexTemplate extends CspTemplate
 			out.println("</tr>");                                       // line 35: </tr>
 			out.println("<tr>");                                        // line 36: <tr>
 			out.increaseTab();
-			out.println("<td>Your Accept-Header is</td>");              // line 37: <td>Your Accept-Header is</td>
+			out.println("<td>Accept-Header</td>");                      // line 37: <td>Accept-Header</td>
 			out.print("<td>");                                          // line 38: <td>
 			html.text(acceptHeader);                                    // line 38: <%html.text(acceptHeader);%>
 			out.println("</td>");                                       // line 38: </td>

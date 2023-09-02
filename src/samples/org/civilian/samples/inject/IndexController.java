@@ -22,7 +22,6 @@ import org.civilian.annotation.HeaderParam;
 import org.civilian.annotation.Post;
 import org.civilian.annotation.Produces;
 import org.civilian.controller.Controller;
-import org.civilian.annotation.Parameter;
 
 
 /**
@@ -40,9 +39,9 @@ public class IndexController extends Controller
 	 * Demonstrates use of the customer annotation @RemoteIp
 	 * which injects the ip of the caller.
 	 */
-	@Post @Produces("text/html") public Object post(@RemoteIp String remoteIp, 
+	@Post @Produces("text/html") public Object post(
+		@RemoteIp String remoteIp, 
 		@HeaderParam("Accept") String acceptHeader,
-		@Parameter("age") int age,
 		@BeanParam Registration registration)
 		throws Exception
 	{

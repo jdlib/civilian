@@ -13,7 +13,7 @@ template(String remoteIp, String acceptHeader, Registration registration) mixin 
 			<div class="row">
 				<div class="span6 offset3">
 					<h1>Inject Sample</h1>
-					demonstrates use of annotations to inject request values into controller method parameters.
+					Demonstrates use of annotations to inject request values into controller method parameters.
 					<p style="margin-bottom: 20px">
 					@if (registration == null)
 						<form method="POST">
@@ -30,11 +30,11 @@ template(String remoteIp, String acceptHeader, Registration registration) mixin 
 					@else  
 						<table class="table">
 						<tr>
-							<td>Your IP is</td>
+							<td>Your IP</td>
 							<td><%html.text(remoteIp);%></td>
 						</tr>	
 						<tr>
-							<td>Your Accept-Header is</td>
+							<td>Accept-Header</td>
 							<td><%html.text(acceptHeader);%></td>
 						</tr>	
 						<tr>
