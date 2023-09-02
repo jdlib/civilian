@@ -81,7 +81,7 @@ public class Button extends Control<String>
 		
 
 		/**
-		 * Returns either "button" or "input". 
+		 * @return either "button" or "input". 
 		 */
 		public final String tag()
 		{
@@ -90,7 +90,7 @@ public class Button extends Control<String>
 		
 		
 		/**
-		 * Returns if the variant describes a submit button. 
+		 * @return if the variant describes a submit button. 
 		 */
 		public final boolean isSubmitVariant()
 		{
@@ -106,6 +106,7 @@ public class Button extends Control<String>
 	/**
 	 * Creates a Button for variant {@link Variant#BUTTON}.
 	 * @param label the button label
+	 * @return the button
 	 */
 	public static Button button(String label)
 	{
@@ -116,6 +117,7 @@ public class Button extends Control<String>
 	/**
 	 * Creates a Button for variant {@link Variant#BUTTON_RESET}.
 	 * @param label the button label
+	 * @return the button
 	 */
 	public static Button reset(String label)
 	{
@@ -126,6 +128,7 @@ public class Button extends Control<String>
 	/**
 	 * Creates a Button for variant {@link Variant#BUTTON_SUBMIT}.
 	 * @param label the button label
+	 * @return the button
 	 */
 	public static Button submit(String label)
 	{
@@ -136,6 +139,7 @@ public class Button extends Control<String>
 	/**
 	 * Creates a Button for variant {@link Variant#INPUT_BUTTON}.
 	 * @param label the button label
+	 * @return the button
 	 */
 	public static Button inputButton(String label)
 	{
@@ -146,6 +150,7 @@ public class Button extends Control<String>
 	/**
 	 * Creates a Button for variant {@link Variant#INPUT_RESET}.
 	 * @param label the button label
+	 * @return the button
 	 */
 	public static Button inputReset(String label)
 	{
@@ -154,7 +159,7 @@ public class Button extends Control<String>
 
 	
 	/**
-	 * Creates a Button for variant {@link Variant#INPUT_SUBMIT}.
+	 * @return a Button for variant {@link Variant#INPUT_SUBMIT}.
 	 * @param label the button label
 	 */
 	public static Button inputSubmit(String label)
@@ -193,6 +198,8 @@ public class Button extends Control<String>
 	
 	/**
 	 * Sets the value of the "onclick" attribute.
+	 * @param function a JS function
+	 * @return this
 	 */
 	public Button setOnClick(String function)
 	{
@@ -207,7 +214,9 @@ public class Button extends Control<String>
 	 * is clicked and submitting the form. The use case are buttons with a 
 	 * cancel or reset-function, which is implemented on the server-side. 
 	 * When clicked, the form input should not be validated, but just submitted,
-	 * and the server-side logic will execute the cancel or reset functionality. 
+	 * and the server-side logic will execute the cancel or reset functionality.
+	 * @param noValidate the flag 
+	 * @return this
 	 */
 	public Button setNoValidate(boolean noValidate)
 	{
@@ -218,6 +227,7 @@ public class Button extends Control<String>
 	
 	/**
 	 * Calls setNoValidate(true).
+	 * @return this
 	 */
 	public Button setNoValidate()
 	{
@@ -226,7 +236,7 @@ public class Button extends Control<String>
 	
 
 	/**
-	 * Returns the no-validate flag of the button.
+	 * @return the no-validate flag of the button.
 	 */
 	public boolean getNoValidate()
 	{
@@ -253,7 +263,7 @@ public class Button extends Control<String>
 	
 	
 	/**
-	 * Returns if the form was submitted by clicking this button, or if the form
+	 * @return if the form was submitted by clicking this button, or if the form
 	 * was submitted by pressing enter in a control and this button
 	 * was registered as default button.
 	 */
@@ -272,7 +282,7 @@ public class Button extends Control<String>
 	
 	
 	/**
-	 * Returns if the form was submitted by clicking this button. 
+	 * @return if the form was submitted by clicking this button. 
 	 */
 	public boolean isDirectlyClicked()
 	{
@@ -288,7 +298,7 @@ public class Button extends Control<String>
 	
 	
 	/**
-	 * Prints the button markup.
+	 * {@inheritDoc}
 	 */
 	@Override public void print(CspWriter out, String... attrs)
 	{
@@ -309,6 +319,8 @@ public class Button extends Control<String>
 	
 	/**
 	 * Prints the button start tag.
+	 * @param out a writer
+	 * @param attrs additional attributes
 	 */
 	public void start(CspWriter out, String... attrs)
 	{
@@ -334,6 +346,7 @@ public class Button extends Control<String>
 
 	/**
 	 * Prints the button end tag.
+	 * @param out a writer
 	 */
 	public void end(CspWriter out)
 	{

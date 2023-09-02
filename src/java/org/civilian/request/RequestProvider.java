@@ -22,7 +22,7 @@ package org.civilian.request;
 public interface RequestProvider
 {
 	/**
-	 * Returns the Request.
+	 * @return the Request.
 	 */
 	public Request getRequest();
 }

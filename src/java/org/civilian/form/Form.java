@@ -90,7 +90,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	
 	/**
-	 * Returns the request associated with the form.
+	 * @return the request associated with the form.
 	 */
 	@Override public Request getRequest()
 	{
@@ -99,7 +99,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 
 	/**
-	 * Returns the response associated with the form.
+	 * @return the response associated with the form.
 	 */
 	@Override public Response getResponse()
 	{
@@ -112,6 +112,7 @@ public class Form implements RequestProvider, ResponseProvider
 	 * generated. When the form is printed, its name is printed 
 	 * as hidden field. The hidden field then allows to detect
 	 * - given a request - if the form was submitted.
+	 * @param name the name
 	 */
 	public void setName(String name)
 	{
@@ -120,7 +121,7 @@ public class Form implements RequestProvider, ResponseProvider
 
 	
 	/**
-	 * Returns the form name. By default a unique form name 
+	 * @return the form name. By default a unique form name 
 	 * based on the form class is automatically generated. 
 	 */
 	public String getName()
@@ -131,6 +132,7 @@ public class Form implements RequestProvider, ResponseProvider
 
 	/**
 	 * Sets the target attribute of the HTML form element.
+	 * @param target the target 
 	 * @see #getTarget()
 	 */
 	public void setTarget(String target)
@@ -140,7 +142,7 @@ public class Form implements RequestProvider, ResponseProvider
 
 	
 	/**
-	 * Returns the target attribute of the HTML form element.
+	 * @return the target attribute of the HTML form element.
 	 * The default is null.
 	 * @see #setTarget(String)
 	 */
@@ -151,7 +153,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	
 	/**
-	 * Returns the action attribute of the HTML form element.
+	 * @return the action attribute of the HTML form element.
 	 * The default is null, which in case of a submit will
 	 * call the originating resource.
 	 */
@@ -164,6 +166,7 @@ public class Form implements RequestProvider, ResponseProvider
 	/**
 	 * Sets the action attribute of the form element. It is automatically
 	 * URL encoded, when printed.
+	 * @param action the action
 	 */
 	public void setAction(String action)
 	{
@@ -172,7 +175,7 @@ public class Form implements RequestProvider, ResponseProvider
 
 	
 	/**
-	 * Returns the method attribute of the form. It is set to POST by default.
+	 * @return the method attribute of the form. It is set to POST by default.
 	 */
 	public String getMethod()
 	{
@@ -182,6 +185,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	/**
 	 * Sets the value of the method attribute.
+	 * @param method the method 
 	 */
 	public void setMethod(String method)
 	{
@@ -208,7 +212,7 @@ public class Form implements RequestProvider, ResponseProvider
 
 	
 	/**
-	 * Returns the multipart encoded flag previously set by 
+	 * @return the multipart encoded flag previously set by 
 	 * setMultipartEncoded(). The default value is false.
 	 * @see #setMultipartEncoded
 	 */
@@ -223,6 +227,7 @@ public class Form implements RequestProvider, ResponseProvider
 	 * i.e. the enctype attribute of the form should have value
 	 * "multipart/form-data". If you add a {@link FileField} to
 	 * the form, the form is automatically multipart encoded.
+	 * @param mode the mode
 	 */
 	public void setMultipartEncoded(boolean mode)
 	{
@@ -242,8 +247,9 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	
 	/**
-	 * Returns the value of an attribute, previously set
+	 * @return the value of an attribute, previously set
 	 * by {@link #setAttribute(String, String)}.
+	 * @param name the name
 	 */
 	public String getAttribute(String name)
 	{
@@ -258,7 +264,7 @@ public class Form implements RequestProvider, ResponseProvider
 
 
 	/**
-	 * Returns the number of controls contained in the form.
+	 * @return the number of controls contained in the form.
 	 */
 	public int size()
 	{
@@ -267,7 +273,8 @@ public class Form implements RequestProvider, ResponseProvider
 
 	
 	/**
-	 * Returns the control.
+	 * @param i a control index
+	 * @return the i-th control.
 	 */
 	public Control<?> get(int i)
 	{
@@ -276,7 +283,8 @@ public class Form implements RequestProvider, ResponseProvider
 
 	
 	/**
-	 * Returns the control with the given name.
+	 * @return the control with the given name.
+	 * @param name a name
 	 */
 	public Control<?> get(String name)
 	{
@@ -297,6 +305,8 @@ public class Form implements RequestProvider, ResponseProvider
 	/**
 	 * Adds a control to the form. 
 	 * @param control the control. It is ignored if null.
+	 * @param <T> the control type
+	 * @return the control
 	 */
 	public <T extends Control<?>> T add(T control)
 	{
@@ -312,7 +322,10 @@ public class Form implements RequestProvider, ResponseProvider
 	/**
 	 * Adds a control to the form and sets the label of the control. 
 	 * @param control the control. It is ignored if null.
+	 * @param label a label
+	 * @param <T> the control type
 	 * @see Control#setLabel(Object)
+	 * @return the control
 	 */
 	public <T extends Control<?>> T add(T control, Object label)
 	{
@@ -328,6 +341,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	/**
 	 * Removes a control from the form.
+	 * @param control a control
 	 */
 	public void remove(Control<?> control)
 	{
@@ -337,6 +351,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	/**
 	 * Sets the required flag of all controls.
+	 * @param required the flag
 	 */
 	public void setRequired(boolean required)
 	{
@@ -348,6 +363,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	/**
 	 * Sets the read-only flag of all controls.
+	 * @param readOnly the flag
 	 * @see Control#setReadOnly(boolean)
 	 */
 	public void setReadOnly(boolean readOnly)
@@ -368,6 +384,7 @@ public class Form implements RequestProvider, ResponseProvider
 	 * added to the form or the button which was explicitly set by {@link #setDefaultButton}.
 	 * If the form was submitted by pressing enter in a text field then
 	 * the {@link Button#isClicked() isClicked()}-method of the default button will return true.
+	 * @return the default button
 	 */
 	public Button getDefaultButton()
 	{
@@ -377,6 +394,7 @@ public class Form implements RequestProvider, ResponseProvider
 
 	/**
 	 * Sets the default button.
+	 * @param button a button
 	 * @see #getDefaultButton()
 	 */
 	public void setDefaultButton(Button button)
@@ -439,7 +457,7 @@ public class Form implements RequestProvider, ResponseProvider
 	 * 		case you should have changed the {@link Control#setStatus(org.civilian.form.Control.Status)
 	 * 		status} of invalid controls.
 	 */
-	protected boolean validate(boolean ok) throws Exception
+	protected boolean validate(boolean ok)
 	{
 		return true;
 	}
@@ -451,7 +469,7 @@ public class Form implements RequestProvider, ResponseProvider
 
 	
 	/**
-	 * Returns true if every control is OK.
+	 * @return true if every control is OK.
 	 * @see Control#isOk()
 	 */
 	public boolean isOk()
@@ -467,7 +485,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 
 	/**
-	 * Returns true if the form was reloaded. Reload means, that the 
+	 * @return true if the form was reloaded. Reload means, that the 
 	 * form was presented in a HTML page, and based on user interaction
 	 * programmatically submitted to the server in order to change, add or remove controls,
 	 * and then to be presented again.
@@ -479,7 +497,7 @@ public class Form implements RequestProvider, ResponseProvider
 
 	
 	/**
-	 * Returns true, if the form was submitted.
+	 * @return true, if the form was submitted.
 	 * This test is implemented by checking the request parameter
 	 * for the hidden name field of the form.
 	 * If it is part of the request then we assume that the form was
@@ -503,7 +521,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	
 	/**
-	 * Returns the first control which contains an error.
+	 * @return the first control which contains an error.
 	 * The error control is either set by an explicit call to {@link #setErrorControl(Control)}
 	 * or when an error status of the control is set ({@link Control#setStatus(org.civilian.form.Control.Status)}. 
 	 */
@@ -526,6 +544,7 @@ public class Form implements RequestProvider, ResponseProvider
 	/**
 	 * Sets the error control of the form. If the form has already
 	 * a error control it will be ignored.
+	 * @param control a control
 	 * @see #getErrorControl()
 	 */
 	public final void setErrorControl(Control<?> control)
@@ -542,6 +561,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	/**
 	 * Prints the form start tag and all hidden fields.
+	 * @param out a writer
 	 */
 	public void start(CspWriter out)
 	{
@@ -551,6 +571,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	/**
 	 * Prints the form start tag and all hidden fields.
+	 * @param out a writer
 	 * @param attrs a list of attribute names and values which
 	 * 		should be printed in the start tag of the control element.
 	 */
@@ -592,6 +613,7 @@ public class Form implements RequestProvider, ResponseProvider
 	
 	/**
 	 * Prints the attributes of the form start tag.
+	 * @param out a writer
 	 */
 	public void printAttrs(CspWriter out)
 	{
@@ -618,6 +640,7 @@ public class Form implements RequestProvider, ResponseProvider
 	/**
 	 * Prints the form end tag.
 	 * Calls {@link #end(CspWriter, Control) end(out, null)};
+	 * @param out a writer
 	 */
 	public void end(CspWriter out)
 	{
@@ -629,6 +652,8 @@ public class Form implements RequestProvider, ResponseProvider
 	 * Prints the form end tag.
 	 * If the form contains controls which need scripts to be printed after the end tag,
 	 * these scripts are also printed.
+	 * @param out a writer
+	 * @param focusControl a control
 	 */
 	public void end(CspWriter out, Control<?> focusControl)
 	{

@@ -65,7 +65,10 @@ public class CspCompiler
 
 
 	/**
-	 * Runs the CspCompiler from the command-line
+	 * Runs the CspCompiler from the command-line.
+	 * @param args the cli args
+	 * @throws IOException for IO errors
+	 * @throws CspException for csp syntax errors
 	 */
 	public static void main(String[] args) throws CspException, IOException
 	{
@@ -84,6 +87,7 @@ public class CspCompiler
 
 	/**
 	 * Creates a new CspCompiler.
+	 * @param options the optins
 	 */
 	public CspCompiler(Options options)
 	{
@@ -96,7 +100,7 @@ public class CspCompiler
 
 
 	/**
-	 * Returns the options of the compiler.
+	 * @return the options of the compiler.
 	 */
 	public Options options()
 	{
@@ -1270,6 +1274,7 @@ public class CspCompiler
 
 		/**
 		 * Sets the encoding of of input and of generated files.
+		 * @param encoding the encoding
 		 */
 		public void setEncoding(String encoding)
 		{

@@ -129,7 +129,7 @@ public class CspException extends RuntimeException
 
 	
 	/**
-	 * Returns the line index of the error causing line, or -1 if not known.
+	 * @return the line index of the error causing line, or -1 if not known.
 	 */
 	public int getLineIndex()
 	{
@@ -138,7 +138,7 @@ public class CspException extends RuntimeException
 	
 
 	/**
-	 * Returns the line that caused the error, or null if not known.
+	 * @return the line that caused the error, or null if not known.
 	 */
 	public String getLine()
 	{
@@ -147,7 +147,7 @@ public class CspException extends RuntimeException
 	
 
 	/**
-	 * Returns the template  file, or null if not known. 
+	 * @return the template  file, or null if not known. 
 	 */
 	public String getTemplateFile()
 	{

@@ -41,7 +41,7 @@ import org.civilian.type.Type;
  * When the form is submitted the FileField will make the corresponding
  * {@link Upload} object available via the convenience methods {@link #getUpload()} or {@link #getUploads()}.
  * @see Form#setMultipartEncoded(boolean)
- * @see Request#getUpload(String)
+ * @see Request#getUploads()
  */
 public class FileField extends Control<Upload[]>
 {
@@ -63,6 +63,7 @@ public class FileField extends Control<Upload[]>
 	
 	/**
 	 * Set if multiple files can be uploaded. The default is false.
+	 * @param multiple flag
 	 * @return this 
 	 */
 	public FileField setMultiple(boolean multiple)
@@ -73,7 +74,7 @@ public class FileField extends Control<Upload[]>
 	
 	
 	/**
-	 * Prints the field.
+	 * {@inheritDoc}
 	 */
 	@Override public void print(CspWriter out, String... attrs)
 	{

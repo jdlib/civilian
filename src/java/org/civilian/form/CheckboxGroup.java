@@ -93,7 +93,7 @@ public class CheckboxGroup<T> extends Control<T[]>
 
 
 	/**
-	 * Prints all checkboxes of the group, separated by a <br> element.
+	 * {@inheritDoc}
 	 */
 	@Override public void print(CspWriter out, String... attrs)
 	{

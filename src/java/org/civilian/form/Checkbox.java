@@ -39,6 +39,7 @@ public class Checkbox extends Control<Boolean>
 	
 	/**
 	 * Creates a Checkbox with the given name. 
+	 * @param name the name
 	 */
 	public Checkbox(String name)
 	{
@@ -49,6 +50,8 @@ public class Checkbox extends Control<Boolean>
 	/**
 	 * Creates a Checkbox with the given name and text.
 	 * The text is printed to the right of the checkbox. 
+	 * @param name the name
+	 * @param text the text
 	 */
 	public Checkbox(String name, String text)
 	{
@@ -64,7 +67,7 @@ public class Checkbox extends Control<Boolean>
 	
 
 	/**
-	 * Returns the text of the Checkbox. 
+	 * @return the text of the Checkbox. 
 	 */
 	public String getText()
 	{
@@ -75,6 +78,7 @@ public class Checkbox extends Control<Boolean>
 	/**
 	 * Sets the text of the Checkbox. 
 	 * The text is printed to the right of the checkbox.
+	 * @param text the text
 	 * @return this 
 	 */
 	public Checkbox setText(String text)
@@ -87,6 +91,7 @@ public class Checkbox extends Control<Boolean>
 	/**
 	 * Does nothing: a checkbox always has a value,
 	 * so it cannot be required. 
+	 * @param required the flag
 	 * @return this 
 	 */
 	@Override public Checkbox setRequired(boolean required)
@@ -107,7 +112,7 @@ public class Checkbox extends Control<Boolean>
 	
 
 	/**
-	 * Always returns true.
+	 * @return Always returns true.
 	 */
 	@Override public boolean isOk()
 	{
@@ -116,7 +121,7 @@ public class Checkbox extends Control<Boolean>
 	
 	
 	/**
-	 * Prints the checkbox markup.
+	 * {@inheritDoc}
 	 */
 	@Override public void print(CspWriter out, String... attrs)
 	{
@@ -144,7 +149,7 @@ public class Checkbox extends Control<Boolean>
 
 		
 	/**
-	 * Returns this.
+	 * @return this.
 	 */
 	@Override public Control<?> toFocusControl()
 	{
