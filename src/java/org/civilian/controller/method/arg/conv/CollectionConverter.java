@@ -50,7 +50,11 @@ public abstract class CollectionConverter<T> extends Converter<Collection<T>>
 	
 	/**
 	 * Converts an array of parameter string values.
+	 * @param arg the method arg
+	 * @param serializer a serializer
 	 * @param values the values, must not be null.
+	 * @return the converted collection
+	 * @throws Exception if conversion fails
 	 */
 	public Collection<T> convert(MethodArg arg, TypeSerializer serializer, String... values) throws Exception
 	{

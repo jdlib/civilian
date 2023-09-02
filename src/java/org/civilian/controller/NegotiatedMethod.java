@@ -57,7 +57,7 @@ public class NegotiatedMethod
 	
 	
 	/**
-	 * Returns if this NegotiatedMethod holds a ControllerMethod.
+	 * @return if this NegotiatedMethod holds a ControllerMethod.
 	 */ 
 	public boolean success()
 	{
@@ -66,7 +66,7 @@ public class NegotiatedMethod
 	
 	
 	/**
-	 * Returns the error code for a negative NegotiatedMethod.
+	 * @return the error code for a negative NegotiatedMethod.
 	 */ 
 	public int getError()
 	{
@@ -75,7 +75,7 @@ public class NegotiatedMethod
 
 	
 	/**
-	 * Returns the ControllerMethod for a positive NegotiatedMethod.
+	 * @return the ControllerMethod for a positive NegotiatedMethod.
 	 */ 
 	public ControllerMethod getMethod()
 	{
@@ -84,7 +84,7 @@ public class NegotiatedMethod
 	
 
 	/**
-	 * Returns the expected content type of the response for 
+	 * @return the expected content type of the response for 
 	 * a positive NegotiationResult. Can be null.
 	 */ 
 	public ContentType getContentType()

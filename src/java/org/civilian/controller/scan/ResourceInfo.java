@@ -18,6 +18,7 @@ package org.civilian.controller.scan;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
 import org.civilian.controller.ControllerResourceData;
 import org.civilian.controller.ControllerSignature;
 import org.civilian.resource.Resource;
@@ -88,7 +89,7 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 	
 
 	/**
-	 * Returns the number of child Path objects.
+	 * @returns the number of child Path objects.
 	 */
 	public int getChildCount()
 	{
@@ -97,7 +98,8 @@ public class ResourceInfo implements Comparable<ResourceInfo>
 
 	
 	/**
-	 * Returns the i-th child.
+	 * @param i the child index
+	 * @returns the i-th child.
 	 */
 	public ResourceInfo getChild(int i)
 	{

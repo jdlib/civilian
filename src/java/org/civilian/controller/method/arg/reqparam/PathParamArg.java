@@ -30,6 +30,8 @@ public class PathParamArg<T> extends MethodArg
 {
 	/**
 	 * Creates a new PathParamArg object.
+	 * @param pathParam the PathParam
+	 * @param defaultValue the default value used if not found
 	 */
 	public PathParamArg(PathParam<T> pathParam, T defaultValue)
 	{
@@ -42,6 +44,10 @@ public class PathParamArg<T> extends MethodArg
 	 * Extracts the parameter or matrix parameter from the request and
 	 * converts into the target value which will be injected into
 	 * argument variable. 
+	 * @param request a request
+	 * @param response a response
+	 * @return the value
+	 * @throws Exception if get fails
 	 */
 	@Override public T getValue(Request request, Response response) throws Exception
 	{

@@ -33,7 +33,8 @@ import org.civilian.response.ResponseContent;
 public class ResponseContentArg extends MethodArg
 {
 	/**
-	 * Creates a new ResponseContentArg. 
+	 * Creates a new ResponseContentArg.
+	 * @param paramClass the class of the content 
 	 */
 	public ResponseContentArg(Class<?> paramClass)
 	{
@@ -45,7 +46,7 @@ public class ResponseContentArg extends MethodArg
 	
 	
 	/**
-	 * Returns a new parameter instance.
+	 * @return a new parameter instance.
 	 */
 	@SuppressWarnings("deprecation")
 	@Override public Object getValue(Request request, Response response)
@@ -63,6 +64,10 @@ public class ResponseContentArg extends MethodArg
 
 	/**
 	 * Writes the parameter object to the response.
+	 * @param request the request
+	 * @param response the response
+	 * @param param a parameter
+	 * @throws Exception if something fails
 	 */
 	@Override public void postProcess(Request request, Response response, Object param) throws Exception
 	{
