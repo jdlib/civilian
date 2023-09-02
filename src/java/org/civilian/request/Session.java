@@ -32,7 +32,7 @@ public interface Session
 	
 
 	/**
-	 * Returns the unique session id.
+	 * @return the unique session id.
 	 */
 	public String getId();
 	
@@ -52,7 +52,7 @@ public interface Session
 	
 	
 	/**
-	 * Returns the time in seconds between client requests before the servlet container will invalidate the session.
+	 * @return the time in seconds between client requests before the servlet container will invalidate the session.
 	 */
 	public int getMaxInactiveInterval();
 	
@@ -96,19 +96,21 @@ public interface Session
 
 	
 	/**
-	 * Returns an enumeration of all names of attributes bound to the session. 
+	 * @return  an enumeration of all names of attributes bound to the session. 
 	 */
 	public Enumeration<String> getAttributeNames();
 	
 	
 	/**
 	 * Sets a session attribute. 
+	 * @param name a name
 	 */
 	public void setAttribute(String name, Object value);
 	
 	
 	/**
-	 * Removes an attribute. 
+	 * Removes an attribute.
+	 * @param name a name
 	 */
 	public void removeAttribute(String name);
 	
@@ -121,7 +123,7 @@ public interface Session
 	
 	
 	/**
-	 * Returns if this session is new and the client does not yet know about it.
+	 * @return if this session is new and the client does not yet know about it.
 	 */
 	public boolean isNew();
 
@@ -188,7 +190,7 @@ public interface Session
 		
 		
 		/**
-		 * Returns if the session exists.
+		 * @return if the session exists.
 		 */
 		public boolean isPresent()
 		{
