@@ -25,8 +25,8 @@ import org.civilian.annotation.Produces;
  */
 public class IndexController extends UserController
 {
-	@Get @Produces("text/plain") public void render() throws Exception
+	@Get @Produces("text/plain") public String render()
 	{
-		getResponse().writeContent("the user id is: " + getUserId());
+		return "the user id is: " + getUserId();
 	} 
 }

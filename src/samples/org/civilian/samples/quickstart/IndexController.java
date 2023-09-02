@@ -26,8 +26,8 @@ import org.civilian.annotation.Produces;
 public class IndexController extends QsController
 {
 	@Get @Produces("text/html") 
-	public void renderHtml() throws Exception
+	public IndexTemplate renderHtml() throws Exception
 	{
-		getResponse().writeContent(new IndexTemplate());
+		return new IndexTemplate();
 	} 
 }
