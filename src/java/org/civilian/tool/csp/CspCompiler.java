@@ -394,7 +394,8 @@ public class CspCompiler
 		TemplateLine tline = new TemplateLine();
 
 		// current line is the template start "{{"
-		parse(scanner_.getLine(), tline);
+		tline.parseOrThrow(scanner_);
+		
 		int tabBase1 = out.getTabCount();
 		while(out.getTabCount() < tline.indent)
 			out.increaseTab();
