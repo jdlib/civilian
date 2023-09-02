@@ -280,14 +280,14 @@ public class CspCompiler
 		try
 		{
 			// phase 1: compile to memory
-			compile(input, output);
+			String compiledClass = compile(input, output);
 
 			// phase 2: write output, in order to not produce a null output if reading fails
 			File dir = output.file.getParentFile();
 			IoUtil.mkdirs(dir);
 			try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output.file), options_.encodingOut)))
 			{
-				out.write(output_);
+				out.write(compiledClass);
 			}
 		}
 		catch(CspException | IOException e)
@@ -305,7 +305,7 @@ public class CspCompiler
 	}
 
 
-	private void compile(TemplateInput input, JavaOutput output) throws CspException, IOException
+	private String compile(TemplateInput input, JavaOutput output) throws CspException, IOException
 	{
 		scanner_ = new Scanner(input.readLines(options_.encodingIn));
 		scanner_.setSource(input.file.getName());
@@ -323,11 +323,11 @@ public class CspCompiler
 			}
 		}
 
-		compile(input.file, output);
+		return compile(input.file, output);
 	}
 
 
-	private void compile(File templFile, JavaOutput output) throws CspException, IOException
+	private String compile(File templFile, JavaOutput output) throws CspException, IOException
 	{
 		StringWriter sw  = new StringWriter();
 		SourceWriter out = new SourceWriter(sw);
@@ -370,7 +370,7 @@ public class CspCompiler
 		}
 		out.flush();
 
-		output_ = sw.toString();
+		return sw.toString();
 	}
 
 
@@ -1304,6 +1304,5 @@ public class CspCompiler
 	private Options options_;
 	private Scanner scanner_;
 	private ClassData classData_;
-	private String output_;
 	private HashMap<String,MixinField> registeredMixins_ = new HashMap<>();
 }
