@@ -18,6 +18,8 @@ package org.civilian.util;
 
 import java.io.File;
 
+import org.civilian.tool.csp.CspException;
+
 
 /**
  * Scanner helps to scan or parse strings.
@@ -384,6 +386,21 @@ public class Scanner
 		return null;
 	}
 	
+	
+	public String nextToken(String what) throws CspException
+	{
+		return nextToken(what, "");
+	}
+
+
+	public String nextToken(String what, String delims) throws CspException
+	{
+		String token = consumeToken(delims);
+		if (token == null)
+			throw exception("missing " + what + "-value");
+		return token;
+	}
+
 	
 	/**
 	 * Returns the string upto the next whitespace boundary.
