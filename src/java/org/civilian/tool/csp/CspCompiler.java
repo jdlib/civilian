@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
-import org.civilian.template.ComponentBuilder;
 import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
@@ -407,6 +406,7 @@ public class CspCompiler
 
 		boolean canHaveSuperCall = isMainTemplate;
 
+		CspTlinePrinter printer = new CspTlinePrinter(out, scanner_);
 		Block block = null;
 		while(true)
 		{
@@ -414,7 +414,6 @@ public class CspCompiler
 				throw new CspException("template end '" + END_TEMPLATE_SECTION + "' expected", scanner_);
 
 			String line = scanner_.getLine();
-			int lineIndex = scanner_.getLineIndex();
 			if (!tline.parse(line))
 				throw new CspException(tline.error, scanner_);
 			
@@ -440,13 +439,12 @@ public class CspCompiler
 					else
 					{
 						block.isCodeBlock = true;
-						out.print(tline.content);
-						out.printSrcln(tline.original, lineIndex);
+						printer.printCodeLine(tline.content, tline.original);
 					}
 				}
 				else if (tline.type == TemplateLine.Type.literal)
 				{
-					printTemplateLiteralLine(out, tline.content, true, lineIndex);
+					printer.printLiteralLine(tline.content, true);
 				}
 				else if (tline.type == TemplateLine.Type.componentStart)
 				{
@@ -461,21 +459,21 @@ public class CspCompiler
 
 					if (p < 0)
 					{
-						printTemplateComponentStart(out, componentLevel, tline.content, true, declare, lineIndex);
+						printer.printComponentStart(componentLevel, tline.content, true, declare);
 					}
 					else
 					{
 						String cbExpr = tline.content.substring(0, p).trim();
-						printTemplateComponentStart(out, componentLevel, cbExpr, false, declare, lineIndex);
-						printTemplateLiteralLine(out, tline.content.substring(p + 1).trim(), false, lineIndex);
-						printTemplateComponentEnd(out, componentLevel--, false, null, lineIndex);
+						printer.printComponentStart(componentLevel, cbExpr, false, declare);
+						printer.printLiteralLine(tline.content.substring(p + 1).trim(), false);
+						printer.printComponentEnd(componentLevel--, false, null);
 					}
 				}
 				else if (tline.type == TemplateLine.Type.componentEnd)
 				{
 					if (componentLevel < 0)
 						throw new CspException("unmatched component end", scanner_);
-					printTemplateComponentEnd(out, componentLevel--, true, tline.original, lineIndex);
+					printer.printComponentEnd(componentLevel--, true, tline.original);
 				}
 				else
 					throw new CspException("unexpected line type " + tline.type, scanner_);
@@ -520,171 +518,6 @@ public class CspCompiler
 			}
 		}
 		return block;
-	}
-
-
-	private void printTemplateComponentStart(SourceWriter out, int level, String cbExpr, boolean multiLine, boolean declare, int lineIndex)
-	{
-		String var = getCbVar(level);
-		if (declare)
-		{
-			out.print(ComponentBuilder.class.getName());
-			out.print(' ');
-		}
-		out.print(var);
-		out.print(" = ");
-		out.print(cbExpr);
-		out.println(";");
-		out.print(var);
-		out.print(".startComponent(");
-		out.print(multiLine);
-		out.print(");");
-
-		out.printSrcln(cbExpr, lineIndex);
-	}
-
-
-	private void printTemplateComponentEnd(SourceWriter out, int level, boolean multiLine, String comment, int lineIndex)
-	{
-		String var = getCbVar(level);
-		out.print(var);
-		out.print(".endComponent(");
-		out.print(multiLine);
-		out.print(");"); // ends the wrapper block
-		out.printSrcln(comment, lineIndex);
-	}
-
-
-	private void printTemplateLiteralLine(SourceWriter out, String line, boolean usePrintln, int lineIndex) throws CspException
-	{
-		int length = line.length();
-		int start = 0;
-		int p = 0;
-		boolean lastPartWasCode = false;
-
-		while((start < length) && ((p = line.indexOf("<%", start)) != -1))
-		{
-			lastPartWasCode = false;
-			if (line.regionMatches(p, "<%%", 0, 3))
-			{
-				if ((p + 3 < length) && (line.charAt(p + 3) == '>'))
-				{
-					// <%%> detected
-					if (start < p)
-						printTemplateText(out, line, start, p, false, lineIndex);
-					start = p + 4;
-				}
-				else
-				{
-					// <%% detected: print literal
-					printTemplateText(out, line, start, p+2, false, lineIndex);
-					start = p + 3;
-				}
-			}
-			else
-			{
-				if (start < p)
-					printTemplateText(out, line, start, p, false, lineIndex);
-
-				int q = line.indexOf("%>", p);
-
-				// code end signal not found
-				if (q == -1)
-					throw new CspException("closing '%>' not found", scanner_);
-
-				// ignore empty code segments <%%>
-				if (q > p + 2)
-				{
-					// line end signal <%/%> found
-					if ((q == p + 3) && (line.charAt(p + 2) == '/'))
-						return;
-
-					String snippetRaw  = line.substring(p, q + 2);
-					String snippetCode = line.substring(p +2, q).trim();
-
-					printTemplateSnippet(out, snippetRaw, snippetCode, lineIndex);
-					lastPartWasCode = true;
-				}
-				start = q + 2;
-			}
-		}
-		if (start < length)
-			printTemplateText(out, line, start, length, usePrintln, lineIndex);
-		else if (usePrintln)
-		{
-			if (lastPartWasCode)
-				out.println("out.printlnIfNotEmpty();");
-			else
-				out.println("out.println();");
-		}
-	}
-
-
-	private void printTemplateText(SourceWriter out, String content, int start, int end, boolean usePrintln, int lineIndex)
-	{
-		out.print(usePrintln ? "out.println(\"" : "out.print(\"");
-		for (int i=start; i<end; i++)
-		{
-			char c = content.charAt(i);
-			switch(c)
-			{
-				case '\t':
-					out.print("\\t");
-					break;
-				case '\\':
-					out.print("\\\\");
-					break;
-				case '"':
-					out.print("\\\"");
-					break;
-				default:
-					out.print(c);
-					break;
-			}
-		}
-		out.print("\");");
-		out.printSrcln(content.substring(start, end), lineIndex);
-	}
-
-
-	/**
-	 * Prints a template code segment embedded in a literal line between "&lt;%" and "%&gt;".
-	 * @param raw the snippet including the boundaries "&lt;%" and "%&gt;".
-	 * @param code the code content, trimmed.
-	 */
-	private void printTemplateSnippet(SourceWriter out, String raw, String code, int lineIndex) throws CspException
-	{
-		if (code.charAt(0) == '?')
-		{
-			if (code.length() != 1)
-			{
-				out.print("if (");
-				out.print(code.substring(1).trim());
-				out.print(")");
-				out.printSrcln(raw, lineIndex);
-				out.beginBlock();
-			}
-			else
-				out.endBlock();
-		}
-		else if (code.endsWith(";"))
-		{
-			out.print(code);
-			out.printSrcln(raw, lineIndex);
-		}
-		else
-		{
-			out.print("out.print(");
-			out.print(code);
-			out.print(");");
-			out.printSrcln(raw, lineIndex);
-		}
-	}
-
-
-	private static String getCbVar(int level)
-	{
-		return "cspCb" + level;
 	}
 
 
@@ -802,5 +635,5 @@ public class CspCompiler
 
 	private Options options_;
 	private Scanner scanner_;
-	private HashMap<String,MixinField> registeredMixins_ = new HashMap<>();
+	private final HashMap<String,MixinField> registeredMixins_ = new HashMap<>();
 }
