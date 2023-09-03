@@ -21,7 +21,6 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-
 import org.civilian.application.AppConfig;
 import org.civilian.application.Application;
 import org.civilian.util.Check;

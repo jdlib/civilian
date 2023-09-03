@@ -21,7 +21,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Type;
-
 import org.civilian.application.AppConfig;
 import org.civilian.application.Application;
 
