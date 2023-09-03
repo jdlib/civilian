@@ -67,7 +67,7 @@ class SourceWriter extends CspWriter
 	}
 
 
-	public void printSrcln(String s, int lineIndex)
+	public void printSrcCommentln(String s, int lineIndex)
 	{
 		if (printSrcMap_ && (s != null))
 		{

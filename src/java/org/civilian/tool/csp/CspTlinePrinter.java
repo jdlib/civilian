@@ -31,7 +31,7 @@ class CspTlinePrinter
 		out.print(multiLine);
 		out.print(");");
 
-		printSrcln(cbExpr);
+		printSrcCommentln(cbExpr);
 	}
 
 
@@ -42,14 +42,14 @@ class CspTlinePrinter
 		out.print(".endComponent(");
 		out.print(multiLine);
 		out.print(");"); // ends the wrapper block
-		printSrcln(comment);
+		printSrcCommentln(comment);
 	}
 
 
 	public void printCodeLine(String line, String src)
 	{
 		out.print(line);
-		printSrcln(src);
+		printSrcCommentln(src);
 	}
 	
 	
@@ -132,7 +132,7 @@ class CspTlinePrinter
 				out.print("if (");
 				out.print(code.substring(1).trim());
 				out.print(")");
-				printSrcln(raw);
+				printSrcCommentln(raw);
 				out.beginBlock();
 			}
 			else
@@ -141,14 +141,14 @@ class CspTlinePrinter
 		else if (code.endsWith(";"))
 		{
 			out.print(code);
-			printSrcln(raw);
+			printSrcCommentln(raw);
 		}
 		else
 		{
 			out.print("out.print(");
 			out.print(code);
 			out.print(");");
-			printSrcln(raw);
+			printSrcCommentln(raw);
 		}
 	}
 
@@ -176,13 +176,13 @@ class CspTlinePrinter
 			}
 		}
 		out.print("\");");
-		printSrcln(content.substring(start, end));
+		printSrcCommentln(content.substring(start, end));
 	}
 
 
-	private void printSrcln(String s)
+	private void printSrcCommentln(String s)
 	{
-		out.printSrcln(s, scanner_.getLineIndex());
+		out.printSrcCommentln(s, scanner_.getLineIndex());
 	}
 
 	

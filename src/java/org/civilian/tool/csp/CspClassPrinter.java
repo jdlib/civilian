@@ -116,7 +116,7 @@ class CspClassPrinter
 		else if ((classData_.superCall != null) || (classData_.superArgs != null))
 		{
 			out.print(classData_.superCall);
-			out.printSrcln(classData_.superCall, classData_.superCallLine);
+			out.printSrcCommentln(classData_.superCall, classData_.superCallLine);
 		}
 		for (Argument arg : classData_.arguments)
 		{
