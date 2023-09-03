@@ -351,10 +351,10 @@ public class CspCompiler
 			StringWriter swBody	 = new StringWriter();
 			SourceWriter outBody = new SourceWriter(swBody, options_.srcMap);
 			outBody.increaseTab();
-			compileJavaLines(outBody, true);
+			boolean hasMainTemplate = compileJavaLines(outBody, true);
 
 			CspClassPrinter printer = new CspClassPrinter(out, classData_);
-			printer.print(templFile, options_.timestamp, swBody.toString());
+			printer.print(templFile, options_.timestamp, hasMainTemplate, swBody.toString());
 		}
 		out.flush();
 
@@ -369,15 +369,16 @@ public class CspCompiler
 	}
 
 
-	private void compileJavaLines(SourceWriter out, boolean allowMainTemplate) throws CspException, IOException
+	private boolean compileJavaLines(SourceWriter out, boolean allowMainTemplate) throws CspException, IOException
 	{
+		boolean hasMainTemplate = false;
 		while(!scanner_.isEOF())
 		{
 			String line = scanner_.getLine();
 			if (line.trim().equals(START_TEMPLATE_SECTION))
 			{
 				if (allowMainTemplate)
-					classData_.hasMainTemplate = true;
+					hasMainTemplate = true;
 				compileTemplateLines(out, allowMainTemplate);
 			}
 			else
@@ -385,6 +386,7 @@ public class CspCompiler
 			allowMainTemplate = false;
 			scanner_.nextLine();
 		}
+		return hasMainTemplate;
 	}
 
 

@@ -19,16 +19,16 @@ class CspClassPrinter
 	}
 	
 	
-	public void print(File templFile, boolean timestamp, String body) throws IOException
+	public void print(File templFile, boolean timestamp, boolean hasMainTemplate, String body) throws IOException
 	{
-		printClassStart(templFile, timestamp);
+		printClassStart(templFile, timestamp, hasMainTemplate);
 		printBody(body);
 		printFields();
 		out.endBlock(); // class block, started in printClassStart
 	}
 	
 	
-	private void printClassStart(File templFile, boolean timestamp) throws IOException
+	private void printClassStart(File templFile, boolean timestamp, boolean hasMainTemplate) throws IOException
 	{
 		out.println("/**");
 		out.print(" * Generated from " + templFile.getName());
@@ -83,7 +83,7 @@ class CspClassPrinter
 			printClassExitMethod(out);
 		}
 
-		if (classData_.hasMainTemplate)
+		if (hasMainTemplate)
 		{
 			if (classData_.extendsClass != null)
 				out.print("@Override ");
