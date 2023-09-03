@@ -23,6 +23,7 @@ public class NumberFormat implements Serializable
 
 	/**
 	 * Creates a new NumberFormat.
+	 * @param locale the locale used by the format
 	 */
 	public NumberFormat(Locale locale)
 	{
@@ -46,7 +47,7 @@ public class NumberFormat implements Serializable
 	
 	
 	/**
-	 * Returns the locale of the NumberFormat.
+	 * @return the locale of the NumberFormat.
 	 */
 	public Locale getLocale()
 	{
@@ -90,7 +91,8 @@ public class NumberFormat implements Serializable
 
 	
 	/**
-	 * Formats a long value.
+	 * @param value the value.
+	 * @return formats a long value.
 	 */
 	public String formatNatural(long value)
 	{
@@ -99,7 +101,10 @@ public class NumberFormat implements Serializable
 
 	
 	/**
-	 * Formats a long value.
+	 * @param value the value.
+	 * @param style a NumberStyle to determine grouping. If null the default
+	 * 		NumberStyle is used.
+	 * @return a long value.
 	 */
 	public String formatNatural(long value, NumberStyle style)
 	{
@@ -109,6 +114,8 @@ public class NumberFormat implements Serializable
 	
 	/**
 	 * Formats a long value.
+	 * @param value the value.
+	 * @return the StringBuilder containing the number
 	 */
 	public StringBuilder formatNatural(long value, NumberStyle style, StringBuilder builder)
 	{
@@ -146,6 +153,7 @@ public class NumberFormat implements Serializable
 	
 	/**
 	 * Formats a double value.
+	 * @param value the value.
 	 */
 	public String formatDecimal(double value)
 	{
@@ -155,6 +163,7 @@ public class NumberFormat implements Serializable
 	
 	/**
 	 * Formats a double value.
+	 * @param value the value.
 	 */
 	public String formatDecimal(double value, NumberStyle style)
 	{
@@ -164,6 +173,10 @@ public class NumberFormat implements Serializable
 	
 	/**
 	 * Formats a long value.
+	 * @param value the value.
+	 * @param builder a StringBuilder to which the formatted number is appended. 
+	 * 		If the builder is null, then a new StringBuilder will be created. 
+	 * @return the StringBuilder containing the number
 	 */
 	public StringBuilder formatDecimal(double value, NumberStyle style, StringBuilder builder)
 	{
@@ -173,6 +186,10 @@ public class NumberFormat implements Serializable
 	
 	/**
 	 * Formats a number.
+	 * @param value the value.
+	 * @param builder a StringBuilder to which the formatted number is appended. 
+	 * 		If the builder is null, then a new StringBuilder will be created. 
+	 * @return the StringBuilder containing the number
 	 */
 	public StringBuilder formatDecimal(Number value, NumberStyle style, StringBuilder builder)
 	{
@@ -453,7 +470,7 @@ public class NumberFormat implements Serializable
 	
 	
 	/**
-	 * Returns true iif the character is 0x20 or 0xA0 (nbsp).
+	 * @return true iif the character is 0x20 or 0xA0 (nbsp).
 	 */
 	private static boolean isSpace(char c)
 	{

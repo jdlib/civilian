@@ -36,6 +36,7 @@ public class CspWriter extends PrintWriter
 	/**
 	 * Sets the default characters used by a new CspWriter to indent a line.
 	 * By default a indent consists of a single tab character.
+	 * @param chars the chars
 	 * @see #setTabChars(String)
 	 */ 
 	public static void setDefaultTabChars(String chars)
@@ -45,7 +46,7 @@ public class CspWriter extends PrintWriter
 
 	
 	/**
-	 * Returns the default characters used by a new CspWriter to indent a line.
+	 * @return the default characters used by a new CspWriter to indent a line.
 	 */ 
 	public static String getDefaultTabChars()
 	{
@@ -56,6 +57,7 @@ public class CspWriter extends PrintWriter
 	/**
 	 * Sets the default line separator used by a new CspWriter.
 	 * By default this is '\n' (in accordance to our primary goal to produce web content.
+	 * @param separator the separator
 	 */ 
 	public static void setDefaultLineSeparator(String separator)
 	{
@@ -136,7 +138,7 @@ public class CspWriter extends PrintWriter
 
 
 	/**
-	 * Returns the current number of indent tabs.
+	 * @return the current number of indent tabs.
 	 */
 	public int getTabCount()
 	{
@@ -214,6 +216,7 @@ public class CspWriter extends PrintWriter
 
 	/**
 	 * Indicates that an error has occurred.
+	 * @param e the error
 	 */
 	protected void setError(IOException e)
 	{
@@ -223,7 +226,7 @@ public class CspWriter extends PrintWriter
 
 	
 	/**
-	 * Returns the error or null if none has occurred.
+	 * @return the error or null if none has occurred.
 	 */
 	public IOException getError()
 	{
@@ -233,6 +236,7 @@ public class CspWriter extends PrintWriter
 
 	/**
 	 * Writes a single character.
+	 * @param c the character
 	 */
 	@Override public void write(int c)
 	{
@@ -244,6 +248,9 @@ public class CspWriter extends PrintWriter
 
 	/**
 	 * Writes a portion of an array of characters.
+	 * @param buf a buffer
+	 * @param off the offset
+	 * @param length the length to write
 	 */
 	@Override public void write(char buf[], int off, int len)
 	{
@@ -255,18 +262,22 @@ public class CspWriter extends PrintWriter
 
 	/**
 	 * Writes a portion of a string.
+	 * @param s a String
+	 * @param off the offset
+	 * @param len the length to write
 	 */
-	@Override public void write(String s, int off, int length)
+	@Override public void write(String s, int off, int len)
 	{
 		if (newLineStarted_)
 			writeNewLineTab();
-		super.write(s, off, length);
+		super.write(s, off, len);
 	}
 
 
 	/**
 	 * Writes a string. This method cannot be inherited from the Writer class
 	 * because it must suppress I/O exceptions.
+	 * @param s a String
 	 */
 	@Override public void write(String s)
 	{
@@ -368,6 +379,7 @@ public class CspWriter extends PrintWriter
 	/**
 	 * Checks if the object is a printable and in that case calls
 	 * print(Printable), else it just calls the default implementation.
+	 * @param object an object
 	 */
 	@Override public void print(Object object)
 	{
@@ -381,6 +393,7 @@ public class CspWriter extends PrintWriter
 	/**
 	 * If a not-null Printable is passed to the CspWriter,
 	 * then the printable is asked to print itself. 
+	 * @param printable a printable
 	 */
 	public void print(Printable printable)
 	{
@@ -433,7 +446,7 @@ public class CspWriter extends PrintWriter
 	
 	
 	/**
-	 * Calls and returns toString() of the wrapped writer. 
+	 * @return toString() of the wrapped writer. 
 	 */
 	@Override public String toString()
 	{

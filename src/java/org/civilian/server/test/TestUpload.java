@@ -29,6 +29,8 @@ public class TestUpload extends Upload
 {
 	/**
 	 * Creates an TestUpload.
+	 * @param name the upload name
+	 * @param fileName the fileName
 	 */
 	public TestUpload(String name, String fileName)
 	{

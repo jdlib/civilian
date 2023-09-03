@@ -69,6 +69,10 @@ public interface Session
 	 * Returns a session attribute, stored under its class name.
 	 * If no attribute is bound, a new object is created.
 	 * @param c the attribute class
+	 * @param <T> the class type
+	 * @return T the attribute value
+	 * @throws IllegalAccessException if an error occurs
+	 * @throws InstantiationException if an error occurs
 	 */
 	public default <T> T getAttrOrCreate(Class<T> c) throws InstantiationException, IllegalAccessException
 	{
@@ -82,6 +86,9 @@ public interface Session
 	 * @param c the attribute class
 	 * @param name the attribute name
 	 * @param <T> the attribute type
+	 * @return the attribute value
+	 * @throws IllegalAccessException if an error occurs
+	 * @throws InstantiationException if an error occurs
 	 */
 	@SuppressWarnings("deprecation")
 	public default <T> T getAttrOrCreate(Class<T> c, String name) throws InstantiationException, IllegalAccessException

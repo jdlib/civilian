@@ -314,7 +314,8 @@ public class TestServer extends Server
 	 * @param app the application
      * @param id the application id
      * @param relativePath the relative path of the application within the server
-	 * @throws IOException if an IO error occurs 
+	 * @throws IOException if an IO error occurs
+	 * @return was the application successfully initialized?
 	 */
 	public boolean addApp(Application app, String id, String relativePath) throws IOException
 	{
@@ -329,6 +330,7 @@ public class TestServer extends Server
      * @param id the application id
      * @param relativePath the relative path of the application within the server
      * @param settings application settings
+	 * @return was the application successfully initialized?
 	 */
 	@Override public boolean addApp(ServerApp app, String id, String relativePath, Settings settings)
 	{
