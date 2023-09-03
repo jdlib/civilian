@@ -66,7 +66,8 @@ public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 
 	/**
 	 * Creates a new LocaleService object.
-	 * @param locale a locale 
+	 * @param locale a locale
+	 * @param typeLib a TypeLib or null if the default type library should be used 
 	 * @param msgBundle a MsgBundle. Will be converted into an empty bundle if null
 	 * @param serializer a LocaleSerializer suitable for the locale. If null a new serializer will be created
 	 */
@@ -81,7 +82,7 @@ public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 	
 	
 	/**
-	 * Implements LocaleServiceProvider and returns this.
+	 * @return Implements LocaleServiceProvider and returns this.
 	 */
 	@Override public LocaleService getLocaleService()
     {
@@ -90,7 +91,7 @@ public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 
 	
 	/**
-	 * Returns the locale.
+	 * @return the locale.
 	 */
 	public Locale getLocale()
 	{
@@ -99,7 +100,7 @@ public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 	
 	
 	/**
-	 * Returns the the type library.
+	 * @return the the type library.
 	 */
 	public TypeLib getTypeLib()
 	{
@@ -108,7 +109,7 @@ public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 	
 
 	/**
-	 * Returns the LocaleSerializer.
+	 * @return the LocaleSerializer.
 	 */
 	public LocaleSerializer getSerializer()
 	{
@@ -117,7 +118,7 @@ public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 
 	
 	/**
-	 * Returns the MsgBundle.
+	 * @return the MsgBundle.
 	 */
 	@Override public MsgBundle getMsgBundle()
 	{
@@ -126,16 +127,17 @@ public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 
 	
 	/**
-	 * Set the MsgBundle used by the service. 
+	 * Sets the MsgBundle used by the service. Supports reload.
+	 * @param msgbundle a message bundle
 	 */
-	public void setMsgBundle(MsgBundle msgBundle)
+	void setMsgBundle(MsgBundle msgBundle)
 	{
 		msgBundle_ = Check.notNull(msgBundle, "msgBundle");
 	}
 	
 	
 	/**
-	 * Returns the data previously set by setData().
+	 * @return the data previously set by setData().
 	 * @see #setData
 	 */
 	public Object getData()
@@ -146,6 +148,7 @@ public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 	
 	/**
 	 * Associates arbitrary data with the LocaleService object.
+	 * @param data some data
 	 */
 	public void setData(Object data)
 	{
@@ -154,7 +157,8 @@ public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 
 	
 	/**
-	 * Returns true iif the other object is a LocaleService for
+	 * @param other another object
+	 * @return true iif the other object is a LocaleService for
 	 * the same locale.
 	 */
 	@Override public boolean equals(Object other)
@@ -165,7 +169,7 @@ public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 
 	
 	/**
-	 * Returns a hash code.
+	 * @return a hash code.
 	 */
 	@Override public int hashCode()
 	{
@@ -174,7 +178,7 @@ public class LocaleService implements LocaleServiceProvider, MsgBundleProvider
 	
 	
 	/**
-	 * Returns the string representation of the Locale.
+	 * @return the string representation of the Locale.
 	 */
 	@Override public String toString()
 	{

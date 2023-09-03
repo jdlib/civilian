@@ -35,6 +35,6 @@ public class IndexForm extends Form
 	}
 
 	
-	public FileField file;
-	public Button ok;
+	public final FileField file;
+	public final Button ok;
 }

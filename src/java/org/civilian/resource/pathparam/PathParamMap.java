@@ -73,7 +73,7 @@ public class PathParamMap implements Iterable<PathParam<?>>
 	
 	
 	/**
-	 * Returns the class which defines for constants for the path parameters
+	 * @return the class which defines for constants for the path parameters
 	 * in this map.
 	 */
 	public Class<?> getConstantsClass()
@@ -83,7 +83,8 @@ public class PathParamMap implements Iterable<PathParam<?>>
 	
 
 	/**
-	 * Returns the java field in the maps constant class which
+	 * @param pathParam a pathParam 
+	 * @return the java field in the maps constant class which
 	 * holds the given path param.
 	 */
 	public Field getConstantField(PathParam<?> pathParam)
@@ -123,7 +124,7 @@ public class PathParamMap implements Iterable<PathParam<?>>
 	
 
 	/**
-	 * Returns a copy of the map.
+	 * @return a copy of the map.
 	 */
 	public Map<String,PathParam<?>> toMap()
 	{

@@ -38,6 +38,7 @@ public abstract class Route
 
 	
 	/**
+	 * @param path a path
 	 * @return a Route for a constant path or url.
 	 */
 	public static final Route constant(String path)
@@ -75,6 +76,7 @@ public abstract class Route
 
 	
 	/**
+	 * @param pathParam a PathParam
 	 * @return a Route which represents this route + the path schema defined
 	 * by the PathParam.
 	 */
@@ -104,12 +106,14 @@ public abstract class Route
 
 
 	/**
+	 * @param index a index
 	 * @return the i-th PathParam contained in this route.
 	 */
 	public abstract PathParam<?> getPathParam(int index);
 
 	
 	/**
+	 * @param pathParam a PathParam
 	 * @return the index of the PathParam within this route.
 	 */
 	public abstract int indexOf(PathParam<?> pathParam);
@@ -150,7 +154,8 @@ public abstract class Route
 
 	
 	/**
-	 * Remove the last character in the StringBuilder if it is a slash '\' character. 
+	 * Remove the last character in the StringBuilder if it is a slash '\' character.
+	 * @param s a StringBuilder 
 	 */
 	protected static void removeLastSlash(StringBuilder s)
 	{

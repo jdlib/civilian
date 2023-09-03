@@ -107,6 +107,7 @@ public class Url implements PathParamProvider
 	/**
 	 * Explicitly sets the TypeSerializer used by the Url when it
 	 * formats typed parameters to a parameter string.
+	 * @param serializer the serializer
 	 * @see QueryParam#setValue(Type, Object) 
 	 * @return this
 	 */
@@ -124,6 +125,7 @@ public class Url implements PathParamProvider
 	 * @see QueryParam#setValue(Type, Object) 
 	 * @see Response#getLocaleService()
 	 * @see LocaleService#getSerializer()
+	 * @return the serializer
 	 */
 	public TypeSerializer getSerializer()
 	{
@@ -152,6 +154,7 @@ public class Url implements PathParamProvider
 
 
 	/**
+	 * @param index the param index
 	 * @return the i-th path param value.
 	 */
 	public Object getPathParam(int index)
@@ -172,7 +175,8 @@ public class Url implements PathParamProvider
 	
 	
 	/**
-	 * Returns the i-th PathParam object which defines the i-th
+	 * @param index the param index
+	 * @return the i-th PathParam object which defines the i-th
 	 * path parameter.
 	 */
 	public PathParam<?> getPathParamDef(int index)
@@ -183,6 +187,7 @@ public class Url implements PathParamProvider
 	
 	/**
 	 * Sets the value of the first path parameter.
+	 * @param value the value
 	 * @return this
 	 */
 	public Url setPathParam(Object value)
@@ -195,6 +200,8 @@ public class Url implements PathParamProvider
 	/**
 	 * Sets the value of the i-th path parameter.
 	 * @see #getPathParamCount()
+	 * @param index the index
+	 * @param value the value
 	 * @return this
 	 */
 	public Url setPathParam(int index, Object value)
@@ -206,6 +213,7 @@ public class Url implements PathParamProvider
 	
 	/**
 	 * Sets the path parameters.
+	 * @param values the values
 	 * @return this
 	 */
 	public Url setPathParams(Object... values)
@@ -219,6 +227,7 @@ public class Url implements PathParamProvider
 	/**
 	 * Copies the path parameters from the provider to this url.
 	 * If the Url does not have path params the method does nothing.
+	 * @param provider the provider
 	 * @return this
 	 */
 	public Url copyPathParams(PathParamProvider provider)
@@ -231,6 +240,9 @@ public class Url implements PathParamProvider
 	
 	/**
 	 * Sets the path parameter who is defined by the PathParam.
+	 * @param param a PathParam
+	 * @param value a value
+	 * @param <T> the value type
 	 * @return this
 	 */
 	public <T> Url setPathParam(PathParam<T> param, T value)
@@ -261,7 +273,7 @@ public class Url implements PathParamProvider
 	
 
 	/**
-	 * Returns a list containing the URL's query parameters.
+	 * @return a list containing the URL's query parameters.
 	 */
 	public QueryParamList queryParams()
 	{
@@ -272,7 +284,7 @@ public class Url implements PathParamProvider
 
 
 	/**
-	 * Returns if the url has query parameters.
+	 * @return if the url has query parameters.
 	 */
 	public boolean hasQueryParams()
 	{
@@ -292,7 +304,7 @@ public class Url implements PathParamProvider
 		
 		
 		/**
-		 * Returns the param name.
+		 * @return the param name.
 		 */
 		public String getName()
 		{
@@ -301,7 +313,7 @@ public class Url implements PathParamProvider
 		
 
 		/**
-		 * Returns the param value.
+		 * @return the param value.
 		 */
 		public String getValue()
 		{
@@ -311,6 +323,7 @@ public class Url implements PathParamProvider
 		
 		/**
 		 * Set the value of the Parameter to a string.
+		 * @param value the value
 		 */
 		public void setValue(String value)
 		{
@@ -320,6 +333,7 @@ public class Url implements PathParamProvider
 		
 		/**
 		 * Sets the int value of the Parameter.
+		 * @param value the value
 		 */
 		public void setValue(int value)
 		{
@@ -335,6 +349,7 @@ public class Url implements PathParamProvider
 		
 		/**
 		 * Sets the boolean value of the Parameter.
+		 * @param value the value
 		 */
 		public void setValue(boolean value)
 		{
@@ -344,6 +359,7 @@ public class Url implements PathParamProvider
 		
 		/**
 		 * Sets the boolean value of the Parameter.
+		 * @param value the value
 		 */
 		public void setValue(Boolean value)
 		{
@@ -354,6 +370,9 @@ public class Url implements PathParamProvider
 		/**
 		 * Sets the value of the Parameter.
 		 * The Urls TypeSerializer is used to convert the value to a string. 
+		 * @param type the type
+		 * @param value the value
+		 * @param <T> the type
 		 * @see Url#getSerializer()
 		 */
 		public <T> void setValue(Type<T> type, T value)
@@ -399,6 +418,7 @@ public class Url implements PathParamProvider
 		 * Adds a new query parameter.
 		 * Use the setters on the returned param object to set the parameter value.
 		 * @param name the parameter name
+		 * @param value the parameter value
 		 * @return the new param
 		 */
 		public QueryParamList add(String name, String value)
@@ -410,6 +430,8 @@ public class Url implements PathParamProvider
 		
 		/**
 		 * Adds multiple query parameters with the same name and the given values.
+		 * @param name a name
+		 * @param values some values
 		 * @return this
 		 */
 		public QueryParamList addQueryParams(String name, String... values)
@@ -475,6 +497,7 @@ public class Url implements PathParamProvider
 		
 		/**
 		 * Removes all query parameters with the specified name.
+		 * @param name a name
 		 * @return this
 		 */
 		public QueryParamList remove(String name)
@@ -496,6 +519,7 @@ public class Url implements PathParamProvider
 	
 	/**
 	 * Specifies the fragment which should be added to the end of the Url.
+	 * @param fragment the fragment
 	 * @return this
 	 */
 	public Url setFragment(String fragment)
@@ -506,7 +530,7 @@ public class Url implements PathParamProvider
 	
 	
 	/**
-	 * Returns the fragment which will be added to the end of the Url.
+	 * @return the fragment which will be added to the end of the Url.
 	 */
 	public String getFragment()
 	{
@@ -544,6 +568,7 @@ public class Url implements PathParamProvider
 	 * Converts the Url to a string.
 	 * @param mainPart include the main part (the part before query parameters and fragment)
 	 * @param queryString include query string and fragment)
+	 * @return the string
 	 */
 	public String toString(boolean mainPart, boolean queryString)
 	{

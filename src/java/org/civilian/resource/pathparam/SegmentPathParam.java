@@ -28,6 +28,7 @@ public class SegmentPathParam extends PathParam<String>
 {
 	/**
 	 * Creates a new SegmentPathParam.
+	 * @param name the param name
 	 */
 	public SegmentPathParam(String name)
 	{

@@ -64,7 +64,8 @@ public abstract class PathParams
 	/**
 	 * Creates a PathParam which matches any path segment. The associated 
 	 * path parameter value is the path segment.
-	 * @param name the name of the path parameter 
+	 * @param name the name of the path parameter
+	 * @return the new PathParam 
 	 */
 	public static PathParam<String> forSegment(String name)
 	{
@@ -79,6 +80,7 @@ public abstract class PathParams
 	 * @param name the name of the path parameter 
 	 * @param segmentPattern a string containing exactly one wildcard '*' character
 	 * 		and no '/' characters.
+	 * @return the new PathParam 
 	 */
 	public static PathParam<String> forSegmentPattern(String name, String segmentPattern)
 	{
@@ -94,6 +96,7 @@ public abstract class PathParams
 	 * 		Example: Pattern.compile("id([^/]+)" to match segments of the form "id*" 
 	 * @param buildPattern equals the matchPattern, whose match group is replaced by a '*'
 	 * 		Example: "id*" 
+	 * @return the new PathParam 
 	 */
 	public static PathParam<String> forPattern(String name, Pattern matchPattern, String buildPattern)
 	{
@@ -105,7 +108,10 @@ public abstract class PathParams
 	 * Creates a PathParam which matches three segments, encoding a date value:
 	 * The segments have the form yyyy/mm/dd, i.e. a 4 digit year, a 2 digit month (from 01 to 12)
 	 * and a 2 digit day of month (01-31).
-	 * @param name the name of the path parameter 
+	 * @param name the name of the path parameter
+	 * @param type the date type 
+	 * @param <T> the path param type
+	 * @return the new PathParam 
 	 */
 	public static <T> PathParam<T> forYearMonthDay(String name, DateType<T> type)
 	{
@@ -121,6 +127,7 @@ public abstract class PathParams
 	 * @param name the name of the PathParam
 	 * @param minSize the minimum number of segments which must be present on
 	 * 		the path.
+	 * @return the new PathParam 
 	 */
 	public static PathParam<String[]> forMultiSegments(String name, int minSize)
 	{
@@ -134,6 +141,8 @@ public abstract class PathParams
 	 * If that PathParam does not match then an empty Optional is parsed.
 	 * @param name the name of the path parameter or null if the name of the inner param should be used
 	 * @param inner the inner PathParam
+	 * @param <T> the path param type
+	 * @return the new PathParam 
 	 */
 	public static <T> PathParam<Optional<T>> optional(String name, PathParam<T> inner)
 	{

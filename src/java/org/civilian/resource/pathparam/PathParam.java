@@ -53,7 +53,7 @@ public abstract class PathParam<T>
 	
 
 	/**
-	 * Returns the name of the path parameter.
+	 * @return the name of the path parameter.
 	 */
 	public String getName()
 	{
@@ -62,7 +62,7 @@ public abstract class PathParam<T>
 	
 	
 	/**
-	 * Returns the type of path parameter values.
+	 * @return the type of path parameter values.
 	 */
 	public abstract Class<T> getType();
 
@@ -78,6 +78,7 @@ public abstract class PathParam<T>
 	 * he wants to try other scans.
 	 * @param scanner a PathScanner object which provides access to the 
 	 * 		path segments.
+	 * @return the parsed value
 	 */
 	public abstract T parse(PathScanner scanner);
 
@@ -87,6 +88,7 @@ public abstract class PathParam<T>
 	 * The returned path should be a valid path string according to the rules
 	 * of {@link Path}.
 	 * @param value path parameter value
+	 * @return the path
 	 */
 	public String buildPath(T value)
 	{
@@ -108,6 +110,8 @@ public abstract class PathParam<T>
 	
 	/**
 	 * Helper method foe buildPath. Appends a single segment to the path.
+	 * @param segment a segment
+	 * @param path the path
 	 */
 	protected void buildPathSegment(String segment, StringBuilder path)
 	{
@@ -118,7 +122,7 @@ public abstract class PathParam<T>
 	
 
 	/**
-	 * Returns a String containing the match pattern of the PathParam.
+	 * @return a String containing the match pattern of the PathParam.
 	 * Used by {@link #toDetailedString()}
 	 */
 	protected abstract String getPatternString();
@@ -135,7 +139,8 @@ public abstract class PathParam<T>
 	 * to a value of the given type. Parsing and formatting is done using
 	 * the {@link StandardSerializer}.
 	 * @param type a Type
-	 * @param name if not null use that name else use the name of this PathParam. 
+	 * @param name if not null use that name else use the name of this PathParam.
+	 * @param <S> the type type 
 	 * @return the new PathParam
 	 */
 	@SuppressWarnings("unchecked")
@@ -150,6 +155,9 @@ public abstract class PathParam<T>
 	
 	/**
 	 * Calls {@link #converting(Type, String)} with a null name.
+	 * @param type the type
+	 * @param <S> the type type
+	 * @return the new PathParam
 	 */
 	public <S> PathParam<S> converting(Type<S> type)
 	{
@@ -162,6 +170,7 @@ public abstract class PathParam<T>
 	 * by the value of another PathParams. 
 	 * The name of the converting param is the name of the inner PathParam.
 	 * @param segment a "prefix" segment
+	 * @return the new PathParam
 	 */
 	public PathParam<T> precededBySegment(String segment)
 	{
@@ -170,7 +179,7 @@ public abstract class PathParam<T>
 	
 	
 	/**
-	 * Returns a detailed string representation of the path parameter for debug purposes. 
+	 * @return a detailed string representation of the path parameter for debug purposes. 
 	 */
 	public String toDetailedString()
 	{
@@ -180,7 +189,7 @@ public abstract class PathParam<T>
 
 	
 	/**
-	 * Returns a string representation of the path parameter for debug purposes. 
+	 * @return a string representation of the path parameter for debug purposes. 
 	 */
 	@Override public String toString()
 	{
@@ -201,5 +210,5 @@ public abstract class PathParam<T>
 	}
 	
 	
-	private String name_;
+	private final String name_;
 }
