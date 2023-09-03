@@ -60,6 +60,7 @@ public class AppServlet implements Servlet
 	/**
 	 * Constructor used when the servlet is created by ServletContainer and
 	 * dynamically registered.
+	 * @param app the application
 	 */
 	public AppServlet(Application app)
 	{

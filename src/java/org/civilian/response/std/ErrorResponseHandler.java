@@ -86,6 +86,8 @@ public class ErrorResponseHandler implements ResponseHandler
 	 * 		is used as message.  
 	 * <li>Else no response content is printed.
 	 * </ol>
+	 * @param response the response
+	 * @throws Exception in case of an error
 	 */
 	protected void sendContent(Response response) throws Exception
 	{

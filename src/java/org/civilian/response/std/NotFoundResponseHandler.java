@@ -42,6 +42,7 @@ public class NotFoundResponseHandler implements ResponseHandler
 	/**
 	 * If the response is not yet committed it calls {@link #sendImpl(Response)}
 	 * Any exception is catched and logged. 
+	 * @param response the response
 	 * @return the exception if an exception occurred else null
 	 */
 	@Override public synchronized Exception send(Response response)
@@ -64,6 +65,8 @@ public class NotFoundResponseHandler implements ResponseHandler
 	 * If in development mode and a text/html response is accepted, 
 	 * it uses {@link NotFoundTemplate} to print a response page with useful context information, 
 	 * else it just sends a 404 not found status-code.
+	 * @param response the response
+	 * @throws Exception in case of an error
 	 */
 	protected void sendImpl(Response response) throws Exception
 	{

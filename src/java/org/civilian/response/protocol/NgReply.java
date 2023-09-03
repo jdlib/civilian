@@ -49,6 +49,7 @@ public class NgReply extends ResponseContent
 {
 	/**
 	 * Writes the reply as JSON.
+	 * @param response a response
 	 */
 	@Override public void writeTo(Response response) throws Exception
 	{
@@ -96,6 +97,7 @@ public class NgReply extends ResponseContent
 	 * Adds a Message to the action result.
 	 * The message is intended to be displayed to the user.
 	 * @param message the message object.
+	 * @return the message object. Use its methods to set message type, text and title.
 	 */
 	public Message addMessage(Message message)
 	{
@@ -108,7 +110,7 @@ public class NgReply extends ResponseContent
 
 	
 	/**
-	 * Returns the number of messages.
+	 * @return the number of messages.
 	 */
 	public int getMessageCount()
 	{
@@ -164,6 +166,7 @@ public class NgReply extends ResponseContent
 	/**
 	 * Adds a toast message to the action result.
 	 * @param message the message object.
+	 * @return the message
 	 */
 	public Message addToast(Message message)
 	{
@@ -176,7 +179,7 @@ public class NgReply extends ResponseContent
 	
 	
 	/**
-	 * Returns the number of toasts.
+	 * @return the number of toasts.
 	 */
 	public int getToastCount()
 	{
@@ -208,7 +211,7 @@ public class NgReply extends ResponseContent
 	
 	
 	/**
-	 * Returns the number of alerts.
+	 * @return the number of alerts.
 	 */
 	public int getLogCount()
 	{
@@ -240,7 +243,7 @@ public class NgReply extends ResponseContent
 	
 	
 	/**
-	 * Returns the number of alerts.
+	 * @return the number of alerts.
 	 */
 	public int getAlertCount()
 	{
@@ -269,7 +272,7 @@ public class NgReply extends ResponseContent
 	
 	
 	/**
-	 * Returns the number of variables.
+	 * @return the number of variables.
 	 */
 	public int getVariableCount()
 	{
@@ -300,7 +303,7 @@ public class NgReply extends ResponseContent
 
 	
 	/**
-	 * Returns the number of scope variables.
+	 * @return the number of scope variables.
 	 */
 	public int getScopeVariableCount()
 	{

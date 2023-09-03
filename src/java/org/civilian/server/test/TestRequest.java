@@ -57,6 +57,8 @@ public class TestRequest extends AbstractRequest
 {
 	/**
 	 * Creates a TestRequest.
+	 * @param application an application
+	 * @param relativePath the relative path of the request
 	 */
 	public TestRequest(Application application, String relativePath)
 	{
@@ -66,6 +68,7 @@ public class TestRequest extends AbstractRequest
 	
 	/**
 	 * Creates a TestRequest.
+	 * @param application an application
 	 */
 	public TestRequest(Application application)
 	{
@@ -88,7 +91,7 @@ public class TestRequest extends AbstractRequest
 
 	
 	/**
-	 * Returns the request method.
+	 * @return the request method.
 	 */
 	@Override public String getMethod()
 	{
@@ -98,6 +101,7 @@ public class TestRequest extends AbstractRequest
 
 	/**
 	 * Sets the request method.
+	 * @param method the method
 	 * @return this
 	 */
 	public TestRequest setMethod(String method)
@@ -126,6 +130,7 @@ public class TestRequest extends AbstractRequest
 	
 	/**
 	 * Sets the path of the request relative to the application path.
+	 * @param response the response
 	 * @param resource the resource which defines the path
 	 * @param pathParams the path parameters of the resource  
 	 * @return this
@@ -174,7 +179,7 @@ public class TestRequest extends AbstractRequest
 	
 	
 	/**
-	 * Returns the path string.
+	 * @return the path string.
 	 */
 	@Override public String getOriginalPath()
 	{
@@ -188,7 +193,7 @@ public class TestRequest extends AbstractRequest
 	
 	
 	/**
-	 * Returns an attribute.
+	 * @return an attribute.
 	 */
 	@Override public Object getAttribute(String name)
 	{
@@ -197,7 +202,7 @@ public class TestRequest extends AbstractRequest
 
 
 	/**
-	 * Returns the attribute names.
+	 * @return the attribute names.
 	 */
 	@Override public Iterator<String> getAttributeNames()
 	{
@@ -237,7 +242,7 @@ public class TestRequest extends AbstractRequest
 	
 	
 	/**
-	 * Returns the CookieList.
+	 * @return the CookieList.
 	 */
 	@Override public CookieList getCookies()
 	{
@@ -249,6 +254,7 @@ public class TestRequest extends AbstractRequest
 	
 	/**
 	 * Allows to set the cookies.
+	 * @param cookies the cookies
 	 * @return this
 	 */
 	public TestRequest setCookies(CookieList cookies)
@@ -260,6 +266,7 @@ public class TestRequest extends AbstractRequest
 	
 	/**
 	 * Allows to set the cookies.
+	 * @param cookies the cookies
 	 * @return this
 	 */
 	public TestRequest setCookies(Cookie... cookies)
@@ -274,7 +281,7 @@ public class TestRequest extends AbstractRequest
 	
 	
 	/**
-	 * Returns a request parameter.
+	 * @return a request parameter.
 	 */
 	@Override public String getParam(String name)
 	{
@@ -283,7 +290,7 @@ public class TestRequest extends AbstractRequest
 	
 
 	/**
-	 * Returns all values of a request parameter.
+	 * @return all values of a request parameter.
 	 */
 	@Override public String[] getParams(String name)
 	{
@@ -292,7 +299,7 @@ public class TestRequest extends AbstractRequest
 
 	
 	/**
-	 * Returns the names of all request parameters.
+	 * @return the names of all request parameters.
 	 */
 	@Override public Iterator<String> getParamNames()
 	{
@@ -301,7 +308,7 @@ public class TestRequest extends AbstractRequest
 
 	
 	/**
-	 * Returns a map of all request parameters.
+	 * Re@returnurns a map of all request parameters.
 	 */
 	@Override public Map<String, String[]> getParamMap()
 	{
@@ -310,7 +317,7 @@ public class TestRequest extends AbstractRequest
 	
 	
 	/**
-	 * Returns a ParamList containing the request parameters.
+	 * @return a ParamList containing the request parameters.
 	 * The ParamList allows you to add parameters. 
 	 */
 	public HeaderMap getParameterList()
@@ -321,6 +328,9 @@ public class TestRequest extends AbstractRequest
 
 	/**
 	 * Sets a request parameter.
+	 * @param name the param name
+	 * @param value the param value
+	 * @return this
 	 */
 	public TestRequest setParameter(String name, String value)
 	{
@@ -344,7 +354,7 @@ public class TestRequest extends AbstractRequest
 	
 	
 	/**
-	 * Returns the uploads.
+	 * @return the uploads.
 	 */
 	@Override public Uploads getUploads()
 	{
@@ -364,7 +374,7 @@ public class TestRequest extends AbstractRequest
 
 	
 	/**
-	 * Returns the content encoding.
+	 * @return the content encoding.
 	 */
 	@Override public String getCharEncoding()
 	{
@@ -382,7 +392,7 @@ public class TestRequest extends AbstractRequest
 
 	
 	/**
-	 * Returns the content length.
+	 * @return the content length.
 	 */
 	@Override public long getContentLength()
 	{
@@ -391,7 +401,7 @@ public class TestRequest extends AbstractRequest
 
 
 	/**
-	 * Returns the content-type.
+	 * @return the content-type.
 	 */
 	@Override protected ContentType getContentTypeImpl()
 	{
@@ -400,7 +410,7 @@ public class TestRequest extends AbstractRequest
 
 
 	/**
-	 * Returns an input stream for the content.
+	 * @return an input stream for the content.
 	 */
 	@Override protected InputStream getContentStreamImpl() throws IOException
 	{
@@ -438,7 +448,7 @@ public class TestRequest extends AbstractRequest
 
 
 	/**
-	 * Returns a reader for the content.
+	 * @return a reader for the content.
 	 */
 	@Override protected Reader getContentReaderImpl() throws IOException
 	{
@@ -454,6 +464,7 @@ public class TestRequest extends AbstractRequest
 
 	/**
 	 * Allows you to set the content.
+	 * @param content the content
 	 * @return this
 	 */
 	public TestRequest setContent(byte[] content)
@@ -470,6 +481,7 @@ public class TestRequest extends AbstractRequest
 	 * 		If it is a byte array or a string the content will be set to that value.
 	 * 		For any other object, the object will be serialized using the current content-type.
 	 * @return this
+	 * @throws Exception if an error occurs
 	 */
 	public TestRequest setContent(Object content) throws Exception
 	{
@@ -513,7 +525,7 @@ public class TestRequest extends AbstractRequest
 
 	
 	/**
-	 * Returns the request headers.
+	 * @return the request headers.
 	 */
 	@Override public Headers getHeaders()
 	{
@@ -544,6 +556,7 @@ public class TestRequest extends AbstractRequest
 	
 	/**
 	 * Allows you to set the preferred content types.
+	 * @param contentTypes the content types
 	 * @return this
 	 */
 	public TestRequest setAcceptedContentTypes(ContentTypeList contentTypes)
@@ -693,7 +706,7 @@ public class TestRequest extends AbstractRequest
 
 	
 	/**
-	 * Returns null.
+	 * @return null.
 	 */
 	@Override public <T> T unwrap(Class<T> implClass)
 	{

@@ -37,6 +37,9 @@ public class Message
 	
 	/**
 	 * Creates a Message with the specified text, title, type. 
+	 * @param text the text
+	 * @param title the title
+	 * @param type the type
 	 */
 	public Message(String text, String title, String type)
 	{
@@ -48,6 +51,7 @@ public class Message
 	
 	/**
 	 * Sets the message type to "error". 
+	 * @return this 
 	 */
 	public Message asError()
 	{
@@ -56,7 +60,8 @@ public class Message
 
 	
 	/**
-	 * Sets the message type to "info". 
+	 * Sets the message type to "info".
+	 * @return this 
 	 */
 	public Message asInfo()
 	{
@@ -66,6 +71,7 @@ public class Message
 	
 	/**
 	 * Sets the message type to "success". 
+	 * @return this 
 	 */
 	public Message asSuccess()
 	{
@@ -75,6 +81,7 @@ public class Message
 	
 	/**
 	 * Sets the message type to "warning". 
+	 * @return this 
 	 */
 	public Message asWarning()
 	{
@@ -84,6 +91,8 @@ public class Message
 	
 	/**
 	 * Sets the message type. 
+	 * @param type the type
+	 * @return this 
 	 */
 	public Message setType(String type)
 	{
@@ -93,7 +102,7 @@ public class Message
 
 	
 	/**
-	 * Returns the message type.
+	 * @return the message type.
 	 */
 	public String getType()
 	{
@@ -102,7 +111,7 @@ public class Message
 	
 	
 	/**
-	 * Returns the message text.
+	 * @return the message text.
 	 */
 	public String getText()
 	{
@@ -112,6 +121,8 @@ public class Message
 	
 	/**
 	 * Sets the message text.
+	 * @param text the text
+	 * @return this 
 	 */
 	public Message setText(String text)
 	{
@@ -121,7 +132,7 @@ public class Message
 
 	
 	/**
-	 * Returns the message title.
+	 * @return the message title.
 	 */
 	public String getTitle()
 	{
@@ -131,6 +142,8 @@ public class Message
 	
 	/**
 	 * Sets the message title
+	 * @param title the title
+	 * @return this 
 	 */
 	public Message setTitle(String title)
 	{
@@ -140,7 +153,7 @@ public class Message
 	
 	
 	/**
-	 * Returns if text and title are null.
+	 * @return if text and title are null.
 	 */
 	public boolean isEmpty()
 	{

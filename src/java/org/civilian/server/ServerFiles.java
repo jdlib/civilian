@@ -37,6 +37,7 @@ public abstract class ServerFiles
 	 * Returns the file corresponding to the given virtual path.
 	 * @param path the path
 	 * @param fileType the expected fileType or null  
+	 * @return the file
 	 * @throws IllegalArgumentException thrown if the path cannot be mapped to a real path
 	 */
 	public File getRealFile(String path, FileType fileType) throws IllegalArgumentException
@@ -50,7 +51,7 @@ public abstract class ServerFiles
 
 
 	/**
-	 * Returns the file corresponding to the servers's root directory in the local file system.  
+	 * @return the file corresponding to the servers's root directory in the local file system.  
 	 */
 	public File getRootDir()
 	{
@@ -63,7 +64,9 @@ public abstract class ServerFiles
 	 * Returns the real path of a resource located in a server specific config
 	 * directory. For a servlet environment, the config directory is the WEB-INF directory
 	 * of the web application. For that a call getConfigPath("myconfig.ini"), would return
-	 * a file path whose name ends with "/WEB-INF/myconfig.ini".   
+	 * a file path whose name ends with "/WEB-INF/myconfig.ini".
+	 * @param name a name
+	 * @return the real path   
 	 */
 	public abstract String getConfigPath(String name);
 
@@ -71,9 +74,10 @@ public abstract class ServerFiles
 	/**
 	 * Returns a File for a config path.
 	 * @param name a name below the {@link #getConfigPath(String) config path}.
-	 * @param fileType the expected fileType or null  
+	 * @param fileType the expected fileType or null
+	 * @return the file  
 	 */
-	public File getConfigFile(String name, FileType fileType) throws IllegalArgumentException
+	public File getConfigFile(String name, FileType fileType)
 	{
 		return getRealFile(getConfigPath(name), fileType);
 	}

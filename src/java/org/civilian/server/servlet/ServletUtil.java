@@ -28,7 +28,8 @@ public class ServletUtil
 
 	
 	/**
-	 * Returns if the given path contains WEB-INF or META-INF. 
+	 * @param path a path
+	 * @return if the given path contains WEB-INF or META-INF. 
 	 */
 	public static boolean isProhibitedPath(String path)
 	{
