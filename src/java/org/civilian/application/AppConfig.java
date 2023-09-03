@@ -31,9 +31,9 @@ import org.civilian.content.JaxbXmlSerializer;
 import org.civilian.content.TextSerializer;
 import org.civilian.controller.ControllerConfig;
 import org.civilian.controller.ControllerFactory;
-import org.civilian.request.Request;
 import org.civilian.resource.Path;
 import org.civilian.resource.Resource;
+import org.civilian.response.Response;
 import org.civilian.server.Server;
 import org.civilian.text.msg.MsgBundleFactories;
 import org.civilian.text.msg.MsgBundleFactory;
@@ -87,7 +87,9 @@ public class AppConfig
 	
 	/**
 	 * Creates a new AppConfig object.
-	 * @param app the app
+	 * @param server the server
+	 * @param appPath the path of the app
+	 * @param controllerConfig the controller config of the app
 	 * @param settings the settings 
 	 */
 	public AppConfig(Server server, Path appPath, ControllerConfig controllerConfig, Settings settings)
@@ -487,7 +489,7 @@ public class AppConfig
 	
 	/**
 	 * Returns the async-value.
-	 * @see #setAsync(boolean)
+	 * @see Response#setAsync(boolean)
 	 * @return the flag
 	 */
 	public boolean getAsync()
@@ -498,7 +500,6 @@ public class AppConfig
 
 	/**
 	 * Sets if the application should be support asynchronous requests processing?
-	 * @see Request#startAsync()
 	 * @param async the flag
 	 */
 	public void setAsync(boolean async)

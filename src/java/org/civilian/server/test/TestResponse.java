@@ -64,6 +64,7 @@ public class TestResponse extends AbstractResponse
 	 * Before calling process(), the TestResponse associated with this request
 	 * is cleared first and the content of this request is reset}.
 	 * @return the TestResponse
+	 * @throws Exception if an error occurs 
 	 */
 	public TestResponse process() throws Exception
 	{
@@ -100,6 +101,7 @@ public class TestResponse extends AbstractResponse
 	
 	/**
 	 * Appends the session id to the url, if a session id was set.
+	 * @return the appended url
 	 */
 	@Override public String addSessionId(String url)
 	{
@@ -158,7 +160,7 @@ public class TestResponse extends AbstractResponse
 
 	
 	/**
-	 * Returns null, Response will construct a Writer from the OutputStream instead.
+	 * @return null, Response will construct a Writer from the OutputStream instead.
 	 */
 	@Override protected PrintWriter getContentWriterImpl() throws IOException
 	{
@@ -181,7 +183,7 @@ public class TestResponse extends AbstractResponse
 	
 	
 	/**
-	 * Returns the content-length.
+	 * @return the content-length.
 	 */
 	public long getContentLength()
 	{
@@ -190,9 +192,10 @@ public class TestResponse extends AbstractResponse
 
 	
 	/**
-	 * Returns the byte currently residing in the buffer
+	 * @return the byte currently residing in the buffer
 	 * converted to a string. This does not use any encoding,
 	 * hence it only makes sense if the buffer contains 7-bit data. 
+	 * @throws IOException if an IO error occurs 
 	 */
 	public String getBufferText() throws IOException
 	{
@@ -201,7 +204,8 @@ public class TestResponse extends AbstractResponse
 
 	
 	/**
-	 * Returns the byte currently residing in the buffer. 
+	 * @return the byte currently residing in the buffer. 
+	 * @throws IOException if an IO error occurs 
 	 */
 	public byte[] getBufferBytes() throws IOException
 	{
@@ -210,7 +214,9 @@ public class TestResponse extends AbstractResponse
 
 	
 	/**
-	 * Returns the current response content as byte array. 
+	 * @param flushBuffer should the buffer be flushed?
+	 * @return the current response content as byte array. 
+	 * @throws IOException if an IO error occurs 
 	 */
 	public byte[] getContentBytes(boolean flushBuffer) throws IOException
 	{
@@ -221,7 +227,9 @@ public class TestResponse extends AbstractResponse
 
 	
 	/**
-	 * Returns the current response content as text string. 
+	 * @param flushBuffer should the buffer be flushed?
+	 * @return the current response content as text string.
+	 * @throws IOException if an IO error occurs 
 	 */
 	public String getContentText(boolean flushBuffer) throws IOException
 	{
@@ -327,7 +335,7 @@ public class TestResponse extends AbstractResponse
 
 	
 	/**
-	 * Returns null.
+	 * @return null.
 	 */
 	@Override public <T> T unwrap(Class<T> implClass)
 	{

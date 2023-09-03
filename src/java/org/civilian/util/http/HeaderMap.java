@@ -88,7 +88,8 @@ public class HeaderMap
 	
 	/**
 	 * Allows chaining of ParamLists.
-	 * The default implementation returns null.
+	 * @param name a header name
+	 * @return the default implementation returns null.
 	 */
 	protected String getNext(String name)
 	{
@@ -98,7 +99,8 @@ public class HeaderMap
 	
 	/**
 	 * Allows chaining of ParamLists.
-	 * The default implementation returns -1L.
+	 * @param name a header name
+	 * @return The default implementation returns -1L.
 	 */
 	protected long getDateNext(String name)
 	{
@@ -117,7 +119,8 @@ public class HeaderMap
 
 	/**
 	 * Allows chaining of ParamLists.
-	 * The default implementation returns null.
+	 * @param name a name
+	 * @return the default implementation returns null.
 	 */
 	protected String[] getNextAll(String name)
 	{
@@ -187,7 +190,7 @@ public class HeaderMap
 	
 	/**
 	 * Allows chaining of ParamLists.
-	 * The default implementation returns an empty array.
+	 * @return the default implementation returns null
 	 */
 	protected Iterator<String> getNextNames()
 	{

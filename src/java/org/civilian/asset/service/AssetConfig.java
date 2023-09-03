@@ -48,6 +48,7 @@ public class AssetConfig
 	/**
 	 * Sets the maximum size of asset files which are 
 	 * cached in memory.
+	 * @param maxCachedSize the size
 	 */
 	public void setMaxCachedSize(int maxCachedSize)
 	{
@@ -76,6 +77,7 @@ public class AssetConfig
 	
 	/**
 	 * Adds a AssetLocation to the location list.
+	 * @param location a location
 	 */
 	public void addLocation(AssetLocation location)
 	{
@@ -88,6 +90,7 @@ public class AssetConfig
 	
 	/**
 	 * Adds a collection of AssetLocations to the location list.
+	 * @param locations some locations
 	 */
 	public void addLocations(Collection<AssetLocation> locations)
 	{
@@ -98,6 +101,7 @@ public class AssetConfig
 
 	
 	/**
+	 * @param path a path
 	 * @return the AssetLocation for a relative location path.
 	 */
 	public AssetLocation getLocation(String path)
@@ -133,6 +137,7 @@ public class AssetConfig
 	/**
 	 * Sets the lookup which should be used to derive
 	 * content-types from asset file names.
+	 * @param lookup the lookup
 	 */
 	public void setContentTypeLookup(ContentTypeLookup lookup)
 	{

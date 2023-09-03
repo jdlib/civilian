@@ -192,13 +192,13 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 
 	
 	/**
-	 * Returns the request.
+	 * @return the request.
 	 */
 	@Override public abstract Request getRequest();
 
 	
 	/**
-	 * Implements ResponseProvider and returns this.
+	 * @return Implements ResponseProvider and returns this.
 	 */
 	@Override public default Response getResponse()
 	{
@@ -207,7 +207,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 
 	
 	/**
-	 * Returns the response owner.
+	 * @return the response owner.
 	 */
 	public ResponseOwner getOwner();
 	
@@ -269,6 +269,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 
 	/**
 	 * Sets the LocaleService associated with the response.
+	 * @return this
 	 */
 	public abstract Response setLocaleService(LocaleService service);
 
@@ -277,6 +278,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * Sets the LocaleService associated with the response
 	 * to the application LocaleService for the given locale.
 	 * @param locale a locale
+	 * @return this
 	 */
 	public default Response setLocaleService(Locale locale)
 	{
@@ -475,6 +477,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	/**
 	 * Calls write(object, null);
+	 * @return this
 	 */
 	public default Response writeContent(Object object) throws Exception
 	{
@@ -496,12 +499,14 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * @param object a object containing the data. If null the method does nothing.
 	 * @param contentType a content type. Can be null, if the content-type was already set on
 	 * 		the response
+	 * @return this
 	 */
 	public abstract Response writeContent(Object object, String contentType) throws Exception;
 
 	
 	/**
 	 * Calls write(object, contentType.getValue());
+	 * @return this
 	 */
 	public default Response writeContent(Object object, ContentType contentType) throws Exception
 	{
@@ -515,7 +520,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	
 	/**
-	 * Returns how response content is produced. 
+	 * @return how response content is produced. 
 	 */
 	public abstract ContentAccess getContentAccess();
 	
@@ -702,8 +707,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 
 	/**
-	 * Returns the buffer size.
-	 * @return the size 
+	 * @return the buffer size.
 	 */
 	public int getBufferSize();
 
@@ -735,8 +739,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 
 	
 	/**
-	 * Returns an iterator for the attribute names stored in the response.
-	 * @return the iterator 
+	 * @return an iterator for the attribute names stored in the response.
 	 */
 	public Iterator<String> getAttributeNames();
 
@@ -763,15 +766,13 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	
 	/**
-	 * Returns if this request has been put into asynchronous mode by a call to {@link #startAsync()}.
-	 * @return the flag 
+	 * @return if this request has been put into asynchronous mode by a call to {@link #startAsync()}.
 	 */
 	public boolean isAsyncStarted();
 	
 	
 	/**
-	 * Returns if this resonse supports asynchronous mode. 
-	 * @return the flag 
+ 	 * @return if this resonse supports asynchronous mode. 
 	 */
 	public boolean isAsyncSupported();
 	

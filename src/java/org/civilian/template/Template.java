@@ -49,8 +49,6 @@ public abstract class Template
 	
 	/**
 	 * Prints the template, using the given Writer.
-	 * The method constructs a CspWriter from the writer and
-	 * then calls {@link #print(CspWriter)}.
 	 * @param out a Writer
 	 * @param data optional context data
 	 * @throws Exception any exception

@@ -71,6 +71,7 @@ public class TestServer extends Server
 	 * Creates a TestServer for the given directory.
 	 * The directory should contain all resources of a servlet application,
 	 * including a WEB/-INF subdirectory. 
+	 * @param dir the test server directory
 	 */
 	public TestServer(File dir)
 	{
@@ -81,7 +82,7 @@ public class TestServer extends Server
 	
 	
 	/**
-	 * Returns the root directory of the TestServer.
+	 * @return the root directory of the TestServer.
 	 */
 	public File getDirectory()
 	{
@@ -91,6 +92,7 @@ public class TestServer extends Server
 	
 	/**
 	 * Sets the develop flag.
+	 * @param develop the flag
 	 */
 	public void setDevelop(boolean develop)
 	{
@@ -101,6 +103,8 @@ public class TestServer extends Server
 	/**
 	 * Returns the settings used by the TestServer.
 	 * By default the settings are stored in file civilian.ini
+	 * @throws IOException if an IO error occurs 
+	 * @return the settings
 	 */
 	public Settings getSettings() throws IOException
 	{
@@ -112,6 +116,7 @@ public class TestServer extends Server
 
 	/**
 	 * Sets the settings of the TestServer.
+	 * @param settings the settings
 	 */
 	public void setSettings(Settings settings)
 	{
@@ -122,6 +127,7 @@ public class TestServer extends Server
 	/**
 	 * Sets the settings of the TestServer.
 	 * @param configName a name of a configuration file
+	 * @throws IOException if an IO error occurs 
 	 */
 	public void setSettings(String configName) throws IOException
 	{
@@ -132,6 +138,7 @@ public class TestServer extends Server
 	/**
 	 * Initializes the server from the settings and adds all applications
 	 * specified in the settings to the server.
+	 * @throws IOException if an error occurs 
 	 */
 	public void init() throws Exception
 	{
@@ -188,7 +195,7 @@ public class TestServer extends Server
 
 	
 	/**
-	 * Returns the ResourceLoader which servers files from
+	 * @return the ResourceLoader which servers files from
 	 * the server directory.
 	 */
 	@Override public ResourceLoader getResourceLoader()
@@ -199,15 +206,16 @@ public class TestServer extends Server
 
 	/**
 	 * Sets the ResourceLoader.
+	 * @param loader the loader
 	 */
-	public void setResourceLoader(ResourceLoader resourceLoader)
+	public void setResourceLoader(ResourceLoader loader)
 	{
-		resourceLoader_ = Check.notNull(resourceLoader, "resourceLoader");
+		resourceLoader_ = Check.notNull(loader, "loader");
 	}
 
 	
 	/**
-	 * Returns if the path goes into the WEB-INF or META-INF subdirectory.
+	 * @return if the path goes into the WEB-INF or META-INF subdirectory.
 	 */
 	@Override public boolean isProhibitedPath(String path)
 	{
@@ -216,7 +224,7 @@ public class TestServer extends Server
 
 	
 	/**
-	 * Returns the config path below the server directory.
+	 * @return the config path below the server directory.
 	 */
 	public String getConfigPath()
 	{
@@ -226,6 +234,7 @@ public class TestServer extends Server
 	
 	/**
 	 * Sets the config path (relative to server directory).
+	 * @param path a path
 	 */
 	public void setConfigPath(String path)
 	{
@@ -234,7 +243,7 @@ public class TestServer extends Server
 
 	
 	/**
-	 * Returns "1.0".
+	 * @return "1.0".
 	 */
 	@Override public String getServerVersion()
 	{
@@ -243,7 +252,7 @@ public class TestServer extends Server
 	
 
 	/**
-	 * Returns "TestServer".
+	 * @return "TestServer".
 	 */
 	@Override public String getServerInfo()
 	{
@@ -252,7 +261,7 @@ public class TestServer extends Server
 
 	
 	/**
-	 * Returns Path.ROOT.
+	 * @return Path.ROOT.
 	 */
 	@Override public Path getPath()
 	{
@@ -261,7 +270,7 @@ public class TestServer extends Server
 	
 
 	/**
-	 * Returns a ContentTypeLookup to translate file names into content types. 
+	 * @return a ContentTypeLookup to translate file names into content types. 
 	 */
 	@Override public ContentTypeLookup getContentTypeLookup()
 	{
@@ -305,6 +314,7 @@ public class TestServer extends Server
 	 * @param app the application
      * @param id the application id
      * @param relativePath the relative path of the application within the server
+	 * @throws IOException if an IO error occurs 
 	 */
 	public boolean addApp(Application app, String id, String relativePath) throws IOException
 	{
@@ -361,7 +371,7 @@ public class TestServer extends Server
 	private class Files extends ServerFiles
 	{
 		/**
-		 * Returns the real path of a file within the server directory.
+		 * @return the real path of a file within the server directory.
 		 */
 		@Override public String getRealPath(String path)
 		{
@@ -370,7 +380,7 @@ public class TestServer extends Server
 
 
 		/**
-		 * Returns a path within the configF subdirectory.
+		 * @return a path within the configF subdirectory.
 		 */
 		@Override public String getConfigPath(String path)
 		{
