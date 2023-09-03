@@ -28,12 +28,9 @@ public class GameForm extends Form
 	{
 		super(rp);
 		
-		add(guess 	= new IntField("guess"), "Your guess");
+		add(guess 	= new IntField("guess"), "Your guess").setRequired();
 		add(ok 		= Button.submit("OK"));
-		add(reset 	= Button.submit("Reset"));
-		
-		guess.setRequired();
-		reset.setNoValidate();
+		add(reset 	= Button.submit("Reset")).setNoValidate();
 	}
 	
 	

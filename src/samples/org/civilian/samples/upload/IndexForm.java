@@ -28,10 +28,8 @@ public class IndexForm extends Form
 	{
 		super(resource);
 		
-		file 	= add(new FileField("file"), "File");
-		ok 		= add(Button.submit("OK"));
-		
-		file.setMultiple(true).setRequired(true);
+		add(file = new FileField("file"), "File").setMultiple(true).setRequired(true);
+		add(ok 	 = Button.submit("OK"));
 	}
 
 	

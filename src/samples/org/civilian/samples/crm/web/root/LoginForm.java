@@ -37,22 +37,17 @@ public class LoginForm extends Form
 		
 		KeyList<LocaleService> langKeys = controller.getApplication().getLocaleServices().getServiceKeys();
 		
-		add(name 		= new TextField("name"), Message.Login);
-		add(password 	= new PasswordField("password"), Message.Password);
+		add(name 		= new TextField("name"), Message.Login).setRequired(true);
+		add(password 	= new PasswordField("password"), Message.Password).setRequired(true);
 		add(ok 			= Button.submit(controller.msg(Message.OK)));
-		add(language	= new Select<>("language", langKeys), Message.Language);
+		add(language	= new Select<>("language", langKeys), Message.Language).removeDefaultOption().setRequired(true);
 		add(path		= HiddenField.create(CrmConstants.LOGIN_PATH_PARAM));
-		
-		name.setRequired(true);
-		password.setRequired(true);
-		language.removeDefaultOption();
-		language.setRequired(true);
 	}
 	
 	
-	public Button ok;
-	public TextField name;
-	public Select<LocaleService> language;
-	public PasswordField password;
-	public HiddenField<String> path;
+	public final Button ok;
+	public final TextField name;
+	public final Select<LocaleService> language;
+	public final PasswordField password;
+	public final HiddenField<String> path;
 }
