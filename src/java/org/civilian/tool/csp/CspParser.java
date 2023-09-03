@@ -4,7 +4,6 @@ package org.civilian.tool.csp;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-
 import org.civilian.template.CspTemplate;
 import org.civilian.template.CspWriter;
 import org.civilian.tool.source.PackageDetector;
