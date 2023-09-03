@@ -15,8 +15,6 @@
  */
 package org.civilian.tool.csp;
 
-import org.civilian.util.Scanner;
-
 /**
  * Helper class to 
  */
@@ -36,14 +34,6 @@ class TemplateLine
 		literal,
 		componentStart,
 		componentEnd,
-	}
-
-	
-	public void parseOrThrow(Scanner scanner) throws CspException
-	{
-		String line = scanner.getLine();
-		if (!parse(line))
-			throw new CspException(error, scanner);
 	}
 
 	

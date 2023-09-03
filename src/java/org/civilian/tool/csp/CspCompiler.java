@@ -394,7 +394,8 @@ public class CspCompiler
 		TemplateLine tline = new TemplateLine();
 
 		// current line is the template start "{{"
-		tline.parseOrThrow(scanner_);
+		if (!tline.parse(scanner_.getLine()))
+			throw new CspException(tline.error, scanner_);
 		
 		int tabBase1 = out.getTabCount();
 		while(out.getTabCount() < tline.indent)
@@ -416,8 +417,9 @@ public class CspCompiler
 
 			String line = scanner_.getLine();
 			int lineIndex = scanner_.getLineIndex();
-			parse(line, tline);
-
+			if (!tline.parse(line))
+				throw new CspException(tline.error, scanner_);
+			
 			if (END_TEMPLATE_SECTION.equals(tline.content))
 				break;
 
@@ -489,13 +491,6 @@ public class CspCompiler
 			out.endBlock();
 		while(out.getTabCount() > tabBase1)
 			out.decreaseTab();
-	}
-
-
-	private void parse(String line, TemplateLine tline) throws CspException
-	{
-		if (!tline.parse(line))
-			throw new CspException(tline.error, scanner_);
 	}
 
 
