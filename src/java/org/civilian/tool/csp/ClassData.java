@@ -55,6 +55,7 @@ class ClassData
 	public String exception = "Exception";
 	public String superCall;
 	public int superCallLine;
+	public boolean hasMainTemplate;
 	public boolean standalone;
 	public boolean isPublic = true;
 	public boolean isAbstract;
