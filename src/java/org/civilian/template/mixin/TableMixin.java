@@ -57,6 +57,7 @@ public class TableMixin implements ComponentBuilder
 {
 	/**
 	 * Creates a new TableMixin.
+	 * @param out a CspWriter
 	 */
 	public TableMixin(CspWriter out)
 	{
@@ -71,6 +72,7 @@ public class TableMixin implements ComponentBuilder
 	
 	/**
 	 * Defines the column model which the TableMixin should use.
+	 * @param model the model
 	 * @return this
 	 */
 	public TableMixin columns(Model model)
@@ -121,6 +123,8 @@ public class TableMixin implements ComponentBuilder
 	 * gap := integer?
 	 * integer := [0-9]+ 
 	 * </pre>
+	 * @param definition the definition
+	 * @return this
 	 */
 	public TableMixin columns(String definition)
 	{
@@ -129,7 +133,7 @@ public class TableMixin implements ComponentBuilder
 	
 	
 	/**
-	 * Returns the number of columns.
+	 * @return the number of columns.
 	 */
 	public int columns()
 	{
@@ -155,6 +159,7 @@ public class TableMixin implements ComponentBuilder
 	/**
 	 * Prints the table start tag.
 	 * @param attrs a list of attribute name-value-pairs to be printed in the start tag, or null.
+	 * @return this
 	 */
 	public TableMixin startTable(String... attrs)
 	{
@@ -168,6 +173,7 @@ public class TableMixin implements ComponentBuilder
 	
 	/**
 	 * Ends the table.
+	 * @return this
 	 */
 	public TableMixin endTable()
 	{
@@ -282,7 +288,7 @@ public class TableMixin implements ComponentBuilder
 
 	
 	/**
-	 * Returns the current row index.
+	 * @return the current row index.
 	 */
 	public int rowIndex()
 	{
@@ -292,7 +298,8 @@ public class TableMixin implements ComponentBuilder
 	
 	/**
 	 * Sets the current row index. This lets you correct
-	 * the row index if you print a row for yourself. 
+	 * the row index if you print a row for yourself.
+	 * @param index the index 
 	 * @return this
 	 */
 	public TableMixin setRowIndex(int index)
@@ -304,7 +311,8 @@ public class TableMixin implements ComponentBuilder
 	
 	/**
 	 * Increases the current row index by the given amount. 
-	 * This lets you correct the row index if you print a row for yourself. 
+	 * This lets you correct the row index if you print a row for yourself.
+	 * @param amount the amount 
 	 * @return this
 	 */
 	public TableMixin increaseRowIndex(int amount)
@@ -350,6 +358,8 @@ public class TableMixin implements ComponentBuilder
 	
 	/**
 	 * Specifies colspan and rowspan for the next cell.
+	 * @param colspan the colspan
+	 * @param rowspan the rowspan
 	 * @see #colspan(int)
 	 * @see #rowspan(int)
 	 * @return this
@@ -376,6 +386,7 @@ public class TableMixin implements ComponentBuilder
 	
 	/**
 	 * Starts a cell which spans the given number of columns.
+	 * @param colspan the colspan
 	 * @return this
 	 */
 	public TableMixin startCell(int colspan)
@@ -399,6 +410,7 @@ public class TableMixin implements ComponentBuilder
 		
 	/**
 	 * Starts a cell which spans the given number of columns.
+	 * @param colspan the colspan
 	 * @param attrs a list of attribute name-value-pairs, or null.
 	 * @return this
 	 */
@@ -529,6 +541,7 @@ public class TableMixin implements ComponentBuilder
 	
 	/**
 	 * Starts a new cell, prints the content and then ends the cell.
+	 * @param content the content
 	 * @return this
 	 */
 	public TableMixin cell(Object content)
@@ -540,7 +553,7 @@ public class TableMixin implements ComponentBuilder
 
 	
 	/**
-	 * Returns the column index of the current cell.
+	 * @return the column index of the current cell.
 	 */
 	public int colIndex()
 	{
@@ -550,7 +563,8 @@ public class TableMixin implements ComponentBuilder
 	
 	/**
 	 * Sets the current row index. This lets you correct
-	 * the row index if you print a row for yourself. 
+	 * the row index if you print a row for yourself.
+	 * @param index the index 
 	 * @return this
 	 */
 	public TableMixin setColIndex(int index)
@@ -563,6 +577,7 @@ public class TableMixin implements ComponentBuilder
 	/**
 	 * Increases the current row index by the given amount. 
 	 * This lets you correct the row index if you print a row for yourself. 
+	 * @param amount the amount
 	 * @return this
 	 */
 	public TableMixin increaseColIndex(int amount)
@@ -627,6 +642,7 @@ public class TableMixin implements ComponentBuilder
 	{
 		/**
 		 * Creates a Model with the given number of columns.
+		 * @param count the number of columns
 		 */
 		public Model(int count)
 		{
@@ -639,6 +655,7 @@ public class TableMixin implements ComponentBuilder
 		
 		/**
 		 * Creates a column array from a definition string.
+		 * @param definition the columns definition
 		 */
 		public Model(String definition)
 		{
@@ -730,7 +747,7 @@ public class TableMixin implements ComponentBuilder
 		
 		
 		/**
-		 * Returns the number of columns.
+		 * @return the number of columns.
 		 */
 		public int getColumnCount()
 		{
@@ -739,7 +756,8 @@ public class TableMixin implements ComponentBuilder
 		
 			
 		/**
-		 * Returns the i-th column.
+		 * @param i the column index
+		 * @return the i-th column.
 		 */
 		public Column getColumn(int i)
 		{
@@ -749,7 +767,8 @@ public class TableMixin implements ComponentBuilder
 		
 		/**
 		 * Sets column attributes on every column.
-		 * @see Column#setAttrs(String...) 
+		 * @see Column#setAttrs(String...)
+		 * @param attrs the attributes 
 		 */
 		public void setColumnAttrs(String... attrs)
 		{
@@ -776,6 +795,7 @@ public class TableMixin implements ComponentBuilder
 		 * Is the column a gap (of a certain width, with no content) or
 		 * is it a content column. Gap columns are used to build
 		 * a vertical spacer between two content columns.
+		 * @return isGap?
 		 */
 		public boolean isGap()
 		{
@@ -784,7 +804,8 @@ public class TableMixin implements ComponentBuilder
 		
 		
 		/**
-		 * Makes the column a gap column with a width of 20 pixels 
+		 * Makes the column a gap column with a width of 20 pixels
+		 * @return this 
 		 */
 		public Column setGap()
 		{
@@ -795,6 +816,7 @@ public class TableMixin implements ComponentBuilder
 		/**
 		 * Makes the column a gap columns.
 		 * @param width the width of the gap 
+		 * @return this 
 		 */
 		public Column setGap(int width)
 		{
@@ -808,6 +830,7 @@ public class TableMixin implements ComponentBuilder
 		 * Sets the column width.
 		 * @param width a string which can be used as value
 		 * 		of a html width attribute. 
+		 * @return this 
 		 */
 		public Column setWidth(String width)
 		{
@@ -819,6 +842,7 @@ public class TableMixin implements ComponentBuilder
 		/**
 		 * Sets the column width as percentage value.
 		 * @param percent a positive value
+		 * @return this 
 		 */
 		public Column setPercentWidth(int percent)
 		{
@@ -829,6 +853,7 @@ public class TableMixin implements ComponentBuilder
 		/**
 		 * Sets the column width in pixels.
 		 * @param pixels a positive value
+		 * @return this 
 		 */
 		public Column setWidth(int pixels)
 		{
@@ -837,7 +862,7 @@ public class TableMixin implements ComponentBuilder
 
 		
 		/**
-		 * Returns the column width.
+		 * @return the column width.
 		 */
 		public String getWidth()
 		{
@@ -849,6 +874,8 @@ public class TableMixin implements ComponentBuilder
 		 * Sets the column attributes.
 		 * If not null, then these attributes are included when 
 		 * a opening td-tag is printed.
+		 * @param attrs the attributes
+		 * @return this 
 		 */
 		public Column setAttrs(String... attrs)
 		{
@@ -858,7 +885,7 @@ public class TableMixin implements ComponentBuilder
 		
 		
 		/**
-		 * Returns the column attributes.
+		 * @return the column attributes.
 		 */
 		public String[] getAttrs()
 		{

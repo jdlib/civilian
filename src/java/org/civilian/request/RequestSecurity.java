@@ -59,6 +59,7 @@ public interface RequestSecurity
 	 * Use the server specific mechanism to authenticate the user making the request.
 	 * @return true, if authentication was successful, false else. In the last case, the response
 	 * 		has been modified to send an appropriate message to the client 
+	 * @throws Exception if an error occurs
 	 */
 	public boolean authenticate() throws Exception;
 	
@@ -78,6 +79,7 @@ public interface RequestSecurity
 	
 	
 	/**
+	 * @param role a role
 	 * @return if the authenticated user has the specified role, as defined by server mechanisms. 
 	 */
 	public boolean isUserInRole(String role);
@@ -85,6 +87,8 @@ public interface RequestSecurity
  	
 	/**
 	 * Asks the server to validate the provided user name and password. 
+	 * @param username a username
+	 * @param password a password
 	 * @throws Exception if validation fails.
 	 */
 	public void login(String username, String password) throws Exception;
@@ -92,6 +96,7 @@ public interface RequestSecurity
 	
 	/**
 	 * Sets the authenticated user to null.
+	 * @throws Exception if an error occurs
 	 */
 	public void logout() throws Exception;
 	

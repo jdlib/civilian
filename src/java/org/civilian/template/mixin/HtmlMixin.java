@@ -108,6 +108,8 @@ public class HtmlMixin
 	/**
 	 * Same as {@link #script(String)} but additionally prints a 
 	 * list of attribute names and values given by the attrs parameter.
+	 * @param src a path to the script file. The path is automatically prefixed by 
+	 * 		the application path.
 	 */
 	public void script(String src, String... attrs)
 	{
@@ -133,6 +135,8 @@ public class HtmlMixin
 	/**
 	 * Same as {@link #img(String)} but additionally prints a 
 	 * list of attribute names and values given by the attrs parameter.
+	 * @param src a path to the script file. The path is automatically prefixed by 
+	 * 		the application path.
 	 */
 	public void img(String src, String... attrs)
 	{
@@ -172,6 +176,8 @@ public class HtmlMixin
 	/**
 	 * Prints a integer attribute.
 	 * The output is: ' ' name '="' value '"'.
+	 * @param name the attribute name
+	 * @param value the attribute value
 	 */
 	public void attr(String name, int value)
 	{
@@ -182,6 +188,8 @@ public class HtmlMixin
 	/**
 	 * Prints a String attribute.
 	 * The output is: ' ' name '="' escaped-value '"'.
+	 * @param name the attribute name
+	 * @param value the attribute value
 	 */
 	public void attr(String name, String value)
 	{
@@ -215,6 +223,7 @@ public class HtmlMixin
 	
 	/**
 	 * Prints an escaped attribute value.
+	 * @param value the attribute value
 	 */
 	public void attrValue(String value)
 	{
@@ -224,6 +233,7 @@ public class HtmlMixin
 	
 	/**
 	 * Prints an escaped text string.
+	 * @param text the text
 	 */
 	public void text(String text)
 	{
@@ -268,6 +278,7 @@ public class HtmlMixin
 	
 	/**
 	 * Sets the path stored in the HtmlMixin.
+	 * @param path the path
 	 * @return this
 	 */
 	public HtmlMixin setPath(Path path)
@@ -279,6 +290,7 @@ public class HtmlMixin
 	
 	/**
 	 * Prints the mixin {@link #path()} + the subpath.
+	 * @param subPath the subPath
 	 */
 	public void path(String subPath)
 	{
@@ -306,7 +318,7 @@ public class HtmlMixin
 	
 
 	/**
-	 * Returns a Url object with the resource path.
+	 * @return a Url object with the resource path.
 	 */
 	public Url url(Resource resource)
 	{
@@ -315,7 +327,7 @@ public class HtmlMixin
 
 	
 	/**
-	 * Returns a Url object with the path of the resource associated with the controller.
+	 * @return a Url object with the path of the resource associated with the controller.
 	 */
 	public Url url(Class<? extends ResourceHandler> controllerClass)
 	{
@@ -324,7 +336,7 @@ public class HtmlMixin
 
 	
 	/**
-	 * Returns a Url with the given value.  
+	 * @return a Url with the given value.  
 	 */
 	public Url url(String value)
 	{
@@ -333,7 +345,7 @@ public class HtmlMixin
 	
 	
 	/**
-	 * Returns a Url with the path of the given path provider.  
+	 * @return a Url with the path of the given path provider.  
 	 */
 	public Url url(PathProvider pp)
 	{
@@ -349,6 +361,7 @@ public class HtmlMixin
 	/**
 	 * Prints a stacktrace of the Throwable.
 	 * The stacktrace lines are wrapped in a paragraph element with css class "stacktrace".
+	 * @param t a throwable
 	 */
 	public void stackTrace(Throwable t)
 	{
@@ -359,6 +372,7 @@ public class HtmlMixin
 	/**
 	 * Prints a stacktrace of the Throwable.
 	 * The stacktrace lines are wrapped in a paragraph element with css class "stacktrace".
+	 * @param t a throwable
 	 */
 	private void stackTrace(Throwable t, boolean printCausedBy)
 	{
