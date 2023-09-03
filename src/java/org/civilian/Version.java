@@ -30,7 +30,8 @@ public class Version
 	/**
 	 * Prints the version number to System.out.
 	 * If the first argument equals "-v", then a property like
-	 * line "civilian.version = (version)" is printed. 
+	 * line "civilian.version = (version)" is printed.
+	 * @param args the commandline arguments 
 	 */
 	public static void main(String[] args)
 	{

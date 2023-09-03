@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
 public @interface Parameter 
 {
 	/**
-	 * Returns the parameter name.
+	 * @return the parameter name.
 	 */
 	public String value();
 }

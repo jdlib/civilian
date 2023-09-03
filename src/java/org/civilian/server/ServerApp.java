@@ -73,7 +73,9 @@ public abstract class ServerApp implements PathProvider
 	
 	
 	/**
-	 * Stores an attribute under the given name in the application. 
+	 * Stores an attribute under the given name in the application.
+	 * @param name the attribute name 
+	 * @param value the attribute value 
 	 */
 	public abstract void setAttribute(String name, Object value);
 
@@ -82,6 +84,7 @@ public abstract class ServerApp implements PathProvider
 	 * Returns an attribute which was previously associated with
 	 * the application.
 	 * @param name the attribute name
+	 * @return the attribute value
 	 * @see #setAttribute(String, Object)
 	 */
 	public abstract Object getAttribute(String name);
@@ -90,6 +93,7 @@ public abstract class ServerApp implements PathProvider
 	/**
 	 * Closes the application. Called when the server shuts down
 	 * or the application is removed from the server.
+	 * @throws Exception if an exception occurs
 	 */
 	protected abstract void runClose() throws Exception;
 	

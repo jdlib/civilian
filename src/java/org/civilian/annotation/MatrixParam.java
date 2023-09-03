@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
 public @interface MatrixParam 
 {
 	/**
-	 * Returns the name of the matrix parameter.
+	 * @return the name of the matrix parameter.
 	 */
 	public String value();
 }

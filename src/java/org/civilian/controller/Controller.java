@@ -93,7 +93,7 @@ import org.civilian.util.http.HeaderNames;
  * </code></pre> 			
  * All of the above methods except exit() allow to throw any exception. 
  * If you decide not to handle an exception in your controller
- * implementation, then the exception is passed to {@link Application#onError(Request, Throwable)}
+ * implementation, then the exception is passed to {@link Application#onError(Request, Response, Throwable)}
  * for application-wide error handling.
  */
 public class Controller implements MsgBundleProvider, RequestProvider, ResponseProvider, ResourceHandler

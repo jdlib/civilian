@@ -22,7 +22,7 @@ package org.civilian.resource;
 public interface PathProvider 
 {
 	/**
-	 * Returns the path. 
+	 * @return the path. 
 	 */
 	public Path getPath();
 }

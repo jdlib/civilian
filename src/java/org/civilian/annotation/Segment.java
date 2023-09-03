@@ -28,9 +28,9 @@ import java.lang.annotation.Target;
  * Segment is an annotation to define a resource mapping.
  * It can be used on
  * <ol>
- * <li><a href="#p">packages</a> containing controller classes
- * <li><a href="#c">controller classes</a>
- * <li><a href="#m">controller action methods</a>
+ * <li>packages containing controller classes
+ * <li>controller classes
+ * <li>controller action methods
  * </ol>
  * It allows to override the mapping of a package or controller class
  * to a resource, or to introduce a mapping of a controller method
@@ -39,7 +39,6 @@ import java.lang.annotation.Target;
  * directory.
  * The {@link #value() value} of the annotation is a relative path string.
  * It is interpreted as follows:
- * <a name="p"></a>
  * <h1>Used on controller packages</h1>
  * The segment string overrides the default mapping of the controller
  * package to a resource, relative to its parent package.
@@ -50,7 +49,6 @@ import java.lang.annotation.Target;
  * resource "/contacts/detail".<br>
  * But annotated with @Segment("showdetails") it would be mapped to resource 
  * "/contacts/showdetails".
- * <a name="c"></a>
  * <h1>Used on controller classes</h1>
  * The path string overrides the default mapping of the controller
  * class to a resource, relative to its package.
@@ -62,7 +60,6 @@ import java.lang.annotation.Target;
  * But annotated with @Segment("show") it would be mapped to resource 
  * "/contacts/show". If annotated with @Segment("") it would be mapped to resource 
  * "/contacts".
- * <a name="m"></a>
  * <h1>Used on controller action methods</h1>
  */
 @Target({ElementType.PACKAGE, ElementType.TYPE, ElementType.METHOD})
@@ -72,8 +69,7 @@ import java.lang.annotation.Target;
 public @interface Segment
 {
 	/**
-	 * Returns the path value.
-	 * @return the path
+	 * @return the path value.
 	 */
 	public String value();
 }

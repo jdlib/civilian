@@ -32,7 +32,7 @@ import org.civilian.content.ContentSerializer;
  * The content of the request will be injected into
  * the parameter variable. Conversion to the variable type
  * is automatically done using a {@link ContentSerializer} provided
- * by the {@link Application#getContentSerializer(org.civilian.content.ContentType) application}.<br>
+ * by the {@link Application#getContentSerializers() application}.<br>
  * Example: If the content has content type application/json, then the
  * parsed JSON data will be injected into the action parameter
  * annotated with this annotation.

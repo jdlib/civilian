@@ -29,7 +29,7 @@ import org.civilian.util.Data;
  * CspWriter maintains a {@link #getTabCount() tab count}. When a new line is started
  * then tab characters are automatically inserted at the beginning of the line, according
  * to the tab count. The default tab characters is a single '\t' character, but you can
- * chose any string instead (e.g. "  ").<p> 
+ * chose any string instead (e.g. "  "). 
  */
 public class CspWriter extends PrintWriter
 {

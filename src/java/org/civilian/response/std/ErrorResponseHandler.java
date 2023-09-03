@@ -27,7 +27,7 @@ import org.civilian.util.Check;
 /**
  * ErrorResponseHandler is used to write an error response.
  * It is called by {@link Response#sendError(int)} or {@link Response#sendError(int, String, Throwable)}.
- * The actual ErrorResponse object used is created by {@link Application#createErrorResponse()}.
+ * The actual ErrorResponse object used is created by {@link Application#createErrorHandler(int, String, Throwable)}.
  */
 public class ErrorResponseHandler implements ResponseHandler
 {

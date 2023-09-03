@@ -34,7 +34,7 @@ import java.lang.annotation.RetentionPolicy;
 public @interface Consumes
 {
 	/**
-	 * Returns the content types.
+	 * @return the content types.
 	 */
 	public abstract String[] value();
 }

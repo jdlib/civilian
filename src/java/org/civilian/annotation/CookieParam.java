@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
 public @interface CookieParam 
 {
 	/**
-	 * Returns the cookie name.
+	 * @return the cookie name.
 	 */
 	public String value();
 }

@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
 public @interface HeaderParam 
 {
 	/**
-	 * Returns the name of the header.
+	 * @return the name of the header.
 	 */
 	public String value();
 }

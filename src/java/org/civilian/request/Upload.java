@@ -25,8 +25,7 @@ import org.civilian.util.IoUtil;
 
 /**
  * Upload represents an uploaded file.
- * @see Request#getUpload(String)
- * @see Request#getUploadNames()
+ * @see Request#getUploads()
  */
 public abstract class Upload
 {

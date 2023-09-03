@@ -41,9 +41,7 @@ import org.civilian.util.http.UriEncoder;
  * The Url class also allows to set query parameters. Locale dependent serialization of parameter objects
  * to parameter strings is supported.
  * <p>
- * Path parameter values and parameter values are automatically percent encoded, using the 
- * {@link Response#getUriEncoder()} UriEncoder} of the response. The Url class also takes
- * care to add the session id to URL if needed. 
+ * Path parameter values and parameter values are automatically percent encoded.
  */
 public class Url implements PathParamProvider
 {

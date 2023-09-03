@@ -36,7 +36,7 @@ import java.lang.annotation.Target;
 public @interface MethodArgProvider
 {
 	/**
-	 * Returns the name of a class which implements {@link org.civilian.controller.method.arg.MethodArgProvider}.
+	 * @return the name of a class which implements {@link org.civilian.controller.method.arg.MethodArgProvider}.
 	 */
 	public abstract String value();
 }

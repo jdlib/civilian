@@ -29,6 +29,9 @@ public class HtmlUtil
 	/**
 	 * Prints a String attribute.
 	 * The output is: ' ' name '="' escaped-value '"'.
+	 * @param out a PrintWriter
+	 * @param name the attribute name
+	 * @param value the attribute value
 	 */
 	public static void attr(PrintWriter out,String name, String value)
 	{
@@ -39,6 +42,7 @@ public class HtmlUtil
 	/**
 	 * Prints an attribute.
 	 * The output is: ' ' name '="'value '"'.
+	 * @param out a PrintWriter
 	 * @param name the attribute name
 	 * @param value the attribute value
 	 * @param escape should the attribute value be escaped. Only pass false, if you
@@ -66,6 +70,9 @@ public class HtmlUtil
 	/**
 	 * Prints a integer attribute.
 	 * The output is: ' ' name '="' value '"'.
+	 * @param out a PrintWriter
+	 * @param name the attribute name
+	 * @param value the attribute value
 	 */
 	public static void attr(PrintWriter out,String name, int value)
 	{
@@ -75,6 +82,7 @@ public class HtmlUtil
 	
 	/**
 	 * Prints attributes.
+	 * @param out a PrintWriter
 	 * @param attrs a list of attribute pairs, i.e. a name string immediately followed by its value string.
 	 */
 	public static void attrs(PrintWriter out, String... attrs)
@@ -92,7 +100,9 @@ public class HtmlUtil
 
 
 	/**
-	 * Escapes and print the text.
+	 * Escapes and prints the text.
+	 * @param out a PrintWriter
+	 * @param text the text
 	 */
 	public static void text(PrintWriter out, String text)
 	{
@@ -102,7 +112,7 @@ public class HtmlUtil
 
 	/**
 	 * Escapes a string.
-	 * @param out receives the escaped string
+	 * @param out a PrintWriter
 	 * @param input the string
 	 * @param isAttribute true, if escape rules for attribute, false if for text values should be applied
 	 */
@@ -162,6 +172,7 @@ public class HtmlUtil
 	 * It escapes \', \n, \r \t and \\ characters and converts
 	 * character which are not printable in the current encoding to
 	 * a HTML character reference. It prints null, if the text is null
+	 * @param out a PrintWriter
 	 * @param text the string
 	 * @param addQuotes adds single quote character around the string if true. 
 	 */

@@ -56,7 +56,7 @@ import java.lang.annotation.Target;
 public @interface PathParam 
 {
 	/**
-	 * Returns the path parameter name.
+	 * @return the path parameter name.
 	 */
 	public String value();
 }
