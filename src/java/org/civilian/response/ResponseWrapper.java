@@ -57,6 +57,7 @@ public class ResponseWrapper implements Response
 	
 	/**
 	 * Creates a new ResponseWrapper.
+	 * @param response the wrapped response
 	 */
 	public ResponseWrapper(Response response)
 	{

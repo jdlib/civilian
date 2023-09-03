@@ -339,6 +339,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 		 * values. Path parameters shared by the current request are automatically initialized.
 		 * @param resource a resource 
 		 * @return the result 
+		 * @throws E in case of an error 
 		 */
 		public T to(Resource resource) throws E
 		{
@@ -353,7 +354,9 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 		 * Builds a Url to to the Resource whose controller has the given class.
 		 * Please note that a controller may be mapped to several resources. In this case
 	     * it is undefined which resource is chosen to build the url.
-		 * @return the result 
+	     * @param handlerClass a handler class
+		 * @return the result
+		 * @throws E in case of an error 
 		 */
 		public T to(Class<? extends ResourceHandler> handlerClass) throws E
 		{

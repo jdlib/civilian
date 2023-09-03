@@ -82,7 +82,7 @@ public class AsyncEvent
 
 	
 	/**
-	 * Returns the event type.
+	 * @return the event type.
 	 */
 	public Type getType()
 	{
@@ -91,7 +91,7 @@ public class AsyncEvent
 	
 
 	/**
-	 * Returns the context.
+	 * @return the context.
 	 */
 	public AsyncContext getContext()
 	{
@@ -100,7 +100,7 @@ public class AsyncEvent
 	
 	
 	/**
-	 * Returns the event error.
+	 * @return the event error.
 	 */
 	public Throwable getError()
 	{
@@ -108,7 +108,7 @@ public class AsyncEvent
 	}
 	
 	
-	private Type type_;
-	private Throwable throwable_;
-	private AsyncContext context_;
+	private final Type type_;
+	private final Throwable throwable_;
+	private final AsyncContext context_;
 }

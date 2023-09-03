@@ -32,6 +32,7 @@ public abstract class AsyncContext
 	/**
 	 * Creates a new AsyncContext.
 	 * @param request the request
+	 * @param response the response
 	 */
 	public AsyncContext(Request request, Response response)
 	{
@@ -48,14 +49,14 @@ public abstract class AsyncContext
 	
 	
 	/**
-	 * Return the AsyncInput of the context. 
+	 * @return the AsyncInput of the context. 
 	 * @throws IOException if an IO error occurs
 	 */
 	public abstract AsyncInput getAsyncInput() throws IOException;
 	
 	
 	/**
-	 * Return the AsyncOutput of the context. 
+	 * @return the AsyncOutput of the context. 
 	 * @throws IOException if an IO error occurs
 	 */
 	public abstract AsyncOutput getAsyncOutput() throws IOException;
@@ -94,12 +95,13 @@ public abstract class AsyncContext
 	/**
 	 * Dispatches the request and of this AsyncContext to the container, using
 	 * the given request path.
+	 * @param path a path
 	 */
 	public abstract void dispatch(String path);
 	
 	
 	/**
-	 * Returns the request.
+	 * @return the request.
 	 */
 	public Request getRequest()
 	{
@@ -108,7 +110,7 @@ public abstract class AsyncContext
 
 
 	/**
-	 * Returns the response.
+	 * @return the response.
 	 */
 	public Response getResponse()
 	{

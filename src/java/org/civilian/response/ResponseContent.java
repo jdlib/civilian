@@ -37,6 +37,8 @@ public abstract class ResponseContent
 	 * inject a ResponseContent object in a controller action method.
 	 * The default implementation calls {@link Response#writeContent(Object)} with this
 	 * as argument. 
+	 * @param response a response
+	 * @throws Exception if an error occurs
 	 */
 	public void writeTo(Response response) throws Exception
 	{

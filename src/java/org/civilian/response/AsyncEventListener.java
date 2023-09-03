@@ -24,6 +24,7 @@ public interface AsyncEventListener
 {
 	/**
 	 * Notifies the listener.
+	 * @param event an event
 	 */
 	public void onEvent(AsyncEvent event);
 }

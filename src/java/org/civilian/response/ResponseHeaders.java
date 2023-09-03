@@ -51,26 +51,29 @@ public interface ResponseHeaders extends Iterable<String>
 
 
 	/**
-	 * Tests if a specific header was added.
+	 * @return Tests if a specific header was added.
+	 * @param name the header name
 	 */
 	public boolean contains(String name);
 	
 	
 	/**
-	 * Returns an iterator of the header names.
+	 * @return an iterator of the header names.
 	 */
 	@Override public Iterator<String> iterator();
 	
 	
 	/**
 	 * Returns all the values of a response header as a String array.
+	 * @param name the header name
 	 * @return the array. It has length 0 if the request does not contain headers with that name
 	 */
 	public String[] getAll(String name); 
 	
 	
 	/**
-	 * Returns the first value of a specific header.
+	 * @param name the header name
+	 * @return the first value of a specific header.
 	 */
 	public String get(String name); 
 
