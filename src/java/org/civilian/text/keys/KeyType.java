@@ -55,6 +55,7 @@ public class KeyType<VALUE> extends AutoType<VALUE>
 	 * Formats a key value. 
 	 * @param value a value
 	 * @param index the index of the value in the keylist.
+	 * @return the formatted value
 	 */
 	public String format(VALUE value, int index)
 	{
@@ -64,6 +65,9 @@ public class KeyType<VALUE> extends AutoType<VALUE>
 
 	/**
 	 * Parses a key value.
+	 * @param s a string
+	 * @return the value
+	 * @throws Exception if a parsing error occurs
 	 */
 	@Override public VALUE parse(String s) throws Exception
 	{
@@ -72,7 +76,7 @@ public class KeyType<VALUE> extends AutoType<VALUE>
 	
 
 	/**
-	 * Returns the class of the first key list element.
+	 * @return the class of the first key list element.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override public Class<VALUE> getJavaType()
@@ -85,7 +89,7 @@ public class KeyType<VALUE> extends AutoType<VALUE>
 	
 	
 	/**
-	 * Returns the key serializer. 
+	 * @return the key serializer. 
 	 */
 	public KeySerializer getKeySerializer()
 	{
@@ -93,6 +97,6 @@ public class KeyType<VALUE> extends AutoType<VALUE>
 	}
 	
 	
-	private KeyList<VALUE> keyList_;
-	private KeySerializer serializer_;
+	private final KeyList<VALUE> keyList_;
+	private final KeySerializer serializer_;
 }

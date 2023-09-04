@@ -65,8 +65,8 @@ class SourceWriter extends CspWriter
 		}
 		return col;
 	}
-
-
+	
+	
 	public void printSrcCommentln(String s, int lineIndex)
 	{
 		if (printSrcMap_ && (s != null))

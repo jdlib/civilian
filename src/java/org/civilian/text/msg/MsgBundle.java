@@ -30,6 +30,8 @@ public abstract class MsgBundle implements MsgBundleProvider
 {
 	/**
 	 * Creates an empty MsgBundle.
+	 * @param locale a Locale
+	 * @return the empty bundle
 	 */
 	public static MsgBundle empty(Locale locale)
 	{
@@ -38,7 +40,7 @@ public abstract class MsgBundle implements MsgBundleProvider
 
 	
 	/**
-	 * Implements MsgBundleProvider and returns this.
+	 * @return Implements MsgBundleProvider and returns this.
 	 */
 	@Override public MsgBundle getMsgBundle()
 	{
@@ -47,26 +49,29 @@ public abstract class MsgBundle implements MsgBundleProvider
 
 	
 	/**
-	 * Returns the locale of the MsgBundle.
+	 * @return the locale of the MsgBundle.
 	 */
 	public abstract Locale getLocale();
 
 	
 	/**
-	 * Tests if the bundle contains an entry for the given id.
+	 * @param id an id
+	 * @return Tests if the bundle contains an entry for the given id.
 	 */
 	public abstract boolean contains(Object id);
 
 
 	/**
-	 * Returns the message entry for the given id.
+	 * @param id an id
+	 * @return the message entry for the given id.
 	 * If the bundle does not contain the id null is returned.
 	 */
 	public abstract String get(Object id);
 	
 	
 	/**
-	 * Returns the message entry for the given id.
+	 * @param id an id
+	 * @return the message entry for the given id.
 	 * If the bundle does not contain the id, the id prefixed
 	 * by a "?" is returned.
 	 */
@@ -79,6 +84,9 @@ public abstract class MsgBundle implements MsgBundleProvider
 	 * The message may contain placeholders "{0}", "{1}", etc.
 	 * These placeholders are replaced with the parameter values
 	 * and the resulting string is returned.
+	 * @param id an id
+	 * @param params optional parameters
+	 * @return message
 	 */
 	@Override public String msg(Object id, Object... params)
 	{
@@ -88,7 +96,9 @@ public abstract class MsgBundle implements MsgBundleProvider
 
 
 	/**
-	 * Returns the text for the given id or the id itself in case it is a String.
+	 * @param id an id
+	 * @param params optional parameters
+	 * @return the text for the given id or the id itself in case it is a String.
 	 */
 	@Override public String msgOrText(Object id, Object... params)
 	{
@@ -97,7 +107,8 @@ public abstract class MsgBundle implements MsgBundleProvider
 
 
 	/**
-	 * Returns the id prefixed by a "?".
+	 * @param id an id
+	 * @return the id prefixed by a "?".
 	 */
 	protected String getUnknown(Object id)
 	{
@@ -106,7 +117,10 @@ public abstract class MsgBundle implements MsgBundleProvider
 		
 	
 	/**
-	 * Inserts the parameter into the message text. 
+	 * Inserts the parameter into the message text.
+	 * @param msg a message 
+	 * @param params optional parameters
+	 * @return the updated message
 	 */
 	public String replaceVars(String msg, Object... params)
 	{
@@ -121,6 +135,10 @@ public abstract class MsgBundle implements MsgBundleProvider
 	
 	/**
 	 * Inserts a single parameter into the message text. 
+	 * @param msg a message 
+	 * @param index the param index
+	 * @param param the param value
+	 * @return the updated message
 	 */
 	public String replaceVar(String msg, int index, Object param)
 	{
@@ -132,12 +150,15 @@ public abstract class MsgBundle implements MsgBundleProvider
 
 	/**
 	 * Provides access to the MsgBundle implementation. 
+	 * @param <T> a type
+	 * @param implClass a class
+	 * @return T the unwrapped value
 	 */
 	public abstract <T> T unwrap(Class<T> implClass);
 
 
 	/**
-	 * Returns a description.
+	 * @return a description.
 	 */
 	@Override public String toString()
 	{

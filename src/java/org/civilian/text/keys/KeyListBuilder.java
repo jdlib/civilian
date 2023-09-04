@@ -24,13 +24,14 @@ import org.civilian.util.Check;
 
 /**
  * KeyListBuilder is a helper class to construct KeyLists.
+ * @param <VALUE> the keylist value type
  */
 public class KeyListBuilder<VALUE>
 {
 	/**
 	 * Adds a key.
 	 * @param value the key value
-	 * @param text the key test
+	 * @param text the key text
 	 * @return this
 	 */
 	public KeyListBuilder<VALUE> add(VALUE value, String text)
@@ -46,6 +47,7 @@ public class KeyListBuilder<VALUE>
 	
 	/**
 	 * Explicitly sets the key serializer which should be used by the keylist.
+	 * @param serializer the serializer
 	 * @return this
 	 */
 	public KeyListBuilder<VALUE> setSerializer(KeySerializer serializer)
@@ -56,7 +58,7 @@ public class KeyListBuilder<VALUE>
 	
 	
 	/**
-	 * Creates the key list.
+	 * @return creates the key list.
 	 */
 	public KeyList<VALUE> end()
 	{
@@ -76,6 +78,6 @@ public class KeyListBuilder<VALUE>
 
 	private Object valuePrototype_;
 	private KeySerializer serializer_;
-	private ArrayList<VALUE> values_ = new ArrayList<>();
-	private ArrayList<String> texts_ = new ArrayList<>();
+	private final ArrayList<VALUE> values_ = new ArrayList<>();
+	private final ArrayList<String> texts_ = new ArrayList<>();
 }

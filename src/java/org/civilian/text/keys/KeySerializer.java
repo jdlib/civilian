@@ -27,8 +27,11 @@ public abstract class KeySerializer
 	 * it will be rejected.
 	 * @param keyList the key list
 	 * @param s the formatted value
+	 * @param <T> the keys value type
+	 * @return the formatted value
+	 * @throws Exception if parsing fails
 	 */
-	public abstract <VALUE> VALUE parseValue(KeyList<VALUE> keyList, String s) throws Exception;
+	public abstract <T> T parseValue(KeyList<T> keyList, String s) throws Exception;
 
 	
 	/**
@@ -36,20 +39,26 @@ public abstract class KeySerializer
 	 * @param keyList the key list
 	 * @param value the value. Must not be null.
 	 * @param index the index of the value within the keylist.
+	 * @param <T> the keys value type
+	 * @return the formatted value
 	 */
-	public abstract <VALUE> String formatValue(KeyList<VALUE> keyList, VALUE value, int index);
+	public abstract <T> String formatValue(KeyList<T> keyList, T value, int index);
 
 
 	/**
 	 * Formats a value to a String.
 	 * @param keyList the key list
 	 * @param value the value. Must not be null.
+	 * @param <T> the keys value type
+	 * @return the formatted value
 	 */
-	public abstract <VALUE> String formatValue(KeyList<VALUE> keyList, VALUE value);
+	public abstract <T> String formatValue(KeyList<T> keyList, T value);
 
 
 	/**
-	 * Creates an IllegalArgumentException for an invalid value. 
+	 * Creates an IllegalArgumentException for an invalid value.
+	 * @param s a value
+	 * @return the exception 
 	 */
 	protected static IllegalArgumentException rejectValue(Object s)
 	{

@@ -28,7 +28,8 @@ public class KeyLists
 
 
 	/**
-	 * Creates a KeyList whose key values equal the key texts. 
+	 * @param texts a list of text strings
+	 * @return Creates a KeyList whose key values equal the key texts. 
 	 */
 	public static KeyList<String> forTexts(String... texts)
 	{
@@ -37,46 +38,59 @@ public class KeyLists
 	
 
 	/**
-	 * Creates a KeyList with the given values and texts. 
+	 * @param values a list of values
+	 * @param texts a list of text strings
+	 * @param <T> the keys value type
+	 * @return Creates a KeyList with the given values and texts. 
 	 */
-	public static <VALUE> KeyList<VALUE> forContent(VALUE values[], String texts[])
+	public static <T> KeyList<T> forContent(T values[], String texts[])
 	{
 		return new SimpleKeyList<>(values, texts);
 	}
 	
 
 	/**
-	 * Creates a KeyList with the given values and texts,
+	 * @param values a list of values
+	 * @param texts a list of text strings
+	 * @param serializer a serializer
+	 * @param <T> the keys value type
+	 * @return Creates a KeyList with the given values and texts,
 	 * using a specific serializer.
 	 */
-	public static <VALUE> KeyList<VALUE> forContent(VALUE values[], String texts[], KeySerializer serializer)
+	public static <T> KeyList<T> forContent(T values[], String texts[], KeySerializer serializer)
 	{
 		return new SimpleKeyList<>(serializer, values, texts);
 	}
 
 
 	/**
-	 * Creates a KeyList with the given values. The text associated with
+	 * @param values a list of values
+	 * @param <T> the keys value type
+	 * @return Creates a KeyList with the given values. The text associated with
 	 * the value is value.toString()
 	 */
-	@SafeVarargs public static <VALUE> KeyList<VALUE> forValues(VALUE... values)
+	@SafeVarargs public static <T> KeyList<T> forValues(T... values)
 	{
 		return forValues(null, values);
 	}
 	
 	
 	/**
-	 * Creates a KeyList with the given values and a specific KeySerializer. The text associated with
+	 * @param serializer a serializer
+	 * @param values a list of values
+	 * @param <T> the keys value type
+	 * @return Creates a KeyList with the given values and a specific KeySerializer. The text associated with
 	 * the value is value.toString()
 	 */
-	@SafeVarargs public static <VALUE> KeyList<VALUE> forValues(KeySerializer serializer, VALUE... values)
+	@SafeVarargs public static <T> KeyList<T> forValues(KeySerializer serializer, T... values)
 	{
 		return new ValueKeyList<>(serializer, values);
 	}
 	
 
 	/**
-	 * Returns an empty KeyList.
+	 * @param <T> the keys value type
+	 * @return an empty KeyList.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> KeyList<T> empty()
@@ -86,7 +100,9 @@ public class KeyLists
 
 	
 	/**
-	 * Returns a KeyList whose values are the values of a Enum, and the texts
+	 * @param enumClass a enum class
+	 * @param <E> a enum type
+	 * @return a KeyList whose values are the values of a Enum, and the texts
 	 * are the enum names.
 	 */
 	public static <E extends Enum<E>> KeyList<E> forEnum(Class<E> enumClass)
@@ -96,7 +112,10 @@ public class KeyLists
 	
 	
 	/**
-	 * Returns a KeyList whose values are the values of the given KeyLists.
+	 * @param keys a KeyList
+	 * @param msgBundle a MsgBundle
+	 * @param <T> the keys value type
+	 * @return a KeyList whose values are the values of the given KeyLists.
 	 * It treats the texts of the original keylist as ids of an MsgBundle
 	 * and returns the translated text when asked for the text of a key. 
 	 */

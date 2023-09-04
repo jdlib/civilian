@@ -57,6 +57,7 @@ public class NumberStyle implements Style
 
 	/**
 	 * Returns a new NumberStyle whose grouping flag has the given value.
+	 * @param value a flag
 	 * @return the new NumberStyle 
 	 */
 	public NumberStyle useGrouping(boolean value)
@@ -77,6 +78,7 @@ public class NumberStyle implements Style
 	/**
 	 * Sets the number of minimal digits which should be printed when
 	 * formatting a decimal. Must be 0 &lt;= min &lt;= maxDecimals(). 
+	 * @param min the min digits
 	 * @return the new NumberStyle 
 	 */
 	public NumberStyle minDecimals(int min)
@@ -97,6 +99,7 @@ public class NumberStyle implements Style
 	/**
 	 * Sets the number of maximal digits which should be printed when
 	 * formatting a decimal. 
+	 * @param max the max digits
 	 * @return the new NumberStyle 
 	 */
 	public NumberStyle maxDecimals(int max)
@@ -107,7 +110,8 @@ public class NumberStyle implements Style
 	
 	/**
 	 * Sets the number of minimal = maximal digits which should be printed when
-	 * formatting a decimal. 
+	 * formatting a decimal.
+	 * @param value the number digits 
 	 * @return the new NumberStyle 
 	 */
 	public NumberStyle decimals(int value)
@@ -119,6 +123,8 @@ public class NumberStyle implements Style
 	/**
 	 * Sets the number of minimal and maximal digits which should be printed when
 	 * formatting a decimal.
+	 * @param min the min digits
+	 * @param max the max digits
 	 * @return the new NumberStyle 
 	 */
 	public NumberStyle decimals(int min, int max)

@@ -9,6 +9,8 @@ public class TimeStyle implements Style
 
 	/**
 	 * Returns the given style as TimeStyle or {@link #HM} if not a TimeStyle.
+	 * @param style a style
+	 * @return the casted style
 	 */
 	public static final TimeStyle cast(Style style)
 	{
@@ -24,7 +26,7 @@ public class TimeStyle implements Style
 
 
 	/**
-	 * Returns if seconds should be shown.
+	 * @return if seconds should be shown.
 	 */
 	public boolean showSeconds()
 	{
@@ -33,7 +35,8 @@ public class TimeStyle implements Style
 
 
 	/**
-	 * Returns a new TimeStyle whose showSeconds flag has the given value.
+	 * @param value the seconds
+	 * @return a new TimeStyle whose showSeconds flag has the given value.
 	 */
 	public TimeStyle showSeconds(boolean value)
 	{

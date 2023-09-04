@@ -15,15 +15,18 @@
  */
 package org.civilian.text.keys;
 
+
 /**
  * A {@link KeyList} implementation for enums.
  * The values of the KeyList are the enum entries, the text
- * is the enum name. 
+ * is the enum name.
+ * @param <E> a enum type 
  */
 public class EnumKeyList<E extends Enum<E>> extends KeyList<E>
 {
 	/**
 	 * Creates a new EnumKeyList.
+	 * @param enumClass the enum class
 	 */
 	public EnumKeyList(Class<E> enumClass)
 	{
@@ -33,7 +36,7 @@ public class EnumKeyList<E extends Enum<E>> extends KeyList<E>
 	
 	
 	/**
-	 * Returns the number of enum entries.
+	 * @return the number of enum entries.
 	 */
 	@Override public int size()
 	{
@@ -42,7 +45,8 @@ public class EnumKeyList<E extends Enum<E>> extends KeyList<E>
 	
 
 	/**
-	 * Returns the i-th enum.
+	 * @param index an index
+	 * @return the i-th enum.
 	 */
 	@Override public E getValue(int index)
 	{
@@ -51,7 +55,8 @@ public class EnumKeyList<E extends Enum<E>> extends KeyList<E>
 	
 
 	/**
-	 * Returns the name of the i-th enum.
+	 * @param index an index
+	 * @return the name of the i-th enum.
 	 */
 	@Override public String getText(int index)
 	{
@@ -59,5 +64,5 @@ public class EnumKeyList<E extends Enum<E>> extends KeyList<E>
 	}
 
 	
-	private E[] values_;
+	private final E[] values_;
 }

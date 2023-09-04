@@ -23,18 +23,18 @@ class TemplateLine
 {
 	private enum IndentChar
 	{
-		tab,
-		space,
-		detect
+		TAB,
+		SPACE,
+		DETECT
 	}
 	
 	public enum Type
 	{
-		empty,
-		code,
-		literal,
-		componentStart,
-		componentEnd,
+		EMPTY,
+		CODE,
+		LITERAL,
+		COMPONENT_START,
+		COMPONENT_END,
 	}
 
 	
@@ -44,8 +44,8 @@ class TemplateLine
 		this.content 		= "";
 		this.error   		= null;
 		this.indent	 		= 0;
-		this.indentChar_ 	= IndentChar.detect;
-		this.type 			= Type.empty;
+		this.indentChar_ 	= IndentChar.DETECT;
+		this.type 			= Type.EMPTY;
 		
 		int n = line.length();
 		for (int i=0; i<n; i++)
@@ -53,11 +53,11 @@ class TemplateLine
 			switch(line.charAt(i))
 			{
 				case '\t':
-					if (!addIndent(IndentChar.tab))
+					if (!addIndent(IndentChar.TAB))
 						return false; // error
 					break;
 				case ' ':
-					if (!addIndent(IndentChar.space))
+					if (!addIndent(IndentChar.SPACE))
 						return false; // error
 					break;
 				default:
@@ -95,27 +95,27 @@ class TemplateLine
 		if (line.startsWith("@@"))
 		{
 			// @@ is a way for template generating templates to start a literal line with a @
-			type 	= Type.literal;
+			type 	= Type.LITERAL;
 			content = line.substring(1);
 		}
 		else if (line.startsWith("@"))
 		{
-			type 	= Type.code;
+			type 	= Type.CODE;
 			content = line.substring(1);
 		}
 		else if (line.startsWith("["))
 		{
-			type 	= Type.componentStart;
+			type 	= Type.COMPONENT_START;
 			content = line.substring(1);
 		}
 		else if (line.startsWith("]"))
 		{
-			type 	= Type.componentEnd;
+			type 	= Type.COMPONENT_END;
 			content = line.substring(1).trim();
 		}
 		else
 		{
-			type 	= Type.literal;
+			type 	= Type.LITERAL;
 			content = line;
 		}
 	}
@@ -123,7 +123,7 @@ class TemplateLine
 	
 	private boolean indentCharDiffers(IndentChar expected, IndentChar actual)
 	{
-		return (expected != IndentChar.detect) && (expected != actual); 
+		return (expected != IndentChar.DETECT) && (expected != actual); 
 	}
 	
 	
@@ -133,5 +133,5 @@ class TemplateLine
 	public int indent;
 	public String original;
 	private IndentChar indentChar_;							// indent char of current line
-	private IndentChar prevIndentChar_ = IndentChar.detect;	// indent char used in previous lines
+	private IndentChar prevIndentChar_ = IndentChar.DETECT;	// indent char used in previous lines
 }

@@ -14,13 +14,18 @@ public abstract class AutoType<VALUE> extends Type<VALUE>
 
 
 	/**
-	 * Formats a key value.
+	 * Formats a value.
+	 * @param value a value
+	 * @return the formatted value
 	 */
 	public abstract String format(VALUE value);
 	
 
 	/**
-	 * Parses a key value.
+	 * Parses a value from a string.
+	 * @param s a string
+	 * @return the parsed value
+	 * @throws Exception if parsing fails
 	 */
 	public abstract VALUE parse(String s) throws Exception;
 }

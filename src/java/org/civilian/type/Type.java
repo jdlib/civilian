@@ -107,7 +107,7 @@ public abstract class Type<T>
 	
 	
 	/**
-	 * Returns the type category.
+	 * @return the type category.
 	 */
 	public final Category category()
 	{
@@ -116,7 +116,7 @@ public abstract class Type<T>
 
 	
 	/**
-	 * Returns true if the Type is a simple type (i.e. not an array or list type).
+	 * @return true if the Type is a simple type (i.e. not an array or list type).
 	 * The default implementation returns true.
 	 */
 	public boolean isSimpleType()
@@ -126,13 +126,13 @@ public abstract class Type<T>
 
 	
 	/**
-	 * Returns the associated Java type.
+	 * @return the associated Java type.
 	 */
 	public abstract Class<T> getJavaType();
 	
 
 	/**
-	 * Returns the associated primitive Java type, or null if does not have one.
+	 * @return the associated primitive Java type, or null if does not have one.
 	 * The default implementation returns null.
 	 */
 	public Class<T> getJavaPrimitiveType()
@@ -142,7 +142,8 @@ public abstract class Type<T>
 	
 
 	/**
-	 * Creates an array of length n.
+	 * @param length a length
+	 * @return an array of length n.
 	 */
 	@SuppressWarnings("unchecked")
 	public T[] createArray(int length)
@@ -152,7 +153,7 @@ public abstract class Type<T>
 
 
 	/**
-	 * Returns the simple name of the type class.
+	 * @return the simple name of the type class.
 	 */
 	@Override public String toString()
 	{
@@ -160,8 +161,8 @@ public abstract class Type<T>
 	}
 
 
-	private int ordinal_;
-	private Category category_;
+	private final int ordinal_;
+	private final Category category_;
 	private static AtomicInteger nextOrdinal_ = new AtomicInteger();
 }
  

@@ -53,6 +53,7 @@ public abstract class KeyList<VALUE>
 	 * Factory method to create a KeyType. Called when no explicit KeyType 
 	 * is passed to the KeyList constructor.
 	 * @param serializer the key serializer passed to the key list constructors or null.
+	 * @return the KeyType
 	 */
 	protected KeyType<VALUE> createType(KeySerializer serializer)
 	{
@@ -61,13 +62,14 @@ public abstract class KeyList<VALUE>
 
 	
 	/**
-	 * Returns the size of the KeyList.
+	 * @return the size of the KeyList.
 	 */
 	public abstract int size();
 
 	
 	/**
-	 * Returns the index of the key with the given value or -1 if not contained in the list.
+	 * @param value a value
+	 * @return the index of the key with the given value or -1 if not contained in the list.
 	 */
 	public int indexOf(VALUE value)
 	{
@@ -93,13 +95,15 @@ public abstract class KeyList<VALUE>
 	
 
 	/**
-	 * Returns the value of the key with the given index.
+	 * @param index an index
+	 * @return the value of the key with the given index.
 	 */
 	public abstract VALUE getValue(int index);
 	
 
 	/**
-	 * Returns the first value of the key with the given text.
+	 * @param text a text
+	 * @return the first value of the key with the given text.
 	 */
 	public VALUE getValue(String text)
 	{
@@ -117,13 +121,15 @@ public abstract class KeyList<VALUE>
 
 	
 	/**
-	 * Returns the text of the key with the given index.
+	 * @param index an index
+	 * @return the text of the key with the given index.
 	 */
 	public abstract String getText(int index);
 
 
 	/**
-	 * Returns the text of the key with the given value.
+	 * @param value a value
+	 * @return the text of the key with the given value.
 	 */
 	public String getText(VALUE value)
 	{
@@ -133,7 +139,8 @@ public abstract class KeyList<VALUE>
 
 	
 	/**
-	 * Returns the index of the given text, or -1 if not contained in the list. 
+	 * @param text a text
+	 * @return the index of the given text, or -1 if not contained in the list. 
 	 */
 	public int getTextIndex(String text)
 	{
@@ -148,7 +155,7 @@ public abstract class KeyList<VALUE>
 	
 	
 	/**
-	 * Returns a type implementation suitable to serialize KeyList values.
+	 * @return a type implementation suitable to serialize KeyList values.
 	 */
 	public KeyType<VALUE> getType()
 	{

@@ -420,7 +420,7 @@ public class CspCompiler
 			if (END_TEMPLATE_SECTION.equals(tline.content))
 				break;
 
-			if (tline.type == TemplateLine.Type.empty)
+			if (tline.type == TemplateLine.Type.EMPTY)
 				out.println("out.println();");
 			else
 			{
@@ -429,7 +429,7 @@ public class CspCompiler
 				block = adjustTemplateIndent(block, tline, out);
 				block.isCodeBlock = false;
 
-				if (tline.type == TemplateLine.Type.code)
+				if (tline.type == TemplateLine.Type.CODE)
 				{
 					if (canHaveSuperCall && tline.content.startsWith("super("))
 					{
@@ -442,11 +442,11 @@ public class CspCompiler
 						printer.printCodeLine(tline.content, tline.original);
 					}
 				}
-				else if (tline.type == TemplateLine.Type.literal)
+				else if (tline.type == TemplateLine.Type.LITERAL)
 				{
 					printer.printLiteralLine(tline.content, true);
 				}
-				else if (tline.type == TemplateLine.Type.componentStart)
+				else if (tline.type == TemplateLine.Type.COMPONENT_START)
 				{
 					boolean declare = false;
 					if (++componentLevel > maxCompLevel)
@@ -469,7 +469,7 @@ public class CspCompiler
 						printer.printComponentEnd(componentLevel--, false, null);
 					}
 				}
-				else if (tline.type == TemplateLine.Type.componentEnd)
+				else if (tline.type == TemplateLine.Type.COMPONENT_END)
 				{
 					if (componentLevel < 0)
 						throw new CspException("unmatched component end", scanner_);
