@@ -33,6 +33,6 @@ public class TemplateLineTest extends CivTest
 		assertEquals("template indent may not contain a mix of tab and space chars: line uses a space indent character, but previous lines used tab characters", line.error);
 		
 		assertTrue(line.parse("@@test"));
-		assertEquals(TemplateLine.Type.literal, line.type);
+		assertEquals(TemplateLine.Type.LITERAL, line.type);
 	}
 }
