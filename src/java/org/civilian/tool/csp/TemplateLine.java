@@ -16,8 +16,14 @@
 package org.civilian.tool.csp;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.civilian.util.StringUtil;
+
+
 /**
- * Helper class to 
+ * Helper class to parse template lines
  */
 class TemplateLine
 {
@@ -25,7 +31,12 @@ class TemplateLine
 	{
 		TAB,
 		SPACE,
-		DETECT
+		DETECT;
+		
+		@Override public String toString()
+		{
+			return name().toLowerCase();
+		}
 	}
 	
 	public enum Type
@@ -36,8 +47,30 @@ class TemplateLine
 		COMPONENT_START,
 		COMPONENT_END,
 	}
-
 	
+	public enum LiteralType
+	{
+		TEXT,
+		JAVA_EXPR,
+		JAVA_STMT,
+		SKIPLN
+	}
+	
+	
+	public class LiteralPart
+	{
+		private LiteralPart(LiteralType type, String value)
+		{
+			this.type = type;
+			this.value = value;
+		}
+		
+		
+		public final LiteralType type;
+		public final String value;
+	}
+	
+
 	public boolean parse(String line)
 	{
 		this.original		= line;
@@ -46,6 +79,7 @@ class TemplateLine
 		this.indent	 		= 0;
 		this.indentChar_ 	= IndentChar.DETECT;
 		this.type 			= Type.EMPTY;
+		this.literalParts.clear();
 		
 		int n = line.length();
 		for (int i=0; i<n; i++)
@@ -92,32 +126,34 @@ class TemplateLine
 	
 	private void setContent(String line)
 	{
-		if (line.startsWith("@@"))
+		if (setContent(line, Type.CODE, CspSymbols.code))
+			return;
+		if (setContent(line, Type.COMPONENT_START, CspSymbols.componentStart))
+			return;
+		if (setContent(line, Type.COMPONENT_END, CspSymbols.componentEnd))
+			return;
+		
+		type 	= Type.LITERAL;
+		content = line;
+	}
+	
+	
+	private boolean setContent(String line, Type type, String symbol)
+	{
+		if (line.startsWith(symbol))
 		{
-			// @@ is a way for template generating templates to start a literal line with a @
-			type 	= Type.LITERAL;
-			content = line.substring(1);
-		}
-		else if (line.startsWith("@"))
-		{
-			type 	= Type.CODE;
-			content = line.substring(1);
-		}
-		else if (line.startsWith("["))
-		{
-			type 	= Type.COMPONENT_START;
-			content = line.substring(1);
-		}
-		else if (line.startsWith("]"))
-		{
-			type 	= Type.COMPONENT_END;
-			content = line.substring(1).trim();
+			line = StringUtil.cutLeft(line, symbol);
+			if (line.startsWith(symbol))
+			{
+				line = StringUtil.cutLeft(line, symbol);
+				type = Type.LITERAL;
+			}
+			this.type = type;
+			this.content = line;
+			return true;
 		}
 		else
-		{
-			type 	= Type.LITERAL;
-			content = line;
-		}
+			return false;
 	}
 	
 	
@@ -132,6 +168,7 @@ class TemplateLine
 	public String content;
 	public int indent;
 	public String original;
+	public List<LiteralPart> literalParts = new ArrayList<>();
 	private IndentChar indentChar_;							// indent char of current line
 	private IndentChar prevIndentChar_ = IndentChar.DETECT;	// indent char used in previous lines
 }

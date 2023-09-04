@@ -60,7 +60,7 @@ class CspTlinePrinter
 		int p = 0;
 		boolean lastPartWasCode = false;
 
-		while((start < length) && ((p = line.indexOf("<%", start)) != -1))
+		while((start < length) && ((p = line.indexOf(CspSymbols.exprStart, start)) != -1))
 		{
 			lastPartWasCode = false;
 			if (line.regionMatches(p, "<%%", 0, 3))
@@ -84,11 +84,11 @@ class CspTlinePrinter
 				if (start < p)
 					printTemplateText(line, start, p, false);
 
-				int q = line.indexOf("%>", p);
+				int q = line.indexOf(CspSymbols.exprEnd, p);
 
 				// code end signal not found
 				if (q == -1)
-					throw new CspException("closing '%>' not found", scanner_);
+					throw new CspException("closing '" + CspSymbols.exprEnd + "' not found", scanner_);
 
 				// ignore empty code segments <%%>
 				if (q > p + 2)
