@@ -17,7 +17,6 @@ package org.civilian.util;
 
 
 import java.io.File;
-
 import org.civilian.tool.csp.CspException;
 
 
@@ -183,7 +182,8 @@ public class Scanner
 
 	
 	/**
-	 * Returns the current character or -1 if there are no more characters.
+	 * Returns the current line.
+	 * @return the current line or "" if not yet initialized or scanner advanced over all input lines
 	 */
 	public String getLine()
 	{
