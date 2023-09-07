@@ -23,6 +23,12 @@ class CspParser
 	}
 	
 	
+	public ClassData getClassData()
+	{
+		return classData_;
+	}
+	
+	
 	public void parsePackageCmd(File templFile, String assumedPackage)
 	{
 		if (scanner_.nextKeyword("package"))
@@ -102,7 +108,7 @@ class CspParser
 			}
 			else
 			{
-				classData_.extendsClass = scanner_.nextToken("extends");
+				classData_.extendsClass = scanner_.nextToken("extends", "(");
 				parseTemplateSuperArgs();
 			}
 
@@ -168,9 +174,7 @@ class CspParser
 	private void parseTemplateSuperArgs() throws IOException
 	{
 		if (!scanner_.next("("))
-			return;
-		if (scanner_.next(")"))
-			return;
+			return; // no super args
 
 		StringBuilder superArgs	= new StringBuilder();
 
@@ -196,6 +200,8 @@ class CspParser
 					bracketLevel--;
 					if (bracketLevel > 0)
 						superArgs.append(')');
+					else
+						scanner_.skip();
 					break;
 			}
 		}
@@ -273,6 +279,14 @@ class CspParser
 		}
 		else
 			return s;
+	}
+	
+	
+	public void parseTemplateLine(TemplateLine tline)
+	{
+		String line = scanner_.getLine();
+		if (!tline.parse(line))
+			throw new CspException(tline.error, scanner_);
 	}
 
 

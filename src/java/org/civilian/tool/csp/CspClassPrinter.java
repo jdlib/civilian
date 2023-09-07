@@ -113,11 +113,6 @@ class CspClassPrinter
 			out.print(classData_.superArgs);
 			out.println(");");
 		}
-		else if ((classData_.superCall != null) || (classData_.superArgs != null))
-		{
-			out.print(classData_.superCall);
-			out.printSrcCommentln(classData_.superCall, classData_.superCallLine);
-		}
 		for (Argument arg : classData_.arguments)
 		{
 			arg.fieldAssign(out);

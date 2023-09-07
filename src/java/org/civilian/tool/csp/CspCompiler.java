@@ -327,17 +327,17 @@ public class CspCompiler
 		ClassData classData = new ClassData(output.className);
 		classData.extendsClass = options_.extendsClass;
 
+		CspParser parser = new CspParser(scanner_, classData, registeredMixins_);
 		if (scanner_.nextKeyword("java"))
 		{
 			// pure java mode: csp file is essentially a Java class
 			// with template snippets
 			scanner_.nextLine();
-			compileJavaLines(classData, out, false);
+			compileJavaLines(parser, out, false);
 		}
 		else
 		{
 			// csp mode: parse commands which describe the generated java class
-			CspParser parser = new CspParser(scanner_, classData, registeredMixins_);
 			parser.parsePackageCmd(templFile, output.assumedPackage);
 			parser.parseImportCmds();
 			parser.parsePrologCmds();
@@ -349,7 +349,7 @@ public class CspCompiler
 			StringWriter swBody	 = new StringWriter();
 			SourceWriter outBody = new SourceWriter(swBody, options_.srcMap);
 			outBody.increaseTab();
-			compileJavaLines(classData, outBody, true);
+			compileJavaLines(parser, outBody, true);
 
 			CspClassPrinter printer = new CspClassPrinter(out, classData);
 			printer.print(templFile, options_.timestamp, swBody.toString());
@@ -367,7 +367,7 @@ public class CspCompiler
 	}
 
 
-	private void compileJavaLines(ClassData classData, SourceWriter out, boolean allowMainTemplate) throws CspException, IOException
+	private void compileJavaLines(CspParser parser, SourceWriter out, boolean allowMainTemplate) throws CspException, IOException
 	{
 		while(!scanner_.isEOF())
 		{
@@ -375,8 +375,8 @@ public class CspCompiler
 			if (line.trim().equals(START_TEMPLATE_SECTION))
 			{
 				if (allowMainTemplate)
-					classData.hasMainTemplate = true;
-				compileTemplateLines(classData, out, allowMainTemplate);
+					parser.getClassData().hasMainTemplate = true;
+				compileTemplateLines(parser, out);
 			}
 			else
 				out.println(line);
@@ -386,13 +386,12 @@ public class CspCompiler
 	}
 
 
-	private void compileTemplateLines(ClassData classData, SourceWriter out, boolean isMainTemplate) throws CspException, IOException
+	private void compileTemplateLines(CspParser parser, SourceWriter out) throws CspException, IOException
 	{
 		TemplateLine tline = new TemplateLine();
 
 		// current line is the template start "{{"
-		if (!tline.parse(scanner_.getLine()))
-			throw new CspException(tline.error, scanner_);
+		parser.parseTemplateLine(tline);
 		
 		int tabBase1 = out.getTabCount();
 		while(out.getTabCount() < tline.indent)
@@ -404,8 +403,6 @@ public class CspCompiler
 		int componentLevel = -1;
 		int maxCompLevel = -1;
 
-		boolean canHaveSuperCall = isMainTemplate;
-
 		CspTlinePrinter printer = new CspTlinePrinter(out, scanner_);
 		Block block = null;
 		while(true)
@@ -413,9 +410,7 @@ public class CspCompiler
 			if (!scanner_.nextLine())
 				throw new CspException("template end '" + END_TEMPLATE_SECTION + "' expected", scanner_);
 
-			String line = scanner_.getLine();
-			if (!tline.parse(line))
-				throw new CspException(tline.error, scanner_);
+			parser.parseTemplateLine(tline);
 			
 			if (END_TEMPLATE_SECTION.equals(tline.content))
 				break;
@@ -431,16 +426,8 @@ public class CspCompiler
 
 				if (tline.type == TemplateLine.Type.CODE)
 				{
-					if (canHaveSuperCall && tline.content.startsWith("super("))
-					{
-						classData.superCall = tline.content;
-						classData.superCallLine = scanner_.getLineIndex();
-					}
-					else
-					{
-						block.isCodeBlock = true;
-						printer.printCodeLine(tline.content, tline.original);
-					}
+					block.isCodeBlock = true;
+					printer.printCodeLine(tline.content, tline.original);
 				}
 				else if (tline.type == TemplateLine.Type.LITERAL)
 				{
@@ -477,8 +464,6 @@ public class CspCompiler
 				}
 				else
 					throw new CspException("unexpected line type " + tline.type, scanner_);
-
-				canHaveSuperCall = false;
 			}
 		}
 

@@ -48,26 +48,31 @@ class TemplateLine
 		COMPONENT_END,
 	}
 	
+	
 	public enum LiteralType
 	{
 		TEXT,
 		JAVA_EXPR,
 		JAVA_STMT,
+		JAVA_IF_START,
+		JAVA_IF_END,
 		SKIPLN
 	}
 	
 	
 	public class LiteralPart
 	{
-		private LiteralPart(LiteralType type, String value)
+		private LiteralPart(LiteralType type, String rawValue, String value)
 		{
 			this.type = type;
 			this.value = value;
+			this.rawValue = rawValue;
 		}
 		
 		
 		public final LiteralType type;
 		public final String value;
+		public final String rawValue;
 	}
 	
 
@@ -96,7 +101,7 @@ class TemplateLine
 					break;
 				default:
 					// line has non whitespace content
-					setContent(line.substring(i).trim());
+					parseContent(line.substring(i).trim());
 					i = n;
 					break;
 			}
@@ -124,21 +129,22 @@ class TemplateLine
 	}
 	
 	
-	private void setContent(String line)
+	private void parseContent(String line)
 	{
-		if (setContent(line, Type.CODE, CspSymbols.code))
+		if (tryParseType(line, Type.CODE, CspSymbols.code))
 			return;
-		if (setContent(line, Type.COMPONENT_START, CspSymbols.componentStart))
+		if (tryParseType(line, Type.COMPONENT_START, CspSymbols.componentStart))
 			return;
-		if (setContent(line, Type.COMPONENT_END, CspSymbols.componentEnd))
+		if (tryParseType(line, Type.COMPONENT_END, CspSymbols.componentEnd))
 			return;
 		
 		type 	= Type.LITERAL;
 		content = line;
+		parseLiteralLine(line);
 	}
 	
 	
-	private boolean setContent(String line, Type type, String symbol)
+	private boolean tryParseType(String line, Type type, String symbol)
 	{
 		if (line.startsWith(symbol))
 		{
@@ -148,7 +154,7 @@ class TemplateLine
 				line = StringUtil.cutLeft(line, symbol);
 				type = Type.LITERAL;
 			}
-			this.type = type;
+			this.type    = type;
 			this.content = line;
 			return true;
 		}
@@ -157,7 +163,12 @@ class TemplateLine
 	}
 	
 	
-	private boolean indentCharDiffers(IndentChar expected, IndentChar actual)
+	private void parseLiteralLine(String line)
+	{
+	}
+	
+	
+	private static boolean indentCharDiffers(IndentChar expected, IndentChar actual)
 	{
 		return (expected != IndentChar.DETECT) && (expected != actual); 
 	}

@@ -5,21 +5,18 @@
 package org.civilian.template.csp;
 
 
-import org.civilian.template.CspTemplate;
-
-
-public class Test5 extends CspTemplate
+public class Test5 extends BaseTemplate
 {
 	public Test5(String name)
 	{
-		super(name, 5, "10");                                           // line 6: super(name, 5, "10");
+		super(name, 5, "10");
 		this.name = name;
 	}
 
 
 	@Override protected void print() throws Exception
 	{
-		out.print(name);                                                // line 7: <%name%>
+		out.print(name);                                                // line 6: <%name%>
 		out.printlnIfNotEmpty();
 	}
 

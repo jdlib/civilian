@@ -1,8 +1,7 @@
 package org.civilian.template.csp
 
 
-template(String name)
+template(String name) extends BaseTemplate(name, 5, "10")
 {{
-	@super(name, 5, "10");
 	<%name%>
 }}

@@ -5,10 +5,11 @@
 package test;
 
 
-public class Test7 extends SuperTemplate(name)
+public class Test7 extends SuperTemplate
 {
 	public Test7(String name)
 	{
+		super(name);
 		this.name = name;
 	}
 

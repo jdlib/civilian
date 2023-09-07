@@ -30,7 +30,7 @@ class ClassData
 
 	public boolean needsCtor()
 	{
-		return (args != null) || (superArgs != null) || (superCall != null);
+		return (args != null) || (superArgs != null);
 	}
 
 
@@ -53,8 +53,6 @@ class ClassData
 	public String writerClassSimple;
 	public String implementsList;
 	public String exception = "Exception";
-	public String superCall;
-	public int superCallLine;
 	public boolean hasMainTemplate;
 	public boolean standalone;
 	public boolean isPublic = true;
