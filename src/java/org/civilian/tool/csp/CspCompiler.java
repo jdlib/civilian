@@ -333,7 +333,7 @@ public class CspCompiler
 			// pure java mode: csp file is essentially a Java class
 			// with template snippets
 			scanner_.nextLine();
-			compileJavaLines(parser, out, false);
+			compileJavaLines(parser, out);
 		}
 		else
 		{
@@ -349,7 +349,10 @@ public class CspCompiler
 			StringWriter swBody	 = new StringWriter();
 			SourceWriter outBody = new SourceWriter(swBody, options_.srcMap);
 			outBody.increaseTab();
-			compileJavaLines(parser, outBody, true);
+			if (scanner_.getLine().trim().equals(START_TEMPLATE_SECTION))
+				classData.hasMainTemplate = true;
+
+			compileJavaLines(parser, outBody);
 
 			CspClassPrinter printer = new CspClassPrinter(out, classData);
 			printer.print(templFile, options_.timestamp, swBody.toString());
@@ -367,20 +370,15 @@ public class CspCompiler
 	}
 
 
-	private void compileJavaLines(CspParser parser, SourceWriter out, boolean allowMainTemplate) throws CspException, IOException
+	private void compileJavaLines(CspParser parser, SourceWriter out) throws CspException, IOException
 	{
 		while(!scanner_.isEOF())
 		{
 			String line = scanner_.getLine();
 			if (line.trim().equals(START_TEMPLATE_SECTION))
-			{
-				if (allowMainTemplate)
-					parser.getClassData().hasMainTemplate = true;
 				compileTemplateLines(parser, out);
-			}
 			else
 				out.println(line);
-			allowMainTemplate = false;
 			scanner_.nextLine();
 		}
 	}
