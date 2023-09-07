@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Map;
 import org.civilian.template.CspTemplate;
 import org.civilian.template.CspWriter;
-import org.civilian.tool.source.PackageDetector;
+import org.civilian.tool.source.JavaPackageDetector;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
 import org.civilian.util.Scanner;
@@ -35,7 +35,7 @@ class CspParser
 			classData_.packageName = assumedPackage;
 		else
 		{
-			String p = PackageDetector.DEFAULT.detect(templFile);
+			String p = JavaPackageDetector.DEFAULT.detect(templFile);
 			if (p == null)
 				throw new CspException("cannot detect package for template '" + templFile.getName() + "', please provide a explicit package in the template", scanner_);
 			classData_.packageName = p;

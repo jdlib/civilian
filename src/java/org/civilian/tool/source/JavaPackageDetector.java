@@ -27,29 +27,29 @@ import org.civilian.util.StringUtil;
 
 
 /**
- * PackageDetector helps to detect the package for a source folder.
+ * JavaPackageDetector helps to detect the java package for a source folder.
  * It scans the files in the folder and if there is a Java file,
  * it tries to extract the package from it.
  * If this fails the parent directory is searched.
- * If a parent directory has the name of a known source folders (e.g. src,
+ * If a parent directory has the name of a known Java source folders (e.g. src,
  * src.* or java) the search also terminates.
  */
-public class PackageDetector
+public class JavaPackageDetector
 {
-	public static final PackageDetector DEFAULT = PackageDetector.of("src", "java", "src\\.[.]+");  
+	public static final JavaPackageDetector DEFAULT = JavaPackageDetector.of("src", "java", "src\\.[.]+");  
 	private static final Pattern PACKAGE_PATTERN = Pattern.compile("^package\\s+(.*);$");
 	
 	
-	public static PackageDetector of(String... rootPatterns)
+	public static JavaPackageDetector of(String... rootPatterns)
 	{
 		Pattern[] patterns = new Pattern[rootPatterns.length];
 		for (int i=0; i<rootPatterns.length; i++)
 			patterns[i] = Pattern.compile(rootPatterns[i]);
-		return new PackageDetector(patterns);
+		return new JavaPackageDetector(patterns);
 	}
 
 	
-	public PackageDetector(Pattern... rootPatterns)
+	public JavaPackageDetector(Pattern... rootPatterns)
 	{
 		rootPatterns_ = Check.notNull(rootPatterns, "rootPatterns");
 	}

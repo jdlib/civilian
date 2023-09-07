@@ -36,7 +36,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.civilian.template.CspWriter;
 import org.civilian.text.msg.MsgId;
 import org.civilian.tool.source.OutputLocation;
-import org.civilian.tool.source.PackageDetector;
+import org.civilian.tool.source.JavaPackageDetector;
 import org.civilian.util.Arguments;
 import org.civilian.util.FileType;
 import org.civilian.util.IoUtil;
@@ -151,7 +151,7 @@ public class ResBundleCompiler
 		
 		String packageName 	= null;
 		if (config.outputType.needsPackage() || (config.constClass != null))
-			packageName	= PackageDetector.DEFAULT.detect(config.excelFile);
+			packageName	= JavaPackageDetector.DEFAULT.detect(config.excelFile);
 		
 		createLanguageOutputs(packageName, config_.excelFile);
 		

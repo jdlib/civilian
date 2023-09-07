@@ -23,7 +23,7 @@ import org.civilian.util.ClassUtil;
 import org.junit.Test;
 
 
-public class PackageDetectorTest extends CivTest
+public class JavaPackageDetectorTest extends CivTest
 {
 	@Test public void test() throws Exception
 	{
@@ -33,7 +33,7 @@ public class PackageDetectorTest extends CivTest
 			File srcFile = new File(rootDir, getClass().getName().replace('.', '/') + ".java");
 			assertTrue(srcFile.getAbsolutePath(), srcFile.exists());
 			
-			PackageDetector d = new PackageDetector();
+			JavaPackageDetector d = new JavaPackageDetector();
 			String packageName = d.detect(srcFile);
 			assertEquals(ClassUtil.getPackageName(getClass()), packageName);
 		}

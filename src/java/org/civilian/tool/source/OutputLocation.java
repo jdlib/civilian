@@ -169,7 +169,7 @@ public class OutputLocation
 		{
 			if (inputFile == null)
 				throw new IllegalArgumentException("inputFile is null");
-			packageName = PackageDetector.DEFAULT.detect(inputFile);
+			packageName = JavaPackageDetector.DEFAULT.detect(inputFile);
 		}
 		
 		if (packageName != null)
