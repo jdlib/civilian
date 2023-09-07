@@ -226,10 +226,10 @@ public class CspCompiler
 	}
 
 
-	private boolean acceptExtension(File templateFile)
+	private static boolean acceptExtension(File templateFile)
 	{
-		String extension = IoUtil.getExtension(templateFile);
-		return EXTENSION.equals(extension);
+		String actual = IoUtil.getExtension(templateFile);
+		return EXTENSION.equals(actual);
 	}
 
 
