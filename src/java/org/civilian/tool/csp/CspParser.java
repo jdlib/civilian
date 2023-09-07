@@ -23,12 +23,6 @@ class CspParser
 	}
 	
 	
-	public ClassData getClassData()
-	{
-		return classData_;
-	}
-	
-	
 	public void parsePackageCmd(File templFile, String assumedPackage)
 	{
 		if (scanner_.nextKeyword("package"))
@@ -140,6 +134,9 @@ class CspParser
 
 		if ((scanner_.getPos() > 0) && scanner_.hasMoreChars())
 			throw new CspException("invalid input: '" + scanner_.getRest() + "'", scanner_);
+		
+		if (scanner_.getLine().trim().equals(CspSymbols.START_TEMPLATE_SECTION))
+			classData_.hasMainTemplate = true;
 	}
 
 	

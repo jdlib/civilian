@@ -41,10 +41,6 @@ import org.civilian.util.StringUtil;
  */
 public class CspCompiler
 {
-	private static final String START_TEMPLATE_SECTION = "{{";
-	private static final String END_TEMPLATE_SECTION = "}}";
-
-
 	/**
 	 * The default extension of CSP files.
 	 */
@@ -349,8 +345,6 @@ public class CspCompiler
 			StringWriter swBody	 = new StringWriter();
 			SourceWriter outBody = new SourceWriter(swBody, options_.srcMap);
 			outBody.increaseTab();
-			if (scanner_.getLine().trim().equals(START_TEMPLATE_SECTION))
-				classData.hasMainTemplate = true;
 
 			compileJavaLines(parser, outBody);
 
@@ -375,7 +369,7 @@ public class CspCompiler
 		while(!scanner_.isEOF())
 		{
 			String line = scanner_.getLine();
-			if (line.trim().equals(START_TEMPLATE_SECTION))
+			if (line.trim().equals(CspSymbols.START_TEMPLATE_SECTION))
 				compileTemplateLines(parser, out);
 			else
 				out.println(line);
@@ -406,11 +400,11 @@ public class CspCompiler
 		while(true)
 		{
 			if (!scanner_.nextLine())
-				throw new CspException("template end '" + END_TEMPLATE_SECTION + "' expected", scanner_);
+				throw new CspException("template end '" + CspSymbols.END_TEMPLATE_SECTION + "' expected", scanner_);
 
 			parser.parseTemplateLine(tline);
 			
-			if (END_TEMPLATE_SECTION.equals(tline.content))
+			if (CspSymbols.END_TEMPLATE_SECTION.equals(tline.content))
 				break;
 
 			if (tline.type == TemplateLine.Type.EMPTY)
