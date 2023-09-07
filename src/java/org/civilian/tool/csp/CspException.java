@@ -67,7 +67,7 @@ public class CspException extends RuntimeException
 			{
 				sb.append(": \"");
 				if (line.length() > 20)
-					sb.append(line.substring(0, 20)).append("...");
+					sb.append(line, 0, 20).append("...");
 				else
 					sb.append(line);
 				sb.append('"');
