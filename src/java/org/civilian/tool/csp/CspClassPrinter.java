@@ -1,7 +1,6 @@
 package org.civilian.tool.csp;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import org.civilian.util.Check;
@@ -19,18 +18,10 @@ class CspClassPrinter
 	}
 	
 	
-	public void print(File templFile, boolean timestamp,  String body) throws IOException
-	{
-		printClassStart(templFile, timestamp);
-		printBody(body);
-		printClassEnd();
-	}
-	
-	
-	private void printClassStart(File templFile, boolean timestamp) throws IOException
+	public void printClassStart(String templFileName, boolean timestamp) throws IOException
 	{
 		out.println("/**");
-		out.print(" * Generated from " + templFile.getName());
+		out.print(" * Generated from " + templFileName);
 		if (timestamp)
 		{
 			out.print(" at ");
@@ -225,7 +216,7 @@ class CspClassPrinter
 	}
 	
 	
-	private void printClassEnd() throws IOException
+	public void printClassEnd() throws IOException
 	{
 		printFields();
 		out.endBlock(); // class block, started in printClassStart

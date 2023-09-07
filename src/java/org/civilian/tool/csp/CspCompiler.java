@@ -338,18 +338,13 @@ public class CspCompiler
 			parser.parseImportCmds();
 			parser.parsePrologCmds();
 			parser.parseTemplateCmd();
-
-			// we compile the body and write it to another temporary writer
-			// since the template body can contain a super-call which
-			// we need in printClassData
-			StringWriter swBody	 = new StringWriter();
-			SourceWriter outBody = new SourceWriter(swBody, options_.srcMap);
-			outBody.increaseTab();
-
-			compileJavaLines(parser, outBody);
-
+			
 			CspClassPrinter printer = new CspClassPrinter(out, classData);
-			printer.print(templFile, options_.timestamp, swBody.toString());
+			printer.printClassStart(templFile.getName(), options_.timestamp);
+
+			compileJavaLines(parser, out);
+			
+			printer.printClassEnd();
 		}
 		out.flush();
 
