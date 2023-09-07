@@ -35,8 +35,7 @@ class CspParser
 			classData_.packageName = assumedPackage;
 		else
 		{
-			PackageDetector detector = new PackageDetector();
-			String p = detector.detect(templFile);
+			String p = PackageDetector.DEFAULT.detect(templFile);
 			if (p == null)
 				throw new CspException("cannot detect package for template '" + templFile.getName() + "', please provide a explicit package in the template", scanner_);
 			classData_.packageName = p;

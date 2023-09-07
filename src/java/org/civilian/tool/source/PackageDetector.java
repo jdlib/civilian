@@ -36,23 +36,16 @@ import org.civilian.util.StringUtil;
  */
 public class PackageDetector
 {
-	public static String detectPackage(File directory)
+	public static final PackageDetector DEFAULT = PackageDetector.of("src", "java", "src\\.[.]+");  
+	private static final Pattern PACKAGE_PATTERN = Pattern.compile("^package\\s+(.*);$");
+	
+	
+	public static PackageDetector of(String... rootPatterns)
 	{
-		return new PackageDetector().detect(directory);
-	}
-	
-	
-	public PackageDetector()
-	{
-		this("src", "java", "src\\.[.]+");
-	}
-	
-	
-	public PackageDetector(String... rootPatterns)
-	{
-		rootPatterns_ = new Pattern[rootPatterns.length];
+		Pattern[] patterns = new Pattern[rootPatterns.length];
 		for (int i=0; i<rootPatterns.length; i++)
-			rootPatterns_[i] = Pattern.compile(rootPatterns[i]); 
+			patterns[i] = Pattern.compile(rootPatterns[i]);
+		return new PackageDetector(patterns);
 	}
 
 	
@@ -64,9 +57,7 @@ public class PackageDetector
 	
 	public String detect(File directory)
 	{
-		if (directory == null)
-			throw new IllegalArgumentException("directory null");
-				
+		Check.notNull(directory, "directory");
 		if (!directory.isDirectory())
 			directory = directory.getParentFile();
 		
@@ -136,6 +127,5 @@ public class PackageDetector
 	}
 
 
-	private Pattern PACKAGE_PATTERN = Pattern.compile("^package\\s+(.*);$");
-	private Pattern[] rootPatterns_;
+	private final Pattern[] rootPatterns_;
 }

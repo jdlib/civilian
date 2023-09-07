@@ -151,7 +151,7 @@ public class ResBundleCompiler
 		
 		String packageName 	= null;
 		if (config.outputType.needsPackage() || (config.constClass != null))
-			packageName	= PackageDetector.detectPackage(config.excelFile);
+			packageName	= PackageDetector.DEFAULT.detect(config.excelFile);
 		
 		createLanguageOutputs(packageName, config_.excelFile);
 		
