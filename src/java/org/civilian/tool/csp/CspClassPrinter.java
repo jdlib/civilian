@@ -178,15 +178,6 @@ class CspClassPrinter
 	}
 	
 
-	private void printBody(String body)
-	{
-		int tab = out.getTabCount();
-		out.setTabCount(0);
-		out.print(body);
-		out.setTabCount(tab);
-	}
-	
-
 	private void printFields() throws IOException
 	{
 		if (classData_.hasFields())
