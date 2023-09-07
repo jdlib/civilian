@@ -180,7 +180,7 @@ public class ScannerTest extends CivTest
 	@Test public void testConsumeHex()
 	{
 		Scanner s = new Scanner("01Ff");
-		byte[] b  = s.consumeBytes();
+		byte[] b  = s.consumeHexBytes();
 		assertEquals(2, b.length);
 		assertEquals(1, b[0]);
 		assertEquals(-1, b[1]);

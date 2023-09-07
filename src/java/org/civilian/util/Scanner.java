@@ -507,9 +507,9 @@ public class Scanner
 
 	
 	/**
-	 * Consumes hex encoded bytes.
+	 * @return consumes and returns hex encoded bytes.
 	 */
-	public byte[] consumeBytes()
+	public byte[] consumeHexBytes()
 	{
 		String hex = consumeWhile("0123456789abcdefABCDEF");
 		byte[] b   = new byte[hex.length() / 2];
@@ -575,7 +575,7 @@ public class Scanner
 	
 	
 	/**
-	 * Scans a quoted string and returns the string without quotes.
+	 * @return a quoted string and returns the string without quotes.
 	 */
 	public String consumeQuotedString()
 	{
@@ -588,6 +588,7 @@ public class Scanner
 	 * The current character is used as quote char.
 	 * Does not autoskip whitespace. 
 	 * @param includeQuotes should the quotes be included?
+	 * @return the consumed string
 	 */
 	public String consumeQuotedString(boolean includeQuotes)
 	{
@@ -602,7 +603,7 @@ public class Scanner
 	
 	
 	/**
-	 * Returns the rest of the current line.
+	 * @return consumes and returns the rest of the current line.
 	 */
 	public String consumeRest()
 	{
@@ -696,7 +697,7 @@ public class Scanner
 	
 	
 	/**
-	 * Returns the rest of the current line.
+	 * @return the rest of the current line.
 	 */
 	public String getRest()
 	{
