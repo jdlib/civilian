@@ -23,8 +23,7 @@ class CspClassPrinter
 	{
 		printClassStart(templFile, timestamp);
 		printBody(body);
-		printFields();
-		out.endBlock(); // class block, started in printClassStart
+		printClassEnd();
 	}
 	
 	
@@ -223,6 +222,13 @@ class CspClassPrinter
 				out.println(" out;");
 			}
 		}
+	}
+	
+	
+	private void printClassEnd() throws IOException
+	{
+		printFields();
+		out.endBlock(); // class block, started in printClassStart
 	}
 	
 	
