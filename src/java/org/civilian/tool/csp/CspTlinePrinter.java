@@ -119,9 +119,10 @@ class CspTlinePrinter
 
 
 	/**
-	 * Prints a template code segment embedded in a literal line between "&lt;%" and "%&gt;".
-	 * @param raw the snippet including the boundaries "&lt;%" and "%&gt;".
-	 * @param code the code content, trimmed.
+	 * Prints a template code segment embedded in a literal line between {@link CspSymbols#exprStart} and
+	 * {@link CspSymbols#exprEnd}.
+	 * @param raw the snippet included the start and end symbol.
+	 * @param code the code content with the symbols and trimmed.
 	 */
 	private void printTemplateSnippet(String raw, String code) throws CspException
 	{
