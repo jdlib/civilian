@@ -76,7 +76,7 @@ class TemplateLine
 	}
 	
 
-	public boolean parse(String line)
+	public void reset(String line)
 	{
 		this.original		= line;
 		this.content 		= "";
@@ -85,6 +85,12 @@ class TemplateLine
 		this.indentChar_ 	= IndentChar.DETECT;
 		this.type 			= Type.EMPTY;
 		this.literalParts.clear();
+	}
+
+	
+	public boolean parse(String line)
+	{
+		reset(line);
 		
 		int n = line.length();
 		for (int i=0; i<n; i++)
