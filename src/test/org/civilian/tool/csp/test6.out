@@ -10,5 +10,4 @@ import org.civilian.template.CspTemplate;
 
 public abstract class Test6 extends CspTemplate
 {
-
 }
