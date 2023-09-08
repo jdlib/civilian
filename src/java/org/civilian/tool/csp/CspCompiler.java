@@ -298,7 +298,7 @@ public class CspCompiler
 	{
 		scanner_ = new Scanner(input.readLines(options_.encodingIn));
 		scanner_.setSource(input.file.getName());
-		scanner_.setErrorHandler(new ErrorHandler());
+		scanner_.setErrorHandler(CspException::new);
 
 		if (scanner_.nextKeyword("encoding"))
 		{
@@ -395,7 +395,7 @@ public class CspCompiler
 		while(true)
 		{
 			if (!scanner_.nextLine())
-				throw new CspException("template end '" + CspSymbols.END_TEMPLATE_SECTION + "' expected", scanner_);
+				throw scanner_.exception("template end '" + CspSymbols.END_TEMPLATE_SECTION + "' expected");
 
 			parser.parseTemplateLine(tline);
 			
@@ -446,11 +446,11 @@ public class CspCompiler
 				else if (tline.type == TemplateLine.Type.COMPONENT_END)
 				{
 					if (componentLevel < 0)
-						throw new CspException("unmatched component end", scanner_);
+						throw scanner_.exception("unmatched component end");
 					printer.printComponentEnd(componentLevel--, true, tline.original);
 				}
 				else
-					throw new CspException("unexpected line type " + tline.type, scanner_);
+					throw scanner_.exception("unexpected line type " + tline.type);
 			}
 		}
 
@@ -480,9 +480,9 @@ public class CspCompiler
 			{
 				block = block.prev;
 				if (block == null)
-					throw new CspException("end of template marker '{{' expected", scanner_);
+					throw scanner_.exception("end of template marker '{{' expected");
 				if (tline.indent > block.indent)
-					throw new CspException("inconsistent indent", scanner_);
+					throw scanner_.exception("inconsistent indent");
 				if (block.isCodeBlock)
 					out.endBlock();
 				else

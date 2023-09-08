@@ -707,10 +707,10 @@ public class Scanner
 	/**
 	 * Raises an exception with context information about input and current position.
 	 */
-	public IllegalArgumentException exception(String message)
+	public RuntimeException exception(String message)
 	{
 		if (errorHandler_ != null)
-			errorHandler_.scanError(this, message);
+			return errorHandler_.scanError(message, this);
 		StringBuilder s = new StringBuilder(message);
 		s.append(" (");
 		if (getLineCount() > 1)
@@ -731,7 +731,7 @@ public class Scanner
 	 */
 	public static interface ErrorHandler
 	{
-		public void scanError(Scanner scanner, String message);
+		public RuntimeException scanError(String message, Scanner scanner);
 	}
 
 	

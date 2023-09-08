@@ -37,7 +37,7 @@ class CspParser
 		{
 			String p = JavaPackageDetector.DEFAULT.detect(templFile);
 			if (p == null)
-				throw new CspException("cannot detect package for template '" + templFile.getName() + "', please provide a explicit package in the template", scanner_);
+				throw scanner_.exception("cannot detect package for template '" + templFile.getName() + "', please provide a explicit package in the template");
 			classData_.packageName = p;
 		}
 	}
@@ -66,7 +66,7 @@ class CspParser
 		//-------------------------------------
 		// "template"
 		if (!scanner_.nextKeyword("template"))
-			throw new CspException("expected the template command, but reached end of file", scanner_);
+			throw scanner_.exception("expected the template command, but reached end of file");
 		parseTemplateArgs();
 
 		//-------------------------------------
@@ -132,7 +132,7 @@ class CspParser
 		}
 
 		if ((scanner_.getPos() > 0) && scanner_.hasMoreChars())
-			throw new CspException("invalid input: '" + scanner_.getRest() + "'", scanner_);
+			throw scanner_.exception("invalid input: '" + scanner_.getRest() + "'");
 		
 		if (scanner_.getLine().trim().equals(CspSymbols.START_TEMPLATE_SECTION))
 			classData_.hasMainTemplate = true;
@@ -160,7 +160,7 @@ class CspParser
 			if (scanner_.next(")"))
 				break;
 			if (!scanner_.next(","))
-				throw new CspException("expected closing bracket ')' of template argument list", scanner_);
+				throw scanner_.exception("expected closing bracket ')' of template argument list");
 		}
 
 		classData_.args = argsString.toString();
@@ -180,7 +180,7 @@ class CspParser
 			String part = scanner_.consumeUpto("\"'()", false, false, false);
 			superArgs.append(part);
 			if (!scanner_.hasMoreChars())
-				throw new CspException("template super must be finished on the beginning line", scanner_);
+				throw scanner_.exception("template super must be finished on the beginning line");
 			switch (scanner_.current())
 			{
 				case '"':
@@ -266,7 +266,7 @@ class CspParser
 			{
 				int p = prefix.lastIndexOf('.');
 				if (p < 0)
-					throw new CspException("relative import '" + s + "' can't be applied to package '" + classData_.packageName + "'", scanner_);
+					throw scanner_.exception("relative import '" + s + "' can't be applied to package '" + classData_.packageName + "'");
 				prefix = prefix.substring(0, p);
 				t = t.substring(3);
 			}
@@ -282,7 +282,7 @@ class CspParser
 	{
 		String line = scanner_.getLine();
 		if (!tline.parse(line))
-			throw new CspException(tline.error, scanner_);
+			throw scanner_.exception(tline.error);
 	}
 
 

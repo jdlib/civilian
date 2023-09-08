@@ -18,7 +18,6 @@ package org.civilian.tool.csp;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.civilian.util.StringUtil;
 
 
@@ -76,12 +75,12 @@ class TemplateLine
 	}
 	
 
-	public void reset(String line)
+	private void reset(String line)
 	{
 		this.original		= line;
 		this.content 		= "";
 		this.error   		= null;
-		this.indent	 		= 0;
+		this.indent	= 0;
 		this.indentChar_ 	= IndentChar.DETECT;
 		this.type 			= Type.EMPTY;
 		this.literalParts.clear();
@@ -95,6 +94,7 @@ class TemplateLine
 		int n = line.length();
 		for (int i=0; i<n; i++)
 		{
+			char c = line.charAt(i);
 			switch(line.charAt(i))
 			{
 				case '\t':
@@ -185,7 +185,7 @@ class TemplateLine
 	public String content;
 	public int indent;
 	public String original;
-	public List<LiteralPart> literalParts = new ArrayList<>();
+	public final List<LiteralPart> literalParts = new ArrayList<>();
 	private IndentChar indentChar_;							// indent char of current line
 	private IndentChar prevIndentChar_ = IndentChar.DETECT;	// indent char used in previous lines
 }

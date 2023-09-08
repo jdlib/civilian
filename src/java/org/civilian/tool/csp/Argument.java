@@ -28,7 +28,7 @@ class Argument
 
 		name_ = scanner.consumeToken(",)");
 		if (name_ == null)
-			throw new CspException("argument '" + type_ + "' needs a name and type", scanner);
+			throw scanner.exception("argument '" + type_ + "' needs a name and type");
 		
 		while (name_.endsWith("[]"))
 		{
@@ -42,7 +42,7 @@ class Argument
 	{
 		String type = scanner.consumeIdentifier();
 		if (type == null)
-			throw new CspException("missing argument type", scanner);
+			throw scanner.exception("missing argument type");
 		
 		// add inner classes
 		while(true)
@@ -54,7 +54,7 @@ class Argument
 				type += '.';
 				String subType = scanner.consumeIdentifier();
 				if (subType == null)
-					throw new CspException("incomplete type '" + type_ + "'", scanner);
+					throw scanner.exception("incomplete type '" + type_ + "'");
 				type += subType;
 			}
 			else
