@@ -1,7 +1,10 @@
 package org.civilian.tool.csp;
 
 
+import java.util.List;
+
 import org.civilian.template.ComponentBuilder;
+import org.civilian.tool.csp.TemplateLine.LiteralPart;
 import org.civilian.util.Scanner;
 
 
@@ -53,62 +56,34 @@ class CspTlinePrinter
 	}
 	
 	
-	public void printLiteralLine(String line, boolean usePrintln)
+	public void printLiteralLine(List<LiteralPart> parts, int start, boolean usePrintln)
 	{
-		int length = line.length();
-		int start = 0;
-		int p = 0;
 		boolean lastPartWasCode = false;
-
-		while((start < length) && ((p = line.indexOf(CspSymbols.exprStart, start)) != -1))
+		boolean textPrintln = false;
+		int size = parts.size();
+		for (int i=start; i<size; i++)
 		{
 			lastPartWasCode = false;
-			if (line.regionMatches(p, "<%%", 0, 3))
+			LiteralPart part = parts.get(i);
+			switch (part.type)
 			{
-				if ((p + 3 < length) && (line.charAt(p + 3) == '>'))
-				{
-					// <%%> detected
-					if (start < p)
-						printTemplateText(line, start, p, false);
-					start = p + 4;
-				}
-				else
-				{
-					// <%% detected: print literal
-					printTemplateText(line, start, p+2, false);
-					start = p + 3;
-				}
-			}
-			else
-			{
-				if (start < p)
-					printTemplateText(line, start, p, false);
-
-				int q = line.indexOf(CspSymbols.exprEnd, p);
-
-				// code end signal not found
-				if (q == -1)
-					scanner_.exception("closing '" + CspSymbols.exprEnd + "' not found");
-
-				// ignore empty code segments <%%>
-				if (q > p + 2)
-				{
-					// line end signal <%/%> found
-					if ((q == p + 3) && (line.charAt(p + 2) == '/'))
-						return;
-
-					String snippetRaw  = line.substring(p, q + 2);
-					String snippetCode = line.substring(p +2, q).trim();
-
-					printTemplateSnippet(snippetRaw, snippetCode);
+				case COMPONENT:
+				case COMPONENT_END:
+				case COMPONENT_START:
+					throw new IllegalStateException();
+				case JAVA_EXPR:
 					lastPartWasCode = true;
-				}
-				start = q + 2;
+					printTemplateSnippet(part.rawValue, part.value);
+					break;
+				case SKIPLN:
+					return;
+				case TEXT:
+					textPrintln = usePrintln && (i == size - 1);
+					printTemplateText(part.value, textPrintln);
+					break;
 			}
 		}
-		if (start < length)
-			printTemplateText(line, start, length, usePrintln);
-		else if (usePrintln)
+		if (usePrintln && !textPrintln)
 		{
 			if (lastPartWasCode)
 				out.println("out.printlnIfNotEmpty();");
@@ -117,7 +92,7 @@ class CspTlinePrinter
 		}
 	}
 
-
+	
 	/**
 	 * Prints a template code segment embedded in a literal line between {@link CspSymbols#exprStart} and
 	 * {@link CspSymbols#exprEnd}.
@@ -154,12 +129,13 @@ class CspTlinePrinter
 	}
 
 	
-	private void printTemplateText(String content, int start, int end, boolean usePrintln)
+	private void printTemplateText(String text, boolean usePrintln)
 	{
 		out.print(usePrintln ? "out.println(\"" : "out.print(\"");
-		for (int i=start; i<end; i++)
+		int length = text.length();
+		for (int i=0; i<length; i++)
 		{
-			char c = content.charAt(i);
+			char c = text.charAt(i);
 			switch(c)
 			{
 				case '\t':
@@ -177,10 +153,10 @@ class CspTlinePrinter
 			}
 		}
 		out.print("\");");
-		printSrcCommentln(content.substring(start, end));
+		printSrcCommentln(text);
 	}
 
-
+	
 	private void printSrcCommentln(String s)
 	{
 		out.printSrcCommentln(s, scanner_.getLineIndex());

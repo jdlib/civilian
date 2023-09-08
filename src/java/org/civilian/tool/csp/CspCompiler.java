@@ -418,7 +418,7 @@ public class CspCompiler
 				}
 				else if (tline.type == TemplateLine.Type.LITERAL)
 				{
-					printer.printLiteralLine(tline.content, true);
+					printer.printLiteralLine(tline.literalParts, 0, true);
 				}
 				else if (tline.type == TemplateLine.Type.COMPONENT_START)
 				{
@@ -439,7 +439,7 @@ public class CspCompiler
 					{
 						String cbExpr = tline.content.substring(0, p).trim();
 						printer.printComponentStart(componentLevel, cbExpr, false, declare);
-						printer.printLiteralLine(tline.content.substring(p + 1).trim(), false);
+						printer.printLiteralLine(tline.literalParts, 1, false);
 						printer.printComponentEnd(componentLevel--, false, null);
 					}
 				}

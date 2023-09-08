@@ -62,6 +62,12 @@ class TemplateLine
 		}
 		
 		
+		@Override public String toString()
+		{
+			return type + "=" + value;
+		}
+		
+		
 		public final LiteralType type;
 		public final String value;
 		public final String rawValue;
@@ -147,7 +153,7 @@ class TemplateLine
 			}
 		}
 		
-		String line = scanner.getRest();
+		String line = scanner.getRest().trim();
 		int length = line.length();
 		int start = 0;
 		int p = 0;
