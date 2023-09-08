@@ -18,6 +18,7 @@ package org.civilian.tool.csp;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.civilian.util.Scanner;
 import org.civilian.util.StringUtil;
 
 
@@ -26,18 +27,6 @@ import org.civilian.util.StringUtil;
  */
 class TemplateLine
 {
-	private enum IndentChar
-	{
-		TAB,
-		SPACE,
-		DETECT;
-		
-		@Override public String toString()
-		{
-			return name().toLowerCase();
-		}
-	}
-	
 	public enum Type
 	{
 		EMPTY,
@@ -77,61 +66,21 @@ class TemplateLine
 
 	private void reset(String line)
 	{
-		this.original		= line;
-		this.content 		= "";
-		this.error   		= null;
-		this.indent	= 0;
-		this.indentChar_ 	= IndentChar.DETECT;
-		this.type 			= Type.EMPTY;
+		this.original	= line;
+		this.content 	= "";
+		this.indent		= 0;
+		this.type 		= Type.EMPTY;
 		this.literalParts.clear();
 	}
 
 	
-	public boolean parse(String line)
+	public void parse(Scanner scanner)
 	{
-		reset(line);
-		
-		int n = line.length();
-		for (int i=0; i<n; i++)
-		{
-			char c = line.charAt(i);
-			switch(line.charAt(i))
-			{
-				case '\t':
-					if (!addIndent(IndentChar.TAB))
-						return false; // error
-					break;
-				case ' ':
-					if (!addIndent(IndentChar.SPACE))
-						return false; // error
-					break;
-				default:
-					// line has non whitespace content
-					parseContent(line.substring(i).trim());
-					i = n;
-					break;
-			}
-		}
-
-		return true; // ok
-	}
-	
-	
-	private boolean addIndent(IndentChar c)
-	{
-		if (indentCharDiffers(prevIndentChar_, c) || indentCharDiffers(indentChar_, c))
-		{
-			error = "template indent may not contain a mix of tab and space chars";
-			if (!indentCharDiffers(indentChar_, c))
-				error += ": line uses a " + c + " indent character, but previous lines used " + prevIndentChar_ + " characters";
-			return false;
-		}
-		else
-		{
-			prevIndentChar_ = indentChar_ = c;
-			indent++;
-			return true;
-		}
+		reset(scanner.getLine());
+		indent_.parse(scanner);
+		indent = indent_.count;
+		if (scanner.hasMoreChars())
+			parseContent(scanner.getRest().trim());
 	}
 	
 	
@@ -174,18 +123,10 @@ class TemplateLine
 	}
 	
 	
-	private static boolean indentCharDiffers(IndentChar expected, IndentChar actual)
-	{
-		return (expected != IndentChar.DETECT) && (expected != actual); 
-	}
-	
-	
 	public Type type;
-	public String error;
 	public String content;
 	public int indent;
 	public String original;
 	public final List<LiteralPart> literalParts = new ArrayList<>();
-	private IndentChar indentChar_;							// indent char of current line
-	private IndentChar prevIndentChar_ = IndentChar.DETECT;	// indent char used in previous lines
+	private final CspIndent indent_ = new CspIndent();
 }

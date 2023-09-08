@@ -280,9 +280,7 @@ class CspParser
 	
 	public void parseTemplateLine(TemplateLine tline)
 	{
-		String line = scanner_.getLine();
-		if (!tline.parse(line))
-			scanner_.exception(tline.error);
+		tline.parse(scanner_);
 	}
 
 

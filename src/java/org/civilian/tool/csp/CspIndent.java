@@ -41,29 +41,45 @@ public class CspIndent
 	}
 	
 	
-	public void parse(Scanner scanner)
+	public boolean parse(Scanner scanner)
 	{
 		count 		 = 0;
 		currentChar_ = Char.DETECT;
-		
-		//scanner.
+
+		while(scanner.hasMoreChars())
+		{
+			int c = scanner.current();
+			switch(c)
+			{
+				case '\t':
+					addIndent(scanner, Char.TAB);
+					break;
+				case ' ':
+					addIndent(scanner, Char.SPACE);
+					break;
+				default:
+					return true; // line with content
+			}
+			scanner.skip();
+		}
+		// whitespace line
+		return true;
 	}
 	
 	
-	private boolean addIndent(Char c)
+	private void addIndent(Scanner scanner, Char c)
 	{
 		if (prevChar_.differsFrom(c) || currentChar_.differsFrom(c))
 		{
 			error = "template indent may not contain a mix of tab and space chars";
 			if (!currentChar_.differsFrom(c))
 				error += ": line uses a " + c + " indent character, but previous lines used " + prevChar_ + " characters";
-			return false;
+			scanner.exception(error);
 		}
 		else
 		{
 			prevChar_ = currentChar_ = c;
 			count++;
-			return true;
 		}
 	}
 
