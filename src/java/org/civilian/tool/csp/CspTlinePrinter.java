@@ -88,7 +88,7 @@ class CspTlinePrinter
 
 				// code end signal not found
 				if (q == -1)
-					throw scanner_.exception("closing '" + CspSymbols.exprEnd + "' not found");
+					scanner_.exception("closing '" + CspSymbols.exprEnd + "' not found");
 
 				// ignore empty code segments <%%>
 				if (q > p + 2)

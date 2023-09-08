@@ -396,7 +396,7 @@ public class Scanner
 	{
 		String token = consumeToken(delims);
 		if (token == null)
-			throw exception("missing " + what + "-value");
+			exception("missing " + what + "-value");
 		return token;
 	}
 
@@ -460,7 +460,7 @@ public class Scanner
 				return consumeUptoFound(start, false);
 		}
 		if (needDelim)
-			throw exception("expected one of '" + delimiters + "'");
+			exception("expected one of '" + delimiters + "'");
 		needSkipWhitespace_ = autoSkipWhitespace_;
 		return currentLine_.substring(start);
 	}
@@ -483,7 +483,7 @@ public class Scanner
 	{
 		String s = consumeWhile(Character.DECIMAL_DIGIT_NUMBER);
 		if (s == null)
-			throw exception("expected a integer");
+			exception("expected a integer");
 		return Integer.parseInt(s);
 	}
 
@@ -500,7 +500,7 @@ public class Scanner
 		if (next("."))
 			increaseWhile(Character.DECIMAL_DIGIT_NUMBER, true);
 		if (pos_ == start)
-			throw exception("expected a double");
+			exception("expected a double");
 		return Double.parseDouble(currentLine_.substring(start, pos_)); 
 	}
 
@@ -642,7 +642,7 @@ public class Scanner
 	public void expect(String s)
 	{
 		if (!next(s))
-			throw exception("expected '" + s + "'");
+			exception("expected '" + s + "'");
 	}
 	
 	
@@ -663,7 +663,8 @@ public class Scanner
 				return c;
 			}
 		}
-		throw exception("expected one of '" + s + "'");
+		exception("expected one of '" + s + "'");
+		return 0;
 	}
 
 	
@@ -707,16 +708,21 @@ public class Scanner
 	/**
 	 * Raises an exception with context information about input and current position.
 	 */
-	public RuntimeException exception(String message)
+	public void exception(String message)
 	{
+		RuntimeException e; 
 		if (errorHandler_ != null)
-			return errorHandler_.scanError(message, this);
-		StringBuilder s = new StringBuilder(message);
-		s.append(" (");
-		if (getLineCount() > 1)
-			s.append(getLineIndex() + 1).append(':');
-		s.append(pos_ + 1).append("): '").append(currentLine_);
-		return new IllegalArgumentException(s.toString()); 
+			e = errorHandler_.scanError(message, this);
+		else
+		{
+			StringBuilder s = new StringBuilder(message);
+			s.append(" (");
+			if (getLineCount() > 1)
+				s.append(getLineIndex() + 1).append(':');
+			s.append(pos_ + 1).append("): '").append(currentLine_);
+			e = new IllegalArgumentException(s.toString());
+		}
+		throw e;
 	}
 	
 	

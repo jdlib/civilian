@@ -395,7 +395,7 @@ public class CspCompiler
 		while(true)
 		{
 			if (!scanner_.nextLine())
-				throw scanner_.exception("template end '" + CspSymbols.END_TEMPLATE_SECTION + "' expected");
+				scanner_.exception("template end '" + CspSymbols.END_TEMPLATE_SECTION + "' expected");
 
 			parser.parseTemplateLine(tline);
 			
@@ -446,11 +446,11 @@ public class CspCompiler
 				else if (tline.type == TemplateLine.Type.COMPONENT_END)
 				{
 					if (componentLevel < 0)
-						throw scanner_.exception("unmatched component end");
+						scanner_.exception("unmatched component end");
 					printer.printComponentEnd(componentLevel--, true, tline.original);
 				}
 				else
-					throw scanner_.exception("unexpected line type " + tline.type);
+					scanner_.exception("unexpected line type " + tline.type);
 			}
 		}
 
@@ -480,9 +480,9 @@ public class CspCompiler
 			{
 				block = block.prev;
 				if (block == null)
-					throw scanner_.exception("end of template marker '{{' expected");
+					scanner_.exception("end of template marker '{{' expected");
 				if (tline.indent > block.indent)
-					throw scanner_.exception("inconsistent indent");
+					scanner_.exception("inconsistent indent");
 				if (block.isCodeBlock)
 					out.endBlock();
 				else

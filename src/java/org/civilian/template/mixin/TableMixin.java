@@ -701,7 +701,7 @@ public class TableMixin implements ComponentBuilder
 					{
 						String name = scanner.consumeToken("]=");
 						if (name == null)
-							throw scanner.exception("invalid column definition");
+							scanner.exception("invalid column definition");
 						
 						scanner.expect("=");
 

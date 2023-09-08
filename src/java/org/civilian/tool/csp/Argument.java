@@ -28,7 +28,7 @@ class Argument
 
 		name_ = scanner.consumeToken(",)");
 		if (name_ == null)
-			throw scanner.exception("argument '" + type_ + "' needs a name and type");
+			scanner.exception("argument '" + type_ + "' needs a name and type");
 		
 		while (name_.endsWith("[]"))
 		{
@@ -42,7 +42,7 @@ class Argument
 	{
 		String type = scanner.consumeIdentifier();
 		if (type == null)
-			throw scanner.exception("missing argument type");
+			scanner.exception("missing argument type");
 		
 		// add inner classes
 		while(true)
@@ -54,7 +54,7 @@ class Argument
 				type += '.';
 				String subType = scanner.consumeIdentifier();
 				if (subType == null)
-					throw scanner.exception("incomplete type '" + type_ + "'");
+					scanner.exception("incomplete type '" + type_ + "'");
 				type += subType;
 			}
 			else
