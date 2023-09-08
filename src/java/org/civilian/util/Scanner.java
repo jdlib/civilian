@@ -17,7 +17,6 @@ package org.civilian.util;
 
 
 import java.io.File;
-import org.civilian.tool.csp.CspException;
 
 
 /**
@@ -387,13 +386,13 @@ public class Scanner
 	}
 	
 	
-	public String nextToken(String what) throws CspException
+	public String nextToken(String what)
 	{
 		return nextToken(what, "");
 	}
 
 
-	public String nextToken(String what, String delims) throws CspException
+	public String nextToken(String what, String delims)
 	{
 		String token = consumeToken(delims);
 		if (token == null)
