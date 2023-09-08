@@ -381,7 +381,7 @@ public class CspCompiler
 		parser.parseTemplateLine(tline);
 		
 		int tabBase1 = out.getTabCount();
-		while(out.getTabCount() < tline.indent)
+		while(out.getTabCount() < tline.indent())
 			out.increaseTab();
 
 		int tabBase2 = out.getTabCount();
@@ -407,7 +407,7 @@ public class CspCompiler
 			else
 			{
 				if (block == null)
-					block = new Block(null, tline.indent);
+					block = new Block(null, tline.indent());
 				block = adjustTemplateIndent(block, tline, out);
 				block.isCodeBlock = false;
 
@@ -464,24 +464,24 @@ public class CspCompiler
 
 	private Block adjustTemplateIndent(Block block, TemplateLine tline, SourceWriter out) throws CspException
 	{
-		if (tline.indent == block.indent)
+		if (tline.indent() == block.indent)
 			return block;
-		if (tline.indent > block.indent)
+		if (tline.indent() > block.indent)
 		{
 			if (block.isCodeBlock)
 				out.beginBlock();
 			else
 				out.println("out.increaseTab();") ;
-			block = new Block(block, tline.indent);
+			block = new Block(block, tline.indent());
 		}
 		else // (tline.indent < block.indent)
 		{
-			while(tline.indent < block.indent)
+			while(tline.indent() < block.indent)
 			{
 				block = block.prev;
 				if (block == null)
 					scanner_.exception("end of template marker '{{' expected");
-				if (tline.indent > block.indent)
+				if (tline.indent() > block.indent)
 					scanner_.exception("inconsistent indent");
 				if (block.isCodeBlock)
 					out.endBlock();

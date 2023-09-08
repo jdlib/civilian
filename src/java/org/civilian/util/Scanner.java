@@ -261,15 +261,27 @@ public class Scanner
 	/**
 	 * Returns if there are that much characters left in the current input string.
 	 */
-	public boolean hasMoreChars(int length)
+	public boolean hasMoreChars(int count)
 	{
-		return pos_ + length <= length_;
+		return pos_ + count <= length_;
+	}
+	
+	
+	public int indexOf(char c)
+	{
+		return currentLine_.indexOf(c, pos_);
+	}
+
+	
+	public int indexOf(String s)
+	{
+		return currentLine_.indexOf(s, pos_);
 	}
 
 	
 	private void advancePos(int n)
 	{
-		pos_ += n;
+		pos_ = Math.min(pos_ + n, length_);
 		needSkipWhitespace_ = autoSkipWhitespace_; 
 	}
 	
@@ -281,8 +293,19 @@ public class Scanner
 	 */
 	public boolean skip()
 	{
-		if (hasMoreChars())
-			advancePos(1);
+		return skip(1);
+	}
+	
+	
+	/**
+	 * Positions on the next character in the current line. (Does not
+	 * skip any whitespace).
+	 * @return true if positioned, false if there are no more characters left
+	 */
+	public boolean skip(int n)
+	{
+		if (n > 0 && hasMoreChars())
+			advancePos(n);
 		return hasMoreChars();
 	}
 	
@@ -354,9 +377,9 @@ public class Scanner
 	{
 		autoSkipWhitespace();
 		
-		int length = s.length();
-		if (hasMoreChars(length) && currentLine_.regionMatches(pos_, s, 0, length))
+		if (hasNext(s))
 		{
+			int length = s.length();
 			int last = pos_ + length;
 			if (last <= length_)
 			{
@@ -368,6 +391,13 @@ public class Scanner
 			}
 		}
 		return false;
+	}
+	
+	
+	public boolean hasNext(String s)
+	{
+		int length = s.length();
+		return hasMoreChars(length) && currentLine_.regionMatches(pos_, s, 0, length);
 	}
 	
 
@@ -427,6 +457,19 @@ public class Scanner
 			return null;
 	}
 	
+	
+	public String consumeUpto(int pos)
+	{
+		if (pos > pos_)
+		{
+			String s = currentLine_.substring(pos_, pos);
+			pos_ = pos;
+			return s;
+		}
+		else
+			return "";
+	}
+
 	
 	/**
 	 * Moves the scanner position until one of the characters in the delimiter string

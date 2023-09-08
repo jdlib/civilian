@@ -19,7 +19,6 @@ package org.civilian.tool.csp;
 import java.util.ArrayList;
 import java.util.List;
 import org.civilian.util.Scanner;
-import org.civilian.util.StringUtil;
 
 
 /**
@@ -33,7 +32,12 @@ class TemplateLine
 		CODE,
 		LITERAL,
 		COMPONENT_START,
-		COMPONENT_END,
+		COMPONENT_END;
+		
+ 		private boolean hasLiteralContent()
+		{
+			return this == LITERAL || this == COMPONENT_START;
+		}
 	}
 	
 	
@@ -41,10 +45,10 @@ class TemplateLine
 	{
 		TEXT,
 		JAVA_EXPR,
-		JAVA_STMT,
-		JAVA_IF_START,
-		JAVA_IF_END,
-		SKIPLN
+		SKIPLN,
+		COMPONENT,
+		COMPONENT_START,
+		COMPONENT_END,
 	}
 	
 	
@@ -63,12 +67,17 @@ class TemplateLine
 		public final String rawValue;
 	}
 	
+	
+	public int indent()
+	{
+		return indent_.count;
+	}
+	
 
 	private void reset(String line)
 	{
 		this.original	= line;
 		this.content 	= "";
-		this.indent		= 0;
 		this.type 		= Type.EMPTY;
 		this.literalParts.clear();
 	}
@@ -78,54 +87,138 @@ class TemplateLine
 	{
 		reset(scanner.getLine());
 		indent_.parse(scanner);
-		indent = indent_.count;
 		if (scanner.hasMoreChars())
-			parseContent(scanner.getRest().trim());
+			parseContent(scanner);
 	}
 	
 	
-	private void parseContent(String line)
+	private void parseContent(Scanner scanner)
 	{
-		if (tryParseType(line, Type.CODE, CspSymbols.code))
-			return;
-		if (tryParseType(line, Type.COMPONENT_START, CspSymbols.componentStart))
-			return;
-		if (tryParseType(line, Type.COMPONENT_END, CspSymbols.componentEnd))
-			return;
-		
-		type 	= Type.LITERAL;
-		content = line;
-		parseLiteralLine(line);
+		parseType(scanner);
+		if (type.hasLiteralContent())
+			parseLiteralContent(scanner);
 	}
 	
 	
-	private boolean tryParseType(String line, Type type, String symbol)
+	private void parseType(Scanner scanner)
 	{
-		if (line.startsWith(symbol))
+		if (tryParseType(scanner, Type.CODE, CspSymbols.code))
+			return;
+		else if (tryParseType(scanner, Type.COMPONENT_START, CspSymbols.componentStart))
+			return;
+		else if (tryParseType(scanner, Type.COMPONENT_END, CspSymbols.componentEnd))
+			return;
+		else
 		{
-			line = StringUtil.cutLeft(line, symbol);
-			if (line.startsWith(symbol))
-			{
-				line = StringUtil.cutLeft(line, symbol);
-				type = Type.LITERAL;
-			}
-			this.type    = type;
-			this.content = line;
+			type 	= Type.LITERAL;
+			content = scanner.getRest().trim();
+		}
+	}
+	
+	
+	private boolean tryParseType(Scanner scanner, Type type, String symbol)
+	{
+		if (!scanner.next(symbol))
+			return false;
+		else
+		{
+			this.type = !scanner.hasNext(symbol) ? type : Type.LITERAL;
+			this.content = scanner.getRest();
 			return true;
 		}
-		else
-			return false;
 	}
 	
 	
-	private void parseLiteralLine(String line)
+	private void parseLiteralContent(Scanner scanner) 
 	{
+		if (type == Type.COMPONENT_START)
+		{
+			int pEnd = scanner.indexOf(CspSymbols.componentEnd);
+			if (pEnd < 0)
+			{
+				addLiteralPart(LiteralType.COMPONENT_START, scanner.getRest());
+				return;
+			}
+			else
+			{
+				String component = scanner.consumeUpto(pEnd);
+				scanner.skip(CspSymbols.componentEnd.length());
+				addLiteralPart(LiteralType.COMPONENT, component, component);
+			}
+		}
+		
+		String line = scanner.getRest();
+		int length = line.length();
+		int start = 0;
+		int p = 0;
+
+		while((start < length) && ((p = line.indexOf(CspSymbols.exprStart, start)) != -1))
+		{
+			if (line.regionMatches(p, "<%%", 0, 3))
+			{
+				if ((p + 3 < length) && (line.charAt(p + 3) == '>'))
+				{
+					// <%%> detected
+					if (start < p)
+						addLiteralPart(LiteralType.TEXT, line.substring(start, p));
+					start = p + 4;
+				}
+				else
+				{
+					// <%% detected: print literal
+					addLiteralPart(LiteralType.TEXT, line.substring(start, p+2));
+					start = p + 3;
+				}
+			}
+			else
+			{
+				if (start < p)
+					addLiteralPart(LiteralType.TEXT, line.substring(start, p));
+
+				int q = line.indexOf(CspSymbols.exprEnd, p);
+
+				// code end signal not found
+				if (q == -1)
+					scanner.exception("closing '" + CspSymbols.exprEnd + "' not found");
+
+				// ignore empty code segments <%%>
+				if (q > p + 2)
+				{
+					// line end signal <%/%> found
+					if ((q == p + 3) && (line.charAt(p + 2) == '/'))
+					{
+						addLiteralPart(LiteralType.SKIPLN, "<%/%>");
+						return;
+					}
+
+					String snippetRaw  = line.substring(p, q + 2);
+					String snippetCode = line.substring(p +2, q).trim();
+
+					addLiteralPart(LiteralType.JAVA_EXPR, snippetRaw, snippetCode);
+				}
+				start = q + 2;
+			}
+		}
+		if (start < length)
+			addLiteralPart(LiteralType.TEXT, line.substring(start, length));
+	}
+	
+	
+	
+	private void addLiteralPart(LiteralType type, String value)
+	{
+		literalParts.add(new LiteralPart(type, value, value));
+	}
+	
+	
+	private void addLiteralPart(LiteralType type, String rawValue, String value)
+	{
+		literalParts.add(new LiteralPart(type, rawValue, value));
 	}
 	
 	
 	public Type type;
 	public String content;
-	public int indent;
 	public String original;
 	public final List<LiteralPart> literalParts = new ArrayList<>();
 	private final CspIndent indent_ = new CspIndent();
