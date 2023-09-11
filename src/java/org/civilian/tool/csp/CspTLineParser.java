@@ -122,52 +122,77 @@ class CspTLineParser
 		int start = 0;
 		int p = 0;
 
-		while((start < length) && ((p = line.indexOf(CspSymbols.exprStart, start)) != -1))
+		while(start < length)
 		{
-			if (line.regionMatches(p, "<%%", 0, 3))
-			{
-				if ((p + 3 < length) && (line.charAt(p + 3) == '>'))
-				{
-					// <%%> detected
-					if (start < p)
-						addLiteralPart(LiteralType.TEXT, line.substring(start, p));
-					start = p + 4;
-				}
-				else
-				{
-					// <%% detected: print literal
-					addLiteralPart(LiteralType.TEXT, line.substring(start, p+2));
-					start = p + 3;
-				}
-			}
-			else
+			if (((p = line.indexOf(CspSymbols.hat, start)) != -1))
 			{
 				if (start < p)
 					addLiteralPart(LiteralType.TEXT, line.substring(start, p));
-
-				int q = line.indexOf(CspSymbols.exprEnd, p);
-
-				// code end signal not found
-				if (q == -1)
-					scanner.exception("closing '" + CspSymbols.exprEnd + "' not found");
-
-				// ignore empty code segments <%%>
-				if (q > p + 2)
+				
+				int nextChar = p + 1 < length ? line.charAt(p + 1) : -1;
+				if (nextChar == CspSymbols.hat)
 				{
-					// line end signal <%/%> found
-					if ((q == p + 3) && (line.charAt(p + 2) == '/'))
-					{
-						addLiteralPart(LiteralType.SKIPLN, "<%/%>");
-						return;
-					}
-
-					String snippetRaw  = line.substring(p, q + 2);
-					String snippetCode = line.substring(p +2, q).trim();
-
-					addLiteralPart(LiteralType.JAVA_EXPR, snippetRaw, snippetCode);
+					// ^^ detected: output a literal ^
+					addLiteralPart(LiteralType.TEXT, String.valueOf(CspSymbols.hat));
+					start = p + 2;
 				}
-				start = q + 2;
+				else if (nextChar == CspSymbols.noop)
+				{
+					// ^': produces not content, but useful at line start or to preserve lines
+					start = p + 2;
+				}
+				else
+					scanner.exception("not yet implemented");
 			}
+			else if (((p = line.indexOf(CspSymbols.exprStart, start)) != -1))
+			{
+				if (line.regionMatches(p, "<%%", 0, 3))
+				{
+					if ((p + 3 < length) && (line.charAt(p + 3) == '>'))
+					{
+						// <%%> detected
+						if (start < p)
+							addLiteralPart(LiteralType.TEXT, line.substring(start, p));
+						start = p + 4;
+					}
+					else
+					{
+						// <%% detected: print literal
+						addLiteralPart(LiteralType.TEXT, line.substring(start, p+2));
+						start = p + 3;
+					}
+				}
+				else
+				{
+					if (start < p)
+						addLiteralPart(LiteralType.TEXT, line.substring(start, p));
+	
+					int q = line.indexOf(CspSymbols.exprEnd, p);
+	
+					// code end signal not found
+					if (q == -1)
+						scanner.exception("closing '" + CspSymbols.exprEnd + "' not found");
+	
+					// ignore empty code segments <%%>
+					if (q > p + 2)
+					{
+						// line end signal <%/%> found
+						if ((q == p + 3) && (line.charAt(p + 2) == '/'))
+						{
+							addLiteralPart(LiteralType.SKIPLN, "<%/%>");
+							return;
+						}
+	
+						String snippetRaw  = line.substring(p, q + 2);
+						String snippetCode = line.substring(p +2, q).trim();
+	
+						addLiteralPart(LiteralType.JAVA_EXPR, snippetRaw, snippetCode);
+					}
+					start = q + 2;
+				}
+			}
+			else
+				break;
 		}
 		if (start < length)
 			addLiteralPart(LiteralType.TEXT, line.substring(start, length));

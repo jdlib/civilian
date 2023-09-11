@@ -13,4 +13,7 @@ public class CspSymbols
 	public static final String exprStartEscape = "%";
 	public static final String exprNoopSuffix = "%>";
 	public static final String exprEnd = "%>";
+	public static final char hat = '^';
+	public static final char noop = '\'';
 }
+

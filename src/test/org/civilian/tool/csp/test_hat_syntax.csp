@@ -1,0 +1,8 @@
+package test
+
+template
+{{
+	escaped hat: ^^...
+	^'
+	alpha^'beta	 
+}}

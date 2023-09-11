@@ -72,6 +72,12 @@ public class CspTest extends CivTest
 	}
 
 	
+	@Test public void testHatSyntax() throws Exception
+	{
+		assertCompile("test_hat_syntax");
+	}
+
+	
 	private void assertCompile(String testCase) throws Exception
 	{
 		String actual = compile(testCase);
