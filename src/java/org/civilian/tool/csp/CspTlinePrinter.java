@@ -4,7 +4,7 @@ package org.civilian.tool.csp;
 import java.util.List;
 
 import org.civilian.template.ComponentBuilder;
-import org.civilian.tool.csp.TemplateLine.LiteralPart;
+import org.civilian.tool.csp.CspTLineParser.LiteralPart;
 import org.civilian.util.Scanner;
 
 

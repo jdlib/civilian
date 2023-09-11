@@ -278,12 +278,6 @@ class CspParser
 	}
 	
 	
-	public void parseTemplateLine(TemplateLine tline)
-	{
-		tline.parse(scanner_);
-	}
-
-
 	private final Scanner scanner_;
 	private final ClassData classData_;
 	private final Map<String,MixinField> registeredMixins_;

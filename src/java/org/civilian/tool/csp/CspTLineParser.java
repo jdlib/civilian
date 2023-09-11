@@ -24,7 +24,7 @@ import org.civilian.util.Scanner;
 /**
  * Helper class to parse template lines
  */
-class TemplateLine
+class CspTLineParser
 {
 	public enum Type
 	{

@@ -27,8 +27,8 @@ import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
 import org.civilian.template.mixin.TableMixin;
-import org.civilian.tool.csp.TemplateLine.LiteralPart;
-import org.civilian.tool.csp.TemplateLine.LiteralType;
+import org.civilian.tool.csp.CspTLineParser.LiteralPart;
+import org.civilian.tool.csp.CspTLineParser.LiteralType;
 import org.civilian.tool.source.OutputFile;
 import org.civilian.tool.source.OutputLocation;
 import org.civilian.util.Arguments;
@@ -325,17 +325,17 @@ public class CspCompiler
 		ClassData classData = new ClassData(output.className);
 		classData.extendsClass = options_.extendsClass;
 
-		CspParser parser = new CspParser(scanner_, classData, registeredMixins_);
 		if (scanner_.nextKeyword("java"))
 		{
 			// pure java mode: csp file is essentially a Java class
 			// with template snippets
 			scanner_.nextLine();
-			compileJavaLines(parser, out);
+			compileJavaLines(out);
 		}
 		else
 		{
 			// csp mode: parse commands which describe the generated java class
+			CspParser parser = new CspParser(scanner_, classData, registeredMixins_);
 			parser.parsePackageCmd(templFile, output.assumedPackage);
 			parser.parseImportCmds();
 			parser.parsePrologCmds();
@@ -344,7 +344,7 @@ public class CspCompiler
 			CspClassPrinter printer = new CspClassPrinter(out, classData);
 			printer.printClassStart(templFile.getName(), options_.timestamp);
 
-			compileJavaLines(parser, out);
+			compileJavaLines(out);
 			
 			printer.printClassEnd();
 		}
@@ -361,13 +361,13 @@ public class CspCompiler
 	}
 
 
-	private void compileJavaLines(CspParser parser, SourceWriter out) throws CspException, IOException
+	private void compileJavaLines(SourceWriter out) throws CspException, IOException
 	{
 		while(!scanner_.isEOF())
 		{
 			String line = scanner_.getLine();
 			if (line.trim().equals(CspSymbols.START_TEMPLATE_SECTION))
-				compileTemplateLines(parser, out);
+				compileTemplateLines(out);
 			else
 				out.println(line);
 			scanner_.nextLine();
@@ -375,15 +375,15 @@ public class CspCompiler
 	}
 
 
-	private void compileTemplateLines(CspParser parser, SourceWriter out) throws CspException, IOException
+	private void compileTemplateLines(SourceWriter out) throws CspException, IOException
 	{
-		TemplateLine tline = new TemplateLine();
+		CspTLineParser parser = new CspTLineParser();
 
 		// current line is the template start "{{"
-		parser.parseTemplateLine(tline);
+		parser.parse(scanner_);
 		
 		int tabBase1 = out.getTabCount();
-		while(out.getTabCount() < tline.indent())
+		while(out.getTabCount() < parser.indent())
 			out.increaseTab();
 
 		int tabBase2 = out.getTabCount();
@@ -399,30 +399,30 @@ public class CspCompiler
 			if (!scanner_.nextLine())
 				scanner_.exception("template end '" + CspSymbols.END_TEMPLATE_SECTION + "' expected");
 
-			parser.parseTemplateLine(tline);
+			parser.parse(scanner_);
 			
-			if (CspSymbols.END_TEMPLATE_SECTION.equals(tline.content))
+			if (CspSymbols.END_TEMPLATE_SECTION.equals(parser.content))
 				break;
 
-			if (tline.type == TemplateLine.Type.EMPTY)
+			if (parser.type == CspTLineParser.Type.EMPTY)
 				out.println("out.println();");
 			else
 			{
 				if (block == null)
-					block = new Block(null, tline.indent());
-				block = adjustTemplateIndent(block, tline, out);
+					block = new Block(null, parser.indent());
+				block = adjustTemplateIndent(block, parser, out);
 				block.isCodeBlock = false;
 
-				if (tline.type == TemplateLine.Type.CODE)
+				if (parser.type == CspTLineParser.Type.CODE)
 				{
 					block.isCodeBlock = true;
-					printer.printCodeLine(tline.content, tline.original);
+					printer.printCodeLine(parser.content, parser.original);
 				}
-				else if (tline.type == TemplateLine.Type.LITERAL)
+				else if (parser.type == CspTLineParser.Type.LITERAL)
 				{
-					if (tline.literalParts.size() > 0)
+					if (parser.literalParts.size() > 0)
 					{
-						LiteralPart first = tline.literalParts.get(0);
+						LiteralPart first = parser.literalParts.get(0);
 						switch (first.type)
 						{
 							case COMPONENT:
@@ -438,25 +438,25 @@ public class CspCompiler
 								else
 								{
 									printer.printComponentStart(componentLevel, first.value, false, declare);
-									printer.printLiteralLine(tline.literalParts, 1, false);
+									printer.printLiteralLine(parser.literalParts, 1, false);
 									printer.printComponentEnd(componentLevel--, false, null);
 								}
 								break;
 							case COMPONENT_END:
 								if (componentLevel < 0)
 									scanner_.exception("unmatched component end");
-								printer.printComponentEnd(componentLevel--, true, tline.original);
+								printer.printComponentEnd(componentLevel--, true, parser.original);
 								break;
 							case JAVA_EXPR:
 							case SKIPLN:
 							case TEXT:
-								printer.printLiteralLine(tline.literalParts, 0, true);
+								printer.printLiteralLine(parser.literalParts, 0, true);
 								break;
 						}
 					}
 				}
 				else
-					scanner_.exception("unexpected line type " + tline.type);
+					scanner_.exception("unexpected line type " + parser.type);
 			}
 		}
 
@@ -468,26 +468,26 @@ public class CspCompiler
 	}
 
 
-	private Block adjustTemplateIndent(Block block, TemplateLine tline, SourceWriter out) throws CspException
+	private Block adjustTemplateIndent(Block block, CspTLineParser parser, SourceWriter out) throws CspException
 	{
-		if (tline.indent() == block.indent)
+		if (parser.indent() == block.indent)
 			return block;
-		if (tline.indent() > block.indent)
+		if (parser.indent() > block.indent)
 		{
 			if (block.isCodeBlock)
 				out.beginBlock();
 			else
 				out.println("out.increaseTab();") ;
-			block = new Block(block, tline.indent());
+			block = new Block(block, parser.indent());
 		}
 		else // (tline.indent < block.indent)
 		{
-			while(tline.indent() < block.indent)
+			while(parser.indent() < block.indent)
 			{
 				block = block.prev;
 				if (block == null)
 					scanner_.exception("end of template marker '{{' expected");
-				if (tline.indent() > block.indent)
+				if (parser.indent() > block.indent)
 					scanner_.exception("inconsistent indent");
 				if (block.isCodeBlock)
 					out.endBlock();
