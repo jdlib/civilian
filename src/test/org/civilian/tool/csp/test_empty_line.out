@@ -1,0 +1,24 @@
+/**
+ * Generated from test_empty_line.csp
+ * Do not edit.
+ */
+package test;
+
+
+public class Test_empty_line extends SuperTemplate
+{
+	public Test_empty_line(String name)
+	{
+		super(name);
+		this.name = name;
+	}
+
+
+	@Override protected void print() throws Exception
+	{
+		out.println();
+	}
+
+
+	protected String name;
+}

@@ -66,6 +66,12 @@ public class CspTest extends CivTest
 	}
 
 
+	@Test public void testEmptyLine() throws Exception
+	{
+		assertCompile("test_empty_line");
+	}
+
+	
 	private void assertCompile(String testCase) throws Exception
 	{
 		String actual = compile(testCase);

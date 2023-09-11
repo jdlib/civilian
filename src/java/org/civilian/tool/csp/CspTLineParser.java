@@ -171,6 +171,11 @@ class CspTLineParser
 		}
 		if (start < length)
 			addLiteralPart(LiteralType.TEXT, line.substring(start, length));
+		
+		if (literalParts.size() == 0)
+		{
+			type = Type.EMPTY;
+		}
 	}
 	
 	
