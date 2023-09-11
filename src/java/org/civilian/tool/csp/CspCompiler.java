@@ -27,6 +27,8 @@ import org.civilian.template.mixin.FormTableMixin;
 import org.civilian.template.mixin.HtmlMixin;
 import org.civilian.template.mixin.LangMixin;
 import org.civilian.template.mixin.TableMixin;
+import org.civilian.tool.csp.TemplateLine.LiteralPart;
+import org.civilian.tool.csp.TemplateLine.LiteralType;
 import org.civilian.tool.source.OutputFile;
 import org.civilian.tool.source.OutputLocation;
 import org.civilian.util.Arguments;
@@ -418,36 +420,40 @@ public class CspCompiler
 				}
 				else if (tline.type == TemplateLine.Type.LITERAL)
 				{
-					printer.printLiteralLine(tline.literalParts, 0, true);
-				}
-				else if (tline.type == TemplateLine.Type.COMPONENT_START)
-				{
-					boolean declare = false;
-					if (++componentLevel > maxCompLevel)
+					if (tline.literalParts.size() > 0)
 					{
-						maxCompLevel = componentLevel;
-						declare = true;
+						LiteralPart first = tline.literalParts.get(0);
+						switch (first.type)
+						{
+							case COMPONENT:
+							case COMPONENT_START:
+								boolean declare = false;
+								if (++componentLevel > maxCompLevel)
+								{
+									maxCompLevel = componentLevel;
+									declare = true;
+								}
+								if (first.type == LiteralType.COMPONENT_START)
+									printer.printComponentStart(componentLevel, first.value, true, declare);
+								else
+								{
+									printer.printComponentStart(componentLevel, first.value, false, declare);
+									printer.printLiteralLine(tline.literalParts, 1, false);
+									printer.printComponentEnd(componentLevel--, false, null);
+								}
+								break;
+							case COMPONENT_END:
+								if (componentLevel < 0)
+									scanner_.exception("unmatched component end");
+								printer.printComponentEnd(componentLevel--, true, tline.original);
+								break;
+							case JAVA_EXPR:
+							case SKIPLN:
+							case TEXT:
+								printer.printLiteralLine(tline.literalParts, 0, true);
+								break;
+						}
 					}
-
-					int p = tline.content.indexOf(']');
-
-					if (p < 0)
-					{
-						printer.printComponentStart(componentLevel, tline.content, true, declare);
-					}
-					else
-					{
-						String cbExpr = tline.content.substring(0, p).trim();
-						printer.printComponentStart(componentLevel, cbExpr, false, declare);
-						printer.printLiteralLine(tline.literalParts, 1, false);
-						printer.printComponentEnd(componentLevel--, false, null);
-					}
-				}
-				else if (tline.type == TemplateLine.Type.COMPONENT_END)
-				{
-					if (componentLevel < 0)
-						scanner_.exception("unmatched component end");
-					printer.printComponentEnd(componentLevel--, true, tline.original);
 				}
 				else
 					scanner_.exception("unexpected line type " + tline.type);

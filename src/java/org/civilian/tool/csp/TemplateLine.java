@@ -30,14 +30,7 @@ class TemplateLine
 	{
 		EMPTY,
 		CODE,
-		LITERAL,
-		COMPONENT_START,
-		COMPONENT_END;
-		
- 		private boolean hasLiteralContent()
-		{
-			return this == LITERAL || this == COMPONENT_START;
-		}
+		LITERAL;
 	}
 	
 	
@@ -80,64 +73,35 @@ class TemplateLine
 	}
 	
 
-	private void reset(String line)
-	{
-		this.original	= line;
-		this.content 	= "";
-		this.type 		= Type.EMPTY;
-		this.literalParts.clear();
-	}
-
-	
 	public void parse(Scanner scanner)
 	{
-		reset(scanner.getLine());
+		this.original = scanner.getLine();
+		this.literalParts.clear();
+		
 		indent_.parse(scanner);
 		if (scanner.hasMoreChars())
-			parseContent(scanner);
-	}
-	
-	
-	private void parseContent(Scanner scanner)
-	{
-		parseType(scanner);
-		if (type.hasLiteralContent())
-			parseLiteralContent(scanner);
-	}
-	
-	
-	private void parseType(Scanner scanner)
-	{
-		if (tryParseType(scanner, Type.CODE, CspSymbols.code))
-			return;
-		else if (tryParseType(scanner, Type.COMPONENT_START, CspSymbols.componentStart))
-			return;
-		else if (tryParseType(scanner, Type.COMPONENT_END, CspSymbols.componentEnd))
-			return;
-		else
 		{
-			type 	= Type.LITERAL;
+			type 	= parseStartSymbol(scanner, CspSymbols.code) ? Type.CODE : Type.LITERAL;
 			content = scanner.getRest().trim();
+			if (type == Type.LITERAL)
+				parseLiteralContent(scanner);
 		}
-	}
-	
-	
-	private boolean tryParseType(Scanner scanner, Type type, String symbol)
-	{
-		if (!scanner.next(symbol))
-			return false;
 		else
 		{
-			this.type = !scanner.hasNext(symbol) ? type : Type.LITERAL;
-			this.content = scanner.getRest();
-			return true;
+			type  	= Type.EMPTY;
+			content = "";
 		}
 	}
 	
 	
 	private void parseLiteralContent(Scanner scanner) 
 	{
-		if (type == Type.COMPONENT_START)
+		if (parseStartSymbol(scanner, CspSymbols.componentEnd))
+		{
+			addLiteralPart(LiteralType.COMPONENT_END, CspSymbols.componentEnd);
+			return;
+		}
+		if (parseStartSymbol(scanner, CspSymbols.componentStart))
 		{
 			int pEnd = scanner.indexOf(CspSymbols.componentEnd);
 			if (pEnd < 0)
@@ -220,6 +184,17 @@ class TemplateLine
 	private void addLiteralPart(LiteralType type, String rawValue, String value)
 	{
 		literalParts.add(new LiteralPart(type, rawValue, value));
+	}
+	
+	
+	/**
+	 * Tests if the line starts with the given symbol and consumes it if so.
+	 * But if the symbol is repeated twice it means that it should not act as a start symbol
+	 * but should be printed literally.
+	 */
+	private boolean parseStartSymbol(Scanner scanner, String symbol)
+	{
+		return scanner.next(symbol) && !scanner.hasNext(symbol);
 	}
 	
 	
