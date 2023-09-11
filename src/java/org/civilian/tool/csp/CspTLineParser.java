@@ -120,53 +120,60 @@ class CspTLineParser
 		String line = scanner.getRest().trim();
 		int length = line.length();
 		int start = 0;
-		int p = 0;
 
 		while(start < length)
 		{
-			if (((p = line.indexOf(CspSymbols.hat, start)) != -1))
+			int pHat = line.indexOf(CspSymbols.hat, start);
+			int pLtPercent = line.indexOf(CspSymbols.exprStart, start);
+			if ((pHat != -1) && (pLtPercent != -1))
 			{
-				if (start < p)
-					addLiteralPart(LiteralType.TEXT, line.substring(start, p));
+				if (pHat < pLtPercent)
+					pLtPercent = -1;
+				else
+					pHat = -1;
+			}
+			
+			if (pHat >= 0)
+			{
+				if (start < pHat)
+					addLiteralPart(LiteralType.TEXT, line.substring(start, pHat));
 				
-				int nextChar = p + 1 < length ? line.charAt(p + 1) : -1;
+				int nextChar = pHat + 1 < length ? line.charAt(pHat + 1) : -1;
 				if (nextChar == CspSymbols.hat)
 				{
 					// ^^ detected: output a literal ^
-					addLiteralPart(LiteralType.TEXT, String.valueOf(CspSymbols.hat));
-					start = p + 2;
+					addLiteralPart(LiteralType.TEXT, CspSymbols.hatString);
+					start = pHat + 2;
 				}
 				else if (nextChar == CspSymbols.noop)
 				{
 					// ^': produces not content, but useful at line start or to preserve lines
-					start = p + 2;
+					start = pHat + 2;
+				}
+				else if (nextChar == CspSymbols.skipln)
+				{
+					// ^\: skip println, ignore rest of line
+					addLiteralPart(LiteralType.SKIPLN, CspSymbols.hatString + CspSymbols.skipln);
+					return;
 				}
 				else
 					scanner.exception("not yet implemented");
 			}
-			else if (((p = line.indexOf(CspSymbols.exprStart, start)) != -1))
+			else if (pLtPercent >= 0)
 			{
-				if (start < p)
-					addLiteralPart(LiteralType.TEXT, line.substring(start, p));
+				if (start < pLtPercent)
+					addLiteralPart(LiteralType.TEXT, line.substring(start, pLtPercent));
 
-				int q = line.indexOf(CspSymbols.exprEnd, p);
+				int q = line.indexOf(CspSymbols.exprEnd, pLtPercent);
 
 				// code end signal not found
 				if (q == -1)
 					scanner.exception("closing '" + CspSymbols.exprEnd + "' not found");
 
-				// ignore empty code segments <%%>
-				if (q > p + 2)
+				if (q > pLtPercent + 2)
 				{
-					// line end signal <%/%> found
-					if ((q == p + 3) && (line.charAt(p + 2) == '/'))
-					{
-						addLiteralPart(LiteralType.SKIPLN, "<%/%>");
-						return;
-					}
-
-					String snippetRaw  = line.substring(p, q + 2);
-					String snippetCode = line.substring(p +2, q).trim();
+					String snippetRaw  = line.substring(pLtPercent, q + 2);
+					String snippetCode = line.substring(pLtPercent + 2, q).trim();
 
 					addLiteralPart(LiteralType.JAVA_EXPR, snippetRaw, snippetCode);
 				}

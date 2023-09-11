@@ -20,7 +20,7 @@ template mixin lang, html
 
 private void link(String url, String text)
 {{
-	<b><a href="<%url%>" target="_blank"><%text%></a></b><%/%>
+	<b><a href="<%url%>" target="_blank"><%text%></a></b>^\
 }}
 
 

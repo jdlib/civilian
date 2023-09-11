@@ -51,9 +51,9 @@ private void printResourceClass(ResourceInfo info)
 		{
 			@String thisRes = hasController ? "this" : "this.resource_"; 
 			@if (hasController)
-				super<%/%>
+				super^\
 			@else
-				<%thisRes%> = new <%Resource.class.getName()%><%/%>
+				<%thisRes%> = new <%Resource.class.getName()%>^\
 			(<%printCtorArgs(info, "parent");%>);
 			@if (hasController)
 				@printSetCtrlSeg(info);
@@ -62,7 +62,7 @@ private void printResourceClass(ResourceInfo info)
 			@for (int i=0; i<childCount; i++)
 				@ResourceInfo child = info.getChild(i);
 				@String field = getJavaField(child);
-				this.<%field%> = new <%/%>
+				this.<%field%> = new ^\
 				@if (child.getChildCount() == 0)
 					<%Resource.class.getName()%>(<%printCtorArgs(child, thisRes);%>);
 					@if (child.getControllerSignature() != null)
@@ -114,11 +114,11 @@ private void printResourceComment(ResourceInfo resInfo)
 private void printCtorArgs(ResourceInfo info, String parent)
 {{
 	@if (!info.isRoot())
-		<%parent%>, <%/%> 
+		<%parent%>, ^\ 
 		@if (info.getSegment() != null)
-			"<%info.getSegment()%>"<%/%>
+			"<%info.getSegment()%>"^\
 		@else
-			<%pathParamConst(info.getPathParam())%><%/%>
+			<%pathParamConst(info.getPathParam())%>^\
 }}
 
 
@@ -128,11 +128,11 @@ private void printSetCtrlSeg(ResourceInfo info)
 	@String packageName = ClassUtil.getPackageName(sig.getClassName());
 	@String simpleName  = ClassUtil.cutPackageName(sig.getClassName());
 	@String packagePart = packageName.substring(ctrlRootPackage_.length());
-	setData(sig(<%stringArg(packagePart)%>, <%stringArg(simpleName)%>)<%/%>
+	setData(sig(<%stringArg(packagePart)%>, <%stringArg(simpleName)%>)^\
 	@if (sig.getMethodSegment() != null)
-		.withMethodSegment("<%sig.getMethodSegment()%>")<%/%>
+		.withMethodSegment("<%sig.getMethodSegment()%>")^\
 	@else if (sig.getMethodPathParam() != null)
-		.withMethodPathParam(<%pathParamConst(sig.getMethodPathParam())%><%/%>
+		.withMethodPathParam(<%pathParamConst(sig.getMethodPathParam())%>^\
 	);
 }}
 

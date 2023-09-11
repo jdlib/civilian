@@ -36,33 +36,33 @@ private void printResourceClass(Resource resource)
 	@boolean hasController = resource.getData() != null;
 	public<%?!isRoot%> static<%?%> class <%className%><%?hasController%> extends <%WEBRESOURCE%><%?%> 
 	{
-		public <%className%><%/%>
+		public <%className%>^\
 		@if (isRoot)
 			(String url)
 		@else
 			(<%WEBRESOURCE%> parent)
 		{
 			@if (hasController)
-				super<%/%>
+				super^\
 			@else
-				this.resource_ = new <%WEBRESOURCE%><%/%>
+				this.resource_ = new <%WEBRESOURCE%>^\
 			(<%printCtorArgs(resource, "parent");%>);
 			
 			@// print field definitions
 			@for (Resource child : resource.children())
 				@boolean childHasController = child.getData() != null;
 				@if (!hasController)
-					this.resource_.<%/%> 
-				addChild(<%/%>
+					this.resource_.^\ 
+				addChild(^\
 				@if (!childHasController)
-					(<%/%>
-				this.<%buildFieldName(child)%> = new <%/%>
+					(^\
+				this.<%buildFieldName(child)%> = new ^\
 				@if (child.getChildCount() == 0)
-					<%WEBRESOURCE%>(<%printCtorArgs(child, hasController ? "this" : "this.resource_");%>)<%/%>
+					<%WEBRESOURCE%>(<%printCtorArgs(child, hasController ? "this" : "this.resource_");%>)^\
 				@else
-					<%buildClassName(child)%>(this)<%/%>
+					<%buildClassName(child)%>(this)^\
 				@if (!childHasController)
-					).resource_<%/%>
+					).resource_^\
 				);
 		}
 		@// print field declarations
@@ -93,13 +93,13 @@ private void printResourceComment(Resource resource)
 private void printCtorArgs(Resource resource, String parent)
 {{
 	@if (!resource.isRoot())
-		<%parent%>, <%/%> 
+		<%parent%>, ^\ 
 		@if (resource.getSegment() != null)
-			"<%resource.getSegment()%>"<%/%>
+			"<%resource.getSegment()%>"^\
 		@else
-			<%app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())%><%/%>
+			<%app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())%>^\
 	@else
-		url<%/%>
+		url^\
 }}
 
 

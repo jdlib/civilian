@@ -262,6 +262,7 @@
 	
 	
  	<target name="_cspcompile.run">
+ 		<echo>running csp compiler on ${csp.src}</echo> 
 		<java classname="org.civilian.tool.csp.CspCompiler" classpath="${build.bin.java}">
 			<arg value="${csp.force}"/>
 			<arg line="-v 1"/>

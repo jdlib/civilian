@@ -57,9 +57,9 @@ private void printNav(String file, String text)
 
 private void printTitle()
 {{
-	Civilian<%/%>
+	Civilian^\
 	@String file = StringUtil.cutRight(inputFile, ".html");
 	@if (!"index".equals(file))
 		@for (String part : file.split("-"))
-			^' - <%StringUtil.startUpperCase(part)%><%/%>
+			^' - <%StringUtil.startUpperCase(part)%>^\
 }}

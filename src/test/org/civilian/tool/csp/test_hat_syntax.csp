@@ -1,8 +1,10 @@
 package test
 
-template
+template(String name)
 {{
 	escaped hat: ^^...
 	^'
-	alpha^'beta	 
+	alpha^'beta
+	skipln^\ignored
+	^' mixed <%name%>^\
 }}

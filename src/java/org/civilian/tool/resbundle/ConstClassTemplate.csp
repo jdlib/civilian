@@ -35,13 +35,13 @@ template(ResBundleCompiler.Config config, String packageName, LocalDateTime gene
 			@String constantName = getConstantName(id, usedConstants);
 			@if (constantName != null)
 				@if (config.javadoc)
-					/**<%/%>
+					/**^\
 					@for (String lang : t.lang)
-						^' "<%lang%>"<%/%>
+						^' "<%lang%>"^\
 					*/
-				public static final <%idClassSimple%> <%constantName%><%/%>
+				public static final <%idClassSimple%> <%constantName%>^\
 				@for (int i=id.length(); i<=20; i++)
-					^' <%/%>
+					^' ^\
 				^' = <%?hasIdClass%>new <%idClassSimple%>(<%?%>"<%escapeId(id)%>"<%?hasIdClass%>)<%?%>;
 		@if (config.inlineIdClass)
 			^'	

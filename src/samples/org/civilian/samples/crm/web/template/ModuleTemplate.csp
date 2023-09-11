@@ -23,8 +23,8 @@ template(Template detailTemplate)
 
 private void printToolbarButton(String ngClick, String disabled, String icon)
 {{
-	<button class="btn" ng-click="<%ngClick%>"<%/%>
+	<button class="btn" ng-click="<%ngClick%>"^\
 	@if (disabled != null)
-		^' ng-disabled="<%disabled%>"<%/%>
+		^' ng-disabled="<%disabled%>"^\
 	><i class="icon-<%icon%>"></i></button>
 }}
