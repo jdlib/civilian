@@ -207,7 +207,6 @@ class CspTLineParser
 					}
 					else if (snippetCode.endsWith(";"))
 					{
-						snippetCode = StringUtil.cutRight(snippetCode, ";");
 						type = LiteralType.JAVA_STATEMENT;
 					}
 					else
