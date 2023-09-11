@@ -10,10 +10,10 @@ template(Resource root, String outputPackage, String outputName, Application app
 	extends - 
 	throws -
 {{
-	<%%>/**
-	<%%> * Generated <%?timestamp%>at <%LocalDateTime.now()%> <%?%>by <%ClientConstGenerator.class.getName()%>.
-	<%%> * Do not edit.
-	<%%> */
+	^'/**
+	^' * Generated <%?timestamp%>at <%LocalDateTime.now()%> <%?%>by <%ClientConstGenerator.class.getName()%>.
+	^' * Do not edit.
+	^' */
 	package <%outputPackage%>;
 	
 	
@@ -28,8 +28,8 @@ private void printResourceClass(Resource resource)
 {{
 	@if (!resource.isRoot())
 		@// two line spacer
-		<%%>
-		<%%>
+		^'
+		^'
 	@printResourceComment(resource);
 	@boolean isRoot        = resource.isRoot(); 
 	@String className      = isRoot ? outputName : buildClassName(resource);
@@ -67,14 +67,14 @@ private void printResourceClass(Resource resource)
 		}
 		@// print field declarations
 		@for (Resource child : resource.children())
-			<%%>
+			^'
 			@printResourceComment(child);
 			public final <%child.getChildCount() > 0 ? buildClassName(child) : WEBRESOURCE%> <%buildFieldName(child)%>;
 		@for (Resource child : resource.children())
 			@if (child.getChildCount() > 0)
 				@printResourceClass(child);
 		@if (!hasController)
-			<%%>
+			^'
 			// hidden since not mapped to a controller
 			private final <%WEBRESOURCE%> resource_;
 	}
@@ -84,9 +84,9 @@ private void printResourceClass(Resource resource)
 
 private void printResourceComment(Resource resource)
 {{
-	<%%>/**
-	<%%> * Resource "<%resource%>"<%?resource.isRoot()%> of application <%app.getClass().getName()%><%?%>. 
-	<%%> */ 
+	^'/**
+	^' * Resource "<%resource%>"<%?resource.isRoot()%> of application <%app.getClass().getName()%><%?%>. 
+	^' */ 
 }}
 
 

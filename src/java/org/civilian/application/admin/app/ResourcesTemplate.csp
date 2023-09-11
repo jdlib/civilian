@@ -13,7 +13,7 @@ mixin html
 			@if (rootRes != null)
 				@for (Resource descendant : rootRes.tree())
 					@printControllerEntry(descendant);				
-		<%%>];
+		^'];
 		
 		$scope.showDetails = function(resource) {
 			if (!resource.details) {

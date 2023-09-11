@@ -61,5 +61,5 @@ private void printTitle()
 	@String file = StringUtil.cutRight(inputFile, ".html");
 	@if (!"index".equals(file))
 		@for (String part : file.split("-"))
-			<%%> - <%StringUtil.startUpperCase(part)%><%/%>
+			^' - <%StringUtil.startUpperCase(part)%><%/%>
 }}

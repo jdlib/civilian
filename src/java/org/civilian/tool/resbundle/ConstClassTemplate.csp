@@ -15,16 +15,16 @@ template(ResBundleCompiler.Config config, String packageName, LocalDateTime gene
 	@HashSet<String> usedConstants = new HashSet<>();
 	@//
 	package <%packageName%>;
-	<%%>	
-	<%%>	
+	^'	
+	^'	
 	@if (hasIdClass && !config.inlineIdClass)
 		import <%config.idClass%>;
-		<%%>	
-		<%%>	
-	<%%>/**
-	<%%> * Contains constants for resource bundle ids in <%config.excelFile.getName()%>.
-	<%%> * Generated at <%generationTime%>. Do not edit directly.
-	<%%> */
+		^'	
+		^'	
+	^'/**
+	^' * Contains constants for resource bundle ids in <%config.excelFile.getName()%>.
+	^' * Generated at <%generationTime%>. Do not edit directly.
+	^' */
 	public interface <%config.constClass%>
 	{
 		@for (Translation t : translations)
@@ -37,15 +37,15 @@ template(ResBundleCompiler.Config config, String packageName, LocalDateTime gene
 				@if (config.javadoc)
 					/**<%/%>
 					@for (String lang : t.lang)
-						<%%> "<%lang%>"<%/%>
+						^' "<%lang%>"<%/%>
 					*/
 				public static final <%idClassSimple%> <%constantName%><%/%>
 				@for (int i=id.length(); i<=20; i++)
-					<%%> <%/%>
-				<%%> = <%?hasIdClass%>new <%idClassSimple%>(<%?%>"<%escapeId(id)%>"<%?hasIdClass%>)<%?%>;
+					^' <%/%>
+				^' = <%?hasIdClass%>new <%idClassSimple%>(<%?%>"<%escapeId(id)%>"<%?hasIdClass%>)<%?%>;
 		@if (config.inlineIdClass)
-			<%%>	
-			<%%>	
+			^'	
+			^'	
 			public static class <%idClassSimple%> implements CharSequence
 			{
 				public <%idClassSimple%>(String value)

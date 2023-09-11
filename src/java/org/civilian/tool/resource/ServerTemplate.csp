@@ -14,19 +14,19 @@ template(ResourceInfo root, String outputPackage, String outputName, Application
 	throws -
 {{
 	@ctrlRootPackage_ = app.getControllerConfig().getRootPackage();
-	<%%>/**
-	<%%> * Generated <%?timestamp%>at <%LocalDateTime.now()%> <%?%>by <%ServerConstGenerator.class.getName()%>.
-	<%%> * Do not edit.
-	<%%> */
+	^'/**
+	^' * Generated <%?timestamp%>at <%LocalDateTime.now()%> <%?%>by <%ServerConstGenerator.class.getName()%>.
+	^' * Do not edit.
+	^' */
 	package <%outputPackage%>;
 	
 
 	import <%ControllerSignature.class.getName()%>;
 	
 		
-	<%%>/**
-	<%%> * Defines the resources of application <%app.getClass().getName()%>.
-	<%%> */	
+	^'/**
+	^' * Defines the resources of application <%app.getClass().getName()%>.
+	^' */	
 	public interface <%outputName%>
 	{
 		@printResourceComment(root);
@@ -71,19 +71,19 @@ private void printResourceClass(ResourceInfo info)
 					<%getJavaClass(child)%>(<%thisRes%>);
 		}
 		@if (!hasController && info.isRoot())
-			<%%>
+			^'
 			public <%Resource.class.getName()%> getResource() 			
 			{
 				return resource_;
 			}
 		@// print field declarations
 		@for (int i=0; i<childCount; i++)
-			<%%>
+			^'
 			@ResourceInfo child = info.getChild(i);
 			@printResourceComment(child);
 			public final <%child.getChildCount() > 0 ? getJavaClass(child) : Resource.class.getName()%> <%getJavaField(child)%>;
 		@if (!hasController)
-			<%%>
+			^'
 			// hidden since not mapped to a controller
 			private final <%Resource.class.getName()%> resource_;
 		@for (int i=0; i<childCount; i++)
@@ -91,8 +91,8 @@ private void printResourceClass(ResourceInfo info)
 			@if (child.getChildCount() > 0)
 				@printResourceClass(child);
 		@if (info.isRoot())
-			<%%>
-			<%%>
+			^'
+			^'
 			private static ControllerSignature sig(String subPackage, String className)
 			{
 				return new ControllerSignature("<%ctrlRootPackage_%>" + subPackage + '.' + className);
@@ -105,9 +105,9 @@ private void printResourceClass(ResourceInfo info)
 private void printResourceComment(ResourceInfo resInfo)
 {{
 	@ControllerSignature ctrlSig = resInfo.getControllerSignature();
-	<%%>/**
-	<%%> * "<%resInfo%>"<%?ctrlSig != null%> = <%ctrlSig%><%?%>
-	<%%> */ 
+	^'/**
+	^' * "<%resInfo%>"<%?ctrlSig != null%> = <%ctrlSig%><%?%>
+	^' */ 
 }}
 
 

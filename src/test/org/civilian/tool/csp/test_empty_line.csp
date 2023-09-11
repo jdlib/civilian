@@ -2,8 +2,8 @@ package test
 
 template(String name) extends SuperTemplate(name)
 {{
-	<%%>
+	^'
 	@if (true)
-		<%%>
+		^'
 		Hello
 }}
