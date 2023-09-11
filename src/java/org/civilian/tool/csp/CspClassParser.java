@@ -13,9 +13,9 @@ import org.civilian.util.Scanner;
 import org.civilian.util.StringUtil;
 
 
-class CspParser 
+class CspClassParser 
 {
-	public CspParser(Scanner scanner, ClassData classData, Map<String,MixinField> registeredMixins)
+	public CspClassParser(Scanner scanner, ClassData classData, Map<String,MixinField> registeredMixins)
 	{
 		scanner_ 			= Check.notNull(scanner, "scanner");
 		classData_ 			= Check.notNull(classData, "classData");

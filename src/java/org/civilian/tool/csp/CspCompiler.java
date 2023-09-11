@@ -335,7 +335,7 @@ public class CspCompiler
 		else
 		{
 			// csp mode: parse commands which describe the generated java class
-			CspParser parser = new CspParser(scanner_, classData, registeredMixins_);
+			CspClassParser parser = new CspClassParser(scanner_, classData, registeredMixins_);
 			parser.parsePackageCmd(templFile, output.assumedPackage);
 			parser.parseImportCmds();
 			parser.parsePrologCmds();
