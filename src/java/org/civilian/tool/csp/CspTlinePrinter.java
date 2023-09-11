@@ -73,13 +73,13 @@ class CspTlinePrinter
 					throw new IllegalStateException();
 				case JAVA_EXPR:
 					lastPartWasCode = true;
-					printTemplateSnippet(part.rawValue, part.value);
+					printLiteralCode(part.rawValue, part.value);
 					break;
 				case SKIPLN:
 					return;
 				case TEXT:
 					textPrintln = usePrintln && (i == size - 1);
-					printTemplateText(part.value, textPrintln);
+					printLiteralText(part.value, textPrintln);
 					break;
 			}
 		}
@@ -99,7 +99,7 @@ class CspTlinePrinter
 	 * @param raw the snippet included the start and end symbol.
 	 * @param code the code content with the symbols and trimmed.
 	 */
-	private void printTemplateSnippet(String raw, String code) throws CspException
+	private void printLiteralCode(String raw, String code) throws CspException
 	{
 		if (code.charAt(0) == '?')
 		{
@@ -129,7 +129,7 @@ class CspTlinePrinter
 	}
 
 	
-	private void printTemplateText(String text, boolean usePrintln)
+	private void printLiteralText(String text, boolean usePrintln)
 	{
 		out.print(usePrintln ? "out.println(\"" : "out.print(\"");
 		int length = text.length();
