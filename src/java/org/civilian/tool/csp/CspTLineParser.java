@@ -106,12 +106,12 @@ class CspTLineParser
 			int pEnd = scanner.indexOf(CspSymbols.componentEnd);
 			if (pEnd < 0)
 			{
-				addLiteralPart(LiteralType.COMPONENT_START, scanner.getRest());
+				addLiteralPart(LiteralType.COMPONENT_START, scanner.getRest().trim());
 				return;
 			}
 			else
 			{
-				String component = scanner.consumeUpto(pEnd);
+				String component = scanner.consumeUpto(pEnd).trim();
 				scanner.skip(CspSymbols.componentEnd.length());
 				addLiteralPart(LiteralType.COMPONENT, component, component);
 			}
