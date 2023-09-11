@@ -18,7 +18,9 @@ package org.civilian.tool.csp;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.civilian.util.Scanner;
+import org.civilian.util.StringUtil;
 
 
 /**
@@ -37,7 +39,10 @@ class CspTLineParser
 	public enum LiteralType
 	{
 		TEXT,
-		JAVA_EXPR,
+		JAVA_EXPRESSION,
+		JAVA_STATEMENT,
+		JAVA_CONDITION_START,
+		JAVA_CONDITION_END,
 		SKIPLN,
 		COMPONENT,
 		COMPONENT_START,
@@ -67,24 +72,30 @@ class CspTLineParser
 	}
 	
 	
+	public CspTLineParser(Scanner scanner)
+	{
+		scanner_ = scanner;
+	}
+	
+	
 	public int indent()
 	{
 		return indent_.count;
 	}
 	
 
-	public void parse(Scanner scanner)
+	public void parse()
 	{
-		this.original = scanner.getLine();
+		this.original = scanner_.getLine();
 		this.literalParts.clear();
 		
-		indent_.parse(scanner);
-		if (scanner.hasMoreChars())
+		indent_.parse(scanner_);
+		if (scanner_.hasMoreChars())
 		{
-			type 	= parseStartSymbol(scanner, CspSymbols.code) ? Type.CODE : Type.LITERAL;
-			content = scanner.getRest().trim();
+			type 	= parseStartSymbol(CspSymbols.code) ? Type.CODE : Type.LITERAL;
+			content = scanner_.getRest().trim();
 			if (type == Type.LITERAL)
-				parseLiteralContent(scanner);
+				parseLiteralLine();
 		}
 		else
 		{
@@ -94,30 +105,35 @@ class CspTLineParser
 	}
 	
 	
-	private void parseLiteralContent(Scanner scanner) 
+	private void parseLiteralLine() 
 	{
-		if (parseStartSymbol(scanner, CspSymbols.componentEnd))
+		if (parseStartSymbol(CspSymbols.componentEnd))
 		{
 			addLiteralPart(LiteralType.COMPONENT_END, CspSymbols.componentEnd);
 			return;
 		}
-		if (parseStartSymbol(scanner, CspSymbols.componentStart))
+		if (parseStartSymbol(CspSymbols.componentStart))
 		{
-			int pEnd = scanner.indexOf(CspSymbols.componentEnd);
+			int pEnd = scanner_.indexOf(CspSymbols.componentEnd);
 			if (pEnd < 0)
 			{
-				addLiteralPart(LiteralType.COMPONENT_START, scanner.getRest().trim());
+				addLiteralPart(LiteralType.COMPONENT_START, scanner_.getRest().trim());
 				return;
 			}
 			else
 			{
-				String component = scanner.consumeUpto(pEnd).trim();
-				scanner.skip(CspSymbols.componentEnd.length());
+				String component = scanner_.consumeUpto(pEnd).trim();
+				scanner_.skip(CspSymbols.componentEnd.length());
 				addLiteralPart(LiteralType.COMPONENT, component, component);
 			}
 		}
 		
-		String line = scanner.getRest().trim();
+		parseLiteralParts(scanner_.getRest().trim());
+	}
+	
+	
+	private void parseLiteralParts(String line)
+	{
 		int length = line.length();
 		int start = 0;
 
@@ -157,7 +173,11 @@ class CspTLineParser
 					return;
 				}
 				else
-					scanner.exception("not yet implemented");
+				{
+					// (^<name> | ^<name>? | ^{<expr>} | ^{<expr?} | ^{stmt;}
+					start = parseCodeSnippet(line, start + 1);
+					scanner_.exception("not yet implemented");
+				}
 			}
 			else if (pLtPercent >= 0)
 			{
@@ -168,14 +188,32 @@ class CspTLineParser
 
 				// code end signal not found
 				if (q == -1)
-					scanner.exception("closing '" + CspSymbols.exprEnd + "' not found");
+					scanner_.exception("closing '" + CspSymbols.exprEnd + "' not found");
 
 				if (q > pLtPercent + 2)
 				{
 					String snippetRaw  = line.substring(pLtPercent, q + 2);
 					String snippetCode = line.substring(pLtPercent + 2, q).trim();
+					LiteralType type;
+					if (snippetCode.startsWith("?"))
+					{
+						if (snippetCode.length() != 1)
+						{
+							type = LiteralType.JAVA_CONDITION_START;
+							snippetCode = snippetCode.substring(1).trim(); 
+						}
+						else
+							type = LiteralType.JAVA_CONDITION_END;
+					}
+					else if (snippetCode.endsWith(";"))
+					{
+						snippetCode = StringUtil.cutRight(snippetCode, ";");
+						type = LiteralType.JAVA_STATEMENT;
+					}
+					else
+						type = LiteralType.JAVA_EXPRESSION;
 
-					addLiteralPart(LiteralType.JAVA_EXPR, snippetRaw, snippetCode);
+					addLiteralPart(type, snippetRaw, snippetCode);
 				}
 				start = q + 2;
 			}
@@ -186,6 +224,51 @@ class CspTLineParser
 			addLiteralPart(LiteralType.TEXT, line.substring(start, length));
 	}
 	
+	
+	/**
+	 * Parse (^<name> | ^<name>? | ^{<expr>} | ^{<expr?} | ^{stmt;}
+	 * The leading ^ symbol has already been consumed
+	 * @param line 
+	 * @param start
+	 * @return the next start
+	 */
+	private int parseCodeSnippet(String line, int start)
+	{
+		Scanner sc = new Scanner(line, start);
+		sc.autoSkipWhitespace(false);
+		String snippet;
+		boolean allowStmt;
+		if (sc.next("{"))
+		{
+			snippet = StringUtil.norm(sc.consumeUpto("}", false, true, true));
+			if (snippet == null)
+				scanner_.exception("missing closing '}' at '" + line + "'");
+			allowStmt = true;
+		}
+		else
+		{
+			snippet = sc.consumeIdentifier();
+			if (snippet == null)
+				scanner_.exception("no valid Java identifier found at '" + line + "'");
+			allowStmt = false;
+		}
+		
+		if (allowStmt && snippet.endsWith(";"))
+		{
+			addLiteralPart(LiteralType.JAVA_STATEMENT, snippet);
+			return sc.getPos();
+		}
+		else if (snippet.endsWith("?"))
+		{
+			snippet = StringUtil.cutRight(snippet, "?");
+			throw new Error("y");
+		}
+		else
+		{
+			addLiteralPart(LiteralType.JAVA_EXPRESSION, snippet);
+			return sc.getPos();
+		}
+	}
 	
 	
 	private void addLiteralPart(LiteralType type, String value)
@@ -205,9 +288,9 @@ class CspTLineParser
 	 * But if the symbol is repeated twice it means that it should not act as a start symbol
 	 * but should be printed literally.
 	 */
-	private boolean parseStartSymbol(Scanner scanner, String symbol)
+	private boolean parseStartSymbol(String symbol)
 	{
-		return scanner.next(symbol) && !scanner.hasNext(symbol);
+		return scanner_.next(symbol) && !scanner_.hasNext(symbol);
 	}
 	
 	
@@ -215,5 +298,6 @@ class CspTLineParser
 	public String content;
 	public String original;
 	public final List<LiteralPart> literalParts = new ArrayList<>();
+	private final Scanner scanner_;
 	private final CspIndent indent_ = new CspIndent();
 }

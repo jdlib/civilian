@@ -71,9 +71,12 @@ class CspTlinePrinter
 				case COMPONENT_END:
 				case COMPONENT_START:
 					throw new IllegalStateException();
-				case JAVA_EXPR:
+				case JAVA_EXPRESSION:
+				case JAVA_STATEMENT:
+				case JAVA_CONDITION_START:
+				case JAVA_CONDITION_END:
 					lastPartWasCode = true;
-					printLiteralCode(part.rawValue, part.value);
+					printLiteralCode(part);
 					break;
 				case SKIPLN:
 					return;
@@ -99,32 +102,32 @@ class CspTlinePrinter
 	 * @param raw the snippet included the start and end symbol.
 	 * @param code the code content with the symbols and trimmed.
 	 */
-	private void printLiteralCode(String raw, String code) throws CspException
+	private void printLiteralCode(LiteralPart part) throws CspException
 	{
-		if (code.charAt(0) == '?')
+		switch(part.type)
 		{
-			if (code.length() != 1)
-			{
+			case JAVA_EXPRESSION:
+				out.print("out.print(");
+				out.print(part.value);
+				out.print(");");
+				printSrcCommentln(part.rawValue);
+				break;
+			case JAVA_STATEMENT:
+				out.print(part.value);
+				printSrcCommentln(part.rawValue);
+				break;
+			case JAVA_CONDITION_START:
 				out.print("if (");
-				out.print(code.substring(1).trim());
+				out.print(part.value);
 				out.print(")");
-				printSrcCommentln(raw);
+				printSrcCommentln(part.rawValue);
 				out.beginBlock();
-			}
-			else
+				break;
+			case JAVA_CONDITION_END:
 				out.endBlock();
-		}
-		else if (code.endsWith(";"))
-		{
-			out.print(code);
-			printSrcCommentln(raw);
-		}
-		else
-		{
-			out.print("out.print(");
-			out.print(code);
-			out.print(");");
-			printSrcCommentln(raw);
+				break;
+			default:
+				throw new IllegalArgumentException("invalid " + part.type);
 		}
 	}
 

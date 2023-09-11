@@ -17,5 +17,6 @@ public class CspSymbols
 	public static final String hatString = String.valueOf(hat);
 	public static final char noop = '\'';
 	public static final char skipln = '\\';
+	public static final char conditional = '?';
 }
 

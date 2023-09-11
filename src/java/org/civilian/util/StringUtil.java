@@ -251,4 +251,12 @@ public abstract class StringUtil
 	{
 		return (s == null) || (s.length() == 0);
 	}
+	
+	
+	public static String norm(String s)
+	{
+		if (s != null)
+			s = s.trim();
+		return isBlank(s) ? null : s;
+	}
 }

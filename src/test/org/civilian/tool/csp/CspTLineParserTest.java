@@ -23,8 +23,8 @@ import org.civilian.util.Scanner;
 
 public class CspTLineParserTest extends CivTest
 {
-	private final CspTLineParser line = new CspTLineParser();
 	private final Scanner scanner = new Scanner();
+	private final CspTLineParser parser = new CspTLineParser(scanner);
 	
 	
 	@Test public void test()
@@ -33,7 +33,7 @@ public class CspTLineParserTest extends CivTest
 		assertParseFail(" \tx", "template indent may not contain a mix of tab and space chars: line uses a space indent character, but previous lines used tab characters");
 		
 		parse("@@test");
-		assertEquals(CspTLineParser.Type.LITERAL, line.type);
+		assertEquals(CspTLineParser.Type.LITERAL, parser.type);
 	}
 	
 	
@@ -54,6 +54,6 @@ public class CspTLineParserTest extends CivTest
 	private void parse(String s)
 	{
 		scanner.init(s);
-		line.parse(scanner);
+		parser.parse();
 	}
 }

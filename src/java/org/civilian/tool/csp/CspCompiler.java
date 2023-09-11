@@ -377,10 +377,10 @@ public class CspCompiler
 
 	private void compileTemplateLines(SourceWriter out) throws CspException, IOException
 	{
-		CspTLineParser parser = new CspTLineParser();
+		CspTLineParser parser = new CspTLineParser(scanner_);
 
 		// current line is the template start "{{"
-		parser.parse(scanner_);
+		parser.parse();
 		
 		int tabBase1 = out.getTabCount();
 		while(out.getTabCount() < parser.indent())
@@ -399,7 +399,7 @@ public class CspCompiler
 			if (!scanner_.nextLine())
 				scanner_.exception("template end '" + CspSymbols.END_TEMPLATE_SECTION + "' expected");
 
-			parser.parse(scanner_);
+			parser.parse();
 			
 			if (CspSymbols.END_TEMPLATE_SECTION.equals(parser.content))
 				break;
@@ -452,9 +452,7 @@ public class CspCompiler
 									scanner_.exception("unmatched component end");
 								printer.printComponentEnd(componentLevel--, true, parser.original);
 								break;
-							case JAVA_EXPR:
-							case SKIPLN:
-							case TEXT:
+							default:
 								printer.printLiteralLine(parser.literalParts, 0, true);
 								break;
 						}
