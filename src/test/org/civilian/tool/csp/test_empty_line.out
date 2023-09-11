@@ -17,6 +17,11 @@ public class Test_empty_line extends SuperTemplate
 	@Override protected void print() throws Exception
 	{
 		out.println();
+		if (true)                                                       // line 6: @if (true)
+		{
+			out.println();
+			out.println("Hello");                                       // line 8: Hello
+		}
 	}
 
 

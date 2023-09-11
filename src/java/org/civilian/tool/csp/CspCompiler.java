@@ -420,7 +420,12 @@ public class CspCompiler
 				}
 				else if (parser.type == CspTLineParser.Type.LITERAL)
 				{
-					if (parser.literalParts.size() > 0)
+					if (parser.literalParts.size() == 0)
+					{
+						// e.g. because of a template line "<%%>" to preserve it, produces a out.println() 
+						printer.printLiteralLine(parser.literalParts, 0, true);
+					}
+					else
 					{
 						LiteralPart first = parser.literalParts.get(0);
 						switch (first.type)
