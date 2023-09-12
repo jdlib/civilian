@@ -172,11 +172,32 @@ public class Scanner
 	
 
 	/**
+	 * Returns the current scanner position within in the current line.
+	 */
+	public Scanner setPos(int pos)
+	{
+		if (pos < 0 || pos > length_)
+			throw new IllegalArgumentException("invalid " + pos);
+		pos_ = pos;
+		return this;
+	}
+
+	
+	/**
 	 * Returns the length of the current line.
 	 */
 	public int getLength()
 	{
 		return length_;
+	}
+	
+	
+	public Scanner setLength(int length)
+	{
+		if (length < 0 || length > currentLine_.length())
+			throw new IllegalArgumentException("invalid " + length);
+		length_ = length;
+		return this;
 	}
 
 	
@@ -394,6 +415,7 @@ public class Scanner
 	}
 	
 	
+	// TODO match
 	public boolean hasNext(String s)
 	{
 		int length = s.length();
@@ -774,6 +796,12 @@ public class Scanner
 		errorHandler_ = errorHandler;
 	}
 	
+	
+	public ErrorHandler getErrorHandler()
+	{
+		return errorHandler_;
+	}
+
 	
 	/**
 	 * A callback interface for scanners when they encounter an error.

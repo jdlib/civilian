@@ -152,7 +152,10 @@ class CspTLineParser
 			if (pHat >= 0)
 			{
 				if (start < pHat)
+				{
 					addLiteralPart(LiteralType.TEXT, line.substring(start, pHat));
+					start = pHat;
+				}
 				
 				int nextChar = pHat + 1 < length ? line.charAt(pHat + 1) : -1;
 				if (nextChar == CspSymbols.hat)
@@ -175,8 +178,7 @@ class CspTLineParser
 				else
 				{
 					// (^<name> | ^<name>? | ^{<expr>} | ^{<expr?} | ^{stmt;}
-					start = parseCodeSnippet(line, start + 1);
-					scanner_.exception("not yet implemented");
+					start = parseCodeSnippet(line, start);
 				}
 			}
 			else if (pLtPercent >= 0)
@@ -226,7 +228,7 @@ class CspTLineParser
 	
 	/**
 	 * Parse (^<name> | ^<name>? | ^{<expr>} | ^{<expr?} | ^{stmt;}
-	 * The leading ^ symbol has already been consumed
+	 * The leading ^ symbol has not been consumed
 	 * @param line 
 	 * @param start
 	 * @return the next start
@@ -234,8 +236,12 @@ class CspTLineParser
 	private int parseCodeSnippet(String line, int start)
 	{
 		Scanner sc = new Scanner(line, start);
+		sc.skip();
 		sc.autoSkipWhitespace(false);
+		sc.setErrorHandler(scanner_.getErrorHandler());
+		
 		String snippet;
+		String snippetRaw;
 		boolean allowStmt;
 		if (sc.next("{"))
 		{
@@ -250,21 +256,43 @@ class CspTLineParser
 			if (snippet == null)
 				scanner_.exception("no valid Java identifier found at '" + line + "'");
 			allowStmt = false;
+			if (sc.next("?"))
+				snippet += "?";
 		}
+		
+		snippetRaw = line.substring(start, sc.getPos());
 		
 		if (allowStmt && snippet.endsWith(";"))
 		{
-			addLiteralPart(LiteralType.JAVA_STATEMENT, snippet);
+			addLiteralPart(LiteralType.JAVA_STATEMENT, snippetRaw, snippet);
 			return sc.getPos();
 		}
 		else if (snippet.endsWith("?"))
 		{
+			// start of a condition
 			snippet = StringUtil.cutRight(snippet, "?");
-			throw new Error("y");
+			addLiteralPart(LiteralType.JAVA_CONDITION_START, snippetRaw, snippet);
+			if (!sc.hasMoreChars(3))
+				sc.exception("expect at least 3 more chars");
+			char openSep = (char)sc.current();
+			sc.skip();
+			char closeSep;
+			switch(openSep)
+			{
+				case '(': closeSep = ')'; 		break;
+				case '[': closeSep = ']'; 		break;
+				case '{': closeSep = '}'; 		break;
+				case '<': closeSep = '>';		break;
+				default:  closeSep = openSep; 	break;
+			}
+			String conditioned = sc.consumeUpto(String.valueOf(closeSep), false, true, true);
+			parseLiteralParts(conditioned);
+			addLiteralPart(LiteralType.JAVA_CONDITION_END, "");
+			return sc.getPos();
 		}
 		else
 		{
-			addLiteralPart(LiteralType.JAVA_EXPRESSION, snippet);
+			addLiteralPart(LiteralType.JAVA_EXPRESSION, snippetRaw, snippet);
 			return sc.getPos();
 		}
 	}
