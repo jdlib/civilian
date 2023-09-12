@@ -153,18 +153,18 @@ public class IndexTemplate extends CspTemplate
 		out.println("<div class=\"control-group\">");                   // line 74: <div class="control-group">
 		out.increaseTab();
 		out.print("<label class=\"control-label\" for=\"");             // line 75: <label class="control-label" for="
-		out.print(name);                                                // line 75: <%name%>
+		out.print(name);                                                // line 75: ^name
 		out.print("\">");                                               // line 75: ">
 		html.text(label);                                               // line 75: <%html.text(label);%>
 		out.println("</label>");                                        // line 75: </label>
 		out.println("<div class=\"controls\">");                        // line 76: <div class="controls">
 		out.increaseTab();
 		out.print("<input type=\"");                                    // line 77: <input type="
-		out.print(type);                                                // line 77: <%type%>
+		out.print(type);                                                // line 77: ^type
 		out.print("\" id=\"");                                          // line 77: " id="
-		out.print(name);                                                // line 77: <%name%>
+		out.print(name);                                                // line 77: ^name
 		out.print("\" name=\"");                                        // line 77: " name="
-		out.print(name);                                                // line 77: <%name%>
+		out.print(name);                                                // line 77: ^name
 		out.println("\" value=\"\">");                                  // line 77: " value="">
 		out.decreaseTab();
 		out.println("</div>");                                          // line 78: </div>

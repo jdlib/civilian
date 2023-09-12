@@ -52,7 +52,7 @@ public class AppTemplate extends CspTemplate
 		out.println("</div>");                                          // line 13: </div>
 		out.println("<div class=\"tab-content\">");                     // line 14: <div class="tab-content">
 		out.increaseTab();
-		out.print(content);                                             // line 15: <%content%>
+		out.print(content);                                             // line 15: ^content
 		out.printlnIfNotEmpty();
 		out.decreaseTab();
 		out.println("</div>");                                          // line 16: </div>
@@ -78,7 +78,7 @@ public class AppTemplate extends CspTemplate
 		}
 		out.println(">");                                               // line 24: >
 		out.increaseTab();
-		out.print(label);                                               // line 25: <%label%>
+		out.print(label);                                               // line 25: ^label
 		out.printlnIfNotEmpty();
 		out.decreaseTab();
 		out.println("</a>");                                            // line 26: </a>

@@ -50,7 +50,7 @@ public class PageTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<div class=\"row-fluid\">");                       // line 16: <div class="row-fluid">
 		out.increaseTab();
-		out.print(content);                                             // line 17: <%content%>
+		out.print(content);                                             // line 17: ^content
 		out.printlnIfNotEmpty();
 		out.decreaseTab();
 		out.println("</div>");                                          // line 18: </div>

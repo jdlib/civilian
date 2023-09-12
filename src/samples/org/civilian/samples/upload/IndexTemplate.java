@@ -112,7 +112,7 @@ public class IndexTemplate extends CspTemplate
 					out.println("<tr>");                                // line 58: <tr>
 					out.increaseTab();
 					out.print("<td>");                                  // line 59: <td>
-					out.print(i);                                       // line 59: <%i%>
+					out.print(i);                                       // line 59: ^i
 					out.println("</td>");                               // line 59: </td>
 					out.print("<td>");                                  // line 60: <td>
 					out.print(lang.format(upload.length()));            // line 60: <%lang.format(upload.length())%>

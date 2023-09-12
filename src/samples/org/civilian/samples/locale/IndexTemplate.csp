@@ -33,7 +33,7 @@ private void printLocale(Locale locale, LocalDate date)
 	</tr>
 	<tr>
 		<td><b>current locale is</b></td>
-		<td><b><%locale%>, <%locale.getDisplayName()%></b></td>
+		<td><b>^locale, <%locale.getDisplayName()%></b></td>
 	</tr>
 	<tr>
 		<td>number</td>

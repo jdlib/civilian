@@ -73,7 +73,7 @@ public class DocTemplate
 		out.println("<div class=\"container\">");                       // line 35: <div class="container">
 		for (String line : lines)                                       // line 36: @for (String line : lines)
 		{
-			out.print(line);                                            // line 37: <%line%>
+			out.print(line);                                            // line 37: ^line
 			out.printlnIfNotEmpty();
 		}
 		if (!inputFile.startsWith("index"))                             // line 38: @if (!inputFile.startsWith("index"))
@@ -104,9 +104,9 @@ public class DocTemplate
 			out.print(" class=\"active\"");                             // line 54: class="active"
 		}
 		out.print("><a href=\"");                                       // line 54: ><a href="
-		out.print(file);                                                // line 54: <%file%>
+		out.print(file);                                                // line 54: ^file
 		out.print(".html\">");                                          // line 54: .html">
-		out.print(text);                                                // line 54: <%text%>
+		out.print(text);                                                // line 54: ^text
 		out.println("</a></li>");                                       // line 54: </a></li>
 	}
 	

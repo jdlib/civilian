@@ -20,7 +20,7 @@ template mixin lang, html
 
 private void link(String url, String text)
 {{
-	<b><a href="<%url%>" target="_blank"><%text%></a></b>^\
+	<b><a href="^url" target="_blank">^text</a></b>^\
 }}
 
 
@@ -74,13 +74,13 @@ private void printWelcome()
 			open <b>multiple windows</b> with different entry points. For example<br>
 			<ul>
 				@Url url = html.url(CrmResources.root.customers);
-				<li>Open the <a href="<%url%>" target="_blank">Customer</a> module in a new window.</li>
+				<li>Open the <a href="^url" target="_blank">Customer</a> module in a new window.</li>
 				@url = html.url(CrmResources.root.customers.$customerId);
 				@url.setPathParam(Integer.valueOf(100)); // :customerId
-				<li>Open the detail page of <a href="<%url%>" target="_blank">Customer 100</a>.</li>
+				<li>Open the detail page of <a href="^url" target="_blank">Customer 100</a>.</li>
 				@url = html.url(CrmResources.root.customers.$customerId.masterdata);
 				@url.setPathParam(Integer.valueOf(100)); // :customerId
-				<li>Open the masterdata page of <a href="<%url%>" target="_blank">Customer 100</a>.</li>
+				<li>Open the masterdata page of <a href="^url" target="_blank">Customer 100</a>.</li>
 			</ul>
 			This technique allows effective reuse of the server-side API: E.g. search dialogs for lookup of CRM entities 
 			use the same search URL as the main search page of a module.<br>

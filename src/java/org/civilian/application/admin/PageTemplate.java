@@ -98,7 +98,7 @@ public class PageTemplate extends CspTemplate
 		out.println("</div>");                                          // line 42: </div>
 		out.println("<div class=\"span10\">");                          // line 43: <div class="span10">
 		out.increaseTab();
-		out.print(content);                                             // line 44: <%content%>
+		out.print(content);                                             // line 44: ^content
 		out.printlnIfNotEmpty();
 		out.decreaseTab();
 		out.println("</div>");                                          // line 45: </div>
@@ -119,9 +119,9 @@ public class PageTemplate extends CspTemplate
 			out.print(" class=\"active\"");                             // line 55: class="active"
 		}
 		out.print("><a href=\"");                                       // line 55: ><a href="
-		out.print(url);                                                 // line 55: <%url%>
+		out.print(url);                                                 // line 55: ^url
 		out.print("\">");                                               // line 55: ">
-		out.print(label);                                               // line 55: <%label%>
+		out.print(label);                                               // line 55: ^label
 		out.println("</a></li>");                                       // line 55: </a></li>
 	}
 

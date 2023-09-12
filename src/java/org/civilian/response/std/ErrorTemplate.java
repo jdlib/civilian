@@ -56,7 +56,7 @@ public class ErrorTemplate extends CspTemplate
 		out.println("</head>");                                         // line 19: </head>
 		out.println("<body>");                                          // line 20: <body>
 		out.print("<h1>Civilian Dev Error - ");                         // line 21: <h1>Civilian Dev Error -
-		out.print(status);                                              // line 21: <%status%>
+		out.print(status);                                              // line 21: ^status
 		out.println("</h1>");                                           // line 21: </h1>
 		out.println("<table>");                                         // line 22: <table>
 		printInfo("Message", message);                                  // line 23: @printInfo("Message", message);
@@ -97,7 +97,7 @@ public class ErrorTemplate extends CspTemplate
 			out.println("<tr>");                                        // line 51: <tr>
 			out.increaseTab();
 			out.print("<td>");                                          // line 52: <td>
-			out.print(what);                                            // line 52: <%what%>
+			out.print(what);                                            // line 52: ^what
 			out.println("</td>");                                       // line 52: </td>
 			out.print("<td>");                                          // line 53: <td>
 			html.text(text);                                            // line 53: <%html.text(text);%>

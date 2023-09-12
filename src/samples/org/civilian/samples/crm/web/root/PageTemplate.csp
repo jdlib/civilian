@@ -34,7 +34,7 @@ template(Response response, Template content, Script script, SessionUser session
 					@if (showNavigation)
 						@printMenuItems();
 					@if (reloadPath != null)
-						<li><button class="btn btn-success" style="display:inline" onclick="reload('<%reloadPath%>')">Reload</button></li>
+						<li><button class="btn btn-success" style="display:inline" onclick="reload('^reloadPath')">Reload</button></li>
 				</ul>
 			<p class="text-right banner-info">
 				<%html.text(sessionUser.name);%>
@@ -45,7 +45,7 @@ template(Response response, Template content, Script script, SessionUser session
 		</div>
 	</div>
 	<div class="container-fluid">
-		<%content%>
+		^content
 	</div>
 	@html.script("js/lib/jquery-3.6.0.min.js"); 
 	@html.script("js/lib/jquery-ui-1.10.3.custom.min.js"); 
@@ -122,8 +122,8 @@ private void printMenuItem(MsgId labelId, Resource resource, Script script, Stri
 private void printMenuItem(NavItem navItem, String image, String label)
 {{
 	<li class="border-left">
-		<a ng-click="openModule('<%label%>', '<%navItem.templateUrl%>', '<%navItem.scriptUrls%>')" href="">
-			<img ng-src="<%html.path("/img/crm/");%><%image%>"> <%label%>
+		<a ng-click="openModule('^label', '<%navItem.templateUrl%>', '<%navItem.scriptUrls%>')" href="">
+			<img ng-src="<%html.path("/img/crm/");%>^image"> ^label
 		</a>
 	</li> 
 }}

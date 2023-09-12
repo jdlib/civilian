@@ -135,7 +135,7 @@ public class ResourcesTemplate extends CspTemplate
 		{
 			String path = resource.getRoute().toString();               // line 69: @String path = resource.getRoute().toString();
 			out.print("{ controller: \"");                              // line 70: { controller: "
-			out.print(data);                                            // line 70: <%data%>
+			out.print(data);                                            // line 70: ^data
 			out.print("\", path: \"");                                  // line 70: ", path: "
 			out.print(path.length() != 0 ? path : "/");                 // line 70: <%path.length() != 0 ? path : "/"%>
 			out.println("\" },");                                       // line 70: " },

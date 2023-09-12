@@ -67,7 +67,7 @@ public class PageTemplate extends CspTemplate
 		out.decreaseTab();
 		out.println("</head>");                                         // line 27: </head>
 		out.print("<body");                                             // line 28: <body
-		if (showNavigation)                                             // line 28: <%?showNavigation%>
+		if (showNavigation)                                             // line 28: ^showNavigation?
 		{
 			out.print(" ng-controller=\"MenuController\"");             // line 28: ng-controller="MenuController"
 		}
@@ -88,7 +88,7 @@ public class PageTemplate extends CspTemplate
 			if (reloadPath != null)                                     // line 36: @if (reloadPath != null)
 			{
 				out.print("<li><button class=\"btn btn-success\" style=\"display:inline\" onclick=\"reload('"); // line 37: <li><button class="btn btn-success" style="display:inline" onclick="reload('
-				out.print(reloadPath);                                  // line 37: <%reloadPath%>
+				out.print(reloadPath);                                  // line 37: ^reloadPath
 				out.println("')\">Reload</button></li>");               // line 37: ')">Reload</button></li>
 			}
 			out.decreaseTab();
@@ -117,7 +117,7 @@ public class PageTemplate extends CspTemplate
 		out.println("</div>");                                          // line 46: </div>
 		out.println("<div class=\"container-fluid\">");                 // line 47: <div class="container-fluid">
 		out.increaseTab();
-		out.print(content);                                             // line 48: <%content%>
+		out.print(content);                                             // line 48: ^content
 		out.printlnIfNotEmpty();
 		out.decreaseTab();
 		out.println("</div>");                                          // line 49: </div>
@@ -220,7 +220,7 @@ public class PageTemplate extends CspTemplate
 		out.println("<li class=\"border-left\">");                      // line 124: <li class="border-left">
 		out.increaseTab();
 		out.print("<a ng-click=\"openModule('");                        // line 125: <a ng-click="openModule('
-		out.print(label);                                               // line 125: <%label%>
+		out.print(label);                                               // line 125: ^label
 		out.print("', '");                                              // line 125: ', '
 		out.print(navItem.templateUrl);                                 // line 125: <%navItem.templateUrl%>
 		out.print("', '");                                              // line 125: ', '
@@ -229,9 +229,9 @@ public class PageTemplate extends CspTemplate
 		out.increaseTab();
 		out.print("<img ng-src=\"");                                    // line 126: <img ng-src="
 		html.path("/img/crm/");                                         // line 126: <%html.path("/img/crm/");%>
-		out.print(image);                                               // line 126: <%image%>
+		out.print(image);                                               // line 126: ^image
 		out.print("\"> ");                                              // line 126: ">
-		out.print(label);                                               // line 126: <%label%>
+		out.print(label);                                               // line 126: ^label
 		out.printlnIfNotEmpty();
 		out.decreaseTab();
 		out.println("</a>");                                            // line 127: </a>

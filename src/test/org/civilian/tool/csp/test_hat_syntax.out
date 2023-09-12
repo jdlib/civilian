@@ -26,7 +26,7 @@ public class Test_hat_syntax extends CspTemplate
 		out.println("beta");                                            // line 7: beta
 		out.print("skipln");                                            // line 8: skipln
 		out.print(" mixed ");                                           // line 9: mixed
-		out.print(name);                                                // line 9: <%name%>
+		out.print(name);                                                // line 9: ^name
 		out.print("pre");                                               // line 10: pre
 		if (today)                                                      // line 10: ^today?
 		{

@@ -56,7 +56,7 @@ template(IndexForm form) mixin html, lang, formTable
 				@for (int i=0; i<uploads.length; i++)
 					@Upload upload = uploads[i];
 					<tr>
-						<td><%i%></td>
+						<td>^i</td>
 						<td><%lang.format(upload.length())%> bytes</td>
 						<td><%upload.getContentType()%></td>
 						<td><%upload.getFileName()%></td>

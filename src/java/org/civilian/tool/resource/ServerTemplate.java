@@ -54,7 +54,7 @@ class ServerTemplate
 		out.println(" * Do not edit.");                                 // line 19: * Do not edit.
 		out.println(" */");                                             // line 20: */
 		out.print("package ");                                          // line 21: package
-		out.print(outputPackage);                                       // line 21: <%outputPackage%>
+		out.print(outputPackage);                                       // line 21: ^outputPackage
 		out.println(";");                                               // line 21: ;
 		out.println();
 		out.println();
@@ -69,7 +69,7 @@ class ServerTemplate
 		out.println(".");                                               // line 28: .
 		out.println(" */");                                             // line 29: */
 		out.print("public interface ");                                 // line 30: public interface
-		out.print(outputName);                                          // line 30: <%outputName%>
+		out.print(outputName);                                          // line 30: ^outputName
 		out.printlnIfNotEmpty();
 		out.println("{");                                               // line 31: {
 		out.increaseTab();
@@ -91,7 +91,7 @@ class ServerTemplate
 		String className = getJavaClass(info);                          // line 46: @String className = getJavaClass(info);
 		boolean hasController = info.getControllerSignature() != null;  // line 47: @boolean hasController = info.getControllerSignature() != null;
 		out.print("public static class ");                              // line 48: public static class
-		out.print(className);                                           // line 48: <%className%>
+		out.print(className);                                           // line 48: ^className
 		if (hasController)                                              // line 48: ^hasController?
 		{
 			out.print(" extends ");                                     // line 48: extends
@@ -101,7 +101,7 @@ class ServerTemplate
 		out.println("{");                                               // line 49: {
 		out.increaseTab();
 		out.print("public ");                                           // line 50: public
-		out.print(className);                                           // line 50: <%className%>
+		out.print(className);                                           // line 50: ^className
 		out.print("(");                                                 // line 50: (
 		if (!info.isRoot())                                             // line 50: ^{!info.isRoot()?}
 		{
@@ -118,7 +118,7 @@ class ServerTemplate
 		}
 		else                                                            // line 55: @else
 		{
-			out.print(thisRes);                                         // line 56: <%thisRes%>
+			out.print(thisRes);                                         // line 56: ^thisRes
 			out.print(" = new ");                                       // line 56: = new
 			out.print(Resource.class.getName());                        // line 56: <%Resource.class.getName()%>
 		}
@@ -136,7 +136,7 @@ class ServerTemplate
 			ResourceInfo child = info.getChild(i);                      // line 63: @ResourceInfo child = info.getChild(i);
 			String field = getJavaField(child);                         // line 64: @String field = getJavaField(child);
 			out.print("this.");                                         // line 65: this.
-			out.print(field);                                           // line 65: <%field%>
+			out.print(field);                                           // line 65: ^field
 			out.print(" = new ");                                       // line 65: = new
 			if (child.getChildCount() == 0)                             // line 66: @if (child.getChildCount() == 0)
 			{
@@ -147,7 +147,7 @@ class ServerTemplate
 				if (child.getControllerSignature() != null)             // line 68: @if (child.getControllerSignature() != null)
 				{
 					out.print("this.");                                 // line 69: this.
-					out.print(field);                                   // line 69: <%field%>
+					out.print(field);                                   // line 69: ^field
 					out.print(".");                                     // line 69: .
 					printSetCtrlSeg(child);                             // line 69: <%printSetCtrlSeg(child);%>
 					out.printlnIfNotEmpty();
@@ -157,7 +157,7 @@ class ServerTemplate
 			{
 				out.print(getJavaClass(child));                         // line 71: <%getJavaClass(child)%>
 				out.print("(");                                         // line 71: (
-				out.print(thisRes);                                     // line 71: <%thisRes%>
+				out.print(thisRes);                                     // line 71: ^thisRes
 				out.println(");");                                      // line 71: );
 			}
 		}
@@ -227,12 +227,12 @@ class ServerTemplate
 		ControllerSignature ctrlSig = resInfo.getControllerSignature(); // line 107: @ControllerSignature ctrlSig = resInfo.getControllerSignature();
 		out.println("/**");                                             // line 108: /**
 		out.print(" * \"");                                             // line 109: * "
-		out.print(resInfo);                                             // line 109: <%resInfo%>
+		out.print(resInfo);                                             // line 109: ^resInfo
 		out.print("\"");                                                // line 109: "
 		if (ctrlSig != null)                                            // line 109: ^{ctrlSig != null?}
 		{
 			out.print(" = ");                                           // line 109: =
-			out.print(ctrlSig);                                         // line 109: <%ctrlSig%>
+			out.print(ctrlSig);                                         // line 109: ^ctrlSig
 		}
 		out.printlnIfNotEmpty();
 		out.println(" */");                                             // line 110: */
@@ -243,7 +243,7 @@ class ServerTemplate
 	{
 		if (!info.isRoot())                                             // line 116: @if (!info.isRoot())
 		{
-			out.print(parent);                                          // line 117: <%parent%>
+			out.print(parent);                                          // line 117: ^parent
 			out.print(", ");                                            // line 117: ,
 			if (info.getSegment() != null)                              // line 118: @if (info.getSegment() != null)
 			{

@@ -38,7 +38,7 @@ public class ModuleTemplate extends CspTemplate
 		out.println("</div>");                                          // line 15: </div>
 		out.println("<div class=\"margin-left\">");                     // line 16: <div class="margin-left">
 		out.increaseTab();
-		out.print(detailTemplate);                                      // line 17: <%detailTemplate%>
+		out.print(detailTemplate);                                      // line 17: ^detailTemplate
 		out.printlnIfNotEmpty();
 		out.decreaseTab();
 		out.println("</div>");                                          // line 18: </div>
@@ -52,16 +52,16 @@ public class ModuleTemplate extends CspTemplate
 	private void printToolbarButton(String ngClick, String disabled, String icon)
 	{
 		out.print("<button class=\"btn\" ng-click=\"");                 // line 26: <button class="btn" ng-click="
-		out.print(ngClick);                                             // line 26: <%ngClick%>
+		out.print(ngClick);                                             // line 26: ^ngClick
 		out.print("\"");                                                // line 26: "
 		if (disabled != null)                                           // line 27: @if (disabled != null)
 		{
 			out.print(" ng-disabled=\"");                               // line 28: ng-disabled="
-			out.print(disabled);                                        // line 28: <%disabled%>
+			out.print(disabled);                                        // line 28: ^disabled
 			out.print("\"");                                            // line 28: "
 		}
 		out.print("><i class=\"icon-");                                 // line 29: ><i class="icon-
-		out.print(icon);                                                // line 29: <%icon%>
+		out.print(icon);                                                // line 29: ^icon
 		out.println("\"></i></button>");                                // line 29: "></i></button>
 	}
 

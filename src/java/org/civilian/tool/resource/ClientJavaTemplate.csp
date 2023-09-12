@@ -14,7 +14,7 @@ template(Resource root, String outputPackage, String outputName, Application app
 	^' * Generated ^timestamp?|at <%LocalDateTime.now()%> |by <%ClientConstGenerator.class.getName()%>.
 	^' * Do not edit.
 	^' */
-	package <%outputPackage%>;
+	package ^outputPackage;
 	
 	
 	@printResourceClass(root);
@@ -34,18 +34,18 @@ private void printResourceClass(Resource resource)
 	@boolean isRoot        = resource.isRoot(); 
 	@String className      = isRoot ? outputName : buildClassName(resource);
 	@boolean hasController = resource.getData() != null;
-	public^{!isRoot?}| static| class <%className%>^hasController?| extends <%WEBRESOURCE%>| 
+	public^{!isRoot?}| static| class ^className^hasController?| extends ^WEBRESOURCE| 
 	{
-		public <%className%>^\
+		public ^className^\
 		@if (isRoot)
 			(String url)
 		@else
-			(<%WEBRESOURCE%> parent)
+			(^WEBRESOURCE parent)
 		{
 			@if (hasController)
 				super^\
 			@else
-				this.resource_ = new <%WEBRESOURCE%>^\
+				this.resource_ = new ^WEBRESOURCE^\
 			(<%printCtorArgs(resource, "parent");%>);
 			
 			@// print field definitions
@@ -58,7 +58,7 @@ private void printResourceClass(Resource resource)
 					(^\
 				this.<%buildFieldName(child)%> = new ^\
 				@if (child.getChildCount() == 0)
-					<%WEBRESOURCE%>(<%printCtorArgs(child, hasController ? "this" : "this.resource_");%>)^\
+					^WEBRESOURCE(<%printCtorArgs(child, hasController ? "this" : "this.resource_");%>)^\
 				@else
 					<%buildClassName(child)%>(this)^\
 				@if (!childHasController)
@@ -76,7 +76,7 @@ private void printResourceClass(Resource resource)
 		@if (!hasController)
 			^'
 			// hidden since not mapped to a controller
-			private final <%WEBRESOURCE%> resource_;
+			private final ^WEBRESOURCE resource_;
 	}
 }}
 
@@ -85,7 +85,7 @@ private void printResourceClass(Resource resource)
 private void printResourceComment(Resource resource)
 {{
 	^'/**
-	^' * Resource "<%resource%>"^{resource.isRoot()?}| of application <%app.getClass().getName()%>|. 
+	^' * Resource "^resource"^{resource.isRoot()?}| of application <%app.getClass().getName()%>|. 
 	^' */ 
 }}
 
@@ -93,7 +93,7 @@ private void printResourceComment(Resource resource)
 private void printCtorArgs(Resource resource, String parent)
 {{
 	@if (!resource.isRoot())
-		<%parent%>, ^\ 
+		^parent, ^\ 
 		@if (resource.getSegment() != null)
 			"<%resource.getSegment()%>"^\
 		@else

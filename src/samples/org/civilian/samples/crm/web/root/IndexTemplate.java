@@ -51,9 +51,9 @@ public class IndexTemplate extends CspTemplate
 	private void link(String url, String text)
 	{
 		out.print("<b><a href=\"");                                     // line 23: <b><a href="
-		out.print(url);                                                 // line 23: <%url%>
+		out.print(url);                                                 // line 23: ^url
 		out.print("\" target=\"_blank\">");                             // line 23: " target="_blank">
-		out.print(text);                                                // line 23: <%text%>
+		out.print(text);                                                // line 23: ^text
 		out.print("</a></b>");                                          // line 23: </a></b>
 	}
 	
@@ -138,17 +138,17 @@ public class IndexTemplate extends CspTemplate
 		out.increaseTab();
 		Url url = html.url(CrmResources.root.customers);                // line 76: @Url url = html.url(CrmResources.root.customers);
 		out.print("<li>Open the <a href=\"");                           // line 77: <li>Open the <a href="
-		out.print(url);                                                 // line 77: <%url%>
+		out.print(url);                                                 // line 77: ^url
 		out.println("\" target=\"_blank\">Customer</a> module in a new window.</li>"); // line 77: " target="_blank">Customer</a> module in a new window.</li>
 		url = html.url(CrmResources.root.customers.$customerId);        // line 78: @url = html.url(CrmResources.root.customers.$customerId);
 		url.setPathParam(Integer.valueOf(100)); // :customerId          // line 79: @url.setPathParam(Integer.valueOf(100)); // :customerId
 		out.print("<li>Open the detail page of <a href=\"");            // line 80: <li>Open the detail page of <a href="
-		out.print(url);                                                 // line 80: <%url%>
+		out.print(url);                                                 // line 80: ^url
 		out.println("\" target=\"_blank\">Customer 100</a>.</li>");     // line 80: " target="_blank">Customer 100</a>.</li>
 		url = html.url(CrmResources.root.customers.$customerId.masterdata); // line 81: @url = html.url(CrmResources.root.customers.$customerId.masterdata);
 		url.setPathParam(Integer.valueOf(100)); // :customerId          // line 82: @url.setPathParam(Integer.valueOf(100)); // :customerId
 		out.print("<li>Open the masterdata page of <a href=\"");        // line 83: <li>Open the masterdata page of <a href="
-		out.print(url);                                                 // line 83: <%url%>
+		out.print(url);                                                 // line 83: ^url
 		out.println("\" target=\"_blank\">Customer 100</a>.</li>");     // line 83: " target="_blank">Customer 100</a>.</li>
 		out.decreaseTab();
 		out.println("</ul>");                                           // line 84: </ul>

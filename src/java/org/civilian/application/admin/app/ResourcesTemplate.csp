@@ -67,5 +67,5 @@ private void printControllerEntry(Resource resource)
 	@Object data = resource.getData(); // is the controllersignature
 	@if (data != null)
 		@String path = resource.getRoute().toString();
-		{ controller: "<%data%>", path: "<%path.length() != 0 ? path : "/"%>" },
+		{ controller: "^data", path: "<%path.length() != 0 ? path : "/"%>" },
 }}

@@ -3,7 +3,7 @@ import org.civilian.template.Template
 
 template(Template content, String controller)
 {{
-	<div ng-controller="<%controller%>">
-		<%content%>
+	<div ng-controller="^controller">
+		^content
 	</div>
 }}

@@ -23,16 +23,16 @@ template() mixin html
 				The expected type of the parameter <code>n</code> is <code>int</code> and we pass an invalid value:<p>
 				@Url paramUrl = html.url(ParamController.class);
 				@paramUrl.queryParams().add("n", "a");
-				<a href="<%paramUrl%>"><%paramUrl%></a>.
+				<a href="^paramUrl">^paramUrl</a>.
 				
 				<h3>A Controller throws an exception during request processing</h3>
 				@Url failUrl = html.url(FailController.class);
-				<a href="<%failUrl%>"><%failUrl%></a>.
+				<a href="^failUrl">^failUrl</a>.
 
 				<h3>Broken Link</h3>
 				We construct a broken link to demonstrate the default not-found error message:<p>
 				@Url notFoundUrl = html.url(html.path().add("notfound"));
-				<a href="<%notFoundUrl%>"><%notFoundUrl%></a>.
+				<a href="^notFoundUrl">^notFoundUrl</a>.
 			</div>
 		</div>
 	</body>

@@ -40,7 +40,7 @@ class ConstClassTemplate
 		HashSet<String> usedConstants = new HashSet<>();                // line 15: @HashSet<String> usedConstants = new HashSet<>();
 		//                                                              // line 16: @//
 		out.print("package ");                                          // line 17: package
-		out.print(packageName);                                         // line 17: <%packageName%>
+		out.print(packageName);                                         // line 17: ^packageName
 		out.println(";");                                               // line 17: ;
 		out.println();
 		out.println();
@@ -57,7 +57,7 @@ class ConstClassTemplate
 		out.print(config.excelFile.getName());                          // line 25: <%config.excelFile.getName()%>
 		out.println(".");                                               // line 25: .
 		out.print(" * Generated at ");                                  // line 26: * Generated at
-		out.print(generationTime);                                      // line 26: <%generationTime%>
+		out.print(generationTime);                                      // line 26: ^generationTime
 		out.println(". Do not edit directly.");                         // line 26: . Do not edit directly.
 		out.println(" */");                                             // line 27: */
 		out.print("public interface ");                                 // line 28: public interface
@@ -80,15 +80,15 @@ class ConstClassTemplate
 					for (String lang : t.lang)                          // line 39: @for (String lang : t.lang)
 					{
 						out.print(" \"");                               // line 40: "
-						out.print(lang);                                // line 40: <%lang%>
+						out.print(lang);                                // line 40: ^lang
 						out.print("\"");                                // line 40: "
 					}
 					out.println("*/");                                  // line 41: */
 				}
 				out.print("public static final ");                      // line 42: public static final
-				out.print(idClassSimple);                               // line 42: <%idClassSimple%>
+				out.print(idClassSimple);                               // line 42: ^idClassSimple
 				out.print(" ");                                         // line 42: 
-				out.print(constantName);                                // line 42: <%constantName%>
+				out.print(constantName);                                // line 42: ^constantName
 				for (int i=id.length(); i<=20; i++)                     // line 43: @for (int i=id.length(); i<=20; i++)
 				{
 					out.print(" ");                                     // line 44: 
@@ -97,7 +97,7 @@ class ConstClassTemplate
 				if (hasIdClass)                                         // line 45: ^hasIdClass?
 				{
 					out.print("new ");                                  // line 45: new
-					out.print(idClassSimple);                           // line 45: <%idClassSimple%>
+					out.print(idClassSimple);                           // line 45: ^idClassSimple
 					out.print("(");                                     // line 45: (
 				}
 				out.print("\"");                                        // line 45: "
@@ -115,12 +115,12 @@ class ConstClassTemplate
 			out.println();
 			out.println();
 			out.print("public static class ");                          // line 49: public static class
-			out.print(idClassSimple);                                   // line 49: <%idClassSimple%>
+			out.print(idClassSimple);                                   // line 49: ^idClassSimple
 			out.println(" implements CharSequence");                    // line 49: implements CharSequence
 			out.println("{");                                           // line 50: {
 			out.increaseTab();
 			out.print("public ");                                       // line 51: public
-			out.print(idClassSimple);                                   // line 51: <%idClassSimple%>
+			out.print(idClassSimple);                                   // line 51: ^idClassSimple
 			out.println("(String value)");                              // line 51: (String value)
 			out.println("{");                                           // line 52: {
 			out.increaseTab();

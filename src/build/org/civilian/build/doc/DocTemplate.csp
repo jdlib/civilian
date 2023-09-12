@@ -34,7 +34,7 @@ template(String inputFile, List<String> lines) extends - throws -
 	</nav>
 	<div class="container">
 	@for (String line : lines)
-		<%line%>
+		^line
 	@if (!inputFile.startsWith("index"))
 		<div class="row">
 			<div class="col-md-3"></div>
@@ -51,7 +51,7 @@ template(String inputFile, List<String> lines) extends - throws -
 
 private void printNav(String file, String text)
 {{
-	<li^{inputFile.startsWith(file)?}| class="active"|><a href="<%file%>.html"><%text%></a></li>
+	<li^{inputFile.startsWith(file)?}| class="active"|><a href="^file.html">^text</a></li>
 }}
 
 

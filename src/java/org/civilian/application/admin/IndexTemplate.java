@@ -143,7 +143,7 @@ public class IndexTemplate extends CspTemplate
 			out.increaseTab();
 			// link within the admin app                                // line 71: @// link within the admin app
 			out.print("<td><a href=\"");                                // line 72: <td><a href="
-			out.print(appUrl);                                          // line 72: <%appUrl%>
+			out.print(appUrl);                                          // line 72: ^appUrl
 			out.print("\">");                                           // line 72: ">
 			out.print(app.getId());                                     // line 72: <%app.getId()%>
 			out.println("</a></td>");                                   // line 72: </a></td>

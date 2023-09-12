@@ -197,17 +197,7 @@ class CspTLineParser
 					String snippetRaw  = line.substring(pLtPercent, q + 2);
 					String snippetCode = line.substring(pLtPercent + 2, q).trim();
 					LiteralType type;
-					if (snippetCode.startsWith("?"))
-					{
-						if (snippetCode.length() != 1)
-						{
-							type = LiteralType.JAVA_CONDITION_START;
-							snippetCode = snippetCode.substring(1).trim(); 
-						}
-						else
-							type = LiteralType.JAVA_CONDITION_END;
-					}
-					else if (snippetCode.endsWith(";"))
+					if (snippetCode.endsWith(";"))
 					{
 						type = LiteralType.JAVA_STATEMENT;
 					}

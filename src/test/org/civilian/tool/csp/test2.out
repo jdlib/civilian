@@ -23,9 +23,9 @@ public class Test2 extends Template
 				out.print("conditional");                               // line 21: conditional
 			}
 			out.printlnIfNotEmpty();
-			out.print(name);                                            // line 22: <%name%>
+			out.print(name);                                            // line 22: ^name
 			out.print(": ");                                            // line 22: :
-			out.print(i);                                               // line 22: <%i%>
+			out.print(i);                                               // line 22: ^i
 			out.printlnIfNotEmpty();
 			list_.add(name);                                            // line 23: @list_.add(name);
 		}

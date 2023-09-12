@@ -16,7 +16,7 @@ public class Test5 extends BaseTemplate
 
 	@Override protected void print() throws Exception
 	{
-		out.print(name);                                                // line 6: <%name%>
+		out.print(name);                                                // line 6: ^name
 		out.printlnIfNotEmpty();
 	}
 

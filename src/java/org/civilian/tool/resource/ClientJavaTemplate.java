@@ -50,7 +50,7 @@ class ClientJavaTemplate
 		out.println(" * Do not edit.");                                 // line 15: * Do not edit.
 		out.println(" */");                                             // line 16: */
 		out.print("package ");                                          // line 17: package
-		out.print(outputPackage);                                       // line 17: <%outputPackage%>
+		out.print(outputPackage);                                       // line 17: ^outputPackage
 		out.println(";");                                               // line 17: ;
 		out.println();
 		out.println();
@@ -79,17 +79,17 @@ class ClientJavaTemplate
 			out.print(" static");                                       // line 37: static
 		}
 		out.print(" class ");                                           // line 37: class
-		out.print(className);                                           // line 37: <%className%>
+		out.print(className);                                           // line 37: ^className
 		if (hasController)                                              // line 37: ^hasController?
 		{
 			out.print(" extends ");                                     // line 37: extends
-			out.print(WEBRESOURCE);                                     // line 37: <%WEBRESOURCE%>
+			out.print(WEBRESOURCE);                                     // line 37: ^WEBRESOURCE
 		}
 		out.printlnIfNotEmpty();
 		out.println("{");                                               // line 38: {
 		out.increaseTab();
 		out.print("public ");                                           // line 39: public
-		out.print(className);                                           // line 39: <%className%>
+		out.print(className);                                           // line 39: ^className
 		if (isRoot)                                                     // line 40: @if (isRoot)
 		{
 			out.println("(String url)");                                // line 41: (String url)
@@ -97,7 +97,7 @@ class ClientJavaTemplate
 		else                                                            // line 42: @else
 		{
 			out.print("(");                                             // line 43: (
-			out.print(WEBRESOURCE);                                     // line 43: <%WEBRESOURCE%>
+			out.print(WEBRESOURCE);                                     // line 43: ^WEBRESOURCE
 			out.println(" parent)");                                    // line 43: parent)
 		}
 		out.println("{");                                               // line 44: {
@@ -109,7 +109,7 @@ class ClientJavaTemplate
 		else                                                            // line 47: @else
 		{
 			out.print("this.resource_ = new ");                         // line 48: this.resource_ = new
-			out.print(WEBRESOURCE);                                     // line 48: <%WEBRESOURCE%>
+			out.print(WEBRESOURCE);                                     // line 48: ^WEBRESOURCE
 		}
 		out.print("(");                                                 // line 49: (
 		printCtorArgs(resource, "parent");                              // line 49: <%printCtorArgs(resource, "parent");%>
@@ -133,7 +133,7 @@ class ClientJavaTemplate
 			out.print(" = new ");                                       // line 59: = new
 			if (child.getChildCount() == 0)                             // line 60: @if (child.getChildCount() == 0)
 			{
-				out.print(WEBRESOURCE);                                 // line 61: <%WEBRESOURCE%>
+				out.print(WEBRESOURCE);                                 // line 61: ^WEBRESOURCE
 				out.print("(");                                         // line 61: (
 				printCtorArgs(child, hasController ? "this" : "this.resource_"); // line 61: <%printCtorArgs(child, hasController ? "this" : "this.resource_");%>
 				out.print(")");                                         // line 61: )
@@ -174,7 +174,7 @@ class ClientJavaTemplate
 			out.println();
 			out.println("// hidden since not mapped to a controller");  // line 78: // hidden since not mapped to a controller
 			out.print("private final ");                                // line 79: private final
-			out.print(WEBRESOURCE);                                     // line 79: <%WEBRESOURCE%>
+			out.print(WEBRESOURCE);                                     // line 79: ^WEBRESOURCE
 			out.println(" resource_;");                                 // line 79: resource_;
 		}
 		out.decreaseTab();
@@ -187,7 +187,7 @@ class ClientJavaTemplate
 	{
 		out.println("/**");                                             // line 87: /**
 		out.print(" * Resource \"");                                    // line 88: * Resource "
-		out.print(resource);                                            // line 88: <%resource%>
+		out.print(resource);                                            // line 88: ^resource
 		out.print("\"");                                                // line 88: "
 		if (resource.isRoot())                                          // line 88: ^{resource.isRoot()?}
 		{
@@ -203,7 +203,7 @@ class ClientJavaTemplate
 	{
 		if (!resource.isRoot())                                         // line 95: @if (!resource.isRoot())
 		{
-			out.print(parent);                                          // line 96: <%parent%>
+			out.print(parent);                                          // line 96: ^parent
 			out.print(", ");                                            // line 96: ,
 			if (resource.getSegment() != null)                          // line 97: @if (resource.getSegment() != null)
 			{

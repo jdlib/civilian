@@ -18,7 +18,7 @@ template(ResourceInfo root, String outputPackage, String outputName, Application
 	^' * Generated ^timestamp?|at <%LocalDateTime.now()%> |by <%ServerConstGenerator.class.getName()%>.
 	^' * Do not edit.
 	^' */
-	package <%outputPackage%>;
+	package ^outputPackage;
 	
 
 	import <%ControllerSignature.class.getName()%>;
@@ -27,7 +27,7 @@ template(ResourceInfo root, String outputPackage, String outputName, Application
 	^'/**
 	^' * Defines the resources of application <%app.getClass().getName()%>.
 	^' */	
-	public interface <%outputName%>
+	public interface ^outputName
 	{
 		@printResourceComment(root);
 		public static final Root root = new Root();
@@ -45,15 +45,15 @@ private void printResourceClass(ResourceInfo info)
 	@printResourceComment(info);
 	@String className = getJavaClass(info);
 	@boolean hasController = info.getControllerSignature() != null; 
-	public static class <%className%>^hasController?| extends <%Resource.class.getName()%>| 
+	public static class ^className^hasController?| extends <%Resource.class.getName()%>| 
 	{
-		public <%className%>(^{!info.isRoot()?}|<%Resource.class.getName()%> parent|)
+		public ^className(^{!info.isRoot()?}|<%Resource.class.getName()%> parent|)
 		{
 			@String thisRes = hasController ? "this" : "this.resource_"; 
 			@if (hasController)
 				super^\
 			@else
-				<%thisRes%> = new <%Resource.class.getName()%>^\
+				^thisRes = new <%Resource.class.getName()%>^\
 			(<%printCtorArgs(info, "parent");%>);
 			@if (hasController)
 				@printSetCtrlSeg(info);
@@ -62,13 +62,13 @@ private void printResourceClass(ResourceInfo info)
 			@for (int i=0; i<childCount; i++)
 				@ResourceInfo child = info.getChild(i);
 				@String field = getJavaField(child);
-				this.<%field%> = new ^\
+				this.^field = new ^\
 				@if (child.getChildCount() == 0)
 					<%Resource.class.getName()%>(<%printCtorArgs(child, thisRes);%>);
 					@if (child.getControllerSignature() != null)
-						this.<%field%>.<%printSetCtrlSeg(child);%>
+						this.^field.<%printSetCtrlSeg(child);%>
 				@else
-					<%getJavaClass(child)%>(<%thisRes%>);
+					<%getJavaClass(child)%>(^thisRes);
 		}
 		@if (!hasController && info.isRoot())
 			^'
@@ -106,7 +106,7 @@ private void printResourceComment(ResourceInfo resInfo)
 {{
 	@ControllerSignature ctrlSig = resInfo.getControllerSignature();
 	^'/**
-	^' * "<%resInfo%>"^{ctrlSig != null?}| = <%ctrlSig%>|
+	^' * "^resInfo"^{ctrlSig != null?}| = ^ctrlSig|
 	^' */ 
 }}
 
@@ -114,7 +114,7 @@ private void printResourceComment(ResourceInfo resInfo)
 private void printCtorArgs(ResourceInfo info, String parent)
 {{
 	@if (!info.isRoot())
-		<%parent%>, ^\ 
+		^parent, ^\ 
 		@if (info.getSegment() != null)
 			"<%info.getSegment()%>"^\
 		@else

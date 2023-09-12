@@ -72,9 +72,9 @@ public IndexTemplate()
 private void printInput(String name, String label, String type)
 {{
 	<div class="control-group">
-		<label class="control-label" for="<%name%>"><%html.text(label);%></label>
+		<label class="control-label" for="^name"><%html.text(label);%></label>
 		<div class="controls">
-			<input type="<%type%>" id="<%name%>" name="<%name%>" value="">
+			<input type="^type" id="^name" name="^name" value="">
 		</div>
 	</div>
 }}

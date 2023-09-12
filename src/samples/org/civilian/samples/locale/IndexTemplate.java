@@ -80,7 +80,7 @@ public class IndexTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<td><b>current locale is</b></td>");               // line 35: <td><b>current locale is</b></td>
 		out.print("<td><b>");                                           // line 36: <td><b>
-		out.print(locale);                                              // line 36: <%locale%>
+		out.print(locale);                                              // line 36: ^locale
 		out.print(", ");                                                // line 36: ,
 		out.print(locale.getDisplayName());                             // line 36: <%locale.getDisplayName()%>
 		out.println("</b></td>");                                       // line 36: </b></td>
