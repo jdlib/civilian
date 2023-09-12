@@ -140,15 +140,6 @@ class CspTLineParser
 		while(start < length)
 		{
 			int pHat = line.indexOf(CspSymbols.hat, start);
-			int pLtPercent = line.indexOf(CspSymbols.exprStart, start);
-			if ((pHat != -1) && (pLtPercent != -1))
-			{
-				if (pHat < pLtPercent)
-					pLtPercent = -1;
-				else
-					pHat = -1;
-			}
-			
 			if (pHat >= 0)
 			{
 				if (start < pHat)
@@ -180,33 +171,6 @@ class CspTLineParser
 					// (^<name> | ^<name>? | ^{<expr>} | ^{<expr?} | ^{stmt;}
 					start = parseCodeSnippet(line, start);
 				}
-			}
-			else if (pLtPercent >= 0)
-			{
-				if (start < pLtPercent)
-					addLiteralPart(LiteralType.TEXT, line.substring(start, pLtPercent));
-
-				int q = line.indexOf(CspSymbols.exprEnd, pLtPercent);
-
-				// code end signal not found
-				if (q == -1)
-					scanner_.exception("closing '" + CspSymbols.exprEnd + "' not found");
-
-				if (q > pLtPercent + 2)
-				{
-					String snippetRaw  = line.substring(pLtPercent, q + 2);
-					String snippetCode = line.substring(pLtPercent + 2, q).trim();
-					LiteralType type;
-					if (snippetCode.endsWith(";"))
-					{
-						type = LiteralType.JAVA_STATEMENT;
-					}
-					else
-						type = LiteralType.JAVA_EXPRESSION;
-
-					addLiteralPart(type, snippetRaw, snippetCode);
-				}
-				start = q + 2;
 			}
 			else
 				break;
