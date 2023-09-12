@@ -27,20 +27,20 @@ private void link(String url, String text)
 private void printWelcome()
 {{
 	<tab>
-		<tab-heading><%lang.msg(Message.Start)%></tab-heading>
+		<tab-heading>^{lang.msg(Message.Start)}</tab-heading>
 		<h3>Welcome</h3>to the Customer Relationship (CRM) sample of 
-		<%link("http://www.civilian-framework.org/", "Civilian Framework");%>.
+		^{link("http://www.civilian-framework.org/", "Civilian Framework");}.
 		<p>
 		Civilian CRM is a proof of concept application how to build an <b>arbitrarily complex Rich 
 		Internet Application</b>, using a REST-based server and modern JavaScript frameworks.<br>
 		Complex translates mainly to a lot of input forms which interact with database content.
 		</p>
 		<p>
-		It uses <%link("http://www.civilian-framework.org/", "Civilian");%> on the server-side, 
-		and <%link("http://www.angularjs.org/", "AngularJS");%>,
-		<%link("http://angular-ui.github.io/", "AngularUI");%>,
-		<%link("http://jquery.com/", "JQuery");%>,
-		<%link("http://getbootstrap.com/2.3.2/", "Twitter Bootstrap");%> to implement an interactive client.
+		It uses ^{link("http://www.civilian-framework.org/", "Civilian");} on the server-side, 
+		and ^{link("http://www.angularjs.org/", "AngularJS");},
+		^{link("http://angular-ui.github.io/", "AngularUI");},
+		^{link("http://jquery.com/", "JQuery");},
+		^{link("http://getbootstrap.com/2.3.2/", "Twitter Bootstrap");} to implement an interactive client.
 		</p>
 		The <b>navigation design</b> is as follows:<br>
 		<ul>

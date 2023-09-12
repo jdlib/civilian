@@ -52,5 +52,5 @@ template(Template content, AdminApp adminApp, ServerApp viewedApp, Resource appR
 
 private void printNavItem(String label, Url url, boolean active)
 {{
-	<li^active?| class="active"|><a href="^url">^label</a></li>
+	<li^?active| class="active"|><a href="^url">^label</a></li>
 }}

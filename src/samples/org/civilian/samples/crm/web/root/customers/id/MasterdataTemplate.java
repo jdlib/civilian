@@ -37,19 +37,19 @@ public class MasterdataTemplate extends CspTemplate
 		org.civilian.template.ComponentBuilder cspCb0 = t.colspan(4);
 		cspCb0.startComponent(false);                                   // line 9: t.colspan(4)
 		out.print("<b>");                                               // line 9: <b>
-		out.print(lang.msg(Message.Company));                           // line 9: <%lang.msg(Message.Company)%>
+		out.print(lang.msg(Message.Company));                           // line 9: ^{lang.msg(Message.Company)}
 		out.print("</b>");                                              // line 9: </b>
 		cspCb0.endComponent(false);
 		cspCb0 = t.colspan(2);
 		cspCb0.startComponent(false);                                   // line 10: t.colspan(2)
 		out.print("<b>");                                               // line 10: <b>
-		out.print(lang.msg(Message.Internal));                          // line 10: <%lang.msg(Message.Internal)%>
+		out.print(lang.msg(Message.Internal));                          // line 10: ^{lang.msg(Message.Internal)}
 		out.print("</b>");                                              // line 10: </b>
 		cspCb0.endComponent(false);
 		//-----------------------------------------------               // line 11: @//-----------------------------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 12: t
-		out.print(lang.msg(Message.Name));                              // line 12: <%lang.msg(Message.Name)%>
+		out.print(lang.msg(Message.Name));                              // line 12: ^{lang.msg(Message.Name)}
 		cspCb0.endComponent(false);
 		cspCb0 = t.colspan(3);
 		cspCb0.startComponent(false);                                   // line 13: t.colspan(3)
@@ -57,7 +57,7 @@ public class MasterdataTemplate extends CspTemplate
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 14: t
-		out.print(lang.msg(Message.Type));                              // line 14: <%lang.msg(Message.Type)%>
+		out.print(lang.msg(Message.Type));                              // line 14: ^{lang.msg(Message.Type)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 15: t
@@ -82,7 +82,7 @@ public class MasterdataTemplate extends CspTemplate
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 23: t
-		out.print(lang.msg(Message.Number));                            // line 23: <%lang.msg(Message.Number)%>
+		out.print(lang.msg(Message.Number));                            // line 23: ^{lang.msg(Message.Number)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 24: t
@@ -91,7 +91,7 @@ public class MasterdataTemplate extends CspTemplate
 		//-----------------------------------------------               // line 25: @//-----------------------------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 26: t
-		out.print(lang.msg(Message.ParentCompany));                     // line 26: <%lang.msg(Message.ParentCompany)%>
+		out.print(lang.msg(Message.ParentCompany));                     // line 26: ^{lang.msg(Message.ParentCompany)}
 		cspCb0.endComponent(false);
 		cspCb0 = t.colspan(2);
 		cspCb0.startComponent(false);                                   // line 27: t.colspan(2)
@@ -103,7 +103,7 @@ public class MasterdataTemplate extends CspTemplate
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 29: t
-		out.print(lang.msg(Message.Status));                            // line 29: <%lang.msg(Message.Status)%>
+		out.print(lang.msg(Message.Status));                            // line 29: ^{lang.msg(Message.Status)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 30: t
@@ -112,7 +112,7 @@ public class MasterdataTemplate extends CspTemplate
 		//-----------------------------------------------               // line 31: @//-----------------------------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 32: t
-		out.print(lang.msg(Message.Enterprise));                        // line 32: <%lang.msg(Message.Enterprise)%>
+		out.print(lang.msg(Message.Enterprise));                        // line 32: ^{lang.msg(Message.Enterprise)}
 		cspCb0.endComponent(false);
 		cspCb0 = t.colspan(2);
 		cspCb0.startComponent(false);                                   // line 33: t.colspan(2)
@@ -122,9 +122,9 @@ public class MasterdataTemplate extends CspTemplate
 		//-----------------------------------------------               // line 35: @//-----------------------------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 36: t
-		out.print(lang.msg(Message.Country));                           // line 36: <%lang.msg(Message.Country)%>
+		out.print(lang.msg(Message.Country));                           // line 36: ^{lang.msg(Message.Country)}
 		out.print(", ");                                                // line 36: ,
-		out.print(lang.msg(Message.Code));                              // line 36: <%lang.msg(Message.Code)%>
+		out.print(lang.msg(Message.Code));                              // line 36: ^{lang.msg(Message.Code)}
 		cspCb0.endComponent(false);
 		cspCb0 = t.colspan(2);
 		cspCb0.startComponent(false);                                   // line 37: t.colspan(2)
@@ -138,7 +138,7 @@ public class MasterdataTemplate extends CspTemplate
 		//-----------------------------------------------               // line 40: @//-----------------------------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 41: t
-		out.print(lang.msg(Message.State));                             // line 41: <%lang.msg(Message.State)%>
+		out.print(lang.msg(Message.State));                             // line 41: ^{lang.msg(Message.State)}
 		cspCb0.endComponent(false);
 		cspCb0 = t.colspan(2);
 		cspCb0.startComponent(false);                                   // line 42: t.colspan(2)
@@ -152,9 +152,9 @@ public class MasterdataTemplate extends CspTemplate
 		//-----------------------------------------------               // line 45: @//-----------------------------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 46: t
-		out.print(lang.msg(Message.Zip));                               // line 46: <%lang.msg(Message.Zip)%>
+		out.print(lang.msg(Message.Zip));                               // line 46: ^{lang.msg(Message.Zip)}
 		out.print(", ");                                                // line 46: ,
-		out.print(lang.msg(Message.City));                              // line 46: <%lang.msg(Message.City)%>
+		out.print(lang.msg(Message.City));                              // line 46: ^{lang.msg(Message.City)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 47: t
@@ -166,7 +166,7 @@ public class MasterdataTemplate extends CspTemplate
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 49: t
-		out.print(lang.msg(Message.createdAt));                         // line 49: <%lang.msg(Message.createdAt)%>
+		out.print(lang.msg(Message.createdAt));                         // line 49: ^{lang.msg(Message.createdAt)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 50: t
@@ -175,7 +175,7 @@ public class MasterdataTemplate extends CspTemplate
 		//-----------------------------------------------               // line 51: @//-----------------------------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 52: t
-		out.print(lang.msg(Message.Street));                            // line 52: <%lang.msg(Message.Street)%>
+		out.print(lang.msg(Message.Street));                            // line 52: ^{lang.msg(Message.Street)}
 		cspCb0.endComponent(false);
 		cspCb0 = t.colspan(3);
 		cspCb0.startComponent(false);                                   // line 53: t.colspan(3)
@@ -183,7 +183,7 @@ public class MasterdataTemplate extends CspTemplate
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 54: t
-		out.print(lang.msg(Message.changedAt));                         // line 54: <%lang.msg(Message.changedAt)%>
+		out.print(lang.msg(Message.changedAt));                         // line 54: ^{lang.msg(Message.changedAt)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 55: t
@@ -199,7 +199,7 @@ public class MasterdataTemplate extends CspTemplate
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 59: t
-		out.print(lang.msg(Message.by));                                // line 59: <%lang.msg(Message.by)%>
+		out.print(lang.msg(Message.by));                                // line 59: ^{lang.msg(Message.by)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 60: t
@@ -208,9 +208,9 @@ public class MasterdataTemplate extends CspTemplate
 		//-----------------------------------------------               // line 61: @//-----------------------------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 62: t
-		out.print(lang.msg(Message.Zip));                               // line 62: <%lang.msg(Message.Zip)%>
+		out.print(lang.msg(Message.Zip));                               // line 62: ^{lang.msg(Message.Zip)}
 		out.print(", ");                                                // line 62: ,
-		out.print(lang.msg(Message.Postbox));                           // line 62: <%lang.msg(Message.Postbox)%>
+		out.print(lang.msg(Message.Postbox));                           // line 62: ^{lang.msg(Message.Postbox)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 63: t
@@ -224,7 +224,7 @@ public class MasterdataTemplate extends CspTemplate
 		//-----------------------------------------------               // line 66: @//-----------------------------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 67: t
-		out.print(lang.msg(Message.Telephone));                         // line 67: <%lang.msg(Message.Telephone)%>
+		out.print(lang.msg(Message.Telephone));                         // line 67: ^{lang.msg(Message.Telephone)}
 		cspCb0.endComponent(false);
 		cspCb0 = t.colspan(3);
 		cspCb0.startComponent(false);                                   // line 68: t.colspan(3)
@@ -234,7 +234,7 @@ public class MasterdataTemplate extends CspTemplate
 		//-----------------------------------------------               // line 70: @//-----------------------------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 71: t
-		out.print(lang.msg(Message.Fax));                               // line 71: <%lang.msg(Message.Fax)%>
+		out.print(lang.msg(Message.Fax));                               // line 71: ^{lang.msg(Message.Fax)}
 		cspCb0.endComponent(false);
 		cspCb0 = t.colspan(3);
 		cspCb0.startComponent(false);                                   // line 72: t.colspan(3)
@@ -244,7 +244,7 @@ public class MasterdataTemplate extends CspTemplate
 		//-----------------------------------------------               // line 74: @//-----------------------------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 75: t
-		out.print(lang.msg(Message.Homepage));                          // line 75: <%lang.msg(Message.Homepage)%>
+		out.print(lang.msg(Message.Homepage));                          // line 75: ^{lang.msg(Message.Homepage)}
 		cspCb0.endComponent(false);
 		cspCb0 = t.colspan(3);
 		cspCb0.startComponent(false);                                   // line 76: t.colspan(3)
@@ -260,10 +260,10 @@ public class MasterdataTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<br>");                                            // line 81: <br>
 		out.print("<button ng-disabled=\"form.$pristine || form.$invalid\" class=\"btn btn-primary\">"); // line 82: <button ng-disabled="form.$pristine || form.$invalid" class="btn btn-primary">
-		out.print(lang.msg(Message.Save));                              // line 82: <%lang.msg(Message.Save)%>
+		out.print(lang.msg(Message.Save));                              // line 82: ^{lang.msg(Message.Save)}
 		out.println("</button>");                                       // line 82: </button>
 		out.print("<button ng-disabled=\"form.$pristine\" class=\"btn\">"); // line 83: <button ng-disabled="form.$pristine" class="btn">
-		out.print(lang.msg(Message.Cancel));                            // line 83: <%lang.msg(Message.Cancel)%>
+		out.print(lang.msg(Message.Cancel));                            // line 83: ^{lang.msg(Message.Cancel)}
 		out.println("</button>");                                       // line 83: </button>
 		out.decreaseTab();
 		cspCb0.endComponent(true);                                      // line 84: ]

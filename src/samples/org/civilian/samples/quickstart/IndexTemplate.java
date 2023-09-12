@@ -43,10 +43,10 @@ public class IndexTemplate extends CspTemplate
 		out.println("<body>");                                          // line 13: <body>
 		out.println("<h1>Hello World</h1>");                            // line 14: <h1>Hello World</h1>
 		out.print("<a href=\"");                                        // line 15: <a href="
-		out.print(html.url(QsResources.root.users));                    // line 15: <%html.url(QsResources.root.users)%>
+		out.print(html.url(QsResources.root.users));                    // line 15: ^{html.url(QsResources.root.users)}
 		out.println("\">Users</a><br>");                                // line 15: ">Users</a><br>
 		out.print("<a href=\"");                                        // line 16: <a href="
-		out.print(html.url(QsResources.root.users.$userId).setPathParam(Integer.valueOf(123))); // line 16: <%html.url(QsResources.root.users.$userId).setPathParam(Integer.valueOf(123))%>
+		out.print(html.url(QsResources.root.users.$userId).setPathParam(Integer.valueOf(123))); // line 16: ^{html.url(QsResources.root.users.$userId).setPathParam(Integer.valueOf(123))}
 		out.println("\">User 123</a><br>");                             // line 16: ">User 123</a><br>
 		out.println("</body>");                                         // line 17: </body>
 		out.decreaseTab();

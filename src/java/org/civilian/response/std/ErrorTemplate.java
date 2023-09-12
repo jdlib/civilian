@@ -100,7 +100,7 @@ public class ErrorTemplate extends CspTemplate
 			out.print(what);                                            // line 52: ^what
 			out.println("</td>");                                       // line 52: </td>
 			out.print("<td>");                                          // line 53: <td>
-			html.text(text);                                            // line 53: <%html.text(text);%>
+			html.text(text);                                            // line 53: ^{html.text(text);}
 			out.println("</td>");                                       // line 53: </td>
 			out.decreaseTab();
 			out.println("</tr>");                                       // line 54: </tr>

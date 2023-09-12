@@ -11,7 +11,7 @@ template(Resource root, String outputPackage, String outputName, Application app
 	throws -
 {{
 	^'/**
-	^' * Generated ^timestamp?|at <%LocalDateTime.now()%> |by <%ClientConstGenerator.class.getName()%>.
+	^' * Generated ^?timestamp|at ^{LocalDateTime.now()} |by ^{ClientConstGenerator.class.getName()}.
 	^' * Do not edit.
 	^' */
 	package ^outputPackage;
@@ -34,7 +34,7 @@ private void printResourceClass(Resource resource)
 	@boolean isRoot        = resource.isRoot(); 
 	@String className      = isRoot ? outputName : buildClassName(resource);
 	@boolean hasController = resource.getData() != null;
-	public^{!isRoot?}| static| class ^className^hasController?| extends ^WEBRESOURCE| 
+	public^?{!isRoot}| static| class ^className^?hasController| extends ^WEBRESOURCE| 
 	{
 		public ^className^\
 		@if (isRoot)
@@ -46,7 +46,7 @@ private void printResourceClass(Resource resource)
 				super^\
 			@else
 				this.resource_ = new ^WEBRESOURCE^\
-			(<%printCtorArgs(resource, "parent");%>);
+			(^{printCtorArgs(resource, "parent");});
 			
 			@// print field definitions
 			@for (Resource child : resource.children())
@@ -56,11 +56,11 @@ private void printResourceClass(Resource resource)
 				addChild(^\
 				@if (!childHasController)
 					(^\
-				this.<%buildFieldName(child)%> = new ^\
+				this.^{buildFieldName(child)} = new ^\
 				@if (child.getChildCount() == 0)
-					^WEBRESOURCE(<%printCtorArgs(child, hasController ? "this" : "this.resource_");%>)^\
+					^WEBRESOURCE(^{printCtorArgs(child, hasController ? "this" : "this.resource_");})^\
 				@else
-					<%buildClassName(child)%>(this)^\
+					^{buildClassName(child)}(this)^\
 				@if (!childHasController)
 					).resource_^\
 				);
@@ -69,7 +69,7 @@ private void printResourceClass(Resource resource)
 		@for (Resource child : resource.children())
 			^'
 			@printResourceComment(child);
-			public final <%child.getChildCount() > 0 ? buildClassName(child) : WEBRESOURCE%> <%buildFieldName(child)%>;
+			public final ^{child.getChildCount() > 0 ? buildClassName(child) : WEBRESOURCE} ^{buildFieldName(child)};
 		@for (Resource child : resource.children())
 			@if (child.getChildCount() > 0)
 				@printResourceClass(child);
@@ -85,7 +85,7 @@ private void printResourceClass(Resource resource)
 private void printResourceComment(Resource resource)
 {{
 	^'/**
-	^' * Resource "^resource"^{resource.isRoot()?}| of application <%app.getClass().getName()%>|. 
+	^' * Resource "^resource"^?{resource.isRoot()}| of application ^{app.getClass().getName()}|. 
 	^' */ 
 }}
 
@@ -95,9 +95,9 @@ private void printCtorArgs(Resource resource, String parent)
 	@if (!resource.isRoot())
 		^parent, ^\ 
 		@if (resource.getSegment() != null)
-			"<%resource.getSegment()%>"^\
+			"^{resource.getSegment()}"^\
 		@else
-			<%app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())%>^\
+			^{app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())}^\
 	@else
 		url^\
 }}

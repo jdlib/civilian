@@ -5,9 +5,9 @@ template
 mixin lang
 {{
 	<div class="lookup-table">
-		<%new SearchTemplate(false)%>
+		^{new SearchTemplate(false)}
 	</div>
 	<hr>
-	<button ng-click="onOk()" ng-disabled="searchResult.empty()" class="btn btn-primary"><%lang.msg(Message.OK)%></button>
-	<button ng-click="onCancel()" class="btn"><%lang.msg(Message.Cancel)%></button>
+	<button ng-click="onOk()" ng-disabled="searchResult.empty()" class="btn btn-primary">^{lang.msg(Message.OK)}</button>
+	<button ng-click="onCancel()" class="btn">^{lang.msg(Message.Cancel)}</button>
 }}

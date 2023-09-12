@@ -37,7 +37,7 @@ public class IndexTemplate extends CspTemplate
 		table.startTable("class", "table table-form");                  // line 8: @table.startTable("class", "table table-form");
 		org.civilian.template.ComponentBuilder cspCb0 = table;
 		cspCb0.startComponent(false);                                   // line 9: table
-		out.print(lang.msg(Message.Name));                              // line 9: <%lang.msg(Message.Name)%>
+		out.print(lang.msg(Message.Name));                              // line 9: ^{lang.msg(Message.Name)}
 		cspCb0.endComponent(false);
 		cspCb0 = table;
 		cspCb0.startComponent(false);                                   // line 10: table
@@ -45,7 +45,7 @@ public class IndexTemplate extends CspTemplate
 		cspCb0.endComponent(false);
 		cspCb0 = table;
 		cspCb0.startComponent(false);                                   // line 11: table
-		out.print(lang.msg(Message.Volume));                            // line 11: <%lang.msg(Message.Volume)%>
+		out.print(lang.msg(Message.Volume));                            // line 11: ^{lang.msg(Message.Volume)}
 		cspCb0.endComponent(false);
 		cspCb0 = table;
 		cspCb0.startComponent(false);                                   // line 12: table
@@ -53,7 +53,7 @@ public class IndexTemplate extends CspTemplate
 		cspCb0.endComponent(false);
 		cspCb0 = table;
 		cspCb0.startComponent(false);                                   // line 13: table
-		out.print(lang.msg(Message.Probability));                       // line 13: <%lang.msg(Message.Probability)%>
+		out.print(lang.msg(Message.Probability));                       // line 13: ^{lang.msg(Message.Probability)}
 		cspCb0.endComponent(false);
 		cspCb0 = table;
 		cspCb0.startComponent(false);                                   // line 14: table

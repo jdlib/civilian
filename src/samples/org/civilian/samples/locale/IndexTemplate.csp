@@ -33,22 +33,22 @@ private void printLocale(Locale locale, LocalDate date)
 	</tr>
 	<tr>
 		<td><b>current locale is</b></td>
-		<td><b>^locale, <%locale.getDisplayName()%></b></td>
+		<td><b>^locale, ^{locale.getDisplayName()}</b></td>
 	</tr>
 	<tr>
 		<td>number</td>
-		<td><%lang.format(1234567890)%></td>		
+		<td>^{lang.format(1234567890)}</td>		
 	</tr>
 	<tr>
 		<td>decimal</td>
-		<td><%lang.format(334455.6677)%></td>		
+		<td>^{lang.format(334455.6677)}</td>		
 	</tr>
 	<tr>
 		<td>date</td>
-		<td><%lang.format(date)%></td>		
+		<td>^{lang.format(date)}</td>		
 	</tr>
 	<tr>
 		<td>translation</td>
-		<td><%lang.msg("civilian")%></td>		
+		<td>^{lang.msg("civilian")}</td>		
 	</tr>
 }}

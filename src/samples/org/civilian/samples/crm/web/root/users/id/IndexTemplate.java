@@ -37,7 +37,7 @@ public class IndexTemplate extends CspTemplate
 		//-----------------------------                                 // line 9: @//-----------------------------
 		org.civilian.template.ComponentBuilder cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 10: t
-		out.print(lang.msg(Message.Name));                              // line 10: <%lang.msg(Message.Name)%>
+		out.print(lang.msg(Message.Name));                              // line 10: ^{lang.msg(Message.Name)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 11: t
@@ -46,7 +46,7 @@ public class IndexTemplate extends CspTemplate
 		//-----------------------------                                 // line 12: @//-----------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 13: t
-		out.print(lang.msg(Message.FirstName));                         // line 13: <%lang.msg(Message.FirstName)%>
+		out.print(lang.msg(Message.FirstName));                         // line 13: ^{lang.msg(Message.FirstName)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 14: t
@@ -55,7 +55,7 @@ public class IndexTemplate extends CspTemplate
 		//-----------------------------                                 // line 15: @//-----------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 16: t
-		out.print(lang.msg(Message.Email));                             // line 16: <%lang.msg(Message.Email)%>
+		out.print(lang.msg(Message.Email));                             // line 16: ^{lang.msg(Message.Email)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 17: t
@@ -64,7 +64,7 @@ public class IndexTemplate extends CspTemplate
 		//-----------------------------                                 // line 18: @//-----------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 19: t
-		out.print(lang.msg(Message.Telephone));                         // line 19: <%lang.msg(Message.Telephone)%>
+		out.print(lang.msg(Message.Telephone));                         // line 19: ^{lang.msg(Message.Telephone)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 20: t
@@ -73,7 +73,7 @@ public class IndexTemplate extends CspTemplate
 		//-----------------------------                                 // line 21: @//-----------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 22: t
-		out.print(lang.msg(Message.isAdmin));                           // line 22: <%lang.msg(Message.isAdmin)%>
+		out.print(lang.msg(Message.isAdmin));                           // line 22: ^{lang.msg(Message.isAdmin)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 23: t
@@ -82,7 +82,7 @@ public class IndexTemplate extends CspTemplate
 		//-----------------------------                                 // line 24: @//-----------------------------
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 25: t
-		out.print(lang.msg(Message.Login));                             // line 25: <%lang.msg(Message.Login)%>
+		out.print(lang.msg(Message.Login));                             // line 25: ^{lang.msg(Message.Login)}
 		cspCb0.endComponent(false);
 		cspCb0 = t;
 		cspCb0.startComponent(false);                                   // line 26: t

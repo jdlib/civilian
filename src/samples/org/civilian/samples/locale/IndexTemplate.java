@@ -82,7 +82,7 @@ public class IndexTemplate extends CspTemplate
 		out.print("<td><b>");                                           // line 36: <td><b>
 		out.print(locale);                                              // line 36: ^locale
 		out.print(", ");                                                // line 36: ,
-		out.print(locale.getDisplayName());                             // line 36: <%locale.getDisplayName()%>
+		out.print(locale.getDisplayName());                             // line 36: ^{locale.getDisplayName()}
 		out.println("</b></td>");                                       // line 36: </b></td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 37: </tr>
@@ -90,7 +90,7 @@ public class IndexTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<td>number</td>");                                 // line 39: <td>number</td>
 		out.print("<td>");                                              // line 40: <td>
-		out.print(lang.format(1234567890));                             // line 40: <%lang.format(1234567890)%>
+		out.print(lang.format(1234567890));                             // line 40: ^{lang.format(1234567890)}
 		out.println("</td>");                                           // line 40: </td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 41: </tr>
@@ -98,7 +98,7 @@ public class IndexTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<td>decimal</td>");                                // line 43: <td>decimal</td>
 		out.print("<td>");                                              // line 44: <td>
-		out.print(lang.format(334455.6677));                            // line 44: <%lang.format(334455.6677)%>
+		out.print(lang.format(334455.6677));                            // line 44: ^{lang.format(334455.6677)}
 		out.println("</td>");                                           // line 44: </td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 45: </tr>
@@ -106,7 +106,7 @@ public class IndexTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<td>date</td>");                                   // line 47: <td>date</td>
 		out.print("<td>");                                              // line 48: <td>
-		out.print(lang.format(date));                                   // line 48: <%lang.format(date)%>
+		out.print(lang.format(date));                                   // line 48: ^{lang.format(date)}
 		out.println("</td>");                                           // line 48: </td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 49: </tr>
@@ -114,7 +114,7 @@ public class IndexTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<td>translation</td>");                            // line 51: <td>translation</td>
 		out.print("<td>");                                              // line 52: <td>
-		out.print(lang.msg("civilian"));                                // line 52: <%lang.msg("civilian")%>
+		out.print(lang.msg("civilian"));                                // line 52: ^{lang.msg("civilian")}
 		out.println("</td>");                                           // line 52: </td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 53: </tr>

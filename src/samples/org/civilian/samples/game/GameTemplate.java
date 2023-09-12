@@ -52,19 +52,19 @@ public class GameTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<h1>Guess a number:</h1>");                        // line 12: <h1>Guess a number:</h1>
 		out.print("I'm thinking of a number between ");                 // line 13: I'm thinking of a number between
-		out.print(game.getSmallest());                                  // line 13: <%game.getSmallest()%>
+		out.print(game.getSmallest());                                  // line 13: ^{game.getSmallest()}
 		out.print(" and ");                                             // line 13: and
-		out.print(game.getBiggest());                                   // line 13: <%game.getBiggest()%>
+		out.print(game.getBiggest());                                   // line 13: ^{game.getBiggest()}
 		out.println(".<br>");                                           // line 13: .<br>
 		out.print("You have ");                                         // line 14: You have
-		out.print(game.getRemainingGuesses());                          // line 14: <%game.getRemainingGuesses()%>
+		out.print(game.getRemainingGuesses());                          // line 14: ^{game.getRemainingGuesses()}
 		out.println(" guesses remaining.");                             // line 14: guesses remaining.
 		out.println("<p>");                                             // line 15: <p>
 		formTable.print(form);                                          // line 16: @formTable.print(form);
 		if (feedback != null)                                           // line 17: @if (feedback != null)
 		{
 			out.print("<div>");                                         // line 18: <div>
-			html.text(feedback);                                        // line 18: <%html.text(feedback);%>
+			html.text(feedback);                                        // line 18: ^{html.text(feedback);}
 			out.println("</div>");                                      // line 18: </div>
 		}
 		out.decreaseTab();

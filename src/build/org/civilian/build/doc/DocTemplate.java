@@ -39,7 +39,7 @@ public class DocTemplate
 		out.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"); // line 12: <meta name="viewport" content="width=device-width, initial-scale=1">
 		out.println("<meta name=\"description\" content=\"civilian java web framework\">"); // line 13: <meta name="description" content="civilian java web framework">
 		out.print("<title>");                                           // line 14: <title>
-		printTitle();                                                   // line 14: <%printTitle();%>
+		printTitle();                                                   // line 14: ^{printTitle();}
 		out.println("</title>");                                        // line 14: </title>
 		out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"res/bootstrap/css/bootstrap.min.css\">"); // line 15: <link rel="stylesheet" type="text/css" href="res/bootstrap/css/bootstrap.min.css">
 		out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"res/civilian.css\">"); // line 16: <link rel="stylesheet" type="text/css" href="res/civilian.css">
@@ -99,7 +99,7 @@ public class DocTemplate
 	private void printNav(String file, String text)
 	{
 		out.print("<li");                                               // line 54: <li
-		if (inputFile.startsWith(file))                                 // line 54: ^{inputFile.startsWith(file)?}
+		if (inputFile.startsWith(file))                                 // line 54: ^?{inputFile.startsWith(file)}
 		{
 			out.print(" class=\"active\"");                             // line 54: class="active"
 		}
@@ -120,7 +120,7 @@ public class DocTemplate
 			for (String part : file.split("-"))                         // line 63: @for (String part : file.split("-"))
 			{
 				out.print(" - ");                                       // line 64: -
-				out.print(StringUtil.startUpperCase(part));             // line 64: <%StringUtil.startUpperCase(part)%>
+				out.print(StringUtil.startUpperCase(part));             // line 64: ^{StringUtil.startUpperCase(part)}
 			}
 		}
 	}

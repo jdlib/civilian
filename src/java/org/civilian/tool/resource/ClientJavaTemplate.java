@@ -38,14 +38,14 @@ class ClientJavaTemplate
 	{
 		out.println("/**");                                             // line 13: /**
 		out.print(" * Generated ");                                     // line 14: * Generated
-		if (timestamp)                                                  // line 14: ^timestamp?
+		if (timestamp)                                                  // line 14: ^?timestamp
 		{
 			out.print("at ");                                           // line 14: at
-			out.print(LocalDateTime.now());                             // line 14: <%LocalDateTime.now()%>
+			out.print(LocalDateTime.now());                             // line 14: ^{LocalDateTime.now()}
 			out.print(" ");                                             // line 14: 
 		}
 		out.print("by ");                                               // line 14: by
-		out.print(ClientConstGenerator.class.getName());                // line 14: <%ClientConstGenerator.class.getName()%>
+		out.print(ClientConstGenerator.class.getName());                // line 14: ^{ClientConstGenerator.class.getName()}
 		out.println(".");                                               // line 14: .
 		out.println(" * Do not edit.");                                 // line 15: * Do not edit.
 		out.println(" */");                                             // line 16: */
@@ -74,13 +74,13 @@ class ClientJavaTemplate
 		String className      = isRoot ? outputName : buildClassName(resource); // line 35: @String className      = isRoot ? outputName : buildClassName(resource);
 		boolean hasController = resource.getData() != null;             // line 36: @boolean hasController = resource.getData() != null;
 		out.print("public");                                            // line 37: public
-		if (!isRoot)                                                    // line 37: ^{!isRoot?}
+		if (!isRoot)                                                    // line 37: ^?{!isRoot}
 		{
 			out.print(" static");                                       // line 37: static
 		}
 		out.print(" class ");                                           // line 37: class
 		out.print(className);                                           // line 37: ^className
-		if (hasController)                                              // line 37: ^hasController?
+		if (hasController)                                              // line 37: ^?hasController
 		{
 			out.print(" extends ");                                     // line 37: extends
 			out.print(WEBRESOURCE);                                     // line 37: ^WEBRESOURCE
@@ -112,7 +112,7 @@ class ClientJavaTemplate
 			out.print(WEBRESOURCE);                                     // line 48: ^WEBRESOURCE
 		}
 		out.print("(");                                                 // line 49: (
-		printCtorArgs(resource, "parent");                              // line 49: <%printCtorArgs(resource, "parent");%>
+		printCtorArgs(resource, "parent");                              // line 49: ^{printCtorArgs(resource, "parent");}
 		out.println(");");                                              // line 49: );
 		out.println();
 		// print field definitions                                      // line 51: @// print field definitions
@@ -129,18 +129,18 @@ class ClientJavaTemplate
 				out.print("(");                                         // line 58: (
 			}
 			out.print("this.");                                         // line 59: this.
-			out.print(buildFieldName(child));                           // line 59: <%buildFieldName(child)%>
+			out.print(buildFieldName(child));                           // line 59: ^{buildFieldName(child)}
 			out.print(" = new ");                                       // line 59: = new
 			if (child.getChildCount() == 0)                             // line 60: @if (child.getChildCount() == 0)
 			{
 				out.print(WEBRESOURCE);                                 // line 61: ^WEBRESOURCE
 				out.print("(");                                         // line 61: (
-				printCtorArgs(child, hasController ? "this" : "this.resource_"); // line 61: <%printCtorArgs(child, hasController ? "this" : "this.resource_");%>
+				printCtorArgs(child, hasController ? "this" : "this.resource_"); // line 61: ^{printCtorArgs(child, hasController ? "this" : "this.resource_");}
 				out.print(")");                                         // line 61: )
 			}
 			else                                                        // line 62: @else
 			{
-				out.print(buildClassName(child));                       // line 63: <%buildClassName(child)%>
+				out.print(buildClassName(child));                       // line 63: ^{buildClassName(child)}
 				out.print("(this)");                                    // line 63: (this)
 			}
 			if (!childHasController)                                    // line 64: @if (!childHasController)
@@ -157,9 +157,9 @@ class ClientJavaTemplate
 			out.println();
 			printResourceComment(child);                                // line 71: @printResourceComment(child);
 			out.print("public final ");                                 // line 72: public final
-			out.print(child.getChildCount() > 0 ? buildClassName(child) : WEBRESOURCE); // line 72: <%child.getChildCount() > 0 ? buildClassName(child) : WEBRESOURCE%>
+			out.print(child.getChildCount() > 0 ? buildClassName(child) : WEBRESOURCE); // line 72: ^{child.getChildCount() > 0 ? buildClassName(child) : WEBRESOURCE}
 			out.print(" ");                                             // line 72: 
-			out.print(buildFieldName(child));                           // line 72: <%buildFieldName(child)%>
+			out.print(buildFieldName(child));                           // line 72: ^{buildFieldName(child)}
 			out.println(";");                                           // line 72: ;
 		}
 		for (Resource child : resource.children())                      // line 73: @for (Resource child : resource.children())
@@ -189,10 +189,10 @@ class ClientJavaTemplate
 		out.print(" * Resource \"");                                    // line 88: * Resource "
 		out.print(resource);                                            // line 88: ^resource
 		out.print("\"");                                                // line 88: "
-		if (resource.isRoot())                                          // line 88: ^{resource.isRoot()?}
+		if (resource.isRoot())                                          // line 88: ^?{resource.isRoot()}
 		{
 			out.print(" of application ");                              // line 88: of application
-			out.print(app.getClass().getName());                        // line 88: <%app.getClass().getName()%>
+			out.print(app.getClass().getName());                        // line 88: ^{app.getClass().getName()}
 		}
 		out.println(".");                                               // line 88: .
 		out.println(" */");                                             // line 89: */
@@ -208,12 +208,12 @@ class ClientJavaTemplate
 			if (resource.getSegment() != null)                          // line 97: @if (resource.getSegment() != null)
 			{
 				out.print("\"");                                        // line 98: "
-				out.print(resource.getSegment());                       // line 98: <%resource.getSegment()%>
+				out.print(resource.getSegment());                       // line 98: ^{resource.getSegment()}
 				out.print("\"");                                        // line 98: "
 			}
 			else                                                        // line 99: @else
 			{
-				out.print(app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())); // line 100: <%app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())%>
+				out.print(app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())); // line 100: ^{app.getControllerConfig().getPathParams().getConstant(resource.getPathParam())}
 			}
 		}
 		else                                                            // line 101: @else

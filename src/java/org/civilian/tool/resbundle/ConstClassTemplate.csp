@@ -18,14 +18,14 @@ template(ResBundleCompiler.Config config, String packageName, LocalDateTime gene
 	^'	
 	^'	
 	@if (hasIdClass && !config.inlineIdClass)
-		import <%config.idClass%>;
+		import ^{config.idClass};
 		^'	
 		^'	
 	^'/**
-	^' * Contains constants for resource bundle ids in <%config.excelFile.getName()%>.
+	^' * Contains constants for resource bundle ids in ^{config.excelFile.getName()}.
 	^' * Generated at ^generationTime. Do not edit directly.
 	^' */
-	public interface <%config.constClass%>
+	public interface ^{config.constClass}
 	{
 		@for (Translation t : translations)
 			@// javafy key: must be a valid java identifier
@@ -42,7 +42,7 @@ template(ResBundleCompiler.Config config, String packageName, LocalDateTime gene
 				public static final ^idClassSimple ^constantName^\
 				@for (int i=id.length(); i<=20; i++)
 					^' ^\
-				^' = ^hasIdClass?|new ^idClassSimple(|"<%escapeId(id)%>"^hasIdClass?|)|;
+				^' = ^?hasIdClass|new ^idClassSimple(|"^{escapeId(id)}"^?hasIdClass|)|;
 		@if (config.inlineIdClass)
 			^'	
 			^'	

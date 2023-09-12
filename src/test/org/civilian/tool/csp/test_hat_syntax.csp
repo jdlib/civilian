@@ -7,6 +7,8 @@ template(String name)
 	alpha^'beta
 	skipln^\ignored
 	^' mixed ^name^\
-	pre^today?| today |post 
-	pre^{today > 0?}[is ^name]post 
+	pre^?today| today |post 
+	pre^?{today > 0}[is ^name]post
+	expr: ^name or ^{name.length()}
+	stmt: ^{name = null;} 
 }}

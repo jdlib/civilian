@@ -16,42 +16,42 @@ template(Server server) mixin html
 	</tr>
 	<tr>
 		<td>Develop</td>
-		<td><%server.develop()%></td>
+		<td>^{server.develop()}</td>
 		<td>org.civilian.Server.develop()</td>
 	</tr>
 	<tr>
 		<td>Server Path</td>
-		<td><%server.getPath()%></td>
+		<td>^{server.getPath()}</td>
 		<td>org.civilian.Server.getPath()</td>
 	</tr>
 	<tr>
 		<td>Server Class</td>
-		<td><%server.getClass().getName()%></td>
+		<td>^{server.getClass().getName()}</td>
 		<td>org.civilian.Server.getClass()</td>
 	</tr>
 	<tr>
 		<td>Civilian Version</td>
-		<td><%Version.VALUE%></td>
+		<td>^{Version.VALUE}</td>
 		<td>org.civilian.Version.VALUE</td>
 	</tr>
 	<tr>
 		<td>Server</td>
-		<td><%server.getServerInfo()%> <%server.getServerVersion()%></td>
+		<td>^{server.getServerInfo()} ^{server.getServerVersion()}</td>
 		<td>org.civilian.Server.getServerInfo(), .getServerVersion()</td>
 	</tr>
 	<tr>
 		<td>Java Version, VM</td>
-		<td><%System.getProperty("java.version")%>, <%System.getProperty("java.vm.name")%></td>
+		<td>^{System.getProperty("java.version")}, ^{System.getProperty("java.vm.name")}</td>
 		<td>java.lang.System.getProperty()</td>
 	</tr>
 	<tr>
 		<td>Java Total Used Memory</td>
-		<td><%getMemory()%></td>
+		<td>^{getMemory()}</td>
 		<td>java.lang.Runtime.totalMemory()</td>
 	</tr>
 	<tr>
 		<td>System Date</td>
-		<td><%LocalDate.now()%></td>
+		<td>^{LocalDate.now()}</td>
 		<td></td>
 	</tr>
 	</table>
@@ -69,11 +69,11 @@ template(Server server) mixin html
 		@appUrl.setPathParam(app.getId()); 
 		<tr>
 			@// link within the admin app
-			<td><a href="^appUrl"><%app.getId()%></a></td>
+			<td><a href="^appUrl">^{app.getId()}</a></td>
 			@// link to the application itself 
-			<td><a target="_blank" href="<%html.url(app)%>"><%app.getPath()%></a></td>
-			<td><%app.getStatus()%></td>
-			<td><%app.getClass().getName()%></td>
+			<td><a target="_blank" href="^{html.url(app)}">^{app.getPath()}</a></td>
+			<td>^{app.getStatus()}</td>
+			<td>^{app.getClass().getName()}</td>
 		</tr>
 	</table>
 }}

@@ -44,12 +44,12 @@ public class IndexTemplate extends CspTemplate
 		if (message != null)                                            // line 8: @if (message != null)
 		{
 			out.print("<div>");                                         // line 9: <div>
-			html.text(message);                                         // line 9: <%html.text(message);%>
+			html.text(message);                                         // line 9: ^{html.text(message);}
 			out.println("</div>");                                      // line 9: </div>
 		}
 		out.println("<p>");                                             // line 10: <p>
 		out.print("<a href=\"");                                        // line 11: <a href="
-		out.print(html.url(createCtrlClass));                           // line 11: <%html.url(createCtrlClass)%>
+		out.print(html.url(createCtrlClass));                           // line 11: ^{html.url(createCtrlClass)}
 		out.println("\">Create</a>");                                   // line 11: ">Create</a>
 	}
 

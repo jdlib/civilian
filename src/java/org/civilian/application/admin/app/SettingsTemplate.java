@@ -51,7 +51,7 @@ public class SettingsTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<td>App Class</td>");                              // line 18: <td>App Class</td>
 		out.print("<td>");                                              // line 19: <td>
-		out.print(app.getClass().getName());                            // line 19: <%app.getClass().getName()%>
+		out.print(app.getClass().getName());                            // line 19: ^{app.getClass().getName()}
 		out.println("</td>");                                           // line 19: </td>
 		out.println("<td>org.civilian.Application.getClass()</td>");    // line 20: <td>org.civilian.Application.getClass()</td>
 		out.decreaseTab();
@@ -60,9 +60,9 @@ public class SettingsTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<td>App Path</td>");                               // line 23: <td>App Path</td>
 		out.print("<td><a target=\"_blank\" href=\"");                  // line 24: <td><a target="_blank" href="
-		out.print(html.url(app));                                       // line 24: <%html.url(app)%>
+		out.print(html.url(app));                                       // line 24: ^{html.url(app)}
 		out.print("\">");                                               // line 24: ">
-		out.print(app.getPath());                                       // line 24: <%app.getPath()%>
+		out.print(app.getPath());                                       // line 24: ^{app.getPath()}
 		out.println("</a></td>");                                       // line 24: </a></td>
 		out.println("<td>org.civilian.Application.getPath()</td>");     // line 25: <td>org.civilian.Application.getPath()</td>
 		out.decreaseTab();
@@ -71,7 +71,7 @@ public class SettingsTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<td>Status</td>");                                 // line 28: <td>Status</td>
 		out.print("<td>");                                              // line 29: <td>
-		out.print(app.getStatus());                                     // line 29: <%app.getStatus()%>
+		out.print(app.getStatus());                                     // line 29: ^{app.getStatus()}
 		out.println("</td>");                                           // line 29: </td>
 		out.println("<td>org.civilian.Application.getStatus()</td>");   // line 30: <td>org.civilian.Application.getStatus()</td>
 		out.decreaseTab();
@@ -80,7 +80,7 @@ public class SettingsTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<td>Encoding</td>");                               // line 33: <td>Encoding</td>
 		out.print("<td>");                                              // line 34: <td>
-		out.print(app.getDefaultCharEncoding());                        // line 34: <%app.getDefaultCharEncoding()%>
+		out.print(app.getDefaultCharEncoding());                        // line 34: ^{app.getDefaultCharEncoding()}
 		out.println("</td>");                                           // line 34: </td>
 		out.println("<td>org.civilian.Application.getDefaultCharEncoding()</td>"); // line 35: <td>org.civilian.Application.getDefaultCharEncoding()</td>
 		out.decreaseTab();
@@ -93,11 +93,11 @@ public class SettingsTemplate extends CspTemplate
 		LocaleServiceList services = app.getLocaleServices();           // line 40: @LocaleServiceList services = app.getLocaleServices();
 		for (int i=0; i<services.size(); i++)                           // line 41: @for (int i=0; i<services.size(); i++)
 		{
-			if (i > 0)                                                  // line 42: ^{i > 0?}
+			if (i > 0)                                                  // line 42: ^?{i > 0}
 			{
 				out.print(", ");                                        // line 42: ,
 			}
-			out.print(services.getLocale(i));                           // line 42: <%services.getLocale(i)%>
+			out.print(services.getLocale(i));                           // line 42: ^{services.getLocale(i)}
 			out.printlnIfNotEmpty();
 		}
 		out.decreaseTab();
@@ -128,13 +128,13 @@ public class SettingsTemplate extends CspTemplate
 			out.println("<tr>");                                        // line 63: <tr>
 			out.increaseTab();
 			out.print("<td>");                                          // line 64: <td>
-			out.print(i++);                                             // line 64: <%i++%>
+			out.print(i++);                                             // line 64: ^{i++}
 			out.println("</td>");                                       // line 64: </td>
 			out.print("<td>");                                          // line 65: <td>
-			out.print(entry.getKey());                                  // line 65: <%entry.getKey()%>
+			out.print(entry.getKey());                                  // line 65: ^{entry.getKey()}
 			out.println("</td>");                                       // line 65: </td>
 			out.print("<td>");                                          // line 66: <td>
-			out.print(entry.getValue().getClass().getName());           // line 66: <%entry.getValue().getClass().getName()%>
+			out.print(entry.getValue().getClass().getName());           // line 66: ^{entry.getValue().getClass().getName()}
 			out.println("</td>");                                       // line 66: </td>
 			out.decreaseTab();
 			out.println("</tr>");                                       // line 67: </tr>
@@ -162,26 +162,26 @@ public class SettingsTemplate extends CspTemplate
 			out.println("<tr>");                                        // line 85: <tr>
 			out.increaseTab();
 			out.print("<td>");                                          // line 86: <td>
-			out.print(i++);                                             // line 86: <%i++%>
+			out.print(i++);                                             // line 86: ^{i++}
 			out.println("</td>");                                       // line 86: </td>
 			out.print("<td>");                                          // line 87: <td>
-			out.print(processor.getClass().getSimpleName());            // line 87: <%processor.getClass().getSimpleName()%>
+			out.print(processor.getClass().getSimpleName());            // line 87: ^{processor.getClass().getSimpleName()}
 			out.println("</td>");                                       // line 87: </td>
 			out.println("<td>");                                        // line 88: <td>
 			out.increaseTab();
 			for (int j=0; j<infos.length; j++)                          // line 89: @for (int j=0; j<infos.length; j++)
 			{
-				if (j > 0)                                              // line 90: ^{j > 0?}
+				if (j > 0)                                              // line 90: ^?{j > 0}
 				{
 					out.print("<br>");                                  // line 90: <br>
 				}
-				html.text(infos[j]);                                    // line 90: <%html.text(infos[j]);%>
+				html.text(infos[j]);                                    // line 90: ^{html.text(infos[j]);}
 				out.printlnIfNotEmpty();
 			}
 			out.decreaseTab();
 			out.println("</td>");                                       // line 91: </td>
 			out.print("<td>");                                          // line 92: <td>
-			out.print(processor.getClass().getName());                  // line 92: <%processor.getClass().getName()%>
+			out.print(processor.getClass().getName());                  // line 92: ^{processor.getClass().getName()}
 			out.println("</td>");                                       // line 92: </td>
 			out.decreaseTab();
 			out.println("</tr>");                                       // line 93: </tr>

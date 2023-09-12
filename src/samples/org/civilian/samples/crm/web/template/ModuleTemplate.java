@@ -23,7 +23,7 @@ public class ModuleTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<div ng-show=\"showSearch\">");                    // line 7: <div ng-show="showSearch">
 		out.increaseTab();
-		out.print(new SearchTemplate(true));                            // line 8: <%new SearchTemplate(true)%>
+		out.print(new SearchTemplate(true));                            // line 8: ^{new SearchTemplate(true)}
 		out.printlnIfNotEmpty();
 		out.decreaseTab();
 		out.println("</div>");                                          // line 9: </div>

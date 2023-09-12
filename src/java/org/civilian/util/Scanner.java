@@ -381,6 +381,20 @@ public class Scanner
 	}
 	
 
+	public boolean next(char c)
+	{
+		autoSkipWhitespace();
+		
+		if (c == current())
+		{
+			skip();
+			return true;
+		}
+		else
+			return false;
+	}
+
+	
 	/**
 	 * Tests if the rest of the current line starts with the given string
 	 * and is not immediately followed by a Java identifier char.

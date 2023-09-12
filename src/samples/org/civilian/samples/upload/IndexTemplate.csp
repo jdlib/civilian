@@ -40,12 +40,12 @@ template(IndexForm form) mixin html, lang, formTable
 			<p>
 			<h3>2. The server received an error:</h3>
 			<code>request.getUploads().error()</code> says<p><br>
-			<%html.stackTrace(uploadError);%>
+			^{html.stackTrace(uploadError);}
 		@else
 			@Upload[] uploads = form.file.getUploads();
 			@if (uploads.length != 0)
 				<p>
-				<h3 style="margin-top:30px">2. The server received <%uploads.length%> uploads</h3> 
+				<h3 style="margin-top:30px">2. The server received ^{uploads.length} uploads</h3> 
 				<table class="table table-bordered table-form">
 				<tr>
 					<th>#</th>
@@ -57,9 +57,9 @@ template(IndexForm form) mixin html, lang, formTable
 					@Upload upload = uploads[i];
 					<tr>
 						<td>^i</td>
-						<td><%lang.format(upload.length())%> bytes</td>
-						<td><%upload.getContentType()%></td>
-						<td><%upload.getFileName()%></td>
+						<td>^{lang.format(upload.length())} bytes</td>
+						<td>^{upload.getContentType()}</td>
+						<td>^{upload.getFileName()}</td>
 					</tr>
 				</table>			
 				</div>

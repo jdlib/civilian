@@ -61,14 +61,14 @@ public class IndexTemplate extends CspTemplate
 		out.println("<tr>");                                            // line 19: <tr>
 		out.increaseTab();
 		out.print("<td>");                                              // line 20: <td>
-		formTable.label(form.zip);                                      // line 20: <%formTable.label(form.zip);%>
+		formTable.label(form.zip);                                      // line 20: ^{formTable.label(form.zip);}
 		out.print(", ");                                                // line 20: ,
-		formTable.label(form.city);                                     // line 20: <%formTable.label(form.city);%>
+		formTable.label(form.city);                                     // line 20: ^{formTable.label(form.city);}
 		out.println("</td>");                                           // line 20: </td>
 		out.print("<td>");                                              // line 21: <td>
-		formTable.control(form.zip);                                    // line 21: <%formTable.control(form.zip);%>
+		formTable.control(form.zip);                                    // line 21: ^{formTable.control(form.zip);}
 		out.print(" ");                                                 // line 21: 
-		formTable.control(form.city);                                   // line 21: <%formTable.control(form.city);%>
+		formTable.control(form.city);                                   // line 21: ^{formTable.control(form.city);}
 		out.println("</td>");                                           // line 21: </td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 22: </tr>
@@ -76,11 +76,11 @@ public class IndexTemplate extends CspTemplate
 		out.increaseTab();
 		formTable.labelCell(form.range);                                // line 24: @formTable.labelCell(form.range);
 		out.print("<td>");                                              // line 25: <td>
-		out.print(form.range.getMin());                                 // line 25: <%form.range.getMin()%>
+		out.print(form.range.getMin());                                 // line 25: ^{form.range.getMin()}
 		out.print(" ");                                                 // line 25: 
-		formTable.control(form.range);                                  // line 25: <%formTable.control(form.range);%>
+		formTable.control(form.range);                                  // line 25: ^{formTable.control(form.range);}
 		out.print(" ");                                                 // line 25: 
-		out.print(form.range.getMax());                                 // line 25: <%form.range.getMax()%>
+		out.print(form.range.getMax());                                 // line 25: ^{form.range.getMax()}
 		out.println("</td>");                                           // line 25: </td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 26: </tr>
@@ -98,7 +98,7 @@ public class IndexTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<br>");                                            // line 35: <br>
 		out.print("You clicked OK <span class=\"badge badge-success\">"); // line 36: You clicked OK <span class="badge badge-success">
-		out.print(form.counter.getValue());                             // line 36: <%form.counter.getValue()%>
+		out.print(form.counter.getValue());                             // line 36: ^{form.counter.getValue()}
 		out.println("</span> times.");                                  // line 36: </span> times.
 		out.decreaseTab();
 		out.println("</td>");                                           // line 37: </td>

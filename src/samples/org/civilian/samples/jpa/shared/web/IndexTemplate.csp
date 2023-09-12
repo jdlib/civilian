@@ -6,7 +6,7 @@ template(IndexForm form, String message, Class<? extends Controller> createCtrlC
 	<h1>JPA Sample</h1>
 	@formTable.print(form);
 	@if (message != null)
-		<div><%html.text(message);%></div>
+		<div>^{html.text(message);}</div>
 	<p>
-	<a href="<%html.url(createCtrlClass)%>">Create</a>	
+	<a href="^{html.url(createCtrlClass)}">Create</a>	
 }}	

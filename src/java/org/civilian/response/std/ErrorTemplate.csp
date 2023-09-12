@@ -50,6 +50,6 @@ private void printInfo(String what, String text)
 	@if (text != null)
 		<tr>
 			<td>^what</td>
-			<td><%html.text(text);%></td>
+			<td>^{html.text(text);}</td>
 		</tr>
 }}

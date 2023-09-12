@@ -103,9 +103,9 @@ public class ResourcesTemplate extends CspTemplate
 		out.println("<td><a href=\"javascript:;\" ng-click=\"showDetails(r)\">{{r.path}}</a></td>"); // line 48: <td><a href="javascript:;" ng-click="showDetails(r)">{{r.path}}</a></td>
 		out.println("<td>{{r.controller}}</td>");                       // line 49: <td>{{r.controller}}</td>
 		out.print("<td><a ng-href=\"");                                 // line 50: <td><a ng-href="
-		out.print(app.getPath());                                       // line 50: <%app.getPath()%>
+		out.print(app.getPath());                                       // line 50: ^{app.getPath()}
 		out.print("{{r.path}}\" target=\"");                            // line 50: {{r.path}}" target="
-		out.print(app.getId());                                         // line 50: <%app.getId()%>
+		out.print(app.getId());                                         // line 50: ^{app.getId()}
 		out.println("\"><i class=\"icon-share-alt\"></i></a></td>");    // line 50: "><i class="icon-share-alt"></i></a></td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 51: </tr>
@@ -137,7 +137,7 @@ public class ResourcesTemplate extends CspTemplate
 			out.print("{ controller: \"");                              // line 70: { controller: "
 			out.print(data);                                            // line 70: ^data
 			out.print("\", path: \"");                                  // line 70: ", path: "
-			out.print(path.length() != 0 ? path : "/");                 // line 70: <%path.length() != 0 ? path : "/"%>
+			out.print(path.length() != 0 ? path : "/");                 // line 70: ^{path.length() != 0 ? path : "/"}
 			out.println("\" },");                                       // line 70: " },
 		}
 	}

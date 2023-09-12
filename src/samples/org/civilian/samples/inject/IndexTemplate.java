@@ -83,7 +83,7 @@ public class IndexTemplate extends CspTemplate
 			out.increaseTab();
 			out.println("<td>Your IP</td>");                            // line 33: <td>Your IP</td>
 			out.print("<td>");                                          // line 34: <td>
-			html.text(remoteIp);                                        // line 34: <%html.text(remoteIp);%>
+			html.text(remoteIp);                                        // line 34: ^{html.text(remoteIp);}
 			out.println("</td>");                                       // line 34: </td>
 			out.decreaseTab();
 			out.println("</tr>");                                       // line 35: </tr>
@@ -91,7 +91,7 @@ public class IndexTemplate extends CspTemplate
 			out.increaseTab();
 			out.println("<td>Accept-Header</td>");                      // line 37: <td>Accept-Header</td>
 			out.print("<td>");                                          // line 38: <td>
-			html.text(acceptHeader);                                    // line 38: <%html.text(acceptHeader);%>
+			html.text(acceptHeader);                                    // line 38: ^{html.text(acceptHeader);}
 			out.println("</td>");                                       // line 38: </td>
 			out.decreaseTab();
 			out.println("</tr>");                                       // line 39: </tr>
@@ -99,7 +99,7 @@ public class IndexTemplate extends CspTemplate
 			out.increaseTab();
 			out.println("<td>Last Name</td>");                          // line 41: <td>Last Name</td>
 			out.print("<td>");                                          // line 42: <td>
-			html.text(registration.getLastName());                      // line 42: <%html.text(registration.getLastName());%>
+			html.text(registration.getLastName());                      // line 42: ^{html.text(registration.getLastName());}
 			out.println("</td>");                                       // line 42: </td>
 			out.decreaseTab();
 			out.println("</tr>");                                       // line 43: </tr>
@@ -107,7 +107,7 @@ public class IndexTemplate extends CspTemplate
 			out.increaseTab();
 			out.println("<td>First Name</td>");                         // line 45: <td>First Name</td>
 			out.print("<td>");                                          // line 46: <td>
-			html.text(registration.getFirstName());                     // line 46: <%html.text(registration.getFirstName());%>
+			html.text(registration.getFirstName());                     // line 46: ^{html.text(registration.getFirstName());}
 			out.println("</td>");                                       // line 46: </td>
 			out.decreaseTab();
 			out.println("</tr>");                                       // line 47: </tr>
@@ -115,7 +115,7 @@ public class IndexTemplate extends CspTemplate
 			out.increaseTab();
 			out.println("<td>Email</td>");                              // line 49: <td>Email</td>
 			out.print("<td>");                                          // line 50: <td>
-			html.text(registration.getEmail());                         // line 50: <%html.text(registration.getEmail());%>
+			html.text(registration.getEmail());                         // line 50: ^{html.text(registration.getEmail());}
 			out.println("</td>");                                       // line 50: </td>
 			out.decreaseTab();
 			out.println("</tr>");                                       // line 51: </tr>
@@ -123,7 +123,7 @@ public class IndexTemplate extends CspTemplate
 			out.increaseTab();
 			out.println("<td>Age</td>");                                // line 53: <td>Age</td>
 			out.print("<td>");                                          // line 54: <td>
-			out.print(registration.getAge());                           // line 54: <%registration.getAge()%>
+			out.print(registration.getAge());                           // line 54: ^{registration.getAge()}
 			out.println("</td>");                                       // line 54: </td>
 			out.decreaseTab();
 			out.println("</tr>");                                       // line 55: </tr>
@@ -155,7 +155,7 @@ public class IndexTemplate extends CspTemplate
 		out.print("<label class=\"control-label\" for=\"");             // line 75: <label class="control-label" for="
 		out.print(name);                                                // line 75: ^name
 		out.print("\">");                                               // line 75: ">
-		html.text(label);                                               // line 75: <%html.text(label);%>
+		html.text(label);                                               // line 75: ^{html.text(label);}
 		out.println("</label>");                                        // line 75: </label>
 		out.println("<div class=\"controls\">");                        // line 76: <div class="controls">
 		out.increaseTab();

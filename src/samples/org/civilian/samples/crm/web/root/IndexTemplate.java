@@ -63,10 +63,10 @@ public class IndexTemplate extends CspTemplate
 		out.println("<tab>");                                           // line 29: <tab>
 		out.increaseTab();
 		out.print("<tab-heading>");                                     // line 30: <tab-heading>
-		out.print(lang.msg(Message.Start));                             // line 30: <%lang.msg(Message.Start)%>
+		out.print(lang.msg(Message.Start));                             // line 30: ^{lang.msg(Message.Start)}
 		out.println("</tab-heading>");                                  // line 30: </tab-heading>
 		out.println("<h3>Welcome</h3>to the Customer Relationship (CRM) sample of"); // line 31: <h3>Welcome</h3>to the Customer Relationship (CRM) sample of
-		link("http://www.civilian-framework.org/", "Civilian Framework"); // line 32: <%link("http://www.civilian-framework.org/", "Civilian Framework");%>
+		link("http://www.civilian-framework.org/", "Civilian Framework"); // line 32: ^{link("http://www.civilian-framework.org/", "Civilian Framework");}
 		out.println(".");                                               // line 32: .
 		out.println("<p>");                                             // line 33: <p>
 		out.println("Civilian CRM is a proof of concept application how to build an <b>arbitrarily complex Rich"); // line 34: Civilian CRM is a proof of concept application how to build an <b>arbitrarily complex Rich
@@ -75,16 +75,16 @@ public class IndexTemplate extends CspTemplate
 		out.println("</p>");                                            // line 37: </p>
 		out.println("<p>");                                             // line 38: <p>
 		out.print("It uses ");                                          // line 39: It uses
-		link("http://www.civilian-framework.org/", "Civilian");         // line 39: <%link("http://www.civilian-framework.org/", "Civilian");%>
+		link("http://www.civilian-framework.org/", "Civilian");         // line 39: ^{link("http://www.civilian-framework.org/", "Civilian");}
 		out.println(" on the server-side,");                            // line 39: on the server-side,
 		out.print("and ");                                              // line 40: and
-		link("http://www.angularjs.org/", "AngularJS");                 // line 40: <%link("http://www.angularjs.org/", "AngularJS");%>
+		link("http://www.angularjs.org/", "AngularJS");                 // line 40: ^{link("http://www.angularjs.org/", "AngularJS");}
 		out.println(",");                                               // line 40: ,
-		link("http://angular-ui.github.io/", "AngularUI");              // line 41: <%link("http://angular-ui.github.io/", "AngularUI");%>
+		link("http://angular-ui.github.io/", "AngularUI");              // line 41: ^{link("http://angular-ui.github.io/", "AngularUI");}
 		out.println(",");                                               // line 41: ,
-		link("http://jquery.com/", "JQuery");                           // line 42: <%link("http://jquery.com/", "JQuery");%>
+		link("http://jquery.com/", "JQuery");                           // line 42: ^{link("http://jquery.com/", "JQuery");}
 		out.println(",");                                               // line 42: ,
-		link("http://getbootstrap.com/2.3.2/", "Twitter Bootstrap");    // line 43: <%link("http://getbootstrap.com/2.3.2/", "Twitter Bootstrap");%>
+		link("http://getbootstrap.com/2.3.2/", "Twitter Bootstrap");    // line 43: ^{link("http://getbootstrap.com/2.3.2/", "Twitter Bootstrap");}
 		out.println(" to implement an interactive client.");            // line 43: to implement an interactive client.
 		out.println("</p>");                                            // line 44: </p>
 		out.println("The <b>navigation design</b> is as follows:<br>"); // line 45: The <b>navigation design</b> is as follows:<br>

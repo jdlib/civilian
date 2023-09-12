@@ -5,7 +5,7 @@ template(Template detailTemplate)
 {{
 	<div class="ng-cloak">
 		<div ng-show="showSearch">
-			<%new SearchTemplate(true)%>
+			^{new SearchTemplate(true)}
 		</div>
 		<div ng-hide="showSearch" class="row-fluid row-stack">
 			<div class="btn-group btn-group-vertical pull-left">

@@ -41,7 +41,7 @@ public class IndexTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<h1>Async Sample</h1>");                           // line 12: <h1>Async Sample</h1>
 		out.print("<a href=\"");                                        // line 13: <a href="
-		out.print(html.url(RunnableController.class));                  // line 13: <%html.url(RunnableController.class)%>
+		out.print(html.url(RunnableController.class));                  // line 13: ^{html.url(RunnableController.class)}
 		out.println("\" target=\"_blank\">Running async in a new thread</a>."); // line 13: " target="_blank">Running async in a new thread</a>.
 		out.decreaseTab();
 		out.println("</body>");                                         // line 14: </body>

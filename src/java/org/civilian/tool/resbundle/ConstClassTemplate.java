@@ -47,21 +47,21 @@ class ConstClassTemplate
 		if (hasIdClass && !config.inlineIdClass)                        // line 20: @if (hasIdClass && !config.inlineIdClass)
 		{
 			out.print("import ");                                       // line 21: import
-			out.print(config.idClass);                                  // line 21: <%config.idClass%>
+			out.print(config.idClass);                                  // line 21: ^{config.idClass}
 			out.println(";");                                           // line 21: ;
 			out.println();
 			out.println();
 		}
 		out.println("/**");                                             // line 24: /**
 		out.print(" * Contains constants for resource bundle ids in "); // line 25: * Contains constants for resource bundle ids in
-		out.print(config.excelFile.getName());                          // line 25: <%config.excelFile.getName()%>
+		out.print(config.excelFile.getName());                          // line 25: ^{config.excelFile.getName()}
 		out.println(".");                                               // line 25: .
 		out.print(" * Generated at ");                                  // line 26: * Generated at
 		out.print(generationTime);                                      // line 26: ^generationTime
 		out.println(". Do not edit directly.");                         // line 26: . Do not edit directly.
 		out.println(" */");                                             // line 27: */
 		out.print("public interface ");                                 // line 28: public interface
-		out.print(config.constClass);                                   // line 28: <%config.constClass%>
+		out.print(config.constClass);                                   // line 28: ^{config.constClass}
 		out.printlnIfNotEmpty();
 		out.println("{");                                               // line 29: {
 		out.increaseTab();
@@ -94,16 +94,16 @@ class ConstClassTemplate
 					out.print(" ");                                     // line 44: 
 				}
 				out.print(" = ");                                       // line 45: =
-				if (hasIdClass)                                         // line 45: ^hasIdClass?
+				if (hasIdClass)                                         // line 45: ^?hasIdClass
 				{
 					out.print("new ");                                  // line 45: new
 					out.print(idClassSimple);                           // line 45: ^idClassSimple
 					out.print("(");                                     // line 45: (
 				}
 				out.print("\"");                                        // line 45: "
-				out.print(escapeId(id));                                // line 45: <%escapeId(id)%>
+				out.print(escapeId(id));                                // line 45: ^{escapeId(id)}
 				out.print("\"");                                        // line 45: "
-				if (hasIdClass)                                         // line 45: ^hasIdClass?
+				if (hasIdClass)                                         // line 45: ^?hasIdClass
 				{
 					out.print(")");                                     // line 45: )
 				}

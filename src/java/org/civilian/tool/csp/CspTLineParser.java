@@ -233,12 +233,13 @@ class CspTLineParser
 		String snippet;
 		String snippetRaw;
 		boolean allowStmt;
+		boolean isCondition = sc.next('?');
 		if (sc.next("{"))
 		{
 			snippet = StringUtil.norm(sc.consumeUpto("}", false, true, true));
 			if (snippet == null)
 				scanner_.exception("missing closing '}' at '" + line + "'");
-			allowStmt = true;
+			allowStmt = !isCondition;
 		}
 		else
 		{
@@ -246,8 +247,6 @@ class CspTLineParser
 			if (snippet == null)
 				scanner_.exception("no valid Java identifier found at '" + line + "'");
 			allowStmt = false;
-			if (sc.next("?"))
-				snippet += "?";
 		}
 		
 		snippetRaw = line.substring(start, sc.getPos());
@@ -257,10 +256,9 @@ class CspTLineParser
 			addLiteralPart(LiteralType.JAVA_STATEMENT, snippetRaw, snippet);
 			return sc.getPos();
 		}
-		else if (snippet.endsWith("?"))
+		else if (isCondition)
 		{
 			// start of a condition
-			snippet = StringUtil.cutRight(snippet, "?");
 			addLiteralPart(LiteralType.JAVA_CONDITION_START, snippetRaw, snippet);
 			if (!sc.hasMoreChars(3))
 				sc.exception("expect at least 3 more chars");

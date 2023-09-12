@@ -11,7 +11,7 @@ template(String inputFile, List<String> lines) extends - throws -
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="civilian java web framework">
-		<title><%printTitle();%></title>
+		<title>^{printTitle();}</title>
 		<link rel="stylesheet" type="text/css" href="res/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="res/civilian.css">
 	</head>
@@ -51,7 +51,7 @@ template(String inputFile, List<String> lines) extends - throws -
 
 private void printNav(String file, String text)
 {{
-	<li^{inputFile.startsWith(file)?}| class="active"|><a href="^file.html">^text</a></li>
+	<li^?{inputFile.startsWith(file)}| class="active"|><a href="^file.html">^text</a></li>
 }}
 
 
@@ -61,5 +61,5 @@ private void printTitle()
 	@String file = StringUtil.cutRight(inputFile, ".html");
 	@if (!"index".equals(file))
 		@for (String part : file.split("-"))
-			^' - <%StringUtil.startUpperCase(part)%>^\
+			^' - ^{StringUtil.startUpperCase(part)}^\
 }}

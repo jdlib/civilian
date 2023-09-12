@@ -33,10 +33,10 @@ private void printSearchPanel()
 		<button class="btn" ng-click="removeSearchParam($index)" ng-disabled="searchParams.length == 1"><i class="icon-minus"></i></button>
 		<button class="btn" ng-click="addSearchParam()" ng-show="$last"><i class="icon-plus"></i></button>
 	</div>
-	<button class="btn btn-primary" ng-click="search()"><%lang.msg(Message.Search)%></button>
-	<button class="btn" ng-click="reset()"><%lang.msg(Message.Reset)%></button>
+	<button class="btn btn-primary" ng-click="search()">^{lang.msg(Message.Search)}</button>
+	<button class="btn" ng-click="reset()">^{lang.msg(Message.Reset)}</button>
 	<p></p>
-	<span ng-hide="searchResult.empty()">{{searchResult.items.length}} <%lang.msg(Message.Hits)%></span>
+	<span ng-hide="searchResult.empty()">{{searchResult.items.length}} ^{lang.msg(Message.Hits)}</span>
 	<p></p>
 	<table ng-hide="searchResult.empty()" class="table table-bordered table-striped table-condensed table-hover table-result no-select">
 	<tr class="result">

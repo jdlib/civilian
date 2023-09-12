@@ -28,18 +28,26 @@ public class Test_hat_syntax extends CspTemplate
 		out.print(" mixed ");                                           // line 9: mixed
 		out.print(name);                                                // line 9: ^name
 		out.print("pre");                                               // line 10: pre
-		if (today)                                                      // line 10: ^today?
+		if (today)                                                      // line 10: ^?today
 		{
 			out.print(" today ");                                       // line 10: today
 		}
 		out.println("post");                                            // line 10: post
 		out.print("pre");                                               // line 11: pre
-		if (today > 0)                                                  // line 11: ^{today > 0?}
+		if (today > 0)                                                  // line 11: ^?{today > 0}
 		{
 			out.print("is ");                                           // line 11: is
 			out.print(name);                                            // line 11: ^name
 		}
 		out.println("post");                                            // line 11: post
+		out.print("expr: ");                                            // line 12: expr:
+		out.print(name);                                                // line 12: ^name
+		out.print(" or ");                                              // line 12: or
+		out.print(name.length());                                       // line 12: ^{name.length()}
+		out.printlnIfNotEmpty();
+		out.print("stmt: ");                                            // line 13: stmt:
+		name = null;                                                    // line 13: ^{name = null;}
+		out.printlnIfNotEmpty();
 	}
 
 

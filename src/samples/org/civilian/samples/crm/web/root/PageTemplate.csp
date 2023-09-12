@@ -25,7 +25,7 @@ template(Response response, Template content, Script script, SessionUser session
 		@html.linkCss("css/samples.css");
 		@html.linkCss("css/crm.css");
 	</head>
-	<body^showNavigation?| ng-controller="MenuController"|>
+	<body^?showNavigation| ng-controller="MenuController"|>
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<span class="brand brand-main">civilian crm</span>
@@ -37,10 +37,10 @@ template(Response response, Template content, Script script, SessionUser session
 						<li><button class="btn btn-success" style="display:inline" onclick="reload('^reloadPath')">Reload</button></li>
 				</ul>
 			<p class="text-right banner-info">
-				<%html.text(sessionUser.name);%>
-				| <a href="#"><%lang.msg(Message.Help)%></a> 
-				| <a href="#"><%lang.msg(Message.Profile)%></a> 
-				| <a href="<%html.url(CrmResources.root.logout)%>"><%lang.msg(Message.Logout)%></a>
+				^{html.text(sessionUser.name);}
+				| <a href="#">^{lang.msg(Message.Help)}</a> 
+				| <a href="#">^{lang.msg(Message.Profile)}</a> 
+				| <a href="^{html.url(CrmResources.root.logout)}">^{lang.msg(Message.Logout)}</a>
 			</p>
 		</div>
 	</div>
@@ -64,22 +64,22 @@ template(Response response, Template content, Script script, SessionUser session
 	<script type="text/ng-template" id="login.template">
 	<form name="form">	
 	<div class="modal-header">
-		<h3>CRM <%lang.msg(Message.Login)%></h3>
+		<h3>CRM ^{lang.msg(Message.Login)}</h3>
 	</div>
 	<div class="modal-body">
-		<table class="table table-form" ng-init="lang='<%sessionUser.localeService.toString()%>'">
+		<table class="table table-form" ng-init="lang='^{sessionUser.localeService.toString()}'">
 		<tr>
-			<td><%lang.msg(Message.Name)%></td>
+			<td>^{lang.msg(Message.Name)}</td>
 			<td><input type="text" ng-model="name" ng-required="true"></td>
 		</tr>
 		<tr>
-			<td><%lang.msg(Message.Password)%></td>
+			<td>^{lang.msg(Message.Password)}</td>
 			<td><input type="password" ng-model="password" ng-required="true"></td>
 		</tr>
 		</table>
 	</div>
 	<div class="modal-footer">
-		<button ng-click="login(name, password, lang)" class="btn" ng-disabled="form.$invalid"><%lang.msg(Message.Login)%></button>
+		<button ng-click="login(name, password, lang)" class="btn" ng-disabled="form.$invalid">^{lang.msg(Message.Login)}</button>
 	</div>
 	</form>
 	</script>
@@ -122,8 +122,8 @@ private void printMenuItem(MsgId labelId, Resource resource, Script script, Stri
 private void printMenuItem(NavItem navItem, String image, String label)
 {{
 	<li class="border-left">
-		<a ng-click="openModule('^label', '<%navItem.templateUrl%>', '<%navItem.scriptUrls%>')" href="">
-			<img ng-src="<%html.path("/img/crm/");%>^image"> ^label
+		<a ng-click="openModule('^label', '^{navItem.templateUrl}', '^{navItem.scriptUrls}')" href="">
+			<img ng-src="^{html.path("/img/crm/");}^image"> ^label
 		</a>
 	</li> 
 }}

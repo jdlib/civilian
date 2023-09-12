@@ -7,7 +7,7 @@ template(LoginForm form, String errorMessage) mixin html, lang, formTable
 	<html ng-app="crm">
 	<head>
 		@html.metaContentType();
-		<title><%lang.msg(Message.CRM)%></title>
+		<title>^{lang.msg(Message.CRM)}</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		@html.linkCss("css/lib/bootstrap.css");
 		@html.linkCss("css/lib/toastr.css");
@@ -34,7 +34,7 @@ template(LoginForm form, String errorMessage) mixin html, lang, formTable
 				@if (errorMessage != null)
 					<tr>
 						<td></td>
-						<td><%html.text(errorMessage);%></td>
+						<td>^{html.text(errorMessage);}</td>
 					</tr>
 				</table>
 				@form.end(out);

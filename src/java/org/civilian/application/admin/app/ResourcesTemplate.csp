@@ -47,7 +47,7 @@ mixin html
 		<td>{{$index+1}}</td>
 		<td><a href="javascript:;" ng-click="showDetails(r)">{{r.path}}</a></td>
 		<td>{{r.controller}}</td>
-		<td><a ng-href="<%app.getPath()%>{{r.path}}" target="<%app.getId()%>"><i class="icon-share-alt"></i></a></td>
+		<td><a ng-href="^{app.getPath()}{{r.path}}" target="^{app.getId()}"><i class="icon-share-alt"></i></a></td>
 	</tr>
 	<tr ng-repeat-end ng-show="r.show">
 		<td colspan="2"></td>
@@ -67,5 +67,5 @@ private void printControllerEntry(Resource resource)
 	@Object data = resource.getData(); // is the controllersignature
 	@if (data != null)
 		@String path = resource.getRoute().toString();
-		{ controller: "^data", path: "<%path.length() != 0 ? path : "/"%>" },
+		{ controller: "^data", path: "^{path.length() != 0 ? path : "/"}" },
 }}

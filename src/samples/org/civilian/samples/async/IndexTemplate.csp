@@ -10,7 +10,7 @@ template mixin html
 	</head>
 	<body>
 		<h1>Async Sample</h1>
-		<a href="<%html.url(RunnableController.class)%>" target="_blank">Running async in a new thread</a>.
+		<a href="^{html.url(RunnableController.class)}" target="_blank">Running async in a new thread</a>.
 	</body>
 	</html>
 }}

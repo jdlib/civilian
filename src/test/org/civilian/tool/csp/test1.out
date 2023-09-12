@@ -48,14 +48,14 @@ public class Test1 extends CspTemplate
 		out.println("<start>");                                         // line 11: <start>
 		for (int i=0; i<10; i++)                                        // line 12: @for (int i=0; i<10; i++)
 		{
-			if (i % 2 == 0)                                             // line 13: ^{i % 2 == 0?}
+			if (i % 2 == 0)                                             // line 13: ^?{i % 2 == 0}
 			{
 				out.print("conditional");                               // line 13: conditional
 			}
 			out.printlnIfNotEmpty();
 			out.print(names);                                           // line 14: ^names
 			out.print(": ");                                            // line 14: :
-			out.print(lang.format(i));                                  // line 14: <%lang.format(i)%>
+			out.print(lang.format(i));                                  // line 14: ^{lang.format(i)}
 			out.printlnIfNotEmpty();
 			list_.add(names);                                           // line 15: @list_.add(names);
 		}

@@ -31,27 +31,27 @@ template(String remoteIp, String acceptHeader, Registration registration) mixin 
 						<table class="table">
 						<tr>
 							<td>Your IP</td>
-							<td><%html.text(remoteIp);%></td>
+							<td>^{html.text(remoteIp);}</td>
 						</tr>	
 						<tr>
 							<td>Accept-Header</td>
-							<td><%html.text(acceptHeader);%></td>
+							<td>^{html.text(acceptHeader);}</td>
 						</tr>	
 						<tr>
 							<td>Last Name</td>
-							<td><%html.text(registration.getLastName());%></td>
+							<td>^{html.text(registration.getLastName());}</td>
 						</tr>	
 						<tr>
 							<td>First Name</td>
-							<td><%html.text(registration.getFirstName());%></td>
+							<td>^{html.text(registration.getFirstName());}</td>
 						</tr>	
 						<tr>
 							<td>Email</td>
-							<td><%html.text(registration.getEmail());%></td>
+							<td>^{html.text(registration.getEmail());}</td>
 						</tr>	
 						<tr>
 							<td>Age</td>
-							<td><%registration.getAge()%></td>
+							<td>^{registration.getAge()}</td>
 						</tr>	
 						</table>
 						<a href="">back</a>
@@ -72,7 +72,7 @@ public IndexTemplate()
 private void printInput(String name, String label, String type)
 {{
 	<div class="control-group">
-		<label class="control-label" for="^name"><%html.text(label);%></label>
+		<label class="control-label" for="^name">^{html.text(label);}</label>
 		<div class="controls">
 			<input type="^type" id="^name" name="^name" value="">
 		</div>

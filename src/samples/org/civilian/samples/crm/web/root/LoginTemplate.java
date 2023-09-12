@@ -47,7 +47,7 @@ public class LoginTemplate extends CspTemplate
 		out.increaseTab();
 		html.metaContentType();                                         // line 9: @html.metaContentType();
 		out.print("<title>");                                           // line 10: <title>
-		out.print(lang.msg(Message.CRM));                               // line 10: <%lang.msg(Message.CRM)%>
+		out.print(lang.msg(Message.CRM));                               // line 10: ^{lang.msg(Message.CRM)}
 		out.println("</title>");                                        // line 10: </title>
 		out.println("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">"); // line 11: <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		html.linkCss("css/lib/bootstrap.css");                          // line 12: @html.linkCss("css/lib/bootstrap.css");
@@ -86,7 +86,7 @@ public class LoginTemplate extends CspTemplate
 			out.increaseTab();
 			out.println("<td></td>");                                   // line 36: <td></td>
 			out.print("<td>");                                          // line 37: <td>
-			html.text(errorMessage);                                    // line 37: <%html.text(errorMessage);%>
+			html.text(errorMessage);                                    // line 37: ^{html.text(errorMessage);}
 			out.println("</td>");                                       // line 37: </td>
 			out.decreaseTab();
 			out.println("</tr>");                                       // line 38: </tr>

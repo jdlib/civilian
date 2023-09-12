@@ -34,7 +34,7 @@ public class NotFoundTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<h1>Civilian Dev Not Found - 404</h1>");           // line 16: <h1>Civilian Dev Not Found - 404</h1>
 		out.print("<b>request: ");                                      // line 17: <b>request:
-		out.print(request.getPath().print());                           // line 17: <%request.getPath().print()%>
+		out.print(request.getPath().print());                           // line 17: ^{request.getPath().print()}
 		out.println("</b>");                                            // line 17: </b>
 		out.decreaseTab();
 		out.println("</body>");                                         // line 18: </body>

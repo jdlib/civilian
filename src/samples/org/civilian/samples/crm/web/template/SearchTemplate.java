@@ -76,14 +76,14 @@ public class SearchTemplate extends CspTemplate
 		out.decreaseTab();
 		out.println("</div>");                                          // line 35: </div>
 		out.print("<button class=\"btn btn-primary\" ng-click=\"search()\">"); // line 36: <button class="btn btn-primary" ng-click="search()">
-		out.print(lang.msg(Message.Search));                            // line 36: <%lang.msg(Message.Search)%>
+		out.print(lang.msg(Message.Search));                            // line 36: ^{lang.msg(Message.Search)}
 		out.println("</button>");                                       // line 36: </button>
 		out.print("<button class=\"btn\" ng-click=\"reset()\">");       // line 37: <button class="btn" ng-click="reset()">
-		out.print(lang.msg(Message.Reset));                             // line 37: <%lang.msg(Message.Reset)%>
+		out.print(lang.msg(Message.Reset));                             // line 37: ^{lang.msg(Message.Reset)}
 		out.println("</button>");                                       // line 37: </button>
 		out.println("<p></p>");                                         // line 38: <p></p>
 		out.print("<span ng-hide=\"searchResult.empty()\">{{searchResult.items.length}} "); // line 39: <span ng-hide="searchResult.empty()">{{searchResult.items.length}}
-		out.print(lang.msg(Message.Hits));                              // line 39: <%lang.msg(Message.Hits)%>
+		out.print(lang.msg(Message.Hits));                              // line 39: ^{lang.msg(Message.Hits)}
 		out.println("</span>");                                         // line 39: </span>
 		out.println("<p></p>");                                         // line 40: <p></p>
 		out.println("<table ng-hide=\"searchResult.empty()\" class=\"table table-bordered table-striped table-condensed table-hover table-result no-select\">"); // line 41: <table ng-hide="searchResult.empty()" class="table table-bordered table-striped table-condensed table-hover table-result no-select">

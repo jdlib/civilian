@@ -48,7 +48,7 @@ public class MultiPanelTemplate extends CspTemplate
 		out.println("<div class=\"span10 tab-content\">");              // line 13: <div class="span10 tab-content">
 		out.increaseTab();
 		out.print("<h3>");                                              // line 14: <h3>
-		out.print(lang.msg(type));                                      // line 14: <%lang.msg(type)%>
+		out.print(lang.msg(type));                                      // line 14: ^{lang.msg(type)}
 		out.println(" {{object.name}}</h3>");                           // line 14: {{object.name}}</h3>
 		out.println("<div ng-repeat=\"panel in panels\" class=\"tab-pane\" ng-class=\"{active: panel.nav.active}\">"); // line 15: <div ng-repeat="panel in panels" class="tab-pane" ng-class="{active: panel.nav.active}">
 		out.increaseTab();

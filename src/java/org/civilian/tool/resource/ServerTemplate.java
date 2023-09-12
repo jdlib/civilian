@@ -42,14 +42,14 @@ class ServerTemplate
 		ctrlRootPackage_ = app.getControllerConfig().getRootPackage();  // line 16: @ctrlRootPackage_ = app.getControllerConfig().getRootPackage();
 		out.println("/**");                                             // line 17: /**
 		out.print(" * Generated ");                                     // line 18: * Generated
-		if (timestamp)                                                  // line 18: ^timestamp?
+		if (timestamp)                                                  // line 18: ^?timestamp
 		{
 			out.print("at ");                                           // line 18: at
-			out.print(LocalDateTime.now());                             // line 18: <%LocalDateTime.now()%>
+			out.print(LocalDateTime.now());                             // line 18: ^{LocalDateTime.now()}
 			out.print(" ");                                             // line 18: 
 		}
 		out.print("by ");                                               // line 18: by
-		out.print(ServerConstGenerator.class.getName());                // line 18: <%ServerConstGenerator.class.getName()%>
+		out.print(ServerConstGenerator.class.getName());                // line 18: ^{ServerConstGenerator.class.getName()}
 		out.println(".");                                               // line 18: .
 		out.println(" * Do not edit.");                                 // line 19: * Do not edit.
 		out.println(" */");                                             // line 20: */
@@ -59,13 +59,13 @@ class ServerTemplate
 		out.println();
 		out.println();
 		out.print("import ");                                           // line 24: import
-		out.print(ControllerSignature.class.getName());                 // line 24: <%ControllerSignature.class.getName()%>
+		out.print(ControllerSignature.class.getName());                 // line 24: ^{ControllerSignature.class.getName()}
 		out.println(";");                                               // line 24: ;
 		out.println();
 		out.println();
 		out.println("/**");                                             // line 27: /**
 		out.print(" * Defines the resources of application ");          // line 28: * Defines the resources of application
-		out.print(app.getClass().getName());                            // line 28: <%app.getClass().getName()%>
+		out.print(app.getClass().getName());                            // line 28: ^{app.getClass().getName()}
 		out.println(".");                                               // line 28: .
 		out.println(" */");                                             // line 29: */
 		out.print("public interface ");                                 // line 30: public interface
@@ -92,10 +92,10 @@ class ServerTemplate
 		boolean hasController = info.getControllerSignature() != null;  // line 47: @boolean hasController = info.getControllerSignature() != null;
 		out.print("public static class ");                              // line 48: public static class
 		out.print(className);                                           // line 48: ^className
-		if (hasController)                                              // line 48: ^hasController?
+		if (hasController)                                              // line 48: ^?hasController
 		{
 			out.print(" extends ");                                     // line 48: extends
-			out.print(Resource.class.getName());                        // line 48: <%Resource.class.getName()%>
+			out.print(Resource.class.getName());                        // line 48: ^{Resource.class.getName()}
 		}
 		out.printlnIfNotEmpty();
 		out.println("{");                                               // line 49: {
@@ -103,9 +103,9 @@ class ServerTemplate
 		out.print("public ");                                           // line 50: public
 		out.print(className);                                           // line 50: ^className
 		out.print("(");                                                 // line 50: (
-		if (!info.isRoot())                                             // line 50: ^{!info.isRoot()?}
+		if (!info.isRoot())                                             // line 50: ^?{!info.isRoot()}
 		{
-			out.print(Resource.class.getName());                        // line 50: <%Resource.class.getName()%>
+			out.print(Resource.class.getName());                        // line 50: ^{Resource.class.getName()}
 			out.print(" parent");                                       // line 50: parent
 		}
 		out.println(")");                                               // line 50: )
@@ -120,10 +120,10 @@ class ServerTemplate
 		{
 			out.print(thisRes);                                         // line 56: ^thisRes
 			out.print(" = new ");                                       // line 56: = new
-			out.print(Resource.class.getName());                        // line 56: <%Resource.class.getName()%>
+			out.print(Resource.class.getName());                        // line 56: ^{Resource.class.getName()}
 		}
 		out.print("(");                                                 // line 57: (
-		printCtorArgs(info, "parent");                                  // line 57: <%printCtorArgs(info, "parent");%>
+		printCtorArgs(info, "parent");                                  // line 57: ^{printCtorArgs(info, "parent");}
 		out.println(");");                                              // line 57: );
 		if (hasController)                                              // line 58: @if (hasController)
 		{
@@ -140,22 +140,22 @@ class ServerTemplate
 			out.print(" = new ");                                       // line 65: = new
 			if (child.getChildCount() == 0)                             // line 66: @if (child.getChildCount() == 0)
 			{
-				out.print(Resource.class.getName());                    // line 67: <%Resource.class.getName()%>
+				out.print(Resource.class.getName());                    // line 67: ^{Resource.class.getName()}
 				out.print("(");                                         // line 67: (
-				printCtorArgs(child, thisRes);                          // line 67: <%printCtorArgs(child, thisRes);%>
+				printCtorArgs(child, thisRes);                          // line 67: ^{printCtorArgs(child, thisRes);}
 				out.println(");");                                      // line 67: );
 				if (child.getControllerSignature() != null)             // line 68: @if (child.getControllerSignature() != null)
 				{
 					out.print("this.");                                 // line 69: this.
 					out.print(field);                                   // line 69: ^field
 					out.print(".");                                     // line 69: .
-					printSetCtrlSeg(child);                             // line 69: <%printSetCtrlSeg(child);%>
+					printSetCtrlSeg(child);                             // line 69: ^{printSetCtrlSeg(child);}
 					out.printlnIfNotEmpty();
 				}
 			}
 			else                                                        // line 70: @else
 			{
-				out.print(getJavaClass(child));                         // line 71: <%getJavaClass(child)%>
+				out.print(getJavaClass(child));                         // line 71: ^{getJavaClass(child)}
 				out.print("(");                                         // line 71: (
 				out.print(thisRes);                                     // line 71: ^thisRes
 				out.println(");");                                      // line 71: );
@@ -167,7 +167,7 @@ class ServerTemplate
 		{
 			out.println();
 			out.print("public ");                                       // line 75: public
-			out.print(Resource.class.getName());                        // line 75: <%Resource.class.getName()%>
+			out.print(Resource.class.getName());                        // line 75: ^{Resource.class.getName()}
 			out.println(" getResource()");                              // line 75: getResource()
 			out.println("{");                                           // line 76: {
 			out.increaseTab();
@@ -182,9 +182,9 @@ class ServerTemplate
 			ResourceInfo child = info.getChild(i);                      // line 82: @ResourceInfo child = info.getChild(i);
 			printResourceComment(child);                                // line 83: @printResourceComment(child);
 			out.print("public final ");                                 // line 84: public final
-			out.print(child.getChildCount() > 0 ? getJavaClass(child) : Resource.class.getName()); // line 84: <%child.getChildCount() > 0 ? getJavaClass(child) : Resource.class.getName()%>
+			out.print(child.getChildCount() > 0 ? getJavaClass(child) : Resource.class.getName()); // line 84: ^{child.getChildCount() > 0 ? getJavaClass(child) : Resource.class.getName()}
 			out.print(" ");                                             // line 84: 
-			out.print(getJavaField(child));                             // line 84: <%getJavaField(child)%>
+			out.print(getJavaField(child));                             // line 84: ^{getJavaField(child)}
 			out.println(";");                                           // line 84: ;
 		}
 		if (!hasController)                                             // line 85: @if (!hasController)
@@ -192,7 +192,7 @@ class ServerTemplate
 			out.println();
 			out.println("// hidden since not mapped to a controller");  // line 87: // hidden since not mapped to a controller
 			out.print("private final ");                                // line 88: private final
-			out.print(Resource.class.getName());                        // line 88: <%Resource.class.getName()%>
+			out.print(Resource.class.getName());                        // line 88: ^{Resource.class.getName()}
 			out.println(" resource_;");                                 // line 88: resource_;
 		}
 		for (int i=0; i<childCount; i++)                                // line 89: @for (int i=0; i<childCount; i++)
@@ -211,7 +211,7 @@ class ServerTemplate
 			out.println("{");                                           // line 97: {
 			out.increaseTab();
 			out.print("return new ControllerSignature(\"");             // line 98: return new ControllerSignature("
-			out.print(ctrlRootPackage_);                                // line 98: <%ctrlRootPackage_%>
+			out.print(ctrlRootPackage_);                                // line 98: ^{ctrlRootPackage_}
 			out.println("\" + subPackage + '.' + className);");         // line 98: " + subPackage + '.' + className);
 			out.decreaseTab();
 			out.println("}");                                           // line 99: }
@@ -229,7 +229,7 @@ class ServerTemplate
 		out.print(" * \"");                                             // line 109: * "
 		out.print(resInfo);                                             // line 109: ^resInfo
 		out.print("\"");                                                // line 109: "
-		if (ctrlSig != null)                                            // line 109: ^{ctrlSig != null?}
+		if (ctrlSig != null)                                            // line 109: ^?{ctrlSig != null}
 		{
 			out.print(" = ");                                           // line 109: =
 			out.print(ctrlSig);                                         // line 109: ^ctrlSig
@@ -248,12 +248,12 @@ class ServerTemplate
 			if (info.getSegment() != null)                              // line 118: @if (info.getSegment() != null)
 			{
 				out.print("\"");                                        // line 119: "
-				out.print(info.getSegment());                           // line 119: <%info.getSegment()%>
+				out.print(info.getSegment());                           // line 119: ^{info.getSegment()}
 				out.print("\"");                                        // line 119: "
 			}
 			else                                                        // line 120: @else
 			{
-				out.print(pathParamConst(info.getPathParam()));         // line 121: <%pathParamConst(info.getPathParam())%>
+				out.print(pathParamConst(info.getPathParam()));         // line 121: ^{pathParamConst(info.getPathParam())}
 			}
 		}
 	}
@@ -266,20 +266,20 @@ class ServerTemplate
 		String simpleName  = ClassUtil.cutPackageName(sig.getClassName()); // line 129: @String simpleName  = ClassUtil.cutPackageName(sig.getClassName());
 		String packagePart = packageName.substring(ctrlRootPackage_.length()); // line 130: @String packagePart = packageName.substring(ctrlRootPackage_.length());
 		out.print("setData(sig(");                                      // line 131: setData(sig(
-		out.print(stringArg(packagePart));                              // line 131: <%stringArg(packagePart)%>
+		out.print(stringArg(packagePart));                              // line 131: ^{stringArg(packagePart)}
 		out.print(", ");                                                // line 131: ,
-		out.print(stringArg(simpleName));                               // line 131: <%stringArg(simpleName)%>
+		out.print(stringArg(simpleName));                               // line 131: ^{stringArg(simpleName)}
 		out.print(")");                                                 // line 131: )
 		if (sig.getMethodSegment() != null)                             // line 132: @if (sig.getMethodSegment() != null)
 		{
 			out.print(".withMethodSegment(\"");                         // line 133: .withMethodSegment("
-			out.print(sig.getMethodSegment());                          // line 133: <%sig.getMethodSegment()%>
+			out.print(sig.getMethodSegment());                          // line 133: ^{sig.getMethodSegment()}
 			out.print("\")");                                           // line 133: ")
 		}
 		else if (sig.getMethodPathParam() != null)                      // line 134: @else if (sig.getMethodPathParam() != null)
 		{
 			out.print(".withMethodPathParam(");                         // line 135: .withMethodPathParam(
-			out.print(pathParamConst(sig.getMethodPathParam()));        // line 135: <%pathParamConst(sig.getMethodPathParam())%>
+			out.print(pathParamConst(sig.getMethodPathParam()));        // line 135: ^{pathParamConst(sig.getMethodPathParam())}
 		}
 		out.println(");");                                              // line 136: );
 	}

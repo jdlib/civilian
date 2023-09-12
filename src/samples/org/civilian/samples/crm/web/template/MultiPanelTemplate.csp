@@ -11,7 +11,7 @@ mixin lang
 			</ul>
 		</div>
 		<div class="span10 tab-content">
-			<h3><%lang.msg(type)%> {{object.name}}</h3>
+			<h3>^{lang.msg(type)} {{object.name}}</h3>
 			<div ng-repeat="panel in panels" class="tab-pane" ng-class="{active: panel.nav.active}">
 				<civ-include src="panel.nav"></civ-include>
 			</div>

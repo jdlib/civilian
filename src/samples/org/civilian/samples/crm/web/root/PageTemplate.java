@@ -67,7 +67,7 @@ public class PageTemplate extends CspTemplate
 		out.decreaseTab();
 		out.println("</head>");                                         // line 27: </head>
 		out.print("<body");                                             // line 28: <body
-		if (showNavigation)                                             // line 28: ^showNavigation?
+		if (showNavigation)                                             // line 28: ^?showNavigation
 		{
 			out.print(" ng-controller=\"MenuController\"");             // line 28: ng-controller="MenuController"
 		}
@@ -96,18 +96,18 @@ public class PageTemplate extends CspTemplate
 		}
 		out.println("<p class=\"text-right banner-info\">");            // line 39: <p class="text-right banner-info">
 		out.increaseTab();
-		html.text(sessionUser.name);                                    // line 40: <%html.text(sessionUser.name);%>
+		html.text(sessionUser.name);                                    // line 40: ^{html.text(sessionUser.name);}
 		out.printlnIfNotEmpty();
 		out.print("| <a href=\"#\">");                                  // line 41: | <a href="#">
-		out.print(lang.msg(Message.Help));                              // line 41: <%lang.msg(Message.Help)%>
+		out.print(lang.msg(Message.Help));                              // line 41: ^{lang.msg(Message.Help)}
 		out.println("</a>");                                            // line 41: </a>
 		out.print("| <a href=\"#\">");                                  // line 42: | <a href="#">
-		out.print(lang.msg(Message.Profile));                           // line 42: <%lang.msg(Message.Profile)%>
+		out.print(lang.msg(Message.Profile));                           // line 42: ^{lang.msg(Message.Profile)}
 		out.println("</a>");                                            // line 42: </a>
 		out.print("| <a href=\"");                                      // line 43: | <a href="
-		out.print(html.url(CrmResources.root.logout));                  // line 43: <%html.url(CrmResources.root.logout)%>
+		out.print(html.url(CrmResources.root.logout));                  // line 43: ^{html.url(CrmResources.root.logout)}
 		out.print("\">");                                               // line 43: ">
-		out.print(lang.msg(Message.Logout));                            // line 43: <%lang.msg(Message.Logout)%>
+		out.print(lang.msg(Message.Logout));                            // line 43: ^{lang.msg(Message.Logout)}
 		out.println("</a>");                                            // line 43: </a>
 		out.decreaseTab();
 		out.println("</p>");                                            // line 44: </p>
@@ -142,19 +142,19 @@ public class PageTemplate extends CspTemplate
 		out.println("<div class=\"modal-header\">");                    // line 66: <div class="modal-header">
 		out.increaseTab();
 		out.print("<h3>CRM ");                                          // line 67: <h3>CRM
-		out.print(lang.msg(Message.Login));                             // line 67: <%lang.msg(Message.Login)%>
+		out.print(lang.msg(Message.Login));                             // line 67: ^{lang.msg(Message.Login)}
 		out.println("</h3>");                                           // line 67: </h3>
 		out.decreaseTab();
 		out.println("</div>");                                          // line 68: </div>
 		out.println("<div class=\"modal-body\">");                      // line 69: <div class="modal-body">
 		out.increaseTab();
 		out.print("<table class=\"table table-form\" ng-init=\"lang='"); // line 70: <table class="table table-form" ng-init="lang='
-		out.print(sessionUser.localeService.toString());                // line 70: <%sessionUser.localeService.toString()%>
+		out.print(sessionUser.localeService.toString());                // line 70: ^{sessionUser.localeService.toString()}
 		out.println("'\">");                                            // line 70: '">
 		out.println("<tr>");                                            // line 71: <tr>
 		out.increaseTab();
 		out.print("<td>");                                              // line 72: <td>
-		out.print(lang.msg(Message.Name));                              // line 72: <%lang.msg(Message.Name)%>
+		out.print(lang.msg(Message.Name));                              // line 72: ^{lang.msg(Message.Name)}
 		out.println("</td>");                                           // line 72: </td>
 		out.println("<td><input type=\"text\" ng-model=\"name\" ng-required=\"true\"></td>"); // line 73: <td><input type="text" ng-model="name" ng-required="true"></td>
 		out.decreaseTab();
@@ -162,7 +162,7 @@ public class PageTemplate extends CspTemplate
 		out.println("<tr>");                                            // line 75: <tr>
 		out.increaseTab();
 		out.print("<td>");                                              // line 76: <td>
-		out.print(lang.msg(Message.Password));                          // line 76: <%lang.msg(Message.Password)%>
+		out.print(lang.msg(Message.Password));                          // line 76: ^{lang.msg(Message.Password)}
 		out.println("</td>");                                           // line 76: </td>
 		out.println("<td><input type=\"password\" ng-model=\"password\" ng-required=\"true\"></td>"); // line 77: <td><input type="password" ng-model="password" ng-required="true"></td>
 		out.decreaseTab();
@@ -173,7 +173,7 @@ public class PageTemplate extends CspTemplate
 		out.println("<div class=\"modal-footer\">");                    // line 81: <div class="modal-footer">
 		out.increaseTab();
 		out.print("<button ng-click=\"login(name, password, lang)\" class=\"btn\" ng-disabled=\"form.$invalid\">"); // line 82: <button ng-click="login(name, password, lang)" class="btn" ng-disabled="form.$invalid">
-		out.print(lang.msg(Message.Login));                             // line 82: <%lang.msg(Message.Login)%>
+		out.print(lang.msg(Message.Login));                             // line 82: ^{lang.msg(Message.Login)}
 		out.println("</button>");                                       // line 82: </button>
 		out.decreaseTab();
 		out.println("</div>");                                          // line 83: </div>
@@ -222,13 +222,13 @@ public class PageTemplate extends CspTemplate
 		out.print("<a ng-click=\"openModule('");                        // line 125: <a ng-click="openModule('
 		out.print(label);                                               // line 125: ^label
 		out.print("', '");                                              // line 125: ', '
-		out.print(navItem.templateUrl);                                 // line 125: <%navItem.templateUrl%>
+		out.print(navItem.templateUrl);                                 // line 125: ^{navItem.templateUrl}
 		out.print("', '");                                              // line 125: ', '
-		out.print(navItem.scriptUrls);                                  // line 125: <%navItem.scriptUrls%>
+		out.print(navItem.scriptUrls);                                  // line 125: ^{navItem.scriptUrls}
 		out.println("')\" href=\"\">");                                 // line 125: ')" href="">
 		out.increaseTab();
 		out.print("<img ng-src=\"");                                    // line 126: <img ng-src="
-		html.path("/img/crm/");                                         // line 126: <%html.path("/img/crm/");%>
+		html.path("/img/crm/");                                         // line 126: ^{html.path("/img/crm/");}
 		out.print(image);                                               // line 126: ^image
 		out.print("\"> ");                                              // line 126: ">
 		out.print(label);                                               // line 126: ^label

@@ -6,13 +6,13 @@ template mixin table, lang
 	<form name="form" ng-submit="nothing()">
 		@table.columns("[]10[200, class=fill]");
 		@table.startTable("class", "table table-form");
-		[table] <%lang.msg(Message.Name)%>
+		[table] ^{lang.msg(Message.Name)}
 		[table] <input type="text" ng-model="object.name" required>
-		[table] <%lang.msg(Message.FirstName)%>
+		[table] ^{lang.msg(Message.FirstName)}
 		[table] <input type="text" ng-model="object.firstName">
-		[table] <%lang.msg(Message.Customer)%>
+		[table] ^{lang.msg(Message.Customer)}
 		[table] <input type="text" ng-model="object.customer">
-		[table] <%lang.msg(Message.Telephone)%>
+		[table] ^{lang.msg(Message.Telephone)}
 		[table] <input type="text" ng-model="object.phone">
 		@table.endTable();
 	</form>

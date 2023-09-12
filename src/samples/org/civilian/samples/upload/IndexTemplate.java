@@ -85,7 +85,7 @@ public class IndexTemplate extends CspTemplate
 			out.println("<p>");                                         // line 40: <p>
 			out.println("<h3>2. The server received an error:</h3>");   // line 41: <h3>2. The server received an error:</h3>
 			out.println("<code>request.getUploads().error()</code> says<p><br>"); // line 42: <code>request.getUploads().error()</code> says<p><br>
-			html.stackTrace(uploadError);                               // line 43: <%html.stackTrace(uploadError);%>
+			html.stackTrace(uploadError);                               // line 43: ^{html.stackTrace(uploadError);}
 			out.printlnIfNotEmpty();
 		}
 		else                                                            // line 44: @else
@@ -95,7 +95,7 @@ public class IndexTemplate extends CspTemplate
 			{
 				out.println("<p>");                                     // line 47: <p>
 				out.print("<h3 style=\"margin-top:30px\">2. The server received "); // line 48: <h3 style="margin-top:30px">2. The server received
-				out.print(uploads.length);                              // line 48: <%uploads.length%>
+				out.print(uploads.length);                              // line 48: ^{uploads.length}
 				out.println(" uploads</h3>");                           // line 48: uploads</h3>
 				out.println("<table class=\"table table-bordered table-form\">"); // line 49: <table class="table table-bordered table-form">
 				out.println("<tr>");                                    // line 50: <tr>
@@ -115,13 +115,13 @@ public class IndexTemplate extends CspTemplate
 					out.print(i);                                       // line 59: ^i
 					out.println("</td>");                               // line 59: </td>
 					out.print("<td>");                                  // line 60: <td>
-					out.print(lang.format(upload.length()));            // line 60: <%lang.format(upload.length())%>
+					out.print(lang.format(upload.length()));            // line 60: ^{lang.format(upload.length())}
 					out.println(" bytes</td>");                         // line 60: bytes</td>
 					out.print("<td>");                                  // line 61: <td>
-					out.print(upload.getContentType());                 // line 61: <%upload.getContentType()%>
+					out.print(upload.getContentType());                 // line 61: ^{upload.getContentType()}
 					out.println("</td>");                               // line 61: </td>
 					out.print("<td>");                                  // line 62: <td>
-					out.print(upload.getFileName());                    // line 62: <%upload.getFileName()%>
+					out.print(upload.getFileName());                    // line 62: ^{upload.getFileName()}
 					out.println("</td>");                               // line 62: </td>
 					out.decreaseTab();
 					out.println("</tr>");                               // line 63: </tr>
