@@ -94,7 +94,7 @@ class ConstClassTemplate
 					out.print(" ");                                     // line 44: 
 				}
 				out.print(" = ");                                       // line 45: =
-				if (hasIdClass)                                         // line 45: <%?hasIdClass%>
+				if (hasIdClass)                                         // line 45: ^hasIdClass?
 				{
 					out.print("new ");                                  // line 45: new
 					out.print(idClassSimple);                           // line 45: <%idClassSimple%>
@@ -103,7 +103,7 @@ class ConstClassTemplate
 				out.print("\"");                                        // line 45: "
 				out.print(escapeId(id));                                // line 45: <%escapeId(id)%>
 				out.print("\"");                                        // line 45: "
-				if (hasIdClass)                                         // line 45: <%?hasIdClass%>
+				if (hasIdClass)                                         // line 45: ^hasIdClass?
 				{
 					out.print(")");                                     // line 45: )
 				}

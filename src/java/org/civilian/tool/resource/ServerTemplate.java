@@ -42,7 +42,7 @@ class ServerTemplate
 		ctrlRootPackage_ = app.getControllerConfig().getRootPackage();  // line 16: @ctrlRootPackage_ = app.getControllerConfig().getRootPackage();
 		out.println("/**");                                             // line 17: /**
 		out.print(" * Generated ");                                     // line 18: * Generated
-		if (timestamp)                                                  // line 18: <%?timestamp%>
+		if (timestamp)                                                  // line 18: ^timestamp?
 		{
 			out.print("at ");                                           // line 18: at
 			out.print(LocalDateTime.now());                             // line 18: <%LocalDateTime.now()%>
@@ -92,7 +92,7 @@ class ServerTemplate
 		boolean hasController = info.getControllerSignature() != null;  // line 47: @boolean hasController = info.getControllerSignature() != null;
 		out.print("public static class ");                              // line 48: public static class
 		out.print(className);                                           // line 48: <%className%>
-		if (hasController)                                              // line 48: <%?hasController%>
+		if (hasController)                                              // line 48: ^hasController?
 		{
 			out.print(" extends ");                                     // line 48: extends
 			out.print(Resource.class.getName());                        // line 48: <%Resource.class.getName()%>
@@ -103,7 +103,7 @@ class ServerTemplate
 		out.print("public ");                                           // line 50: public
 		out.print(className);                                           // line 50: <%className%>
 		out.print("(");                                                 // line 50: (
-		if (!info.isRoot())                                             // line 50: <%?!info.isRoot()%>
+		if (!info.isRoot())                                             // line 50: ^{!info.isRoot()?}
 		{
 			out.print(Resource.class.getName());                        // line 50: <%Resource.class.getName()%>
 			out.print(" parent");                                       // line 50: parent
@@ -229,7 +229,7 @@ class ServerTemplate
 		out.print(" * \"");                                             // line 109: * "
 		out.print(resInfo);                                             // line 109: <%resInfo%>
 		out.print("\"");                                                // line 109: "
-		if (ctrlSig != null)                                            // line 109: <%?ctrlSig != null%>
+		if (ctrlSig != null)                                            // line 109: ^{ctrlSig != null?}
 		{
 			out.print(" = ");                                           // line 109: =
 			out.print(ctrlSig);                                         // line 109: <%ctrlSig%>

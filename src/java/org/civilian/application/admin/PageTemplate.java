@@ -114,7 +114,7 @@ public class PageTemplate extends CspTemplate
 	private void printNavItem(String label, Url url, boolean active)
 	{
 		out.print("<li");                                               // line 55: <li
-		if (active)                                                     // line 55: <%?active%>
+		if (active)                                                     // line 55: ^active?
 		{
 			out.print(" class=\"active\"");                             // line 55: class="active"
 		}

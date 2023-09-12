@@ -15,7 +15,7 @@ template(ResourceInfo root, String outputPackage, String outputName, Application
 {{
 	@ctrlRootPackage_ = app.getControllerConfig().getRootPackage();
 	^'/**
-	^' * Generated <%?timestamp%>at <%LocalDateTime.now()%> <%?%>by <%ServerConstGenerator.class.getName()%>.
+	^' * Generated ^timestamp?|at <%LocalDateTime.now()%> |by <%ServerConstGenerator.class.getName()%>.
 	^' * Do not edit.
 	^' */
 	package <%outputPackage%>;
@@ -45,9 +45,9 @@ private void printResourceClass(ResourceInfo info)
 	@printResourceComment(info);
 	@String className = getJavaClass(info);
 	@boolean hasController = info.getControllerSignature() != null; 
-	public static class <%className%><%?hasController%> extends <%Resource.class.getName()%><%?%> 
+	public static class <%className%>^hasController?| extends <%Resource.class.getName()%>| 
 	{
-		public <%className%>(<%?!info.isRoot()%><%Resource.class.getName()%> parent<%?%>)
+		public <%className%>(^{!info.isRoot()?}|<%Resource.class.getName()%> parent|)
 		{
 			@String thisRes = hasController ? "this" : "this.resource_"; 
 			@if (hasController)
@@ -106,7 +106,7 @@ private void printResourceComment(ResourceInfo resInfo)
 {{
 	@ControllerSignature ctrlSig = resInfo.getControllerSignature();
 	^'/**
-	^' * "<%resInfo%>"<%?ctrlSig != null%> = <%ctrlSig%><%?%>
+	^' * "<%resInfo%>"^{ctrlSig != null?}| = <%ctrlSig%>|
 	^' */ 
 }}
 

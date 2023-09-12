@@ -93,7 +93,7 @@ public class SettingsTemplate extends CspTemplate
 		LocaleServiceList services = app.getLocaleServices();           // line 40: @LocaleServiceList services = app.getLocaleServices();
 		for (int i=0; i<services.size(); i++)                           // line 41: @for (int i=0; i<services.size(); i++)
 		{
-			if (i > 0)                                                  // line 42: <%?i > 0%>
+			if (i > 0)                                                  // line 42: ^{i > 0?}
 			{
 				out.print(", ");                                        // line 42: ,
 			}
@@ -171,7 +171,7 @@ public class SettingsTemplate extends CspTemplate
 			out.increaseTab();
 			for (int j=0; j<infos.length; j++)                          // line 89: @for (int j=0; j<infos.length; j++)
 			{
-				if (j > 0)                                              // line 90: <%?j > 0%>
+				if (j > 0)                                              // line 90: ^{j > 0?}
 				{
 					out.print("<br>");                                  // line 90: <br>
 				}

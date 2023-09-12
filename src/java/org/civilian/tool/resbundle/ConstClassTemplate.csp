@@ -42,7 +42,7 @@ template(ResBundleCompiler.Config config, String packageName, LocalDateTime gene
 				public static final <%idClassSimple%> <%constantName%>^\
 				@for (int i=id.length(); i<=20; i++)
 					^' ^\
-				^' = <%?hasIdClass%>new <%idClassSimple%>(<%?%>"<%escapeId(id)%>"<%?hasIdClass%>)<%?%>;
+				^' = ^hasIdClass?|new <%idClassSimple%>(|"<%escapeId(id)%>"^hasIdClass?|)|;
 		@if (config.inlineIdClass)
 			^'	
 			^'	

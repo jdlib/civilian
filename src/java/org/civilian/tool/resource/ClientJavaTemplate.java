@@ -38,7 +38,7 @@ class ClientJavaTemplate
 	{
 		out.println("/**");                                             // line 13: /**
 		out.print(" * Generated ");                                     // line 14: * Generated
-		if (timestamp)                                                  // line 14: <%?timestamp%>
+		if (timestamp)                                                  // line 14: ^timestamp?
 		{
 			out.print("at ");                                           // line 14: at
 			out.print(LocalDateTime.now());                             // line 14: <%LocalDateTime.now()%>
@@ -74,13 +74,13 @@ class ClientJavaTemplate
 		String className      = isRoot ? outputName : buildClassName(resource); // line 35: @String className      = isRoot ? outputName : buildClassName(resource);
 		boolean hasController = resource.getData() != null;             // line 36: @boolean hasController = resource.getData() != null;
 		out.print("public");                                            // line 37: public
-		if (!isRoot)                                                    // line 37: <%?!isRoot%>
+		if (!isRoot)                                                    // line 37: ^{!isRoot?}
 		{
 			out.print(" static");                                       // line 37: static
 		}
 		out.print(" class ");                                           // line 37: class
 		out.print(className);                                           // line 37: <%className%>
-		if (hasController)                                              // line 37: <%?hasController%>
+		if (hasController)                                              // line 37: ^hasController?
 		{
 			out.print(" extends ");                                     // line 37: extends
 			out.print(WEBRESOURCE);                                     // line 37: <%WEBRESOURCE%>
@@ -189,7 +189,7 @@ class ClientJavaTemplate
 		out.print(" * Resource \"");                                    // line 88: * Resource "
 		out.print(resource);                                            // line 88: <%resource%>
 		out.print("\"");                                                // line 88: "
-		if (resource.isRoot())                                          // line 88: <%?resource.isRoot()%>
+		if (resource.isRoot())                                          // line 88: ^{resource.isRoot()?}
 		{
 			out.print(" of application ");                              // line 88: of application
 			out.print(app.getClass().getName());                        // line 88: <%app.getClass().getName()%>

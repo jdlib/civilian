@@ -39,7 +39,7 @@ template(Application app) mixin html
 		<td>
 			@LocaleServiceList services = app.getLocaleServices();
 			@for (int i=0; i<services.size(); i++)
-				<%?i > 0%>, <%?%><%services.getLocale(i)%> 
+				^{i > 0?}|, |<%services.getLocale(i)%> 
 		</td>
 		<td>org.civilian.Application.getLocaleServices().getLocale(i)</td>
 	</tr>
@@ -87,7 +87,7 @@ private void printProcessors(ProcessorList processors)
 			<td><%processor.getClass().getSimpleName()%></td>
 			<td>
 				@for (int j=0; j<infos.length; j++)
-					<%?j > 0%><br><%?%><%html.text(infos[j]);%>
+					^{j > 0?}|<br>|<%html.text(infos[j]);%>
 			</td>
 			<td><%processor.getClass().getName()%></td>
 		</tr>

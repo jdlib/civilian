@@ -11,7 +11,7 @@ template(Resource root, String outputPackage, String outputName, Application app
 	throws -
 {{
 	^'/**
-	^' * Generated <%?timestamp%>at <%LocalDateTime.now()%> <%?%>by <%ClientConstGenerator.class.getName()%>.
+	^' * Generated ^timestamp?|at <%LocalDateTime.now()%> |by <%ClientConstGenerator.class.getName()%>.
 	^' * Do not edit.
 	^' */
 	package <%outputPackage%>;
@@ -34,7 +34,7 @@ private void printResourceClass(Resource resource)
 	@boolean isRoot        = resource.isRoot(); 
 	@String className      = isRoot ? outputName : buildClassName(resource);
 	@boolean hasController = resource.getData() != null;
-	public<%?!isRoot%> static<%?%> class <%className%><%?hasController%> extends <%WEBRESOURCE%><%?%> 
+	public^{!isRoot?}| static| class <%className%>^hasController?| extends <%WEBRESOURCE%>| 
 	{
 		public <%className%>^\
 		@if (isRoot)
@@ -85,7 +85,7 @@ private void printResourceClass(Resource resource)
 private void printResourceComment(Resource resource)
 {{
 	^'/**
-	^' * Resource "<%resource%>"<%?resource.isRoot()%> of application <%app.getClass().getName()%><%?%>. 
+	^' * Resource "<%resource%>"^{resource.isRoot()?}| of application <%app.getClass().getName()%>|. 
 	^' */ 
 }}
 

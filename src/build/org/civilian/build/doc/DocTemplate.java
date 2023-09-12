@@ -99,7 +99,7 @@ public class DocTemplate
 	private void printNav(String file, String text)
 	{
 		out.print("<li");                                               // line 54: <li
-		if (inputFile.startsWith(file))                                 // line 54: <%?inputFile.startsWith(file)%>
+		if (inputFile.startsWith(file))                                 // line 54: ^{inputFile.startsWith(file)?}
 		{
 			out.print(" class=\"active\"");                             // line 54: class="active"
 		}

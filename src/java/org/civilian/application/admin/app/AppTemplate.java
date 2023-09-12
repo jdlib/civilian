@@ -63,14 +63,14 @@ public class AppTemplate extends CspTemplate
 	{
 		boolean active = activeTab == tabIndex;                         // line 22: @boolean active = activeTab == tabIndex;
 		out.print("<li");                                               // line 23: <li
-		if (active)                                                     // line 23: <%?active%>
+		if (active)                                                     // line 23: ^active?
 		{
 			out.print(" class=\"active\"");                             // line 23: class="active"
 		}
 		out.println(">");                                               // line 23: >
 		out.increaseTab();
 		out.print("<a");                                                // line 24: <a
-		if (!active)                                                    // line 24: <%?!active%>
+		if (!active)                                                    // line 24: ^{!active?}
 		{
 			out.print(" href=\"");                                      // line 24: href="
 			out.print(html.url(path));                                  // line 24: <%html.url(path)%>
