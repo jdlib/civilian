@@ -18,7 +18,7 @@ public class Test2 extends Template
 	{{
 		<start>
 		@for (int i=0; i<10; i++)
-			<%?i % 2 == 0%>conditional<%?%>
+			^{i % 2 == 0?}|conditional|
 			<%name%>: <%i%> 	
 			@list_.add(name);
 		</start>		

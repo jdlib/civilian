@@ -25,7 +25,7 @@ template(Response response, Template content, Script script, SessionUser session
 		@html.linkCss("css/samples.css");
 		@html.linkCss("css/crm.css");
 	</head>
-	<body<%?showNavigation%> ng-controller="MenuController"<%?%>>
+	<body^showNavigation?| ng-controller="MenuController"|>
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<span class="brand brand-main">civilian crm</span>
