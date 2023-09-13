@@ -264,10 +264,10 @@ public class VarConverter
 	
 	private String paramPart1_;
 	private String paramPart2_;
-	private File parentFile_; 
-	private File inputFile_;
-	private File javaDocDir_;
 	private int lineIndex_;
-	private StringBuilder buffer_ = new StringBuilder();
+	private final File parentFile_; 
+	private final File inputFile_;
+	private final File javaDocDir_;
+	private final StringBuilder buffer_ = new StringBuilder();
 	private static final Pattern VAR_PATTERN = Pattern.compile("\\{([a-z]+)\\:([^}]*)}");
 }

@@ -111,5 +111,5 @@ public class DocConverter
 	}
 	
 	
-	private File javaDocDir_;
+	private final File javaDocDir_;
 }
