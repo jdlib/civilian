@@ -54,6 +54,7 @@ public class DoubleField extends InputField<Double>
 	
 	/**
 	 * Sets the minimum allowed value.
+	 * @param min the min value
 	 * @return this
 	 */
 	public DoubleField setMin(double min)
@@ -65,6 +66,7 @@ public class DoubleField extends InputField<Double>
 
 	/**
 	 * Sets the maximum allowed value.
+	 * @param max the max value
 	 * @return this
 	 */
 	public DoubleField setMax(double max)
@@ -76,6 +78,8 @@ public class DoubleField extends InputField<Double>
 
 	/**
 	 * Sets the minimum and maximum allowed values.
+	 * @param min the min value
+	 * @param max the max value
 	 * @return this
 	 */
 	public DoubleField setMinMax(double min, double max)
@@ -89,6 +93,7 @@ public class DoubleField extends InputField<Double>
 	/**
 	 * Sets the step attribute of the text field.
 	 * The step attribute specifies the legal number intervals for an element.
+	 * @param step the step
 	 * @return this
 	 */
 	public DoubleField setStep(double step)
@@ -101,7 +106,7 @@ public class DoubleField extends InputField<Double>
 	
 
 	/**
-	 * Returns the style object previously set by #setStyle().
+	 * @return the style object previously set by #setStyle().
 	 */
 	@Override public NumberStyle getStyle()
 	{
@@ -111,6 +116,7 @@ public class DoubleField extends InputField<Double>
 	
 	/**
 	 * Sets the style object which should be used when formatting the control value.
+	 * @param style a style
 	 */
 	public void setStyle(NumberStyle style)
 	{

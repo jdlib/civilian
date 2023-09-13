@@ -36,7 +36,6 @@ import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
 import org.civilian.resource.ResourceHandler;
 import org.civilian.resource.Url;
-import org.civilian.response.std.ErrorResponseHandler;
 import org.civilian.template.Template;
 import org.civilian.text.service.LocaleService;
 import org.civilian.text.service.LocaleServiceProvider;
@@ -217,6 +216,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * if status and headers are already written. 
 	 * If not committed then a call to {@link #reset()} or {@link Response#resetBuffer()}
 	 * is still possible.
+	 * @return is committed?
 	 */
 	public abstract boolean isCommitted();
 
@@ -232,7 +232,8 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Returns the response type. The initial type is Type.NORMAL.
 	 * When you send an error or forward, the type changes
-	 * accordingly. 
+	 * accordingly.
+	 * @return the type 
 	 */
 	public abstract Type getType();
 
@@ -292,7 +293,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	
 	/**
-	 * Returns the status code of the response.
+	 * @return the status code of the response.
 	 */
 	public abstract int getStatus();
 
@@ -405,12 +406,13 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Sends an error response to the client.
 	 * After using this method, the response is committed and should not be written to.
-	 * Internally the {@link ErrorResponseHandler} implementation provided by {@link Application#createErrorResponse()}
+	 * Internally the {@link ResponseHandler} implementation provided by {@link Application#createErrorHandler(int, String, Throwable)}
 	 * is used to write the response.
 	 * @param statusCode see {@link Status} for a list of status codes.
 	 * @param message if not null, the message will be included in the error response.
 	 * @param error an optional error object.
 	 * @throws IllegalStateException if the response is already committed
+	 * @throws IOException if an IO error occurs
 	 */
 	public abstract void sendError(int statusCode, String message, Throwable error) 
 		throws IllegalStateException, IOException;
@@ -425,6 +427,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * Sends a redirect response to the client. 
 	 * After using this method, the response is committed and should not be written to.
 	 * @throws IllegalStateException if the response has already been committed 
+	 * @throws IOException if an IO error occurs
 	 */
 	public abstract void redirect(String url) throws IOException;
 
@@ -531,6 +534,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * the default character encoding of the application is used.
 	 * The method may not be called if {@link #getContentStream()} was called before.
 	 * @see Application#getDefaultCharEncoding()
+	 * @throws IOException if an IO error occurs
 	 */
 	public abstract PrintWriter getContentWriter() throws IOException;
 
@@ -539,6 +543,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * Returns a OutputStream to write a binary response.
 	 * The method may not be called if {@link #getContentWriter()} was called before.
 	 * @return the OutputStream
+	 * @throws IOException if an IO error occurs
 	 */
 	public abstract OutputStream getContentStream() throws IOException;
 

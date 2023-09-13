@@ -28,6 +28,8 @@ public abstract class ClassUtil
 	 * Returns the package part of the class name (without a trailing dot).
 	 * Alternatively you could use Class.getPackage.getName(), but
 	 * since Class.getPackage could return null, this method is safer.
+	 * @param c a class
+	 * @return the package name
 	 */
 	public static String getPackageName(Class<?> c)
 	{
@@ -36,8 +38,8 @@ public abstract class ClassUtil
 
 
 	/**
-	 * Returns the package part of the given class name (without a trailing dot).
-	 * 
+	 * @param className a class name
+	 * @return the package part of the given class name (without a trailing dot).
 	 */
 	public static String getPackageName(String className)
 	{
@@ -55,6 +57,8 @@ public abstract class ClassUtil
 	 * Removes the package from the class name and returns the rest.
 	 * In case of an inner class, this will return
 	 * the inner class name, prefixed by all outer class names. 
+	 * @param className a class name
+	 * @return the className without the package name
 	 */
 	public static String cutPackageName(String className)
 	{
@@ -69,7 +73,10 @@ public abstract class ClassUtil
 	
 	
 	/**
-	 * Tests if the object is an instance of the given class.
+	 * @param object an object
+	 * @param c a class
+	 * @param <T> the class type
+	 * @return tests if the object is an instance of the given class.
 	 */
 	public static <T> boolean isA(Object object, Class<T> c)
 	{
@@ -82,6 +89,9 @@ public abstract class ClassUtil
 	 * @param className the name of the class
 	 * @param superClass a superclass of the class. The method checks that the class 
 	 * 		is derived from the superclass. 
+	 * @param loader optional, a ClassLoader
+	 * @param <T> the class type
+	 * @return the new object
 	 * @throws ClassNotFoundException if the class was not found 
 	 * @throws IllegalArgumentException if the class is not derived from the given superClass. 
 	 * @throws InstantiationException if the instance could not be created 
@@ -101,6 +111,9 @@ public abstract class ClassUtil
 	 * @param className the name of the class
 	 * @param superClass a superclass of the class. The method checks that the class 
 	 * 		is derived from the superclass. 
+	 * @param loader optional, a ClassLoader
+	 * @param <T> the class type
+	 * @return the class
 	 * @throws ClassNotFoundException if the class was not found 
 	 * @throws IllegalArgumentException if the class is not derived from the given superClass. 
 	 */
@@ -123,6 +136,9 @@ public abstract class ClassUtil
 	 * @param className the name of the class
 	 * @param superClass a superclass of the class. The method checks that the class 
 	 * 		is derived from the superclass. 
+	 * @param loader optional, a ClassLoader
+	 * @param <T> the class type
+	 * @return the class
 	 * @throws IllegalArgumentException if the class is not derived from the given superClass. 
 	 */
 	public static <T> Class<? extends T> getPotentialClass(String className, Class<T> superClass, ClassLoader loader)  
@@ -140,6 +156,10 @@ public abstract class ClassUtil
 	
 	/**
 	 * Tests if the annotation is an instance of the given annotation class.
+	 * @param annotation an annotation
+	 * @param c a class
+	 * @param <A> the annotation type
+	 * @return is an instance?
 	 */
 	public static <A extends Annotation> boolean isA(Annotation annotation, Class<A> c)
 	{
@@ -150,6 +170,10 @@ public abstract class ClassUtil
 	/**
 	 * Returns the first annotation in a list of annotations which is an instance of the
 	 * given annotation class.
+	 * @param annotations annotations
+	 * @param c a class
+	 * @param <A> the annotation type
+	 * @return the annotation or null
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A extends Annotation> A findAnnotation(Annotation[] annotations, Class<A> c)
@@ -166,6 +190,10 @@ public abstract class ClassUtil
 	/**
 	 * Tests if an object is an instance of a given class.
 	 * If yes the object is casted to that class and returned, else null is returned.
+	 * @param object an object
+	 * @param targetClass the target class	
+	 * @param <T> the class type
+	 * @return the casted object
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T unwrap(Object object, Class<T> targetClass)
@@ -177,7 +205,12 @@ public abstract class ClassUtil
 	/**
 	 * Translates a Enum name into an Enum object.
 	 * If the Enum name is null or not defined, then the default value is returned. This helps 
-	 * to avoid the IllegalArgumentException thrown by Enum.valueOf 
+	 * to avoid the IllegalArgumentException thrown by Enum.valueOf
+	 * @param enumClass the enum class
+	 * @param name the name of an enum entry
+	 * @param defaultValue a default value 
+	 * @param <T> the enum type
+	 * @return the enum
 	 */
 	public static <T extends Enum<T>> T getEnum(Class<T> enumClass, String name, T defaultValue)
 	{
@@ -194,7 +227,8 @@ public abstract class ClassUtil
 	
 
 	/**
-	 * Returns the package name of the class, with all '.' characters
+	 * @param c a class
+	 * @return the package name of the class, with all '.' characters
 	 * replaced by '/'.
 	 */
 	public static String buildResourcePath(Class<?> c)
@@ -206,6 +240,9 @@ public abstract class ClassUtil
 	/**
 	 * Builds the resource path for the class and appends the file name.
 	 * The returned string is suitable to be passed to ClasLoader.getResource().
+	 * @param c a class
+	 * @param name a name
+	 * @return the resource file name
 	 */
 	public static String buildResourceFile(Class<?> c, String name)
 	{
