@@ -133,7 +133,7 @@ public class Arguments
     
  
     /**
-	 * Returns the current argument.
+	 * @return the current argument.
 	 */
 	public String get()
 	{
@@ -142,7 +142,7 @@ public class Arguments
 
 	
 	/**
-	 * Returns the next argument string and proceeds to the next argument.
+	 * @return the next argument string and proceeds to the next argument.
 	 */
 	public String next()
 	{
@@ -151,7 +151,7 @@ public class Arguments
 
 
 	/**
-	 * Returns the next argument string or throws an IllegalArgumentException if there
+	 * @return the next argument string or throws an IllegalArgumentException if there
 	 * are no more arguments left.
 	 * @param what describes the parameter. Used when a IllegalArgumentException is thrown.
 	 */
@@ -167,7 +167,7 @@ public class Arguments
 
 
     /**
-     * Returns the next argument string as int.
+     * @return the next argument string as int.
  	 * @param what describes the parameter. Used when a IllegalArgumentException is thrown.
      * @throws IllegalArgumentException if there are no more arguments left.
      */
@@ -186,7 +186,7 @@ public class Arguments
     
     
     /**
-     * Returns the next argument string as boolean.
+     * @return the next argument string as boolean.
 	 * @param what describes the parameter. Used when a IllegalArgumentException is thrown.
      * @throws IllegalArgumentException if there are no more arguments left.
      */
@@ -198,7 +198,7 @@ public class Arguments
 
     
     /**
-     * Returns the next argument string as File.
+     * @return the next argument string as File.
  	 * @param what describes the parameter. Used when a IllegalArgumentException is thrown.
      * @throws IllegalArgumentException if there are no more arguments left.
      */
@@ -209,7 +209,7 @@ public class Arguments
     
     
     /**
-     * Returns the next argument string as File.
+     * @return the next argument string as File.
      * @param what describes the parameter. Used when a IllegalArgumentException is thrown.
      * @param fileType the expected file type.
      * @throws IllegalArgumentException if there are no more arguments left or the file
@@ -229,6 +229,8 @@ public class Arguments
      * new instance of that class.
      * @param what describes the parameter. Used when a IllegalArgumentException is thrown.
      * @param superClass a super class of the class.
+     * @param <T> the superclass type
+     * @return the new instance
      */
     public <T> T nextObject(String what, Class<T> superClass)
     {
@@ -244,8 +246,9 @@ public class Arguments
     } 
 
    
-   /**
-	 * Returns if the next argument matches the string. If true, 
+    /**
+	 * @param s a string 
+	 * @return if the next argument matches the string. If true, 
 	 * the string is consumed.
 	 */
 	public boolean consume(String s)
@@ -261,6 +264,7 @@ public class Arguments
 
 
 	/**
+	 * @param s a string
 	 * Replaces the current argument with the string.
 	 */
 	public void replace(String s)
@@ -271,7 +275,8 @@ public class Arguments
 	
 	
 	/**
-	 * Returns if the next argument starts with the given string.
+	 * @param s a string
+	 * @return if the next argument starts with the given string.
 	 */
 	public boolean startsWith(String s)
 	{
@@ -280,7 +285,7 @@ public class Arguments
 
 
 	/**
-	 * Returns if there are more arguments left.
+	 * @return if there are more arguments left.
 	 */
 	public boolean hasMore()
 	{
@@ -289,21 +294,22 @@ public class Arguments
 
 
 	/**
-	 * Returns if there are at least n more arguments.
+	 * @param count the count
+	 * @return if there are at least count more arguments.
 	 */
-	public boolean hasMore(int amount)
+	public boolean hasMore(int count)
 	{
-		return pos_ + amount <= args_.size();
+		return pos_ + count <= args_.size();
 	}
 	
 	
 	/**
-	 * Returns the remaining arguments.
+	 * @return the remaining arguments.
 	 */
 	public List<String> getRestArgs()
 	{
 		return args_.subList(pos_, args_.size());
-}
+	}
 	
 	
 	private IllegalArgumentException createConvertException(String what, String message, Exception cause)

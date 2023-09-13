@@ -30,7 +30,8 @@ import org.civilian.util.ClassUtil;
 public class ResMsgBundle extends MsgBundle
 {
 	/**
-	 * Creates a new ResMsgBundle for a ResourceBundle. 
+	 * Creates a new ResMsgBundle for a ResourceBundle.
+	 * @param bundle the java bundle  
 	 */
 	public ResMsgBundle(ResourceBundle bundle)
 	{
@@ -39,7 +40,7 @@ public class ResMsgBundle extends MsgBundle
 
 	
 	/**
-	 * Returns the locale of the resource bundle.
+	 * @return the locale of the resource bundle.
 	 */
 	@Override public Locale getLocale()
 	{
@@ -58,10 +59,12 @@ public class ResMsgBundle extends MsgBundle
 	
 	
 	/**
-	 * Returns the message with the id.
+	 * Returns the message for the id.
 	 * If the resource bundle does not contain a message with that id,
 	 * the resulting MissingResourceException is catched and  
 	 * null is returned instead.
+	 * @param id the message id
+	 * @return the message
 	 */
 	@Override public String get(Object id)
 	{
@@ -100,5 +103,5 @@ public class ResMsgBundle extends MsgBundle
 	}
 	
 	
-	private ResourceBundle bundle_;
+	private final ResourceBundle bundle_;
 }

@@ -647,7 +647,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Close the content output, either the {@link #getContentStream() OutputStream}
 	 * or {@link #getContentWriter() PrintWriter}.
-	 * This method is called automatically at the end of request {@link Application#process(Request) processing}.
+	 * This method is called automatically at the end of request {@link Application#process(Request,Response) processing}.
 	 */
 	public abstract void closeContent();
 	

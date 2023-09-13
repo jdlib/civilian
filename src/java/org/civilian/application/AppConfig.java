@@ -33,7 +33,6 @@ import org.civilian.controller.ControllerConfig;
 import org.civilian.controller.ControllerFactory;
 import org.civilian.resource.Path;
 import org.civilian.resource.Resource;
-import org.civilian.response.Response;
 import org.civilian.server.Server;
 import org.civilian.text.msg.MsgBundleFactories;
 import org.civilian.text.msg.MsgBundleFactory;
@@ -489,7 +488,6 @@ public class AppConfig
 	
 	/**
 	 * Returns the async-value.
-	 * @see Response#setAsync(boolean)
 	 * @return the flag
 	 */
 	public boolean getAsync()

@@ -60,7 +60,7 @@ public class TypeLib implements Iterable<Type<?>>
 
 
 	/**
-	 * Returns the default type library. 
+	 * @return the default type library. 
 	 */
 	public static TypeLib getDefaultTypeLib()
 	{
@@ -116,7 +116,7 @@ public class TypeLib implements Iterable<Type<?>>
 
 	
 	/**
-	 * Returns the number of type contained in the library. 
+	 * @return the number of type contained in the library. 
 	 */
 	public int size()
 	{
@@ -125,7 +125,9 @@ public class TypeLib implements Iterable<Type<?>>
 	
 	
 	/**
-	 * Adds a type to the library. 
+	 * Adds a type to the library.
+	 * @param type a type 
+	 * @param <T> the type's type
 	 */
 	public <T> void put(Type<T> type)
 	{
@@ -141,7 +143,9 @@ public class TypeLib implements Iterable<Type<?>>
 
 	
 	/** 
-	 * Returns a Type for a Java class. 
+	 * @return a Type for a Java class. 
+	 * @param c a class
+	 * @param <T> the class type
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> Type<? super T> get(Class<T> c)
@@ -166,7 +170,10 @@ public class TypeLib implements Iterable<Type<?>>
 	
 		
 	/** 
-	 * Returns a Type for a Java class. 
+	 * Returns a Type for a Java class.
+	 * @param c a class
+	 * @param <T> the class type
+	 * @return the type 
 	 * @throws IllegalArgumentException if no type is registered for the class.
 	 */
 	public <T> Type<? super T> getSafe(Class<T> c)
@@ -180,6 +187,9 @@ public class TypeLib implements Iterable<Type<?>>
 	
 	/** 
 	 * Removes a Type from the library. 
+	 * @param c a class
+	 * @param <T> the class type
+	 * @return the removed type
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> Type<T> remove(Class<T> c)
@@ -190,6 +200,9 @@ public class TypeLib implements Iterable<Type<?>>
 	
 	/** 
 	 * Removes a Type from the library. 
+	 * @param type a type 
+	 * @param <T> the type's type
+	 * @return the removed type
 	 */
 	public <T> Type<T> remove(Type<T> type)
 	{
@@ -207,7 +220,7 @@ public class TypeLib implements Iterable<Type<?>>
 
 	
 	/**
-	 * Returns the associated class of a class of primitive type.
+	 * @return the associated class of a class of primitive type.
 	 * @param c a class for a primitive type (e.g. int.class)
 	 */
 	public static Class<?> getObjectClassForPrimitiveType(Class<?> c)
@@ -218,7 +231,9 @@ public class TypeLib implements Iterable<Type<?>>
 	
 	
 	/**
-	 * Returns a default value for a primitive java type
+	 * @return a default value for a primitive java type
+	 * @param c a primitive class
+	 * @param <T> the class type
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getPrimitiveDefaultValue(Class<T> c)

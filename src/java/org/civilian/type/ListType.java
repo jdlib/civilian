@@ -29,13 +29,15 @@ public abstract class ListType<T,E> extends Type<T>
 	
 	
 	/**
-	 * Returns the type of a list element.
+	 * @return the type of a list element.
 	 */
 	public abstract Type<E> getElementType();
 	
 	
 	/**
 	 * Create a list object from an value array.
+	 * @param values the values
+	 * @return the list
 	 */
 	public abstract T create(E[] values);
 }

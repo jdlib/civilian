@@ -172,6 +172,8 @@ public abstract class Server implements PathProvider
 	/**
 	 * Disconnect the application from the server.
 	 * Called when the application is closed.
+	 * @param app the app
+	 * @param connector a connector
 	 */
 	protected abstract void disconnect(ServerApp app, Object connector);
 
@@ -194,6 +196,7 @@ public abstract class Server implements PathProvider
 	
 	/**
 	 * Closes an application and removes it from the Server.
+	 * @param app an app
 	 */
 	protected synchronized void close(ServerApp app)
 	{
@@ -244,6 +247,8 @@ public abstract class Server implements PathProvider
 	
 	/**
 	 * Returns the first application with the given class.
+	 * @param appClass the appClass
+	 * @param <T> the appClass type
 	 * @return the application or null
 	 */
 	@SuppressWarnings("unchecked")

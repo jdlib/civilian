@@ -115,6 +115,8 @@ public class NumberFormat implements Serializable
 	/**
 	 * Formats a long value.
 	 * @param value the value.
+	 * @param style a style
+	 * @param builder a StringBuilder
 	 * @return the StringBuilder containing the number
 	 */
 	public StringBuilder formatNatural(long value, NumberStyle style, StringBuilder builder)
@@ -154,6 +156,7 @@ public class NumberFormat implements Serializable
 	/**
 	 * Formats a double value.
 	 * @param value the value.
+	 * @return the formatted value
 	 */
 	public String formatDecimal(double value)
 	{
@@ -164,6 +167,8 @@ public class NumberFormat implements Serializable
 	/**
 	 * Formats a double value.
 	 * @param value the value.
+	 * @param style a style
+	 * @return the formatted value
 	 */
 	public String formatDecimal(double value, NumberStyle style)
 	{

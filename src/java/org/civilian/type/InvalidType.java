@@ -31,7 +31,8 @@ public class InvalidType<T> extends Type<T>
 	}
 	
 	/**
-	 * Returns a InvalidType object for a type., 
+	 * @return a InvalidType object for a type.
+	 * @param <S> the type 
 	 */
 	@SuppressWarnings("unchecked")
 	public static <S> InvalidType<S> instance()

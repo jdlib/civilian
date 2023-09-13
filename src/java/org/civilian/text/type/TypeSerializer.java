@@ -68,6 +68,7 @@ public abstract class TypeSerializer
 		/**
 		 * Returns a value which represents the empty string.
 		 * @return the default implementation returns null.
+		 * @throws Exception in case of an error
 		 */
 		default public T parseEmpty() throws Exception
 		{
@@ -127,6 +128,9 @@ public abstract class TypeSerializer
 	/**
 	 * Formats a typed value into a string.
 	 * Calls {@link #format(Type, Object, Style)} using a null style.
+	 * @param type a type
+	 * @param value a value
+	 * @param<T> the type of the type
 	 * @return the formatted value
 	 */
 	public <T> String format(Type<T> type, T value)
@@ -137,6 +141,10 @@ public abstract class TypeSerializer
 	
 	/**
 	 * Formats a typed value into a string using the given style.
+	 * @param type the type
+	 * @param value the value
+	 * @param style optional, a style
+ 	 * @param<T> the type of the type
 	 * @return the formatted value
 	 */
 	public <T> String format(Type<T> type, T value, Style style)
@@ -153,7 +161,9 @@ public abstract class TypeSerializer
 	
 	
 	/**
-	 * Returns a Formatter for a type.
+	 * @return a Formatter for a type.
+	 * @param type the type
+	 * @param<T> the type of the type
 	 */
 	public <T> Formatter<T> getFormatter(Type<T> type)
 	{
@@ -228,6 +238,7 @@ public abstract class TypeSerializer
 	 * Parses the value from a string.
 	 * @param type a Type object
 	 * @param s the string representation 
+	 * @param<T> the type of the type
 	 * @return the Value object
 	 */
 	public <T> Value<T> parseValue(Type<T> type, String s)

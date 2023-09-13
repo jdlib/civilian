@@ -50,7 +50,8 @@ public class ResMsgBundleFactory extends MsgBundleFactory
 
 	
 	/**
-	 * Returns the ResMsgBundle for the locale.
+	 * @return the ResMsgBundle for the locale.
+	 * @param locale a locale
 	 */
 	@Override public MsgBundle getMsgBundle(Locale locale)
 	{
@@ -59,7 +60,8 @@ public class ResMsgBundleFactory extends MsgBundleFactory
 
 	
 	/**
-	 * Returns a ResourceBundle for the locale.
+	 * @return a ResourceBundle for the locale.
+	 * @param locale a locale
 	 */
 	public ResourceBundle getResBundle(Locale locale)
 	{
@@ -69,6 +71,7 @@ public class ResMsgBundleFactory extends MsgBundleFactory
 
 	/**
 	 * Sets the ClassLoader used by the factory.
+	 * @param classLoader the ClassLoader
 	 */
 	public void setClassLoader(ClassLoader classLoader)
 	{
@@ -78,6 +81,7 @@ public class ResMsgBundleFactory extends MsgBundleFactory
 	
 	/**
 	 * Sets the ResourceBundle.Control used by the factory.
+	 * @param control the control
 	 */
 	public void setControl(ResourceBundle.Control control)
 	{
@@ -110,7 +114,7 @@ public class ResMsgBundleFactory extends MsgBundleFactory
 
 	
 	/**
-	 * Returns an info string.
+	 * @return an info string.
 	 */
 	@Override public String toString()
 	{

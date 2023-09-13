@@ -30,6 +30,7 @@ public class DiscreteType<T> extends Type<T>
 {
 	/**
 	 * Creates a new DiscreteType.
+	 * @param type a type
 	 * @param list an non empty array of objects.
 	 */
 	@SafeVarargs

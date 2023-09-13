@@ -44,18 +44,22 @@ public abstract class DateType<T> extends Type<T> implements DateFormat.Factory<
 	
 	/**
 	 * Creates a Date object for current date.
+	 * @return the date
 	 */
 	public abstract T createToday();
 
 
 	/**
 	 * Extracts the year from a date object.
+	 * @param date a date
+	 * @return the year
 	 */
 	public abstract int getYear(T date);
 
 
 	/**
 	 * Extracts the month from a date object.
+	 * @param date a date
 	 * @return the month (1-12)
 	 */
 	public abstract int getMonth(T date);
@@ -63,6 +67,7 @@ public abstract class DateType<T> extends Type<T> implements DateFormat.Factory<
 
 	/**
 	 * Extracts the day from a date object.
+	 * @param date a date
 	 * @return the day (1-31)
 	 */
 	public abstract int getDay(T date);

@@ -60,7 +60,7 @@ public abstract class Type<T>
 		
 		
 		/**
-		 * Returns the category name.
+		 * @return the category name.
 		 */
 		public final String name()
 		{
@@ -75,7 +75,7 @@ public abstract class Type<T>
 
 		
 		/**
-		 * Returns the number of existing categories.
+		 * @return the number of existing categories.
 		 */
 		public static int count()
 		{
@@ -83,8 +83,8 @@ public abstract class Type<T>
 		}
 		
 		
-		private int ordinal_;
-		private String name_;
+		private final int ordinal_;
+		private final String name_;
 	}
 
 	
@@ -163,6 +163,6 @@ public abstract class Type<T>
 
 	private final int ordinal_;
 	private final Category category_;
-	private static AtomicInteger nextOrdinal_ = new AtomicInteger();
+	private static final AtomicInteger nextOrdinal_ = new AtomicInteger();
 }
  

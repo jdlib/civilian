@@ -39,6 +39,7 @@ public class LocaleServiceList
 {
 	/**
 	 * Creates a new LocaleServiceList.
+	 * @param typeLib a type library
 	 * @param msgBundleFactory a factory to create localized MsgBundles or null, if the service
 	 * 		should only provide empty message bundles 
 	 * @param allowUnsupportedLocales true if the service also constructs LocaleServices for unsupported
@@ -87,7 +88,7 @@ public class LocaleServiceList
 	
 	
 	/**
-	 * Returns the the type library of this LocaleServiceList.
+	 * @return the the type library of this LocaleServiceList.
 	 */
 	public TypeLib getTypeLib()
 	{
@@ -96,7 +97,7 @@ public class LocaleServiceList
 	
 
 	/**
-	 * Returns the MsgBundleFactory of this LocaleServiceList.
+	 * @return the MsgBundleFactory of this LocaleServiceList.
 	 */
 	public MsgBundleFactory getMsgBundleFactory()
 	{
@@ -105,7 +106,7 @@ public class LocaleServiceList
 	
 	
 	/**
-	 * Returns the number of supported locales. 
+	 * @return the number of supported locales. 
 	 */
 	public int size()
 	{
@@ -114,7 +115,8 @@ public class LocaleServiceList
 
 	
 	/**
-	 * Returns the i-th supported locale. 
+	 * @return the i-th supported locale.
+	 * @param i the locale index 
 	 */
 	public Locale getLocale(int i)
 	{
@@ -123,7 +125,7 @@ public class LocaleServiceList
 
 	
 	/**
-	 * Returns the first supported locale. 
+	 * @return the first supported locale. 
 	 */
 	public Locale getDefaultLocale()
 	{
@@ -132,7 +134,7 @@ public class LocaleServiceList
 	
 
 	/**
-	 * Returns if LocaleServices for unsupported locales
+	 * @return if LocaleServices for unsupported locales
 	 * are returned, or if the service falls back to a supported locale. 
 	 */
 	public boolean allowUnsupportedLocales()
@@ -142,7 +144,9 @@ public class LocaleServiceList
 
 	
 	/**
-	 * Tests if the given locale is supported. 
+	 * Tests if the given locale is supported.
+	 * @param locale a locale 
+	 * @return supported
 	 */
 	public boolean isSupported(Locale locale)
 	{
@@ -165,7 +169,9 @@ public class LocaleServiceList
 	 * Returns a supported locale. If the locale is included
 	 * in the supported locales it is returned.
 	 * If its language matches the language of a supported locale
-	 * that locale is returned. Else the default locale is returned. 
+	 * that locale is returned. Else the default locale is returned.
+	 * @param locale a locale
+	 * @return the normed locale 
 	 */
 	public Locale normLocale(Locale locale)
 	{
@@ -190,7 +196,7 @@ public class LocaleServiceList
 	
 	
 	/**
-	 * Returns the LocaleService of the default locale.
+	 * @return the LocaleService of the default locale.
 	 */
 	public LocaleService getDefaultService()
 	{
@@ -207,6 +213,8 @@ public class LocaleServiceList
 	 * therefore has a small performance penalty.
 	 * If unsupported locales are not allowed, a LocaleService for fallback locale
 	 * is returned.
+	 * @param locale a locale
+	 * @return the service
 	 */
 	public LocaleService getService(Locale locale)
 	{
@@ -232,7 +240,8 @@ public class LocaleServiceList
 
 	
 	/**
-	 * Returns the LocaleService for the i-th locale.
+	 * @return the LocaleService for the i-th locale.
+	 * @param i the service index
 	 */ 
 	public LocaleService getService(int i)
 	{
@@ -241,7 +250,7 @@ public class LocaleServiceList
 
 	
 	/**
-	 * Returns a KeyList for the defined LocaleService objects.
+	 * @return a KeyList for the defined LocaleService objects.
 	 */ 
 	public KeyList<LocaleService> getServiceKeys()
 	{
