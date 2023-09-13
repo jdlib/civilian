@@ -46,6 +46,8 @@ public class ServerConstGenerator
 	
 	/**
 	 * Runs the ResConstGenerator.
+	 * @param args the CLI args
+	 * @throws Exception in case of an error
 	 */
 	public static void main(String[] args) throws Exception
 	{

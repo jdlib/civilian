@@ -58,6 +58,8 @@ public class ResBundleCompiler
 	
 	/**
 	 * Command line entry point.
+	 * @param stringArgs the CLI args
+	 * @throws IOException if an IO exception occurs
 	 */
 	public static void main(String[] stringArgs) throws IOException
 	{
@@ -135,6 +137,9 @@ public class ResBundleCompiler
 	
 	/**
 	 * Runs the compiler.
+	 * @param config a config
+	 * @return run successful?
+	 * @throws IOException if an IO error occurs
 	 */
 	public boolean run(Config config) throws IOException 
 	{
