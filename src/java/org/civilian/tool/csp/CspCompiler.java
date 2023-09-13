@@ -422,7 +422,7 @@ public class CspCompiler
 				{
 					if (parser.literalParts.size() == 0)
 					{
-						// e.g. because of a template line "<%%>" to preserve it, produces a out.println() 
+						// e.g. because of a template line "^'" to preserve it, produces a out.println() 
 						printer.printLiteralLine(parser.literalParts, 0, true);
 					}
 					else

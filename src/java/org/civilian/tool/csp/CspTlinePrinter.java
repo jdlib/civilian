@@ -97,8 +97,7 @@ class CspTlinePrinter
 
 	
 	/**
-	 * Prints a template code segment embedded in a literal line between {@link CspSymbols#exprStart} and
-	 * {@link CspSymbols#exprEnd}.
+	 * Prints a template code snippet.
 	 * @param raw the snippet included the start and end symbol.
 	 * @param code the code content with the symbols and trimmed.
 	 */
