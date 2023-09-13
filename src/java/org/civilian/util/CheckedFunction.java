@@ -16,9 +16,9 @@ public interface CheckedFunction<T, R, E extends Exception>
 {
     /**
      * Applies this function to the given argument.
-     *
      * @param t the function argument
      * @return the function result
+     * @throws E if an error occurs
      */
     R apply(T t) throws E;
 }

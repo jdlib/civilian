@@ -19,6 +19,7 @@ package org.civilian.util;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Objects;
 
 
 /**
@@ -28,6 +29,10 @@ public abstract class ArrayUtil
 {
 	/**
 	 * Creates a new array, with the given item prepended.
+	 * @param array an array
+	 * @param item an item
+	 * @param <T> the element type
+	 * @return the new array
 	 */
 	public static <T> T[] addFirst(T[] array, T item)
 	{
@@ -41,6 +46,10 @@ public abstract class ArrayUtil
 	
 	/**
 	 * Creates a new array, with the given item appended to the end.
+	 * @param array an array
+	 * @param item an item
+	 * @param <T> the element type
+	 * @return the new array
 	 */
 	public static <T> T[] addLast(T[] array, T item)
 	{
@@ -54,10 +63,14 @@ public abstract class ArrayUtil
 
 	/**
 	 * Creates a new array, with the given item appended to the end.
+	 * @param array1 the first array
+	 * @param array2 the second array
+	 * @param <T> the element type
+	 * @return the new array
 	 */
 	public static <T> T[] concat(T[] array1, T[] array2)
 	{
-		if (array1 == null)
+		if (array1 == null) 
 			return array2;
 		else if (array2 == null)
 			return array1;
@@ -74,6 +87,10 @@ public abstract class ArrayUtil
 	
 	/**
 	 * Returns a new array, with the first count items removed.
+	 * @param array an array
+	 * @param count a element count
+	 * @param <T> the element type
+	 * @return the new array
 	 */
 	public static <T> T[] removeFirst(T[] array, int count)
 	{
@@ -91,6 +108,10 @@ public abstract class ArrayUtil
 	
 	/**
 	 * Returns a new array, with the item at the given index removed
+	 * @param <T> the element type
+	 * @param array an array
+	 * @param index an index into the array
+	 * @return the array
 	 */
 	public static <T> T[] removeAt(T[] array, int index)
 	{
@@ -109,6 +130,10 @@ public abstract class ArrayUtil
 	
 	/**
 	 * Tests if the array contains the item.
+	 * @param <T> the element type
+	 * @param array an array
+	 * @param item an item
+	 * @return contains?
 	 */
 	public static <T> boolean contains(T[] array, T item)
 	{
@@ -116,7 +141,7 @@ public abstract class ArrayUtil
 		{
 			for (int i=0; i<array.length; i++)
 			{
-				if (equals(array[i], item))
+				if (Objects.equals(array[i], item))
 					return true;
 			}
 		}
@@ -126,6 +151,10 @@ public abstract class ArrayUtil
 
 	/**
 	 * Collects the items of an Enumeration and returns them as an array.
+	 * @param it an Enumeration
+	 * @param c the element class
+	 * @param <T> the element type
+	 * @return the array
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T[] toArray(Enumeration<T> it, Class<T> c)
@@ -134,11 +163,5 @@ public abstract class ArrayUtil
 		while(it.hasMoreElements())
 			list.add(it.nextElement());
 		return list.toArray((T[])Array.newInstance(c, list.size()));
-	}
-	
-	
-	private static boolean equals(Object o1, Object o2)
-	{
-		return o1 == null ? o2 == null : o1.equals(o2);
 	}
 }
