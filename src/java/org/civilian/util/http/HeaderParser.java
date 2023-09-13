@@ -61,7 +61,7 @@ public class HeaderParser
 	 */
 	public void init(String header)
 	{
-		scanner_.init(header);
+		scanner_.input(header);
 		scanParams_ = false;
 		token_ = Token.START;
 	}

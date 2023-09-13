@@ -161,7 +161,7 @@ class CspTlinePrinter
 	
 	private void printSrcCommentln(String s)
 	{
-		out.printSrcCommentln(s, scanner_.getLineIndex());
+		out.printSrcCommentln(s, scanner_.input.getLineIndex());
 	}
 
 	

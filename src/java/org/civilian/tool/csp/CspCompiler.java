@@ -298,8 +298,10 @@ public class CspCompiler
 
 	private String compile(TemplateInput input, JavaOutput output) throws CspException, IOException
 	{
-		scanner_ = new Scanner(input.readLines(options_.encodingIn));
-		scanner_.setSource(input.file.getName());
+		scanner_ = new Scanner();
+		scanner_.input
+			.setLines(input.readLines(options_.encodingIn))
+			.setSource(input.file.getName());
 		scanner_.setErrorHandler(CspException::new);
 
 		if (scanner_.nextKeyword("encoding"))
@@ -308,7 +310,7 @@ public class CspCompiler
 
 			if (!options_.encodingIn.equalsIgnoreCase(encoding))
 			{
-				scanner_.init(input.readLines(encoding));
+				scanner_.input(input.readLines(encoding));
 				scanner_.nextKeyword("encoding");
 				scanner_.nextToken("encoding");
 			}
@@ -329,7 +331,7 @@ public class CspCompiler
 		{
 			// pure java mode: csp file is essentially a Java class
 			// with template snippets
-			scanner_.nextLine();
+			scanner_.input.nextLine();
 			compileJavaLines(out);
 		}
 		else
@@ -363,14 +365,14 @@ public class CspCompiler
 
 	private void compileJavaLines(SourceWriter out) throws CspException, IOException
 	{
-		while(scanner_.hasMoreLines())
+		while(scanner_.input.hasMoreLines())
 		{
 			String line = scanner_.getLine();
 			if (line.trim().equals(CspSymbols.START_TEMPLATE_SECTION))
 				compileTemplateLines(out);
 			else
 				out.println(line);
-			scanner_.nextLine();
+			scanner_.input.nextLine();
 		}
 	}
 
@@ -396,7 +398,7 @@ public class CspCompiler
 		Block block = null;
 		while(true)
 		{
-			if (!scanner_.nextLine())
+			if (!scanner_.input.nextLine())
 				scanner_.exception("template end '" + CspSymbols.END_TEMPLATE_SECTION + "' expected");
 
 			parser.parse();

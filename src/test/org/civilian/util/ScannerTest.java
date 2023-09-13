@@ -28,17 +28,17 @@ public class ScannerTest extends CivTest
 	
 	@Test public void testInit()
 	{
-		scanner.init((String)null);
+		scanner.input((String)null);
 		a.pos(0).length(0).line("");
 		
-		scanner.init("abc");
+		scanner.input("abc");
 		a.pos(0).length(3).line("abc");
 	}
 	
 	
 	@Test public void testNextQuotedString()
 	{
-		scanner.init("'abc' 'abc' \"\" 'ab\"c'#");
+		scanner.input("'abc' 'abc' \"\" 'ab\"c'#");
 		a.current('\'');
 		assertEquals("abc", scanner.consumeQuotedString(false));
 		scanner.skipWhitespace();
@@ -68,23 +68,23 @@ public class ScannerTest extends CivTest
 
 	@Test public void testMultLines()
 	{
-		scanner.init("a", "b", "c");
-		a.lineCount(3);
+		scanner.input("a", "b", "c");
+		a.inputLineCount(3);
 		for (int i=0; i<3; i++)
-			a.lineIndex(i).nextLine(i < 2);
+			a.inputLineIndex(i).inputNextLine(i < 2);
 		
-		scanner.init();
-		a.lineCount(0).lineIndex(0).line("");
+		scanner.input();
+		a.inputLineCount(0).inputLineIndex(0).line("");
 
-		scanner.init((String[])null);
-		a.lineCount(0).lineIndex(0).line("");
+		scanner.input((String[])null);
+		a.inputLineCount(0).inputLineIndex(0).line("");
 	}
 
 
 	@Test public void testAccessors()
 	{
-		scanner.init("123");
-		a.lineIndex(0).lineCount(1).line("123").length(3).pos(0).current('1');
+		scanner.input("123");
+		a.inputLineIndex(0).inputLineCount(1).line("123").length(3).pos(0).current('1');
 		scanner.skip();
 		a.pos(1).current('2');
  		assertTrue  (scanner.currentIsDigit());
@@ -115,7 +115,7 @@ public class ScannerTest extends CivTest
 		assertFalse(s.next("abd"));
 		assertTrue(s.nextKeyword("abc"));
 		
-		s.init("abc,");
+		s.input("abc,");
 		assertTrue(s.nextKeyword("abc"));
 	}
 
@@ -133,11 +133,11 @@ public class ScannerTest extends CivTest
 		Scanner s = new Scanner("a");
 		assertEquals("a", s.consumeToken());
 		
-		s.init("a b,d");
+		s.input("a b,d");
 		assertEquals("a", s.consumeToken());
 		assertEquals("b", s.consumeToken(","));
 		
-		s.init(" a");
+		s.input(" a");
 		s.autoSkipWhitespace(false);
 		assertNull(s.consumeToken());
 	}

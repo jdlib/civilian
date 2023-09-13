@@ -22,11 +22,116 @@ package org.civilian.util;
 public class Scanner
 {
 	/**
+	 * Input presents the lines used as input for the scanner. 
+	 */
+	public class Input
+	{
+		/**
+		 * Sets the line strings which should be scanned and positions on the first line.
+		 * If no lines are given, an empty line is used as input.
+		 * @param lines the lines
+		 * @return this
+		 */
+		public Input setLines(String... lines)
+		{
+			lines_		= lines != null ? lines : new String[0];
+			lineIndex_	= 0;
+			initLine(lines_.length > 0 ? lines_[lineIndex_] : "");
+			return this;
+		}
+	
+		
+		/**
+		 * @return the current line index, starting at 0.
+		 */
+		public int getLineIndex()
+		{
+			return lineIndex_;
+		}
+		
+		
+		/**
+		 * @return the number of lines of the input.
+		 */
+		public int getLineCount()
+		{
+			return lines_.length;
+		}
+	
+		
+		/**
+		 * @return the lines on which the scanner is operating.
+		 */
+		public String[] getLines()
+		{
+			return lines_;
+		}
+
+		
+		/**
+		 * @return if the input has more lines.
+		 */
+		public boolean hasMoreLines()
+		{
+			return getLineIndex() < getLineCount();
+		}
+		
+		
+		/**
+		 * Sets the source of the scanner input.
+		 * @param source the source, e.g. a file name whose lines make up the scanner input
+		 * @return this
+		 */
+		public Input setSource(String source)
+		{
+			source_ = source;
+			return this;
+		}
+		
+		
+		/**
+		 * @return the source of the scanner input.
+		 * @see #setSource(String)
+		 */
+		public String getSource()
+		{
+			return source_; 
+		}
+
+	
+		/**
+		 * Positions the scanner on the next line.
+		 * @return true if there was another line in the input lines. False if no more line was available. 
+		 * In this case the current line of the scanner is initialised to an empty line- 
+		 */
+		public boolean nextLine()
+		{
+			if (lineIndex_ < lines_.length - 1)
+			{
+				initLine(lines_[++lineIndex_]);
+				return true;
+			}
+			else 
+			{
+				lineIndex_ = lines_.length;
+				initLine("");
+				return false;
+			}
+		}
+		
+		
+		private int lineIndex_;
+		private String[] lines_;
+		private String source_;
+	}
+	
+	
+	/**
 	 * Creates a new Scanner with empty input.
 	 */
 	public Scanner()
 	{
-		init((String)null);
+		input((String)null);
 	}
 	
 	
@@ -36,7 +141,7 @@ public class Scanner
 	 */
 	public Scanner(String... lines)
 	{
-		init(lines);
+		input(lines);
 	}
 
 	
@@ -46,11 +151,9 @@ public class Scanner
 	 * @param lines the lines
 	 * @return this
 	 */
-	public Scanner init(String... lines)
+	public Scanner input(String... lines)
 	{
-		lines_		= lines != null ? lines : new String[0];
-		lineIndex_	= 0;
-		initLine(lines_.length > 0 ? lines_[lineIndex_] : "");
+		input.setLines(lines);
 		return this;
 	}
 	
@@ -61,65 +164,6 @@ public class Scanner
 		length_ 	 		= currentLine_.length();
 		needSkipWhitespace_ = autoSkipWhitespace_;
 		setPos(0);
-	}
-	
-	  
-	/**
-	 * Sets the source of the scanner input.
-	 * @param source the source, e.g. a file name whose lines make up the scanner input
-	 * @return this
-	 */
-	public Scanner setSource(String source)
-	{
-		source_ = source;
-		return this;
-	}
-	
-	
-	/**
-	 * @return the source of the scanner lines.
-	 * @see #setSource(String)
-	 */
-	public String getSource()
-	{
-		return source_; 
-	}
-
-	
-	/**
-	 * @return the lines on which the scanner is operating.
-	 */
-	public String[] getLines()
-	{
-		return lines_;
-	}
-	
-	
-	/**
-	 * @return the current line index, starting at 0.
-	 */
-	public int getLineIndex()
-	{
-		return lineIndex_;
-	}
-	
-	
-	/**
-	 * @return the number of lines on which the scanner is operating.
-	 */
-	public int getLineCount()
-	{
-		return lines_.length;
-	}
-
-	
-	/**
-	 * @return the current line index, starting at 0.
-	 * @see #getLines()
-	 */
-	public boolean hasMoreLines()
-	{
-		return getLineIndex() < getLineCount();
 	}
 	
 	
@@ -298,27 +342,6 @@ public class Scanner
 		autoSkipWhitespace();
 		int length = s.length();
 		return hasMoreChars(length) && currentLine_.regionMatches(pos_, s, 0, length);
-	}
-	
-	
-	/**
-	 * Positions the scanner on the next line.
-	 * @return true if there was another line in the input lines. False if no more line was available. 
-	 * In this case the current line of the scanner is initialized with an empty line- 
-	 */
-	public boolean nextLine()
-	{
-		if (lineIndex_ < lines_.length - 1)
-		{
-			initLine(lines_[++lineIndex_]);
-			return true;
-		}
-		else 
-		{
-			lineIndex_ = lines_.length;
-			initLine("");
-			return false;
-		}
 	}
 
 	
@@ -722,7 +745,7 @@ public class Scanner
 				}
 				return;
 			}
-			if (!nextLine())
+			if (!input.nextLine())
 				return;
 		}
 	}
@@ -749,8 +772,8 @@ public class Scanner
 		{
 			StringBuilder s = new StringBuilder(message);
 			s.append(" (");
-			if (getLineCount() > 1)
-				s.append(getLineIndex() + 1).append(':');
+			if (input.getLineCount() > 1)
+				s.append(input.getLineIndex() + 1).append(':');
 			s.append(pos_ + 1).append("): '").append(currentLine_);
 			e = new IllegalArgumentException(s.toString());
 		}
@@ -781,11 +804,9 @@ public class Scanner
 	
 	private int pos_;
 	private int length_;
-	private int lineIndex_;
 	private String currentLine_;
-	private String[] lines_;
 	private boolean autoSkipWhitespace_ = true;
 	private boolean needSkipWhitespace_;
 	private ErrorHandler errorHandler_;
-	private String source_;
+	public final Input input = new Input();
 }

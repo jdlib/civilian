@@ -35,8 +35,8 @@ public class CspException extends RuntimeException
 		// show location
 		if (scanner != null)
 		{
-			String source = scanner.getSource();
-			int lineIndex = scanner.getLineIndex();
+			String source = scanner.input.getSource();
+			int lineIndex = scanner.input.getLineIndex();
 			
 			if ((source != null) || (lineIndex >= 0))
 			{
@@ -121,9 +121,9 @@ public class CspException extends RuntimeException
 		super(buildMessage(msg, cause, scanner), cause);
 		if (scanner != null)
 		{
-			lineIndex_		= scanner.getLineIndex();
+			templateFile_	= scanner.input.getSource();
+			lineIndex_		= scanner.input.getLineIndex();
 			line_			= scanner.getLine();
-			templateFile_	= scanner.getSource();
 		}
 	}
 

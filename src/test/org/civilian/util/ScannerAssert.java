@@ -39,23 +39,23 @@ public class ScannerAssert
 	}
 
 	
-	public ScannerAssert lineCount(int expected)
+	public ScannerAssert inputLineCount(int expected)
 	{
-		assertEquals("lineCount", expected, scanner_.getLineCount());
+		assertEquals("lineCount", expected, scanner_.input.getLineCount());
 		return this;
 	}
 
 	
-	public ScannerAssert lineIndex(int expected)
+	public ScannerAssert inputLineIndex(int expected)
 	{
-		assertEquals("lineIndex", expected, scanner_.getLineIndex());
+		assertEquals("lineIndex", expected, scanner_.input.getLineIndex());
 		return this;
 	}
 	
 	
-	public ScannerAssert nextLine(boolean expected)
+	public ScannerAssert inputNextLine(boolean expected)
 	{
-		assertEquals("nextLine", expected, scanner_.nextLine());
+		assertEquals("nextLine", expected, scanner_.input.nextLine());
 		return this;
 	}
 	

@@ -53,7 +53,7 @@ public class CspTLineParserTest extends CivTest
 	
 	private void parse(String s)
 	{
-		scanner.init(s);
+		scanner.input(s);
 		parser.parse();
 	}
 }
