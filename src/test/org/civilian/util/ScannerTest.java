@@ -22,18 +22,32 @@ import org.civilian.CivTest;
 
 public class ScannerTest extends CivTest
 {
+	private final Scanner scanner = new Scanner();
+	private final ScannerAssert a = new ScannerAssert(scanner);
+	
+	
+	@Test public void testInit()
+	{
+		scanner.init((String)null);
+		a.pos(0).length(0).line("");
+		
+		scanner.init("abc");
+		a.pos(0).length(3).line("abc");
+	}
+	
+	
 	@Test public void testNextQuotedString()
 	{
-		Scanner s = new Scanner("'abc' 'abc' \"\" 'ab\"c'#");
-		assertEquals('\'', s.current());
-		assertEquals("abc", s.consumeQuotedString(false));
-		s.skipWhitespace();
-		assertEquals("'abc'", s.consumeQuotedString(true));
-		s.skipWhitespace();
-		assertEquals("", s.consumeQuotedString(false));
-		s.skipWhitespace();
-		assertEquals("'ab\"c'", s.consumeQuotedString(true));
-		assertEquals('#', s.current());
+		scanner.init("'abc' 'abc' \"\" 'ab\"c'#");
+		a.current('\'');
+		assertEquals("abc", scanner.consumeQuotedString(false));
+		scanner.skipWhitespace();
+		assertEquals("'abc'", scanner.consumeQuotedString(true));
+		scanner.skipWhitespace();
+		assertEquals("", scanner.consumeQuotedString(false));
+		scanner.skipWhitespace();
+		assertEquals("'ab\"c'", scanner.consumeQuotedString(true));
+		assertEquals('#', scanner.current());
 	}
 
 
@@ -54,43 +68,35 @@ public class ScannerTest extends CivTest
 
 	@Test public void testMultLines()
 	{
-		Scanner s = new Scanner("a", "b", "c");
-		assertEquals(3, s.getLines().length);
+		scanner.init("a", "b", "c");
+		a.lineCount(3);
 		for (int i=0; i<3; i++)
-		{
-			assertEquals(i, s.getLineIndex());
-			assertEquals(i < 2, s.nextLine());
-		}
+			a.lineIndex(i).nextLine(i < 2);
 		
-		s = new Scanner(new String[0]);
-		assertEquals(1, s.getLines().length);
+		scanner.init();
+		a.lineCount(0).lineIndex(0).line("");
 
-		s = new Scanner((String[])null);
-		assertEquals(1, s.getLines().length);
+		scanner.init((String[])null);
+		a.lineCount(0).lineIndex(0).line("");
 	}
 
 
 	@Test public void testAccessors()
 	{
-		Scanner s = new Scanner("123");
- 		assertEquals(0, s.getLineIndex());
- 		assertEquals(1, s.getLineCount());
- 		assertEquals("123", s.getLine());
-		assertEquals(3, s.getLength());
-		assertEquals(0, s.getPos());
-		s.skip();
-		assertEquals(1, s.getPos());
- 		assertEquals('2', s.current());
- 		assertTrue  (s.currentIsDigit());
- 		assertFalse (s.currentHasType(Character.MATH_SYMBOL));
- 		assertTrue  (s.next("23"));
- 		assertEquals(-1, s.current());
+		scanner.init("123");
+		a.lineIndex(0).lineCount(1).line("123").length(3).pos(0).current('1');
+		scanner.skip();
+		a.pos(1).current('2');
+ 		assertTrue  (scanner.currentIsDigit());
+ 		assertFalse (scanner.currentHasType(Character.MATH_SYMBOL));
+ 		assertTrue  (scanner.next("23"));
+ 		a.current(-1);
 	}
 
 
 	@Test public void testSkipWhitespace()
 	{
-		Scanner s = new Scanner(" 1 1", 0);
+		Scanner s = new Scanner(" 1 1");
 		s.autoSkipWhitespace(false);
 		assertFalse(s.next("1"));
 		s.skipWhitespace();

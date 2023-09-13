@@ -189,7 +189,7 @@ class CspTLineParser
 	 */
 	private int parseCodeSnippet(String line, int start)
 	{
-		Scanner sc = new Scanner(line, start);
+		Scanner sc = new Scanner(line).setPos(start);
 		sc.skip();
 		sc.autoSkipWhitespace(false);
 		sc.setErrorHandler(scanner_.getErrorHandler());

@@ -363,7 +363,7 @@ public class CspCompiler
 
 	private void compileJavaLines(SourceWriter out) throws CspException, IOException
 	{
-		while(!scanner_.isEOF())
+		while(scanner_.hasMoreLines())
 		{
 			String line = scanner_.getLine();
 			if (line.trim().equals(CspSymbols.START_TEMPLATE_SECTION))

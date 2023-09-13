@@ -16,16 +16,13 @@
 package org.civilian.util;
 
 
-import java.io.File;
-
-
 /**
- * Scanner helps to scan or parse strings.
+ * Scanner helps to scan strings.
  */
 public class Scanner
 {
 	/**
-	 * Creates a new Scanner.
+	 * Creates a new Scanner with empty input.
 	 */
 	public Scanner()
 	{
@@ -34,100 +31,54 @@ public class Scanner
 	
 	
 	/**
-	 * Creates a new Scanner for the string.
-	 */
-	public Scanner(String input)
-	{
-		init(input);
-	}
-	
-	
-	/**
-	 * Creates a new Scanner for the string.
-	 * @param start start scanning at that index
-	 */
-	public Scanner(String input, int start)
-	{
-		init(input, start);
-	}
-	
-	
-	/**
-	 * Creates a new Scanner for multiple lines.
+	 * Creates a new Scanner using the given lines as input.
+	 * @param lines the lines
 	 */
 	public Scanner(String... lines)
 	{
 		init(lines);
 	}
-	
-	
-	/**
-	 * Sets the string which should be scanned.
-	 */
-	public void init(String input)
-	{
-		init(input, 0);
-	}
-	
+
 	
 	/**
-	 * Sets the string which should be scanned.
-	 * @param start start scanning at that index
+	 * Sets the line strings which should be scanned and positions on the first line.
+	 * If no lines are given, an empty line is used as input.
+	 * @param lines the lines
+	 * @return this
 	 */
-	public void init(String input, int start)
+	public Scanner init(String... lines)
 	{
-		initInput(input, start);
-		
-		lines_		= new String[] { currentLine_ };
+		lines_		= lines != null ? lines : new String[0];
 		lineIndex_	= 0;
-	}
-
-	
-	/**
-	 * Sets the strings which should be scanned.
-	 */
-	public void init(String... lines)
-	{
-		if ((lines == null) || (lines.length == 0))
-			init("", 0);
-		else
-		{
-			initInput(lines[0], 0);
-			lines_		= lines;
-			lineIndex_	= 0;
-		}
+		initLine(lines_.length > 0 ? lines_[lineIndex_] : "");
+		return this;
 	}
 	
 	
-	private void initInput(String input, int start)
+	private void initLine(String line)
 	{
-		currentLine_ = input != null ? input : "";
-		length_ 	 = currentLine_.length();
-		pos_ 		 = Math.max(0, Math.min(start, length_));
+		currentLine_ 		= line != null ? line : "";
+		length_ 	 		= currentLine_.length();
 		needSkipWhitespace_ = autoSkipWhitespace_;
-	}
-
-	
-	/**
-	 * Stores the source of the scanner input.
-	 */
-	public void setSource(File source)
-	{
-		setSource(source != null ? source.getAbsolutePath() : null);
+		setPos(0);
 	}
 	
 	  
 	/**
-	 * Stores the source of the scanner input.
+	 * Sets the source of the scanner input.
+	 * @param source the source, e.g. a file name whose lines make up the scanner input
+	 * @return this
 	 */
-	public void setSource(String source)
+	public Scanner setSource(String source)
 	{
 		source_ = source;
+		return this;
 	}
 	
 	
 	/**
-	 * Returns the source of the scanner data.
+	 * @return the source of the scanner lines.
+	 * @see #setSource(String)
 	 */
 	public String getSource()
 	{
@@ -136,7 +87,7 @@ public class Scanner
 
 	
 	/**
-	 * Returns the lines on which the scanner is operating.
+	 * @return the lines on which the scanner is operating.
 	 */
 	public String[] getLines()
 	{
@@ -145,7 +96,7 @@ public class Scanner
 	
 	
 	/**
-	 * Returns the current scanner line index, starting at 0.
+	 * @return the current line index, starting at 0.
 	 */
 	public int getLineIndex()
 	{
@@ -154,16 +105,27 @@ public class Scanner
 	
 	
 	/**
-	 * Returns the current scanner line index, starting at 0.
+	 * @return the number of lines on which the scanner is operating.
 	 */
 	public int getLineCount()
 	{
 		return lines_.length;
 	}
+
+	
+	/**
+	 * @return the current line index, starting at 0.
+	 * @see #getLines()
+	 */
+	public boolean hasMoreLines()
+	{
+		return getLineIndex() < getLineCount();
+	}
 	
 	
 	/**
-	 * Returns the current scanner position within in the current line.
+	 * @return the current scan position within in the current line, starting with index 0. 
+	 * A position which equals the line length signifies that all the current line has been processed.
 	 */
 	public int getPos()
 	{
@@ -172,19 +134,20 @@ public class Scanner
 	
 
 	/**
-	 * Returns the current scanner position within in the current line.
+	 * Sets the current scanner zero-based position within in the current line.
+	 * Invalid positions (e.g. < 0 or > {@link #getLength()} length) are silently corrected.
+	 * @param pos the position
+	 * @return this
 	 */
 	public Scanner setPos(int pos)
 	{
-		if (pos < 0 || pos > length_)
-			throw new IllegalArgumentException("invalid " + pos);
-		pos_ = pos;
+		pos_ = Math.max(0, Math.min(pos, length_));
 		return this;
 	}
 
 	
 	/**
-	 * Returns the length of the current line.
+	 * @return the length of the current line.
 	 */
 	public int getLength()
 	{
@@ -192,32 +155,27 @@ public class Scanner
 	}
 	
 	
+	/**
+	 * Sets the end of the current line.
+	 * Invalid positions (e.g. < 0 or > the real length of the current line) are silently corrected.
+	 * The current position is also adjusted to equal the length if it exceeds the new length.
+	 * @return this
+	 */
 	public Scanner setLength(int length)
 	{
-		if (length < 0 || length > currentLine_.length())
-			throw new IllegalArgumentException("invalid " + length);
-		length_ = length;
+		length_ = Math.max(0, Math.min(length, currentLine_.length()));
+		if (pos_ > length_)
+			pos_ = length;
 		return this;
 	}
 
 	
 	/**
-	 * Returns the current line.
-	 * @return the current line or "" if not yet initialized or scanner advanced over all input lines
+	 * @return the current line.
 	 */
 	public String getLine()
 	{
 		return currentLine_;
-	}
-
-	
-	/**
-	 * Returns if the scanner has parsed all line and is now 
-	 * positioned after the last line.
-	 */
-	public boolean isEOF()
-	{
-		return lineIndex_ >= lines_.length;
 	}
 
 	
@@ -344,26 +302,21 @@ public class Scanner
 	
 	
 	/**
-	 * Positions the scanner on the next line
-	 * @return false if the end of lines was reached
+	 * Positions the scanner on the next line.
+	 * @return true if there was another line in the input lines. False if no more line was available. 
+	 * In this case the current line of the scanner is initialized with an empty line- 
 	 */
 	public boolean nextLine()
 	{
 		if (lineIndex_ < lines_.length - 1)
 		{
-			initInput(lines_[++lineIndex_], 0);
+			initLine(lines_[++lineIndex_]);
 			return true;
 		}
 		else 
 		{
-			if (lineIndex_ == lines_.length - 1)
-			{
-				// empty line
-				lineIndex_++;
-				length_ = 0;
-				pos_ = 0;
-				currentLine_ = "";
-			}
+			lineIndex_ = lines_.length;
+			initLine("");
 			return false;
 		}
 	}
