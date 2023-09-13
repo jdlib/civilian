@@ -28,60 +28,60 @@ template(String name, List<Flower> flowers, GreetingHelper helper, int x, int y)
 	</html>
     
     
-	Hello <%name%>!
+	Hello ^name!
     
     
-	1 + 2 = <%1 + 2%>
-	SPAM GREETINGS <%name.toUpperCase()%>
+	1 + 2 = ^{1 + 2}
+	SPAM GREETINGS ^{name.toUpperCase()}
 	
 	
-	Hey <%name%>, 1 + 2 = <%1 + 2%>
+	Hey ^name, 1 + 2 = ^{1 + 2}
 	
 	
-	Hey <% doSomething(name); %>!
+	Hey ^{doSomething(name);}!
 	
 	
-	Hey <% html.text(name); %>, 100 * 321 is <% lang.format(100*321); %>
+	Hey ^{html.text(name);}, 100 * 321 is ^{lang.format(100*321);}
 	
 	
 	@if (name.length() > 20)
-		howdy big <%name%>
+		howdy big ^name
 	@else
-		howdy shorty <%name%>
+		howdy shorty ^name
 
 
 	@for (int i=0; i<name.length(); i++)
-		The <%i%>-th character in your name is <%name.charAt(i)%>
+		The ^i-th character in your name is ^{name.charAt(i)}
 
 	
 	<div>
-    	Hey <%name%>
-		<%%> what's up?
+    	Hey ^name
+		^' what's up?
 	</div>
 	
 	
-	hello  <%%>
-	<%%>@...
-	<%%>[...
+	hello  ^'
+	^'@...
+	^'[...
 	
 	
-	Hey <%/%>
+	Hey ^\
 	@if (name.length() > 0)
-    	big <%/%>
-	<%name%>
+    	big ^\
+	^name
 	
 
-	Hey <%? name.length() > 0 %>big <%?%><%name%>
+	Hey ^?{name.length() > 0 }|big |^name
 	
 	
 	@calcArea();
-	The area of <%x%> times <%y%> is <%printArea();%>.
+	The area of ^x times ^y is ^{printArea();}.
 }}
 
 
 private void printArea()
 {{
-	<%area%>!
+	^area!
 }}
 
 
