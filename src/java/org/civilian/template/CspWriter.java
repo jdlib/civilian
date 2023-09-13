@@ -250,7 +250,7 @@ public class CspWriter extends PrintWriter
 	 * Writes a portion of an array of characters.
 	 * @param buf a buffer
 	 * @param off the offset
-	 * @param length the length to write
+	 * @param len the length to write
 	 */
 	@Override public void write(char buf[], int off, int len)
 	{

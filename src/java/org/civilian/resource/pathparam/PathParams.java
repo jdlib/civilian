@@ -27,6 +27,7 @@ import org.civilian.type.Type;
  * The following table shows which paths the different patterns match and what 
  * path parameter values are extracted from the path:
  * <table>
+ * <caption>PathParams</caption>
  * <tr>
  * 		<th>Pattern</th>
  * 		<th>Accepted path or segment</th>

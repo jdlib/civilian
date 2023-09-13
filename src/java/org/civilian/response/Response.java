@@ -491,7 +491,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Writes data to the response content.
 	 * If the object parameter is null, the method does nothing.<br>
-	 * If the object parameter is a template, then {@link Template#print(PrintWriter)} is called.<br>
+	 * If the object parameter is a template, then {@link Template#print(PrintWriter,Object...)} is called.<br>
 	 * If the provided content-type is null, then the current content-type of the response
 	 * is used. (The response content-type may have been set during content negotiation).<br>
 	 * If the current content-type is null and the object is a string the content-type 

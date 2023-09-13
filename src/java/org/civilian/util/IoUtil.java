@@ -40,6 +40,7 @@ public abstract class IoUtil
 {
 	/**
 	 * Silently closes a Closeable.
+	 * @param in a Closeable
 	 * @return the exception or null if no exception thrown
 	 */
 	public static IOException close(Closeable in)
@@ -58,7 +59,7 @@ public abstract class IoUtil
 
 	
 	/**
-	 * Returns the system dependent line separator.
+	 * @return the system dependent line separator.
 	 */
 	public static String getLineSeparator()
 	{
@@ -68,7 +69,9 @@ public abstract class IoUtil
 	
 	/**
 	 * Copies all data from an InputStream to an OutputStream.
-	 * @exception IOException if an I/O error occurs
+	 * @param src a InputStream
+	 * @param dest a OutputStream
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static void copy(InputStream src, OutputStream dest) throws IOException
 	{
@@ -81,7 +84,9 @@ public abstract class IoUtil
 	
 	/**
 	 * Copies all data from an InputStream to an OutputStream.
-	 * @exception IOException if an I/O error occurs
+	 * @param src a Reader
+	 * @param dest a Writer
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static void copy(Reader src, Writer dest) throws IOException
 	{
@@ -94,7 +99,9 @@ public abstract class IoUtil
 	
 	/**
 	 * Copies all file to another file.
-	 * @exception IOException if an I/O error occurs
+	 * @param src a File
+	 * @param dest a File
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static void copyFile(File src, File dest) throws IOException 
 	{
@@ -112,6 +119,9 @@ public abstract class IoUtil
 	
 	/**
 	 * Copies all data from the InputStream into a byte array.
+	 * @param in a InputStream
+	 * @return the bytes
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static byte[] readBytes(InputStream in) throws IOException
 	{
@@ -123,7 +133,10 @@ public abstract class IoUtil
 
 	/**
 	 * Reads all data from the reader and returns it as an array of lines.
+	 * @param in a reader
 	 * @param trim true, if the lines should be trimmed.
+	 * @return the lines
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static String[] readLines(Reader in, boolean trim) throws IOException
 	{
@@ -135,7 +148,10 @@ public abstract class IoUtil
 	
 	/**
 	 * Reads all data from the reader and fills it in a list.
+	 * @param in a reader
 	 * @param trim true, if the lines should be trimmed.
+	 * @param list receives the lines
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static void readLines(Reader in, boolean trim, List<String> list) throws IOException
 	{
@@ -153,6 +169,9 @@ public abstract class IoUtil
 	
 	/**
 	 * Reads all data from the Reader and returns it as string.
+	 * @param in a reader
+	 * @return the result
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static String readString(Reader in) throws IOException
 	{
@@ -164,14 +183,19 @@ public abstract class IoUtil
 	
 	/**
 	 * Reads data from the Reader and stores it in a char array.
+	 * @param in a reader
+	 * @param buffer a buffer
+	 * @param start the start index in the buffer
+	 * @param length the number of bytes ro read
 	 * @return the total number of chars read
+	 * @throws IOException if an I/O error occurs
 	 */
-	public static int read(Reader reader, char[] buffer, int start, int length) throws IOException
+	public static int read(Reader in, char[] buffer, int start, int length) throws IOException
 	{
 		int totalRead = 0;
 		int toRead = length;
 		int read;
-		while ((totalRead < length) && ((read = reader.read(buffer, start, toRead)) != -1))
+		while ((totalRead < length) && ((read = in.read(buffer, start, toRead)) != -1))
 		{
 			totalRead += read;
 			toRead -= read;
@@ -183,7 +207,12 @@ public abstract class IoUtil
 	
 	/**
 	 * Reads data from the InputStream and stores it in a byte array.
+	 * @param in a InputStream
+	 * @param buffer a buffer
+	 * @param start the start index in the buffer
+	 * @param length the number of bytes ro read
 	 * @return the total number of bytes read
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static int read(InputStream in, byte[] buffer, int start, int length) throws IOException
 	{
@@ -201,7 +230,9 @@ public abstract class IoUtil
 	
 	
 	/**
-	 * Removes any extension from the file name. 
+	 * Removes any extension from the file name.
+	 * @param file a file
+	 * @return the file name without extension 
 	 */
 	public static String cutExtension(File file)
 	{
@@ -210,7 +241,9 @@ public abstract class IoUtil
 
 	
 	/**
-	 * Removes any extension from the file name. 
+	 * Removes any extension from the file name.
+	 * @param name a file name
+	 * @return the name without the extension 
 	 */
 	public static String cutExtension(String name)
 	{
@@ -222,6 +255,7 @@ public abstract class IoUtil
 	/**
 	 * Extracts the extension, i.e. the part after the first '.'
 	 * from the filename.
+	 * @param file a file
 	 * @return the file extension or null 
 	 */
 	public static String getExtension(File file)
@@ -233,6 +267,7 @@ public abstract class IoUtil
 	/**
 	 * Extracts the extension, i.e. the part after the first '.'
 	 * from the filename.
+	 * @param name a file name
 	 * @return the file extension or null 
 	 */
 	public static String getExtension(String name)
@@ -246,6 +281,8 @@ public abstract class IoUtil
 	 * Norms a extension. If the provided extension is null
 	 * or empty, then null is returned. Else the extension 
 	 * is returned, with any leading dot removed.
+	 * @param extension the extension
+	 * @return the normed extension
 	 */
 	public static String normExtension(String extension)
 	{
@@ -258,6 +295,7 @@ public abstract class IoUtil
 
 	/**
 	 * Deletes a file or a recursively deletes a directory.
+	 * @param file a file
 	 * @throws IOException if a file or directory cannot be deleted.
 	 */
 	public static void delete(File file) throws IOException 
