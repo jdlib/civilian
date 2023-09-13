@@ -224,28 +224,4 @@ public abstract class ClassUtil
 		}
 		return defaultValue;
 	}
-	
-
-	/**
-	 * @param c a class
-	 * @return the package name of the class, with all '.' characters
-	 * replaced by '/'.
-	 */
-	public static String buildResourcePath(Class<?> c)
-	{
-		return getPackageName(c).replace('.', '/');
-	}
-
-
-	/**
-	 * Builds the resource path for the class and appends the file name.
-	 * The returned string is suitable to be passed to ClasLoader.getResource().
-	 * @param c a class
-	 * @param name a name
-	 * @return the resource file name
-	 */
-	public static String buildResourceFile(Class<?> c, String name)
-	{
-		return buildResourcePath(c) + '/' + name;
-	}
 }

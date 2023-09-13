@@ -103,17 +103,9 @@ public class ClassUtilTest extends CivTest
 	}
 	
 
-
 	@Test public void testEnum() throws Exception
 	{
 		assertEquals(EnumTest.ALPHA, ClassUtil.getEnum(EnumTest.class, "ALPHA", null));
 		assertEquals(EnumTest.BETA, ClassUtil.getEnum(EnumTest.class, "GAMMA", EnumTest.BETA));
-	}
-	
-	
-	@Test public void testResourcePath()
-	{
-		assertEquals("java/lang", ClassUtil.buildResourcePath(String.class));
-		assertEquals("java/lang/test.txt", ClassUtil.buildResourceFile(String.class, "test.txt"));
 	}
 }
