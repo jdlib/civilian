@@ -350,16 +350,59 @@ public class Scanner
 	}
 	
 	
+	//----------------------------------------------
+	// next-operations: consume from the current pos
+	//----------------------------------------------
 	
+
 	/**
-	 * Tests if the current line at the current positions starts with the given string.
-	 * If true positions on the index after that prefix.
-	 * Else does not move the scanner position.
-	 * Autoskips whitespace before the test is made, if autoskip is turned on.
+	 * Tells the scanner to expect a result from the following consume operation
+	 * (all next* methods). If the result is false or null an exception is thrown
+	 * @return this 
 	 */
-	public boolean consume(String s)
+	public Scanner expect()
 	{
-		return consume(s, false);
+		return expect(true);
+	}
+	
+	
+	public Scanner expect(boolean flag)
+	{
+		expect_ = flag;
+		return this;
+	}
+
+	
+	private boolean nextResult(boolean result, String what, Object param)
+	{
+		if (expect_)
+		{
+			expect_ = false;
+			if (!result)
+				nextFail(what, param);
+		}
+		needSkipWhitespace_ = autoSkipWhitespace_;
+		return result;
+	}
+
+	
+	private <T> T nextResult(T result, String what, Object param)
+	{
+		if (expect_)
+		{
+			expect_ = false;
+			if (result == null)
+				nextFail(what, param);
+		}
+		needSkipWhitespace_ = autoSkipWhitespace_;
+		return result;
+	}
+	
+	
+	private void nextFail(String what, Object param)
+	{
+		String message = "expected " + what + (param != null ? "(" +  param + ')' : "");
+		exception(message);
 	}
 	
 
@@ -374,14 +417,37 @@ public class Scanner
 	public boolean consume(char c)
 	{
 		autoSkipWhitespace();
-		
 		if (c == current())
 		{
-			skip();
+			skip(); // also sets needSkipWhitespace_ = true 
 			return true;
 		}
-		else
+		else if (!expect_)
 			return false;
+		else
+			return nextResult(false, "next", c);
+	}
+	
+
+	/**
+	 * Tests if the current line at the current positions starts with the given string.
+	 * If true positions on the index after that prefix.
+	 * Else does not move the scanner position.
+	 * Autoskips whitespace before the test is made, if autoskip is turned on.
+	 */
+	public boolean consume(String s)
+	{
+		boolean result = false;
+		if (match(s)) // also skips whitespace
+		{
+			int last = pos_ + s.length();
+			if (last <= length_)
+			{
+				setPos(last);
+				result = true;
+			}
+		}
+		return nextResult(result, "next", s);
 	}
 
 	
@@ -394,19 +460,13 @@ public class Scanner
 	 */
 	public boolean consumeKeyword(String s)
 	{
-		return consume(s, true);
-	}
-	
-	
-	private boolean consume(String s, boolean testKeyword)
-	{
 		if (match(s))
 		{
 			int length = s.length();
 			int last = pos_ + length;
 			if (last <= length_)
 			{
-				if (!testKeyword || (last == length_) || !Character.isJavaIdentifierPart(currentLine_.charAt(last)))
+				if ((last == length_) || !Character.isJavaIdentifierPart(currentLine_.charAt(last)))
 				{
 					setPos(last);
 					return true;
@@ -808,23 +868,12 @@ public class Scanner
 	}
 	
 	
-	public static interface Operations
-	{
-		public boolean text(String text);
-		
-		public boolean text(char c);
-		
-		public boolean anyText(char c);
-		
-		public String token()
-	}
-
-	
 	private int pos_;
 	private int length_;
 	private String currentLine_;
-	private boolean autoSkipWhitespace_ = true;
 	private boolean needSkipWhitespace_;
+	private boolean autoSkipWhitespace_ = true;
+	private boolean expect_;
 	private ErrorHandler errorHandler_;
 	public final Input input = new Input();
 }
