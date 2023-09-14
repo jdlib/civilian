@@ -304,14 +304,14 @@ public class CspCompiler
 			.setSource(input.file.getName());
 		scanner_.setErrorHandler(CspException::new);
 
-		if (scanner_.nextKeyword("encoding"))
+		if (scanner_.consumeKeyword("encoding"))
 		{
 			String encoding = scanner_.nextToken("encoding");
 
 			if (!options_.encodingIn.equalsIgnoreCase(encoding))
 			{
 				scanner_.input(input.readLines(encoding));
-				scanner_.nextKeyword("encoding");
+				scanner_.consumeKeyword("encoding");
 				scanner_.nextToken("encoding");
 			}
 		}
@@ -327,7 +327,7 @@ public class CspCompiler
 		ClassData classData = new ClassData(output.className);
 		classData.extendsClass = options_.extendsClass;
 
-		if (scanner_.nextKeyword("java"))
+		if (scanner_.consumeKeyword("java"))
 		{
 			// pure java mode: csp file is essentially a Java class
 			// with template snippets
@@ -365,6 +365,7 @@ public class CspCompiler
 
 	private void compileJavaLines(SourceWriter out) throws CspException, IOException
 	{
+		scanner_.setAutoSkipWhitespace(false);
 		while(scanner_.input.hasMoreLines())
 		{
 			String line = scanner_.getLine();

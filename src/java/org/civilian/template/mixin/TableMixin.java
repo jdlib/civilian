@@ -664,7 +664,7 @@ public class TableMixin implements ComponentBuilder
 			while(scanner.hasMoreChars())
 			{
 				Column column;
-				if (scanner.next("["))
+				if (scanner.consume('['))
 					column = parseColumn(scanner);
 				else
 					column = parseGap(scanner);
@@ -685,14 +685,14 @@ public class TableMixin implements ComponentBuilder
 		{
 			Column column = new Column();
 			ArrayList<String> attrs = null;
-			if (!scanner.next("]"))
+			if (!scanner.consume(']'))
 			{
 				while (true)
 				{
 					if (scanner.currentIsDigit())
 					{
 						int width = scanner.consumeInt();
-						if (scanner.next("%"))
+						if (scanner.consume('%'))
 							column.setPercentWidth(width);
 						else
 							column.setWidth(width);
@@ -717,7 +717,7 @@ public class TableMixin implements ComponentBuilder
 						attrs.add(value);
 					}
 
-					if (scanner.next("]"))
+					if (scanner.consume(']'))
 						break;
 					scanner.expect(",");
 				}

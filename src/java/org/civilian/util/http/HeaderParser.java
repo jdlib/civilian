@@ -112,7 +112,7 @@ public class HeaderParser
 		
 		if (scanParams_)
 		{
-			if (scanner_.next(";"))
+			if (scanner_.consume(';'))
 			{
 				// parse parameter
 				paramName  = scanner_.consumeUpto("=", false, true, true);
@@ -126,7 +126,7 @@ public class HeaderParser
 			else
 			{	
 				scanParams_ = false;
-				scanner_.next(",");
+				scanner_.consume(',');
 			}
 		}
 		item 		= scanner_.consumeUpto(" ;,", false, false, false);

@@ -25,7 +25,7 @@ class CspClassParser
 	
 	public void parsePackageCmd(File templFile, String assumedPackage)
 	{
-		if (scanner_.nextKeyword("package"))
+		if (scanner_.consumeKeyword("package"))
 		{
 			classData_.packageName = StringUtil.cutRight(scanner_.nextToken("package"), ";");
 			if ((assumedPackage != null) && !assumedPackage.equals(classData_.packageName))
@@ -45,7 +45,7 @@ class CspClassParser
 	
 	public void parseImportCmds()
 	{
-		while(scanner_.nextKeyword("import"))
+		while(scanner_.consumeKeyword("import"))
 		{
 			String s = StringUtil.cutRight(scanner_.nextToken("import"), ";");
 			s = resolveRelativeImport(s);
@@ -56,7 +56,7 @@ class CspClassParser
 
 	public void parsePrologCmds()
 	{
-		while(scanner_.nextKeyword("prolog"))
+		while(scanner_.consumeKeyword("prolog"))
 			classData_.prolog.add(scanner_.consumeRest());
 	}
 
@@ -65,31 +65,31 @@ class CspClassParser
 	{
 		//-------------------------------------
 		// "template"
-		if (!scanner_.nextKeyword("template"))
+		if (!scanner_.consumeKeyword("template"))
 			scanner_.exception("expected the template command, but reached end of file");
 		parseTemplateArgs();
 
 		//-------------------------------------
 		// "package-access"
-		if (scanner_.nextKeyword("package-access"))
+		if (scanner_.consumeKeyword("package-access"))
 			classData_.isPublic = false;
 
 		//-------------------------------------
 		// "abstract"
-		if (scanner_.nextKeyword("abstract"))
+		if (scanner_.consumeKeyword("abstract"))
 			classData_.isAbstract = true;
 
 		//-------------------------------------
 		// "extends"
-		if (scanner_.nextKeyword("extends"))
+		if (scanner_.consumeKeyword("extends"))
 		{
-			if (scanner_.next("-"))
+			if (scanner_.consume('-'))
 			{
 				classData_.standalone   = true;
 				classData_.extendsClass = null;
 
 				String writerClass = CspWriter.class.getSimpleName();
-				if (scanner_.nextKeyword("using"))
+				if (scanner_.consumeKeyword("using"))
 					writerClass = scanner_.nextToken("using");
 
 				if ("CspWriter".equals(writerClass))
@@ -114,17 +114,17 @@ class CspClassParser
 
 		//-------------------------------------
 		// "implements"
-		if (scanner_.nextKeyword("implements"))
+		if (scanner_.consumeKeyword("implements"))
 			classData_.implementsList = parseClassList();
 
 		//-------------------------------------
 		// "mixin"
-		if (scanner_.nextKeyword("mixin"))
+		if (scanner_.consumeKeyword("mixin"))
 			parseMixins();
 
 		//-------------------------------------
 		// "throws"
-		if (scanner_.nextKeyword("throws"))
+		if (scanner_.consumeKeyword("throws"))
 		{
 			classData_.exception = parseClassList();
 			if ("-".equals(classData_.exception))
@@ -141,9 +141,9 @@ class CspClassParser
 	
 	private void parseTemplateArgs() throws IOException
 	{
-		if (!scanner_.next("("))
+		if (!scanner_.consume('('))
 			return;
-		if (scanner_.next(")"))
+		if (scanner_.consume(')'))
 			return;
 
 		StringBuilder argsString = new StringBuilder();
@@ -157,9 +157,9 @@ class CspClassParser
 				argsString.append(", ");
 			argument.ctorArg(argsString);
 
-			if (scanner_.next(")"))
+			if (scanner_.consume(')'))
 				break;
-			if (!scanner_.next(","))
+			if (!scanner_.consume(','))
 				scanner_.exception("expected closing bracket ')' of template argument list");
 		}
 
@@ -169,7 +169,7 @@ class CspClassParser
 
 	private void parseTemplateSuperArgs() throws IOException
 	{
-		if (!scanner_.next("("))
+		if (!scanner_.consume('('))
 			return; // no super args
 
 		StringBuilder superArgs	= new StringBuilder();
@@ -215,7 +215,7 @@ class CspClassParser
 			if (list.length() > 0)
 				list.append(", ");
 			list.append(type);
-			if (!scanner_.next(","))
+			if (!scanner_.consume(','))
 				break;
 		}
 		return list.toString();
@@ -235,7 +235,7 @@ class CspClassParser
 				parseMixin(className, fieldName);
 			}
 		}
-		while(scanner_.next(","));
+		while(scanner_.consume(','));
 	}
 
 

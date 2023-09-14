@@ -186,6 +186,7 @@ public class Scanner
 	public Scanner setPos(int pos)
 	{
 		pos_ = Math.max(0, Math.min(pos, length_));
+		needSkipWhitespace_ = autoSkipWhitespace_;
 		return this;
 	}
 
@@ -209,7 +210,7 @@ public class Scanner
 	{
 		length_ = Math.max(0, Math.min(length, currentLine_.length()));
 		if (pos_ > length_)
-			pos_ = length;
+			setPos(length);
 		return this;
 	}
 
@@ -224,7 +225,37 @@ public class Scanner
 
 	
 	/**
-	 * Returns the current character or -1 if there are no more characters.
+	 * Sets if whitespace should automatically be skipped,
+	 * before consume*, next* or expect*-operations are 
+	 * performed.
+	 * @param flag the skip flag
+	 * @return this; 
+	 */
+	public Scanner setAutoSkipWhitespace(boolean flag)
+	{
+		needSkipWhitespace_ = autoSkipWhitespace_ = flag;
+		return this;
+	}
+	
+	
+	/**
+	 * @return the autoskip whitespace flag.
+	 */
+	public boolean getAutoSkipWhitespace()
+	{
+		return autoSkipWhitespace_;
+	}
+	
+	
+	private void autoSkipWhitespace()
+	{
+		if (needSkipWhitespace_)
+			skipWhitespace();
+	}
+
+	
+	/**
+	 * @return the current character or -1 if there are no more characters.
 	 */
 	public int current()
 	{
@@ -233,7 +264,7 @@ public class Scanner
 	
 	
 	/**
-	 * Returns if the current character has the given character type.
+	 * @return if the current character has the given character type.
 	 * @param charType a character type defined in the Character class
 	 * @see Character#getType(char)
 	 */
@@ -244,35 +275,16 @@ public class Scanner
 	
 	
 	/**
-	 * Returns if the current character is a digit.
+	 * @return if the current character is a digit.
 	 */
 	public boolean currentIsDigit()
 	{
 		return currentHasType(Character.DECIMAL_DIGIT_NUMBER);
 	}
-
-	
-	/**
-	 * Sets if whitespace should automatically be skipped,
-	 * before consume*, next* or expect*-operations are 
-	 * performed. 
-	 */
-	public void autoSkipWhitespace(boolean flag)
-	{
-		autoSkipWhitespace_ = flag;
-		needSkipWhitespace_ = flag;
-	}
-	
-	
-	private void autoSkipWhitespace()
-	{
-		if (needSkipWhitespace_)
-			skipWhitespace();
-	}
 	
 	
 	/**
-	 * Returns if there are more characters left in the 
+	 * @return if there are more characters left in the 
 	 * current line.
 	 */
 	public boolean hasMoreChars()
@@ -282,7 +294,7 @@ public class Scanner
 	
 	
 	/**
-	 * Returns if there are that much characters left in the current input string.
+	 * @return if there are that much characters left in the current input string.
 	 */
 	public boolean hasMoreChars(int count)
 	{
@@ -299,13 +311,6 @@ public class Scanner
 	public int indexOf(String s)
 	{
 		return currentLine_.indexOf(s, pos_);
-	}
-
-	
-	private void advancePos(int n)
-	{
-		pos_ = Math.min(pos_ + n, length_);
-		needSkipWhitespace_ = autoSkipWhitespace_; 
 	}
 	
 	
@@ -328,7 +333,7 @@ public class Scanner
 	public boolean skip(int n)
 	{
 		if (n > 0 && hasMoreChars())
-			advancePos(n);
+			setPos(pos_ + n);
 		return hasMoreChars();
 	}
 	
@@ -343,7 +348,8 @@ public class Scanner
 		int length = s.length();
 		return hasMoreChars(length) && currentLine_.regionMatches(pos_, s, 0, length);
 	}
-
+	
+	
 	
 	/**
 	 * Tests if the current line at the current positions starts with the given string.
@@ -351,13 +357,21 @@ public class Scanner
 	 * Else does not move the scanner position.
 	 * Autoskips whitespace before the test is made, if autoskip is turned on.
 	 */
-	public boolean next(String s)
+	public boolean consume(String s)
 	{
-		return next(s, false);
+		return consume(s, false);
 	}
 	
 
-	public boolean next(char c)
+	/**
+	 * Tests if the current line at the current positions starts with the given char.
+	 * If true positions on the index after that char.
+	 * Else does not move the scanner position.
+	 * Autoskips whitespace before the test is made, if autoskip is turned on.
+	 * @param char a character
+	 * @return char consumed?
+	 */
+	public boolean consume(char c)
 	{
 		autoSkipWhitespace();
 		
@@ -378,17 +392,15 @@ public class Scanner
 	 * Else does not move the scanner position.
 	 * Autoskips whitespace before the test is made, if autoskip is turned on.
 	 */
-	public boolean nextKeyword(String s)
+	public boolean consumeKeyword(String s)
 	{
-		return next(s, true);
+		return consume(s, true);
 	}
 	
 	
-	private boolean next(String s, boolean testKeyword)
+	private boolean consume(String s, boolean testKeyword)
 	{
-		autoSkipWhitespace();
-		
-		if (hasNext(s))
+		if (match(s))
 		{
 			int length = s.length();
 			int last = pos_ + length;
@@ -396,7 +408,7 @@ public class Scanner
 			{
 				if (!testKeyword || (last == length_) || !Character.isJavaIdentifierPart(currentLine_.charAt(last)))
 				{
-					advancePos(length);
+					setPos(last);
 					return true;
 				}
 			}
@@ -404,24 +416,18 @@ public class Scanner
 		return false;
 	}
 	
-	
-	// TODO match
-	public boolean hasNext(String s)
-	{
-		int length = s.length();
-		return hasMoreChars(length) && currentLine_.regionMatches(pos_, s, 0, length);
-	}
-	
 
 	/**
 	 * Consumes the first matching string. 
-	 * @return the matched string, or null if no string matches 
+	 * @param strings some strings
+	 * @return the matched string, or null if no string matches
+	 * @see #consume(String) 
 	 */
 	public String consumeAny(String... strings)
 	{
 		for (String s : strings)
 		{
-			if (next(s))
+			if (consume(s))
 				return s;
 		}
 		return null;
@@ -552,7 +558,7 @@ public class Scanner
 		autoSkipWhitespace();
 		int start = pos_;
 		increaseWhile(Character.DECIMAL_DIGIT_NUMBER, true);
-		if (next("."))
+		if (consume('.'))
 			increaseWhile(Character.DECIMAL_DIGIT_NUMBER, true);
 		if (pos_ == start)
 			exception("expected a double");
@@ -696,7 +702,7 @@ public class Scanner
 	 */
 	public void expect(String s)
 	{
-		if (!next(s))
+		if (!consume(s))
 			exception("expected '" + s + "'");
 	}
 	
@@ -799,6 +805,18 @@ public class Scanner
 	public static interface ErrorHandler
 	{
 		public RuntimeException scanError(String message, Scanner scanner);
+	}
+	
+	
+	public static interface Operations
+	{
+		public boolean text(String text);
+		
+		public boolean text(char c);
+		
+		public boolean anyText(char c);
+		
+		public String token()
 	}
 
 	

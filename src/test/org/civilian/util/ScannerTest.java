@@ -54,14 +54,14 @@ public class ScannerTest extends CivTest
 	@Test public void testNextKeyword()
 	{
 		Scanner s = new Scanner("encoding12");
-		assertFalse(s.nextKeyword("encoding"));
+		assertFalse(s.consumeKeyword("encoding"));
 
 		s = new Scanner("encoding");
-		assertTrue(s.nextKeyword("encoding"));
+		assertTrue(s.consumeKeyword("encoding"));
 		assertFalse(s.hasMoreChars());
 
 		s = new Scanner("encoding ISO-8859-1");
-		assertTrue(s.nextKeyword("encoding"));
+		assertTrue(s.consumeKeyword("encoding"));
 		assertEquals("ISO-8859-1", s.consumeRest());
 	}
 	
@@ -89,7 +89,7 @@ public class ScannerTest extends CivTest
 		a.pos(1).current('2');
  		assertTrue  (scanner.currentIsDigit());
  		assertFalse (scanner.currentHasType(Character.MATH_SYMBOL));
- 		assertTrue  (scanner.next("23"));
+ 		assertTrue  (scanner.consume("23"));
  		a.current(-1);
 	}
 
@@ -97,26 +97,26 @@ public class ScannerTest extends CivTest
 	@Test public void testSkipWhitespace()
 	{
 		Scanner s = new Scanner(" 1 1");
-		s.autoSkipWhitespace(false);
-		assertFalse(s.next("1"));
+		s.setAutoSkipWhitespace(false);
+		assertFalse(s.consume("1"));
 		s.skipWhitespace();
-		assertTrue(s.next("1"));
+		assertTrue(s.consume("1"));
 		
-		assertFalse(s.next("1"));
-		s.autoSkipWhitespace(true);
-		assertTrue(s.next("1"));
+		assertFalse(s.consume("1"));
+		s.setAutoSkipWhitespace(true);
+		assertTrue(s.consume("1"));
 	}
 
 
 	@Test public void testNext()
 	{
 		Scanner s = new Scanner("abc");
-		assertFalse(s.next("abcd"));
-		assertFalse(s.next("abd"));
-		assertTrue(s.nextKeyword("abc"));
+		assertFalse(s.consume("abcd"));
+		assertFalse(s.consume("abd"));
+		assertTrue(s.consumeKeyword("abc"));
 		
 		s.input("abc,");
-		assertTrue(s.nextKeyword("abc"));
+		assertTrue(s.consumeKeyword("abc"));
 	}
 
 
@@ -138,7 +138,7 @@ public class ScannerTest extends CivTest
 		assertEquals("b", s.consumeToken(","));
 		
 		s.input(" a");
-		s.autoSkipWhitespace(false);
+		s.setAutoSkipWhitespace(false);
 		assertNull(s.consumeToken());
 	}
 

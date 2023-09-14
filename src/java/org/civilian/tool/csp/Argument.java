@@ -49,7 +49,7 @@ class Argument
 		{
 			if (scanner.match("..."))
 				break;
-			else if (scanner.next("."))
+			else if (scanner.consume('.'))
 			{
 				type += '.';
 				String subType = scanner.consumeIdentifier();
@@ -62,14 +62,14 @@ class Argument
 		}
 		
 		// add generic parameter
-		if (scanner.next("<"))
+		if (scanner.consume('<'))
 			type += parseGenericType(scanner);
 
 		// add arrays
-		while (scanner.next("[]"))
+		while (scanner.consume("[]"))
 			type += "[]";
 		
-		if (scanner.next("..."))
+		if (scanner.consume("..."))
 			varArgs_ = true;
 		
 		return type;

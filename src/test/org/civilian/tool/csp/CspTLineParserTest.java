@@ -23,7 +23,7 @@ import org.civilian.util.Scanner;
 
 public class CspTLineParserTest extends CivTest
 {
-	private final Scanner scanner = new Scanner();
+	private final Scanner scanner = new Scanner().setAutoSkipWhitespace(false);
 	private final CspTLineParser parser = new CspTLineParser(scanner);
 	
 	

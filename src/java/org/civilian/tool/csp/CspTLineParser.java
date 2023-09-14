@@ -19,6 +19,7 @@ package org.civilian.tool.csp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.civilian.util.Check;
 import org.civilian.util.Scanner;
 import org.civilian.util.StringUtil;
 
@@ -74,7 +75,12 @@ class CspTLineParser
 	
 	public CspTLineParser(Scanner scanner)
 	{
-		scanner_ = scanner;
+		scanner_ = Check.notNull(scanner, "scanner");
+		if (scanner.getAutoSkipWhitespace())
+		{
+			// e.g. problems in parseStartSymbol/scanner_.match when parsing component symbols [
+			throw new IllegalArgumentException("cannot work with autoskip whitespace scanner");
+		}
 	}
 	
 	
@@ -189,16 +195,15 @@ class CspTLineParser
 	 */
 	private int parseCodeSnippet(String line, int start)
 	{
-		Scanner sc = new Scanner(line).setPos(start);
+		Scanner sc = new Scanner(line).setPos(start).setAutoSkipWhitespace(false);
 		sc.skip();
-		sc.autoSkipWhitespace(false);
 		sc.setErrorHandler(scanner_.getErrorHandler());
 		
 		String snippet;
 		String snippetRaw;
 		boolean allowStmt;
-		boolean isCondition = sc.next('?');
-		if (sc.next("{"))
+		boolean isCondition = sc.consume('?');
+		if (sc.consume('{'))
 		{
 			snippet = StringUtil.norm(sc.consumeUpto("}", false, true, true));
 			if (snippet == null)
@@ -269,7 +274,7 @@ class CspTLineParser
 	 */
 	private boolean parseStartSymbol(String symbol)
 	{
-		return scanner_.next(symbol) && !scanner_.hasNext(symbol);
+		return scanner_.consume(symbol) && !scanner_.match(symbol);
 	}
 	
 	
