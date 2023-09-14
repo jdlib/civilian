@@ -108,7 +108,7 @@ public class ScannerTest extends CivTest
 	}
 
 
-	@Test public void testNext()
+	@Test public void testNextString()
 	{
 		Scanner s = new Scanner("abc");
 		assertFalse(s.consume("abcd"));
