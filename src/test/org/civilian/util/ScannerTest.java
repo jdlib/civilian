@@ -124,6 +124,17 @@ public class ScannerTest extends CivTest
 	}
 
 
+	@Test public void testNextIdentifier()
+	{
+		scanner.input.lines("a a12 abc-");
+		a.nextIdentifier().returns("a")
+		 .nextIdentifier().returns("a12")
+		 .nextIdentifier().returns("abc")
+		 .nextIdentifier().returns(null)
+		 .expect().nextIdentifier().fails("nextIdentifier");
+	}
+
+
 	@Test public void testConsumeToken()
 	{
 		Scanner s = new Scanner("a");
@@ -136,17 +147,6 @@ public class ScannerTest extends CivTest
 		s.input(" a");
 		s.setAutoSkipWhitespace(false);
 		assertNull(s.consumeToken());
-	}
-
-
-	@Test public void testConsumeIdentifier()
-	{
-		Scanner s = new Scanner("a a12 abc-");
-		assertEquals("a", s.consumeIdentifier());
-		assertEquals("a12", s.consumeIdentifier());
-		assertEquals("abc", s.consumeIdentifier());
-		assertEquals('-', s.current());
-		assertNull(s.consumeIdentifier());
 	}
 
 

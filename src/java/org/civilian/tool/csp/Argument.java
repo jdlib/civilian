@@ -40,7 +40,7 @@ class Argument
 	
 	private String parseType(Scanner scanner)
 	{
-		String type = scanner.consumeIdentifier();
+		String type = scanner.nextIdentifier();
 		if (type == null)
 			scanner.exception("missing argument type");
 		
@@ -52,7 +52,7 @@ class Argument
 			else if (scanner.next('.'))
 			{
 				type += '.';
-				String subType = scanner.consumeIdentifier();
+				String subType = scanner.nextIdentifier();
 				if (subType == null)
 					scanner.exception("incomplete type '" + type_ + "'");
 				type += subType;

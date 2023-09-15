@@ -12,6 +12,7 @@ public class ScannerAssert
 	private static final Method NEXT = method("next", String.class);
 	private static final Method NEXT_CHAR = method("next", char.class);
 	private static final Method NEXT_KEYWORD = method("nextKeyword", String.class);
+	private static final Method NEXT_IDENTIFIER = method("nextIdentifier");
 	
 	
 	private static Method method(String name, Class<?>... parameterTypes)
@@ -171,6 +172,12 @@ public class ScannerAssert
 	public NextResult nextKeyword(String s)
 	{
 		return new NextResult(NEXT_KEYWORD, s);
+	}
+
+	
+	public NextResult nextIdentifier()
+	{
+		return new NextResult(NEXT_IDENTIFIER);
 	}
 
 	

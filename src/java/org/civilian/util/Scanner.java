@@ -729,22 +729,24 @@ public class Scanner
 
 	/**
 	 * Scans a Java identifier and returns it.
+	 * @return the identifier or null
 	 */
-	public String consumeIdentifier()
+	public String nextIdentifier()
 	{
 		autoSkipWhitespace();
 
-		if (!Character.isJavaIdentifierStart(current()))
-			return null;
-		
-		int start = pos_;
-		do
+		String result = null;
+		if (Character.isJavaIdentifierStart(current()))
 		{
-			pos_++;
+			int start = pos_;
+			do
+			{
+				pos_++;
+			}
+			while(Character.isJavaIdentifierPart(current()));
+			result = currentLine_.substring(start, pos_);
 		}
-		while(Character.isJavaIdentifierPart(current()));
-		needSkipWhitespace_ = autoSkipWhitespace_;
-		return currentLine_.substring(start, pos_);
+		return nextResult(result, "nextIdentifier", null);
 	}
 	
 	
