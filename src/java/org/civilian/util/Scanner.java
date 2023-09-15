@@ -748,28 +748,6 @@ public class Scanner
 		}
 		return nextResult(result, "nextIdentifier", null);
 	}
-	
-	
-	/**
-	 * Consume a character which must be contained in the given parameter
-	 * string. If this fails raise an exception.
-	 */
-	public char expectOneOf(String s)
-	{
-		autoSkipWhitespace();
-		if (hasMoreChars())
-		{
-			char c = currentLine_.charAt(pos_);
-			if (s.indexOf(c) >= 0)
-			{
-				pos_++;
-				needSkipWhitespace_ = autoSkipWhitespace_;
-				return c;
-			}
-		}
-		exception("expected one of '" + s + "'");
-		return 0;
-	}
 
 	
 	/**
