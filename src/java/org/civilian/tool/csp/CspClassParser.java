@@ -25,7 +25,7 @@ class CspClassParser
 	
 	public void parsePackageCmd(File templFile, String assumedPackage)
 	{
-		if (scanner_.consumeKeyword("package"))
+		if (scanner_.nextKeyword("package"))
 		{
 			classData_.packageName = StringUtil.cutRight(scanner_.nextToken("package"), ";");
 			if ((assumedPackage != null) && !assumedPackage.equals(classData_.packageName))
@@ -45,7 +45,7 @@ class CspClassParser
 	
 	public void parseImportCmds()
 	{
-		while(scanner_.consumeKeyword("import"))
+		while(scanner_.nextKeyword("import"))
 		{
 			String s = StringUtil.cutRight(scanner_.nextToken("import"), ";");
 			s = resolveRelativeImport(s);
@@ -56,7 +56,7 @@ class CspClassParser
 
 	public void parsePrologCmds()
 	{
-		while(scanner_.consumeKeyword("prolog"))
+		while(scanner_.nextKeyword("prolog"))
 			classData_.prolog.add(scanner_.consumeRest());
 	}
 
@@ -65,23 +65,23 @@ class CspClassParser
 	{
 		//-------------------------------------
 		// "template"
-		if (!scanner_.consumeKeyword("template"))
+		if (!scanner_.nextKeyword("template"))
 			scanner_.exception("expected the template command, but reached end of file");
 		parseTemplateArgs();
 
 		//-------------------------------------
 		// "package-access"
-		if (scanner_.consumeKeyword("package-access"))
+		if (scanner_.nextKeyword("package-access"))
 			classData_.isPublic = false;
 
 		//-------------------------------------
 		// "abstract"
-		if (scanner_.consumeKeyword("abstract"))
+		if (scanner_.nextKeyword("abstract"))
 			classData_.isAbstract = true;
 
 		//-------------------------------------
 		// "extends"
-		if (scanner_.consumeKeyword("extends"))
+		if (scanner_.nextKeyword("extends"))
 		{
 			if (scanner_.next('-'))
 			{
@@ -89,7 +89,7 @@ class CspClassParser
 				classData_.extendsClass = null;
 
 				String writerClass = CspWriter.class.getSimpleName();
-				if (scanner_.consumeKeyword("using"))
+				if (scanner_.nextKeyword("using"))
 					writerClass = scanner_.nextToken("using");
 
 				if ("CspWriter".equals(writerClass))
@@ -114,17 +114,17 @@ class CspClassParser
 
 		//-------------------------------------
 		// "implements"
-		if (scanner_.consumeKeyword("implements"))
+		if (scanner_.nextKeyword("implements"))
 			classData_.implementsList = parseClassList();
 
 		//-------------------------------------
 		// "mixin"
-		if (scanner_.consumeKeyword("mixin"))
+		if (scanner_.nextKeyword("mixin"))
 			parseMixins();
 
 		//-------------------------------------
 		// "throws"
-		if (scanner_.consumeKeyword("throws"))
+		if (scanner_.nextKeyword("throws"))
 		{
 			classData_.exception = parseClassList();
 			if ("-".equals(classData_.exception))

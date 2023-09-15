@@ -458,8 +458,9 @@ public class Scanner
 	 * Else does not move the scanner position.
 	 * Autoskips whitespace before the test is made, if autoskip is turned on.
 	 */
-	public boolean consumeKeyword(String s)
+	public boolean nextKeyword(String s)
 	{
+		boolean result = false;
 		if (match(s))
 		{
 			int length = s.length();
@@ -468,29 +469,12 @@ public class Scanner
 			{
 				if ((last == length_) || !Character.isJavaIdentifierPart(currentLine_.charAt(last)))
 				{
-					setPos(last);
-					return true;
+					setPos(last); // also sets 
+					result = true;
 				}
 			}
 		}
-		return false;
-	}
-	
-
-	/**
-	 * Consumes the first matching string. 
-	 * @param strings some strings
-	 * @return the matched string, or null if no string matches
-	 * @see #next(String) 
-	 */
-	public String consumeAny(String... strings)
-	{
-		for (String s : strings)
-		{
-			if (next(s))
-				return s;
-		}
-		return null;
+		return nextResult(result, "nextKeyword", s);
 	}
 	
 	

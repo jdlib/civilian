@@ -10,7 +10,9 @@ import java.lang.reflect.Method;
 public class ScannerAssert
 {
 	private static final Method NEXT = method("next", String.class);
-	private static final Method NEXT_CHAR = method("consume", char.class);
+	private static final Method NEXT_CHAR = method("next", char.class);
+	private static final Method NEXT_KEYWORD = method("nextKeyword", String.class);
+	
 	
 	private static Method method(String name, Class<?>... parameterTypes)
 	{
@@ -86,6 +88,20 @@ public class ScannerAssert
 	}
 	
 	
+	public ScannerAssert hasMore(boolean expected)
+	{
+		assertEquals("hasMore", expected, scanner_.hasMoreChars());
+		return this;
+	}
+	
+	
+	public ScannerAssert rest(String expected)
+	{
+		assertEquals("getRest", expected, scanner_.getRest());
+		return this;
+	}
+
+	
 	public ScannerAssert expect()
 	{
 		scanner_.expect();
@@ -149,6 +165,12 @@ public class ScannerAssert
 	public NextResult next(char c)
 	{
 		return new NextResult(NEXT_CHAR, c);
+	}
+	
+	
+	public NextResult nextKeyword(String s)
+	{
+		return new NextResult(NEXT_KEYWORD, s);
 	}
 
 	

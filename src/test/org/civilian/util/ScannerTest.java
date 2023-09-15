@@ -116,24 +116,11 @@ public class ScannerTest extends CivTest
 	
 	@Test public void testNextKeyword()
 	{
-		Scanner s = new Scanner("encoding12");
-		assertFalse(s.consumeKeyword("encoding"));
-
-		s = new Scanner("encoding");
-		assertTrue(s.consumeKeyword("encoding"));
-		assertFalse(s.hasMoreChars());
-
-		s = new Scanner("encoding ISO-8859-1");
-		assertTrue(s.consumeKeyword("encoding"));
-		assertEquals("ISO-8859-1", s.consumeRest());
-	}
-	
-	
-	@Test public void testConsumeAny()
-	{
-		Scanner s = new Scanner("a");
-		assertEquals(null, s.consumeAny("b"));
-		assertEquals("a", s.consumeAny("b", "a"));
+		scanner.input.lines(" encoding ISO-8859-1");
+		a.expect().nextKeyword("a").fails("x")
+		 .nextKeyword("enc").returns(false)
+		 .nextKeyword("encoding").returns(true)
+		 .rest(" ISO-8859-1");
 	}
 
 
