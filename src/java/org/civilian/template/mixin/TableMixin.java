@@ -703,7 +703,7 @@ public class TableMixin implements ComponentBuilder
 						if (name == null)
 							scanner.exception("invalid column definition");
 						
-						scanner.expect("=");
+						scanner.expect().next('=');
 
 						String value = null;
 						if (scanner.current() == '\'')
@@ -719,7 +719,7 @@ public class TableMixin implements ComponentBuilder
 
 					if (scanner.next(']'))
 						break;
-					scanner.expect(",");
+					scanner.expect().next(',');
 				}
 			}
 			

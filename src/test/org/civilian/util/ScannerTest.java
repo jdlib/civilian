@@ -100,7 +100,7 @@ public class ScannerTest extends CivTest
 		a.next("abd").returns(false).pos(1);
 		a.next("abc").returns(true).pos(4);
 		a.next("white").returns(true); // has skipped whitespace
-		a.expect().next("space").fails("next(space)");
+		a.expect().next("space").fails("next(\"space\")");
 	}
 
 
@@ -108,7 +108,7 @@ public class ScannerTest extends CivTest
 	{
 		scanner.input.lines("a b");
 		a.next('x').returns(false).pos(0);
-		a.expect().next('x').fails("next(x)");
+		a.expect().next('x').fails("next('x')");
 		a.next('a').returns(true).pos(1);
 		a.next('b').returns(true); // has skipped whitespace
 	}
@@ -163,7 +163,7 @@ public class ScannerTest extends CivTest
 		{
 			assertEquals("expected a integer (4): '12 a 12.34 b", e.getMessage());
 		}
-		s.expect("a");
+		s.expect().next('a');
 		
 		assertEquals(12.34, s.consumeDouble(), 0.0);
 		try
@@ -175,7 +175,7 @@ public class ScannerTest extends CivTest
 		{
 			assertEquals("expected a double (12): '12 a 12.34 b", e.getMessage());
 		}
-		s.expect("b");
+		s.expect().next('b');
 	}
 
 

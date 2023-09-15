@@ -401,8 +401,20 @@ public class Scanner
 	
 	private void nextFail(String what, Object param)
 	{
-		String message = "expected " + what + (param != null ? "(" +  param + ')' : "");
+		String message = "expected " + what + (param != null ? '(' +  paramString(param) + ')' : "");
 		exception(message);
+	}
+	
+	
+	private String paramString(Object param)
+	{
+		String s = param.toString();
+		if (param instanceof String)
+			return '"' + s + '"';
+		else if (param instanceof Character)
+			return '\'' + s + '\'';
+		else
+			return s;
 	}
 	
 
@@ -417,15 +429,10 @@ public class Scanner
 	public boolean next(char c)
 	{
 		autoSkipWhitespace();
-		if (c == current())
-		{
-			skip(); // also sets needSkipWhitespace_ = true 
-			return true;
-		}
-		else if (!expect_)
-			return false;
-		else
-			return nextResult(false, "next", c);
+		boolean result = c == current();
+		if (result)
+			skip();
+		return nextResult(result, "next", c);
 	}
 	
 
@@ -587,7 +594,7 @@ public class Scanner
 	public int consumeInt()
 	{
 		String s = consumeWhile(Character.DECIMAL_DIGIT_NUMBER);
-		if (s == null)
+		if (s == null) 
 			exception("expected a integer");
 		return Integer.parseInt(s);
 	}
@@ -738,16 +745,6 @@ public class Scanner
 		while(Character.isJavaIdentifierPart(current()));
 		needSkipWhitespace_ = autoSkipWhitespace_;
 		return currentLine_.substring(start, pos_);
-	}
-	
-
-	/**
-	 * Consumes a string. If this fails raise an exception.
-	 */
-	public void expect(String s)
-	{
-		if (!next(s))
-			exception("expected '" + s + "'");
 	}
 	
 	
