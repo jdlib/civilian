@@ -38,16 +38,13 @@ public class ScannerTest extends CivTest
 	
 	@Test public void testNextQuotedString()
 	{
-		scanner.input("'abc' 'abc' \"\" 'ab\"c'#");
+		scanner.input("'123' 'abc' \"\" 'ab\"c'#");
 		a.current('\'');
-		assertEquals("abc", scanner.consumeQuotedString(false));
-		scanner.skipWhitespace();
-		assertEquals("'abc'", scanner.consumeQuotedString(true));
-		scanner.skipWhitespace();
-		assertEquals("", scanner.consumeQuotedString(false));
-		scanner.skipWhitespace();
-		assertEquals("'ab\"c'", scanner.consumeQuotedString(true));
-		assertEquals('#', scanner.current());
+		a.nextQuotedString().returns("123");
+		a.nextQuotedString('"').returns(null).nextQuotedString('\'').returns("abc");
+		a.nextQuotedString(true).returns("\"\"");
+		a.nextQuotedString('\'', true).returns("'ab\"c'");
+		a.current('#');
 	}
 	
 

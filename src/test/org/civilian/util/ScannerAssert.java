@@ -13,6 +13,10 @@ public class ScannerAssert
 	private static final Method NEXT_CHAR = method("next", char.class);
 	private static final Method NEXT_KEYWORD = method("nextKeyword", String.class);
 	private static final Method NEXT_IDENTIFIER = method("nextIdentifier");
+	private static final Method NEXT_QUOTEDSTRING = method("nextQuotedString");
+	private static final Method NEXT_QUOTEDSTRING_CHAR = method("nextQuotedString", char.class);
+	private static final Method NEXT_QUOTEDSTRING_BOOLEAN = method("nextQuotedString", boolean.class);
+	private static final Method NEXT_QUOTEDSTRING_CHAR_BOOLEAN = method("nextQuotedString", char.class, boolean.class);
 	
 	
 	private static Method method(String name, Class<?>... parameterTypes)
@@ -178,6 +182,30 @@ public class ScannerAssert
 	public NextResult nextIdentifier()
 	{
 		return new NextResult(NEXT_IDENTIFIER);
+	}
+
+	
+	public NextResult nextQuotedString()
+	{
+		return new NextResult(NEXT_QUOTEDSTRING);
+	}
+
+	
+	public NextResult nextQuotedString(boolean includeQuotes)
+	{
+		return new NextResult(NEXT_QUOTEDSTRING_BOOLEAN, includeQuotes);
+	}
+
+	
+	public NextResult nextQuotedString(char quote, boolean includeQuotes)
+	{
+		return new NextResult(NEXT_QUOTEDSTRING_CHAR_BOOLEAN, quote, includeQuotes);
+	}
+
+	
+	public NextResult nextQuotedString(char quote)
+	{
+		return new NextResult(NEXT_QUOTEDSTRING_CHAR, quote);
 	}
 
 	

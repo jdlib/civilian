@@ -185,7 +185,7 @@ class CspClassParser
 			{
 				case '"':
 				case '\'':
-					superArgs.append(scanner_.consumeQuotedString(true));
+					superArgs.append(scanner_.nextQuotedString(true));
 					break;
 				case '(':
 					bracketLevel++;

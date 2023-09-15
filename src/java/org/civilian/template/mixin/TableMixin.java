@@ -707,7 +707,7 @@ public class TableMixin implements ComponentBuilder
 
 						String value = null;
 						if (scanner.current() == '\'')
-							value = scanner.consumeQuotedString();
+							value = scanner.nextQuotedString();
 						else
 							value = scanner.consumeToken("],");
 						

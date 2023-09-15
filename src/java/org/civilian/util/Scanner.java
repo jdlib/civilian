@@ -686,11 +686,32 @@ public class Scanner
 	
 	
 	/**
-	 * @return a quoted string and returns the string without quotes.
+	 * @return Scans a quoted string and returns the string without quotes.
+	 * The quote character is the current char
 	 */
-	public String consumeQuotedString()
+	public String nextQuotedString()
 	{
-		return consumeQuotedString(false);
+		return nextQuotedString(false);
+	}
+
+	
+	/**
+	 * @return Scans a quoted string and returns the string without quotes.
+	 */
+	public String nextQuotedString(boolean includeQuotes)
+	{
+		autoSkipWhitespace();
+		char quote = hasMoreChars() ? (char)current() : 0;
+		return nextQuotedString(quote, includeQuotes);
+	}
+
+	
+	/**
+	 * @return Scans a quoted string and returns the string without quotes.
+	 */
+	public String nextQuotedString(char quote)
+	{
+		return nextQuotedString(quote, false);
 	}
 	
 	
@@ -698,18 +719,22 @@ public class Scanner
 	 * Scans a quoted string and returns it.
 	 * The current character is used as quote char.
 	 * Does not autoskip whitespace. 
+	 * @param the quote char
 	 * @param includeQuotes should the quotes be included?
 	 * @return the consumed string
 	 */
-	public String consumeQuotedString(boolean includeQuotes)
+	public String nextQuotedString(char quote, boolean includeQuotes)
 	{
-		if (!hasMoreChars())
-			return null;
-		
-		char quote = currentLine_.charAt(pos_++);
-		String s   = consumeUptoNoSkip(String.valueOf(quote), false, true, true);
-		needSkipWhitespace_ = autoSkipWhitespace_;
-		return includeQuotes ? quote + s + quote : s;
+		autoSkipWhitespace();
+		String result = null;
+		if (current() == quote)
+		{
+			pos_++;
+			result = consumeUptoNoSkip(String.valueOf(quote), false, true, true);
+			if (includeQuotes)
+				result = quote + result + quote;
+		}
+		return nextResult(result, "nextQuotedString", quote);
 	}
 	
 	

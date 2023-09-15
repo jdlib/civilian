@@ -118,7 +118,7 @@ public class HeaderParser
 				paramName  = scanner_.consumeUpto("=", false, true, true);
 				scanner_.skipWhitespace();
 				if (scanner_.current() == '"')
-					paramValue = scanner_.consumeQuotedString();
+					paramValue = scanner_.nextQuotedString();
 				else
 					paramValue = scanner_.consumeUpto(" ;,", false, false, false);
 				return (token_ = Token.PARAM);
