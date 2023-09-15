@@ -83,7 +83,7 @@ class CspClassParser
 		// "extends"
 		if (scanner_.consumeKeyword("extends"))
 		{
-			if (scanner_.consume('-'))
+			if (scanner_.next('-'))
 			{
 				classData_.standalone   = true;
 				classData_.extendsClass = null;
@@ -141,9 +141,9 @@ class CspClassParser
 	
 	private void parseTemplateArgs() throws IOException
 	{
-		if (!scanner_.consume('('))
+		if (!scanner_.next('('))
 			return;
-		if (scanner_.consume(')'))
+		if (scanner_.next(')'))
 			return;
 
 		StringBuilder argsString = new StringBuilder();
@@ -157,9 +157,9 @@ class CspClassParser
 				argsString.append(", ");
 			argument.ctorArg(argsString);
 
-			if (scanner_.consume(')'))
+			if (scanner_.next(')'))
 				break;
-			if (!scanner_.consume(','))
+			if (!scanner_.next(','))
 				scanner_.exception("expected closing bracket ')' of template argument list");
 		}
 
@@ -169,7 +169,7 @@ class CspClassParser
 
 	private void parseTemplateSuperArgs() throws IOException
 	{
-		if (!scanner_.consume('('))
+		if (!scanner_.next('('))
 			return; // no super args
 
 		StringBuilder superArgs	= new StringBuilder();
@@ -215,7 +215,7 @@ class CspClassParser
 			if (list.length() > 0)
 				list.append(", ");
 			list.append(type);
-			if (!scanner_.consume(','))
+			if (!scanner_.next(','))
 				break;
 		}
 		return list.toString();
@@ -235,7 +235,7 @@ class CspClassParser
 				parseMixin(className, fieldName);
 			}
 		}
-		while(scanner_.consume(','));
+		while(scanner_.next(','));
 	}
 
 

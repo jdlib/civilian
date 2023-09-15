@@ -202,8 +202,8 @@ class CspTLineParser
 		String snippet;
 		String snippetRaw;
 		boolean allowStmt;
-		boolean isCondition = sc.consume('?');
-		if (sc.consume('{'))
+		boolean isCondition = sc.next('?');
+		if (sc.next('{'))
 		{
 			snippet = StringUtil.norm(sc.consumeUpto("}", false, true, true));
 			if (snippet == null)
@@ -274,7 +274,7 @@ class CspTLineParser
 	 */
 	private boolean parseStartSymbol(String symbol)
 	{
-		return scanner_.consume(symbol) && !scanner_.match(symbol);
+		return scanner_.next(symbol) && !scanner_.match(symbol);
 	}
 	
 	

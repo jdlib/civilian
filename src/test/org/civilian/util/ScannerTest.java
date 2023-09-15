@@ -49,21 +49,6 @@ public class ScannerTest extends CivTest
 		assertEquals("'ab\"c'", scanner.consumeQuotedString(true));
 		assertEquals('#', scanner.current());
 	}
-
-
-	@Test public void testNextKeyword()
-	{
-		Scanner s = new Scanner("encoding12");
-		assertFalse(s.consumeKeyword("encoding"));
-
-		s = new Scanner("encoding");
-		assertTrue(s.consumeKeyword("encoding"));
-		assertFalse(s.hasMoreChars());
-
-		s = new Scanner("encoding ISO-8859-1");
-		assertTrue(s.consumeKeyword("encoding"));
-		assertEquals("ISO-8859-1", s.consumeRest());
-	}
 	
 
 	@Test public void testMultLines()
@@ -89,7 +74,7 @@ public class ScannerTest extends CivTest
 		a.pos(1).current('2');
  		assertTrue  (scanner.currentIsDigit());
  		assertFalse (scanner.currentHasType(Character.MATH_SYMBOL));
- 		assertTrue  (scanner.consume("23"));
+ 		assertTrue  (scanner.next("23"));
  		a.current(-1);
 	}
 
@@ -98,28 +83,52 @@ public class ScannerTest extends CivTest
 	{
 		Scanner s = new Scanner(" 1 1");
 		s.setAutoSkipWhitespace(false);
-		assertFalse(s.consume("1"));
+		assertFalse(s.next("1"));
 		s.skipWhitespace();
-		assertTrue(s.consume("1"));
+		assertTrue(s.next("1"));
 		
-		assertFalse(s.consume("1"));
+		assertFalse(s.next("1"));
 		s.setAutoSkipWhitespace(true);
-		assertTrue(s.consume("1"));
+		assertTrue(s.next("1"));
 	}
 
 
 	@Test public void testNextString()
 	{
-		Scanner s = new Scanner("abc");
-		assertFalse(s.consume("abcd"));
-		assertFalse(s.consume("abd"));
-		assertTrue(s.consumeKeyword("abc"));
-		
-		s.input("abc,");
-		assertTrue(s.consumeKeyword("abc"));
+		scanner.input.lines(" abc white");
+		a.next("abcd").returns(false).pos(1); // has skipped whitespace
+		a.next("abd").returns(false).pos(1);
+		a.next("abc").returns(true).pos(4);
+		a.next("white").returns(true); // has skipped whitespace
+		a.expect().next("space").fails("next(space)");
 	}
 
 
+	@Test public void testNextChar()
+	{
+		scanner.input.lines("a b");
+		a.next('x').returns(false).pos(0);
+		a.expect().next('x').fails("next(x)");
+		a.next('a').returns(true).pos(1);
+		a.next('b').returns(true); // has skipped whitespace
+	}
+
+	
+	@Test public void testNextKeyword()
+	{
+		Scanner s = new Scanner("encoding12");
+		assertFalse(s.consumeKeyword("encoding"));
+
+		s = new Scanner("encoding");
+		assertTrue(s.consumeKeyword("encoding"));
+		assertFalse(s.hasMoreChars());
+
+		s = new Scanner("encoding ISO-8859-1");
+		assertTrue(s.consumeKeyword("encoding"));
+		assertEquals("ISO-8859-1", s.consumeRest());
+	}
+	
+	
 	@Test public void testConsumeAny()
 	{
 		Scanner s = new Scanner("a");

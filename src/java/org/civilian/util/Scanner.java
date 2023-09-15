@@ -32,7 +32,7 @@ public class Scanner
 		 * @param lines the lines
 		 * @return this
 		 */
-		public Input setLines(String... lines)
+		public Input lines(String... lines)
 		{
 			lines_		= lines != null ? lines : new String[0];
 			lineIndex_	= 0;
@@ -82,7 +82,7 @@ public class Scanner
 		 * @param source the source, e.g. a file name whose lines make up the scanner input
 		 * @return this
 		 */
-		public Input setSource(String source)
+		public Input source(String source)
 		{
 			source_ = source;
 			return this;
@@ -91,7 +91,7 @@ public class Scanner
 		
 		/**
 		 * @return the source of the scanner input.
-		 * @see #setSource(String)
+		 * @see #source(String)
 		 */
 		public String getSource()
 		{
@@ -153,7 +153,7 @@ public class Scanner
 	 */
 	public Scanner input(String... lines)
 	{
-		input.setLines(lines);
+		input.lines(lines);
 		return this;
 	}
 	
@@ -414,7 +414,7 @@ public class Scanner
 	 * @param char a character
 	 * @return char consumed?
 	 */
-	public boolean consume(char c)
+	public boolean next(char c)
 	{
 		autoSkipWhitespace();
 		if (c == current())
@@ -435,7 +435,7 @@ public class Scanner
 	 * Else does not move the scanner position.
 	 * Autoskips whitespace before the test is made, if autoskip is turned on.
 	 */
-	public boolean consume(String s)
+	public boolean next(String s)
 	{
 		boolean result = false;
 		if (match(s)) // also skips whitespace
@@ -481,13 +481,13 @@ public class Scanner
 	 * Consumes the first matching string. 
 	 * @param strings some strings
 	 * @return the matched string, or null if no string matches
-	 * @see #consume(String) 
+	 * @see #next(String) 
 	 */
 	public String consumeAny(String... strings)
 	{
 		for (String s : strings)
 		{
-			if (consume(s))
+			if (next(s))
 				return s;
 		}
 		return null;
@@ -618,7 +618,7 @@ public class Scanner
 		autoSkipWhitespace();
 		int start = pos_;
 		increaseWhile(Character.DECIMAL_DIGIT_NUMBER, true);
-		if (consume('.'))
+		if (next('.'))
 			increaseWhile(Character.DECIMAL_DIGIT_NUMBER, true);
 		if (pos_ == start)
 			exception("expected a double");
@@ -762,7 +762,7 @@ public class Scanner
 	 */
 	public void expect(String s)
 	{
-		if (!consume(s))
+		if (!next(s))
 			exception("expected '" + s + "'");
 	}
 	

@@ -2,14 +2,15 @@ package org.civilian.util;
 
 
 import static org.junit.Assert.*;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 
 public class ScannerAssert
 {
-	private static final Method NEXT = method("consume", String.class);
-	private static final Method NEXT_CHAR = method("consume", Character.class);
+	private static final Method NEXT = method("next", String.class);
+	private static final Method NEXT_CHAR = method("consume", char.class);
 	
 	private static Method method(String name, Class<?>... parameterTypes)
 	{
@@ -85,52 +86,71 @@ public class ScannerAssert
 	}
 	
 	
-	public ScannerAssert expectFail(String s)
+	public ScannerAssert expect()
 	{
-		expectedFail_ = s;
+		scanner_.expect();
 		return this; 
-	}
-	
-	
-	public ScannerAssert next(boolean expected, String s)
-	{
-		return nextResult(expected, NEXT, s);
-	}
-	
-	
-	public ScannerAssert next(boolean expected, char c)
-	{
-		return nextResult(expected, NEXT_CHAR, c);
 	}
 
 	
-	private ScannerAssert nextResult(Object expected, Method method, Object... params)
+	public class NextResult
 	{
-		Object actual = null;
-		String actualFail = null;
-		String expectedFail = expectedFail_;
-		expectedFail_ = null;
-		
-		try
+		private NextResult(Method method, Object... params)
 		{
-			actual = method.invoke(scanner_, params);
-		} 
-		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
-		{
-			throw new IllegalStateException("unexpected", e);
+			Object actual = null;
+			String actualError = null;
+			try
+			{
+				actual = method.invoke(scanner_, params);
+			}
+			catch (InvocationTargetException e)
+			{
+				actualError = e.getCause().getMessage();
+			}
+			catch (Exception e)
+			{
+				actualError = e.getMessage();
+			}
+			this.actual = actual;
+			this.actualError = actualError;
 		}
-		catch (Exception e)
+		
+		
+		public ScannerAssert returns(Object expected)
 		{
-			actualFail = e.getMessage();
+			if (actualError != null)
+				fail("was error: " + actualError);
+			assertEquals(expected, actual);
+			return ScannerAssert.this;
 		}
 		
-		assertEquals("fail", expectedFail, actualFail);
-		if (actualFail != null) 
-			assertEquals("result", expected, actual);
-		return this;
+		
+		public ScannerAssert fails(String expectedError)
+		{
+			if (actualError == null)
+				fail("was result: " + actual);
+			if (!actualError.contains(expectedError))
+				fail("actual error '" + actualError + "' does not contain expected '" + expectedError + "'");
+			return ScannerAssert.this;
+		}
+
+		
+		private final Object actual;
+		private final String actualError;
 	}
 	
 	
+	public NextResult next(String s)
+	{
+		return new NextResult(NEXT, s);
+	}
+	
+	
+	public NextResult next(char c)
+	{
+		return new NextResult(NEXT_CHAR, c);
+	}
+
+	
 	private final Scanner scanner_;
-	private String expectedFail_;
 }

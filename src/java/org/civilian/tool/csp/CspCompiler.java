@@ -300,8 +300,8 @@ public class CspCompiler
 	{
 		scanner_ = new Scanner();
 		scanner_.input
-			.setLines(input.readLines(options_.encodingIn))
-			.setSource(input.file.getName());
+			.lines(input.readLines(options_.encodingIn))
+			.source(input.file.getName());
 		scanner_.setErrorHandler(CspException::new);
 
 		if (scanner_.consumeKeyword("encoding"))
