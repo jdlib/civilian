@@ -98,14 +98,14 @@ public class ScannerTest extends CivTest
 		a.next('b').returns(true); // has skipped whitespace
 	}
 
-	
-	@Test public void testNextKeyword()
+
+	@Test public void testNextHex()
 	{
-		scanner.input(" encoding ISO-8859-1");
-		a.expect().nextKeyword("a").fails("x")
-		 .nextKeyword("enc").returns(false)
-		 .nextKeyword("encoding").returns(true)
-		 .rest(" ISO-8859-1");
+		Scanner s = new Scanner("01Ff");
+		byte[] b  = s.nextHexBytes();
+		assertEquals(2, b.length);
+		assertEquals(1, b[0]);
+		assertEquals(-1, b[1]);
 	}
 
 
@@ -117,6 +117,16 @@ public class ScannerTest extends CivTest
 		 .nextIdentifier().returns("abc")
 		 .nextIdentifier().returns(null)
 		 .expect().nextIdentifier().fails("nextIdentifier");
+	}
+
+	
+	@Test public void testNextKeyword()
+	{
+		scanner.input(" encoding ISO-8859-1");
+		a.expect().nextKeyword("a").fails("x")
+		 .nextKeyword("enc").returns(false)
+		 .nextKeyword("encoding").returns(true)
+		 .rest(" ISO-8859-1");
 	}
 
 
@@ -151,42 +161,49 @@ public class ScannerTest extends CivTest
 	}
 
 
-	@Test public void testConsumeNumber()
+	@Test public void testWhile()
 	{
-		Scanner s = new Scanner("12 a 12.34 b");
-		assertEquals(12, s.consumeInt());
-		try
-		{
-			s.consumeInt();
-			fail();
-		}
-		catch(IllegalArgumentException e)
-		{
-			assertEquals("expected a integer (4): '12 a 12.34 b", e.getMessage());
-		}
-		s.expect().next('a');
-		
-		assertEquals(12.34, s.consumeDouble(), 0.0);
-		try
-		{
-			s.consumeDouble();
-			fail();
-		}
-		catch(IllegalArgumentException e)
-		{
-			assertEquals("expected a double (12): '12 a 12.34 b", e.getMessage());
-		}
-		s.expect().next('b');
+		scanner.input("221100abca");
+		a.nextWhile("abc").returns(null)
+		 .nextWhile("012").returns("221100")
+		 .nextWhile("abc").returns("abca")
+		 .hasMore(false);
 	}
 
-
-	@Test public void testConsumeHex()
+	
+	@Test public void testExpectInt()
 	{
-		Scanner s = new Scanner("01Ff");
-		byte[] b  = s.consumeHexBytes();
-		assertEquals(2, b.length);
-		assertEquals(1, b[0]);
-		assertEquals(-1, b[1]);
+		scanner.input("12 a");
+		assertEquals(12, scanner.expectInt());
+		try
+		{
+			scanner.expectInt();
+			fail();
+		}
+		catch(IllegalArgumentException e)
+		{
+			assertEquals("expected int (4): \"12 a\"", e.getMessage());
+		}
+		scanner.expect().next('a');
+	}
+	
+	
+	@Test
+	public void testNextDouble()
+	{
+		scanner.input("12.34 b");
+		
+		assertEquals(12.34, scanner.expectDouble(), 0.0);
+		try
+		{
+			scanner.expectDouble();
+			fail();
+		}
+		catch(IllegalArgumentException e)
+		{
+			assertEquals("expected double (7): \"12.34 b\"", e.getMessage());
+		}
+		scanner.expect().next('b');
 	}
 }
 

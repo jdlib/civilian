@@ -58,7 +58,7 @@ class CspClassParser
 	public void parsePrologCmds()
 	{
 		while(scanner_.nextKeyword("prolog"))
-			classData_.prolog.add(scanner_.consumeRest());
+			classData_.prolog.add(scanner_.nextRest());
 	}
 
 

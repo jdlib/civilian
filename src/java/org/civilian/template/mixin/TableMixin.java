@@ -691,7 +691,7 @@ public class TableMixin implements ComponentBuilder
 				{
 					if (scanner.currentIsDigit())
 					{
-						int width = scanner.consumeInt();
+						int width = scanner.expectInt();
 						if (scanner.next('%'))
 							column.setPercentWidth(width);
 						else
@@ -733,7 +733,7 @@ public class TableMixin implements ComponentBuilder
 		{
 			if (scanner.currentIsDigit())
 			{
-				int width = scanner.consumeInt();
+				int width = scanner.expectInt();
 				if (width > 0)
 				{
 					Column gap = new Column();

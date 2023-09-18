@@ -20,6 +20,7 @@ public class ScannerAssert
 	private static final Method NEXT_TOKEN = method("nextToken");
 	private static final Method NEXT_TOKEN_DELIMS = method("nextToken", String.class);
 	private static final Method NEXT_UPTOPOS = method("nextUptoPos", int.class);
+	private static final Method NEXT_WHILE = method("nextWhile", String.class);
 	
 	
 	private static Method method(String name, Class<?>... parameterTypes)
@@ -227,6 +228,12 @@ public class ScannerAssert
 	public NextResult nextUptoPos(int pos)
 	{
 		return new NextResult(NEXT_UPTOPOS, pos);
+	}
+
+	
+	public NextResult nextWhile(String chars)
+	{
+		return new NextResult(NEXT_WHILE, chars);
 	}
 
 	

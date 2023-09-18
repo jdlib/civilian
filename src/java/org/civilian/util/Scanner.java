@@ -373,6 +373,18 @@ public class Scanner
 	}
 
 	
+	public int expectInt()
+	{
+		return expect("int").nextInt().intValue();
+	}
+
+	
+	public double expectDouble()
+	{
+		return expect("double").nextDouble().doubleValue();
+	}
+
+	
 	private boolean nextResult(boolean result, String what, Object param)
 	{
 		String expect = expect_;
@@ -594,12 +606,18 @@ public class Scanner
 	/**
 	 * Consumes all digit characters and return the string converted to an integer.
 	 */
-	public int consumeInt()
+	public Integer nextInt()
 	{
-		String s = consumeWhile(Character.DECIMAL_DIGIT_NUMBER);
-		if (s == null) 
-			exception("expected a integer");
-		return Integer.parseInt(s);
+		String s = nextWhileCharType(Character.DECIMAL_DIGIT_NUMBER);
+		try
+		{
+			return s != null ? Integer.valueOf(s) : null;
+		}
+		catch (NumberFormatException e)
+		{
+			exception("cannot parse number: " + s, e);
+			return null; // does not happen
+		}
 	}
 
 
@@ -607,31 +625,50 @@ public class Scanner
 	 * Consumes all digit characters and an optional fraction part
 	 * and returns the string converted to a double.
 	 */
-	public double consumeDouble()
+	public Double nextDouble()
 	{
 		autoSkipWhitespace();
 		int start = pos_;
-		increaseWhile(Character.DECIMAL_DIGIT_NUMBER, true);
-		if (next('.'))
-			increaseWhile(Character.DECIMAL_DIGIT_NUMBER, true);
-		if (pos_ == start)
-			exception("expected a double");
-		return Double.parseDouble(currentLine_.substring(start, pos_)); 
+		advanceWhileCharType(Character.DECIMAL_DIGIT_NUMBER, true);
+		if (pos_ > start)
+		{
+			if (next('.'))
+				advanceWhileCharType(Character.DECIMAL_DIGIT_NUMBER, true);
+		}
+		Double result = null;
+		if (pos_ > start)
+		{
+			String s = currentLine_.substring(start, pos_);
+			try
+			{
+				return result = Double.valueOf(s);
+			}
+			catch (NumberFormatException e)
+			{
+				exception("cannot parse number: " + s, e);
+				return null; // does not happen
+			}
+		}
+		return nextResult(result, "nextDouble", null); 
 	}
 
 	
 	/**
 	 * @return consumes and returns hex encoded bytes.
 	 */
-	public byte[] consumeHexBytes()
+	public byte[] nextHexBytes()
 	{
-		String hex = consumeWhile("0123456789abcdefABCDEF");
-		byte[] b   = new byte[hex.length() / 2];
-		int next   = 0;
-		for (int i=0; i<b.length; i++)
+		String hex = nextWhile("0123456789abcdefABCDEF");
+		byte[] b = null;
+		if (hex != null)
 		{
-			b[i] = (byte)Integer.parseInt(hex.substring(next, next + 2), 16);
-			next += 2;
+			b = new byte[hex.length() / 2];
+			int next   = 0;
+			for (int i=0; i<b.length; i++)
+			{
+				b[i] = (byte)Integer.parseInt(hex.substring(next, next + 2), 16);
+				next += 2;
+			}
 		}
 		return b;
 	}
@@ -640,23 +677,23 @@ public class Scanner
 	/**
 	 * Move the scanner position while seeing characters of that type.
 	 */
-	public String consumeWhile(byte charType)
+	public String nextWhileCharType(byte charType)
 	{
-		return consumeWhile(charType, true);
+		return nextWhileCharType(charType, true);
 	}
 
 	
-	public String consumeWhile(byte charType, boolean equals)
+	public String nextWhileCharType(byte charType, boolean equals)
 	{
 		autoSkipWhitespace();
 
 		int start = pos_;
-		increaseWhile(charType, equals);
-		return pos_ > start ? currentLine_.substring(start, pos_) : null;
+		advanceWhileCharType(charType, equals);
+		return nextResult(pos_ > start ? currentLine_.substring(start, pos_) : null, "nextWhileCharType", null);
 	}
 	
 	
-	private void increaseWhile(byte charType, boolean equals)
+	private void advanceWhileCharType(byte charType, boolean equals)
 	{
 		while (hasMoreChars())
 		{
@@ -664,7 +701,6 @@ public class Scanner
 				break;
 			pos_++;
 		}
-		needSkipWhitespace_ = autoSkipWhitespace_;
 	}
 
 	
@@ -672,7 +708,7 @@ public class Scanner
 	 * Move the scanner position while seeing characters contained in
 	 * the chars parameter.
 	 */
-	public String consumeWhile(String chars)
+	public String nextWhile(String chars)
 	{
 		autoSkipWhitespace();
 
@@ -683,8 +719,8 @@ public class Scanner
 				break;
 			pos_++;
 		}
-		needSkipWhitespace_ = autoSkipWhitespace_;
-		return pos_ > start ? currentLine_.substring(start, pos_) : null;
+		
+		return nextResult(pos_ > start ? currentLine_.substring(start, pos_) : null, "nextWhile", chars);
 	}
 	
 	
@@ -744,14 +780,13 @@ public class Scanner
 	/**
 	 * @return consumes and returns the rest of the current line.
 	 */
-	public String consumeRest()
+	public String nextRest()
 	{
 		autoSkipWhitespace();
 
 		String s = getRest();
 		pos_ 	 = length_;
-		needSkipWhitespace_ = autoSkipWhitespace_;
-		return s; 
+		return nextResult(s, "nextRest", null); 
 	}
 	
 
@@ -820,16 +855,22 @@ public class Scanner
 	 */
 	public void exception(String message)
 	{
+		exception(message, null);
+	}
+	
+	
+	public void exception(String message, Throwable cause)
+	{
 		RuntimeException e; 
 		if (errorHandler_ != null)
-			e = errorHandler_.scanError(message, this);
+			e = errorHandler_.scanError(message, cause, this);
 		else
 		{
 			StringBuilder s = new StringBuilder(message);
 			s.append(" (");
 			if (input.getLineCount() > 1)
 				s.append(input.getLineIndex() + 1).append(':');
-			s.append(pos_ + 1).append("): '").append(currentLine_);
+			s.append(pos_ + 1).append("): \"").append(currentLine_).append('"');
 			e = new IllegalArgumentException(s.toString());
 		}
 		throw e;
@@ -853,7 +894,7 @@ public class Scanner
 	 */
 	public static interface ErrorHandler
 	{
-		public RuntimeException scanError(String message, Scanner scanner);
+		public RuntimeException scanError(String message, Throwable cause, Scanner scanner);
 	}
 	
 	
