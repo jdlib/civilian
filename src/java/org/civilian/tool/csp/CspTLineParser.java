@@ -97,7 +97,7 @@ class CspTLineParser
 		indent_.parse(scanner_);
 		if (scanner_.hasMoreChars())
 		{
-			type 	= parseStartSymbol(CspSymbols.code) ? Type.CODE : Type.LITERAL;
+			type 	= parseStartSymbol(CspSymbols.CODE) ? Type.CODE : Type.LITERAL;
 			content = scanner_.getRest().trim();
 			if (type == Type.LITERAL)
 				parseLiteralLine();
@@ -112,14 +112,14 @@ class CspTLineParser
 	
 	private void parseLiteralLine() 
 	{
-		if (parseStartSymbol(CspSymbols.componentEnd))
+		if (parseStartSymbol(CspSymbols.COMPONENT_END))
 		{
-			addLiteralPart(LiteralType.COMPONENT_END, CspSymbols.componentEnd);
+			addLiteralPart(LiteralType.COMPONENT_END, CspSymbols.COMPONENT_END);
 			return;
 		}
-		if (parseStartSymbol(CspSymbols.componentStart))
+		if (parseStartSymbol(CspSymbols.COMPONENT_START))
 		{
-			int pEnd = scanner_.indexOf(CspSymbols.componentEnd);
+			int pEnd = scanner_.indexOf(CspSymbols.COMPONENT_END);
 			if (pEnd < 0)
 			{
 				addLiteralPart(LiteralType.COMPONENT_START, scanner_.getRest().trim());
@@ -128,7 +128,7 @@ class CspTLineParser
 			else
 			{
 				String component = scanner_.nextUptoPos(pEnd).trim();
-				scanner_.skip(CspSymbols.componentEnd.length());
+				scanner_.skip(CspSymbols.COMPONENT_END.length());
 				addLiteralPart(LiteralType.COMPONENT, component, component);
 			}
 		}
@@ -144,7 +144,7 @@ class CspTLineParser
 
 		while(start < length)
 		{
-			int pHat = line.indexOf(CspSymbols.hat, start);
+			int pHat = line.indexOf(CspSymbols.HAT, start);
 			if (pHat >= 0)
 			{
 				if (start < pHat)
@@ -154,21 +154,21 @@ class CspTLineParser
 				}
 				
 				int nextChar = pHat + 1 < length ? line.charAt(pHat + 1) : -1;
-				if (nextChar == CspSymbols.hat)
+				if (nextChar == CspSymbols.HAT)
 				{
 					// ^^ detected: output a literal ^
-					addLiteralPart(LiteralType.TEXT, CspSymbols.hatString);
+					addLiteralPart(LiteralType.TEXT, CspSymbols.HATSTRING);
 					start = pHat + 2;
 				}
-				else if (nextChar == CspSymbols.noop)
+				else if (nextChar == CspSymbols.NOOP)
 				{
 					// ^': produces not content, but useful at line start or to preserve lines
 					start = pHat + 2;
 				}
-				else if (nextChar == CspSymbols.skipln)
+				else if (nextChar == CspSymbols.SKIPLN)
 				{
 					// ^\: skip println, ignore rest of line
-					addLiteralPart(LiteralType.SKIPLN, CspSymbols.hatString + CspSymbols.skipln);
+					addLiteralPart(LiteralType.SKIPLN, CspSymbols.HATSTRING + CspSymbols.SKIPLN);
 					return;
 				}
 				else

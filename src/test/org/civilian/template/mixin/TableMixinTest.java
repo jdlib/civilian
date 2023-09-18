@@ -118,7 +118,7 @@ public class TableMixinTest extends CivTest
 		}
 		catch(IllegalArgumentException e)
 		{
-			assertEquals("expected next('=') (7): '[align]", e.getMessage());
+			assertEquals("expected next('=') (7): \"[align]\"", e.getMessage());
 		}
 	}
 	
