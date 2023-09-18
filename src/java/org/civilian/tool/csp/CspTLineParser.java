@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.civilian.util.Check;
 import org.civilian.util.Scanner;
-import org.civilian.util.StringUtil;
 
 
 /**
@@ -205,9 +204,7 @@ class CspTLineParser
 		boolean isCondition = sc.next('?');
 		if (sc.next('{'))
 		{
-			snippet = StringUtil.norm(sc.consumeUpto("}", false, true, true));
-			if (snippet == null)
-				scanner_.exception("missing closing '}' at '" + line + "'");
+			snippet = sc.expect().nextUpto("}", false, true, true, true);
 			allowStmt = !isCondition;
 		}
 		else
@@ -242,7 +239,7 @@ class CspTLineParser
 				case '<': closeSep = '>';		break;
 				default:  closeSep = openSep; 	break;
 			}
-			String conditioned = sc.consumeUpto(String.valueOf(closeSep), false, true, true);
+			String conditioned = sc.nextUpto(String.valueOf(closeSep), false, true, true, false);
 			parseLiteralParts(conditioned);
 			addLiteralPart(LiteralType.JAVA_CONDITION_END, "");
 			return sc.getPos();

@@ -36,18 +36,6 @@ public class ScannerTest extends CivTest
 	}
 	
 	
-	@Test public void testNextQuotedString()
-	{
-		scanner.input("'123' 'abc' \"\" 'ab\"c'#");
-		a.current('\'');
-		a.nextQuotedString().returns("123");
-		a.nextQuotedString('"').returns(null).nextQuotedString('\'').returns("abc");
-		a.nextQuotedString(true).returns("\"\"");
-		a.nextQuotedString('\'', true).returns("'ab\"c'");
-		a.current('#');
-	}
-	
-
 	@Test public void testMultLines()
 	{
 		scanner.input("a", "b", "c");
@@ -90,7 +78,7 @@ public class ScannerTest extends CivTest
 	}
 
 
-	@Test public void testNextString()
+	@Test public void testNext()
 	{
 		scanner.input(" abc white");
 		a.next("abcd").returns(false).pos(1); // has skipped whitespace
@@ -131,6 +119,18 @@ public class ScannerTest extends CivTest
 		 .expect().nextIdentifier().fails("nextIdentifier");
 	}
 
+
+	@Test public void testNextQuotedString()
+	{
+		scanner.input("'123' 'abc' \"\" 'ab\"c'#");
+		a.current('\'');
+		a.nextQuotedString().returns("123");
+		a.nextQuotedString('"').returns(null).nextQuotedString('\'').returns("abc");
+		a.nextQuotedString(true).returns("\"\"");
+		a.nextQuotedString('\'', true).returns("'ab\"c'");
+		a.current('#');
+	}
+	
 
 	@Test public void testNextToken()
 	{

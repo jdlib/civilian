@@ -178,7 +178,7 @@ class CspClassParser
 		int bracketLevel = 1;
 		while(bracketLevel > 0)
 		{
-			String part = scanner_.consumeUpto("\"'()", false, false, false);
+			String part = scanner_.nextUpto("\"'()", false, false, false, false);
 			superArgs.append(part);
 			if (!scanner_.hasMoreChars())
 				scanner_.exception("template super must be finished on the beginning line");

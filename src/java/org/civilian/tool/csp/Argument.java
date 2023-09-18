@@ -82,7 +82,7 @@ class Argument
 		int level = 1;
 		while(level > 0)
 		{
-			String s = scanner.consumeUpto("<>", false, true, false);
+			String s = scanner.nextUpto("<>", false, true, false, false);
 			
 			gt.append(s);
 			char delim = (char)scanner.current();

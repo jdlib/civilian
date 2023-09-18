@@ -115,12 +115,12 @@ public class HeaderParser
 			if (scanner_.next(';'))
 			{
 				// parse parameter
-				paramName  = scanner_.consumeUpto("=", false, true, true);
+				paramName  = scanner_.nextUpto("=", false, true, true, false);
 				scanner_.skipWhitespace();
 				if (scanner_.current() == '"')
 					paramValue = scanner_.nextQuotedString();
 				else
-					paramValue = scanner_.consumeUpto(" ;,", false, false, false);
+					paramValue = scanner_.nextUpto(" ;,", false, false, false, false);
 				return (token_ = Token.PARAM);
 			}
 			else
@@ -129,7 +129,7 @@ public class HeaderParser
 				scanner_.next(',');
 			}
 		}
-		item 		= scanner_.consumeUpto(" ;,", false, false, false);
+		item 		= scanner_.nextUpto(" ;,", false, false, false, false);
 		scanParams_	= true;
 		paramName	= null;
 		return (token_ = Token.ITEM);

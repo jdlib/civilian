@@ -537,7 +537,7 @@ public class Scanner
 		return nextResult(result, "nextUptoPos", null);
 	}
 
-	
+
 	/**
 	 * Moves the scanner position until one of the characters in the delimiter string
 	 * is encountered. 
@@ -546,23 +546,17 @@ public class Scanner
 	 * @param needDelim if true and no delimiter is found, an exception is thrown.
 	 * 		Else the whole rest of the line is consumed.
 	 * @param skipDelim if true, position after the delimiter, else stop at the delimiter
+	 * @param norm if true and the result string is empty, it is normed to a null string
 	 * @return the consumed string
 	 */
-	public String consumeUpto(String delimiters, boolean whitespaceLimits, boolean needDelim, boolean skipDelim)
+	public String nextUpto(String delimiters, boolean whitespaceLimits, boolean needDelim, boolean skipDelim, boolean norm)
 	{
 		autoSkipWhitespace();
-		return nextResult(consumeUptoNoSkip(delimiters, whitespaceLimits, needDelim, skipDelim, false), "nextUpTo", delimiters);
-	}
-
-
-	private String nextUpto(String delimiters, boolean whitespaceLimits, boolean needDelim, boolean skipDelim, boolean norm)
-	{
-		autoSkipWhitespace();
-		return nextResult(consumeUptoNoSkip(delimiters, whitespaceLimits, needDelim, skipDelim, norm), "nextUpTo", delimiters);
+		return nextResult(nextUptoNoSkip(delimiters, whitespaceLimits, needDelim, skipDelim, norm), "nextUpTo", delimiters);
 	}
 
 	
-	private String consumeUptoNoSkip(String delimiters, boolean whitespaceLimits, boolean needDelim, boolean skipDelim, boolean norm)
+	private String nextUptoNoSkip(String delimiters, boolean whitespaceLimits, boolean needDelim, boolean skipDelim, boolean norm)
 	{
 		int start = pos_;
 		if (delimiters == null)
@@ -572,9 +566,9 @@ public class Scanner
 		{
 			char c = currentLine_.charAt(pos_++);
 			if ((delimiters.indexOf(c) >= 0))
-				return consumeUptoFound(start, skipDelim, norm);
+				return nextUptoFound(start, skipDelim, norm);
 			else if (whitespaceLimits && Character.isWhitespace(c))  
-				return consumeUptoFound(start, false, norm);
+				return nextUptoFound(start, false, norm);
 		}
 		if (needDelim)
 			exception("expected one of '" + delimiters + "'");
@@ -582,7 +576,7 @@ public class Scanner
 	}
 	
 	
-	private String consumeUptoFound(int start, boolean skipDelim, boolean norm)
+	private String nextUptoFound(int start, boolean skipDelim, boolean norm)
 	{
 		String s = currentLine_.substring(start, pos_ - 1);
 		if (!skipDelim)
@@ -739,7 +733,7 @@ public class Scanner
 		if (current() == quote)
 		{
 			pos_++;
-			result = consumeUptoNoSkip(String.valueOf(quote), false, true, true, false);
+			result = nextUptoNoSkip(String.valueOf(quote), false, true, true, false);
 			if (includeQuotes)
 				result = quote + result + quote;
 		}
