@@ -27,7 +27,7 @@ class CspClassParser
 	{
 		if (scanner_.nextKeyword("package"))
 		{
-			classData_.packageName = StringUtil.cutRight(scanner_.nextToken("package"), ";");
+			classData_.packageName = StringUtil.cutRight(scanner_.expect("package").nextToken(), ";");
 			if ((assumedPackage != null) && !assumedPackage.equals(classData_.packageName))
 				throw new CspException("package was set by compiler parameters to '" + assumedPackage + ", but the template specified '" + classData_.packageName + "'");
 		}
@@ -47,9 +47,10 @@ class CspClassParser
 	{
 		while(scanner_.nextKeyword("import"))
 		{
-			String s = StringUtil.cutRight(scanner_.nextToken("import"), ";");
+			String s = scanner_.expect("import").nextToken(";");
 			s = resolveRelativeImport(s);
 			classData_.imports.add(s);
+			scanner_.next(';');
 		}
 	}
 
@@ -90,7 +91,7 @@ class CspClassParser
 
 				String writerClass = CspWriter.class.getSimpleName();
 				if (scanner_.nextKeyword("using"))
-					writerClass = scanner_.nextToken("using");
+					writerClass = scanner_.expect("using").nextToken();
 
 				if ("CspWriter".equals(writerClass))
 					writerClass = CspWriter.class.getName();
@@ -101,7 +102,7 @@ class CspClassParser
 			}
 			else
 			{
-				classData_.extendsClass = scanner_.nextToken("extends", "(");
+				classData_.extendsClass = scanner_.expect("extends").nextToken("(");
 				parseTemplateSuperArgs();
 			}
 
@@ -211,7 +212,7 @@ class CspClassParser
 		StringBuffer list = new StringBuffer();
 		while(true)
 		{
-			String type = scanner_.nextToken("implements", ",");
+			String type = scanner_.expect("implements").nextToken(",");
 			if (list.length() > 0)
 				list.append(", ");
 			list.append(type);
@@ -226,7 +227,7 @@ class CspClassParser
 	{
 		do
 		{
-			String def = scanner_.nextToken("mixin def", ",");
+			String def = scanner_.expect("mixin def").nextToken(",");
 			String[] parts = def.split(":", 2);
 			if (parts.length > 0)
 			{

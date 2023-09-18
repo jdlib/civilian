@@ -92,7 +92,7 @@ public class ScannerTest extends CivTest
 
 	@Test public void testNextString()
 	{
-		scanner.input.lines(" abc white");
+		scanner.input(" abc white");
 		a.next("abcd").returns(false).pos(1); // has skipped whitespace
 		a.next("abd").returns(false).pos(1);
 		a.next("abc").returns(true).pos(4);
@@ -103,7 +103,7 @@ public class ScannerTest extends CivTest
 
 	@Test public void testNextChar()
 	{
-		scanner.input.lines("a b");
+		scanner.input("a b");
 		a.next('x').returns(false).pos(0);
 		a.expect().next('x').fails("next('x')");
 		a.next('a').returns(true).pos(1);
@@ -113,7 +113,7 @@ public class ScannerTest extends CivTest
 	
 	@Test public void testNextKeyword()
 	{
-		scanner.input.lines(" encoding ISO-8859-1");
+		scanner.input(" encoding ISO-8859-1");
 		a.expect().nextKeyword("a").fails("x")
 		 .nextKeyword("enc").returns(false)
 		 .nextKeyword("encoding").returns(true)
@@ -123,7 +123,7 @@ public class ScannerTest extends CivTest
 
 	@Test public void testNextIdentifier()
 	{
-		scanner.input.lines("a a12 abc-");
+		scanner.input("a a12 abc-");
 		a.nextIdentifier().returns("a")
 		 .nextIdentifier().returns("a12")
 		 .nextIdentifier().returns("abc")
@@ -132,18 +132,22 @@ public class ScannerTest extends CivTest
 	}
 
 
-	@Test public void testConsumeToken()
+	@Test public void testNextToken()
 	{
-		Scanner s = new Scanner("a");
-		assertEquals("a", s.consumeToken());
+		scanner.input("a ");
+		a.nextToken().returns("a").nextToken().returns(null);
 		
-		s.input("a b,d");
-		assertEquals("a", s.consumeToken());
-		assertEquals("b", s.consumeToken(","));
-		
-		s.input(" a");
-		s.setAutoSkipWhitespace(false);
-		assertNull(s.consumeToken());
+		scanner.input("a b,d");
+		a.nextToken().returns("a").nextToken(",").returns("b");
+	}
+	
+	
+	@Test public void testNextUptoPos()
+	{
+		scanner.input("01234");
+		a.nextUptoPos(-1).returns(null)
+		 .nextUptoPos(2).returns("01")
+		 .nextUptoPos(100).returns("234");
 	}
 
 

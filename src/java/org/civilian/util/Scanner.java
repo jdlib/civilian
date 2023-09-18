@@ -362,24 +362,25 @@ public class Scanner
 	 */
 	public Scanner expect()
 	{
-		return expect(true);
+		return expect("");
 	}
 	
 	
-	public Scanner expect(boolean flag)
+	public Scanner expect(String what)
 	{
-		expect_ = flag;
+		expect_ = what;
 		return this;
 	}
 
 	
 	private boolean nextResult(boolean result, String what, Object param)
 	{
-		if (expect_)
+		String expect = expect_;
+		if (expect != null)
 		{
-			expect_ = false;
+			expect_ = null;
 			if (!result)
-				nextFail(what, param);
+				nextFail(expect, what, param);
 		}
 		needSkipWhitespace_ = autoSkipWhitespace_;
 		return result;
@@ -388,33 +389,47 @@ public class Scanner
 	
 	private <T> T nextResult(T result, String what, Object param)
 	{
-		if (expect_)
+		String expect = expect_;
+		if (expect != null)
 		{
-			expect_ = false;
+			expect_ = null;
 			if (result == null)
-				nextFail(what, param);
+				nextFail(expect, what, param);
 		}
 		needSkipWhitespace_ = autoSkipWhitespace_;
 		return result;
 	}
 	
 	
-	private void nextFail(String what, Object param)
+	private void nextFail(String expect, String method, Object param)
 	{
-		String message = "expected " + what + (param != null ? '(' +  paramString(param) + ')' : "");
-		exception(message);
+		StringBuilder s = new StringBuilder();
+		s.append("expected ");
+		if (expect.length() > 0) 
+			s.append(expect);
+		else
+		{
+			s.append(method);
+			if (param != null)
+			{
+				s.append('(');
+				paramString(param, s);
+				s.append(')');
+			}
+		}
+		exception(s.toString());
 	}
 	
 	
-	private String paramString(Object param)
+	private void paramString(Object param, StringBuilder s)
 	{
-		String s = param.toString();
+		String p = param.toString();
 		if (param instanceof String)
-			return '"' + s + '"';
+			s.append('"').append(p).append('"');
 		else if (param instanceof Character)
-			return '\'' + s + '\'';
+			s.append('\'').append(p).append('\'');
 		else
-			return s;
+			s.append(p);
 	}
 	
 
@@ -485,28 +500,13 @@ public class Scanner
 	}
 	
 	
-	public String nextToken(String what)
-	{
-		return nextToken(what, "");
-	}
-
-
-	public String nextToken(String what, String delims)
-	{
-		String token = consumeToken(delims);
-		if (token == null)
-			exception("missing " + what + "-value");
-		return token;
-	}
-
-	
 	/**
 	 * Returns the string upto the next whitespace boundary.
 	 * If that string is empty or the end is reached null is returned.
 	 */
-	public String consumeToken()
+	public String nextToken()
 	{
-		return consumeToken("");
+		return nextToken("");
 	}
 	
 	
@@ -515,28 +515,26 @@ public class Scanner
 	 * one of the characters on the delimiter string is reached.
 	 * If that string is empty or the end is reached null is returned.
 	 */
-	public String consumeToken(String delimiters)
+	public String nextToken(String delimiters)
 	{
-		String s = consumeUpto(delimiters, true, false, false);
-		if (s.length() > 0)
-		{
-			return s;
-		}
-		else
-			return null;
+		return nextUpto(delimiters, true, false, false, true);
 	}
 	
 	
-	public String consumeUpto(int pos)
+	/**
+	 * Does not skip whitespace.
+	 * 
+	 */
+	public String nextUptoPos(int pos)
 	{
-		if (pos > pos_)
+		String result = null;
+		if ((pos > pos_) && hasMoreChars())
 		{
-			String s = currentLine_.substring(pos_, pos);
-			pos_ = pos;
-			return s;
+			int curpos = pos_;
+			setPos(pos);
+			result = norm(currentLine_.substring(curpos, pos_), true);
 		}
-		else
-			return "";
+		return nextResult(result, "nextUptoPos", null);
 	}
 
 	
@@ -553,11 +551,18 @@ public class Scanner
 	public String consumeUpto(String delimiters, boolean whitespaceLimits, boolean needDelim, boolean skipDelim)
 	{
 		autoSkipWhitespace();
-		return consumeUptoNoSkip(delimiters, whitespaceLimits, needDelim, skipDelim);
+		return nextResult(consumeUptoNoSkip(delimiters, whitespaceLimits, needDelim, skipDelim, false), "nextUpTo", delimiters);
 	}
 
 
-	private String consumeUptoNoSkip(String delimiters, boolean whitespaceLimits, boolean needDelim, boolean skipDelim)
+	private String nextUpto(String delimiters, boolean whitespaceLimits, boolean needDelim, boolean skipDelim, boolean norm)
+	{
+		autoSkipWhitespace();
+		return nextResult(consumeUptoNoSkip(delimiters, whitespaceLimits, needDelim, skipDelim, norm), "nextUpTo", delimiters);
+	}
+
+	
+	private String consumeUptoNoSkip(String delimiters, boolean whitespaceLimits, boolean needDelim, boolean skipDelim, boolean norm)
 	{
 		int start = pos_;
 		if (delimiters == null)
@@ -567,24 +572,28 @@ public class Scanner
 		{
 			char c = currentLine_.charAt(pos_++);
 			if ((delimiters.indexOf(c) >= 0))
-				return consumeUptoFound(start, skipDelim);
+				return consumeUptoFound(start, skipDelim, norm);
 			else if (whitespaceLimits && Character.isWhitespace(c))  
-				return consumeUptoFound(start, false);
+				return consumeUptoFound(start, false, norm);
 		}
 		if (needDelim)
 			exception("expected one of '" + delimiters + "'");
-		needSkipWhitespace_ = autoSkipWhitespace_;
-		return currentLine_.substring(start);
+		return norm(currentLine_.substring(start), norm);
 	}
 	
 	
-	private String consumeUptoFound(int start, boolean skipDelim)
+	private String consumeUptoFound(int start, boolean skipDelim, boolean norm)
 	{
-		needSkipWhitespace_ = autoSkipWhitespace_;
 		String s = currentLine_.substring(start, pos_ - 1);
 		if (!skipDelim)
 			pos_--;
-		return s;
+		return norm(s, norm);
+	}
+	
+	
+	private static String norm(String s, boolean norm)
+	{
+		return norm && s.length() == 0 ? null : s;
 	}
 	
 	
@@ -730,7 +739,7 @@ public class Scanner
 		if (current() == quote)
 		{
 			pos_++;
-			result = consumeUptoNoSkip(String.valueOf(quote), false, true, true);
+			result = consumeUptoNoSkip(String.valueOf(quote), false, true, true, false);
 			if (includeQuotes)
 				result = quote + result + quote;
 		}
@@ -859,7 +868,7 @@ public class Scanner
 	private String currentLine_;
 	private boolean needSkipWhitespace_;
 	private boolean autoSkipWhitespace_ = true;
-	private boolean expect_;
+	private String expect_;
 	private ErrorHandler errorHandler_;
 	public final Input input = new Input();
 }

@@ -699,7 +699,7 @@ public class TableMixin implements ComponentBuilder
 					}
 					else
 					{
-						String name = scanner.consumeToken("]=");
+						String name = scanner.nextToken("]=");
 						if (name == null)
 							scanner.exception("invalid column definition");
 						
@@ -709,7 +709,7 @@ public class TableMixin implements ComponentBuilder
 						if (scanner.current() == '\'')
 							value = scanner.nextQuotedString();
 						else
-							value = scanner.consumeToken("],");
+							value = scanner.nextToken("],");
 						
 						if (attrs == null)
 							attrs = new ArrayList<>();

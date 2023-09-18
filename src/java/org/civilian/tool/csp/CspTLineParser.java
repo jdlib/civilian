@@ -128,7 +128,7 @@ class CspTLineParser
 			}
 			else
 			{
-				String component = scanner_.consumeUpto(pEnd).trim();
+				String component = scanner_.nextUptoPos(pEnd).trim();
 				scanner_.skip(CspSymbols.componentEnd.length());
 				addLiteralPart(LiteralType.COMPONENT, component, component);
 			}

@@ -26,7 +26,7 @@ class Argument
 	{
 		type_ = parseType(scanner);
 
-		name_ = scanner.consumeToken(",)");
+		name_ = scanner.nextToken(",)");
 		if (name_ == null)
 			scanner.exception("argument '" + type_ + "' needs a name and type");
 		

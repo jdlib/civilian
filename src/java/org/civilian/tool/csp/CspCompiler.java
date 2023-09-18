@@ -306,13 +306,13 @@ public class CspCompiler
 
 		if (scanner_.nextKeyword("encoding"))
 		{
-			String encoding = scanner_.nextToken("encoding");
+			String encoding = scanner_.expect("encoding").nextToken();
 
 			if (!options_.encodingIn.equalsIgnoreCase(encoding))
 			{
 				scanner_.input(input.readLines(encoding));
 				scanner_.nextKeyword("encoding");
-				scanner_.nextToken("encoding");
+				scanner_.nextToken();
 			}
 		}
 
