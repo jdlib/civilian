@@ -136,16 +136,12 @@ class CspTLineParser
 			}
 		}
 		
-		parseLiteralParts(scanner_.getRest().trim());
+		parseLiteralParts(scanner_);
 	}
 	
 	
-	private void parseLiteralParts(String line)
+	private void parseLiteralParts(Scanner scanner)
 	{
-		Scanner scanner = new Scanner(line).setAutoSkipWhitespace(false);
-		scanner.setErrorHandler(scanner_.getErrorHandler());
-		
-
 		while(scanner.hasMoreChars())
 		{
 			// finde the next position of a '^' character
@@ -188,7 +184,11 @@ class CspTLineParser
 				break;
 		}
 		if (scanner.hasMoreChars())
-			addLiteralPart(LiteralType.TEXT, scanner.getRest());
+		{
+			// must not use getRest(), since we want to consume it
+			// conditional set a artifical length and later increase it again
+			addLiteralPart(LiteralType.TEXT, scanner.nextRest());
+		}
 	}
 	
 	
@@ -251,16 +251,13 @@ class CspTLineParser
 				case '<': closeSep = '>';		break;
 				default:  closeSep = openSep; 	break;
 			}
-//			int closePos = sc.indexOf(closeSep);
-//			int oldLength = sc.getLength();
-//			sc.setLength(closePos);
-//			parseLiteralParts(sc);
-//			addLiteralPart(LiteralType.JAVA_CONDITION_END, "");
-//			sc.setLength(oldLength);
-//			sc.skip(); // closeSep
-			String conditioned = sc.nextUpto(String.valueOf(closeSep), false, true, true, false);
-			parseLiteralParts(conditioned);
+			int closePos = sc.indexOf(closeSep);
+			int oldLength = sc.getLength();
+			sc.setLength(closePos);
+			parseLiteralParts(sc);
 			addLiteralPart(LiteralType.JAVA_CONDITION_END, "");
+			sc.setLength(oldLength);
+			sc.skip(); // closeSep
 			return;
 		}
 		else

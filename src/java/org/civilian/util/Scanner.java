@@ -846,7 +846,7 @@ public class Scanner
 	 */
 	public String getRest()
 	{
-		return hasMoreChars() ? currentLine_.substring(pos_) : ""; 
+		return hasMoreChars() ? currentLine_.substring(pos_, length_) : ""; // length_ can be smaller than currentLine_.length()
 	}
 	
 	
