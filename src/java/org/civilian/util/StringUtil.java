@@ -259,4 +259,19 @@ public abstract class StringUtil
 			s = s.trim();
 		return isBlank(s) ? null : s;
 	}
+
+
+	public static String rtrim(String s)
+	{
+		if (s != null)
+		{
+			int last = s.length()-1;  
+			int i = last;
+			while (i >= 0 && Character.isWhitespace(s.charAt(i))) 
+				i--;
+			if (i < last)
+				s = s.substring(0, i+1);
+		}
+		return s;
+	}
 }

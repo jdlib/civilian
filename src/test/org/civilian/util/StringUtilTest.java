@@ -95,4 +95,12 @@ public class StringUtilTest extends CivTest
 		assertEquals("001", StringUtil.fillLeft(1, 3));
 		assertEquals("12",  StringUtil.fillLeft(123, 2));
 	}
+
+
+	@Test public void testRtrim()
+	{
+		assertNull("a", StringUtil.rtrim(null));
+		assertSame("a", StringUtil.rtrim("a"));
+		assertEquals(" a b", StringUtil.rtrim(" a b \t\r\n"));
+	}
 }

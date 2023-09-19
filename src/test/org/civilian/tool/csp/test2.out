@@ -11,8 +11,8 @@ public class Test2 extends Template
 	{
 		this.name = name;
 	}
-	
-	
+
+
 	@Override protected void print() throws Exception
 	{
 		out.println("<start>");                                         // line 19: <start>
@@ -33,6 +33,6 @@ public class Test2 extends Template
 	}
 
 
-	private String name; 
+	private String name;
 	private ArrayList<String> list_ = new ArrayList<>();
 }

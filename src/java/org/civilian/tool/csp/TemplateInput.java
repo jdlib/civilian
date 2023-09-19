@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import org.civilian.util.IoUtil;
+import org.civilian.util.StringUtil;
 
 
 class TemplateInput
@@ -39,7 +40,10 @@ class TemplateInput
 	{
 		try(Reader reader = new InputStreamReader(new FileInputStream(file), encoding))
 		{
-			return IoUtil.readLines(reader, false /*trim*/);
+			String[] lines = IoUtil.readLines(reader, false /*trim*/);
+			for (int i=0; i<lines.length; i++)
+				lines[i] = StringUtil.rtrim(lines[i]);
+			return lines;
 		}
 	}
 

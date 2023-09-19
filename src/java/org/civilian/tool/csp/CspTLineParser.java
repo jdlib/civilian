@@ -132,62 +132,63 @@ class CspTLineParser
 			{
 				String component = scanner_.nextUptoPos(pEnd).trim();
 				scanner_.skip(CspSymbols.COMPONENT_END.length());
+				scanner_.skipWhitespace();
 				addLiteralPart(LiteralType.COMPONENT, component, component);
 			}
 		}
 		
-		parseLiteralParts(scanner_);
+		parseLiteralParts();
 	}
 	
 	
-	private void parseLiteralParts(Scanner scanner)
+	private void parseLiteralParts()
 	{
-		while(scanner.hasMoreChars())
+		while(scanner_.hasMoreChars())
 		{
 			// finde the next position of a '^' character
-			int pHat = scanner.indexOf(CspSymbols.HAT);
+			int pHat = scanner_.indexOf(CspSymbols.HAT);
 			if (pHat >= 0)
 			{
 				// consume any preceding text
-				String literalText = scanner.nextUptoPos(pHat);
+				String literalText = scanner_.nextUptoPos(pHat);
 				if (literalText != null)
 					addLiteralPart(LiteralType.TEXT, literalText);
 				
 				// consume '^'
-				scanner.skip();
+				scanner_.skip();
 			
-				int nextChar = scanner.current();
+				int nextChar = scanner_.current();
 				if (nextChar == CspSymbols.HAT)
 				{
 					// ^^ seen: output a literal ^
-					scanner.skip();
+					scanner_.skip();
 					addLiteralPart(LiteralType.TEXT, CspSymbols.HATSTRING);
 				}
 				else if (nextChar == CspSymbols.NOOP)
 				{
 					// ^' seen: produces no content, but useful at line start or to preserve lines
-					scanner.skip();
+					scanner_.skip();
 				}
 				else if (nextChar == CspSymbols.SKIPLN)
 				{
 					// ^\ seen: skip println, ignore rest of line
-					scanner.skip();
+					scanner_.skip();
 					addLiteralPart(LiteralType.SKIPLN, HAT_SKIPLN);
 					return;
 				}
 				else
 				{
-					parseCodeSnippet(scanner);
+					parseCodeSnippet();
 				}
 			}
 			else
 				break;
 		}
-		if (scanner.hasMoreChars())
+		if (scanner_.hasMoreChars())
 		{
 			// must not use getRest(), since we want to consume it
 			// conditional set a artifical length and later increase it again
-			addLiteralPart(LiteralType.TEXT, scanner.nextRest());
+			addLiteralPart(LiteralType.TEXT, scanner_.nextRest());
 		}
 	}
 	
@@ -207,27 +208,27 @@ class CspTLineParser
 	 * @param start
 	 * @return the next start
 	 */
-	private void parseCodeSnippet(Scanner sc)
+	private void parseCodeSnippet()
 	{
-		int hatPos = sc.getPos() - 1;
+		int hatPos = scanner_.getPos() - 1;
 		String snippet;
 		String snippetRaw;
 		boolean allowStmt;
-		boolean isCondition = sc.next('?');
-		if (sc.next('{'))
+		boolean isCondition = scanner_.next('?');
+		if (scanner_.next('{'))
 		{
-			snippet = sc.expect().nextUpto("}", false, true, true, true);
+			snippet = scanner_.expect().nextUpto("}", false, true, true, true);
 			allowStmt = !isCondition;
 		}
 		else
 		{
-			snippet = sc.nextIdentifier();
+			snippet = scanner_.nextIdentifier();
 			if (snippet == null)
-				sc.exception("no valid Java identifier found");
+				scanner_.exception("no valid Java identifier found");
 			allowStmt = false;
 		}
 		
-		snippetRaw = sc.getLine().substring(hatPos, sc.getPos());
+		snippetRaw = scanner_.getLine().substring(hatPos, scanner_.getPos());
 		
 		if (allowStmt && snippet.endsWith(";"))
 		{
@@ -238,10 +239,10 @@ class CspTLineParser
 		{
 			// start of a condition
 			addLiteralPart(LiteralType.JAVA_CONDITION_START, snippetRaw, snippet);
-			if (!sc.hasMoreChars(3))
-				sc.exception("expect at least 3 more chars");
-			char openSep = (char)sc.current();
-			sc.skip();
+			if (!scanner_.hasMoreChars(3))
+				scanner_.exception("expect at least 3 more chars");
+			char openSep = (char)scanner_.current();
+			scanner_.skip();
 			char closeSep;
 			switch(openSep)
 			{
@@ -251,13 +252,13 @@ class CspTLineParser
 				case '<': closeSep = '>';		break;
 				default:  closeSep = openSep; 	break;
 			}
-			int closePos = sc.indexOf(closeSep);
-			int oldLength = sc.getLength();
-			sc.setLength(closePos);
-			parseLiteralParts(sc);
+			int closePos = scanner_.indexOf(closeSep);
+			int oldLength = scanner_.getLength();
+			scanner_.setLength(closePos);
+			parseLiteralParts();
 			addLiteralPart(LiteralType.JAVA_CONDITION_END, "");
-			sc.setLength(oldLength);
-			sc.skip(); // closeSep
+			scanner_.setLength(oldLength);
+			scanner_.skip(); // closeSep
 			return;
 		}
 		else
