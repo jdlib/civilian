@@ -204,6 +204,17 @@ public class ScannerTest extends CivTest
 		}
 		scanner.expect().next('b');
 	}
+	
+	
+	@Test public void testGetRest()
+	{
+		scanner.input("12345");
+		assertEquals("12345", scanner.getRest());
+		scanner.skip();
+		assertEquals("2345", scanner.getRest());
+		scanner.setLength(4);
+		assertEquals("234", scanner.getRest());
+	}
 }
 
 
