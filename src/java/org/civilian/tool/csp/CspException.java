@@ -28,97 +28,15 @@ public class CspException extends RuntimeException
 	private static final long serialVersionUID = 1L; 
 
 	
-	private static String buildMessage(String msg, Throwable cause, Scanner scanner)
-	{
-		StringBuilder sb = new StringBuilder();
-
-		// show location
-		if (scanner != null)
-		{
-			String source = scanner.input.getSource();
-			int lineIndex = scanner.input.getLineIndex();
-			
-			if ((source != null) || (lineIndex >= 0))
-			{
-				sb.append('[');
-				if (source != null)
-					sb.append(source);
-				if (lineIndex >= 0)
-					sb.append(':').append(lineIndex + 1);
-				sb.append("] ");
-			}
-		}
-		
-		// show message
-		if ((msg == null) && (cause != null))
-		{
-			msg = cause.getMessage();
-			if (msg == null)
-				msg = cause.toString();
-		}
-		sb.append(msg != null ? msg : "error");
-		
-		
-		// show line content
-		if (scanner != null)
-		{
-			String line = scanner.getLine();
-			if ((line != null) && (line.length() > 0))
-			{
-				sb.append(": \"");
-				if (line.length() > 20)
-					sb.append(line, 0, 20).append("...");
-				else
-					sb.append(line);
-				sb.append('"');
-			}
-		}
-		
-		return sb.toString();
-	}
-
-	
 	/**
 	 * Creates a new CspException.
 	 * @param msg an error message.
-	 */
-	public CspException(String msg)
-	{
-		super(msg);
-	}
-
-	
-	/**
-	 * Creates a new CspException.
-	 * @param msg an error message.
-	 * @param cause the original error cause
-	 */
-	public CspException(String msg, Throwable cause)
-	{
-		super(msg, cause);
-	}
-
-	
-	/**
-	 * Creates a new CspException.
-	 * @param msg an error message.
-	 * @param scanner the used scanner, providing context information about the compiled input
-	 */
-	public CspException(String msg, Scanner scanner)
-	{
-		this(msg, null, scanner);
-	}
-	
-	
-	/**
-	 * Creates a new CspException.
-	 * @param msg an error message.
-	 * @param cause the original error cause
+	 * @param cause the original error cause, can be null
 	 * @param scanner the used scanner, providing context information about the compiled input
 	 */
 	public CspException(String msg, Throwable cause, Scanner scanner)
 	{
-		super(buildMessage(msg, cause, scanner), cause);
+		super(Scanner.buildErrorMessage(msg, cause, scanner), cause);
 		if (scanner != null)
 		{
 			templateFile_	= scanner.input.getSource();

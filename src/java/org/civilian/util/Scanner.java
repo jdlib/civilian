@@ -866,20 +866,17 @@ public class Scanner
 			e = errorHandler_.scanError(message, cause, this);
 		else
 		{
-			StringBuilder s = new StringBuilder(message);
-			s.append(" (");
-			if (input.getLineCount() > 1)
-				s.append(input.getLineIndex() + 1).append(':');
-			s.append(pos_ + 1).append("): \"").append(currentLine_).append('"');
-			e = new IllegalArgumentException(s.toString());
+			String error = buildErrorMessage(message, cause, this);
+			e = new IllegalArgumentException(error, cause);
 		}
 		throw e;
 	}
 	
 	
-	public void setErrorHandler(ErrorHandler errorHandler)
+	public Scanner setErrorHandler(ErrorHandler errorHandler)
 	{
 		errorHandler_ = errorHandler;
+		return this;
 	}
 	
 	
@@ -896,6 +893,71 @@ public class Scanner
 	{
 		public RuntimeException scanError(String message, Throwable cause, Scanner scanner);
 	}
+	
+	
+	public static String buildErrorMessage(String msg, Throwable cause, Scanner scanner)
+	{
+		StringBuilder sb = new StringBuilder();
+
+		// 1. line: show location
+		if (scanner != null)
+		{
+			sb.append('[');
+			String source = scanner.input.getSource();
+			if (source != null)
+				sb.append("src=").append(source).append(':');
+			int lineIndex = scanner.input.getLineIndex();
+			if (lineIndex >= 0)
+				sb.append("ln=").append(lineIndex + 1).append(':');
+			sb.append("col=").append(scanner.getPos() + 1);
+			sb.append("]\n");
+		}
+		
+		// 2. line: show message
+		sb.append(effectiveErrorMessage(msg, cause)).append('\n');
+		
+		// 3. show line content + 4. pos
+		if (scanner != null)
+		{
+			String line = scanner.getLine();
+			if (line != null)
+			{
+				sb.append("line=");
+				int len = line.length();
+				for (int i=0; i<len; i++)
+				{
+					char c = line.charAt(i);
+					sb.append(c < 33 ? '.' : c);
+				}
+				sb.append('\n');
+				sb.append("pos ="); // should match "line="
+				int pos = scanner.getPos();
+				for (int i=0; i<pos; i++)
+					sb.append(' ');
+				sb.append('^');
+			}
+		}
+		
+		return sb.toString();
+	}
+	
+	
+	private static String effectiveErrorMessage(String msg, Throwable cause)
+	{
+		if (msg == null)
+		{
+			if (cause != null)
+			{
+				msg = cause.getMessage();
+				if (msg == null)
+					msg = cause.toString();
+			}
+			else
+				msg = "error";
+		}
+		return msg;
+	}
+	
 	
 	
 	private int pos_;

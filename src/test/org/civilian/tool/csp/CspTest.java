@@ -18,12 +18,17 @@ package org.civilian.tool.csp;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+
 import org.civilian.CivTest;
 import org.junit.Test;
 
 
 public class CspTest extends CivTest
 {
+	private static final Pattern LN_SPLIT = Pattern.compile("\\n");
+	
+	
 	@Test public void testCompile1() throws Exception
 	{
 		assertCompile("test1");
@@ -115,41 +120,41 @@ public class CspTest extends CivTest
 
 	@Test public void testError1() throws Exception
 	{
-		assertError("err1", 0, "[err1.csp:1] cannot detect package for template 'err1.csp', please provide a explicit package in the template: 'x'");
+		assertError("err1", "[src=err1.csp:ln=1:col=1]", "cannot template package, please provide an explicit package in the template", "x");
 	}
 
 
 	@Test public void testError2() throws Exception
 	{
-		assertError("err2", 2, "[err2.csp:3] relative import '../../../data.Data1' can't be applied to package 'com.test': 'import ../../../data...'");
+		assertError("err2", "[src=err2.csp:ln=3:col=27]", "relative import '../../../data.Data1' can't be applied to package 'com.test'", "import.../../../data.Data1");
 	}
 
 
 	@Test public void testError3() throws Exception
 	{
-		assertError("err3", 2, "[err3.csp:3] expected the template command, but reached end of file: 'package-access'");
+		assertError("err3", "[src=err3.csp:ln=3:col=1]", "expected the template command, but reached end of file", "package-access");
 	}
 
 
 	@Test public void testError4() throws Exception
 	{
-		assertError("err4", 2, "[err4.csp:3] invalid input: 'x': 'template x'");
+		assertError("err4", "[src=err4.csp:ln=3:col=10]", "invalid input: 'x'", "template.x");
 	}
 
 
 	@Test public void testError5() throws Exception
 	{
-		assertError("err5", 2, "[err5.csp:3] argument 'String' needs a name and type: 'template(String)'");
+		assertError("err5", "[src=err5.csp:ln=3:col=16]", "argument 'String' needs a name and type", "template(String)");
 	}
 
 
 	@Test public void testError6() throws Exception
 	{
-		assertError("err6", 3, "[err6.csp:4] expected closing bracket ')' of template argument list");
+		assertError("err6", "[src=err6.csp:ln=4:col=1]", "expected closing bracket ')' of template argument list", "");
 	}
 
 
-	private void assertError(String file, int lineIndex, String error) throws Exception
+	private void assertError(String file, String location, String message, String line) throws Exception
 	{
 		try
 		{
@@ -158,8 +163,10 @@ public class CspTest extends CivTest
 		}
 		catch(CspException e)
 		{
-			assertEquals(error, e.getMessage().replace('"', '\''));
-			assertEquals(lineIndex, e.getLineIndex());
+			String[] actualErrorLines = LN_SPLIT.split(e.getMessage().replace('"', '\''));
+			assertEquals("message", message, actualErrorLines[1]);
+			assertEquals("location", location, actualErrorLines[0]);
+			assertEquals("line", line, actualErrorLines[2].substring(5)); // cut prefix "line="
 		}
 	}
 

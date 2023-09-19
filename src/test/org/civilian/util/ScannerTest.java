@@ -182,7 +182,11 @@ public class ScannerTest extends CivTest
 		}
 		catch(IllegalArgumentException e)
 		{
-			assertEquals("expected int (4): \"12 a\"", e.getMessage());
+			assertEquals(
+					  "[ln=1:col=4]\n"
+					+ "expected int\n"
+					+ "line=12.a\n"
+					+ "pos =   ^", e.getMessage());
 		}
 		scanner.expect().next('a');
 	}
@@ -200,7 +204,11 @@ public class ScannerTest extends CivTest
 		}
 		catch(IllegalArgumentException e)
 		{
-			assertEquals("expected double (7): \"12.34 b\"", e.getMessage());
+			assertEquals(
+					  "[ln=1:col=7]\n"
+					+ "expected double\n"
+					+ "line=12.34.b\n"
+					+ "pos =      ^", e.getMessage());
 		}
 		scanner.expect().next('b');
 	}

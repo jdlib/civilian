@@ -29,7 +29,7 @@ class CspClassParser
 		{
 			classData_.packageName = StringUtil.cutRight(scanner_.expect("package").nextToken(), ";");
 			if ((assumedPackage != null) && !assumedPackage.equals(classData_.packageName))
-				throw new CspException("package was set by compiler parameters to '" + assumedPackage + ", but the template specified '" + classData_.packageName + "'");
+				scanner_.exception("package was set by compiler parameters to '" + assumedPackage + ", but the template specified '" + classData_.packageName + "'");
 		}
 		else if (assumedPackage != null)
 			classData_.packageName = assumedPackage;
@@ -37,7 +37,7 @@ class CspClassParser
 		{
 			String p = JavaPackageDetector.DEFAULT.detect(templFile);
 			if (p == null)
-				scanner_.exception("cannot detect package for template '" + templFile.getName() + "', please provide a explicit package in the template");
+				scanner_.exception("cannot template package, please provide an explicit package in the template");
 			classData_.packageName = p;
 		}
 	}

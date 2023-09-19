@@ -298,11 +298,10 @@ public class CspCompiler
 
 	private String compile(TemplateInput input, JavaOutput output) throws CspException, IOException
 	{
-		scanner_ = new Scanner();
+		scanner_ = new Scanner().setErrorHandler(CspException::new);
 		scanner_.input
 			.lines(input.readLines(options_.encodingIn))
 			.source(input.file.getName());
-		scanner_.setErrorHandler(CspException::new);
 
 		if (scanner_.nextKeyword("encoding"))
 		{
