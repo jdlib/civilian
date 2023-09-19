@@ -188,8 +188,7 @@ public class ScannerTest extends CivTest
 	}
 	
 	
-	@Test
-	public void testNextDouble()
+	@Test public void testNextDouble()
 	{
 		scanner.input("12.34 b");
 		

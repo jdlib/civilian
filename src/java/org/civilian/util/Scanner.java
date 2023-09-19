@@ -849,7 +849,7 @@ public class Scanner
 		return hasMoreChars() ? currentLine_.substring(pos_) : ""; 
 	}
 	
-
+	
 	/**
 	 * Raises an exception with context information about input and current position.
 	 */

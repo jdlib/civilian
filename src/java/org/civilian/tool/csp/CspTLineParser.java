@@ -50,6 +50,9 @@ class CspTLineParser
 	}
 	
 	
+	private static final String HAT_SKIPLN = CspSymbols.HATSTRING + CspSymbols.SKIPLN;
+	
+	
 	public class LiteralPart
 	{
 		private LiteralPart(LiteralType type, String rawValue, String value)
@@ -112,20 +115,20 @@ class CspTLineParser
 	
 	private void parseLiteralLine() 
 	{
-		if (parseStartSymbol(CspSymbols.COMPONENT_END))
+		if (parseStartSymbol(CspSymbols.COMPONENT_END)) // ]
 		{
 			addLiteralPart(LiteralType.COMPONENT_END, CspSymbols.COMPONENT_END);
 			return;
 		}
-		if (parseStartSymbol(CspSymbols.COMPONENT_START))
+		if (parseStartSymbol(CspSymbols.COMPONENT_START)) // [componentBuilder...
 		{
-			int pEnd = scanner_.indexOf(CspSymbols.COMPONENT_END);
-			if (pEnd < 0)
+			int pEnd = scanner_.indexOf(CspSymbols.COMPONENT_END); 
+			if (pEnd < 0) // [componentBuilder EOL
 			{
 				addLiteralPart(LiteralType.COMPONENT_START, scanner_.getRest().trim());
 				return;
-			}
-			else
+			} 
+			else // [componentBuilder] literalParts 
 			{
 				String component = scanner_.nextUptoPos(pEnd).trim();
 				scanner_.skip(CspSymbols.COMPONENT_END.length());
@@ -139,65 +142,74 @@ class CspTLineParser
 	
 	private void parseLiteralParts(String line)
 	{
-		int length = line.length();
-		int start = 0;
+		Scanner scanner = new Scanner(line).setAutoSkipWhitespace(false);
+		scanner.setErrorHandler(scanner_.getErrorHandler());
+		
 
-		while(start < length)
+		while(scanner.hasMoreChars())
 		{
-			int pHat = line.indexOf(CspSymbols.HAT, start);
+			// finde the next position of a '^' character
+			int pHat = scanner.indexOf(CspSymbols.HAT);
 			if (pHat >= 0)
 			{
-				if (start < pHat)
-				{
-					addLiteralPart(LiteralType.TEXT, line.substring(start, pHat));
-					start = pHat;
-				}
+				// consume any preceding text
+				String literalText = scanner.nextUptoPos(pHat);
+				if (literalText != null)
+					addLiteralPart(LiteralType.TEXT, literalText);
 				
-				int nextChar = pHat + 1 < length ? line.charAt(pHat + 1) : -1;
+				// consume '^'
+				scanner.skip();
+			
+				int nextChar = scanner.current();
 				if (nextChar == CspSymbols.HAT)
 				{
-					// ^^ detected: output a literal ^
+					// ^^ seen: output a literal ^
+					scanner.skip();
 					addLiteralPart(LiteralType.TEXT, CspSymbols.HATSTRING);
-					start = pHat + 2;
 				}
 				else if (nextChar == CspSymbols.NOOP)
 				{
-					// ^': produces not content, but useful at line start or to preserve lines
-					start = pHat + 2;
+					// ^' seen: produces no content, but useful at line start or to preserve lines
+					scanner.skip();
 				}
 				else if (nextChar == CspSymbols.SKIPLN)
 				{
-					// ^\: skip println, ignore rest of line
-					addLiteralPart(LiteralType.SKIPLN, CspSymbols.HATSTRING + CspSymbols.SKIPLN);
+					// ^\ seen: skip println, ignore rest of line
+					scanner.skip();
+					addLiteralPart(LiteralType.SKIPLN, HAT_SKIPLN);
 					return;
 				}
 				else
 				{
-					// (^<name> | ^<name>? | ^{<expr>} | ^{<expr?} | ^{stmt;}
-					start = parseCodeSnippet(line, start);
+					parseCodeSnippet(scanner);
 				}
 			}
 			else
 				break;
 		}
-		if (start < length)
-			addLiteralPart(LiteralType.TEXT, line.substring(start, length));
+		if (scanner.hasMoreChars())
+			addLiteralPart(LiteralType.TEXT, scanner.getRest());
 	}
 	
 	
 	/**
-	 * Parse (^<name> | ^<name>? | ^{<expr>} | ^{<expr?} | ^{stmt;}
-	 * The leading ^ symbol has not been consumed
+	 * Parse an embedded code snippet:
+	 * <code>
+	 * <ul>
+	 * <li>snippet := '^' ( snippet-expr | snippet-statement | snippet-conditional )
+	 * <li>snippet-expression := java-variable-name | '{' java-expression '}'
+	 * <li>snippet-statement := '{' (java-statement ';')+ '}'
+	 * <li>snippet-conditional := '?' (boolean-java-variable-name | '{' boolean-java-expression '}'
+	 * </ul>
+	 * </code>
+	 * The leading ^ symbol has already been consumed
 	 * @param line 
 	 * @param start
 	 * @return the next start
 	 */
-	private int parseCodeSnippet(String line, int start)
+	private void parseCodeSnippet(Scanner sc)
 	{
-		Scanner sc = new Scanner(line).setPos(start).setAutoSkipWhitespace(false);
-		sc.skip();
-		sc.setErrorHandler(scanner_.getErrorHandler());
-		
+		int hatPos = sc.getPos() - 1;
 		String snippet;
 		String snippetRaw;
 		boolean allowStmt;
@@ -211,16 +223,16 @@ class CspTLineParser
 		{
 			snippet = sc.nextIdentifier();
 			if (snippet == null)
-				scanner_.exception("no valid Java identifier found at '" + line + "'");
+				sc.exception("no valid Java identifier found");
 			allowStmt = false;
 		}
 		
-		snippetRaw = line.substring(start, sc.getPos());
+		snippetRaw = sc.getLine().substring(hatPos, sc.getPos());
 		
 		if (allowStmt && snippet.endsWith(";"))
 		{
 			addLiteralPart(LiteralType.JAVA_STATEMENT, snippetRaw, snippet);
-			return sc.getPos();
+			return;
 		}
 		else if (isCondition)
 		{
@@ -239,15 +251,22 @@ class CspTLineParser
 				case '<': closeSep = '>';		break;
 				default:  closeSep = openSep; 	break;
 			}
+//			int closePos = sc.indexOf(closeSep);
+//			int oldLength = sc.getLength();
+//			sc.setLength(closePos);
+//			parseLiteralParts(sc);
+//			addLiteralPart(LiteralType.JAVA_CONDITION_END, "");
+//			sc.setLength(oldLength);
+//			sc.skip(); // closeSep
 			String conditioned = sc.nextUpto(String.valueOf(closeSep), false, true, true, false);
 			parseLiteralParts(conditioned);
 			addLiteralPart(LiteralType.JAVA_CONDITION_END, "");
-			return sc.getPos();
+			return;
 		}
 		else
 		{
 			addLiteralPart(LiteralType.JAVA_EXPRESSION, snippetRaw, snippet);
-			return sc.getPos();
+			return;
 		}
 	}
 	
