@@ -11,6 +11,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ public class ResourceLoaders
 	/**
 	 * Creates a resource loader who uses
 	 * ClassLoader.getResource to load resources.
+	 * @return the loader
 	 */
 	public static ResourceLoader forClassLoader(ClassLoader classLoader)
 	{
@@ -35,6 +37,7 @@ public class ResourceLoaders
 	/**
 	 * Creates a resource loader who uses
 	 * the system ClassLoader to load resources.
+	 * @return the loader
 	 */
 	public static ResourceLoader forSystemClassLoader()
 	{
@@ -45,6 +48,7 @@ public class ResourceLoaders
 	/**
 	 * Creates a resource loader who uses
 	 * Class.getResource to load resources.
+	 * @return the loader
 	 */
 	public static ResourceLoader forClass(Class<?> c)
 	{
@@ -55,6 +59,7 @@ public class ResourceLoaders
 	/**
 	 * Creates a resource loader who uses
 	 * ServletContext.getResource to load resources.
+	 * @return the loader
 	 */
 	public static ResourceLoader forSerlvetContext(ServletContext context)
 	{
@@ -65,6 +70,7 @@ public class ResourceLoaders
 	/**
 	 * Creates a resource loader who
 	 * loads resources from the current directory.
+	 * @return the loader
 	 */
 	public static ResourceLoader forCurrentDirectory()
 	{
@@ -75,6 +81,7 @@ public class ResourceLoaders
 	/**
 	 * Creates a resource loader who
 	 * loads resources from the given directory.
+	 * @return the loader
 	 */
 	public static ResourceLoader forDirectory(File file)
 	{
@@ -86,6 +93,7 @@ public class ResourceLoaders
 	/**
 	 * Creates a resource loader who
 	 * loads resources from the given directory.
+	 * @return the loader
 	 */
 	public static ResourceLoader forFile(File file)
 	{
@@ -97,6 +105,7 @@ public class ResourceLoaders
 	 * Creates a resource loader who
 	 * returns the string content if the resource name
 	 * matches the specified name.
+	 * @return the loader
 	 */
 	public static ResourceLoader forString(String name, String content)
 	{
@@ -108,6 +117,8 @@ public class ResourceLoaders
 	 * Creates a chain of resource loaders. If a loader
 	 * cannot load a resource, the next loader in the chain
 	 * is asked.
+	 * @param loaders the loaders
+	 * @return the chained loader
 	 */
 	public static ResourceLoader chain(ResourceLoader... loaders)
 	{
@@ -116,7 +127,7 @@ public class ResourceLoaders
 
 
 	/**
-	 * Returns a ResourceLoader which constantly returns null.
+	 * @return a ResourceLoader which constantly returns null.
 	 */
 	public static ResourceLoader empty()
 	{
@@ -437,7 +448,7 @@ class StringResLoader extends ResourceLoader
 	}
 	
 
-	@Override public Reader getResourceAsReader(String name, String charset)
+	@Override public Reader getResourceAsReader(String name, Charset charset)
 	{
 		return name_.equals(name) ? new StringReader(content_) : null;
 	}
