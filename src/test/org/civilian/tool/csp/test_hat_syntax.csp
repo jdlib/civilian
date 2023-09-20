@@ -11,5 +11,5 @@ template(String name, int i)
 	pre^?{today > 0}[is ^name]post
 	expr: ^name or ^{name.length()}
 	stmt: ^{name = null;}
-	line=^?{i.>.0}|, |^{name.charAt(i)} 
+	line=^?{i > 0}|, |^{name.charAt(i)} 
 }}

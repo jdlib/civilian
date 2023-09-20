@@ -10,9 +10,10 @@ import org.civilian.template.CspTemplate;
 
 public class Test_hat_syntax extends CspTemplate
 {
-	public Test_hat_syntax(String name)
+	public Test_hat_syntax(String name, int i)
 	{
 		this.name = name;
+		this.i = i;
 	}
 
 
@@ -48,8 +49,16 @@ public class Test_hat_syntax extends CspTemplate
 		out.print("stmt: ");                                            // line 13: stmt:
 		name = null;                                                    // line 13: ^{name = null;}
 		out.printlnIfNotEmpty();
+		out.print("line=");                                             // line 14: line=
+		if (i > 0)                                                      // line 14: ^?{i > 0}
+		{
+			out.print(", ");                                            // line 14: ,
+		}
+		out.print(name.charAt(i));                                      // line 14: ^{name.charAt(i)}
+		out.printlnIfNotEmpty();
 	}
 
 
 	protected String name;
+	protected int i;
 }
