@@ -179,7 +179,7 @@ public class Scanner
 
 	/**
 	 * Sets the current scanner zero-based position within in the current line.
-	 * Invalid positions (e.g. < 0 or > {@link #getLength()} length) are silently corrected.
+	 * Invalid positions (e.g. &lt; 0 or &gt; {@link #getLength()} length) are silently corrected.
 	 * @param pos the position
 	 * @return this
 	 */
@@ -202,7 +202,7 @@ public class Scanner
 	
 	/**
 	 * Sets the end of the current line.
-	 * Invalid positions (e.g. < 0 or > the real length of the current line) are silently corrected.
+	 * Invalid positions (e.g. &lt; 0 or &gt; the real length of the current line) are silently corrected.
 	 * The current position is also adjusted to equal the length if it exceeds the new length.
 	 * @return this
 	 */
@@ -450,7 +450,7 @@ public class Scanner
 	 * If true positions on the index after that char.
 	 * Else does not move the scanner position.
 	 * Autoskips whitespace before the test is made, if autoskip is turned on.
-	 * @param char a character
+	 * @param c a character
 	 * @return char consumed?
 	 */
 	public boolean next(char c)
@@ -459,7 +459,7 @@ public class Scanner
 		boolean result = c == current();
 		if (result)
 			skip();
-		return nextResult(result, "next", c);
+		return nextResult(result, "next", Character.valueOf(c));
 	}
 	
 
@@ -758,7 +758,7 @@ public class Scanner
 	 * Scans a quoted string and returns it.
 	 * The current character is used as quote char.
 	 * Does not autoskip whitespace. 
-	 * @param the quote char
+	 * @param quote the quote char
 	 * @param includeQuotes should the quotes be included?
 	 * @return the consumed string
 	 */

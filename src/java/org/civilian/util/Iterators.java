@@ -30,6 +30,7 @@ import java.util.NoSuchElementException;
 public abstract class Iterators
 {
 	/**
+	 * @param <T> the element type
 	 * @return an empty Iterator. 
 	 */
 	public static <T> Iterator<T> empty()
@@ -39,25 +40,33 @@ public abstract class Iterators
 
 	
 	/**
+	 * @param array the array
+	 * @param <T> the element type
 	 * @return an Iterator for an array. 
 	 */
 	@SafeVarargs
-	public static <T,S extends T> Iterator<T> forValues(S... array)
+	public static <T> Iterator<T> forValues(T... array)
 	{
 		return forValues(array, 0, array.length);
 	}
 	
 
 	/**
+	 * @param array an array
+	 * @param start the start index
+	 * @param end the end index.
+	 * @param <T> the element type
 	 * @return an Iterator for an array part. 
 	 */
-	public static <T,S extends T> Iterator<T> forValues(S[] array, int start, int end)
+	public static <T> Iterator<T> forValues(T[] array, int start, int end)
 	{
 		return new ArrayIt<>(array, start, end);
 	}
 
 	
 	/**
+	 * @param enumeration an enumeration
+	 * @param <T> the element type
 	 * @return an Iterator which wraps a enumeration. 
 	 */
 	public static <T> Iterator<T> asIterator(Enumeration<T> enumeration)
@@ -67,6 +76,8 @@ public abstract class Iterators
 
 	
 	/**
+	 * @param iterator an iterator
+	 * @param <T> the element type
 	 * @return an enumeration which wraps an iterator. 
 	 */
 	public static <T> Enumeration<T> asEnumeration(Iterator<T> iterator)
@@ -79,6 +90,7 @@ public abstract class Iterators
 	 * @return an Iterator which returns zero or one values.
 	 * @param value the value. If it is not null, the iterator wiull returns
 	 * 		this values, else it returns no value. 
+	 * @param <T> the element type
 	 */
 	public static <T> Iterator<T> forValue(T value)
 	{
@@ -91,6 +103,7 @@ public abstract class Iterators
 	 * @param value the value
 	 * @param hasNext if true, the iterator will return the value, else
 	 * 		it will return nothing  
+	 * @param <T> the element type
 	 */
 	public static <T> Iterator<T> forValue(T value, boolean hasNext)
 	{
@@ -99,6 +112,8 @@ public abstract class Iterators
 
 	
 	/**
+	 * @param iterators a list of iterators
+	 * @param <T> the element type
 	 * @return an Iterator which joins the given iterators.
 	 */
 	@SafeVarargs
@@ -109,7 +124,9 @@ public abstract class Iterators
 
 	
 	/**
-	 * Returns an Iterator which returns every element just once.
+	 * @param iterator a list of iterators
+	 * @param <T> the element type
+	 * @return an Iterator which returns every element just once.
 	 */
 	public static <T> Iterator<T> unique(Iterator<T> iterator)
 	{
@@ -118,6 +135,8 @@ public abstract class Iterators
 
 	
 	/**
+	 * @param it an iterator
+	 * @param <T> the element type
 	 * @return an unmodifiable iterator. 
 	 */
 	public static <T> Iterator<T> unmodifiable(Iterator<T> it)
@@ -127,7 +146,9 @@ public abstract class Iterators
 
 	
 	/**
-	 * Returns an unmodifiable iterator for the collection. 
+	 * @param list a list
+	 * @return an unmodifiable iterator for the collection. 
+	 * @param <T> the element type
 	 */
 	public static <T> Iterator<T> unmodifiable(Collection<T> list)
 	{

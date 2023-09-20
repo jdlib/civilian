@@ -33,6 +33,7 @@ public class PathScanner
 	 * If the last segment of the path has an extension
 	 * it will be ignored.
 	 * If the then last segment equals "/index" it will also be ignored.
+	 * @param path a path
 	 */
 	public PathScanner(String path)
 	{
@@ -60,7 +61,7 @@ public class PathScanner
 	
 
 	/**
-	 * Returns the whole path of the scanner.
+	 * @return the whole path of the scanner.
 	 */
 	public String getPath()
 	{
@@ -69,7 +70,7 @@ public class PathScanner
 
 	
 	/**
-	 * Returns the current scan position in the path.
+	 * @return the current scan position in the path.
 	 */
 	public int getPosition()
 	{
@@ -93,7 +94,7 @@ public class PathScanner
 	
 
 	/**
-	 * Returns true if the scanner has not yet reached
+	 * @return true if the scanner has not yet reached
 	 * the end of the path.
 	 */
 	public boolean hasMore()
@@ -113,7 +114,8 @@ public class PathScanner
 	
 	
 	/**
-	 * Returns if the current segment equals the given segment. 
+	 * @param segment a segment
+	 * @return if the current segment equals the given segment. 
 	 */
 	public boolean matchSegment(String segment)
 	{
@@ -124,8 +126,9 @@ public class PathScanner
 	
 	
 	/**
-	 * If the current segment equals the given segment then advance to the next segment and return true.
+	 * @return If the current segment equals the given segment then advance to the next segment and return true.
 	 * Else returns false.
+	 * @param segment a segment
 	 */
 	public boolean consumeSegment(String segment)
 	{
@@ -140,7 +143,7 @@ public class PathScanner
 	
 
 	/**
-	 * If there is a current segment return it and advance to the next segment. 
+	 * @return If there is a current segment return it and advance to the next segment. 
 	 * Else return null.
 	 */
 	public String consumeSegment()
@@ -157,6 +160,8 @@ public class PathScanner
 	 * matches the pattern. The pattern can match one or more path segments
 	 * (therefore allowing a lookahead for multiple segments).
 	 * It can also match only whole segments.
+	 * @param pattern a pattern
+	 * @return the result
 	 */
 	public MatchResult matchPattern(Pattern pattern)
 	{
@@ -187,6 +192,7 @@ public class PathScanner
 	
 	/**
 	 * Positions the scanner at the given position.
+	 * @param end the end position
 	 * @throws IllegalArgumentException if the position is not a valid segment boundary. 
 	 */
 	public void next(int end)
@@ -215,7 +221,7 @@ public class PathScanner
 	
 	
 	/**
-	 * Returns a Mark object which stores the current state of the scanner. 
+	 * @return a Mark object which stores the current state of the scanner. 
 	 */
 	public Mark mark()
 	{

@@ -37,6 +37,7 @@ public abstract class Charset
 	 * Returns a Charset for the charset name. If not known a eight-bit charset
 	 * is returned.
 	 * @param charsetName a charset name like UTF-8, ISO-8859-1
+	 * @return the Charset
 	 */
 	public static Charset getCharset(String charsetName)
 	{
@@ -67,6 +68,8 @@ public abstract class Charset
 	
 	/**
 	 * Tests if the charset can print the character.
+	 * @param c a character
+	 * @return is printable?
 	 */
 	public abstract boolean isPrintable(char c);
 }

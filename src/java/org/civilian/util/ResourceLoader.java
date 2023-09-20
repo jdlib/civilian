@@ -70,6 +70,8 @@ public abstract class ResourceLoader
 	 * @param name the resource name
 	 * @param charset the encoding of the resource or null
 	 * 		if the system encoding should be used
+	 * @return a Reader
+	 * @throws UnsupportedEncodingException if the encoding is not supported
 	 */
 	public Reader getResourceAsReader(String name, String charset)
 		throws UnsupportedEncodingException

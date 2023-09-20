@@ -66,6 +66,7 @@ public enum FileType
 	/**
 	 * Tests if the given file matches the file
 	 * @param file a file
+	 * @return does it match?
 	 */
 	public File check(File file)
 	{
@@ -78,6 +79,7 @@ public enum FileType
 	 * @param file a file
 	 * @param what describes the file purpose. Used to build error messages.
 	 * @throws IllegalArgumentException thrown if the check fails
+	 * @return does it match?
 	 */
 	public File check(File file, String what) throws IllegalArgumentException
 	{
