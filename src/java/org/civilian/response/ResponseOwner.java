@@ -1,6 +1,7 @@
 package org.civilian.response;
 
 
+import java.nio.charset.Charset;
 import org.civilian.content.ContentSerializerConfig;
 import org.civilian.resource.PathProvider;
 import org.civilian.resource.Resource;
@@ -16,7 +17,7 @@ public interface ResponseOwner extends PathProvider
 	/**
 	 * @return the default encoding for textual content of responses.
 	 */
-	public String getDefaultCharEncoding();
+	public Charset getDefaultEncoding();
 	
 	
 	/**

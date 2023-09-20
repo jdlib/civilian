@@ -4,6 +4,7 @@ package org.civilian.asset;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Date;
 import org.civilian.content.ContentType;
 import org.civilian.response.Response;
@@ -25,15 +26,15 @@ public abstract class AbstractAsset extends Asset
 	}
 
 	
-	@Override public String getCharEncoding()
+	@Override public Charset getEncoding()
 	{
-		return charEncoding_;
+		return encoding_;
 	}
 	
 	
-	@Override public void setCharEncoding(String encoding)
+	@Override public void setEncoding(Charset encoding)
 	{
-		charEncoding_ = encoding;
+		encoding_ = encoding;
 	}
 
 	
@@ -112,8 +113,8 @@ public abstract class AbstractAsset extends Asset
 	{
 		if (contentType_ != null)
 			response.setContentType(contentType_);
-		if (charEncoding_ != null)
-			response.setCharEncoding(charEncoding_);
+		if (encoding_ != null)
+			response.setCharEncoding(encoding_.name());
 		if (length_ >= 0)
 			response.setContentLength(length_);
 		if (lastModifiedHttp_ != null)
@@ -139,7 +140,7 @@ public abstract class AbstractAsset extends Asset
 
 	
 	private ContentType contentType_;
-	private String charEncoding_;
+	private Charset encoding_;
 	private long length_ = -1L;
 	private long lastModified_ = -1L;
 	private String lastModifiedHttp_;

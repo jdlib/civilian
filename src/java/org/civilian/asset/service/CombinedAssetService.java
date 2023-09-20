@@ -16,6 +16,7 @@
 package org.civilian.asset.service;
 
 
+import java.nio.charset.Charset;
 import org.civilian.asset.Asset;
 import org.civilian.asset.AssetCacheControl;
 import org.civilian.asset.AssetInitializer;
@@ -40,8 +41,11 @@ public class CombinedAssetService extends AssetService
 	
 	/**
 	 * Makes the own path absolute and then forwards to the children.
+	 * @param parentPath the parent path
+	 * @param defaultEncoding the default encoding
+	 * @param lookup a ContentTypeLookup
 	 */
-	@Override public void init(Path parentPath, String defaultEncoding, ContentTypeLookup lookup)
+	@Override public void init(Path parentPath, Charset defaultEncoding, ContentTypeLookup lookup)
 	{
 		// make own path absolute
 		path_ = parentPath.add(relativePath_); 

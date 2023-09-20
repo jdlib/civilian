@@ -49,10 +49,10 @@ public class AssetServicesTest extends CivTest
 		
 		AssetLocation loc = locations.get(0);
 		assertEquals("", loc.getRelativePath().toString());
-		assertEquals("ISO-8859-1", loc.getCharEncoding());
+		assertSame("ISO-8859-1", loc.getEncoding().name());
 
 		loc = locations.get(1);
-		assertEquals(null, loc.getCharEncoding());
+		assertEquals(null, loc.getEncoding());
 		assertEquals("/civilian", loc.getRelativePath().toString());
 
 		loc = locations.get(2);

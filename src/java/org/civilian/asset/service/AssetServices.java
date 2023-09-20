@@ -17,6 +17,7 @@ package org.civilian.asset.service;
 
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import org.civilian.ConfigKeys;
@@ -153,8 +154,8 @@ public abstract class AssetServices
 		if (contentType != null)
 			location.setContentType(ContentType.getContentType(contentType));
 			
-		String encoding	= locSettings.get(ConfigKeys.ENCODING, null);
-		location.setCharEncoding(encoding);
+		Charset charset = locSettings.getCharset(ConfigKeys.ENCODING, null);
+		location.setEncoding(charset);
 		
 		return location;
 	}

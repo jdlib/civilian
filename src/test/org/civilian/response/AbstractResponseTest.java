@@ -149,9 +149,9 @@ public class AbstractResponseTest extends CivTest
 
 		PrintWriter out = response.getContentWriter();
 		
-		assertSame(app.getDefaultCharEncoding(), response.getCharEncoding());
+		assertEquals(app.getDefaultEncoding().name(), response.getCharEncoding());
 		response.setCharEncoding("x");
-		assertSame(app.getDefaultCharEncoding(), response.getCharEncoding());
+		assertEquals(app.getDefaultEncoding().name(), response.getCharEncoding());
 		assertSame(Response.ContentAccess.WRITER, response.getContentAccess());
 		assertSame(out, response.getContentWriter());
 		

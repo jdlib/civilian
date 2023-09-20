@@ -80,9 +80,9 @@ public class SettingsTemplate extends CspTemplate
 		out.increaseTab();
 		out.println("<td>Encoding</td>");                               // line 33: <td>Encoding</td>
 		out.print("<td>");                                              // line 34: <td>
-		out.print(app.getDefaultCharEncoding());                        // line 34: ^{app.getDefaultCharEncoding()}
+		out.print(app.getDefaultEncoding());                            // line 34: ^{app.getDefaultEncoding()}
 		out.println("</td>");                                           // line 34: </td>
-		out.println("<td>org.civilian.Application.getDefaultCharEncoding()</td>"); // line 35: <td>org.civilian.Application.getDefaultCharEncoding()</td>
+		out.println("<td>org.civilian.Application.getDefaultEncoding()</td>"); // line 35: <td>org.civilian.Application.getDefaultEncoding()</td>
 		out.decreaseTab();
 		out.println("</tr>");                                           // line 36: </tr>
 		out.println("<tr>");                                            // line 37: <tr>

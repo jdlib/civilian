@@ -16,6 +16,7 @@
 package org.civilian.asset.service;
 
 
+import java.nio.charset.Charset;
 import org.civilian.Logs;
 import org.civilian.asset.Asset;
 import org.civilian.asset.AssetCacheControl;
@@ -43,12 +44,12 @@ public abstract class AssetService implements PathProvider
 	 * 		of an application is done, all configured AssetServices will
 	 * 		be initialized.
 	 * @param defaultEncoding the default encoding which should be
-	 * 		used by the AssetService if it has no own encoding. 
+	 * 		used by the AssetService if it has no explicit encoding. 
 	 * @param lookup can be used by the AssetService to determine the content-type of 
 	 * 		an asset
 	 * @see Asset#setContentType(org.civilian.content.ContentType)
 	 */
-	public abstract void init(Path parentPath, String defaultEncoding, ContentTypeLookup lookup);
+	public abstract void init(Path parentPath, Charset defaultEncoding, ContentTypeLookup lookup);
 
 	
 	/**

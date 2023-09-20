@@ -16,6 +16,7 @@
 package org.civilian.asset.service;
 
 
+import java.nio.charset.Charset;
 import org.civilian.Logs;
 import org.civilian.asset.Asset;
 import org.civilian.asset.AssetCacheControl;
@@ -46,12 +47,12 @@ public abstract class AssetLocation extends AssetService
 	/**
 	 * Initializes the AssetLocation with context information.
 	 */
-	@Override public void init(Path parentPath, String defaultEncoding, ContentTypeLookup lookup)
+	@Override public void init(Path parentPath, Charset defaultEncoding, ContentTypeLookup lookup)
 	{
 		path_ = Check.notNull(parentPath, "parentPath").add(relativePath_);
 		contentTypeLookup_ 	= Check.notNull(lookup, "lookup");
-		if (charEncoding_ == null)
-			charEncoding_ = defaultEncoding;
+		if (encoding_ == null)
+			encoding_ = defaultEncoding;
 	}
 
 	
@@ -83,24 +84,23 @@ public abstract class AssetLocation extends AssetService
 
 	
 	/**
-	 * Sets the default character encoding of the assets served by this
-	 * AssetLocation.
+	 * Sets the default encoding of the assets served by this AssetLocation.
 	 * @param encoding the encoding
 	 */
-	public void setCharEncoding(String encoding)
+	public void setEncoding(Charset encoding)
 	{
-		charEncoding_ = encoding;
+		encoding_ = encoding;
 	}
 
 	
 	/**
 	 * Returns the encoding of the assets served by this
 	 * AssetLocation, or null if not known or no common encoding exists.
-	 * @return the encoding 
+	 * @return the encoding
 	 */
-	public String getCharEncoding()
+	public Charset getEncoding()
 	{
-		return charEncoding_;
+		return encoding_;
 	}
 	
 	
@@ -187,8 +187,8 @@ public abstract class AssetLocation extends AssetService
 		if (Logs.ASSET.isTraceEnabled())
 			Logs.ASSET.trace("{} -> {}", path, asset);
 		
-		if ((charEncoding_ != null) && (asset.getCharEncoding() == null))
-			asset.setCharEncoding(charEncoding_);
+		if ((encoding_ != null) && (asset.getEncoding() == null))
+			asset.setEncoding(encoding_);
 		if ((cacheControl_ != null) && (asset.getCacheControl() == null))
 			asset.setCacheControl(cacheControl_);
 		
@@ -223,8 +223,8 @@ public abstract class AssetLocation extends AssetService
 	@Override public String getInfo()
 	{
 		String info = path_ + " -> " +  getInfoParam();
-		if (charEncoding_ != null)
-			info += ", " + charEncoding_;
+		if (encoding_ != null)
+			info += ", " + encoding_.name();
 		return info;
 	}
 	
@@ -237,7 +237,7 @@ public abstract class AssetLocation extends AssetService
 	
 	private Path path_;
 	private Path relativePath_;
-	private String charEncoding_;
+	private Charset encoding_;
 	private ContentType contentType_;
 	private AssetCacheControl cacheControl_ = AssetCacheControl.DEFAULT;
 	private ContentTypeLookup contentTypeLookup_ = ContentTypeLookup.EMPTY;

@@ -17,6 +17,7 @@ package org.civilian.server.servlet;
 
 
 import static org.mockito.Mockito.*;
+import java.nio.charset.StandardCharsets;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
@@ -86,6 +87,7 @@ public class AppServletTest extends CivTest
 	{
 		Application app = mock(Application.class);
 		when(app.getPath()).thenReturn(Path.ROOT);
+		when(app.getDefaultEncoding()).thenReturn(StandardCharsets.UTF_8);
 		AppServlet servlet = new AppServlet(app);
 	
 		ServletRequest invRequest  		= mock(ServletRequest.class);

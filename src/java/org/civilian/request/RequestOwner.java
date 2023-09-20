@@ -1,6 +1,7 @@
 package org.civilian.request;
 
 
+import java.nio.charset.Charset;
 import org.civilian.content.ContentSerializerConfig;
 import org.civilian.resource.PathProvider;
 import org.civilian.text.service.LocaleServiceList;
@@ -14,7 +15,7 @@ public interface RequestOwner extends PathProvider
 	/**
 	 * @return the default encoding for textual content of responses.
 	 */
-	public String getDefaultCharEncoding();
+	public Charset getDefaultEncoding();
 	
 	
 	/**

@@ -522,7 +522,7 @@ public interface Request extends RequestProvider, PathParamProvider, PathProvide
 	  
 	/**
 	 * Returns a Reader for the request content. If the {@link #getCharEncoding() content encoding}
-	 * is not set, it uses the default {@link Application#getDefaultCharEncoding() application encoding}.
+	 * is not set, it uses the default {@link Application#getDefaultEncoding() application encoding}.
 	 * @return  the Reader
 	 * @throws IOException if {@link #getContentStream()} has already been called. 
 	 */

@@ -16,6 +16,7 @@
 package org.civilian.application;
 
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -100,7 +101,7 @@ public class AppConfig
 				settings = new Settings();
 			settings_ 				= settings;
 			async_					= settings.getBoolean(ConfigKeys.ASYNC, false); 
-			defaultCharEncoding_	= settings.get(ConfigKeys.ENCODING, ConfigKeys.ENCODING_DEFAULT);
+			defaultEncoding_		= settings.getCharset(ConfigKeys.ENCODING, ConfigKeys.ENCODING_DEFAULT);
 			typeLib_ 				= new TypeLib();
 			supportedLocales_		= initLocales(settings);
 			uploadConfig_ 			= initUploadConfig(settings); 
@@ -235,13 +236,13 @@ public class AppConfig
 	
 	
 	/**
-	 * Returns the default application character encoding.
-	 * @see Application#getDefaultCharEncoding()
+	 * Returns the default application character encoding used for text responses.
+	 * @see Application#getDefaultEncoding()
 	 * @return the encoding
 	 */
-	public String getDefaultCharEncoding()
+	public Charset getDefaultEncoding()
 	{
-		return defaultCharEncoding_;
+		return defaultEncoding_;
 	}
 
 
@@ -249,9 +250,9 @@ public class AppConfig
 	 * Sets the default application encoding.
 	 * @param encoding the encoding
 	 */
-	public void setEncoding(String encoding)
+	public void setDefaultEncoding(Charset encoding)
 	{
-		defaultCharEncoding_ = Check.notNull(encoding, "encoding");
+		defaultEncoding_ = Check.notNull(encoding, "encoding");
 	}
 
 	
@@ -561,7 +562,7 @@ public class AppConfig
 	}
 
 	
-	private String defaultCharEncoding_;
+	private Charset defaultEncoding_;
 	private String version_;
 	private Settings settings_;
 	private Locale[] supportedLocales_;

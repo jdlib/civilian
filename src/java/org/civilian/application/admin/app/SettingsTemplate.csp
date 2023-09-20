@@ -31,8 +31,8 @@ template(Application app) mixin html
 	</tr>
 	<tr>
 		<td>Encoding</td>
-		<td>^{app.getDefaultCharEncoding()}</td>
-		<td>org.civilian.Application.getDefaultCharEncoding()</td>
+		<td>^{app.getDefaultEncoding()}</td>
+		<td>org.civilian.Application.getDefaultEncoding()</td>
 	</tr>
 	<tr>
 		<td>Locale</td>

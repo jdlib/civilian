@@ -46,7 +46,7 @@ class MpRequestAdapter extends ServletRequestAdapter
 		// now parse the parts of the request
 		String encoding = servletRequest.getCharacterEncoding();
 		if (encoding == null)
-			encoding = app.getDefaultCharEncoding();
+			encoding = app.getDefaultEncoding().name();
 
 		Uploads uploads;
 		try

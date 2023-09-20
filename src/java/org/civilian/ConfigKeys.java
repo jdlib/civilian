@@ -16,6 +16,10 @@
 package org.civilian;
 
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
+
 /**
  * Defines constants for the keys of the civilian.ini.
  */
@@ -102,7 +106,7 @@ public interface ConfigKeys
 	/**
 	 * Default value "UTF-8" for encodings.
 	 */
-	public static final String ENCODING_DEFAULT	= "UTF-8";
+	public static final Charset ENCODING_DEFAULT = StandardCharsets.UTF_8;
 
 
 	/**

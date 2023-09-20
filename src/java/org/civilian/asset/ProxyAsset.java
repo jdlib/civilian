@@ -3,6 +3,7 @@ package org.civilian.asset;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import org.civilian.content.ContentType;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
@@ -31,15 +32,15 @@ public abstract class ProxyAsset extends Asset
 	}
 
 
-	@Override public String getCharEncoding()
+	@Override public Charset getEncoding()
 	{
-		return asset_.getCharEncoding();
+		return asset_.getEncoding();
 	}
 
 
-	@Override public void setCharEncoding(String value)
+	@Override public void setEncoding(Charset value)
 	{
-		asset_.setCharEncoding(value);
+		asset_.setEncoding(value);
 	}
 
 

@@ -18,8 +18,8 @@ package org.civilian.asset;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.content.ContentType;
@@ -33,20 +33,11 @@ public class AssetTest extends CivTest
 {
 	@Test public void testBytesAsset() throws Exception
 	{
-		BytesAsset asset = new BytesAsset("UTF-8", "bytes");
+		BytesAsset asset = new BytesAsset(StandardCharsets.UTF_8, "bytes");
 		assertTrue(asset.isValid());
 		assertTrue(asset.toString().startsWith("BytesAsset@"));
 		assertEquals(5, asset.length());
 		assertSame(asset, asset.cache());
-		
-		try
-		{
-			new BytesAsset("XYZ", "bytes");
-		}
-		catch(IllegalStateException e)
-		{
-			assertTrue(e.getCause() instanceof UnsupportedEncodingException);
-		}
 	}
 
 
@@ -117,7 +108,7 @@ public class AssetTest extends CivTest
 	@Test public void testWrite() throws Exception
 	{
 		TestAsset asset = new TestAsset("content");
-		asset.setCharEncoding("ISO-8859-1");
+		asset.setEncoding(StandardCharsets.ISO_8859_1);
 		asset.setContentType(ContentType.TEXT_CSS);
 		asset.setCacheControl(AssetCacheControl.DEFAULT);
 		

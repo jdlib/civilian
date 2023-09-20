@@ -21,12 +21,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.function.Function;
 
 
 /**
@@ -251,6 +253,16 @@ public class Settings
 		String v = get(key, null);
 		return (v != null) ? Boolean.valueOf(v).booleanValue() : defaultValue;
 	}
+	
+	
+	/**
+	 * Returns the value of a key.
+	 * If the key is not mapped to any value, the default value is returned.
+	 */
+	public java.nio.charset.Charset getCharset(String key, java.nio.charset.Charset defaultValue)
+	{
+		return getValue(key, Charset::forName, defaultValue);
+ 	}
 
 	
 	/**
@@ -405,7 +417,7 @@ public class Settings
 	 * Assumes that the value for the given key is a class name
 	 * and returns a new instance of that class. If the Settings does
 	 * not contain the key, then it returns the defaultValue.
-	 * @param key
+	 * @param key a key
 	 * @param superClass a superclass of the class. The method checks that the class 
 	 * 		is derived from the superclass. 
 	 */
@@ -414,6 +426,21 @@ public class Settings
 	{
 		String className = get(key, null);
 		return (className == null) ? defaultValue : ClassUtil.createObject(className, superClass, loader);
+	}
+	
+	
+	/**
+	 * Gets the string value for a key. If not null asks the factory
+	 * to convert it into the target value, else returns the default value.
+	 * @param key a key
+	 * @param factory can translate a string into the target value
+	 * @param defaultValue returned if the string value is null
+	 * @return the result  
+	 */
+	public <T> T getValue(String key, Function<String,T> factory, T defaultValue)
+	{
+		String s = get(key, null);
+		return s != null ? factory.apply(s) : defaultValue;
 	}
 	
 	

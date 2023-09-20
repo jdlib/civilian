@@ -533,7 +533,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * If no content character encoding has been set,
 	 * the default character encoding of the application is used.
 	 * The method may not be called if {@link #getContentStream()} was called before.
-	 * @see Application#getDefaultCharEncoding()
+	 * @see Application#getDefaultEncoding()
 	 * @throws IOException if an IO error occurs
 	 */
 	public abstract PrintWriter getContentWriter() throws IOException;
@@ -617,7 +617,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * Returns the character encoding of the response.
 	 * The encoding can be set with a call to {@link #setCharEncoding(String)}.
 	 * If getWriter() is called and no encoding is set, then the default encoding of the application 
-	 * (see {@link Application#getDefaultCharEncoding()} is used.
+	 * (see {@link Application#getDefaultEncoding()} is used.
 	 * @return the encoding
 	 */
 	public abstract String getCharEncoding();

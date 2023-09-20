@@ -426,7 +426,7 @@ public class TestRequest extends AbstractRequest
 				contentBytes_ = EMPTY_BYTES;
 			else
 			{
-				String encoding = charEncoding_ != null ? charEncoding_ : getOwner().getDefaultCharEncoding();
+				String encoding = charEncoding_ != null ? charEncoding_ : getOwner().getDefaultEncoding().name();
 				ByteArrayOutputStream out = new ByteArrayOutputStream(); 
 				try
 				{
@@ -456,7 +456,7 @@ public class TestRequest extends AbstractRequest
 			return new StringReader(contentString_);
 		else
 		{
-			String encoding = charEncoding_ != null ? charEncoding_ : getOwner().getDefaultCharEncoding();
+			String encoding = charEncoding_ != null ? charEncoding_ : getOwner().getDefaultEncoding().name();
 			return new InputStreamReader(new ByteArrayInputStream(getContentBytes()), encoding);
 		}
 	}

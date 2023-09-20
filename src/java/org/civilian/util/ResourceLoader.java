@@ -20,8 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Enumeration;
 
 
@@ -68,13 +68,11 @@ public abstract class ResourceLoader
 	 * Returns a Reader for a resource with the specified name or null
 	 * if the resource could not be found.
 	 * @param name the resource name
-	 * @param charset the encoding of the resource or null
-	 * 		if the system encoding should be used
+	 * @param charset the charset of the resource or null
+	 * 		if the system charset should be used
 	 * @return a Reader
-	 * @throws UnsupportedEncodingException if the encoding is not supported
 	 */
-	public Reader getResourceAsReader(String name, String charset)
-		throws UnsupportedEncodingException
+	public Reader getResourceAsReader(String name, Charset charset)
 	{
 		InputStream in = getResourceAsStream(name);
 		if (in == null)
@@ -113,8 +111,7 @@ class RequiredResLoader extends ResourceLoader
 	}
 
 
-	@Override public Reader getResourceAsReader(String name, String charset)
-		throws UnsupportedEncodingException
+	@Override public Reader getResourceAsReader(String name, Charset charset)
 	{
 		return check(loader_.getResourceAsReader(name, charset), name);
 	}

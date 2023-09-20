@@ -296,7 +296,7 @@ public abstract class AbstractRequest implements Request
 	
 	private void setDefaultCharEncoding()
 	{
-		String encoding = getOwner().getDefaultCharEncoding();
+		String encoding = getOwner().getDefaultEncoding().name();
 		try
 		{
 			setCharEncoding(encoding);

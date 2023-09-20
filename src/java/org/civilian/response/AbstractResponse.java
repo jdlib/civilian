@@ -264,7 +264,7 @@ public abstract class AbstractResponse implements Response
 			
 		// make sure that encoding is initialized, fallback to application encoding
 		if (charEncoding_ == null)
-			setCharEncoding(getOwner().getDefaultCharEncoding());
+			setCharEncoding(getOwner().getDefaultEncoding().name());
 
 		try
 		{

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -60,17 +61,16 @@ public abstract class Asset
 
 	
 	/**
-	 * Returns the character encoding of the asset, or null if not known
-	 * @return the encoding
+	 * @return the character encoding of the asset, or null if not known.
 	 */
-	public abstract String getCharEncoding();
+	public abstract Charset getEncoding();
 	
 	
 	/**
 	 * Sets the encoding of the asset.
-	 * @param encoding encoding
+	 * @param encoding the encoding
 	 */
-	public abstract void setCharEncoding(String encoding);
+	public abstract void setEncoding(Charset encoding);
 
 	
 	/**
@@ -209,14 +209,13 @@ public abstract class Asset
 	
 	/**
 	 * Returns a Reader for the asset content.
-	 * If no encoding is set on the asset, an IllegalArgumentException
-	 * is thrown.
+	 * If no encoding is set on the asset, an IllegalArgumentException is thrown.
 	 * @throws IOException if an IO error occurs
 	 * @return the reader
 	 */
 	public Reader getReader() throws IOException
 	{
-		String encoding = Check.notNull(getCharEncoding(), "charEncoding");
+		Charset encoding = Check.notNull(getEncoding(), "encoding");
 		return new BufferedReader(new InputStreamReader(getInputStream(), encoding));
 	}
 	

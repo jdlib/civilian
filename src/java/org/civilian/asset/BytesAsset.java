@@ -19,7 +19,7 @@ package org.civilian.asset;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import org.civilian.util.Check;
 
 
@@ -30,27 +30,14 @@ import org.civilian.util.Check;
  */
 public class BytesAsset extends AbstractAsset
 {
-	private static byte[] convert(String encoding, String content)
-	{
-		try
-		{
-			return content.getBytes(encoding);
-		}
-		catch (UnsupportedEncodingException e)
-		{
-			throw new IllegalStateException(e);
-		}
-	}
-	
-	
 	/**
 	 * Creates a new BytesAsset.
-	 * @param encoding the encoding
-	 * @param content the content as string
+	 * @param encoding the charset
+	 * @param content the content as string, will be converted to bytes using the encoding
 	 */
-	public BytesAsset(String encoding, String content)
+	public BytesAsset(Charset encoding, String content)
 	{
-		this(encoding, convert(encoding, content));
+		this(encoding, content.getBytes(encoding));
 	}
 	
 	
@@ -59,10 +46,10 @@ public class BytesAsset extends AbstractAsset
 	 * @param encoding the encoding
 	 * @param bytes the byte content
 	 */
-	public BytesAsset(String encoding, byte[] bytes)
+	public BytesAsset(Charset encoding, byte[] bytes)
 	{
 		bytes_ = Check.notNull(bytes, "bytes");
-		setCharEncoding(encoding);
+		setEncoding(encoding);
 		setLastModified(System.currentTimeMillis());
 		setLength(bytes.length);
 	}

@@ -16,6 +16,7 @@
 package org.civilian.asset.service;
 
 
+import java.nio.charset.Charset;
 import java.util.concurrent.ConcurrentHashMap;
 import org.civilian.Logs;
 import org.civilian.asset.Asset;
@@ -47,7 +48,7 @@ public class AssetCache extends AssetService
 	/**
 	 * Forwards to the implementation.
 	 */
-	@Override public void init(Path parentPath, String defaultEncoding, ContentTypeLookup lookup)
+	@Override public void init(Path parentPath, Charset defaultEncoding, ContentTypeLookup lookup)
 	{
 		implementation_.init(parentPath, defaultEncoding, lookup);
 	}

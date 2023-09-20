@@ -16,6 +16,7 @@
 package org.civilian.application;
 
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -185,13 +186,13 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 			// even if init throws an error we complete
 			// setup of safe application properties
 			// since the error page may rely on them
-			data.async				= appConfig.getAsync();
-			defaultCharEncoding_	= appConfig.getDefaultCharEncoding();
-			version_				= appConfig.getVersion();
-			assetService_			= initAssets(appConfig.getAssetConfig());
-			uploadConfig_			= appConfig.getUploadConfig();
-			contentSerializers_ 	= new ContentSerializerConfig(appConfig.getContentSerializers());
-			localeServices_			= new LocaleServiceList( 
+			data.async			= appConfig.getAsync();
+			defaultEncoding_		= appConfig.getDefaultEncoding();
+			version_			= appConfig.getVersion();
+			assetService_		= initAssets(appConfig.getAssetConfig());
+			uploadConfig_		= appConfig.getUploadConfig();
+			contentSerializers_ = new ContentSerializerConfig(appConfig.getContentSerializers());
+			localeServices_		= new LocaleServiceList( 
 				appConfig.getTypeLib(),
 				appConfig.getMsgBundleFactory(), 
 				appConfig.allowUnsupportedLocales(),
@@ -242,7 +243,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 		AssetService service = AssetServices.combine(Path.ROOT, config.getLocations());
 		if (config.getLocationCount() > 0)
 			service = AssetServices.makeCaching(service, config.getMaxCachedSize()); 
-		service.init(getPath(), getDefaultCharEncoding(), config.getContentTypeLookup());
+		service.init(getPath(), getDefaultEncoding(), config.getContentTypeLookup());
 		return service;
 	}
 	
@@ -376,11 +377,11 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	
 	
 	/**
-	 * @return the default encoding for textual content of responses.
+	 * @return the default encoding for the textual content of responses.
 	 */
-	@Override public String getDefaultCharEncoding()
+	@Override public Charset getDefaultEncoding()
 	{
-		return defaultCharEncoding_;
+		return defaultEncoding_;
 	}
 
 	
@@ -684,7 +685,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	
 	// properties all have reasonable defaults, initialized again when added to the server
 	private String id_ = "?";
-	private String defaultCharEncoding_ = ConfigKeys.ENCODING_DEFAULT;
+	private Charset defaultEncoding_ = ConfigKeys.ENCODING_DEFAULT;
 	private Path relativePath_ = Path.ROOT;
 	private Path path_ = Path.ROOT;
 	private Server server_ = TempServer.INSTANCE;
