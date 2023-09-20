@@ -189,7 +189,7 @@ public class Scanner
 		needSkipWhitespace_ = autoSkipWhitespace_;
 		return this;
 	}
-
+	
 	
 	/**
 	 * @return the length of the current line.
@@ -304,13 +304,19 @@ public class Scanner
 	
 	public int indexOf(char c)
 	{
-		return currentLine_.indexOf(c, pos_);
+		return normIndexOf(currentLine_.indexOf(c, pos_), 1);
 	}
 
 	
 	public int indexOf(String s)
 	{
-		return currentLine_.indexOf(s, pos_);
+		return normIndexOf(currentLine_.indexOf(s, pos_), s.length());
+	}
+	
+	
+	private int normIndexOf(int p, int chars)
+	{
+		return p + chars <= length_ ? p : -1;
 	}
 	
 	

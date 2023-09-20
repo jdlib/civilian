@@ -222,9 +222,7 @@ class CspTLineParser
 		}
 		else
 		{
-			snippet = scanner_.nextIdentifier();
-			if (snippet == null)
-				scanner_.exception("no valid Java identifier found");
+			snippet = scanner_.expect().nextIdentifier();
 			allowStmt = false;
 		}
 		

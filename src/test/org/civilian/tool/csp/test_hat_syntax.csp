@@ -1,6 +1,6 @@
 package test
 
-template(String name)
+template(String name, int i)
 {{
 	escaped hat: ^^...
 	^'
@@ -10,5 +10,6 @@ template(String name)
 	pre^?today| today |post 
 	pre^?{today > 0}[is ^name]post
 	expr: ^name or ^{name.length()}
-	stmt: ^{name = null;} 
+	stmt: ^{name = null;}
+	line=^?{i.>.0}|, |^{name.charAt(i)} 
 }}

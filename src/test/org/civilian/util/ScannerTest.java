@@ -26,7 +26,7 @@ public class ScannerTest extends CivTest
 	private final ScannerAssert a = new ScannerAssert(scanner);
 	
 	
-	@Test public void testInit()
+	@Test public void testInput()
 	{
 		scanner.input((String)null);
 		a.pos(0).length(0).line("");
@@ -36,7 +36,7 @@ public class ScannerTest extends CivTest
 	}
 	
 	
-	@Test public void testMultLines()
+	@Test public void testMultiLines()
 	{
 		scanner.input("a", "b", "c");
 		a.inputLineCount(3);
@@ -64,20 +64,28 @@ public class ScannerTest extends CivTest
 	}
 
 
-	@Test public void testSkipWhitespace()
+	@Test public void testIndexOf()
 	{
-		Scanner s = new Scanner(" 1 1");
-		s.setAutoSkipWhitespace(false);
-		assertFalse(s.next("1"));
-		s.skipWhitespace();
-		assertTrue(s.next("1"));
+		scanner.input("012345");
+		assertEquals(0, scanner.indexOf('0'));
+		assertEquals(4, scanner.indexOf('4'));
+		assertEquals(4, scanner.indexOf("45"));
+		scanner.skip();
 		
-		assertFalse(s.next("1"));
-		s.setAutoSkipWhitespace(true);
-		assertTrue(s.next("1"));
+		assertEquals(-1, scanner.indexOf('0'));
+		assertEquals(4, scanner.indexOf('4'));
+		assertEquals(4, scanner.indexOf("45"));
+		
+		scanner.setLength(5);
+		assertEquals(4, scanner.indexOf('4'));
+		assertEquals(-1, scanner.indexOf("45"));
+		
+		scanner.setLength(4);
+		assertEquals(-1, scanner.indexOf('4'));
+		assertEquals(-1, scanner.indexOf("45"));
 	}
-
-
+	
+	
 	@Test public void testNext()
 	{
 		scanner.input(" abc white");
@@ -161,7 +169,7 @@ public class ScannerTest extends CivTest
 	}
 
 
-	@Test public void testWhile()
+	@Test public void testNextWhile()
 	{
 		scanner.input("221100abca");
 		a.nextWhile("abc").returns(null)
@@ -222,6 +230,20 @@ public class ScannerTest extends CivTest
 		assertEquals("2345", scanner.getRest());
 		scanner.setLength(4);
 		assertEquals("234", scanner.getRest());
+	}
+
+
+	@Test public void testSkipWhitespace()
+	{
+		Scanner s = new Scanner(" 1 1");
+		s.setAutoSkipWhitespace(false);
+		assertFalse(s.next("1"));
+		s.skipWhitespace();
+		assertTrue(s.next("1"));
+		
+		assertFalse(s.next("1"));
+		s.setAutoSkipWhitespace(true);
+		assertTrue(s.next("1"));
 	}
 }
 
