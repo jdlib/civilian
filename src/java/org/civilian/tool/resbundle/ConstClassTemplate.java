@@ -178,7 +178,7 @@ class ConstClassTemplate
 		return constantName;
 	}
 	
-		
+	
 	private String escapeId(String id)
 	{
 		return id.replace("\\",  "\\\\").replace("\"", "\\\"");

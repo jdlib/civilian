@@ -226,17 +226,17 @@ class ClientJavaTemplate
 	private String buildClassName(Resource resource)
 	{
 		return resource.getSegment() != null ?
-			javaName_.makeClass(resource.getSegment()) : 
+			javaName_.makeClass(resource.getSegment()) :
 			javaName_.makeParamClass(resource.getPathParam().getName());
-	} 
+	}
 	
 	
 	private String buildFieldName(Resource resource)
 	{
 		return resource.getSegment() != null ?
-			javaName_.makeVar(resource.getSegment()) : 
+			javaName_.makeVar(resource.getSegment()) :
 			javaName_.makeParamVar(resource.getPathParam().getName());
-	} 
+	}
 	
 	
 	private final JavaName javaName_ = new JavaName();
