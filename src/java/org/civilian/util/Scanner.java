@@ -204,6 +204,7 @@ public class Scanner
 	 * Sets the end of the current line.
 	 * Invalid positions (e.g. &lt; 0 or &gt; the real length of the current line) are silently corrected.
 	 * The current position is also adjusted to equal the length if it exceeds the new length.
+	 * @param length the new length
 	 * @return this
 	 */
 	public Scanner setLength(int length)
@@ -294,6 +295,7 @@ public class Scanner
 	
 	
 	/**
+	 * @param count number of left chars
 	 * @return if there are that much characters left in the current input string.
 	 */
 	public boolean hasMoreChars(int count)
@@ -332,8 +334,8 @@ public class Scanner
 	
 	
 	/**
-	 * Positions on the next character in the current line. (Does not
-	 * skip any whitespace).
+	 * Skips at least n characters in the current line. (Does not skip any whitespace).
+	 * @param n the number of characters to skip
 	 * @return true if positioned, false if there are no more characters left
 	 */
 	public boolean skip(int n)
@@ -347,6 +349,8 @@ public class Scanner
 	/**
 	 * Autoskips whitespace, and then tests (but does not consume) 
 	 * if the scanner string starts with the given string.
+	 * @param s the string
+	 * @return does match?
 	 */
 	public boolean match(String s)
 	{
@@ -474,6 +478,7 @@ public class Scanner
 	 * If true positions on the index after that prefix.
 	 * Else does not move the scanner position.
 	 * Autoskips whitespace before the test is made, if autoskip is turned on.
+	 * @return string recognized?
 	 */
 	public boolean next(String s)
 	{
