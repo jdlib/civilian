@@ -16,11 +16,12 @@
 package org.civilian.server.servlet;
 
 
-import java.util.Enumeration;
+import java.util.Iterator;
 import javax.servlet.http.HttpSession;
 import org.civilian.request.Session;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
+import org.civilian.util.Iterators;
 
 
 /**
@@ -91,9 +92,9 @@ public class SessionAdapter implements Session
 	/**
 	 * Forwards to the HttpSession. 
 	 */
-	@Override public Enumeration<String> getAttributeNames()
+	@Override public Iterator<String> getAttributeNames()
 	{
-		return session_.getAttributeNames();
+		return Iterators.asIterator(session_.getAttributeNames());
 	}
 	
 

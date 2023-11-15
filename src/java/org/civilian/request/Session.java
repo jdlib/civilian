@@ -16,7 +16,7 @@
 package org.civilian.request;
 
 
-import java.util.Enumeration;
+import java.util.Iterator;
 
 
 /**
@@ -106,7 +106,7 @@ public interface Session
 	/**
 	 * @return an enumeration of all names of attributes bound to the session. 
 	 */
-	public Enumeration<String> getAttributeNames();
+	public Iterator<String> getAttributeNames();
 	
 	
 	/**

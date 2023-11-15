@@ -16,11 +16,11 @@
 package org.civilian.server.test;
 
 
-import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
+
 import org.civilian.request.Session;
 import org.civilian.util.Check;
-import org.civilian.util.Iterators;
 
 
 /**
@@ -78,9 +78,9 @@ public class TestSession implements Session
 	}
 	
 
-	@Override public Enumeration<String> getAttributeNames()
+	@Override public Iterator<String> getAttributeNames()
 	{
-		return Iterators.asEnumeration(attributes_.keySet().iterator());
+		return attributes_.keySet().iterator();
 	}
 	
 
