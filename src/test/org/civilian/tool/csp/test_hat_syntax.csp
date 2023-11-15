@@ -1,15 +1,33 @@
 package test
 
-template(String name, int i)
+template(String name, int i) mixin table:t
 {{
 	escaped hat: ^^...
 	^'
 	alpha^'beta
 	skipln^\ignored
 	^' mixed ^name^\
+}}
+
+
+private void testConditionalSnippets()
+{{
 	pre^?today| today |post 
 	pre^?{today > 0}[is ^name]post
 	expr: ^name or ^{name.length()}
 	stmt: ^{name = null;}
 	line=^?{i > 0}|, |^{name.charAt(i)} 
+}}
+
+
+private void testComponentBuilderSyntax()
+{{
+	@t.columns("[]10[]");
+	@t.startTable();
+	[t]				simple
+	[t.colspan(2)]	colspan
+	[t.colspan(2)	
+		<br>
+	]
+	@t.endTable();
 }}

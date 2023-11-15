@@ -6,6 +6,7 @@ package test;
 
 
 import org.civilian.template.CspTemplate;
+import org.civilian.template.mixin.TableMixin;
 
 
 public class Test_hat_syntax extends CspTemplate
@@ -14,6 +15,20 @@ public class Test_hat_syntax extends CspTemplate
 	{
 		this.name = name;
 		this.i = i;
+	}
+
+
+	@Override protected void init()
+	{
+		super.init();
+		t = new TableMixin(out);
+	}
+
+
+	@Override protected void exit()
+	{
+		t = null;
+		super.exit();
 	}
 
 
@@ -28,37 +43,65 @@ public class Test_hat_syntax extends CspTemplate
 		out.print("skipln");                                            // line 8: skipln
 		out.print(" mixed ");                                           // line 9: mixed
 		out.print(name);                                                // line 9: ^name
-		out.print("pre");                                               // line 10: pre
-		if (today)                                                      // line 10: ^?today
+	}
+	
+	
+	private void testConditionalSnippets()
+	{
+		out.print("pre");                                               // line 15: pre
+		if (today)                                                      // line 15: ^?today
 		{
-			out.print(" today ");                                       // line 10: today
+			out.print(" today ");                                       // line 15: today
 		}
-		out.println("post");                                            // line 10: post
-		out.print("pre");                                               // line 11: pre
-		if (today > 0)                                                  // line 11: ^?{today > 0}
+		out.println("post");                                            // line 15: post
+		out.print("pre");                                               // line 16: pre
+		if (today > 0)                                                  // line 16: ^?{today > 0}
 		{
-			out.print("is ");                                           // line 11: is
-			out.print(name);                                            // line 11: ^name
+			out.print("is ");                                           // line 16: is
+			out.print(name);                                            // line 16: ^name
 		}
-		out.println("post");                                            // line 11: post
-		out.print("expr: ");                                            // line 12: expr:
-		out.print(name);                                                // line 12: ^name
-		out.print(" or ");                                              // line 12: or
-		out.print(name.length());                                       // line 12: ^{name.length()}
+		out.println("post");                                            // line 16: post
+		out.print("expr: ");                                            // line 17: expr:
+		out.print(name);                                                // line 17: ^name
+		out.print(" or ");                                              // line 17: or
+		out.print(name.length());                                       // line 17: ^{name.length()}
 		out.printlnIfNotEmpty();
-		out.print("stmt: ");                                            // line 13: stmt:
-		name = null;                                                    // line 13: ^{name = null;}
+		out.print("stmt: ");                                            // line 18: stmt:
+		name = null;                                                    // line 18: ^{name = null;}
 		out.printlnIfNotEmpty();
-		out.print("line=");                                             // line 14: line=
-		if (i > 0)                                                      // line 14: ^?{i > 0}
+		out.print("line=");                                             // line 19: line=
+		if (i > 0)                                                      // line 19: ^?{i > 0}
 		{
-			out.print(", ");                                            // line 14: ,
+			out.print(", ");                                            // line 19: ,
 		}
-		out.print(name.charAt(i));                                      // line 14: ^{name.charAt(i)}
+		out.print(name.charAt(i));                                      // line 19: ^{name.charAt(i)}
 		out.printlnIfNotEmpty();
+	}
+	
+	
+	private void testComponentBuilderSyntax()
+	{
+		t.columns("[]10[]");                                            // line 25: @t.columns("[]10[]");
+		t.startTable();                                                 // line 26: @t.startTable();
+		org.civilian.template.ComponentBuilder cspCb0 = t;
+		cspCb0.startComponent(false);                                   // line 27: t
+		out.print("simple");                                            // line 27: simple
+		cspCb0.endComponent(false);
+		cspCb0 = t.colspan(2);
+		cspCb0.startComponent(false);                                   // line 28: t.colspan(2)
+		out.print("colspan");                                           // line 28: colspan
+		cspCb0.endComponent(false);
+		cspCb0 = t.colspan(2);
+		cspCb0.startComponent(true);                                    // line 29: t.colspan(2)
+		out.increaseTab();
+		out.println("<br>");                                            // line 30: <br>
+		out.decreaseTab();
+		cspCb0.endComponent(true);                                      // line 31: ]
+		t.endTable();                                                   // line 32: @t.endTable();
 	}
 
 
 	protected String name;
 	protected int i;
+	protected TableMixin t;
 }
