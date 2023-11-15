@@ -196,7 +196,7 @@ public abstract class Iterators
 	{
 		public EnumerationIt(Enumeration<T> enumeration)
 		{
-			enumeration_ = enumeration;
+			enumeration_ = Check.notNull(enumeration, "enumeration");
 		}
 		
 		
@@ -211,12 +211,6 @@ public abstract class Iterators
 			return enumeration_.nextElement();
 		}
 
-		
-		@Override public void remove()
-		{
-			throw new UnsupportedOperationException();
-		}
-		
 		
 		private final Enumeration<T> enumeration_;
 	}
