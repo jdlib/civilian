@@ -451,7 +451,7 @@ public class CspCompiler
 								break;
 							case COMPONENT_END:
 								if (componentLevel < 0)
-									scanner_.exception("unmatched component end");
+									scanner_.exception("unmatched component end: " + componentLevel);
 								printer.printComponentEnd(componentLevel--, true, parser.original);
 								break;
 							default:
