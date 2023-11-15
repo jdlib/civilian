@@ -59,6 +59,9 @@ public abstract class Server implements PathProvider
 	
 	/**
 	 * Initializes the Server from the provided settings.
+	 * @param appClassLoader a ClassLoader to load applications
+	 * @param settings the civilian settings
+	 * @throws Exception if initialization fails
 	 */
 	protected void init(ClassLoader appClassLoader, Settings settings) throws Exception
 	{
@@ -97,8 +100,6 @@ public abstract class Server implements PathProvider
 	 * @param relPathString the path of the application relative to the server path
 	 * @param settings the settings of the application, can be null.
 	 * @return was the application successfully initialized?
-	 * @throws IllegalArgumentException if the app is contained in another server
-	 * 		or its path is already used by another application 
 	 */
 	protected synchronized boolean addApp(ServerApp app, String id, String relPathString, Settings settings)
 	{
@@ -196,7 +197,7 @@ public abstract class Server implements PathProvider
 	
 	/**
 	 * Closes an application and removes it from the Server.
-	 * @param app an app
+	 * @param app the app
 	 */
 	protected synchronized void close(ServerApp app)
 	{
