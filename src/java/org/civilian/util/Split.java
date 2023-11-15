@@ -50,6 +50,7 @@ public class Split
 	
 	/**
 	 * Advises the split to trim splitted parts.
+	 * @return this
 	 */
 	public Split trim()
 	{
@@ -66,6 +67,7 @@ public class Split
 	
 	/**
 	 * Split the given input.
+	 * @param input the input
 	 * @return the number of actual parts contained in the input.
 	 */
 	public int apply(String input)
