@@ -35,6 +35,7 @@ public abstract class ResourceLoader
 	 * Returns a resource loader which internally uses this
 	 * ResourceLoader but throws an IllegalArgumentException 
 	 * if the resource cannot be found.
+	 * @return the required loader
 	 */
 	public ResourceLoader required()
 	{
@@ -46,12 +47,16 @@ public abstract class ResourceLoader
 	 * Returns the URL of a resource with the specified name or null
 	 * if the resource could not be found.
 	 * @param name the resource name
+	 * @return the URL
 	 */
 	public abstract URL getResourceUrl(String name);
 	
 	
 	/**
 	 * Returns URL of all resources with the specified name
+	 * @param name a name
+	 * @return the enumeration
+	 * @throws IOException if a URL could not be created
 	 */
 	public abstract Enumeration<URL> getResourceUrls(String name) throws IOException;
 
@@ -60,6 +65,7 @@ public abstract class ResourceLoader
 	 * Returns an InputStream for a resource with the specified name or null
 	 * if the resource could not be found.
 	 * @param name the resource name
+	 * @return the InputStream
 	 */
 	public abstract InputStream getResourceAsStream(String name); 
 
