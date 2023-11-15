@@ -478,6 +478,7 @@ public class Scanner
 	 * If true positions on the index after that prefix.
 	 * Else does not move the scanner position.
 	 * Autoskips whitespace before the test is made, if autoskip is turned on.
+	 * @param s a string
 	 * @return string recognized?
 	 */
 	public boolean next(String s)
@@ -502,6 +503,8 @@ public class Scanner
 	 * If true positions on the index after that prefix.
 	 * Else does not move the scanner position.
 	 * Autoskips whitespace before the test is made, if autoskip is turned on.
+	 * @param s a string
+	 * @return starts with given string?
 	 */
 	public boolean nextKeyword(String s)
 	{
@@ -526,6 +529,7 @@ public class Scanner
 	/**
 	 * Returns the string upto the next whitespace boundary.
 	 * If that string is empty or the end is reached null is returned.
+	 * @return the consumed string
 	 */
 	public String nextToken()
 	{
@@ -537,6 +541,8 @@ public class Scanner
 	 * Returns the string upto the next whitespace boundary or upto
 	 * one of the characters on the delimiter string is reached.
 	 * If that string is empty or the end is reached null is returned.
+	 * @param delimiters the delimiters
+	 * @return the consumed string
 	 */
 	public String nextToken(String delimiters)
 	{
@@ -546,7 +552,8 @@ public class Scanner
 	
 	/**
 	 * Does not skip whitespace.
-	 * 
+	 * @param pos the position
+	 * @return the consumed string 
 	 */
 	public String nextUptoPos(int pos)
 	{
@@ -616,6 +623,7 @@ public class Scanner
 	
 	/**
 	 * Consumes all digit characters and return the string converted to an integer.
+	 * @return the Integer
 	 */
 	public Integer nextInt()
 	{
@@ -635,6 +643,7 @@ public class Scanner
 	/**
 	 * Consumes all digit characters and an optional fraction part
 	 * and returns the string converted to a double.
+	 * @return the Double
 	 */
 	public Double nextDouble()
 	{
@@ -687,6 +696,8 @@ public class Scanner
 	
 	/**
 	 * Move the scanner position while seeing characters of that type.
+	 * @param charType the character type
+	 * @return the consumed string
 	 */
 	public String nextWhileCharType(byte charType)
 	{
@@ -718,6 +729,8 @@ public class Scanner
 	/**
 	 * Move the scanner position while seeing characters contained in
 	 * the chars parameter.
+	 * @param chars the characters
+	 * @return the consumed string
 	 */
 	public String nextWhile(String chars)
 	{
@@ -746,7 +759,8 @@ public class Scanner
 
 	
 	/**
-	 * @return Scans a quoted string and returns the string without quotes.
+	 * @param includeQuotes should the quotes be included?
+	 * @return Scans a quoted string and returns the string.
 	 */
 	public String nextQuotedString(boolean includeQuotes)
 	{
@@ -757,6 +771,7 @@ public class Scanner
 
 	
 	/**
+	 * @param quote the quote char
 	 * @return Scans a quoted string and returns the string without quotes.
 	 */
 	public String nextQuotedString(char quote)
@@ -863,6 +878,7 @@ public class Scanner
 	
 	/**
 	 * Raises an exception with context information about input and current position.
+	 * @param message the error message
 	 */
 	public void exception(String message)
 	{

@@ -69,11 +69,6 @@ public class ResourceLoaderTest extends CivTest
 	{
 		File temp = File.createTempFile("loader", ".txt");
 		
-		ResourceLoader fileLoader = ResourceLoaders.forFile(temp);
-		assertEquals(temp.toURI().toURL(), fileLoader.getResourceUrl(temp.getName()));
-		assertNull(fileLoader.getResourceUrl("x"));
-		assertNull(fileLoader.getResourceAsStream("x"));
-		
 		ResourceLoader dirLoader = ResourceLoaders.forDirectory(temp.getParentFile()); 
 		assertEquals(temp.toURI().toURL(), dirLoader.getResourceUrl(temp.getName()));
 		assertNull(dirLoader.getResourceUrl("invalidname"));

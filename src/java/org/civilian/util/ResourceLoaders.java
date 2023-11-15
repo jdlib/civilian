@@ -24,8 +24,9 @@ import javax.servlet.ServletContext;
 public class ResourceLoaders 
 {
 	/**
-	 * Creates a resource loader who uses
+	 * Creates a resource loader which uses
 	 * ClassLoader.getResource to load resources.
+	 * @param classLoader a ClassLoader
 	 * @return the loader
 	 */
 	public static ResourceLoader forClassLoader(ClassLoader classLoader)
@@ -35,7 +36,7 @@ public class ResourceLoaders
 	
 
 	/**
-	 * Creates a resource loader who uses
+	 * Creates a resource loader which uses
 	 * the system ClassLoader to load resources.
 	 * @return the loader
 	 */
@@ -46,8 +47,9 @@ public class ResourceLoaders
 
 	
 	/**
-	 * Creates a resource loader who uses
+	 * Creates a resource loader which uses
 	 * Class.getResource to load resources.
+	 * @param c a class
 	 * @return the loader
 	 */
 	public static ResourceLoader forClass(Class<?> c)
@@ -57,8 +59,9 @@ public class ResourceLoaders
 
 	
 	/**
-	 * Creates a resource loader who uses
+	 * Creates a resource loader which uses
 	 * ServletContext.getResource to load resources.
+	 * @param context the context
 	 * @return the loader
 	 */
 	public static ResourceLoader forSerlvetContext(ServletContext context)
@@ -81,6 +84,7 @@ public class ResourceLoaders
 	/**
 	 * Creates a resource loader who
 	 * loads resources from the given directory.
+	 * @param file a file 
 	 * @return the loader
 	 */
 	public static ResourceLoader forDirectory(File file)
@@ -89,22 +93,13 @@ public class ResourceLoaders
 		return new DirectoryResLoader(directory);
 	}
 
-
-	/**
-	 * Creates a resource loader who
-	 * loads resources from the given directory.
-	 * @return the loader
-	 */
-	public static ResourceLoader forFile(File file)
-	{
-		return new FileResLoader(file);
-	}
-
 	
 	/**
-	 * Creates a resource loader who
+	 * Creates a resource loader which
 	 * returns the string content if the resource name
 	 * matches the specified name.
+	 * @param name a name
+	 * @param content the content
 	 * @return the loader
 	 */
 	public static ResourceLoader forString(String name, String content)
@@ -311,64 +306,6 @@ class DirectoryResLoader extends ResourceLoader
 	
 	
 	private final File directory_;
-}	
-
-
-/**
- * A ResourceLoader based on a single file. 
- */
-class FileResLoader extends ResourceLoader
-{
-	public FileResLoader(File file)
-	{
-		file_ = Check.notNull(file, "file");
-	}
-	
-	
-	@Override public URL getResourceUrl(String name)
-	{
-		try
-		{
-			File file = getResourceFile(name);
-			return file == null ? null : file.toURI().toURL();
-		} 
-		catch (MalformedURLException e)
-		{
-			throw new IllegalStateException("cannot create resource URL for '" + name + "'", e);
-		}
-	}
-	
-	
-	@Override public Enumeration<URL> getResourceUrls(String name) throws IOException
-	{
-		URL url = getResourceUrl(name);
-		return Iterators.asEnumeration(Iterators.forValue(url));
-	}
-	
-	
-	@Override public InputStream getResourceAsStream(String name)
-	{
-		try
-		{
-			File file = getResourceFile(name);
-			if (file != null)
-				return new FileInputStream(file);
-		}
-		catch (FileNotFoundException e)
-		{
-			// ignore silently
-		}
-		return null;
-	}
-	
-	
-	private File getResourceFile(String name)
-	{
-		return file_.exists() && file_.getName().equals(name) ? file_ : null;
-	}
-	
-	
-	private final File file_;
 }	
 
 
