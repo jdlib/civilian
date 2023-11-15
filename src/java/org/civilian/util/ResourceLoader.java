@@ -16,13 +16,11 @@
 package org.civilian.util;
 
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.Enumeration;
 
 
 /**
@@ -50,15 +48,6 @@ public abstract class ResourceLoader
 	 * @return the URL
 	 */
 	public abstract URL getResourceUrl(String name);
-	
-	
-	/**
-	 * Returns URL of all resources with the specified name
-	 * @param name a name
-	 * @return the enumeration
-	 * @throws IOException if a URL could not be created
-	 */
-	public abstract Enumeration<URL> getResourceUrls(String name) throws IOException;
 
 	
 	/**
@@ -102,12 +91,6 @@ class RequiredResLoader extends ResourceLoader
 	@Override public URL getResourceUrl(String name)
 	{
 		return check(loader_.getResourceUrl(name), name);
-	}
-
-	
-	@Override public Enumeration<URL> getResourceUrls(String name) throws IOException
-	{
-		return check(loader_.getResourceUrls(name), name);
 	}
 
 	

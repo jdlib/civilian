@@ -5,16 +5,12 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Iterator;
 import javax.servlet.ServletContext;
 
 
@@ -148,12 +144,6 @@ class ClassLoaderResLoader extends ResourceLoader
 	}
 
 
-	@Override public Enumeration<URL> getResourceUrls(String name) throws IOException
-	{
-		return classLoader_.getResources(name);
-	}
-	
-	
 	@Override public InputStream getResourceAsStream(String name)
 	{
 		return classLoader_.getResourceAsStream(name);
@@ -178,12 +168,6 @@ class ClassResLoader extends ResourceLoader
 	@Override public URL getResourceUrl(String name)
 	{
 		return class_.getResource(name);
-	}
-	
-	
-	@Override public Enumeration<URL> getResourceUrls(String name) throws IOException
-	{
-		return Iterators.asEnumeration(Iterators.forValue(getResourceUrl(name)));
 	}
 	
 	
@@ -221,25 +205,6 @@ class ServletContextResLoader extends ResourceLoader
 	}
 	
 	
-	@Override public Enumeration<URL> getResourceUrls(String name) throws IOException
-	{
-		final Iterator<String> paths = servletContext_.getResourcePaths(name).iterator();
-		return new Enumeration<URL>()
-		{
-			@Override public boolean hasMoreElements()
-			{
-				return paths.hasNext();
-			}
-
-			@Override public URL nextElement()
-			{
-				return getResourceUrl(paths.next());
-			}
-			
-		};
-	}
-	
-	
 	@Override public InputStream getResourceAsStream(String name)
 	{
 		return servletContext_.getResourceAsStream(name);
@@ -272,13 +237,6 @@ class DirectoryResLoader extends ResourceLoader
 		{
 			throw new IllegalStateException("cannot create resource URL for '" + name + "'", e);
 		}
-	}
-	
-	
-	@Override public Enumeration<URL> getResourceUrls(String name) throws IOException
-	{
-		URL url = getResourceUrl(name);
-		return Iterators.asEnumeration(Iterators.forValue(url));
 	}
 	
 	
@@ -331,18 +289,6 @@ class ChainedLoader extends ResourceLoader
 	}
 	
 
-	@Override public Enumeration<URL> getResourceUrls(String name) throws IOException
-	{
-		ArrayList<URL> urls = new ArrayList<>();
-		for (int i=0; i<loaders_.length; i++)
-		{
-			for (Enumeration<URL> resUrls = loaders_[i].getResourceUrls(name); resUrls.hasMoreElements(); )
-				urls.add(resUrls.nextElement());
-		}
-		return Iterators.asEnumeration(urls.iterator());
-	}
-	
-	
 	@Override public InputStream getResourceAsStream(String name)
 	{
 		for (int i=0; i<loaders_.length; i++)
@@ -373,12 +319,6 @@ class StringResLoader extends ResourceLoader
 	}
 	
 
-	@Override public Enumeration<URL> getResourceUrls(String name) throws IOException
-	{
-		throw new UnsupportedOperationException();
-	}
-	
-	
 	@Override public InputStream getResourceAsStream(String name)
 	{
 		return name_.equals(name) ? new ByteArrayInputStream(content_.getBytes()) : null;
@@ -401,12 +341,6 @@ class EmptyResLoader extends ResourceLoader
 	@Override public URL getResourceUrl(String name)
 	{
 		return null;
-	}
-
-	
-	@Override public Enumeration<URL> getResourceUrls(String name) throws IOException
-	{
-		return Iterators.asEnumeration(Iterators.<URL>empty());
 	}
 
 	

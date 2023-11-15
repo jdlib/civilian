@@ -18,10 +18,8 @@ package org.civilian.util;
 
 import java.io.File;
 import java.io.InputStream;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Enumeration;
 import java.util.HashSet;
 import javax.servlet.ServletContext;
 import static org.mockito.Mockito.*;
@@ -36,11 +34,6 @@ public class ResourceLoaderTest extends CivTest
 		ResourceLoader loader = ResourceLoaders.forClass(getClass());
 		URL url = loader.getResourceUrl(getClass().getSimpleName() + ".class");
 		assertTrue(url.toString().endsWith("org/civilian/util/ResourceLoaderTest.class"));
-
-		loader = ResourceLoaders.forClass(BigInteger.class);
-		Enumeration<URL> urls = loader.getResourceUrls("BigDecimal.class");
-		assertTrue(urls.nextElement().toString().endsWith("java/math/BigDecimal.class"));
-		assertFalse(urls.hasMoreElements());
 	}
 
 
@@ -50,7 +43,6 @@ public class ResourceLoaderTest extends CivTest
 		assertNull(loader.getResourceUrl(null));
 		assertNull(loader.getResourceAsStream(null));
 		assertNull(loader.getResourceAsReader(null, null));
-		assertFalse(loader.getResourceUrls(null).hasMoreElements());	
 	}
 
 
@@ -61,7 +53,6 @@ public class ResourceLoaderTest extends CivTest
 		assertNull(loader.getResourceUrl(null));
 		assertNull(loader.getResourceAsStream(null));
 		assertNull(loader.getResourceAsReader(null, null));
-		assertFalse(loader.getResourceUrls(null).hasMoreElements());	
 	}
 
 
@@ -104,10 +95,6 @@ public class ResourceLoaderTest extends CivTest
 		paths.add("z");
 		when(context.getResourcePaths("z")).thenReturn(paths);
 		when(context.getResource("z")).thenReturn(new URL("http://z.com"));
-		
-		Enumeration<URL> urls = loader.getResourceUrls("z");
-		assertEquals("http://z.com", urls.nextElement().toString());
-		assertFalse(urls.hasMoreElements());
 	}
 
 
@@ -117,11 +104,6 @@ public class ResourceLoaderTest extends CivTest
 		URL url = loader.getResourceUrl("java/lang/String.class");
 		assertTrue(url.toString().endsWith("/java/lang/String.class"));
 
-		// system classloader sometimes returns several identical urls
-		Enumeration<URL> urls = loader.getResourceUrls("java/lang/String.class");
-		while (urls.hasMoreElements())
-			assertTrue(urls.nextElement().toString().endsWith("/java/lang/String.class"));
-		
 		try (InputStream in = loader.getResourceAsStream("java/lang/String.class"))
 		{
 			assertNotNull(in);
