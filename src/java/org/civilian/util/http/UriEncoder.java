@@ -34,7 +34,9 @@ public class UriEncoder
 	
 	
 	/**
-	 * Encodes a string. 
+	 * Encodes a string.
+	 * @param s a string
+	 * @return the encoded string 
 	 */
 	public static String encode(String s)
 	{
@@ -61,7 +63,9 @@ public class UriEncoder
 	
 
 	/**
-	 * Encodes a string and appends the result to a StringBuilder. 
+	 * Encodes a string and appends the result to a StringBuilder.
+	 * @param s a string
+	 * @param out receives the encoded string 
 	 */
 	public static void encode(String s, StringBuilder out)
 	{

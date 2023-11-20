@@ -27,6 +27,7 @@ public class Check
 	 * @param what describes the object.
 	 * @return the object
 	 * @exception IllegalArgumentException if the object is null.
+	 * @param <T> the class type
 	 */
 	public static <T> T notNull(T object, String what)
 	{
@@ -55,6 +56,7 @@ public class Check
 	 * @return the array
 	 * @param what describes the array.
 	 * @exception IllegalArgumentException if the array is empty.
+	 * @param <T> the class type
 	 */
 	public static <T> T[] notEmpty(T[] array, String what)
 	{
@@ -119,6 +121,7 @@ public class Check
 	/**
 	 * Checks that a int value is &gt;= another value.
 	 * @param n the value
+	 * @param min the minimum
 	 * @param what describes the value
 	 * @return the value
 	 * @exception IllegalArgumentException if the value is outside the range.
@@ -133,6 +136,8 @@ public class Check
 
 	/**
 	 * Checks that the first class is a superclass of the second class.
+	 * @param superClass the super class candidate
+	 * @param derivedClass the derived class candidate
 	 */
 	public static void isSuperclassOf(Class<?> superClass, Class<?> derivedClass)
 	{
@@ -150,9 +155,11 @@ public class Check
 	/**
 	 * Checks that an object is an instance of a class.
 	 * @param object the object
+	 * @param type a class
 	 * @param what describes the object.
 	 * @return the object
 	 * @exception IllegalArgumentException if the object is null.
+	 * @param <T> the class type
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T isA(Object object, Class<T> type, String what)

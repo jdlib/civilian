@@ -56,6 +56,9 @@ public abstract class KeySerializers
 
 	/**
 	 * Creates a KeySerializer for enums. The name of the enum value is used as string form.
+	 * @param enumClass the class
+	 * @return the serializer
+	 * @param <E> the enum type
 	 */
 	public static <E extends Enum<E>> KeySerializer forEnum(Class<E> enumClass)
 	{
@@ -66,6 +69,7 @@ public abstract class KeySerializers
 	/**
 	 * Creates a KeySerializer for a KeyList whose values have the given class.  
 	 * @param valueClass May be null.
+	 * @return the serializer
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static KeySerializer forType(Class<?> valueClass)

@@ -229,14 +229,18 @@ public class DateFormat implements Serializable
 	
 	/**
 	 * Parses a date from a string representation.
+	 * @param factory a date factory
+	 * @param s a string input 
 	 * @exception java.text.ParseException thrown if an parse error occurs
+	 * @return the parse date
+	 * @param <T> the date type
 	 */
-	public <T> T parse(Factory<T> factory, String text) throws ParseException
+	public <T> T parse(Factory<T> factory, String s) throws ParseException
 	{
 		int values[] = new int[6]; // 0-2: value 3-5: length of string part
-		int errorPos = parseValues(text, values);
+		int errorPos = parseValues(s, values);
 		if (errorPos >= 0)
-			throw new ParseException("'" + text + "' has an invalid date format", errorPos);
+			throw new ParseException("'" + s + "' has an invalid date format", errorPos);
 
 		int day  	= values[dayPosition_];
 		int month	= values[monthPosition_];
@@ -250,7 +254,7 @@ public class DateFormat implements Serializable
 		}
 		catch(Exception e)
 		{
-			ParseException pe = new ParseException("'" + text + "' is an invalid date", 0);
+			ParseException pe = new ParseException("'" + s + "' is an invalid date", 0);
 			pe.initCause(e);
 			throw pe;
 		}
@@ -304,6 +308,7 @@ public class DateFormat implements Serializable
 	 * @param year the year (the year 2001 is specified as 2001)
 	 * @param month the month (counting from 1 to 12)
 	 * @param day the day (counting from 1 to 31)
+	 * @return the string representation
 	 */
 	public String format(int year, int month, int day)
 	{

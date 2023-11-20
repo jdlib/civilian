@@ -49,6 +49,7 @@ public class HeaderParser
 
 	/**
 	 * Creates a new HeaderParser. 
+	 * @param header a header 
 	 */
 	public HeaderParser(String header)
 	{
@@ -57,7 +58,8 @@ public class HeaderParser
 	
 	
 	/**
-	 * (Re-)init the HeaderParser. 
+	 * (Re-)init the HeaderParser.
+	 * @param header a header 
 	 */
 	public void init(String header)
 	{

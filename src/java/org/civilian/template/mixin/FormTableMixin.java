@@ -31,6 +31,7 @@ public class FormTableMixin
 {
 	/**
 	 * Creates a new FormTableMixin.
+	 * @param out a CspWriter
 	 */
 	public FormTableMixin(CspWriter out)
 	{
@@ -41,6 +42,8 @@ public class FormTableMixin
 	/**
 	 * Defines a css class value which is added to labels
 	 * of required controls.
+	 * @param s a css class
+	 * @return this
 	 */
 	public FormTableMixin setRequiredLabelClass(String s)
 	{
@@ -51,6 +54,8 @@ public class FormTableMixin
 	
 	/**
 	 * Defines a css class value which is added to error controls.
+	 * @param s a css class
+	 * @return this
 	 */
 	public FormTableMixin setErrorControlClass(String s)
 	{
@@ -98,6 +103,7 @@ public class FormTableMixin
 	
 	/**
 	 * Escapes and prints a label.
+	 * @param text a text
 	 */
 	public void label(String text)
 	{
@@ -123,6 +129,7 @@ public class FormTableMixin
 	
 	/**
 	 * Prints a table cell containing the label.
+	 * @param label a label
 	 */
 	public void labelCell(String label)
 	{

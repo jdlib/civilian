@@ -178,7 +178,8 @@ public class NumberFormat implements Serializable
 	
 	/**
 	 * Formats a long value.
-	 * @param value the value.
+	 * @param value the value
+	 * @param style the style
 	 * @param builder a StringBuilder to which the formatted number is appended. 
 	 * 		If the builder is null, then a new StringBuilder will be created. 
 	 * @return the StringBuilder containing the number
@@ -191,7 +192,8 @@ public class NumberFormat implements Serializable
 	
 	/**
 	 * Formats a number.
-	 * @param value the value.
+	 * @param value the value
+	 * @param style the style
 	 * @param builder a StringBuilder to which the formatted number is appended. 
 	 * 		If the builder is null, then a new StringBuilder will be created. 
 	 * @return the StringBuilder containing the number

@@ -45,6 +45,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 {
 	/**
 	 * Creates a new LangMixin object.
+	 * @param out a CspWriter
 	 */
 	public LangMixin(CspWriter out)
 	{
@@ -57,6 +58,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 	
 	/**
 	 * Initializes the mixin to use the LocaleSerivce.
+	 * @param service the LocaleSerivce
 	 */
 	public void init(LocaleService service)
 	{
@@ -70,7 +72,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 
 	
 	/**
-	 * Returns the LocaleService used by the mixin.
+	 * @return the LocaleService used by the mixin.
 	 */
 	@Override public LocaleService getLocaleService()
 	{
@@ -79,7 +81,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 
 	
 	/**
-	 * Returns the TypeSerializer used by the mixin.
+	 * @return the TypeSerializer used by the mixin.
 	 */
 	public TypeSerializer getSerializer()
 	{
@@ -88,7 +90,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 	
 	
 	/**
-	 * Returns the MsgBundle used by the mixin.
+	 * @return the MsgBundle used by the mixin.
 	 */
 	@Override public MsgBundle getMsgBundle()
 	{
@@ -129,6 +131,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 	 * @param value a value
 	 * @param defaultFormat returned if the value is null
 	 * @return the formatted value or defaultFormat if the value is null
+	 * @param <T> the type of the value
 	 */
 	public <T> String format(T value, String defaultFormat)
 	{
@@ -142,6 +145,7 @@ public class LangMixin implements MsgBundleProvider, LocaleServiceProvider
 	 * @param style a style passed to the formatter or null
 	 * @param defaultFormat returned if the value is null
 	 * @return the formatted value or defaultFormat if the value is null
+	 * @param <T> the type of the value
 	 */
 	public <T> String format(T value, Style style, String defaultFormat)
 	{

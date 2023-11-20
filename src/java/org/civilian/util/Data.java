@@ -56,6 +56,7 @@ public class Data
 	/**
 	 * Returns the first value that has the given class.
 	 * @param cls a class
+	 * @param <T> the class type
 	 * @return the value or null if not found.
 	 */
 	public <T> T get(Class<? extends T> cls)
@@ -73,6 +74,9 @@ public class Data
 	/**
 	 * Returns the first attribute object of the CspWriter that has
 	 * the given class.  
+	 * @param cls a class
+	 * @param <T> the class type
+	 * @return the value or null if not found.
 	 * @throws IllegalStateException if there is no such object,
 	 */
 	public <T> T getRequired(Class<? extends T> cls)

@@ -66,7 +66,7 @@ public class CspWriter extends PrintWriter
 
 	
 	/**
-	 * Returns the default line separator used by a new CspWriter.
+	 * @return the default line separator used by a new CspWriter.
 	 */ 
 	public static String getDefaultLineSeparator()
 	{
@@ -101,6 +101,7 @@ public class CspWriter extends PrintWriter
 	 * Sets the string used for a tab. 
 	 * If you do not explicitly specify the tab chars, 
 	 * the value of {@link #getDefaultTabChars()} is used.
+	 * @param chars the chars
 	 */
 	public void setTabChars(String chars)
 	{
@@ -111,6 +112,7 @@ public class CspWriter extends PrintWriter
 	/**
 	 * Sets the characters used to separate lines. The default is
 	 * system dependent (e.g. "0xD0xA" on Windows).
+	 * @param separator the separator
 	 */
 	public void setLineSeparator(String separator)
 	{

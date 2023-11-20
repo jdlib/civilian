@@ -22,7 +22,7 @@ package org.civilian.text.service;
 public interface LocaleServiceProvider
 {
 	/**
-	 * Returns the LocaleService.
+	 * @return the LocaleService.
 	 */
 	public LocaleService getLocaleService();
 }

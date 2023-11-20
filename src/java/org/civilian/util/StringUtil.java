@@ -26,6 +26,8 @@ public abstract class StringUtil
 {
 	/**
 	 * Returns a string which starts with an upper case character.
+	 * @param s the input string
+	 * @return the new string
 	 */
 	public static String startUpperCase(String s)
 	{
@@ -37,6 +39,8 @@ public abstract class StringUtil
 
 	/**
 	 * Returns a string which starts with a lower case character.
+	 * @param s the input string
+	 * @return the new string
 	 */
 	public static String startLowerCase(String s)
 	{
@@ -81,6 +85,9 @@ public abstract class StringUtil
 	 * Returns the part of the string before the given character
 	 * or the whole string if the input does not contain
 	 * the character.
+	 * @param s the input string
+	 * @param c a character
+	 * @return the new string
 	 */
 	public static String before(String s, char c)
 	{
@@ -93,6 +100,9 @@ public abstract class StringUtil
 	 * Returns the part of the string after the given character
 	 * or null if the input does not contain
 	 * the character.
+	 * @param s the input string
+	 * @param c a character
+	 * @return the new string
 	 */
 	public static String after(String s, char c)
 	{
@@ -105,6 +115,9 @@ public abstract class StringUtil
 	 * Returns a string which is the input string with the
 	 * prefix prepended to the left. If the string already starts with
 	 * the prefix it is returned unchanged.
+	 * @param s the input string
+	 * @param prefix a prefix
+	 * @return the new string
 	 */
 	public static String haveLeft(String s, String prefix)
 	{
@@ -116,6 +129,9 @@ public abstract class StringUtil
 	 * Returns a string which is the input string with the
 	 * suffix appended to the right. If the string already ends with
 	 * the suffix it is returned unchanged.
+	 * @param s the input string
+	 * @param suffix a suffix
+	 * @return the new string
 	 */
 	public static String haveRight(String s, String suffix)
 	{
@@ -127,6 +143,9 @@ public abstract class StringUtil
 	 * Returns a string which is the input string with the
 	 * prefix removed from the left. If the string does not start with
 	 * the prefix it is returned unchanged.
+	 * @param s the input string
+	 * @param prefix a prefix
+	 * @return the new string
 	 */
 	public static String cutLeft(String s, String prefix)
 	{
@@ -138,6 +157,9 @@ public abstract class StringUtil
 	 * Returns a string which is the input string with the
 	 * suffix removed from the right. If the string does not end with
 	 * the suffix it is returned unchanged.
+	 * @param s the input string
+	 * @param suffix a suffix
+	 * @return the new string
 	 */
 	public static String cutRight(String s, String suffix)
 	{
@@ -150,15 +172,22 @@ public abstract class StringUtil
 	 * string. If the input is longer than newlen, it is cut.
 	 * If it is less than newlen then it is filled up with the fillchar at
 	 * the end.
+	 * @param s the input string
+	 * @param newlen the new length
+	 * @param fillChar the character used to fill up 
+	 * @return the new string
 	 */
-	public static String fillRight(String s, int newlen, char fillchar)
+	public static String fillRight(String s, int newlen, char fillChar)
 	{
-		return fill(s, newlen, fillchar, false);
+		return fill(s, newlen, fillChar, false);
 	}
 		
 	
 	/**
 	 * A shortcut for fillRight(s, newlen, ' ')
+	 * @param s the input string
+	 * @param newlen the new length
+	 * @return the new string
 	 */
 	public static String fillRight(String s, int newlen)
 	{
@@ -168,6 +197,9 @@ public abstract class StringUtil
 	
 	/**
 	 * A shortcut for fillRight(String.valueOf(n), newlen, '0')
+	 * @param n a number
+	 * @param newlen the new length
+	 * @return the new string
 	 */
 	public static String fillRight(int n, int newlen)
 	{
@@ -180,15 +212,22 @@ public abstract class StringUtil
 	 * string. If the input is longer than newlen, it is cut.
 	 * If it is less than newlen then it is filled up with the fillchar at
 	 * the beginning.
+	 * @param s the input string
+	 * @param newlen the length of the new string
+	 * @param fillChar the character used to fill up 
+	 * @return the new string
 	 */
-	public static String fillLeft(String s, int newlen, char fillchar)
+	public static String fillLeft(String s, int newlen, char fillChar)
 	{
-		return fill(s, newlen, fillchar, true);
+		return fill(s, newlen, fillChar, true);
 	}
 
 
 	/**
 	 * A shortcut for fillLeft(String s, int newlen).
+	 * @param s the input string
+	 * @param newlen the length of the new string
+	 * @return the new string
 	 */
 	public static String fillLeft(String s, int newlen)
 	{
@@ -198,6 +237,9 @@ public abstract class StringUtil
 
 	/**
 	 * A shortcut for fillLeft(n, newlen, '0').
+	 * @param n a number, to be turned into a string
+	 * @param newlen the length of the new string
+	 * @return the new string
 	 */
 	public static String fillLeft(int n, int newlen)
 	{
@@ -207,6 +249,10 @@ public abstract class StringUtil
 
 	/**
 	 * A shortcut for fillLeft(String.valueOf(n), newlen, fillChar)).
+	 * @param n a number, to be turned into a string
+	 * @param newlen the length of the new string
+	 * @param fillChar the character used to fill up 
+	 * @return the new string
 	 */
 	public static String fillLeft(int n, int newlen, char fillChar)
 	{
@@ -232,20 +278,23 @@ public abstract class StringUtil
 
 
 	/**
-	 * Returns a string consisting of the character replicated
-	 * x times.
+	 * @return a string consisting of the character replicated
+	 * n times.
+	 * @param times the length of the result string
+	 * @param c the character
 	 */
-	public static String replicate(int x, char c)
+	public static String replicate(int times, char c)
 	{
-		StringBuilder sb = new StringBuilder(x);
-		for (int i=0; i<x; i++)
+		StringBuilder sb = new StringBuilder(times);
+		for (int i=0; i<times; i++)
 			sb.append(c);
 		return sb.toString();
 	}
 
 
 	/**
-	 * Returns true iif the String is null or empty.
+	 * @return true iif the String is null or empty.
+	 * @param s the input string
 	 */
 	public static boolean isBlank(String s)
 	{

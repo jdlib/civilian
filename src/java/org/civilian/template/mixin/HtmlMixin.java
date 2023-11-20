@@ -63,6 +63,7 @@ public class HtmlMixin
 	 * a list of attribute names and values given by the attrs parameter.
 	 * @param href a relative path to the css file. The path is automatically
 	 * 		prefixed by the {@link #path()} stored in the mixin..
+	 * @param attrs the attribute names and values
 	 */
 	public void linkCss(String href, String... attrs)
 	{
@@ -110,6 +111,7 @@ public class HtmlMixin
 	 * list of attribute names and values given by the attrs parameter.
 	 * @param src a path to the script file. The path is automatically prefixed by 
 	 * 		the application path.
+	 * @param attrs the attribute names and values
 	 */
 	public void script(String src, String... attrs)
 	{
@@ -137,6 +139,7 @@ public class HtmlMixin
 	 * list of attribute names and values given by the attrs parameter.
 	 * @param src a path to the script file. The path is automatically prefixed by 
 	 * 		the application path.
+	 * @param attrs the attribute names and values
 	 */
 	public void img(String src, String... attrs)
 	{
@@ -150,6 +153,8 @@ public class HtmlMixin
 
 	/**
 	 * Prints a meta tag with a http-equiv and content attribute.
+	 * @param httpEquiv the httpEquiv value
+	 * @param content the content value
 	 */
 	public void metaHttpEquiv(String httpEquiv, String content)
 	{
@@ -258,6 +263,7 @@ public class HtmlMixin
 	 * The default path equals the application path if the   
 	 * CspWriter was initialized from a Civilian response.
 	 * Else the default path is simple the root path.
+	 * @return the path
 	 */
 	public Path path()
 	{
@@ -319,6 +325,7 @@ public class HtmlMixin
 
 	/**
 	 * @return a Url object with the resource path.
+	 * @param resource a Resource
 	 */
 	public Url url(Resource resource)
 	{
@@ -328,15 +335,17 @@ public class HtmlMixin
 	
 	/**
 	 * @return a Url object with the path of the resource associated with the controller.
+	 * @param type a ResourceHandler class
 	 */
-	public Url url(Class<? extends ResourceHandler> controllerClass)
+	public Url url(Class<? extends ResourceHandler> type)
 	{
-		return response().url().to(controllerClass);
+		return response().url().to(type);
 	}
 
 	
 	/**
-	 * @return a Url with the given value.  
+	 * @return a Url with the given value.
+	 * @param value a value  
 	 */
 	public Url url(String value)
 	{
@@ -345,7 +354,8 @@ public class HtmlMixin
 	
 	
 	/**
-	 * @return a Url with the path of the given path provider.  
+	 * @return a Url with the path of the given path provider.
+	 * @param pp a PathProvider  
 	 */
 	public Url url(PathProvider pp)
 	{

@@ -38,6 +38,7 @@ public class Value<T>
 	
 	/**
 	 * Creates a new Value.
+	 * @param value the value
 	 */
 	public Value(T value)
 	{
@@ -62,7 +63,7 @@ public class Value<T>
 
 	
 	/**
-	 * Returns the contained value.
+	 * @return the contained value.
 	 */
 	public T getValue()
 	{
@@ -71,7 +72,7 @@ public class Value<T>
 	
 	
 	/**
-	 * Returns if the contained value is not null. 
+	 * @return if the contained value is not null. 
 	 */
 	public boolean hasValue()
 	{
@@ -80,7 +81,6 @@ public class Value<T>
 	
 	
 	/**
-	 * Returns the error.
 	 * @return the error or null. 
 	 */
 	public Throwable getError()
@@ -90,7 +90,7 @@ public class Value<T>
 	
 	
 	/**
-	 * Returns the original string value
+	 * @return the original string value
      * which represented the value but could not be parsed.
 	 */
 	public String getErrorValue()
@@ -100,7 +100,7 @@ public class Value<T>
 
 	
 	/**
-	 * Returns if the Value has an error.
+	 * @return if the Value has an error.
 	 */
 	public boolean hasError()
 	{
@@ -109,7 +109,7 @@ public class Value<T>
 
 	
 	/**
-	 * Returns a debug string representation of the value.
+	 * @return a debug string representation of the value.
 	 */
 	@Override public String toString()
 	{

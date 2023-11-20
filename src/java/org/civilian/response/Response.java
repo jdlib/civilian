@@ -240,6 +240,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	/**
 	 * Adds a cookie to the response.
+	 * @param cookie a cookie
 	 * @return this response
 	 */
 	public abstract Response addCookie(Cookie cookie); 
@@ -247,7 +248,8 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 
 	/**
 	 * Adds the session id to the URL string and returns the new URL string.
-	 * In Servlet terms this method corresponds to HttpServletResponse#encodeURL.  
+	 * In Servlet terms this method corresponds to HttpServletResponse#encodeURL.
+	 * @param url a url  
 	 * @return the URL with session id included or the original URL if the session id does not 
 	 * need to be included in the URL.
 	 */
@@ -270,6 +272,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 
 	/**
 	 * Sets the LocaleService associated with the response.
+	 * @param service a LocaleService
 	 * @return this
 	 */
 	public abstract Response setLocaleService(LocaleService service);
@@ -396,6 +399,8 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Sends an error response to the client.
 	 * This is a shortcut for {@link #sendError(int, String, Throwable) sendError(statusCode, null, null)}.
+	 * @param statusCode a status code
+	 * @throws IOException if an IO error occurs
 	 */
 	public default void sendError(int statusCode) throws IllegalStateException, IOException
 	{
@@ -426,6 +431,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Sends a redirect response to the client. 
 	 * After using this method, the response is committed and should not be written to.
+	 * @param url a URL
 	 * @throws IllegalStateException if the response has already been committed 
 	 * @throws IOException if an IO error occurs
 	 */
@@ -449,6 +455,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Writes JSON data to the response content.
 	 * @param object a object which is converted to JSON.
+	 * @throws Exception if an error occurs
 	 */
 	public default void writeJson(Object object) throws Exception
 	{
@@ -462,6 +469,8 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * {@link JaxbXmlSerializer} or another suitable ContentSerializer to the applications 
 	 * {@link AppConfig#getContentSerializers() serializers}
 	 * during application setup.  
+	 * @param object a object containing the data.
+	 * @throws Exception if an error occurs
 	 */
 	public default void writeXml(Object object) throws Exception
 	{
@@ -471,6 +480,8 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	/**
 	 * Writes text to the response content.
+	 * @param text the text
+	 * @throws Exception if an error occurs
 	 */
 	public default void writeText(String text) throws Exception
 	{
@@ -480,7 +491,9 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	
 	/**
 	 * Calls write(object, null);
+	 * @param object a object containing the data.
 	 * @return this
+	 * @throws Exception if an error occurs
 	 */
 	public default Response writeContent(Object object) throws Exception
 	{
@@ -503,13 +516,17 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * @param contentType a content type. Can be null, if the content-type was already set on
 	 * 		the response
 	 * @return this
+	 * @throws Exception if an error occurs
 	 */
 	public abstract Response writeContent(Object object, String contentType) throws Exception;
 
 	
 	/**
 	 * Calls write(object, contentType.getValue());
+	 * @param object the content
+	 * @param contentType a content type
 	 * @return this
+	 * @throws Exception if an error occurs
 	 */
 	public default Response writeContent(Object object, ContentType contentType) throws Exception
 	{
@@ -535,6 +552,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * The method may not be called if {@link #getContentStream()} was called before.
 	 * @see Application#getDefaultEncoding()
 	 * @throws IOException if an IO error occurs
+	 * @return the writer
 	 */
 	public abstract PrintWriter getContentWriter() throws IOException;
 

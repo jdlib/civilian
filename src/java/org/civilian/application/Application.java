@@ -101,6 +101,8 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	/**
 	 * Creates a new application.
 	 * Shortcut for Application(pathParams, controllerRootPackage, new ControllerNaming())
+	 * @param pathParams the path parameters
+	 * @param controllerRootPackage the controller root package
 	 */
 	public Application(PathParamMap pathParams, String controllerRootPackage)
 	{
@@ -111,6 +113,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	/**
 	 * Creates a new application.
 	 * Shortcut for Application(pathParams, &lt;application package&gt;, new ControllerNaming())
+	 * @param pathParams the path parameters
 	 */
 	public Application(PathParamMap pathParams)
 	{
@@ -236,6 +239,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	/**
 	 * Initializes the AssetService of the application. Called after
 	 * {@link #init(AppConfig)} finished.
+	 * @param config the config
 	 * @return the AssetService
 	 */
 	protected AssetService initAssets(AssetConfig config)
@@ -282,7 +286,8 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * <li>ResourceDispatch, to dispatch requests to resources
 	 * </ol>
 	 * The process list can be rearranged, reduced or enhanced depending
-	 * on the needs of your application.  
+	 * on the needs of your application.
+	 * @param config the config  
 	 * @throws Exception if an error during initialization occurs.
 	 */
 	protected void initProcessors(ProcessorConfig config) throws Exception
@@ -319,6 +324,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * The method is also called when {@link #init(AppConfig)} threw an exception.
 	 * Therefore you need to take into account that your app resource may
 	 * not have been fully initialized.
+	 * @throws Exception if an error occurs
 	 */
 	protected abstract void close() throws Exception;
 
@@ -606,6 +612,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	 * @param request the request
 	 * @param response the response
 	 * @param error the error
+	 * @throws Exception if an error occurs
 	 */
 	protected void onError(Request request, Response response, Throwable error) throws Exception
 	{

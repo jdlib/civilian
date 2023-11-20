@@ -36,6 +36,10 @@ public abstract class MsgBundleFactories
 	 * 		<li>resbundle:&lt;base name for java resoure bundles&gt;
 	 * 		</ul>
 	 * 		Else the definition string is interpreted as class name of MsgBundleFactory.
+	 * @return the factory
+	 * @throws ClassNotFoundException if the factory class cannot be found
+	 * @throws InstantiationException if the factory class cannot be instantiated
+	 * @throws IllegalAccessException if the factory class cannot be accessed
 	 */
 	public static MsgBundleFactory createFactory(String definition) 
 		throws ClassNotFoundException, InstantiationException, IllegalAccessException
@@ -56,6 +60,7 @@ public abstract class MsgBundleFactories
 	
 	/**
 	 * Creates a MsgBundleFactory which returns empty MsgNundles. 
+	 * @return the MsgBundleFactory
 	 */
 	public static MsgBundleFactory createEmptyFactory()
 	{
@@ -66,6 +71,7 @@ public abstract class MsgBundleFactories
 	/**
 	 * Creates a MsgBundleFactory based on Java resource bundles. 
 	 * @param baseName the base name of the message bundles
+	 * @return the MsgBundleFactory
 	 */
 	public static MsgBundleFactory createResBundleFactory(String baseName)
 	{

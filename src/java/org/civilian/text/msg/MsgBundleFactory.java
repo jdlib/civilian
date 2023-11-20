@@ -26,6 +26,8 @@ public abstract class MsgBundleFactory
 {
 	/**
 	 * Creates a MsgBundle for a locale.
+	 * @param locale a locale
+	 * @return the MsgBundle
 	 */
 	public abstract MsgBundle getMsgBundle(Locale locale);
 	
