@@ -19,6 +19,7 @@ package org.civilian.controller;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import org.civilian.annotation.Segment;
+import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.util.Check;
@@ -38,6 +39,13 @@ public class ControllerSignature
 	private static final char SEPARATOR   		= ':';
 	private static final String PARAMPREFIX   	= "$";
 	
+	
+	public static ControllerSignature of(Resource resource)
+	{
+		Object data = resource.getData();
+		return data != null ? Check.isA(data, ControllerSignature.class) : null;
+	}
+
 	
 	public static ControllerSignature parse(String signature, PathParamMap pathParams)
 	{
@@ -65,6 +73,25 @@ public class ControllerSignature
 			}
 		}
 		return new ControllerSignature(className, methodSegment, methodPathParam);
+	}
+
+	
+
+	
+	/**
+	 * Recursively go trough the resource tree and instantiate the controller classes.
+	 * This allows for a test during application startup (in production mode) 
+	 * if the resource tree has valid controller classes.
+	 * @param resource a resource
+	 * @throws ClassNotFoundException if a controller class could not be found   
+	 */
+	public static void touchControllerClasses(Resource resource) throws ClassNotFoundException
+	{
+		ControllerSignature signature = of(resource);
+		if (signature != null)
+			Class.forName(signature.getClassName());
+		for (Resource child : resource.children())
+			touchControllerClasses(child);
 	}
 
 	

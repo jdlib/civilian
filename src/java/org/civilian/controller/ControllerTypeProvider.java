@@ -43,52 +43,14 @@ public interface ControllerTypeProvider
 	public static Map<ControllerSignature,Resource> initTypeProviders(Resource root, ControllerService service)
 	{
 		Map<ControllerSignature,Resource> sig2resource = new HashMap<>();
-		initTypeProviders(root, service, sig2resource);
+		ControllerTypeUtil.initTypeProviders(root, service, sig2resource);
 		return sig2resource;
-	}
-		
-
-	private static void initTypeProviders(Resource resource, ControllerService service, Map<ControllerSignature,Resource> sig2resource)
-	{
-		ControllerSignature sig = getSignature(resource);
-		if (sig != null)
-		{
-			sig.setData(ControllerTypeProvider.create(service, sig));
-			sig2resource.put(sig, resource);
-		}		
-		
-		for (Resource child : resource.children())
-			initTypeProviders(child, service, sig2resource);
-	}
-
-	
-	/**
-	 * Recursively go trough the resource tree and instantiate the controller classes.
-	 * This allows for a test during application startup (in production mode) 
-	 * if the resource tree has valid controller classes.
-	 * @param resource a resource
-	 * @throws ClassNotFoundException if a controller class could not be found   
-	 */
-	public static void touchControllerClasses(Resource resource) throws ClassNotFoundException
-	{
-		ControllerSignature signature = getSignature(resource);
-		if (signature != null)
-			Class.forName(signature.getClassName());
-		for (Resource child : resource.children())
-			touchControllerClasses(child);
-	}
-
-	
-	private static ControllerSignature getSignature(Resource resource)
-	{
-		Object data = resource.getData();
-		return data != null ? Check.isA(data, ControllerSignature.class) : null;
 	}
 
 	
 	public static ControllerTypeProvider getTypeProvider(Resource resource)
 	{
-		ControllerSignature sig = getSignature(resource);
+		ControllerSignature sig = ControllerSignature.of(resource);
 		Object data = sig != null ? sig.getData() : null;
 		return data != null ? Check.isA(data, ControllerTypeProvider.class) : ControllerTypeProvider.EMPTY; 
 	}
@@ -101,6 +63,23 @@ public interface ControllerTypeProvider
 	
 	
 	public abstract ControllerType getControllerType();
+}
+
+
+class ControllerTypeUtil
+{
+	static void initTypeProviders(Resource resource, ControllerService service, Map<ControllerSignature,Resource> sig2resource)
+	{
+		ControllerSignature sig = ControllerSignature.of(resource);
+		if (sig != null)
+		{
+			sig.setData(ControllerTypeProvider.create(service, sig));
+			sig2resource.put(sig, resource);
+		}		
+		
+		for (Resource child : resource.children())
+			initTypeProviders(child, service, sig2resource);
+	}
 }
 
 

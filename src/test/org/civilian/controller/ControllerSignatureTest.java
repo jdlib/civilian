@@ -18,9 +18,11 @@ package org.civilian.controller;
 
 import org.junit.Test;
 import org.civilian.CivTest;
+import org.civilian.resource.Resource;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.resource.pathparam.PathParamMap;
 import org.civilian.resource.pathparam.PathParams;
+import org.civilian.testcase1.AlphaController;
 
 
 public class ControllerSignatureTest extends CivTest
@@ -45,5 +47,16 @@ public class ControllerSignatureTest extends CivTest
 		sig = ControllerSignature.parse("c:$p", map);
 		assertEquals("c", sig.getClassName());
 		assertSame(pp, sig.getMethodPathParam());
+	}
+	
+	
+	@Test public void testTouch() throws Exception
+	{
+		Resource root = new Resource();
+		root.setData(new ControllerSignature(AlphaController.class));
+		
+		new Resource(root, "a");
+		
+		ControllerSignature.touchControllerClasses(root);
 	}
 }
