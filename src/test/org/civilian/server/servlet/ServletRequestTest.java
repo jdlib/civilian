@@ -108,6 +108,7 @@ public class ServletRequestTest extends CivTest
 	}		
 		
 	
+	@SuppressWarnings("unchecked")
 	@Test public void testAttributes() throws Exception
 	{
 		init();
@@ -118,6 +119,7 @@ public class ServletRequestTest extends CivTest
 		when(servletReq.getAttribute("x")).thenReturn("y");
 		assertEquals("y", request.getAttribute("x"));
 		
+		when(servletReq.getAttributeNames()).thenReturn(mock(Enumeration.class));
 		request.getAttributeNames();
 		verify(servletReq).getAttributeNames();
 	}	
