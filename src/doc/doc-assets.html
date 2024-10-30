@@ -31,24 +31,24 @@
 		<h2 id="intro">Introduction</h2>
 		Assets are static resources like CSS stylesheets, JavaScript code, images, etc. 
 		used by your application. They are resources since they can be addressed by a URL;
-		they are static since they are (usually) not generated at runtime, but reside as files in the local file system.<br>
+		they are static since they are (usually) not generated at runtime, but reside as files in the servers file system.<br>
 		
 		<h2 id="processing">Processing asset requests</h2>
-		a client does not care if a resource is static or dynamic. But internally processing of these requests is different:
+		A client should not care if a resource is static or dynamic. But internally, processing of these requests is different:
 		<ul>
-		<li>Requests for dynamic resources requires to create a Controller and call it to process the request.
+		<li>Requests for dynamic resources requires to create a Controller which then processes the request.
 		<li>Requests for static resources will return the content of a server-side file.
 		</ul>
 		By default Civilian first tries to route a request to a Controller.
-		If not possible it tries to find an asset for the request. If both fails the application sends
-		{javadoc:application.Application#createNotFoundResponse() a not-found response}.
+		If not successful it tries to find an asset for the request. If both fails the application sends
+		{javadoc:application.Application#createNotFoundHandler() a not-found response}.
 		<p>
 		Asset responses include a <code>Last-Modified</code> header for the asset file date, and a <code>max-age</code>
-		header for 30 days. The <code>If-Modified-Since</code> request header is evaluated and may
+		header (with a default of 30 days). The <code>If-Modified-Since</code> request header is evaluated and may
 		result in a {javadoc:response.Response*Status#SC304_NOT_MODIFIED 304 not modified} response. 
 		
 		<h2 id="locations">Asset locations</h2>
-		Civilians asset handling allows you to publish files from a local directories or (any other file trees) as
+		Civilians asset handling allows you to publish files from local directories as
 		resources under the application path.<br>  
 		For example if directory <code>c:\myfiles</code> is published under the asset path <code>/files</code> in an application
 		with {javadoc:application.Application#getPath() path} <code>/myapp</code>, then the directory content will become available
@@ -67,7 +67,7 @@
 			<td><code>/myapp/<b>files/js/script.js</b></code></td>
 		</tr>
 		</table>
-		(Of course the asset path may be the root path <code>/</code>, publishing the asset files directly under the application root).
+		(The asset path can also be the root path <code>/</code>, publishing the asset files directly under the application root).
 		<p>
 		
 		<h3 id="dir">Publishing file assets from local directories</h3>
@@ -100,7 +100,7 @@
 		<a href="doc-development.html#tomcat-loader">deployment build</a>). 
 
 		<h3 id="classpath">Publishing Java resource files from the classpath</h3>
-		Java classpath resources can also be published as web resources. For security reasons only Java resources with certain
+		Java classpath resources can also be published as assets. For security reasons only Java resources with certain
 		non-empty prefixes may be published.<br>
 		If for example Java resources beginning with <code>"/civassets"</code> are published under the asset path <code>/civ</code> 
 		in an application with path <code>/myapp</code>, then these Java resources become available as web resources: 
@@ -121,8 +121,8 @@
 		</table>
 		
 		<h3 id="impl">Implementing own asset locations</h3>
-		Asset locations are represented as instances of the {javadoc:asset.service.AssetLocation} class. If you need an additional asset retrieval 
-		besides directories or Java resources, you could implement your own AssetLocation and install an instance during
+		Asset locations are represented as instances of the {javadoc:asset.service.AssetLocation} class. If you need an additional asset 
+		retrieval method 	besides directories or Java resources, you could implement your own AssetLocation and install an instance during
 		asset configuration (see below). 
 
 		<h2 id="caching">Caching</h2>
@@ -135,7 +135,7 @@
 		
 		<h2 id="encoding">Asset encoding and content-types</h2>
 		An asset response contains a <code>Content-Type</code> header which includes an encoding parameter.
-		By default encoding of textual assets equals the application {javadoc:application.Application#getDefaultCharEncoding() encoding} (which by default is UTF-8).
+		If not configured differently encoding of textual assets equals the application {javadoc:application.Application#getDefaultEncoding() encoding}, which by default is UTF-8.
 		It is a good idea to serve all HTML pages and textual assets in the same encoding.
 		<p>
 		Additionally you can specify different encodings for every asset location.
@@ -168,7 +168,7 @@
 		</div>
 		<p>
 		The location type <code>dir</code> denotes a <b>directory</b> containing assets files. If it has no param it equals
-		the directory where the application is deployed, if the param is an relative directory
+		the directory where the application is deployed. If the param denotes a relative path
 		then it is the corresponding subdirectory, else it is interpreted as absolute directory. 
 		<div class="highlight">
 			<table width="100%">
@@ -243,7 +243,7 @@
 		locations and cache behaviour during {javadoc:application.Application#init(org*civilian*application*AppConfig) application startup}.
 		<p>
 		For advanced use you could also override {javadoc:application.Application#initAssets(org*civilian*asset*AssetConfig) Application.initAssets(AssetConfig)}
-		to determine how the applications {javadoc:asset.service.AssetService} is constructed.  
+		to determine how the {javadoc:asset.service.AssetService} is constructed.  
 		<br>
 		  
 

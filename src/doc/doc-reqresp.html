@@ -105,13 +105,14 @@
 		In the example the path segment <code>/1345</code> is interpreted as an id referencing a data object. Definition and
 		workings of path parameters are explained <a href="doc-resources.html#pathparams">here</a>.
 		<p>
-		When a HTML form is posted, the browser send form values as request content with content type <code>application/x-www-form-urlencoded</code>.
+		When a HTML form is posted, the browser sends form values as request content with content type <code>application/x-www-form-urlencoded</code>.
 		Civilian treats these as query parameters as well - if you would use "GET" as form method they also would end up as part of
 		the URL.
 		<p>
 		Values of query and matrix parameters are strings. Manual conversion to other types is tedious and error prone. Civilian includes
-		a {javadoc:type.package-summary Type framework} to help with parsing and formatting. Based on that simple and type-safe access
-		to parameters is {javadoc:request.Request#getQueryParam(java*lang*String,$org*civilian*type*Type) possible}.<br>
+		a {javadoc:type.package-summary Type framework} to help with parsing and formatting. 
+		This {javadoc:request.Request#getQueryParam(java*lang*String,$org*civilian*type*Type) allows} for simple and type-safe
+		access to parameters.<br>
 		Within Controllers the runtime can inject request parameter values into Controller 
 		<a href="doc-controllers.html#parameters">method parameters</a> in a type-safe way, to relieve you from manual type conversion.
 		<p>

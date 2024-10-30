@@ -37,7 +37,7 @@
 		When a controller has finished, a response should have been generated. This usually means: 
 		<ol>
 		<li>Evaluate request parameters (normal parameters, path params, matrix-params, cookies, headers, request content)
-		<li>Call back-end services to fulfill the request, passing request parameters in appropriate form.
+		<li>Call backend services to fulfill the request, passing request parameters in appropriate form.
 			The result produced by those servies is the <b>model</b> (the M in MVC). Civilian does not make any assumption about the form
 			of your services and models. 
 		<li>Turn the model into a <b>view</b> (the V in MVC), suitable to be sent as response. 
@@ -47,8 +47,8 @@
 		<li>Alternative responses would be to send an {javadoc:response.Response#sendError(int) error status}, 
 			or a {javadoc:response.Response#redirect(java*lang*String) redirect} to another resource.
 		</ol>
-		Controllers are not meant to contain a lot of code. Ideally they are just the glue between the frontend request and back-end services,
-		translating request parameters, invoke back-end services and convert data models into response views. 
+		Controllers are not meant to contain a lot of code. Ideally they are just the glue between the frontend request and backend services,
+		translating request parameters, invoke backend services and convert data models into response views. 
 		<p>
 		 
 

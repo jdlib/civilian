@@ -4,7 +4,7 @@
 		<h1>Linking</h1>
 		
 		<div class="takeaway">
-			Civilian provides techniques to build correct URL strings and to prevent broken links.
+			Civilian provides techniques to build valid URL strings in order to prevent broken links.
 		</div>
 		
 		<ul>
@@ -24,14 +24,14 @@
 		
 		<h2 id="intro">Introduction</h2>
 		
-		Web applications sometimes need to create URLs to reference application resources: Hyperlinks
+		Web applications often need to create URLs to reference application resources: Hyperlinks
 		in HTML responses, redirects, HATEOS locations etc. To represent URLs as strings &ndash; 
 		as it is usually done &ndash; and manually build URLs is tedious and error prone.
 		Just think of formatting of parameter values.   
 		<p>
 		Hyperlinks on the web can break, but at least they work good enough to be useful.<br> 
-		Being realistic about the web does not mean that we tolerate broken links within
-		our applications. But using URL strings again makes broken links more likely:
+		Being realistic about the web does not mean that we should tolerate broken links within
+		our applications. But using URL strings just makes broken links more likely:
 		A change to the URL structure of an application requires to manually look for affected places in the code. 
 		<p>
 		Civilians {javadoc:resource.Path} and {javadoc:resource.Url} classes help to avoid these pitfalls:
@@ -49,13 +49,16 @@
 		{javadoc:resource.PathProvider} to give access to these paths.		
 		
 		<h2 id="url">The Url class</h2>
-		The {javadoc:resource.Url} class is a builder class to construct URL strings and  
-		guarantees a syntactical correct form of the URL.
+		The {javadoc:resource.Url} class represents a URL to adress resources, either resources of the application itself or 
+		external resources.. 
+		It guarantees a syntactical correct form of the URL, takes care of serializing path or query parameters contained
+		in the URL. Given a constructed Url object one can then produce a Url string from it and use that string in server
+		responses.
 		<p>
-		To create a Url object you need to call a Url constructor, passing the request object (or a {javadoc:request.RequestProvider} like
-		a {javadoc:controller.Controller}) and an additional argument which describe the URL path:
+		To create a Url object you need to call a Url constructor, passing {javadoc:text.service.LocaleServiceProvider}
+		(like {javadoc:request.Request} or {javadoc:response.Response}) and an path String or a {javadoc:resource.PathProvider}.
 		<ul>
-		<li>or a simple URL or path string, in case you want to address resources outside of the application (or address interal resources
+		<li>a URL or path string, in case you want to address resources outside of the application (or address interal resources
 			in an unchecked way). 
 		<li>a {javadoc:resource.Path} to build an Url for that path
 		<li>a {javadoc:resource.PathProvider} like the {javadoc:application.Application} or the {javadoc:request.Request} 
@@ -64,11 +67,11 @@
 		<li>a {javadoc:resource.Resource} to build a URL to that resource.   
 		</ul>
 		<div class="highlight">
-			<pre><code>RequestProvider rp = ...<br
+			<pre><code>LocaleServiceProvider lsp = ...<br
 			>Url url;<br
-			>url = new Url(rp, "https://example.org/some/path");<br
-			>url = new Url(rp, getApplication());<br
-			>url = new Url(rp, SearchController.class);</code></pre>
+			>url = new Url(lsp, "https://example.org/some/path");<br
+			>url = new Url(lsp, getApplication());<br
+			>url = new Url(lsp, SearchController.class);</code></pre>
 		</div>
 		
 		Once constructed a Url object can be tweaked in many ways:

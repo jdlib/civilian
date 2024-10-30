@@ -109,7 +109,7 @@
 		As will be described <a href="doc-controllers.html">later</a>, you need to implement
 		a {javadoc:controller.Controller} class for each dynamic resource of your application. 
 		Their class names and package structure are used to derive their resource URLs,
-		so designing your resource URLS will automatically structure your controller classes 
+		so designing your resource URLs will automatically structure your controller classes 
 		and packages.<br> 
 		The name of the root package of your controller classes must be known to the application
 		base class. By default it equals the application package, else you must explicitly
@@ -125,7 +125,7 @@
 			          >org.example.petshop.web.food.OrderForm<br
 			          >org.example.petshop.web.food.OrderTemplate</code></pre>
 		</div>
-		Your application may define any other packages, for instance for accessing the data back-end.
+		Your application may define any other packages, for instance for accessing the data backend.
 		Keeping those separate from the controller packages is a good idea:
 		<div class="highlight">
 			<pre><code>org.example.petshop.service<br
@@ -136,7 +136,7 @@
 		<h2 id="tasks">Main development tasks</h2>
 		Developing a Civilian application has these main tasks.
 		<ul>
-		<li>Design the URL interface of your application, including parameters, allowed REST methods and content types, etc.
+		<li>Design the REST API oof your application, ie. URLs, parameters, allowed REST methods and content types, etc.
 		<li>Design the expected responses when calling these URLs.
 		<li><a href="doc-development.html#scaffold">Scaffold</a> a new application.
 		<li>Configure the application via the Civilian <a href="doc-config.html#ini">config file</a>. 
@@ -144,11 +144,11 @@
 			<ul>
 			<li>define all path parameters used by the application
 			<li>implement additional programmatic configurations
-			<li>initialize and provide application global resources like data back-end services.
+			<li>initialize and provide application global resources like data backend services.
 			</ul>
 		</li>
 		<li>Create {javadoc:controller.Controller} implementations for every dynamic resource exposed by the application.
-			Controllers most probably will rely on a data back-end services to retrieve model, completely in control by your application.
+			Controllers most probably will rely on a data backend services to retrieve model, completely in control by your application.
 		<li>Implement {javadoc:template.Template Templates} to be used by controllers to turn models into views.
 		<li>Implement {javadoc:form.Form Forms} to be used by controller to read and write HTML forms. 
 		<li>Assemble and organize static assets like JavaScript, CSS, image files, etc.

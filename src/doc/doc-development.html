@@ -5,20 +5,20 @@
 
 		<div class="takeaway">
 			Ease of development is crucial: Shows how to make development more productive.
-			Introduces class-reloading also known as the "code &ndash; save &ndash; refresh &ndash; be happy" 
-			cycle. Explains testing and scaffold capabilities. Introduces the admin application.
+			Introduces class-reloading of a running application, explains testing, scaffold capabilities
+			and the admin application.
 		</div>
 
 		<ul>
 		<li><a href="#intro">Introduction</a>
-		<li><a href="#ease">Ease of development</a>
+		<li><a href="#view">View effect of code changes</a>
 			<ul>
 				<li><a href="#tomcat-loader">Using Tomcats VirtualWebappLoader</a>
 				<li><a href="#tomcat-manager">Using Tomcat manager to reload applications</a>
 				<li><a href="#embed">Running an embedded Jetty or Tomcat server</a>
+				<li><a href="#changes">Class reloading</a>
 			</ul>
 		</li>
-		<li><a href="#reload">Class reloading</a>
 		<li><a href="#testing">Testing</a>
 		<li><a href="#admin">Admin app</a>
 		<li><a href="#scaffold">Scaffold</a>
@@ -29,23 +29,27 @@
 		<p>
 		First we concentrate on ease of development.<br>
 		We want to work with frameworks that support an elegant, fast and productive development mode.<br>
-		Children would break out in tears if you would tell them about past J2EE application servers 
-		with 10++ minutes redeployment time just to see the effect of changing a single line of code.<br>
-		Much has improved since, but there is still room for more. Here we describe several techniques to ease development. 
-		We especially describe Civilians class-reloading technique which can supercharge your development cycle. 
-		<p>
-		Then we discuss how Civilian web applications can be tested, introduce the admin application and
-		end with a topic which is at the very beginning of application development: Scaffold new applications.
+		When J2EE application servers were invented it wasn't unusual that developers waited 10++ minutes 
+		for redeployment to complete in order to see the effect of latest code changes.<br>
+		Much has improved since, but there is still room for more. Here we describe several techniques to increase development
+		productivity: <br>
+		<ul>
+		<li>We start with Civilians class-reloading feature which can supercharge your development cycle.
+		<li>Then we discuss how Civilian web applications can be tested.
+		<li>introduce the admin application and
+		<li>describe scaffolding of new applications.
+		</ul>
 
-		<h2 id="ease">Ease of development</h2>
+		<h2 id="view">View effect of code changes</h2>
 		From a developers perspective we want to see the effect of code changes immediately. Ideally we want just
-		to hit refresh in the browser. PHP is not an option since we are Java pigheads.
+		hit refresh in the browser to reload the current page and see the effect of code changes. This chapter
+		describes several techniques to come closer to this goal.
 		
 		<h3 id="tomcat-loader">Using Tomcats VirtualWebappLoader</h3>
 		For deployment in a servlet container you can always build a WAR archive of your application and deploy that.<br>
-		Eclipse Dynamic Web Projects (and similar offers by other IDEs) do the packing and copying for you.
+		Eclipse Dynamic Web Projects (and similar features of other IDEs) do the packing and copying for you.
 		<p>
-		When using {link:https://tomcat.apache.org/ Apache Tomcat} (7.0.54+) we take the opposite
+		When using {link:https://tomcat.apache.org/ Apache Tomcat} we can take the opposite
 		approach: Instead of deploying the application into Tomcats webapp directory, we instruct Tomcat to pick up
 		the application from our IDE project, using Tomcats 
 		{link:https://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/loader/VirtualWebappLoader.html VirtualWebappLoader}.
@@ -80,7 +84,7 @@
 		</div>   
 		This is how we use this feature:<br> 
 		When running in development mode we typically integrate a reload button or link in our HTML pages. When clicked it will 
-		send an Ajax call to the manager application
+		send an Ajax call to the manager application.
 		Please take a look at the <a href="doc-samples.html#crm">CRM sample</a> and the script <code>civassets/dev/reload-tomcat.js</code>
 		in Civilians source how this can be implemented.
 		<p>
@@ -91,15 +95,14 @@
 		<h3 id="embed">Running an embedded Jetty or Tomcat server</h3>
 		Another great way to avoid building WARs or copy classes to a servlet container is to start an embedded server.<br> 
 		The {javadoc:boot.Jetty} and {javadoc:boot.Tomcat} classes provide a small command line interface to start a Jetty or Tomcat server embedded
-		in your program (see the <a href="quickstart.html">Quickstart</a> for an example).<br>
-		(The {javadoc:boot.Tomcat} class right now is experimental &ndash; unfortunately Tomcats documentation 
-		about its embedded mode is not very detailed).
+		in your program (see the <a href="quickstart.html">Quickstart</a> for an example).
 
-		<h2 id="reload">Class reloading</h2>
+		<h3 id="reload">Class reloading</h3>
 		Civilians class reloading is a feature which when used in combination with the <a href="#tomcat-loader">VirtualWebappLoader</a> technique
 		or with an embedded server enables the following development cycle:
 		<ol>
-		<li>Code (save, compile).
+		<li>Change some code.
+		<li>Code is autocompiled by the IDE.
 		<li>Hit refresh in the browser and immediately see the changes.
 		</ol>
 		Unlike <a href="#tomcat-manager">application reloading</a> this does not reinitialize the application, so you now will

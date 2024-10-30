@@ -16,7 +16,7 @@
 		Civilian includes a set of sample applications which demonstrate the framework features.<br>
 		To run the samples you may either <a href="download.html">download</a> 
 		<ul>
-		<li>the {downloadfile:civilian-samples.war samples WAR file}, ready to be deployed in a servlet 3.0+ container, or
+		<li>the {downloadfile:civilian-samples.war samples WAR file}, ready to be deployed in a servlet 3.1+ container, or
 		<li>the {downloadfile:civilian.zip distribution} and follow the instructions in its <code>runsamples.txt</code>. 
 		</ul>
 		
@@ -61,7 +61,8 @@
 		<span class="badge">ControllerFactory</span>
 		<span class="badge">DI</span>
 		<p>
-		The CDI samples demonstrates Dependency Injection (DI) using CDI.<br>
+		The CDI samples demonstrates Dependency Injection (DI) using the Context and Dependency Injection framework (CDI)
+		of Java EE 6+.<br>
 		At startup the application installs the {javadoc:controller.factory.CdiControllerFactory}, 
 		in order to inject CDI managed beans via <code>javax.inject.Inject</code> annotations into Controllers.<br>
 		CDI support is experimental. If you look into the CdiControllerFactory code and compare with 
@@ -74,8 +75,8 @@
 		<h3 id="chat">Chat</h3>
 		<span class="badge">Async Response</span>
 		<p>
-		The chat app demonstrates asynchronous response. After you chose a user name you can write 
-		messages to the chat board which are broadcasted to all participating users. 
+		The chat app demonstrates how to create asynchronous responses. After you chose a user name you can write 
+		messages to the chat board which are broadcasted to all participants. 
 		
 		<h3 id="client">Client</h3>
 		<span class="badge">Client</span>

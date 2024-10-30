@@ -50,7 +50,7 @@
 		You can run one or more applications inside a Civilian server (<a href="#multiapp">This</a>
 		topic motivates why you would want to run more than one app). Every <b>application config</b>
 		uses keys <code>app.<i>id</i>.*</code> with id being a unique {javadoc:application.Application#getId() identifier} for each application.<br>
-		The <b>class</b> entry gives the application class, <b>path</b> the {javadoc:application.Application#getRelativePath() relative path} of the 
+		The <b>class</b> entry defines the application class, <b>path</b> the {javadoc:application.Application#getRelativePath() relative path} of the 
 		application under the server path. 
 		<b>enabled</b> allows to include/exclude the application from deployment. <b>encoding</b> is the default application
 		{javadoc:application.Application#getDefaultCharEncoding() encoding} used for assets, HTML pages, etc.
@@ -81,14 +81,14 @@
 		To enable file uploads, <b>upload</b> definitions are needed. Take a look at {javadoc:application.UploadConfig}
 		to learn about these definitions which roughly correspond to a servlet MultipartConfig: 
 		<div class="highlight">
-			<pre><code>app.crm.async.enabled           = true<br
+			<pre><code>app.crm.async.enabled            = true<br
 			          >app.crm.upload.enabled           = true<br
 			          >app.crm.upload.dir               = <br
 			          >app.crm.upload.maxRequestSize    = 200000<br
 			          >app.crm.upload.maxFileSize       = 100000<br
 			          >app.crm.upload.fileSizeThreshold = 5000</code></pre>
 		</div>
-		Last there is a configuration which is only evaluated when development mode is turned on, 
+		Last, there is a configuration which is only evaluated when development mode is turned on, 
 		explained in detail <a href="doc-development.html#config">here</a>. 
 		<div class="highlight">
 			<pre><code>app.crm.dev.classreload = true</code></pre>
@@ -104,7 +104,7 @@
 
 		<h2 id="prog">Programmatic configuration</h2>
 		Almost all application settings of <code>civilian.ini</code> can also be changed programmatically
-		by your implementation of the {javadoc:application.Application} class. Some advanced settings can
+		by the {javadoc:application.Application} implementation class. Some advanced settings can
 		only be changed programmatically.<br>
 		Programmatic configuration can be done in these methods:
 		<ul>
@@ -126,7 +126,6 @@
 		<h2 id="logging">Logging</h2>
 		Civilian uses {link:http://www.slf4j.org/ SLF4J} for logging. Please consult the 
 		SLF4J documentation how to configure SLF4J.<br>
-		Log output is definitely not chatty, and hopefully to the point. 
 		<p> 
 		Civilian uses the following logger names for the corresponding part of the framework:
 		<ul>
@@ -167,7 +166,7 @@
 &lt;web-app></code></pre></div>
 
 		<h2 id="multiapp">Multiple applications in a server</h2>
-		Civilian allows to install more than one applications in a server.
+		Civilian allows to install more than one application in a server.
 		Of course it is perfectly fine to only use a single application, whose path equals
 		the server path.
 		Installing multiple application effectively means to segment the resource URL space
