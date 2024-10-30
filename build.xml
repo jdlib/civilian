@@ -97,6 +97,7 @@
 		<javac srcdir="${src.java}" destdir="${build.bin.java}" classpathref="compile.path" 
 			debug="true" includeantruntime="false">
 			<exclude name="**/package-info.java"/>
+			<compilerarg line="-Xlint:unchecked"/>
 		</javac>
 	</target>
 
@@ -108,6 +109,7 @@
 				<path refid="compile.path"/>	
 				<pathelement path="${build.bin.java}"/>
             </classpath>
+			<compilerarg line="-Xlint:unchecked"/>
 		</javac>
 	</target>
 
@@ -119,6 +121,7 @@
 				<path refid="compile.path"/>	
 				<pathelement path="${build.bin.java}"/>
             </classpath>
+			<compilerarg line="-Xlint:unchecked"/>
 		</javac>
 	</target>
 
@@ -133,6 +136,7 @@
 					<include name="*.jar" />
 				</fileset>
             </classpath>
+			<compilerarg line="-Xlint:unchecked"/>
 		</javac>
 		<copy todir="${build.bin.test}">
 			<fileset dir="${src.test}">
@@ -165,7 +169,7 @@
 	</target>
 	
 	
-	<target name="coverage" depends="compile" xmlns:jacoco="antlib:org.jacoco.ant">
+	<target name="coverage" depends="compile" xmlns:jacoco="antlib:org.jacoco.ant" description="runs tests and measures coverage">
 		<path id="coverage.path">
 			<fileset dir="${lib}/coverage">
 				<include name="*.jar" />
@@ -209,7 +213,7 @@
 					<fileset dir="${src.test}">
 						<include name="${test.dir}/*Test.java" />
 						<exclude name="**/CivTest.java" />
-						<exclude name="**/PackageDetectorTest.java" />
+						<exclude name="**/JavaPackageDetectorTest.java" />
 					</fileset>
 				</batchtest>
 			</junit>
