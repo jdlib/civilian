@@ -45,11 +45,13 @@
 			
 		<dependency conf="jetty->default" org="org.eclipse.jetty.aggregate" name="jetty-all-server" rev="8.1.15.v20140411"/>
 		
-		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.core" rev="0.7.6.201602180812"/>
-		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.ant" rev="0.7.6.201602180812"/>
-		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.report" rev="0.7.6.201602180812"/>
-		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.agent" rev="0.7.6.201602180812"/>
-		<dependency conf="coverage->default" org="org.ow2.asm" name="asm-all" rev="5.1"/>
+		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.core" rev="0.8.11"/>
+		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.ant" rev="0.8.11"/>
+		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.report" rev="0.8.11"/>
+		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.agent" rev="0.8.11"/>
+		<dependency conf="coverage->default" org="org.ow2.asm" name="asm" rev="9.6"/>
+		<dependency conf="coverage->default" org="org.ow2.asm" name="asm-commons" rev="9.6"/>
+		<dependency conf="coverage->default" org="org.ow2.asm" name="asm-tree" rev="9.6"/>
 	</dependencies>    
 </ivy-module>
 
