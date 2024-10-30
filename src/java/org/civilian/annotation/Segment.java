@@ -39,7 +39,7 @@ import java.lang.annotation.Target;
  * directory.
  * The {@link #value() value} of the annotation is a relative path string.
  * It is interpreted as follows:
- * <h1>Used on controller packages</h1>
+ * <h2>Used on controller packages</h2>
  * The segment string overrides the default mapping of the controller
  * package to a resource, relative to its parent package.
  * The path string must not be empty.<br>
@@ -49,7 +49,7 @@ import java.lang.annotation.Target;
  * resource "/contacts/detail".<br>
  * But annotated with @Segment("showdetails") it would be mapped to resource 
  * "/contacts/showdetails".
- * <h1>Used on controller classes</h1>
+ * <h2>Used on controller classes</h2>
  * The path string overrides the default mapping of the controller
  * class to a resource, relative to its package.
  * The path string may be empty.
@@ -60,7 +60,7 @@ import java.lang.annotation.Target;
  * But annotated with @Segment("show") it would be mapped to resource 
  * "/contacts/show". If annotated with @Segment("") it would be mapped to resource 
  * "/contacts".
- * <h1>Used on controller action methods</h1>
+ * <h2>Used on controller action methods</h2>
  */
 @Target({ElementType.PACKAGE, ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

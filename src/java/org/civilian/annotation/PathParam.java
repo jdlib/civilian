@@ -34,16 +34,16 @@ import java.lang.annotation.Target;
  * <li>parameters of controller action methods
  * </ol>
  * Its value is the name of a PathParam defined by the application.
- * <h1>Used on packages</h1>
+ * <h2>Used on packages</h2>
  * To qualify a package, create a package-info.java file and place
  * the annotation on its package statement. This means that
  * the package does not map to a constant URL segment, but to
  * URLs that contain the path parameter.
- * <h1>Used on controller classes</h1>
+ * <h2>Used on controller classes</h2>
  * To annotate a controller class serves a similar purpose
  * than annotating a controller packages: It maps the controller
  * class to a resource which extends the package resource by the path param. 
- * <h1>Used on parameters of controller action methods</h1>
+ * <h2>Used on parameters of controller action methods</h2>
  * When the action method is invoked then the corresponding
  * path parameter of the request will be injected into the parameter.
  * {@link DefaultValue} can be used to specify a default value if the request contains

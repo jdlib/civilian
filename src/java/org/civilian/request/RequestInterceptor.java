@@ -22,7 +22,7 @@ import java.io.IOException;
 /**
  * A RequestInterceptor can be used to wrap the Reader or InputStream of a Request.
  * @see Request#addInterceptor()
- * @param T either a Reader or InputStream
+ * @param <T> either a Reader or InputStream
  */
 public interface RequestInterceptor<T>
 {
