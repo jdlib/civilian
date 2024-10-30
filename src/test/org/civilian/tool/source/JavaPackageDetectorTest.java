@@ -31,7 +31,8 @@ public class JavaPackageDetectorTest extends CivTest
 		if (rootDir != null)
 		{
 			File srcFile = new File(rootDir, getClass().getName().replace('.', '/') + ".java");
-			assertTrue(srcFile.getAbsolutePath(), srcFile.exists());
+			if (!srcFile.exists())
+				fail(srcFile.getAbsolutePath() + " does not exist");
 			
 			JavaPackageDetector d = new JavaPackageDetector();
 			String packageName = d.detect(srcFile);
