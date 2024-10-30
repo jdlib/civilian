@@ -49,7 +49,8 @@ public class CivTest extends Assert
 	}
 	
 	 
-	public static <T> void assertArrayEquals2(T[] actual, @SuppressWarnings("unchecked") T... expected)
+	@SafeVarargs
+	public static <T> void assertArrayEquals2(T[] actual, T... expected)
 	{
 		if (expected == null)
 		{
