@@ -84,7 +84,7 @@ public class DocTemplate
 			out.println("<div class=\"col-md-9\">");                    // line 41: <div class="col-md-9">
 			out.increaseTab();
 			out.println("<hr>");                                        // line 42: <hr>
-			out.println("<p class=\"footer\">Copyright &copy; 2014-2021. All rights reserved.</p>"); // line 43: <p class="footer">Copyright &copy; 2014-2021. All rights reserved.</p>
+			out.println("<p class=\"footer\">Copyright &copy; 2014-2024. All rights reserved.</p>"); // line 43: <p class="footer">Copyright &copy; 2014-2024. All rights reserved.</p>
 			out.decreaseTab();
 			out.println("</div>");                                      // line 44: </div>
 			out.decreaseTab();
