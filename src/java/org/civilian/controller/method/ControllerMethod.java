@@ -154,13 +154,9 @@ public class ControllerMethod
 	 */
 	public boolean canConsume(ContentType contentType)
 	{
-		if (consumes_ == null)
-		{
-			// if we don't have a @Consumes definition we accept all
-			return true;
-		}
-		else
-			return consumes_.matchesSome(contentType != null ? contentType : ContentType.ANY);
+		return 
+			consumes_ == null // if we don't have a @Consumes definition we accept all 
+			|| consumes_.matchesSome(contentType != null ? contentType : ContentType.ANY);
 	}
 
 	
