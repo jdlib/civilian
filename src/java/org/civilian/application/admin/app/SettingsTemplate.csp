@@ -45,11 +45,11 @@ template(Application app) mixin html
 	</tr>
 	</table>
 	@printProcessors(app.getProcessors());
-	@printContentSerializers(app.getContentSerializers().toMap());
+	@printContentSerializers();
 }}
 
 
-private void printContentSerializers(Map<String,ContentSerializer> map)
+private void printContentSerializers()
 {{
 	<h4>Content Serializers</h4>
 	<table class="table table-striped table-bordered table-condensed">

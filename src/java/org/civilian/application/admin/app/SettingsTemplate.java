@@ -107,11 +107,11 @@ public class SettingsTemplate extends CspTemplate
 		out.println("</tr>");                                           // line 45: </tr>
 		out.println("</table>");                                        // line 46: </table>
 		printProcessors(app.getProcessors());                           // line 47: @printProcessors(app.getProcessors());
-		printContentSerializers(app.getContentSerializers().toMap());   // line 48: @printContentSerializers(app.getContentSerializers().toMap());
+		printContentSerializers();                                      // line 48: @printContentSerializers();
 	}
 	
 	
-	private void printContentSerializers(Map<String,ContentSerializer> map)
+	private void printContentSerializers()
 	{
 		out.println("<h4>Content Serializers</h4>");                    // line 54: <h4>Content Serializers</h4>
 		out.println("<table class=\"table table-striped table-bordered table-condensed\">"); // line 55: <table class="table table-striped table-bordered table-condensed">
