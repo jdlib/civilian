@@ -47,10 +47,8 @@ public class ReloadConfig implements Predicate<String>
 	{
 		if (excludes_.contains(name))
 			return false;
-		else if (includes_.contains(name)) 
-			return true;
-		else
-			return false;
+		else 
+			return includes_.contains(name); 
 	}
 
 		
