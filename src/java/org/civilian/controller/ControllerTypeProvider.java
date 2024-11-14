@@ -52,7 +52,7 @@ public interface ControllerTypeProvider
 	{
 		ControllerSignature sig = ControllerSignature.of(resource);
 		Object data = sig != null ? sig.getData() : null;
-		return data != null ? Check.isA(data, ControllerTypeProvider.class) : ControllerTypeProvider.EMPTY; 
+		return data != null ? Check.isA(data, ControllerTypeProvider.class) : EMPTY; 
 	}
 	
 	

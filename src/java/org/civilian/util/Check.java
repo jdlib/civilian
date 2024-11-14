@@ -164,7 +164,7 @@ public class Check
 	@SuppressWarnings("unchecked")
 	public static <T> T isA(Object object, Class<T> type, String what)
 	{
-		Check.notNull(object, what);
+		notNull(object, what);
 		if (!type.isAssignableFrom(object.getClass()))
 			isAFailed(object, type, what);
 		return (T)object;

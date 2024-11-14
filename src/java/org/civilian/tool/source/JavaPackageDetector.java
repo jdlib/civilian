@@ -36,7 +36,7 @@ import org.civilian.util.StringUtil;
  */
 public class JavaPackageDetector
 {
-	public static final JavaPackageDetector DEFAULT = JavaPackageDetector.of("src", "java", "src\\.[.]+");  
+	public static final JavaPackageDetector DEFAULT = of("src", "java", "src\\.[.]+");  
 	private static final Pattern PACKAGE_PATTERN = Pattern.compile("^package\\s+(.*);$");
 	
 	

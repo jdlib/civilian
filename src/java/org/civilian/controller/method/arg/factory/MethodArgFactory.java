@@ -24,7 +24,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
-
 import javax.servlet.http.Cookie;
 import org.civilian.annotation.BeanParam;
 import org.civilian.annotation.CookieParam;
@@ -394,7 +393,7 @@ public class MethodArgFactory
 		}
 		
 
-		public Info(Class<?> type, java.lang.reflect.Type genericType, Annotation[] annotations)
+		public Info(Class<?> type, Type genericType, Annotation[] annotations)
 		{
 			this.type = type;
 			this.genericType = genericType;
@@ -409,7 +408,7 @@ public class MethodArgFactory
 		
 		
 		public Class<?> type;
-		public java.lang.reflect.Type genericType;
+		public Type genericType;
 		public Annotation[] annotations;
 	}
 	

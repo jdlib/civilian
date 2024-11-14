@@ -282,7 +282,7 @@ public class Settings
 	 * @param key the key
 	 * @param defaultValue the default value
 	 */
-	public java.nio.charset.Charset getCharset(String key, java.nio.charset.Charset defaultValue)
+	public Charset getCharset(String key, Charset defaultValue)
 	{
 		return getValue(key, Charset::forName, defaultValue);
  	}

@@ -293,7 +293,7 @@ public class Path implements CharSequence, Serializable, Comparable<Path>, PathP
 		else if (length() > path.length())
 			return new Path(null, value_.substring(path.length()));
 		else
-			return Path.ROOT;
+			return ROOT;
 	}
 	
 	
