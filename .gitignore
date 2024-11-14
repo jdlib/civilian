@@ -7,3 +7,4 @@ lib/test/
 lib/coverage/
 tmp/
 todo.txt
+pom.xml
