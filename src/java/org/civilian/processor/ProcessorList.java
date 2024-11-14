@@ -105,7 +105,7 @@ public class ProcessorList extends Processor implements Iterable<Processor>
 	
 	@Override public boolean process(Request request, Response response, ProcessorChain chain) throws Exception
 	{
-		return process(request, response) ? true : chain.next(request, response);
+		return process(request, response) || chain.next(request, response);
 	}
 	
 	

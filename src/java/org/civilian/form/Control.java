@@ -256,7 +256,7 @@ public abstract class Control<T> implements CspWriter.Printable
 	 */
 	public boolean getBooleanValue()
 	{
-		return value_ == null ? false : ((Boolean)value_).booleanValue();
+		return value_ != null && ((Boolean)value_).booleanValue();
 	}
 
 	

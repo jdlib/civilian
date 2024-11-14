@@ -64,7 +64,7 @@ public class HeaderMap
 	
 	public boolean contains(String name)
 	{
-		return map_ != null ? get(name) != null : false;
+		return map_ != null && get(name) != null;
 	}
 	
 	
