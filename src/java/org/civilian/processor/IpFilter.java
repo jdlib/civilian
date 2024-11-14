@@ -56,10 +56,10 @@ public class IpFilter extends Processor
 				tests.add(new LiteralTest(allowedIp));
 		}
 
-		if (tests.size() > 0)
-			tests.toArray(ipTests_ = new IpTest[tests.size()]);
-		else
+		if (tests.isEmpty())
 			ipTests_ = null;
+		else
+			tests.toArray(ipTests_ = new IpTest[tests.size()]);
 		
 		// build info
 		StringBuilder sb = new StringBuilder("Allowed IPs: ");
