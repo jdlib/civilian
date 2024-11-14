@@ -262,7 +262,7 @@ public class Range extends AbstractList<Range.Part>
 		
 		private Range end(boolean valid)
 		{
-			return new Range(valid && parts_.size() > 0, parts_);
+			return new Range(valid && !parts_.isEmpty(), parts_);
 		}
 		
 		

@@ -177,7 +177,7 @@ public class TestServer extends Server
 		}
 		
 		ClassLoader cl = getClass().getClassLoader();
-		if (urls.size() > 0)
+		if (!urls.isEmpty())
 			cl = new URLClassLoader(urls.toArray(new URL[urls.size()]), cl);
 		return cl;
 	}

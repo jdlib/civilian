@@ -286,7 +286,7 @@ public class Url implements PathParamProvider
 	 */
 	public boolean hasQueryParams()
 	{
-		return queryParams_ != null && queryParams_.size() > 0; 
+		return queryParams_ != null && !queryParams_.isEmpty(); 
 	}
 
 	
