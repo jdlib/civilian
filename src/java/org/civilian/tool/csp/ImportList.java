@@ -110,14 +110,14 @@ class ImportList
 	 */
 	public boolean write(PrintWriter out, String appPackage)
 	{
-		String imports_[] = toArray(appPackage);
-		int size = imports_.length;
+		String[] imports = toArray(appPackage);
+		int size = imports.length;
 		if (size > 0)
 		{
 			for (int i=0; i<size; i++)
 			{
 				out.print("import ");
-				out.print(imports_[i]);
+				out.print(imports[i]);
 				out.println(";");
 			}
 			return true;
