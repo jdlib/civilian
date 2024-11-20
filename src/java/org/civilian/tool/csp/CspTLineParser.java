@@ -231,7 +231,6 @@ class CspTLineParser
 		if (allowStmt && snippet.endsWith(";"))
 		{
 			addLiteralPart(LiteralType.JAVA_STATEMENT, snippetRaw, snippet);
-			return;
 		}
 		else if (isCondition)
 		{
@@ -257,12 +256,10 @@ class CspTLineParser
 			addLiteralPart(LiteralType.JAVA_CONDITION_END, "");
 			scanner_.setLength(oldLength);
 			scanner_.skip(); // closeSep
-			return;
 		}
 		else
 		{
 			addLiteralPart(LiteralType.JAVA_EXPRESSION, snippetRaw, snippet);
-			return;
 		}
 	}
 	
