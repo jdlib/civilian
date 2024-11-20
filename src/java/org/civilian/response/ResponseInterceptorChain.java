@@ -55,17 +55,17 @@ class ResponseInterceptorChain<T> implements ResponseInterceptor<T>
 	
 	@Override public ResponseInterceptor<T> prepareIntercept(Response response)
 	{
-		ResponseInterceptor<T> preppedI1_ = i1_.prepareIntercept(response);
-		ResponseInterceptor<T> preppedI2_ = i2_.prepareIntercept(response);
+		ResponseInterceptor<T> preppedI1 = i1_.prepareIntercept(response);
+		ResponseInterceptor<T> preppedI2 = i2_.prepareIntercept(response);
 
-		if ((preppedI1_ == i1_) && (preppedI2_ == i2_))
+		if ((preppedI1 == i1_) && (preppedI2 == i2_))
 			return this;
-		else if ((preppedI1_ != null) && (preppedI2_ != null))
-			return new ResponseInterceptorChain<>(preppedI1_, preppedI2_);
-		else if (preppedI1_ != null)
-			return preppedI1_;
+		else if ((preppedI1 != null) && (preppedI2 != null))
+			return new ResponseInterceptorChain<>(preppedI1, preppedI2);
+		else if (preppedI1 != null)
+			return preppedI1;
 		else
-			return preppedI2_;
+			return preppedI2;
 	}
 
 	
