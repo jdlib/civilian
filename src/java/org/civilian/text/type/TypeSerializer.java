@@ -92,7 +92,7 @@ public abstract class TypeSerializer
 	}
 	
 	
-	protected static final Parser<String> PARSE_STRING = new Parser<String>()
+	protected static final Parser<String> PARSE_STRING = new Parser<>()
 	{
 		@Override public String parse(Type<String> type, String s) throws Exception
 		{

@@ -33,7 +33,7 @@ public class ContextListenerTest extends CivTest
 		ServletContext context 		= mock(ServletContext.class);
 		when(event.getServletContext()).thenReturn(context);
 		when(context.getMajorVersion()).thenReturn(Integer.valueOf(2), Integer.valueOf(3));
-		doAnswer(new Answer<Object>()
+		doAnswer(new Answer<>()
 		{
 			@Override public Object answer(InvocationOnMock invocation) throws Throwable
 			{

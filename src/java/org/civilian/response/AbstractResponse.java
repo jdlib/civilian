@@ -134,6 +134,7 @@ public abstract class AbstractResponse implements Response
 	protected abstract void redirectImpl(String url) throws IOException;
 
 
+	@SuppressWarnings("resource")
 	@Override public Response writeContent(Object object, String contentType) throws Exception
 	{
 		if (object == null)

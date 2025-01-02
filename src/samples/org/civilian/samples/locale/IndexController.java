@@ -17,7 +17,6 @@ package org.civilian.samples.locale;
 
 
 import java.util.Locale;
-
 import org.civilian.annotation.Get;
 import org.civilian.annotation.Produces;
 import org.civilian.controller.Controller;
@@ -25,6 +24,7 @@ import org.civilian.controller.Controller;
 
 public class IndexController extends Controller
 {
+	@SuppressWarnings("deprecation")
 	@Get @Produces("text/html") 
 	public Object get() throws Exception
 	{
