@@ -23,7 +23,6 @@ import java.net.URL;
 import java.util.function.Predicate;
 import org.civilian.Logs;
 import org.civilian.util.Check;
-import org.civilian.util.IoUtil;
 
 
 /**
@@ -136,7 +135,7 @@ public class DevRequestClassLoader extends ClassLoader
 		{
 			try(InputStream in = url.openStream())
 			{
-				byte[] data = IoUtil.readBytes(in);
+				byte[] data = in.readAllBytes();
                 return defineClass(name, data, 0, data.length);
 			}
 			catch(IOException e)

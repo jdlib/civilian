@@ -17,7 +17,6 @@ package org.civilian.util;
 
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -115,20 +114,6 @@ public abstract class IoUtil
 	        destChannel.transferFrom(srcChannel, 0, srcChannel.size());
 	    }
 	}	
-	
-	
-	/**
-	 * Copies all data from the InputStream into a byte array.
-	 * @param in a InputStream
-	 * @return the bytes
-	 * @throws IOException if an I/O error occurs
-	 */
-	public static byte[] readBytes(InputStream in) throws IOException
-	{
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		copy(in, out);
-		return out.toByteArray();
-	}
 
 
 	/**
