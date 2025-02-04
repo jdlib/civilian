@@ -16,7 +16,6 @@
 package org.civilian.util;
 
 
-import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -56,13 +55,10 @@ public class IoUtilTest extends CivTest
 	}
 	
 	
-	@Test public void testRead() throws Exception
+	@Test public void testReadLines() throws Exception
 	{
 		String[] s = IoUtil.readLines(new StringReader("abc \n\n xyz "), true);
 		assertArrayEquals2(new String[] { "abc", "xyz" }, s); 
-
-		ByteArrayInputStream in = new ByteArrayInputStream("abc".getBytes());  
-		assertEquals(3, IoUtil.read(in, new byte[4], 0, 4));
 	}
 
 

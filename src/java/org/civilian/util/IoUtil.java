@@ -188,30 +188,6 @@ public abstract class IoUtil
 		}
 		return totalRead;
 	}
-		
-	
-	/**
-	 * Reads data from the InputStream and stores it in a byte array.
-	 * @param in a InputStream
-	 * @param buffer a buffer
-	 * @param start the start index in the buffer
-	 * @param length the number of bytes ro read
-	 * @return the total number of bytes read
-	 * @throws IOException if an I/O error occurs
-	 */
-	public static int read(InputStream in, byte[] buffer, int start, int length) throws IOException
-	{
-		int totalRead = 0;
-		int toRead = length;
-		int read;
-		while ((totalRead < length) && ((read = in.read(buffer, start, toRead)) != -1))
-		{
-			totalRead += read;
-			toRead -= read;
-			start += read;
-		}
-		return totalRead;
-	}
 	
 	
 	/**
