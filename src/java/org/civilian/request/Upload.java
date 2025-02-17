@@ -37,7 +37,7 @@ public abstract class Upload
 		
 	/**
 	 * Deletes the upload file including any temporary files.
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public abstract void delete() throws IOException;
 
@@ -56,7 +56,7 @@ public abstract class Upload
 	
 	/**
 	 * @return an input stream to the uploaded data.
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public abstract InputStream getInputStream() throws IOException;
 
@@ -64,7 +64,7 @@ public abstract class Upload
 	/**
 	 * Writes the upload to the specified file.
 	 * @param file a file
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public void write(File file) throws IOException
 	{

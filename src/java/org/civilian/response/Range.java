@@ -35,7 +35,7 @@ public class Range extends AbstractList<Range.Part>
 	 * @param request a non-null request
 	 * @param response a non-null response
 	 * @return the parsed Range or null if no range header was present
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static Range writeRange(File file, Request request, Response response) throws IOException
 	{
@@ -55,7 +55,7 @@ public class Range extends AbstractList<Range.Part>
 	 * @param response a non-null response
 	 * @param range a range. If the range is null, the whole file is written. 
 	 * 		If the range is not valid a {@link Status#SC416_REQUESTED_RANGE_NOT_SATISFIABLE} is sent.
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static void writeRange(File file, Response response, Range range) throws IOException 
 	{

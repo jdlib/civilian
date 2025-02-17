@@ -81,7 +81,7 @@ public class Settings
 	/**
 	 * Reads the settings from the input stream.
 	 * @param in the InputStream
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public void read(InputStream in) throws IOException
 	{
@@ -92,7 +92,7 @@ public class Settings
 	/**
 	 * Reads the Settings from the reader.
 	 * @param reader a reader
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public void read(Reader reader) throws IOException
 	{
@@ -107,7 +107,7 @@ public class Settings
 	 * Reads the Settings from the file and sets
 	 * the {@link #getSource() source}.
 	 * @param file a file
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public void read(File file) throws IOException
 	{

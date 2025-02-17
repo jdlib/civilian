@@ -44,7 +44,7 @@ public interface ResponseInterceptor<T>
 	 * is discarded and created by a new Writer. 
 	 * @param out the Writer or OutputStream
 	 * @return an Writer which should be used to write response content.
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public T intercept(T out) throws IOException; 
 }

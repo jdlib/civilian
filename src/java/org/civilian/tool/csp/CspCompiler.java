@@ -103,7 +103,7 @@ public class CspCompiler
 	 * Configures the compiler with the command line arguments and then runs the compiler.
 	 * @param args command line arguments.
 	 * @throws CspException if a compiler error occurs
-	 * @throws IOException if an io error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static synchronized void compile(String[] args) throws CspException, IOException
 	{
@@ -115,7 +115,7 @@ public class CspCompiler
 	 * Configures the compiler with the command line arguments and then runs the compiler.
 	 * @param args command line arguments, wrapped in a Arguments object
 	 * @throws CspException if a compiler error occurs
-	 * @throws IOException if an io error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static void compile(Arguments args) throws CspException, IOException
 	{

@@ -195,7 +195,7 @@ public class TestResponse extends AbstractResponse
 	 * @return the byte currently residing in the buffer
 	 * converted to a string. This does not use any encoding,
 	 * hence it only makes sense if the buffer contains 7-bit data. 
-	 * @throws IOException if an IO error occurs 
+	 * @throws IOException if an I/O error occurs 
 	 */
 	public String getBufferText() throws IOException
 	{
@@ -205,7 +205,7 @@ public class TestResponse extends AbstractResponse
 	
 	/**
 	 * @return the byte currently residing in the buffer. 
-	 * @throws IOException if an IO error occurs 
+	 * @throws IOException if an I/O error occurs 
 	 */
 	public byte[] getBufferBytes() throws IOException
 	{
@@ -216,7 +216,7 @@ public class TestResponse extends AbstractResponse
 	/**
 	 * @param flushBuffer should the buffer be flushed?
 	 * @return the current response content as byte array. 
-	 * @throws IOException if an IO error occurs 
+	 * @throws IOException if an I/O error occurs 
 	 */
 	public byte[] getContentBytes(boolean flushBuffer) throws IOException
 	{
@@ -229,7 +229,7 @@ public class TestResponse extends AbstractResponse
 	/**
 	 * @param flushBuffer should the buffer be flushed?
 	 * @return the current response content as text string.
-	 * @throws IOException if an IO error occurs 
+	 * @throws IOException if an I/O error occurs 
 	 */
 	public String getContentText(boolean flushBuffer) throws IOException
 	{

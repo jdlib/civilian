@@ -103,7 +103,7 @@ public class TestServer extends Server
 	/**
 	 * Returns the settings used by the TestServer.
 	 * By default the settings are stored in file civilian.ini
-	 * @throws IOException if an IO error occurs 
+	 * @throws IOException if an I/O error occurs 
 	 * @return the settings
 	 */
 	public Settings getSettings() throws IOException
@@ -127,7 +127,7 @@ public class TestServer extends Server
 	/**
 	 * Sets the settings of the TestServer.
 	 * @param configName a name of a configuration file
-	 * @throws IOException if an IO error occurs 
+	 * @throws IOException if an I/O error occurs 
 	 */
 	public void setSettings(String configName) throws IOException
 	{
@@ -314,7 +314,7 @@ public class TestServer extends Server
 	 * @param app the application
      * @param id the application id
      * @param relativePath the relative path of the application within the server
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 * @return was the application successfully initialized?
 	 */
 	public boolean addApp(Application app, String id, String relativePath) throws IOException

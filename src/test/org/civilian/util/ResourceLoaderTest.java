@@ -70,7 +70,6 @@ public class ResourceLoaderTest extends CivTest
 	}
 
 
-	@SuppressWarnings("deprecation")
 	@Test public void testServletContextLoader() throws Exception
 	{
 		ServletContext context = mock(ServletContext.class); 

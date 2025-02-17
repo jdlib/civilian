@@ -23,7 +23,6 @@ import org.civilian.CivTest;
 
 public class VfsTest extends CivTest
 {
-	@SuppressWarnings("deprecation")
 	@Test public void test() throws Exception
 	{
 		assertNotNull(Vfs.create());

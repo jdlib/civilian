@@ -50,14 +50,14 @@ public abstract class AsyncContext
 	
 	/**
 	 * @return the AsyncInput of the context. 
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public abstract AsyncInput getAsyncInput() throws IOException;
 	
 	
 	/**
 	 * @return the AsyncOutput of the context. 
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public abstract AsyncOutput getAsyncOutput() throws IOException;
 	

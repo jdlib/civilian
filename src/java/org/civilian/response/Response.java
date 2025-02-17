@@ -400,7 +400,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * Sends an error response to the client.
 	 * This is a shortcut for {@link #sendError(int, String, Throwable) sendError(statusCode, null, null)}.
 	 * @param statusCode a status code
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public default void sendError(int statusCode) throws IllegalStateException, IOException
 	{
@@ -417,7 +417,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * @param message if not null, the message will be included in the error response.
 	 * @param error an optional error object.
 	 * @throws IllegalStateException if the response is already committed
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public abstract void sendError(int statusCode, String message, Throwable error) 
 		throws IllegalStateException, IOException;
@@ -433,7 +433,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * After using this method, the response is committed and should not be written to.
 	 * @param url a URL
 	 * @throws IllegalStateException if the response has already been committed 
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public abstract void redirect(String url) throws IOException;
 
@@ -551,7 +551,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * the default character encoding of the application is used.
 	 * The method may not be called if {@link #getContentStream()} was called before.
 	 * @see Application#getDefaultEncoding()
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 * @return the writer
 	 */
 	public abstract PrintWriter getContentWriter() throws IOException;
@@ -561,7 +561,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	 * Returns a OutputStream to write a binary response.
 	 * The method may not be called if {@link #getContentWriter()} was called before.
 	 * @return the OutputStream
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public abstract OutputStream getContentStream() throws IOException;
 
@@ -716,7 +716,7 @@ public interface Response extends RequestProvider, ResponseProvider, LocaleServi
 	/**
 	 * Flushes any buffered content.
 	 * @return this
-	 * @throws IOException if an IO error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public Response flushBuffer() throws IOException;
 	
