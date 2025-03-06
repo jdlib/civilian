@@ -2,11 +2,9 @@ package org.civilian.asset;
 
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import org.civilian.response.Response;
-import org.civilian.util.IoUtil;
 
 
 public class CachedAsset extends ProxyAsset
@@ -16,9 +14,7 @@ public class CachedAsset extends ProxyAsset
 		super(asset);
 		try(InputStream in = asset.getInputStream())
 		{
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			IoUtil.copy(in, out);
-			bytes_ = out.toByteArray();
+			bytes_ = in.readAllBytes();
 		}
 	}
 	

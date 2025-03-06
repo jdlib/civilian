@@ -1,14 +1,12 @@
 package org.civilian.asset;
 
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Date;
 import org.civilian.content.ContentType;
 import org.civilian.response.Response;
-import org.civilian.util.IoUtil;
 import org.civilian.util.http.HeaderNames;
 
 
@@ -102,9 +100,7 @@ public abstract class AbstractAsset extends Asset
 	{
 		try(InputStream in = getInputStream())
 		{
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			IoUtil.copy(in, out);
-			return out.toByteArray(); 
+			return in.readAllBytes();
 		}
 	}
 	
@@ -128,7 +124,7 @@ public abstract class AbstractAsset extends Asset
 	{
 		try(InputStream in = getInputStream())
 		{
-			IoUtil.copy(in, response.getContentStream());
+			in.transferTo(response.getContentStream());
 		}
 	}
 

@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import org.civilian.util.IoUtil;
 
 
 /**
@@ -70,7 +69,7 @@ public abstract class Upload
 	{
 		try (FileOutputStream out = new FileOutputStream(file))
 		{
-			IoUtil.copy(getInputStream(), out);
+			getInputStream().transferTo(out);
 		}
 	}
 

@@ -17,11 +17,9 @@ package org.civilian.server.test;
 
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -44,7 +42,6 @@ import org.civilian.resource.Url;
 import org.civilian.resource.pathparam.PathParam;
 import org.civilian.response.Response;
 import org.civilian.util.Check;
-import org.civilian.util.IoUtil;
 import org.civilian.util.Iterators;
 import org.civilian.util.http.HeaderNames;
 import org.civilian.util.http.HeaderMap;
@@ -427,18 +424,14 @@ public class TestRequest extends AbstractRequest
 			else
 			{
 				String encoding = charEncoding_ != null ? charEncoding_ : getOwner().getDefaultEncoding().name();
-				ByteArrayOutputStream out = new ByteArrayOutputStream(); 
 				try
 				{
-					OutputStreamWriter writer = new OutputStreamWriter(out, encoding);
-					IoUtil.copy(new StringReader(contentString_), writer);
-					writer.flush();
+					contentBytes_ = contentString_.getBytes(encoding); 
 				}
 				catch (Exception e)
 				{
 					throw new IllegalStateException("unexpected", e);
 				}
-				contentBytes_ = out.toByteArray();
 			}
 		}
 		

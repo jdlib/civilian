@@ -22,11 +22,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,36 +60,6 @@ public abstract class IoUtil
 	public static String getLineSeparator()
 	{
 		return System.getProperty("line.separator");
-	}
-
-	
-	/**
-	 * Copies all data from an InputStream to an OutputStream.
-	 * @param src a InputStream
-	 * @param dest a OutputStream
-	 * @throws IOException if an I/O error occurs
-	 */
-	public static void copy(InputStream src, OutputStream dest) throws IOException
-	{
-		byte buffer[] = new byte[2048];
-		int count;
-		while ((count = src.read(buffer)) != -1)
-			dest.write(buffer, 0, count);
-	}
-
-	
-	/**
-	 * Copies all data from an InputStream to an OutputStream.
-	 * @param src a Reader
-	 * @param dest a Writer
-	 * @throws IOException if an I/O error occurs
-	 */
-	public static void copy(Reader src, Writer dest) throws IOException
-	{
-		char buffer[] = new char[2048];
-		int count;
-		while ((count = src.read(buffer)) != -1)
-			dest.write(buffer, 0, count);
 	}
 
 	
@@ -161,7 +128,7 @@ public abstract class IoUtil
 	public static String readString(Reader in) throws IOException
 	{
 		StringWriter out = new StringWriter();
-		copy(in, out);
+		in.transferTo(out);
 		return out.toString();
 	}
 	

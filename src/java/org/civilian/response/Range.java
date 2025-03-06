@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import org.civilian.request.Request;
 import org.civilian.response.Response.Status;
 import org.civilian.util.Check;
-import org.civilian.util.IoUtil;
 import org.civilian.util.http.HeaderNames;
 
 
@@ -69,7 +68,7 @@ public class Range extends AbstractList<Range.Part>
 			response.setContentLength(fileLength);
 			try (FileInputStream in = new FileInputStream(file))
 			{
-				IoUtil.copy(in, response.getContentStream());
+				in.transferTo(response.getContentStream());
 			}
 			return;
 		}
