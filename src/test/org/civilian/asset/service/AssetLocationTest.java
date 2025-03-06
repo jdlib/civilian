@@ -73,7 +73,7 @@ public class AssetLocationTest extends CivTest
 		assertNotNull(asset);
 		try(Reader reader = asset.getReader())
 		{
-			String[] lines = IoUtil.readLines(reader, false);
+			String[] lines = IoUtil.readLines(reader);
 			assertEquals(3, lines.length);
 			assertEquals("civilian.appPath = new civilian.Path('/app');", lines[0]);
 			assertEquals("civilian.basePath = civilian.Path.createBasePath();", lines[1]);

@@ -63,7 +63,7 @@ public class DocConverter
 	{
 		try(Reader in = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8))
 		{
-			String[] all = IoUtil.readLines(in, false);
+			String[] all = IoUtil.readLines(in);
 			VarConverter varConverter = new VarConverter(javaDocDir_, parentFile, inputFile); 
 			for (int i=0; i<all.length; i++)
 			{

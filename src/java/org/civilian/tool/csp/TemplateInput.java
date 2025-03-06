@@ -40,7 +40,7 @@ class TemplateInput
 	{
 		try(Reader reader = new InputStreamReader(new FileInputStream(file), encoding))
 		{
-			String[] lines = IoUtil.readLines(reader, false /*trim*/);
+			String[] lines = IoUtil.readLines(reader);
 			for (int i=0; i<lines.length; i++)
 				lines[i] = StringUtil.rtrim(lines[i]);
 			return lines;

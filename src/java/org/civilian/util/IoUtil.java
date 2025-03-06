@@ -77,14 +77,12 @@ public abstract class IoUtil
 	/**
 	 * Reads all data from the reader and returns it as an array of lines.
 	 * @param in a reader
-	 * @param trim true, if the lines should be trimmed.
 	 * @return the lines
 	 * @throws IOException if an I/O error occurs
 	 */
-	public static String[] readLines(Reader in, boolean trim) throws IOException
+	public static String[] readLines(Reader in) throws IOException
 	{
-		ArrayList<String> list = new ArrayList<>(); 
-		readLines(in, trim, list);
+		List<String> list = readLines(in, new ArrayList<>());  
 		return list.toArray(new String[list.size()]);
 	}
 
@@ -94,19 +92,16 @@ public abstract class IoUtil
 	 * @param in a reader
 	 * @param trim true, if the lines should be trimmed.
 	 * @param list receives the lines
+	 * @return the list
 	 * @throws IOException if an I/O error occurs
 	 */
-	public static void readLines(Reader in, boolean trim, List<String> list) throws IOException
+	public static List<String> readLines(Reader in, List<String> list) throws IOException
 	{
 		BufferedReader reader = new BufferedReader(in);
 		String line = null;
 		while((line = reader.readLine()) != null)
-		{
-			if (trim)
-				line = line.trim();
-			if (!trim || (line.length() > 0))
-				list.add(line);
-		}
+			list.add(line);
+		return list;
 	}
 
 	

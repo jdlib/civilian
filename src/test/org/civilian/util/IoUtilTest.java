@@ -57,8 +57,8 @@ public class IoUtilTest extends CivTest
 	
 	@Test public void testReadLines() throws Exception
 	{
-		String[] s = IoUtil.readLines(new StringReader("abc \n\n xyz "), true);
-		assertArrayEquals2(new String[] { "abc", "xyz" }, s); 
+		String[] s = IoUtil.readLines(new StringReader("abc \n xyz "));
+		assertArrayEquals2(new String[] { "abc ", " xyz " }, s); 
 	}
 
 
