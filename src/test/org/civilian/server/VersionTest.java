@@ -18,7 +18,6 @@ package org.civilian.server;
 
 import org.civilian.CivTest;
 import org.civilian.Version;
-import org.civilian.util.IoUtil;
 import org.junit.Test;
 
 
@@ -30,11 +29,11 @@ public class VersionTest extends CivTest
 		{
 			Version.main(new String[] {});
 			
-			assertEquals(Version.VALUE + IoUtil.getLineSeparator(), out.toString());
+			assertEquals(Version.VALUE + System.lineSeparator(), out.toString());
 
 			out.reset();
 			Version.main(new String[] { "-v"});
-			assertEquals("civilian.version = " + Version.VALUE + IoUtil.getLineSeparator(), out.toString());
+			assertEquals("civilian.version = " + Version.VALUE + System.lineSeparator(), out.toString());
 		}
 	}
 }

@@ -55,15 +55,6 @@ public abstract class IoUtil
 
 	
 	/**
-	 * @return the system dependent line separator.
-	 */
-	public static String getLineSeparator()
-	{
-		return System.getProperty("line.separator");
-	}
-
-	
-	/**
 	 * Copies all file to another file.
 	 * @param src a File
 	 * @param dest a File
