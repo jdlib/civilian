@@ -19,12 +19,9 @@ package org.civilian.util;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
  
@@ -52,26 +49,6 @@ public abstract class IoUtil
 			return e;
 		}
 	}
-
-	
-	/**
-	 * Copies all file to another file.
-	 * @param src a File
-	 * @param dest a File
-	 * @throws IOException if an I/O error occurs
-	 */
-	public static void copyFile(File src, File dest) throws IOException 
-	{
-        dest.createNewFile();
-
-	    try (FileInputStream in = new FileInputStream(src);
-	    	FileOutputStream out = new FileOutputStream(dest))
-	    {
-	    	FileChannel srcChannel  = in.getChannel();
-	    	FileChannel destChannel = out.getChannel();
-	        destChannel.transferFrom(srcChannel, 0, srcChannel.size());
-	    }
-	}	
 
 
 	/**

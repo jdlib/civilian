@@ -36,23 +36,6 @@ public class IoUtilTest extends CivTest
 		doThrow(e).when(c).close();
 		assertSame(e, IoUtil.close(c));
 	}
-
-
-	@Test public void testCopy() throws Exception
-	{
-		File file1 = createTempFile("txt", "UTF-8", "abc");
-		File file2 = File.createTempFile("test", "txt");
-		try
-		{
-			IoUtil.copyFile(file1, file2);
-			assertEquals("abc", read(file2));
-		}
-		finally
-		{
-			file1.delete();
-			file2.delete();
-		}
-	}
 	
 	
 	@Test public void testReadLines() throws Exception
