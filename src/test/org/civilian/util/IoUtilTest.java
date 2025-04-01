@@ -16,28 +16,14 @@
 package org.civilian.util;
 
 
-import java.io.Closeable;
 import java.io.File;
-import java.io.IOException;
 import java.io.StringReader;
 import org.junit.Test;
-import static org.mockito.Mockito.*;
 import org.civilian.CivTest;
 
 
 public class IoUtilTest extends CivTest
 {
-	@Test public void testClosed() throws Exception
-	{
-		IoUtil.close(null);
-		
-		IOException e = new IOException();
-		Closeable c = mock(Closeable.class);
-		doThrow(e).when(c).close();
-		assertSame(e, IoUtil.close(c));
-	}
-	
-	
 	@Test public void testReadLines() throws Exception
 	{
 		String[] s = IoUtil.readLines(new StringReader("abc \n xyz "));

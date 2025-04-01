@@ -17,7 +17,6 @@ package org.civilian.util;
 
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
@@ -31,26 +30,6 @@ import java.util.List;
  */
 public abstract class IoUtil
 {
-	/**
-	 * Silently closes a Closeable.
-	 * @param in a Closeable
-	 * @return the exception or null if no exception thrown
-	 */
-	public static IOException close(Closeable in)
-	{
-		try
-		{
-			if (in != null)
-				in.close();
-			return null;
-		}
-		catch(IOException e)
-		{
-			return e;
-		}
-	}
-
-
 	/**
 	 * Reads all data from the reader and returns it as an array of lines.
 	 * @param in a reader
