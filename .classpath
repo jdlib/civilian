@@ -15,7 +15,6 @@
 	<classpathentry kind="lib" path="lib/build/el-api-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/build/freemarker-2.3.19.jar"/>
 	<classpathentry kind="lib" path="lib/build/gson-2.2.4.jar"/>
-	<classpathentry kind="lib" path="lib/build/guice-3.0.jar"/>
 	<classpathentry kind="lib" path="lib/build/javax.inject-1.jar"/>
 	<classpathentry kind="lib" path="lib/build/jboss-vfs-3.2.2.Final.jar"/>
 	<classpathentry kind="lib" path="lib/build/velocity-1.7.jar"/>
@@ -40,5 +39,6 @@
 	<classpathentry kind="lib" path="lib/jetty/jetty-webapp-11.0.25.jar"/>
 	<classpathentry kind="lib" path="lib/jetty/jetty-servlet-11.0.25.jar"/>
 	<classpathentry kind="lib" path="lib/jetty/jetty-util-11.0.25.jar"/>
+	<classpathentry kind="lib" path="lib/build/guice-7.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

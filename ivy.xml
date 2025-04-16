@@ -11,7 +11,7 @@
 	
 	<dependencies>
 		<dependency conf="build->master" org="com.google.code.gson" name="gson" rev="2.2.4"/>
-		<dependency conf="build->master" org="com.google.inject" name="guice" rev="3.0"/>
+		<dependency conf="build->master" org="com.google.inject" name="guice" rev="7.0.0"/>
 		<dependency conf="build->master" org="javax.inject" name="javax.inject" rev="1"/>
 		<dependency conf="build->master,sources" org="jakarta.servlet" name="jakarta.servlet-api" rev="6.0.0"/>
 		<dependency conf="build->master" org="javax.enterprise" name="cdi-api" rev="1.2"/>		
@@ -36,7 +36,7 @@
 		<dependency conf="test->default" org="com.sun.xml.bind" name="jaxb-core" rev="2.3.0.1"/>	
 		<dependency conf="test->default" org="com.sun.activation" name="javax.activation" rev="1.2.0"/>
 		
-		<dependency conf="samples->default" org="com.google.inject" name="guice" rev="3.0"/>
+		<dependency conf="samples->default" org="com.google.inject" name="guice" rev="7.0.0"/>
 		<dependency conf="samples->master" org="org.slf4j" name="slf4j-simple" rev="2.0.7"/>
 		<dependency conf="samples->master" org="org.slf4j" name="slf4j-api" rev="2.0.7"/>
 		<dependency conf="samples->master" org="com.h2database" name="h2" rev="1.4.179"/>

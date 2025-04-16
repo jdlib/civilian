@@ -468,7 +468,8 @@
 
 
 	<target name="resolve" description="retrieve dependencies with ivy">
-		<ivy:retrieve pattern="lib/[conf]/[artifact]-[revision].[ext]" type="jar"/>
+		<!-- guava uses packaging 'bundle': -->
+		<ivy:retrieve pattern="lib/[conf]/[artifact]-[revision].[ext]" type="jar,bundle"/>
 		<ivy:retrieve pattern="lib/[conf]/[artifact]-[revision]-sources.[ext]" type="source"/>
 	</target>
 	
