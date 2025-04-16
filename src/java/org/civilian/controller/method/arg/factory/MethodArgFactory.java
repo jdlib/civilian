@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 import org.civilian.annotation.BeanParam;
 import org.civilian.annotation.CookieParam;
 import org.civilian.annotation.DefaultValue;

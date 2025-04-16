@@ -43,10 +43,10 @@ public class ScanTest extends CivTest
 
 	@Test public void testJarScan() throws Exception
 	{
-		ClassPathScan scan = new ClassPathScan("javax.servlet");
+		ClassPathScan scan = new ClassPathScan("jakarta.servlet");
 		Set<String> adapters = scan.collect(className -> className.endsWith(".HttpSession"));
 		
 		assertEquals(1, adapters.size());
-		assertTrue(adapters.contains("javax.servlet.http.HttpSession"));
+		assertTrue(adapters.contains("jakarta.servlet.http.HttpSession"));
 	}
 }

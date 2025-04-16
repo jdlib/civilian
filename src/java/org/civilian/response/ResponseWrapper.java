@@ -21,7 +21,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.Locale;
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 import org.civilian.request.Request;
 import org.civilian.text.service.LocaleService;
 import org.civilian.util.Check;

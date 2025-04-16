@@ -152,7 +152,7 @@ class ImportList
 		{
 			if (s.startsWith("java."))
 				return 1;
-			else if (s.startsWith("javax."))
+			else if (s.startsWith("jakarta."))
 				return 2;
 			else if ((appPackage_ == null) || !s.startsWith(appPackage_))
 				return 3;

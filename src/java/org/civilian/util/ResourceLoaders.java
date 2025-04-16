@@ -11,7 +11,7 @@ import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 
 /**

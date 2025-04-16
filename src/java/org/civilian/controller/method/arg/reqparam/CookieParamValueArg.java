@@ -17,7 +17,7 @@ package org.civilian.controller.method.arg.reqparam;
 
 
 import java.util.ArrayList;
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 import org.civilian.request.CookieList;
 import org.civilian.request.Request;
 import org.civilian.response.Response;

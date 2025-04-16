@@ -16,7 +16,7 @@
 package org.civilian.controller.method.arg;
 
 
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.civilian.CivTest;

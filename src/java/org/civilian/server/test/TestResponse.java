@@ -22,8 +22,7 @@ import java.io.Flushable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import javax.servlet.http.Cookie;
-
+import jakarta.servlet.http.Cookie;
 import org.civilian.application.Application;
 import org.civilian.request.CookieList;
 import org.civilian.request.Session;

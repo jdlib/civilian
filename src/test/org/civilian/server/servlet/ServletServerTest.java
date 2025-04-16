@@ -17,7 +17,7 @@ package org.civilian.server.servlet;
 
 
 import java.io.File;
-import javax.servlet.ServletRegistration;
+import jakarta.servlet.ServletRegistration;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.mockito.invocation.InvocationOnMock;

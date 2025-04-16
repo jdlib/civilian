@@ -18,7 +18,7 @@ package org.civilian.request;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 import org.civilian.CivTest;
 import org.civilian.server.test.TestLocalInfo;
 import org.civilian.server.test.TestRemoteInfo;

@@ -24,7 +24,7 @@ import org.civilian.response.AsyncEvent.Type;
 import org.civilian.util.Check;
 
 
-class AsyncEventListenerAdapter implements javax.servlet.AsyncListener
+class AsyncEventListenerAdapter implements jakarta.servlet.AsyncListener
 {
 	public AsyncEventListenerAdapter(org.civilian.response.AsyncEventListener listener, AsyncContext context)
 	{
@@ -33,31 +33,31 @@ class AsyncEventListenerAdapter implements javax.servlet.AsyncListener
 	}
 	
 	
-	@Override public void onComplete(javax.servlet.AsyncEvent servletEvent) throws IOException
+	@Override public void onComplete(jakarta.servlet.AsyncEvent servletEvent) throws IOException
 	{
 		onEvent(Type.COMPLETE, servletEvent);
 	}
 
 	
-	@Override public void onError(javax.servlet.AsyncEvent servletEvent) throws IOException
+	@Override public void onError(jakarta.servlet.AsyncEvent servletEvent) throws IOException
 	{
 		onEvent(Type.ERROR, servletEvent);
 	}
 
 	
-	@Override public void onStartAsync(javax.servlet.AsyncEvent servletEvent) throws IOException
+	@Override public void onStartAsync(jakarta.servlet.AsyncEvent servletEvent) throws IOException
 	{
 		onEvent(Type.START, servletEvent);
 	}
 
 
-	@Override public void onTimeout(javax.servlet.AsyncEvent servletEvent) throws IOException
+	@Override public void onTimeout(jakarta.servlet.AsyncEvent servletEvent) throws IOException
 	{
 		onEvent(Type.TIMEOUT, servletEvent);
 	}
 
 	
-	private void onEvent(Type type, javax.servlet.AsyncEvent servletEvent)
+	private void onEvent(Type type, jakarta.servlet.AsyncEvent servletEvent)
 	{
 		AsyncEvent civEvent = new AsyncEvent(type, context_, servletEvent.getThrowable());
 		listener_.onEvent(civEvent);

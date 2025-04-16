@@ -63,7 +63,7 @@ public interface Uploads
 	
 	/**
 	 * Returns the first Upload object with the given name.
-	 * In Servlet terms the Upload object corresponds to a javax.servlet.http.Part object 
+	 * In Servlet terms the Upload object corresponds to a jakarta.servlet.http.Part object 
 	 * in a multipart/form-data request whose content disposition contains
 	 * a filename parameter and whose name equals the given name.
 	 * @param name a name
@@ -74,7 +74,7 @@ public interface Uploads
 	
 	/**
 	 * Returns all Upload objects with the given name.
-	 * In Servlet terms the Upload object corresponds to a javax.servlet.http.Part object 
+	 * In Servlet terms the Upload object corresponds to a jakarta.servlet.http.Part object 
 	 * in a multipart/form-data request whose content disposition contains
 	 * a filename parameter and whose name equals the given name.
 	 * @param name a name

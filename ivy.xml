@@ -13,7 +13,7 @@
 		<dependency conf="build->master" org="com.google.code.gson" name="gson" rev="2.2.4"/>
 		<dependency conf="build->master" org="com.google.inject" name="guice" rev="3.0"/>
 		<dependency conf="build->master" org="javax.inject" name="javax.inject" rev="1"/>
-		<dependency conf="build->master,sources" org="javax.servlet" name="javax.servlet-api" rev="3.1.0"/>
+		<dependency conf="build->master,sources" org="jakarta.servlet" name="jakarta.servlet-api" rev="6.0.0"/>
 		<dependency conf="build->master" org="javax.enterprise" name="cdi-api" rev="1.2"/>		
 		<dependency conf="build->master" org="javax.ejb" name="ejb-api" rev="3.0"/>		
 		<dependency conf="build->master" org="javax.el" name="el-api" rev="1.0"/>
@@ -21,7 +21,7 @@
 		<dependency conf="build->master" org="org.apache.poi" name="poi-ooxml" rev="4.0.1"/>
 		<dependency conf="build->master,sources" org="org.apache.tomcat" name="tomcat-catalina" rev="9.0.80"/>
 		<dependency conf="build->master" org="org.apache.velocity" name="velocity" rev="1.7"/>
-		<dependency conf="build->master" org="org.eclipse.jetty.aggregate" name="jetty-all-server" rev="8.1.15.v20140411"/>
+		<dependency conf="build->master" org="org.eclipse.jetty" name="jetty-server" rev="11.0.25"/>
 		<dependency conf="build->master" org="org.eclipse.persistence" name="javax.persistence" rev="2.1.0"/>
 		<dependency conf="build->master" org="org.freemarker" name="freemarker" rev="2.3.19"/>
 		<dependency conf="build->master" org="org.jboss" name="jboss-vfs" rev="3.2.2.Final"/>
@@ -42,8 +42,9 @@
 		<dependency conf="samples->master" org="com.h2database" name="h2" rev="1.4.179"/>
 		<dependency conf="samples->default" org="com.google.code.gson" name="gson" rev="2.2.4"/>
 		<dependency conf="samples->default" org="org.eclipse.persistence" name="eclipselink" rev="2.5.1"/>
-			
-		<dependency conf="jetty->default" org="org.eclipse.jetty.aggregate" name="jetty-all-server" rev="8.1.15.v20140411"/>
+		
+		<dependency conf="jetty->default" org="org.eclipse.jetty" name="jetty-server" rev="11.0.25"/>
+		<dependency conf="jetty->default" org="org.eclipse.jetty" name="jetty-webapp" rev="11.0.25"/>
 		
 		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.core" rev="0.8.11"/>
 		<dependency conf="coverage->master" org="org.jacoco" name="org.jacoco.ant" rev="0.8.11"/>

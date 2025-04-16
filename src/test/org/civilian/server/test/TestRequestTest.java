@@ -16,7 +16,7 @@
 package org.civilian.server.test;
 
 
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 import org.civilian.CivTest;
 import org.civilian.application.admin.AdminApp;
 import org.civilian.application.admin.AdminPathParams;

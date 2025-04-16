@@ -44,7 +44,7 @@ public class AssetLocationTest extends CivTest
 	
 	@Test public void testClassPathLocation() throws Exception
 	{
-		AssetLocation location = AssetServices.getJavaResourceLocation("/", "javax/servlet");
+		AssetLocation location = AssetServices.getJavaResourceLocation("/", "jakarta/servlet");
 		assertNull(location.getAsset("/xyz"));
 		
 		Asset asset = (location.getAsset("/ServletRequest.class"));

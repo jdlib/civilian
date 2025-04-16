@@ -34,4 +34,4 @@ This starts an embedded Jetty server and deploys the samples in it.
 The samples start page is now available under http://localhost:8080/
 
 You can also deploy the samples war from the build subdirectory <code>tmp</code>
-in any Servlet 3.1+ container.
+in any Servlet 5.0+ container.

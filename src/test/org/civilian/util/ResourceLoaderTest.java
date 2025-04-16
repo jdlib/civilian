@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.civilian.CivTest;

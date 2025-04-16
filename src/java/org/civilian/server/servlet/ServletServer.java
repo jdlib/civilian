@@ -18,10 +18,10 @@ package org.civilian.server.servlet;
 
 import java.io.IOException;
 import java.util.Iterator;
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletRegistration;
+import jakarta.servlet.MultipartConfigElement;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletRegistration;
 import org.civilian.Logs;
 import org.civilian.application.Application;
 import org.civilian.application.UploadConfig;
@@ -40,7 +40,7 @@ import org.civilian.util.StringUtil;
 
 
 /**
- * A Server implementation which wraps a javax.servlet.ServletContext.
+ * A Server implementation which wraps a jakarta.servlet.ServletContext.
  */
 class ServletServer extends Server
 {

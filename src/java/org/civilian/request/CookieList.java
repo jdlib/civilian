@@ -18,7 +18,7 @@ package org.civilian.request;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 
 
 /**

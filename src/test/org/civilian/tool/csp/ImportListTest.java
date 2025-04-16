@@ -19,7 +19,7 @@ package org.civilian.tool.csp;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
-import javax.servlet.Servlet;
+import jakarta.servlet.Servlet;
 import org.civilian.CivTest;
 import org.civilian.server.Server;
 import org.junit.Test;
@@ -52,7 +52,7 @@ public class ImportListTest extends CivTest
 		assertTrue(list.write(w, "org.civilian"));
 		String output = s.toString().replace("\r", "");
 		assertEquals("import java.util.List;\n" +
-			"import javax.servlet.Servlet;\n" +
+			"import jakarta.servlet.Servlet;\n" +
 			"import org.junit.Test;\n" + 
 			"import org.civilian.server.Server;\n", output);
 	}

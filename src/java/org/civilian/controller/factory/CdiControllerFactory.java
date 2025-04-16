@@ -28,7 +28,6 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-
 import org.civilian.application.AppConfig;
 import org.civilian.controller.Controller;
 import org.civilian.controller.ControllerFactory;

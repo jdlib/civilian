@@ -3,8 +3,8 @@ package org.civilian.server.servlet;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.WriteListener;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
 import org.civilian.response.AsyncOutput;
 import org.civilian.response.AsyncOutputListener;
 import org.civilian.util.Check;

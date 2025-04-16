@@ -16,8 +16,8 @@
 package org.civilian.server.servlet;
 
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
 import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;

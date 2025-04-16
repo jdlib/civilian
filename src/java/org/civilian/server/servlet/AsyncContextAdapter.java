@@ -17,10 +17,8 @@ package org.civilian.server.servlet;
 
 
 import java.io.IOException;
-
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletOutputStream;
-
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.ServletOutputStream;
 import org.civilian.response.AsyncContext;
 import org.civilian.response.AsyncEventListener;
 import org.civilian.response.AsyncInput;
@@ -106,7 +104,7 @@ class AsyncContextAdapter extends AsyncContext
 	}
 
 	
-	private final javax.servlet.AsyncContext servletAsyncContext_;
+	private final jakarta.servlet.AsyncContext servletAsyncContext_;
 	private AsyncInputAdapter asyncInput_;
 	private AsyncOutputAdapter asyncOutput_;
 }

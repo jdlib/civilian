@@ -18,7 +18,7 @@ package org.civilian.server.servlet;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 
 public abstract class MockServletContext implements ServletContext

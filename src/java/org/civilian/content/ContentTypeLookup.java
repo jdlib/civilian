@@ -18,7 +18,7 @@ package org.civilian.content;
 
 import java.net.URLConnection;
 import java.util.Map;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import org.civilian.util.Check;
 import org.civilian.util.IoUtil;
 

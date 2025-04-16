@@ -17,7 +17,6 @@ package org.civilian.samples.cdi;
 
 
 import javax.inject.Inject;
-
 import org.civilian.annotation.Get;
 import org.civilian.controller.Controller;
 import org.civilian.samples.cdi.service.Service;

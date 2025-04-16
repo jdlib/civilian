@@ -17,7 +17,7 @@ package org.civilian.server.servlet;
 
 
 import java.util.Iterator;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import org.civilian.request.Session;
 import org.civilian.util.Check;
 import org.civilian.util.ClassUtil;
