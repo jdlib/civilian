@@ -134,7 +134,7 @@
 	</target>
 
 		
- 	<target name="compile.test" description="compiles src/test">
+ 	<target name="compile.test" description="compiles src/test" depends="compile.java">
     	<mkdir dir="${build.bin.test}"/>
 		<javac srcdir="${src.test}" destdir="${build.bin.test}"	debug="true" includeantruntime="false" encoding="UTF-8">
 			<classpath>
@@ -155,7 +155,7 @@
 	</target>
 
 		
-	<target name="copyright">
+    <target name="copyright">
 		<copy todir="${build}/cr/java">
 	  		<fileset dir="${src.java}" includes="**/*.java"/>
 	  		<filterchain>
@@ -177,7 +177,7 @@
 	</target>
 	
 	
-	<target name="coverage" depends="compile" xmlns:jacoco="antlib:org.jacoco.ant" description="runs tests and measures coverage">
+	<target name="test" depends="compile" xmlns:jacoco="antlib:org.jacoco.ant" description="runs tests and measures coverage">
 		<path id="coverage.path">
 			<fileset dir="${lib}/coverage">
 				<include name="*.jar" />
@@ -207,7 +207,9 @@
 		<mkdir dir="${reports.junit.xml.dir}"/>
 		
 		<jacoco:coverage destfile="${jacoco.exec}">
+			<!-- use fork and jvmarg to support class reloading in newer JVMs -->
 			<junit fork="true" forkmode="once">
+				<jvmarg line="--add-opens java.base/java.lang=ALL-UNNAMED"/>
 				<classpath location="${build.bin.java}" />
 				<classpath location="${build.bin.test}" />
 				<classpath refid="run.path" />
@@ -295,7 +297,7 @@
 	</target>
 
 		
-	<target name="dist" description="builds the civilian distribution" depends="war,javadoc,doc">
+	<target name="dist" description="builds the civilian distribution" depends="test,war,javadoc,doc">
    		<property name="dist.zip" value="${build}/civilian-${version}.zip"/>
 		<zip destfile="${dist.zip}">
 			<fileset dir="${basedir}">
@@ -304,6 +306,7 @@
 				<include name="lib/readme.txt"/>
 				<include name="web/**/*"/>
 				<exclude name=".settings"/>
+				<exclude name="todo.txt"/>
 				<exclude name="tmp"/>
 				<include name="*"/>
 			</fileset>
