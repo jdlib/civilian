@@ -24,7 +24,7 @@ public class Version
 	/**
 	 * Holds the version number of the Civilian framework.
 	 */
-	public static final String VALUE = "3.0";
+	public static final String VALUE = "4.0";
 
 	
 	/**
