@@ -46,7 +46,6 @@ public abstract class IoUtil
 	/**
 	 * Reads all data from the reader and fills it in a list.
 	 * @param in a reader
-	 * @param trim true, if the lines should be trimmed.
 	 * @param list receives the lines
 	 * @return the list
 	 * @throws IOException if an I/O error occurs
