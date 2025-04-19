@@ -307,6 +307,7 @@
 				<include name="web/**/*"/>
 				<exclude name=".settings"/>
 				<exclude name="todo.txt"/>
+				<exclude name="pom.xml"/>
 				<exclude name="tmp"/>
 				<include name="*"/>
 			</fileset>
