@@ -20,6 +20,7 @@ import java.io.IOException;
 import org.junit.Test;
 import org.civilian.CivTest;
 import org.civilian.ConfigKeys;
+import org.civilian.application.classloader.DevRequestClassLoader;
 import org.civilian.content.ContentSerializerConfig;
 import org.civilian.content.ContentType;
 import org.civilian.resource.pathparam.PathParamMap;
@@ -118,7 +119,7 @@ public class ApplicationTest extends CivTest
 		settings.set(ConfigKeys.DEV_CLASSRELOAD, true);
 		server.addApp(testApp, "test", "test", settings);
 		assertEquals(Application.Status.RUNNING, testApp.getStatus());
-		assertTrue(testApp.getControllerService().isReloading());
+		assertEquals(DevRequestClassLoader.isSupported(), testApp.getControllerService().isReloading());
 		assertNotNull(testApp.getProcessors());
 		assertNotNull(testApp.getRootResource());
 		ContentSerializerConfig ctm = testApp.getContentSerializers();
