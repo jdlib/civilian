@@ -190,7 +190,7 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 			// setup of safe application properties
 			// since the error page may rely on them
 			data.async			= appConfig.getAsync();
-			defaultEncoding_		= appConfig.getDefaultEncoding();
+			defaultEncoding_	= appConfig.getDefaultEncoding();
 			version_			= appConfig.getVersion();
 			assetService_		= initAssets(appConfig.getAssetConfig());
 			uploadConfig_		= appConfig.getUploadConfig();
@@ -539,9 +539,13 @@ public abstract class Application extends ServerApp implements RequestOwner, Res
 	{
 		ClassLoader appClassLoader = getClass().getClassLoader();
 		boolean reloading = reloadConfig != null && reloadConfig.isValid();
-		return reloading ?
-			new ClassLoaderFactory.Dev(appClassLoader, reloadConfig) :
-			new ClassLoaderFactory.Production(appClassLoader);
+		if (reloading)
+		{
+			if (ClassLoaderFactory.Dev.isSupported())
+				return new ClassLoaderFactory.Dev(appClassLoader, reloadConfig);
+			Logs.APPLICATION.warn("class reloading not supported, add JVM arg \"--add-opens java.base/java.lang=ALL-UNNAMED\"");
+		}
+		return new ClassLoaderFactory.Production(appClassLoader);
 	}
 			
 

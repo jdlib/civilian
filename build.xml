@@ -26,7 +26,14 @@
 	<description>Ant build file for Civilian</description>
 	
 	
+	<path id="jetty.path">
+		<fileset dir="${lib}\jetty">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
 	<path id="compile.path">
+		<path refid="jetty.path"/>
 		<fileset dir="${lib}\build">
 			<include name="*.jar" />
 		</fileset>
@@ -453,12 +460,12 @@
 	
 	
 	<target name="jetty" description="run the samples in a jetty server" depends="compile">
-		<java classname="org.civilian.boot.Jetty" classpathref="samples.path">
+		<!-- use fork and jvmarg to support class reloading in newer JVMs -->
+		<java classname="org.civilian.boot.Jetty" fork="yes" classpathref="samples.path">
+			<jvmarg line="--add-opens java.base/java.lang=ALL-UNNAMED"/>
 			<classpath>
+				<path refid="jetty.path"/>
 				<path refid="samples.path"/>
-				<fileset dir="${lib}/jetty">
-					<include name="**/*.jar" />
-				</fileset>
 			</classpath>
 			<arg value="-port"/>
 			<arg value="8080"/>

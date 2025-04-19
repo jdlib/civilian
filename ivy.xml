@@ -2,7 +2,7 @@
 	<info organisation="civilian" module="main"/>    
 
 	<configurations>
-		<conf name="build"     description="jars needed to build src/java amd src/samples"/>
+		<conf name="build"     description="jars needed to build src/java and src/samples"/>
 		<conf name="test"      description="jars needed to build and run src/test"/>
 		<conf name="samples"   description="jars needed to run the samples" />
 		<conf name="jetty"     description="jetty jar files"/>
@@ -21,7 +21,6 @@
 		<dependency conf="build->master" org="org.apache.poi" name="poi-ooxml" rev="4.0.1"/>
 		<dependency conf="build->master,sources" org="org.apache.tomcat" name="tomcat-catalina" rev="9.0.80"/>
 		<dependency conf="build->master" org="org.apache.velocity" name="velocity" rev="1.7"/>
-		<dependency conf="build->master" org="org.eclipse.jetty" name="jetty-server" rev="11.0.25"/>
 		<dependency conf="build->master" org="org.eclipse.persistence" name="javax.persistence" rev="2.1.0"/>
 		<dependency conf="build->master" org="org.freemarker" name="freemarker" rev="2.3.19"/>
 		<dependency conf="build->master" org="org.jboss" name="jboss-vfs" rev="3.2.2.Final"/>

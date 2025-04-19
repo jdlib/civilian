@@ -55,34 +55,39 @@ public class DevRequestClassLoaderTest extends CivTest
 	
 	@Test public void testFilter() throws Exception
 	{
-		ReloadConfig config = new ReloadConfig();
-		config.includes().addPackage(getClass());
-		config.excludes().add(BETA_NAME);
-		
-		DevRequestClassLoader cl = new DevRequestClassLoader(getClass().getClassLoader(), config);
-		
-		// Alpha is included
-		Class<?> alphaClass = cl.loadClass(ALPHA_NAME);
-		assertSame(cl, alphaClass.getClassLoader()); 
-
-		// Beta is excluded
-		Class<?> betaClass = cl.loadClass(BETA_NAME);
-		assertSame(getClass().getClassLoader(), betaClass.getClassLoader()); 
+		if (DevRequestClassLoader.isSupported())
+		{
+			ReloadConfig config = new ReloadConfig();
+			config.includes().addPackage(getClass());
+			config.excludes().add(BETA_NAME);
+			
+			DevRequestClassLoader cl = DevRequestClassLoader.of(getClass().getClassLoader(), config);
+			
+			// Alpha is included
+			Class<?> alphaClass = cl.loadClass(ALPHA_NAME);
+			assertSame(cl, alphaClass.getClassLoader()); 
+	
+			// Beta is excluded
+			Class<?> betaClass = cl.loadClass(BETA_NAME);
+			assertSame(getClass().getClassLoader(), betaClass.getClassLoader()); 
+		}
 	}
 
 	
 	@Test public void testDelegation() throws Exception
 	{
-		ClassLoader parent = getClass().getClassLoader();
-		DevRequestClassLoader cl = new DevRequestClassLoader(parent, s -> true);
-		
-		// load alpha class by parent classloader
-		// cl will detect this and not load by itself
-		Class<?> gammaClass = parent.loadClass(GAMMA_NAME);
-		assertSame(parent, gammaClass.getClassLoader()); 
-		assertSame(gammaClass, cl.loadClass(GAMMA_NAME));
-
-		Class<?> betaClass = cl.loadClass(DELTA_NAME);
-		assertSame(cl, betaClass.getClassLoader()); 
+		if (DevRequestClassLoader.isSupported())
+		{
+			ClassLoader parent = getClass().getClassLoader();
+			DevRequestClassLoader cl = DevRequestClassLoader.of(parent, s -> true);
+			// load alpha class by parent classloader
+			// cl will detect this and not load by itself
+			Class<?> gammaClass = parent.loadClass(GAMMA_NAME);
+			assertSame(parent, gammaClass.getClassLoader()); 
+			assertSame(gammaClass, cl.loadClass(GAMMA_NAME));
+	
+			Class<?> betaClass = cl.loadClass(DELTA_NAME);
+			assertSame(cl, betaClass.getClassLoader()); 
+		}
 	}
 }

@@ -38,19 +38,36 @@ public class DevRequestClassLoader extends ClassLoader
 	private static final Method FINDELOADEDCLASS_METHOD;
 	static
 	{
+		Method m;
 		try
 		{
-			FINDELOADEDCLASS_METHOD = ClassLoader.class.getDeclaredMethod("findLoadedClass", String.class);
-			FINDELOADEDCLASS_METHOD.setAccessible(true);
+			m = ClassLoader.class.getDeclaredMethod("findLoadedClass", String.class);
+			m.setAccessible(true);
 		}
 		catch (Exception e)
 		{
-			throw new ExceptionInInitializerError(e);
+			m = null;
+			Logs.CLASSLOADER.warn(e.getMessage(), e);
 		}
+		FINDELOADEDCLASS_METHOD = m;
 	}
 	
 	
-	public DevRequestClassLoader(ClassLoader parent, Predicate<String> filter)
+	public static boolean isSupported()
+	{
+		return FINDELOADEDCLASS_METHOD != null;
+	}
+	
+	
+	public static DevRequestClassLoader of(ClassLoader parent, Predicate<String> filter)
+	{
+		if (!isSupported())
+			throw new UnsupportedOperationException();
+		return new DevRequestClassLoader(parent, filter);
+	}
+	
+	
+	private DevRequestClassLoader(ClassLoader parent, Predicate<String> filter)
 	{
 		super(parent);
 		filter_ = Check.notNull(filter, "filter");

@@ -17,6 +17,12 @@ public interface ClassLoaderFactory
 
 	public static class Dev implements ClassLoaderFactory 
 	{
+		public static boolean isSupported()
+		{
+			return DevRequestClassLoader.isSupported();
+		}
+		
+		
 		public Dev(ClassLoader appClassLoader, ReloadConfig reloadConfig)
 		{
 			appClassLoader_ = Check.notNull(appClassLoader, "appClassLoader");
@@ -38,7 +44,7 @@ public interface ClassLoaderFactory
 
 		@Override public ClassLoader getRequestClassLoader() 
 		{
-			return new DevRequestClassLoader(appClassLoader_, reloadConfig_);
+			return DevRequestClassLoader.of(appClassLoader_, reloadConfig_);
 		}
 
 
