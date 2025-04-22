@@ -41,8 +41,8 @@ public class ContextListener implements ServletContextListener
 	@Override public void contextInitialized(ServletContextEvent event)
 	{
 		ServletContext servletContext = event.getServletContext();
-		if (servletContext.getMajorVersion() < 3)
-			servletContext.log("civilian needs a servlet engine >= 3.0");
+		if (servletContext.getMajorVersion() < 5)
+			servletContext.log("civilian needs a servlet engine >= 5.0");
 		else
 			server_ = new ServletServer(servletContext);
 	}
