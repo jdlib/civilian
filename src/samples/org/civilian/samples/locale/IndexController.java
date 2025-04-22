@@ -24,6 +24,7 @@ import org.civilian.controller.Controller;
 
 public class IndexController extends Controller
 {
+	@SuppressWarnings("deprecation")
 	@Get @Produces("text/html") 
 	public Object get() throws Exception
 	{
