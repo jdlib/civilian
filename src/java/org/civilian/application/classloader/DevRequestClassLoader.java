@@ -26,8 +26,8 @@ import org.civilian.util.Check;
 
 
 /**
- * A ClassLoader which is used if during development if the class reload is activated.
- * In this scenario for each request a DevRequestClassLoader is created.
+ * A ClassLoader which is used during development if the class reload is activated.
+ * In this scenario for each request a new DevRequestClassLoader is created.
  * DevRequestClassLoader uses an eager, non-delegating class loader strategy.
  * Controller and dependent classes like templates will therefore be reloaded for every request -
  * perfect for rapid development where you change a class and hit refresh in the browser
