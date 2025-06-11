@@ -2,9 +2,7 @@ import ../../text.Message
 
 
 prolog /**
-prolog  * Generic SearchTemplate
-prolog  * @param toolbar: if embedded in a module panel, the searchpanel has a toolbar to navigate to
-prolog  * 		the detail view
+prolog  * Generic SearchTemplate.
 prolog  */
 template(boolean withToolbar)
 mixin lang

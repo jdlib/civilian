@@ -25,6 +25,7 @@ import java.io.PrintWriter;
 import jakarta.servlet.http.Cookie;
 import org.civilian.application.Application;
 import org.civilian.request.CookieList;
+import org.civilian.request.Request;
 import org.civilian.request.Session;
 import org.civilian.response.AbstractResponse;
 import org.civilian.response.AsyncContext;

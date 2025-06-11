@@ -62,9 +62,9 @@ import org.civilian.util.http.HeaderNames;
  * <p>
  * Given an incoming request, the best matching action method is selected by an algorithm
  * called content negotiation. If no action method matches the request, an error 
- * is sent (e.g. {@link Response.Status#SC405_METHOD_NOT_ALLOWED},
- * {@link Response.Status#SC406_NOT_ACCEPTABLE},
- * {@link Response.Status#SC415_UNSUPPORTED_MEDIA_TYPE} as response. 
+ * is sent (e.g. {@link org.civilian.response.Response.Status#SC405_METHOD_NOT_ALLOWED},
+ * {@link org.civilian.response.Response.Status#SC406_NOT_ACCEPTABLE},
+ * {@link org.civilian.response.Response.Status#SC415_UNSUPPORTED_MEDIA_TYPE} as response. 
  * Else the matching method is invoked.<br>
  * An action method can have annotated parameters into which context values, like 
  * request parameters, matrix parameters,

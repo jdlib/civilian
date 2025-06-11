@@ -22,7 +22,7 @@ import java.io.IOException;
 /**
  * A ResponseInterceptor can be used to wrap the Writer or OutputStream of a Response.
  * @see Response#addInterceptor()
- * @param T either Writer or OutputStream
+ * @param <T> either Writer or OutputStream
  */
 public interface ResponseInterceptor<T>
 {

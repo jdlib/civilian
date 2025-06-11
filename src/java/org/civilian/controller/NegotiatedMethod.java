@@ -27,7 +27,7 @@ import org.civilian.util.Check;
  * of a {@link Controller} which is most suitable to handle a request.
  * NegotiatedMethod either holds the ControllerMethod and the preferred
  * content type, or an error code if no suitable method was found.
- * @see ControllerType#getMethod(org.civilian.Request)
+ * @see ControllerType#getMethod(org.civilian.request.Request)
  */
 public class NegotiatedMethod
 {

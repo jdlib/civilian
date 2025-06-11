@@ -39,7 +39,7 @@ class ResourceExt
 		
 		/**
 		 * Reads @PathParam and @Segment annotations for package-info and controller classes.
-		 * @param segment the default segment derived from the last package part or 
+		 * @param defaultSegment the default segment derived from the last package part or 
 		 * 		the simple name of the controller class. 
 		 */
 		public ResourceExt getExtension(AnnotatedElement annotated, String defaultSegment, boolean allowEmptySegment)

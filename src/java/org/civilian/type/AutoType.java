@@ -3,7 +3,7 @@ package org.civilian.type;
 
 /**
  * AutoType is a Type which knows how to parse and format values.
- * It uses {@link Category#AUTO}.
+ * It uses {@link org.civilian.type.Type.Category#AUTO}.
  */
 public abstract class AutoType<VALUE> extends Type<VALUE> 
 {

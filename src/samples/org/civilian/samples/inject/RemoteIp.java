@@ -26,7 +26,6 @@ import org.civilian.annotation.MethodArgProvider;
 /**
  * RemoteIp is custom annotation which can be used
  * on String parameters of controller action methods
- * (see {@link IndexController#get(String, org.civilian.Response)}).
  * It uses @MethodArgProvider to reference the RemoteIpArgProvider.
  */
 @Target({java.lang.annotation.ElementType.PARAMETER})

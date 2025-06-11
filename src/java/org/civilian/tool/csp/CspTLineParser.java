@@ -206,7 +206,6 @@ class CspTLineParser
 	 * The leading ^ symbol has already been consumed
 	 * @param line 
 	 * @param start
-	 * @return the next start
 	 */
 	private void parseCodeSnippet()
 	{
